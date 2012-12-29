@@ -12,6 +12,11 @@ import com.quane.glass.core.language.data.Number
 import com.quane.glass.core.language.data.Direction
 import com.quane.glass.core.language.data.Value
 
+/** A set programs used during development - mostly to sanity check the
+  * language and how it compiles.
+  *
+  * @author Sean Connolly
+  */
 object Programs {
 
     private val worker = Executors.newSingleThreadScheduledExecutor()

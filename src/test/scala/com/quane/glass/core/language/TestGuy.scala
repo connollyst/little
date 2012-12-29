@@ -1,4 +1,4 @@
-package com.quane.glass.language
+package com.quane.glass.core.language
 
 import org.jbox2d.dynamics.Body
 import org.junit.runner.RunWith
