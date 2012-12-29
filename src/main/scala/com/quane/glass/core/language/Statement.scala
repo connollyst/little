@@ -1,14 +1,13 @@
 package com.quane.glass.core.language
 
 import org.eintr.loglady.Logging
+import com.quane.glass.core.language.data.Value
 import com.quane.glass.core.language.data.Variable
 
 abstract class Statement[T]
-        extends Expression[T] {
+    extends Expression[T]
 
-}
-
-class AssignmentStatement(name: String, value: String, scope: Scope)
+class AssignmentStatement(scope: Scope, name: String, value: Value[Any])
         extends Statement[Unit]
         with Logging {
 

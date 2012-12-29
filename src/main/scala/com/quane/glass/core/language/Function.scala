@@ -7,12 +7,12 @@ package com.quane.glass.core.language
   *
   * @param steps
   */
-class Function(override val scope: Scope, var steps: List[_ <: Statement[_ <: Any]])
+class Function(override val scope: Scope, var steps: List[_ <: Expression[_ <: Any]])
         extends Block(scope) {
 
-    def this(scope: Scope) = this(scope, List[Statement[_ <: Any]]())
+    def this(scope: Scope) = this(scope, List[Expression[_ <: Any]]())
 
-    def addStep(step: Statement[_ <: Any]): Unit = {
+    def addStep(step: Expression[_ <: Any]): Unit = {
         steps = steps ::: List(step)
     }
 

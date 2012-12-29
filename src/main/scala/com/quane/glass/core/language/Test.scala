@@ -1,9 +1,9 @@
 package com.quane.glass.core.language
 
 class Test(
-    var left: Expression[Boolean],
-    var operator: Operator,
-    var right: Expression[Boolean])
+    left: Expression[Boolean],
+    operator: LogicalOperator,
+    right: Expression[Boolean])
         extends Expression[Boolean] {
 
     def evaluate: Boolean = isTrue
@@ -23,6 +23,6 @@ class Test(
 
 }
 
-sealed trait Operator
-object AND extends Operator
-object OR extends Operator
+sealed trait LogicalOperator
+object AND extends LogicalOperator
+object OR extends LogicalOperator

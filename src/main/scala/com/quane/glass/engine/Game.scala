@@ -37,16 +37,16 @@ class Game extends BasicGame("Glass") {
         engine.world.setContactListener(listener)
         container.setMinimumLogicUpdateInterval(20)
         container.setMaximumLogicUpdateInterval(50)
-        guy.addEventListener(new EventListener(guy, Event.OnSpawn, Programs.move(guy, "10")))
+        guy.addEventListener(new EventListener(guy, Event.OnSpawn, Programs.move(guy, 10)))
         guy.addEventListener(new EventListener(guy, Event.OnContact, Programs.stop(guy)))
         guy.getEventListeners(Event.OnSpawn) foreach (
             listener =>
                 listener.fire()
         );
         Programs.inTime(4, Programs.stop(guy));
-        Programs.inTime(4, Programs.turn(guy, "10"))
-        Programs.inTime(5, Programs.move(guy, "50"))
-        Programs.inTime(6, Programs.turn(guy, "-60"))
+        Programs.inTime(4, Programs.turn(guy, 10))
+        Programs.inTime(5, Programs.move(guy, 50))
+        Programs.inTime(6, Programs.turn(guy, -60))
     }
 
     @Override

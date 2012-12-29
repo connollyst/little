@@ -6,6 +6,7 @@ import org.scalatest.junit.JUnitRunner
 import com.quane.glass.core.language.Function
 import com.quane.glass.core.language.AssignmentStatement
 import com.quane.glass.core.language.ReturnStatement
+import com.quane.glass.core.language.data.Text
 
 /** @author Sean Connolly
   */
@@ -17,8 +18,8 @@ class TestFunction extends FunSuite {
       */
     test("test function: new") {
         val fun = new Function(null)
-        fun.addStep(new AssignmentStatement("Obj1", "A", fun))
-        fun.addStep(new AssignmentStatement("Obj2", "B", fun))
+        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("A")))
+        fun.addStep(new AssignmentStatement(fun, "Obj2", new Text("B")))
         fun.evaluate
         val obj1 = fun.fetch("Obj1")
         val obj2 = fun.fetch("Obj2")
@@ -32,10 +33,10 @@ class TestFunction extends FunSuite {
       */
     test("test function: assignment") {
         val fun = new Function(null)
-        fun.addStep(new AssignmentStatement("Obj1", "A", fun))
-        fun.addStep(new AssignmentStatement("Obj2", "B", fun))
+        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("A")))
+        fun.addStep(new AssignmentStatement(fun, "Obj2", new Text("B")))
         // TODO we need a new AssignmentStatement that sets one Variable to another?
-        fun.addStep(new AssignmentStatement("Obj1", "Obj2", fun))
+        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("Obj2")))
         fun.evaluate
         val obj1 = fun.fetch("Obj1")
         val obj2 = fun.fetch("Obj2")
@@ -49,7 +50,7 @@ class TestFunction extends FunSuite {
       */
     test("test function: return step") {
         val fun = new Function(null)
-        fun.addStep(new AssignmentStatement("Obj1", "A", fun))
+        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("A")))
         fun.addStep(new ReturnStatement("Obj1", fun))
         val obj1 = fun.evaluate
         // assert(obj1.value == "A", "expected Obj1 to be 'A' but is: " + obj1.value)

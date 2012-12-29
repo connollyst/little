@@ -4,7 +4,7 @@ import com.quane.glass.core.language.Expression
 import java.awt.Point
 import java.util.Date
 
-sealed trait Value[T]
+sealed trait Value[+T]
     extends Expression[T]
 
 class Bool(value: Boolean)
@@ -18,6 +18,11 @@ class Location(value: Point)
 }
 
 class Number(value: Int)
+        extends Value[Int] {
+    def evaluate: Int = value
+}
+
+class Direction(value: Int)
         extends Value[Int] {
     def evaluate: Int = value
 }

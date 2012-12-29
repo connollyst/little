@@ -7,6 +7,8 @@ import com.quane.glass.core.event.EventListener
 import org.eintr.loglady.Logging
 import com.quane.glass.core.language.data.Variable
 import com.quane.glass.core.language.Scope
+import com.quane.glass.core.language.data.Location
+import java.awt.Point
 
 object Guy {
 
@@ -35,6 +37,13 @@ class Guy(val body: Body)
 
     // Range of 0-360
     var direction = 0;
+
+    def location: Location = {
+        val position = body.getPosition()
+        val x = body.getPosition().x toInt;
+        val y = body.getPosition().y toInt;
+        new Location(new Point(x, y))
+    }
 
     var eventListeners = List[EventListener]();
 
