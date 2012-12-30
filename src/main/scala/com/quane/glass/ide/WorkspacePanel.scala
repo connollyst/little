@@ -15,6 +15,9 @@ import scala.swing.Label
 import javax.swing.JDesktopPane
 import scala.swing.DesktopPanel
 import com.google.common.eventbus.Subscribe
+import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.ide.language.GlassEventFrame
+import com.quane.glass.core.event.GlassEvent._
 
 /** The workspace is the area in which programs are created and edited.
   *
@@ -39,8 +42,6 @@ class WorkspacePanel
     // Listen for drag & drop events on the event bus
     GlassIDE.eventBus.register(new WorkspaceDragAndDropEventListener(this))
 
-    
-
     /** Create a new panel on the workspace.
       *
       * @param title
@@ -50,8 +51,8 @@ class WorkspacePanel
       * @param y
       * 		the y coordinate of the upper left corner of the panel
       */
-    def createEventPanel(title: String, x: Int, y: Int) {
-        val frame = new ProgramPanel(title)
+    def createEventPanel(event: GlassEvent, x: Int, y: Int) {
+        val frame = new GlassEventFrame(event)
         frame.location = new Point(x, y)
         frame.pack
         add(frame)
@@ -91,7 +92,7 @@ class WorkspaceDragAndDropEventListener(workspacePanel: WorkspacePanel) {
             val itemX = eventX - workspaceX
             val itemY = eventY - workspaceY
             println("Dropping tool: " + event.name)
-            workspacePanel.createEventPanel(event.name, itemX, itemY)
+            workspacePanel.createEventPanel(OnSpawn, itemX, itemY) // TODO get OnSpawn from event
             workspacePanel.unhighlight
         }
     }

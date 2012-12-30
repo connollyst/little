@@ -5,19 +5,19 @@ import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.contacts.Contact
 
-import com.quane.glass.core.event.Event
+import com.quane.glass.core.event.GlassEvent
 
 class GlassContactListener(val game: Game) extends ContactListener {
 
     def beginContact(contact: Contact) = {
-        reportContact(Event.OnContact, contact);
+        reportContact(GlassEvent.OnContact, contact);
     }
 
     def endContact(contact: Contact) = {
-        reportContact(Event.OnContactEnded, contact);
+        reportContact(GlassEvent.OnContactEnded, contact);
     }
 
-    def reportContact(event: Event, contact: Contact) = {
+    def reportContact(event: GlassEvent, contact: Contact) = {
         val bodyA = contact.getFixtureA.getBody
         val bodyB = contact.getFixtureB.getBody
 
@@ -32,7 +32,7 @@ class GlassContactListener(val game: Game) extends ContactListener {
         }
     }
 
-    def reportContactWithUUID(event: Event, uuid: String): Unit = {
+    def reportContactWithUUID(event: GlassEvent, uuid: String): Unit = {
         game.queueEvent(event, uuid);
     }
 

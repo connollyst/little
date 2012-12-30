@@ -2,7 +2,7 @@ package com.quane.glass.core
 
 import java.util.UUID
 import org.jbox2d.dynamics.Body
-import com.quane.glass.core.event.Event
+import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.event.EventListener
 import org.eintr.loglady.Logging
 import com.quane.glass.core.language.data.Variable
@@ -51,7 +51,7 @@ class Guy(val body: Body)
         eventListeners = eventListener :: eventListeners;
     }
 
-    def getEventListeners(event: Event): List[EventListener] = {
+    def getEventListeners(event: GlassEvent): List[EventListener] = {
         var listening = List[EventListener]();
         eventListeners.foreach(listener => if (listener.event == event) {
             listening = listener :: listening;

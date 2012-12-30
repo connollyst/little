@@ -3,11 +3,8 @@ package com.quane.glass.core.language
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import com.quane.glass.core.language.Test
 import com.quane.glass.core.language.data.True
 import com.quane.glass.core.language.data.False
-import com.quane.glass.core.language.AND
-import com.quane.glass.core.language.OR
 
 @RunWith(classOf[JUnitRunner])
 class TestTest extends FunSuite {

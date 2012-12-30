@@ -13,7 +13,7 @@ import org.newdawn.slick.SlickException
 import org.newdawn.slick.geom.Circle
 import org.newdawn.slick.geom.Line
 import org.newdawn.slick.geom.Rectangle
-import com.quane.glass.core.event.Event
+import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.entities.WorldEdge
 import com.quane.glass.core.Guy
@@ -27,7 +27,7 @@ class Game extends BasicGame("Glass") {
     val guy = new Guy(engine.createBody);
     val walls = engine.createWalls;
 
-    val eventQueue = new HashMap[String, Set[Event]]() with MultiMap[String, Event]
+    val eventQueue = new HashMap[String, Set[GlassEvent]]() with MultiMap[String, GlassEvent]
 
     @Override
     @throws(classOf[SlickException])
@@ -37,9 +37,9 @@ class Game extends BasicGame("Glass") {
         engine.world.setContactListener(listener)
         container.setMinimumLogicUpdateInterval(20)
         container.setMaximumLogicUpdateInterval(50)
-        guy.addEventListener(new EventListener(guy, Event.OnSpawn, Programs.move(guy, 10)))
-        guy.addEventListener(new EventListener(guy, Event.OnContact, Programs.stop(guy)))
-        guy.getEventListeners(Event.OnSpawn) foreach (
+        guy.addEventListener(new EventListener(guy, GlassEvent.OnSpawn, Programs.move(guy, 10)))
+        guy.addEventListener(new EventListener(guy, GlassEvent.OnContact, Programs.stop(guy)))
+        guy.getEventListeners(GlassEvent.OnSpawn) foreach (
             listener =>
                 listener.fire()
         );
@@ -160,7 +160,7 @@ class Game extends BasicGame("Glass") {
         graphics.draw(new Rectangle(wall.x, wall.y, wall.w, wall.h));
     }
 
-    def queueEvent(event: Event, uuid: String) = {
+    def queueEvent(event: GlassEvent, uuid: String) = {
         eventQueue.addBinding(uuid, event)
     }
 }

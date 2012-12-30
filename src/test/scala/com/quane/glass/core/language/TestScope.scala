@@ -3,7 +3,6 @@ package com.quane.glass.core.language
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import com.quane.glass.core.language.Function
 import com.quane.glass.core.language.data.Variable
 
 /** Tests for the {@code Scope} trait.

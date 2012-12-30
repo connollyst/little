@@ -9,6 +9,8 @@ import com.google.common.eventbus.Subscribe
 import scala.swing.event.Event
 import javax.swing.BorderFactory
 import java.awt.Color
+import com.quane.glass.ide.language.ProgramEnteredEvent
+import com.quane.glass.ide.language.ProgramExitedEvent
 
 // TODO
 // X add toolkit on left
@@ -39,7 +41,8 @@ object GlassIDE extends SimpleSwingApplication {
 
 }
 
-class BasePanel extends BorderPanel {
+class BasePanel
+        extends BorderPanel {
 
     val toolkitPanel = new ToolkitPanel
     val workspacePanel = new WorkspacePanel
@@ -63,7 +66,7 @@ class DragAndDropEventListener {
     @Subscribe
     def dropEvent(event: ToolDroppedEvent) {
         dragging = None;
-        GlassIDE.eventBus.post(new DragDropEvent(event.tool, event.toolType, event.point))
+        GlassIDE.eventBus.post(new DragDropEvent(event.tool, event.toolType, event.point, event.controller))
     }
 
     @Subscribe

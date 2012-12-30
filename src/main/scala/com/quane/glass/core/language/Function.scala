@@ -12,6 +12,8 @@ class Function(override val scope: Scope, var steps: List[_ <: Expression[_ <: A
 
     def this(scope: Scope) = this(scope, List[Expression[_ <: Any]]())
 
+    def this() = this(null) // TODO we should avoid null, yeah?
+    
     def addStep(step: Expression[_ <: Any]): Unit = {
         steps = steps ::: List(step)
     }

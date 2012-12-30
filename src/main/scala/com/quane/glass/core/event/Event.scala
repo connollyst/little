@@ -1,32 +1,32 @@
 package com.quane.glass.core.event
 
-sealed trait Event {
+sealed trait GlassEvent {
 
 }
 
-object Event {
+object GlassEvent {
 
     // Generic events
-    object OnSpawn extends Event
+    object OnSpawn extends GlassEvent
 
-    object OnContact extends Event
+    object OnContact extends GlassEvent
 
-    object OnContactEnded extends Event
+    object OnContactEnded extends GlassEvent
     
-    object WhenDone extends Event
+    object WhenDone extends GlassEvent
     
-    object In5Seconds extends Event
+    object In5Seconds extends GlassEvent
     
     // Food related events
-    object OnFoodNearby extends Event
+    object OnFoodNearby extends GlassEvent
 
-    object OnFoodConsumed extends Event
+    object OnFoodConsumed extends GlassEvent
 
     // Mobs (bad guys) related events
-    object OnMobNearby extends Event
+    object OnMobNearby extends GlassEvent
 
-    object OnMobMoved extends Event
+    object OnMobMoved extends GlassEvent
 
-    object OnMobGone extends Event
+    object OnMobGone extends GlassEvent
 
 }

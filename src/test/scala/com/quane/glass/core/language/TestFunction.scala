@@ -3,9 +3,6 @@ package com.quane.glass.core.language
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import com.quane.glass.core.language.Function
-import com.quane.glass.core.language.AssignmentStatement
-import com.quane.glass.core.language.ReturnStatement
 import com.quane.glass.core.language.data.Text
 
 /** @author Sean Connolly
