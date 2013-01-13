@@ -11,6 +11,10 @@ import javax.swing.BorderFactory
 import java.awt.Color
 import com.quane.glass.ide.language.ProgramEnteredEvent
 import com.quane.glass.ide.language.ProgramExitedEvent
+import scala.swing.MenuBar
+import scala.swing.MenuItem
+import scala.swing.event.MouseClicked
+import scala.swing.event.ButtonClicked
 
 // TODO
 // X add toolkit on left
@@ -27,16 +31,14 @@ object GlassIDE extends SimpleSwingApplication {
     // Set the application title in Mac 
     System.setProperty("com.apple.mrj.application.apple.menu.about.name", "GlassIDE");
 
-    val DEFAULT_BORDER = BorderFactory.createLineBorder(Color.black)
-    val HIGHLIGHTED_BORDER = BorderFactory.createLineBorder(Color.yellow)
-
     // TODO replace static event bus with dependency injection
     val eventBus = new EventBus
 
     def top = new MainFrame {
         title = "Glass"
-        minimumSize = new Dimension(800, 600)
+        minimumSize = new Dimension(1024, 768)
         contents = new BasePanel
+        menuBar = new GlassMenuBar
     }
 
 }
@@ -46,11 +48,19 @@ class BasePanel
 
     val toolkitPanel = new ToolkitPanel
     val workspacePanel = new WorkspacePanel
+    val toolbar = new GlassToolBar
 
     layout(toolkitPanel) = BorderPanel.Position.West
     layout(workspacePanel) = BorderPanel.Position.Center
+    layout(toolbar) = BorderPanel.Position.South
 
     GlassIDE.eventBus.register(new DragAndDropEventListener)
+
+}
+
+class MenuBarListener {
+
+    // TODO no events need to be handled here, yet
 
 }
 
@@ -66,34 +76,44 @@ class DragAndDropEventListener {
     @Subscribe
     def dropEvent(event: ToolDroppedEvent) {
         dragging = None;
-        GlassIDE.eventBus.post(new DragDropEvent(event.tool, event.toolType, event.point, event.controller))
+        GlassIDE.eventBus.post(
+            new DragDropEvent(event.tool, event.toolType, event.point, event.controllerFactoryFunction)
+        )
     }
 
     @Subscribe
     def enterRecipientEvent(event: WorkspaceEnteredEvent) {
         if (dragging isDefined) {
-            GlassIDE.eventBus.post(new DragOverWorkspaceEvent(dragging.get))
+            GlassIDE.eventBus.post(
+                new DragOverWorkspaceEvent(dragging.get)
+            )
         }
     }
 
     @Subscribe
     def exitRecipientEvent(event: WorkspaceExitedEvent) {
         if (dragging isDefined) {
-            GlassIDE.eventBus.post(new DragOutWorkspaceEvent(dragging.get))
+            GlassIDE.eventBus.post(
+                new DragOutWorkspaceEvent(dragging.get)
+            )
         }
     }
 
     @Subscribe
     def enterRecipientEvent(event: ProgramEnteredEvent) {
         if (dragging isDefined) {
-            GlassIDE.eventBus.post(new DragOverProgramEvent(dragging.get))
+            GlassIDE.eventBus.post(
+                new DragOverProgramEvent(dragging.get)
+            )
         }
     }
 
     @Subscribe
     def exitRecipientEvent(event: ProgramExitedEvent) {
         if (dragging isDefined) {
-            GlassIDE.eventBus.post(new DragOutProgramEvent(dragging.get))
+            GlassIDE.eventBus.post(
+                new DragOutProgramEvent(dragging.get)
+            )
         }
     }
 

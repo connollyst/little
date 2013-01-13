@@ -4,8 +4,7 @@ import scala.collection.mutable.Map
 import com.quane.glass.core.language.data.Variable
 import org.eintr.loglady.Logging
 
-/** A Scope defines a space in which {@code Vimport com.quane.glass.core.language.data.Variable
-  * ariable} objects can be stored
+/** A Scope defines a space in which {@code Variable} objects can be stored
   * and retrieved.
   *
   * Scopes can be embedded within each other in a hierarchical fashion. As
@@ -32,7 +31,7 @@ trait Scope
       * @param variable the variable to be stored in memory
       */
     def save(variable: Variable): Unit = {
-        log.info("Remembering '" + variable.name + "' as '" + variable.value + "'")
+        log.info("Remembering '" + variable.name + "' as '" + variable.value.evaluate + "'")
         if (scope != null && scope.isDefined(variable.name)) {
             scope.save(variable)
         } else {

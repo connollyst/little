@@ -1,14 +1,18 @@
 package com.quane.glass.core
 
+import java.awt.Point
 import java.util.UUID
-import org.jbox2d.dynamics.Body
-import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.core.event.EventListener
+
 import org.eintr.loglady.Logging
-import com.quane.glass.core.language.data.Variable
+import org.jbox2d.dynamics.Body
+
+import com.quane.glass.core.event.EventListener
+import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.Scope
 import com.quane.glass.core.language.data.Location
-import java.awt.Point
+import com.quane.glass.core.language.data.Variable
+import com.quane.glass.core.language.data.Number
+import com.quane.glass.core.language.data.Direction
 
 object Guy {
 
@@ -77,9 +81,23 @@ class Guy(val body: Body)
     override def save(variable: Variable) = {
         log.info("Guy is saving " + variable.name);
         if (variable.name.equals(Guy.VAR_SPEED)) {
-            speed = Integer valueOf (variable.value toString)
+            speed = variable.value match {
+                case number: Number =>
+                    number.evaluate
+                case _ =>
+                    throw new ClassCastException("Cannot set "
+                        + Guy.VAR_SPEED + " as a "
+                        + variable.getClass.getSimpleName)
+            }
         } else if (variable.name.equals(Guy.VAR_DIRECTION)) {
-            direction = Integer valueOf (variable.value toString)
+            direction = variable.value match {
+                case direction: Direction =>
+                    direction.evaluate
+                case _ =>
+                    throw new ClassCastException("Cannot set "
+                        + Guy.VAR_DIRECTION + " as a "
+                        + variable.getClass.getSimpleName)
+            }
         } else {
             // It's not a special variable, store it in normal memory
             super.save(variable);
@@ -89,9 +107,9 @@ class Guy(val body: Body)
     override def fetch(name: String): Variable = {
         log.info("Guy is remembering " + name);
         if (name.equals(Guy.VAR_SPEED)) {
-            new Variable(name, speed toString)
+            new Variable(name, new Number(speed))
         } else if (name.equals(Guy.VAR_DIRECTION)) {
-            new Variable(name, direction toString)
+            new Variable(name, new Direction(direction))
         } else {
             // It's not a special variable, fetch it from normal memory
             super.fetch(name);

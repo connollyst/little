@@ -6,6 +6,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.glass.core.Guy
 import com.quane.glass.core.language.data.Variable
+import com.quane.glass.core.language.data.Text
 
 /** Tests for the {@code Guy} class.
   *
@@ -17,7 +18,7 @@ class TestGuy extends FunSuite {
     test("test guy: functions can access my memory") {
         val guy = new Guy(null)
         val fun1 = new Function(guy)
-        guy.save(new Variable("MyA", "A"))
+        guy.save(new Variable("MyA", new Text("A")))
         val obj1 = fun1.fetch("MyA")
         assert(obj1.value == "A", "expected 'MyA' to be 'A' but is: " + obj1.value)
     }

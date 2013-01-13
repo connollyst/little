@@ -4,6 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.glass.core.language.data.Variable
+import com.quane.glass.core.language.data.Text
 
 /** Tests for the {@code Scope} trait.
   *
@@ -15,8 +16,8 @@ class TestScope extends FunSuite {
     test("test scope: fetch from parent scope") {
         val fun1 = new Function(null)
         val fun2 = new Function(fun1)
-        fun1.save(new Variable("MyA", "A"))
-        fun2.save(new Variable("MyB", "B"))
+        fun1.save(new Variable("MyA", new Text("A")))
+        fun2.save(new Variable("MyB", new Text("B")))
         val myA = fun2.fetch("MyA")
         val myB = fun2.fetch("MyB")
         assert(myA.value == "A", "expected 'MyA' to be 'A' but is: " + myA.value)
@@ -25,7 +26,7 @@ class TestScope extends FunSuite {
 
     test("test scope: is defined: positive") {
         val fun1 = new Function(null)
-        fun1.save(new Variable("MyA", "A"))
+        fun1.save(new Variable("MyA", new Text("A")))
         val defined = fun1.isDefined("MyA");
         assert(defined, "expected 'MyA' to be defined")
     }

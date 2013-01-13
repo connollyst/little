@@ -7,15 +7,21 @@ import com.quane.glass.ide.language.GlassEventFrame
 import com.quane.glass.ide.language.GlassPanelController
 import com.quane.glass.core.language.Expression
 
+/* Drag and drop events are those fired when a user drags an item from the
+ * toolkit to the workspace.
+ */
 trait DragAndDropEvent extends Event
 
-class DragOverEvent[T](val name: String)
+class DragDropEvent[T](val name: String,
+                       val toolType: ToolType,
+                       val point: Point,
+                       val controllerFactoryFunction: () => GlassPanelController[Expression[Any]])
+        extends DragAndDropEvent
+
+class DragOverEvent[T] protected (val name: String)
     extends DragAndDropEvent
 
-class DragOutEvent[T](val name: String)
-    extends DragAndDropEvent
-
-class DragDropEvent[T](val name: String, val toolType: ToolType, val point: Point, val controller: GlassPanelController[Expression[Any]])
+class DragOutEvent[T] protected (val name: String)
     extends DragAndDropEvent
 
 class DragOverWorkspaceEvent(name: String)
@@ -24,14 +30,15 @@ class DragOverWorkspaceEvent(name: String)
 class DragOutWorkspaceEvent(name: String)
     extends DragOutEvent[WorkspacePanel](name)
 
-class DragDropWorkspaceEvent(name: String, toolType: ToolType, point: Point, controller: GlassPanelController[Expression[Any]])
-    extends DragDropEvent[WorkspacePanel](name, toolType, point, controller)
-
 class DragOverProgramEvent(name: String)
     extends DragOverEvent[GlassEventFrame](name)
 
 class DragOutProgramEvent(name: String)
     extends DragOutEvent[GlassEventFrame](name)
 
-class DragDropProgramEvent(name: String, toolType: ToolType, point: Point, controller: GlassPanelController[Expression[Any]])
-    extends DragDropEvent[GlassEventFrame](name, toolType, point, controller)
+/* Menu bar events are those fired from the IDE's top menu bar.
+ */
+trait MenuBarEvent extends Event
+
+class DoCompileEvent
+    extends MenuBarEvent
