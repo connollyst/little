@@ -52,7 +52,6 @@ class Game extends BasicGame("Glass") {
     @Override
     @throws(classOf[SlickException])
     def update(container: GameContainer, delta: Int): Unit = {
-
     }
 
     @Override

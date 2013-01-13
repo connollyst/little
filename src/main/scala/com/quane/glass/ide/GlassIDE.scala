@@ -6,15 +6,14 @@ import scala.swing.MainFrame
 import scala.swing.SimpleSwingApplication
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
-import scala.swing.event.Event
-import javax.swing.BorderFactory
-import java.awt.Color
+import com.quane.glass.engine.Game
 import com.quane.glass.ide.language.ProgramEnteredEvent
 import com.quane.glass.ide.language.ProgramExitedEvent
-import scala.swing.MenuBar
-import scala.swing.MenuItem
-import scala.swing.event.MouseClicked
-import scala.swing.event.ButtonClicked
+import javax.swing.JFrame
+
+
+import org.newdawn.slick.CanvasGameContainer
+import com.quane.glass.engine.Game
 
 // TODO
 // X add toolkit on left
@@ -35,7 +34,7 @@ object GlassIDE extends SimpleSwingApplication {
     val eventBus = new EventBus
 
     def top = new MainFrame {
-        title = "Glass"
+        title = "GlassIDE"
         minimumSize = new Dimension(1024, 768)
         contents = new BasePanel
         menuBar = new GlassMenuBar
@@ -54,13 +53,25 @@ class BasePanel
     layout(workspacePanel) = BorderPanel.Position.Center
     layout(toolbar) = BorderPanel.Position.South
 
+    GlassIDE.eventBus.register(new MenuBarListener(this))
     GlassIDE.eventBus.register(new DragAndDropEventListener)
 
 }
 
-class MenuBarListener {
+class MenuBarListener(ide: BasePanel) {
 
-    // TODO no events need to be handled here, yet
+    @Subscribe
+    def compileEvent(event: DoCompileEvent) {
+        println("Compiling..")
+        ide.workspacePanel.compileAll
+    }
+
+    @Subscribe
+    def runEvent(event: DoRunEvent) {
+        println("Running..");
+        val frame = new GlassGameFrame
+        frame.run
+    }
 
 }
 
