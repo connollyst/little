@@ -71,9 +71,9 @@ class SettersToolPanel
     // Say something
     toolList.contents += new ToolButton("Say", toolType, GlassPanelFactory.createPrintStatementPanel)
     // Set Speed
-    toolList.contents += new ToolButton("Speed", toolType, null)
+    toolList.contents += new ToolButton("Speed", toolType, GlassPanelFactory.createSetSpeedStatementPanel)
     // Set Direction
-    toolList.contents += new ToolButton("Direction", toolType, null)
+    toolList.contents += new ToolButton("Direction", toolType, GlassPanelFactory.createSetDirectionStatementPanel)
     // Set any Variable
     toolList.contents += new ToolButton("Set", toolType, GlassPanelFactory.createAssignmentStatementPanel)
 

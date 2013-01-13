@@ -42,21 +42,34 @@ class AssignmentStatementPanel(varName: String, varValue: String)
     def variableName: String = nameField.text
 
     def variableValue: String = valueField.text
-    
+
 }
 
 /** @author Sean Connolly
   */
+class SetSpeedStatementPanel
+    extends LabeledStatementPanel("Speed");
+
+/** @author Sean Connolly
+  */
+class SetDirectionStatementPanel
+    extends LabeledStatementPanel("Direction");
+
+/** @author Sean Connolly
+  */
 class PrintStatementPanel
+    extends LabeledStatementPanel("Say");
+
+abstract class LabeledStatementPanel(label: String)
         extends BoxPanel(Orientation.Horizontal)
         with StatementPanel {
 
-    private val field = new TextField
-    
-    contents += new Label("Say: ")
+    protected val field = new TextField
+
+    contents += new Label(label + ":")
     contents += field
 
-    def printText: String = {
+    def value: String = {
         field.text
     }
 

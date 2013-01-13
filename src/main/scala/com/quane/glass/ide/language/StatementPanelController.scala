@@ -1,12 +1,14 @@
 package com.quane.glass.ide.language
 
 import org.eintr.loglady.Logging
-
 import com.quane.glass.core.language.AssignmentStatement
 import com.quane.glass.core.language.Expression
 import com.quane.glass.core.language.PrintStatement
+import com.quane.glass.core.language.SetSpeedStatement
 import com.quane.glass.core.language.Scope
 import com.quane.glass.core.language.data.Text
+import com.quane.glass.core.Guy
+import com.quane.glass.core.language.SetDirectionStatement
 
 /** @author Sean Connolly
   */
@@ -25,12 +27,44 @@ class AssignmentStatementPanelController(view: AssignmentStatementPanel)
 
     override def validate: Unit = {
         // TODO
-        log.error("TODO: implement AssignmentStatementPanel.validate")
+        log.error("TODO: implement AssignmentStatementPanelController.validate")
     }
 
     override def compile(scope: Scope): AssignmentStatement = {
         println("Compiling: Set " + view.variableName + "='" + view.variableValue + "'");
         new AssignmentStatement(scope, view.variableName, new Text(view.variableValue))
+    }
+
+}
+
+class SetSpeedStatementPanelController(view: SetSpeedStatementPanel)
+        extends StatementPanelController[SetSpeedStatement](view)
+        with Logging {
+
+    override def validate: Unit = {
+        // TODO
+        log.error("TODO: implement SetSpeedStatementPanelController.validate")
+    }
+
+    override def compile(scope: Scope): SetSpeedStatement = {
+        println("Compiling: Set " + Guy.VAR_SPEED + "='" + view.value + "'");
+        new SetSpeedStatement(scope, new Text(view.value))
+    }
+
+}
+
+class SetDirectionStatementPanelController(view: SetDirectionStatementPanel)
+        extends StatementPanelController[SetDirectionStatement](view)
+        with Logging {
+
+    override def validate: Unit = {
+        // TODO
+        log.error("TODO: implement SetSpeedStatementPanelController.validate")
+    }
+
+    override def compile(scope: Scope): SetDirectionStatement = {
+        println("Compiling: Set " + Guy.VAR_DIRECTION + "='" + view.value + "'");
+        new SetDirectionStatement(scope, new Text(view.value))
     }
 
 }
@@ -50,8 +84,8 @@ class PrintStatementPanelController(view: PrintStatementPanel)
     }
 
     override def compile(scope: Scope): PrintStatement = {
-        println("Compiling: Say '" + view.printText + "'");
-        new PrintStatement(view.printText)
+        println("Compiling: Say '" + view.value + "'");
+        new PrintStatement(view.value)
     }
 
 }

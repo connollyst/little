@@ -3,6 +3,7 @@ package com.quane.glass.core.language
 import org.eintr.loglady.Logging
 import com.quane.glass.core.language.data.Value
 import com.quane.glass.core.language.data.Variable
+import com.quane.glass.core.Guy
 
 abstract class Statement[T]
     extends Expression[T]
@@ -17,6 +18,12 @@ class AssignmentStatement(scope: Scope, name: String, value: Value[Any])
     }
 
 }
+
+class SetSpeedStatement(scope: Scope, value: Value[Any])
+    extends AssignmentStatement(scope, Guy.VAR_SPEED, value);
+
+class SetDirectionStatement(scope: Scope, value: Value[Any])
+    extends AssignmentStatement(scope, Guy.VAR_DIRECTION, value);
 
 class PrintStatement(text: String)
         extends Statement[Unit] {
