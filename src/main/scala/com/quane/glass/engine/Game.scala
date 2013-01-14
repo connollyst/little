@@ -21,54 +21,57 @@ import com.quane.glass.core.Programs
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
+/** The Glass game.
+  *
+  * @author Sean Connolly
+  */
 class Game extends BasicGame("Glass") {
 
-    var engine = new PhysicsEngine;
-    val guy = new Guy(engine.createBody);
-    val walls = engine.createWalls;
-
+    // The event queue contains events that have fired and are waiting to be executed 
     val eventQueue = new HashMap[String, Set[GlassEvent]]() with MultiMap[String, GlassEvent]
 
+    val engine = new PhysicsEngine
+    val walls = engine.createWalls;
+    val guy = createGuy;
+
+    def createGuy: Guy = {
+        val newGuy = new Guy(engine.createBody);
+        queueEvent(GlassEvent.OnSpawn, newGuy.uuid toString)
+        newGuy
+    }
+
+    /** Initialize the game.
+      *
+      * @param container
+      * @throws SlickException
+      */
     @Override
     @throws(classOf[SlickException])
     def init(container: GameContainer): Unit = {
-        println("Initializing")
-        val listener = new GlassContactListener(this)
-        engine.world.setContactListener(listener)
-        container.setMinimumLogicUpdateInterval(20)
+        engine.world.setContactListener(new GlassContactListener(this))
+        container.setMinimumLogicUpdateInterval(-1) // Default
         container.setMaximumLogicUpdateInterval(50)
-        guy.addEventListener(new EventListener(guy, GlassEvent.OnSpawn, Programs.move(guy, 10)))
-        guy.addEventListener(new EventListener(guy, GlassEvent.OnContact, Programs.stop(guy)))
-        guy.getEventListeners(GlassEvent.OnSpawn) foreach (
-            listener =>
-                listener.fire()
-        );
-        Programs.inTime(4, Programs.stop(guy));
-        Programs.inTime(4, Programs.turn(guy, 10))
-        Programs.inTime(5, Programs.move(guy, 50))
-        Programs.inTime(6, Programs.turn(guy, -60))
+        //        guy.addEventListener(new EventListener(GlassEvent.OnSpawn, Programs.move(guy, 10)))
+        //        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.stop(guy)))
+        //        Programs.inTime(4, Programs.stop(guy));
+        //        Programs.inTime(4, Programs.turn(guy, 10))
+        //        Programs.inTime(5, Programs.move(guy, 50))
+        //        Programs.inTime(6, Programs.turn(guy, -60))
     }
 
+    /** Update to the next state of the game.
+      *
+      * @param container
+      * @param delta
+      * @throws SlickException
+      */
     @Override
     @throws(classOf[SlickException])
     def update(container: GameContainer, delta: Int): Unit = {
-    }
-
-    @Override
-    @throws(classOf[SlickException])
-    def render(container: GameContainer, graphics: Graphics): Unit = {
         // Fire any events on the guy
         // TODO check events; mod nearby, food nearby, etc
 
-        accelerateGuyToSpeed(graphics)
-        rotateGuyToDirection(graphics)
-
-        // Run a step of the engine and draw the next state
-        engine.update
-        drawGuy(graphics, guy)
-        walls.foreach(wall => drawWall(graphics, wall))
-
-        // See which events need to be fired
+        // Fire all events which occurred
         eventQueue.keys foreach (
             uuid => {
                 val events = eventQueue.get(uuid).orNull // TODO replace with orElse?
@@ -81,6 +84,26 @@ class Game extends BasicGame("Glass") {
                     })
             })
         eventQueue.clear
+
+        // Update the guy's speed & direction
+        accelerateGuyToSpeed
+        rotateGuyToDirection
+
+        // Run a step of the engine and draw the next state
+        engine.update
+    }
+
+    /** Render the current state of the game.
+      *
+      * @param container
+      * @param graphics
+      * @throws SlickException
+      */
+    @Override
+    @throws(classOf[SlickException])
+    def render(container: GameContainer, graphics: Graphics): Unit = {
+        walls.foreach(wall => drawWall(graphics, wall))
+        drawGuy(graphics, guy)
     }
 
     /** Apply forces to the guy's physical body in order to maintain correct
@@ -95,7 +118,7 @@ class Game extends BasicGame("Glass") {
       * @param container
       * @param graphics
       */
-    def accelerateGuyToSpeed(graphics: Graphics): Unit = {
+    def accelerateGuyToSpeed: Unit = {
         // Translate the 'speed' change, if any, to an applied force
         val targetVelocity = guy.speed
         val actualVelocity = guy.body.getLinearVelocity
@@ -105,17 +128,20 @@ class Game extends BasicGame("Glass") {
         val impulseX = targetVelocity * math.cos(impulseAngle) toFloat;
         val impulseY = targetVelocity * math.sin(impulseAngle) toFloat;
         val impulse = new Vec2(impulseX, impulseY)
-        graphics.drawString("ACCELERATION:", 25, 150)
-        graphics.drawString("Impulse Strength: " + impulseStrength, 50, 175)
-        graphics.drawString("Impulse Angle: " + math.toDegrees(impulseAngle), 50, 200)
-        graphics.drawString("Impulse x: " + impulse.x, 50, 225)
-        graphics.drawString("Impulse y: " + impulse.y, 50, 250)
-        graphics.drawString("Actual Velocity.x: " + actualVelocity.x, 50, 275)
-        graphics.drawString("Actual Velocity.y: " + actualVelocity.y, 50, 300)
         guy.body.applyLinearImpulse(impulse, guy.body.getWorldCenter())
+
+        // View these numbers live
+        //        graphics.drawString("ACCELERATION:", 25, 150)
+        //        graphics.drawString("Impulse Strength: " + impulseStrength, 50, 175)
+        //        graphics.drawString("Impulse Angle: " + math.toDegrees(impulseAngle), 50, 200)
+        //        graphics.drawString("Impulse x: " + impulse.x, 50, 225)
+        //        graphics.drawString("Impulse y: " + impulse.y, 50, 250)
+        //        graphics.drawString("Actual Velocity.x: " + actualVelocity.x, 50, 275)
+        //        graphics.drawString("Actual Velocity.y: " + actualVelocity.y, 50, 300)
+
     }
 
-    def rotateGuyToDirection(graphics: Graphics): Unit = {
+    def rotateGuyToDirection: Unit = {
         // Translate the 'direction' change, if any, to an applied force
         val desiredAngle = math.toRadians(guy.direction);
         val bodyAngle = guy.body.getAngle;
@@ -129,11 +155,11 @@ class Game extends BasicGame("Glass") {
         val impulse = guy.body.getInertia * desiredAngularVelocity;
         guy.body.applyAngularImpulse(impulse);
 
-        // View these in real time
-        graphics.drawString("ROTATION", 25, 25);
-        graphics.drawString("Target Angle: " + desiredAngle, 50, 50);
-        graphics.drawString("Body Angle: " + math.toDegrees(bodyAngle), 50, 75);
-        graphics.drawString("Next Angle: " + math.toDegrees(nextAngle), 50, 100);
+        // View these numbers live
+        //        graphics.drawString("ROTATION", 25, 25);
+        //        graphics.drawString("Target Angle: " + desiredAngle, 50, 50);
+        //        graphics.drawString("Body Angle: " + math.toDegrees(bodyAngle), 50, 75);
+        //        graphics.drawString("Next Angle: " + math.toDegrees(nextAngle), 50, 100);
     }
 
     def drawGuy(graphics: Graphics, guy: Guy): Unit = {
@@ -162,4 +188,5 @@ class Game extends BasicGame("Glass") {
     def queueEvent(event: GlassEvent, uuid: String) = {
         eventQueue.addBinding(uuid, event)
     }
+
 }

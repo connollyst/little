@@ -1,7 +1,6 @@
 package com.quane.glass.ide.language
 
 import java.awt.Dimension
-
 import scala.collection.mutable.ListBuffer
 import scala.swing.BoxPanel
 import scala.swing.InternalFrame
@@ -9,9 +8,6 @@ import scala.swing.Orientation
 import scala.swing.event.Event
 import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
-
-import javax.swing.BorderFactory
-
 import com.google.common.eventbus.Subscribe
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.Expression
@@ -20,11 +16,14 @@ import com.quane.glass.ide.DragOutProgramEvent
 import com.quane.glass.ide.DragOverProgramEvent
 import com.quane.glass.ide.GlassIDE
 import com.quane.glass.ide.swing.HighlightableComponent
+import com.quane.glass.core.language.Function
+import com.quane.glass.core.event.EventListener
+import org.eintr.loglady.Logging
 
 class GlassEventFrame(val event: GlassEvent)
         extends InternalFrame {
 
-    title = event.toString
+    title = event.getClass().getSimpleName()
     visible = true
     resizable = true
     closable = true
@@ -70,14 +69,6 @@ class GlassEventFrame(val event: GlassEvent)
         steps toList
     }
 
-    /**
-      */
-    def compile: Unit = {
-        println("Compiling event..")
-        // TODO how does this work..?
-        // when we go to run the code we need to give it a top level scope?
-        steps.foreach(step => step.compile(null));
-    }
 }
 
 class ProgramRootPanel
@@ -88,7 +79,8 @@ class ProgramEnteredEvent extends Event
 
 class ProgramExitedEvent extends Event
 
-class ProgramDragAndDropEventListener(myPanel: GlassEventFrame) {
+class ProgramDragAndDropEventListener(myPanel: GlassEventFrame)
+        extends Logging {
 
     var overMe = false;
 
@@ -113,7 +105,7 @@ class ProgramDragAndDropEventListener(myPanel: GlassEventFrame) {
             val myY = myPanel.bounds.y
             val itemX = eventX - myX
             val itemY = eventY - myY
-            println("Dropping tool: " + event.name)
+            log.info("Dropping tool: " + event.name)
             val controller = event.controllerFactoryFunction()
             myPanel.addStep(controller)
             myPanel.unhighlight

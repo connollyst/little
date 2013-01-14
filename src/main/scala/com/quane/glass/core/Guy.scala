@@ -1,11 +1,12 @@
 package com.quane.glass.core
 
+import scala.collection.mutable.HashMap
+import scala.collection.mutable.MultiMap
+import scala.collection.mutable.Set
 import java.awt.Point
 import java.util.UUID
-
 import org.eintr.loglady.Logging
 import org.jbox2d.dynamics.Body
-
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.Scope
@@ -13,6 +14,7 @@ import com.quane.glass.core.language.data.Location
 import com.quane.glass.core.language.data.Variable
 import com.quane.glass.core.language.data.Number
 import com.quane.glass.core.language.data.Direction
+import scala.collection.mutable.ListBuffer
 
 object Guy {
 
@@ -20,6 +22,9 @@ object Guy {
 
     val VAR_DIRECTION = "GuyDirection"
 
+    val MAX_SPEED = 50
+
+    val MIN_SPEED = 0
 }
 
 class Guy(val body: Body)
@@ -49,23 +54,27 @@ class Guy(val body: Body)
         new Location(new Point(x, y))
     }
 
-    var eventListeners = List[EventListener]();
+    val eventListeners = new ListBuffer[EventListener]
 
     def addEventListener(eventListener: EventListener) {
-        eventListeners = eventListener :: eventListeners;
+        log.info("Guy will listen for " + eventListener.event.getClass().getSimpleName() + " events.")
+        // TODO set the function's scope to this guy
+        eventListeners += eventListener
     }
 
     def getEventListeners(event: GlassEvent): List[EventListener] = {
-        var listening = List[EventListener]();
-        eventListeners.foreach(listener => if (listener.event == event) {
-            listening = listener :: listening;
-        });
-        listening;
+        val listening = new ListBuffer[EventListener]
+        eventListeners.foreach(
+            listener =>
+                if (listener.event == event) {
+                    listening += listener
+                }
+        )
+        listening toList
     }
 
     def setSpeed(speed: Int): Unit = {
-        // TODO check for limit violations
-        this.speed = speed
+        this.speed = math.max(Guy.MIN_SPEED, math.min(speed, Guy.MAX_SPEED))
     }
 
     def setDirection(direction: Int): Unit = {

@@ -1,12 +1,11 @@
 package com.quane.glass.core.event
 
-import com.quane.glass.core.Guy
-import com.quane.glass.core.language.Expression
+import com.quane.glass.core.language.Function
 
-class EventListener(val guy: Guy, val event: GlassEvent, val expression: Expression[_ <: Any]) {
+class EventListener(val event: GlassEvent, val function: Function) {
 
     def fire(): Unit = {
-        expression.evaluate
+        function.evaluate
     }
 
 }

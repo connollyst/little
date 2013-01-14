@@ -26,9 +26,13 @@ class SetDirectionStatement(scope: Scope, value: Value[Any])
     extends AssignmentStatement(scope, Guy.VAR_DIRECTION, value);
 
 class PrintStatement(text: String)
-        extends Statement[Unit] {
+        extends Statement[Unit]
+        with Logging {
 
-    def evaluate: Unit = println(text);
+    def evaluate: Unit = {
+        // TODO this should display a speech bubble over the guy
+        log.error(text);
+    }
 
 }
 

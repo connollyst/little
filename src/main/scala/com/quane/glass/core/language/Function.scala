@@ -1,5 +1,7 @@
 package com.quane.glass.core.language
 
+import scala.collection.mutable.ListBuffer
+
 /** A Function is a collection of steps which are evaluated in sequence when
   * the Function itself is evaluated.<br/>
   * A Function is a type of {@code Block} and, as such, has a {@code Scope}.
@@ -7,15 +9,17 @@ package com.quane.glass.core.language
   *
   * @param steps
   */
-class Function(override val scope: Scope, var steps: List[_ <: Expression[_ <: Any]])
+class Function(scope: Scope, steps: ListBuffer[Expression[Any]])
         extends Block(scope) {
 
-    def this(scope: Scope) = this(scope, List[Expression[_ <: Any]]())
+    /** Alternative constructor; create an empty function.
+      */
+    def this(scope: Scope) = this(scope, ListBuffer[Expression[Any]]())
 
     def this() = this(null) // TODO we should avoid null, yeah?
-    
-    def addStep(step: Expression[_ <: Any]): Unit = {
-        steps = steps ::: List(step)
+
+    def addStep(step: Expression[Any]): Unit = {
+        steps += step
     }
 
     def evaluate: Any = {

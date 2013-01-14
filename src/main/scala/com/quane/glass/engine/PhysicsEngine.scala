@@ -12,13 +12,15 @@ import com.quane.glass.entities.WorldEdge
 import net.phys2d.raw.shapes.Circle
 import org.jbox2d.collision.shapes.CircleShape
 import org.jbox2d.collision.shapes.ShapeType
+import org.eintr.loglady.Logging
 
-class PhysicsEngine() {
+class PhysicsEngine()
+        extends Logging {
 
     val gravity = new Vec2(0, 0);
     val doSleep = true;
     val world = new World(gravity, doSleep);
-    
+
     val timeStep = 1 / 60f; //the length of time passed to simulate (seconds)
     val velocityIterations = 8; //how strongly to correct velocity
     val positionIterations = 3; //how strongly to correct position
@@ -28,7 +30,7 @@ class PhysicsEngine() {
     }
 
     def createBody(): Body = {
-        println("Creating a body..")
+        log.info("Creating a body..")
         val polygonShape = new CircleShape
         polygonShape.m_radius = 20
         val bodyDef = new BodyDef

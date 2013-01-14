@@ -6,15 +6,24 @@ import scala.swing.Frame
 
 import org.newdawn.slick.CanvasGameContainer
 
+import com.quane.glass.core.event.EventListener
 import com.quane.glass.engine.Game
 
 class GlassGameFrame
         extends Frame {
 
-    preferredSize = new Dimension(1024, 768 + 24)	// add 24 for the menu bar
+    // Set the window title in Mac 
+    System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Glass");
 
-    def run = {
-        val canvas = new CanvasGameContainer(new Game())
+    preferredSize = new Dimension(1024, 768 + 24) // add 24 for the menu bar
+
+    def run(eventListeners: List[EventListener]) = {
+        val game = new Game()
+        eventListeners.foreach(
+            eventListener =>
+                game.guy.addEventListener(eventListener)
+        )
+        val canvas = new CanvasGameContainer(game)
         peer.getContentPane().add(canvas)
         peer.pack()
         peer.setVisible(true)

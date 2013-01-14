@@ -6,14 +6,9 @@ import scala.swing.MainFrame
 import scala.swing.SimpleSwingApplication
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
-import com.quane.glass.engine.Game
 import com.quane.glass.ide.language.ProgramEnteredEvent
 import com.quane.glass.ide.language.ProgramExitedEvent
-import javax.swing.JFrame
-
-
-import org.newdawn.slick.CanvasGameContainer
-import com.quane.glass.engine.Game
+import org.eintr.loglady.Logging
 
 // TODO
 // X add toolkit on left
@@ -21,14 +16,14 @@ import com.quane.glass.engine.Game
 // X add elements to toolkit
 // X d&d elements from toolkit to workspace
 // X d&d elements into programs
-// - translate programs to Expressions
-// - encorporate game into application
-// - add menu to run game
+// X translate programs to Expressions
+// X encorporate game into application
+// X add menu to run game
 // - serialize and deserialize programs
 object GlassIDE extends SimpleSwingApplication {
 
-    // Set the application title in Mac 
-    System.setProperty("com.apple.mrj.application.apple.menu.about.name", "GlassIDE");
+    // Set the window title in Mac 
+    System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Glass");
 
     // TODO replace static event bus with dependency injection
     val eventBus = new EventBus
@@ -58,19 +53,21 @@ class BasePanel
 
 }
 
-class MenuBarListener(ide: BasePanel) {
+class MenuBarListener(ide: BasePanel)
+        extends Logging {
 
     @Subscribe
     def compileEvent(event: DoCompileEvent) {
-        println("Compiling..")
+        log.info("Compiling..")
         ide.workspacePanel.compileAll
     }
 
     @Subscribe
     def runEvent(event: DoRunEvent) {
-        println("Running..");
-        val frame = new GlassGameFrame
-        frame.run
+        log.info("Compiling..")
+        val eventListeners = ide.workspacePanel.compileAll
+        log.info("Running..");
+        new GlassGameFrame().run(eventListeners)
     }
 
 }

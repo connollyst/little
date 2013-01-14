@@ -31,7 +31,7 @@ class AssignmentStatementPanelController(view: AssignmentStatementPanel)
     }
 
     override def compile(scope: Scope): AssignmentStatement = {
-        println("Compiling: Set " + view.variableName + "='" + view.variableValue + "'");
+        log.info("Compiling: Set " + view.variableName + "='" + view.variableValue + "'");
         new AssignmentStatement(scope, view.variableName, new Text(view.variableValue))
     }
 
@@ -47,7 +47,7 @@ class SetSpeedStatementPanelController(view: SetSpeedStatementPanel)
     }
 
     override def compile(scope: Scope): SetSpeedStatement = {
-        println("Compiling: Set " + Guy.VAR_SPEED + "='" + view.value + "'");
+        log.info("Compiling: Set " + Guy.VAR_SPEED + "='" + view.value + "'");
         new SetSpeedStatement(scope, new Text(view.value))
     }
 
@@ -63,7 +63,7 @@ class SetDirectionStatementPanelController(view: SetDirectionStatementPanel)
     }
 
     override def compile(scope: Scope): SetDirectionStatement = {
-        println("Compiling: Set " + Guy.VAR_DIRECTION + "='" + view.value + "'");
+        log.info("Compiling: Set " + Guy.VAR_DIRECTION + "='" + view.value + "'");
         new SetDirectionStatement(scope, new Text(view.value))
     }
 
@@ -76,7 +76,8 @@ class SetDirectionStatementPanelController(view: SetDirectionStatementPanel)
   * @author Sean Connolly
   */
 class PrintStatementPanelController(view: PrintStatementPanel)
-        extends StatementPanelController[PrintStatement](view) {
+        extends StatementPanelController[PrintStatement](view)
+        with Logging {
 
     override def validate: Unit = {
         // There's no way a print statement can be invalid, worst case scenario
@@ -84,7 +85,7 @@ class PrintStatementPanelController(view: PrintStatementPanel)
     }
 
     override def compile(scope: Scope): PrintStatement = {
-        println("Compiling: Say '" + view.value + "'");
+        log.info("Compiling: Say '" + view.value + "'");
         new PrintStatement(view.value)
     }
 
