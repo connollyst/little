@@ -10,7 +10,7 @@ import com.quane.glass.core.language.Scope
   *
   * @author Sean Connolly
   */
-abstract class GlassPanelController[+E <: Expression[Any]](val view: GlassPanel) {
+abstract class ExpressionPanelController[+E <: Expression[Any]](val view: ExpressionPanel) {
 
     def validate: Unit
 

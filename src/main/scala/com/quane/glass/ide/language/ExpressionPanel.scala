@@ -12,5 +12,5 @@ import scala.swing.Panel
   *
   * @author Sean Connolly
   */
-trait GlassPanel
+trait ExpressionPanel
         extends Panel

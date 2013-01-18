@@ -2,19 +2,23 @@ package com.quane.glass.ide
 
 import java.awt.Color
 import java.awt.Point
+
 import scala.collection.mutable.ListBuffer
 import scala.swing.DesktopPanel
 import scala.swing.event.Event
 import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
+
+import org.eintr.loglady.Logging
+
 import com.google.common.eventbus.Subscribe
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.core.event.GlassEvent.OnSpawn
-import com.quane.glass.ide.language.GlassEventFrame
-import com.quane.glass.ide.language.GlassEventFrameController
+import com.quane.glass.core.language.Expression
+import com.quane.glass.ide.language.ExpressionPanelController
+import com.quane.glass.ide.language.GlassFrame
+import com.quane.glass.ide.language.GlassFrameController
 import com.quane.glass.ide.swing.HighlightableComponent
-import org.eintr.loglady.Logging
 
 /** The workspace is the area in which programs are created and edited.
   *
@@ -26,7 +30,7 @@ class WorkspacePanel
 
     background = Color.white
 
-    val eventFrameControllers = new ListBuffer[GlassEventFrameController]()
+    val frameControllers = new ListBuffer[GlassFrameController]()
 
     // Listen for the mouse entering and exiting the workspace
     listenTo(mouse.moves)
@@ -41,21 +45,21 @@ class WorkspacePanel
     GlassIDE.eventBus.register(new WorkspaceDragAndDropEventListener(this))
     GlassIDE.eventBus.register(new WorkspaceCommandEventListener(this))
 
-    /** Create a new panel on the workspace.
+    /** Add a frame to the workspace.
       *
-      * @param title
-      * 		the title to give the panel
+      * @param controller
+      * 		the controller for the frame
       * @param x
-      * 		the x coordinate of the upper left corner of the panel
+      * 		the x coordinate of the upper left corner of the frame
       * @param y
-      * 		the y coordinate of the upper left corner of the panel
+      * 		the y coordinate of the upper left corner of the frame
       */
-    def createEventPanel(event: GlassEvent, x: Int, y: Int) = {
-        val frame = new GlassEventFrame(event)
-        eventFrameControllers += new GlassEventFrameController(frame)
-        frame.location = new Point(x, y)
-        frame.pack
-        add(frame)
+    def addEventFrame(panelController: ExpressionPanelController[Expression[Any]], x: Int, y: Int) = {
+        val controller = new GlassFrameController(GlassEvent.OnSpawn, new GlassFrame("Sean Is Cool"))
+        frameControllers += controller
+        controller.view.location = new Point(x, y)
+        controller.view.pack
+        add(controller.view)
         repaint
     }
 
@@ -65,7 +69,7 @@ class WorkspacePanel
       */
     def compileAll: List[EventListener] = {
         val eventListeners = new ListBuffer[EventListener]
-        eventFrameControllers.foreach(
+        frameControllers.foreach(
             controller => {
                 eventListeners += controller.compile
             }
@@ -97,7 +101,7 @@ class WorkspaceDragAndDropEventListener(workspace: WorkspacePanel)
     }
 
     @Subscribe
-    def dropEvent(event: DragDropEvent[WorkspacePanel]) {
+    def dropEvent(event: DropExpressionEvent[WorkspacePanel]) {
         if (overMe) {
             // TODO compensate for offset in header
             val eventX = event.point.x
@@ -107,7 +111,8 @@ class WorkspaceDragAndDropEventListener(workspace: WorkspacePanel)
             val itemX = eventX - workspaceX
             val itemY = eventY - workspaceY
             log.info("Dropping tool: " + event.name)
-            workspace.createEventPanel(OnSpawn, itemX, itemY) // TODO get type from event
+            val controller = event.dropFunction();
+            workspace.addEventFrame(controller, itemX, itemY)
             workspace.unhighlight
         }
     }

@@ -9,7 +9,7 @@ import scala.swing.event.EditDone
 import scala.swing.event.KeyTyped
 
 trait StatementPanel
-    extends GlassPanel
+    extends ExpressionPanel
 
 /** @author Sean Connolly
   */

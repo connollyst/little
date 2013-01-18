@@ -13,10 +13,10 @@ import com.quane.glass.core.language.SetDirectionStatement
 /** @author Sean Connolly
   */
 abstract class StatementPanelController[E <: Expression[Any]](view: StatementPanel)
-    extends GlassPanelController[E](view)
+    extends ExpressionPanelController[E](view)
 
-/** The controller for the {@code AssignmentStatementPanel} is  responsible for
-  * creating a {@code AssignmentStatement} to represent that
+/** The controller for the {@link AssignmentStatementPanel} is  responsible for
+  * creating a {@link AssignmentStatement} to represent that
   * represented by the panel.
   *
   * @author Sean Connolly
@@ -69,8 +69,8 @@ class SetDirectionStatementPanelController(view: SetDirectionStatementPanel)
 
 }
 
-/** The controller for the {@code PrintStatementPanel} is responsible for
-  * creating a {@code PrintStatement} to represent that
+/** The controller for the {@link PrintStatementPanel} is responsible for
+  * creating a {@link PrintStatement} to represent that
   * represented by the panel.
   *
   * @author Sean Connolly

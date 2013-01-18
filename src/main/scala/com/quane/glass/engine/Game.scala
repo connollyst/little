@@ -79,7 +79,7 @@ class Game extends BasicGame("Glass") {
                     event => {
                         guy.getEventListeners(event) foreach (
                             listener =>
-                                listener.fire()
+                                listener.evaluate
                         )
                     })
             })

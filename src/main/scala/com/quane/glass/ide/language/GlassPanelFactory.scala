@@ -1,8 +1,12 @@
 package com.quane.glass.ide.language
 
-import com.quane.glass.core.language.Expression
+import com.quane.glass.core.event.GlassEvent
 
 object GlassPanelFactory {
+
+    def getEventFrameFunction(event: GlassEvent) = {
+        () => new ListenerPanelController(event, new ListenerPanel)
+    }
 
     def createPrintStatementPanel(): PrintStatementPanelController = {
         new PrintStatementPanelController(new PrintStatementPanel)

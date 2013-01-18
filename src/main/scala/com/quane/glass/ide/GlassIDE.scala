@@ -16,10 +16,19 @@ import org.eintr.loglady.Logging
 // X add elements to toolkit
 // X d&d elements from toolkit to workspace
 // X d&d elements into programs
-// X translate programs to Expressions
-// X encorporate game into application
+// X compile programs to expressions
+// X add game into ide
 // X add menu to run game
-// - serialize and deserialize programs
+// ~ add support for other events
+// - add support for multiple guys
+// - add support for obstacles
+// - add speech bubbles
+// - add food
+// - save and load programs
+// - add better IDE controls
+// - add better memory handling (types, limit, visualization, etc.)
+// - code should be time controlled (eg one Expression per frame)
+// - add camera scrolling, tracking, etc.
 object GlassIDE extends SimpleSwingApplication {
 
     // Set the window title in Mac 
@@ -85,7 +94,7 @@ class DragAndDropEventListener {
     def dropEvent(event: ToolDroppedEvent) {
         dragging = None;
         GlassIDE.eventBus.post(
-            new DragDropEvent(event.tool, event.toolType, event.point, event.controllerFactoryFunction)
+            new DropExpressionEvent(event.tool, event.toolType, event.point, event.controllerFactoryFunction)
         )
     }
 
@@ -103,24 +112,6 @@ class DragAndDropEventListener {
         if (dragging isDefined) {
             GlassIDE.eventBus.post(
                 new DragOutWorkspaceEvent(dragging.get)
-            )
-        }
-    }
-
-    @Subscribe
-    def enterRecipientEvent(event: ProgramEnteredEvent) {
-        if (dragging isDefined) {
-            GlassIDE.eventBus.post(
-                new DragOverProgramEvent(dragging.get)
-            )
-        }
-    }
-
-    @Subscribe
-    def exitRecipientEvent(event: ProgramExitedEvent) {
-        if (dragging isDefined) {
-            GlassIDE.eventBus.post(
-                new DragOutProgramEvent(dragging.get)
             )
         }
     }

@@ -1,11 +1,14 @@
 package com.quane.glass.core.event
 
+import com.quane.glass.core.language.Expression
 import com.quane.glass.core.language.Function
 
-class EventListener(val event: GlassEvent, val function: Function) {
+class EventListener(val event: GlassEvent, function: Function)
+        extends Expression[Boolean] {
 
-    def fire(): Unit = {
+    def evaluate: Boolean = {
         function.evaluate
+        true
     }
 
 }

@@ -1,20 +1,21 @@
 package com.quane.glass.core
 
-import scala.collection.mutable.HashMap
-import scala.collection.mutable.MultiMap
-import scala.collection.mutable.Set
 import java.awt.Point
 import java.util.UUID
+
+import scala.collection.mutable.ListBuffer
+import scala.collection.mutable.MultiMap
+
 import org.eintr.loglady.Logging
 import org.jbox2d.dynamics.Body
+
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.Scope
-import com.quane.glass.core.language.data.Location
-import com.quane.glass.core.language.data.Variable
-import com.quane.glass.core.language.data.Number
 import com.quane.glass.core.language.data.Direction
-import scala.collection.mutable.ListBuffer
+import com.quane.glass.core.language.data.Location
+import com.quane.glass.core.language.data.Number
+import com.quane.glass.core.language.data.Variable
 
 object Guy {
 

@@ -1,28 +1,18 @@
 package com.quane.glass.ide
 
-import java.awt.Color
 import java.awt.Dimension
 import java.awt.Point
 import scala.swing.BoxPanel
 import scala.swing.Button
-import scala.swing.Component
 import scala.swing.Label
 import scala.swing.Orientation
-import scala.swing.Reactor
 import scala.swing.event.Event
-import scala.swing.event.MouseEvent
 import scala.swing.event.MousePressed
 import scala.swing.event.MouseReleased
-import com.google.common.eventbus.EventBus
 import com.quane.glass.core.language.Expression
-import com.quane.glass.ide.language.AssignmentStatementPanel
-import com.quane.glass.ide.language.AssignmentStatementPanelController
-import com.quane.glass.ide.language.GlassPanel
-import com.quane.glass.ide.language.GlassPanelController
-import com.quane.glass.ide.language.PrintStatementPanel
-import javax.swing.BorderFactory
-import com.quane.glass.ide.language.PrintStatementPanelController
 import com.quane.glass.ide.language.GlassPanelFactory
+import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.ide.language.ExpressionPanelController
 
 class ToolkitPanel
         extends BoxPanel(Orientation.Vertical) {
@@ -52,16 +42,36 @@ class ToolPanel(title: String, val toolType: ToolType)
 class EventsToolPanel
         extends ToolPanel("Events", EventToolType) {
 
-    toolList.contents += new ToolButton("OnSpawn", toolType, null)
-    toolList.contents += new ToolButton("OnContact", toolType, null)
-    toolList.contents += new ToolButton("OnContactEnded", toolType, null)
-    toolList.contents += new ToolButton("WhenDone", toolType, null)
-    toolList.contents += new ToolButton("In5Seconds", toolType, null)
-    toolList.contents += new ToolButton("OnFoodNearby", toolType, null)
-    toolList.contents += new ToolButton("OnFoodConsumed", toolType, null)
-    toolList.contents += new ToolButton("OnMobNearby", toolType, null)
-    toolList.contents += new ToolButton("OnMobMoved", toolType, null)
-    toolList.contents += new ToolButton("OnMobGone", toolType, null)
+    toolList.contents += new ToolButton("OnSpawn", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnSpawn)
+    )
+    toolList.contents += new ToolButton("OnContact", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnContact)
+    )
+    toolList.contents += new ToolButton("OnContactEnded", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnContactEnded)
+    )
+    toolList.contents += new ToolButton("WhenDone", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.WhenDone)
+    )
+    toolList.contents += new ToolButton("In5Seconds", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.In5Seconds)
+    )
+    toolList.contents += new ToolButton("OnFoodNearby", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnFoodNearby)
+    )
+    toolList.contents += new ToolButton("OnFoodConsumed", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnFoodConsumed)
+    )
+    toolList.contents += new ToolButton("OnMobNearby", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnMobNearby)
+    )
+    toolList.contents += new ToolButton("OnMobMoved", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnMobMoved)
+    )
+    toolList.contents += new ToolButton("OnMobGone", toolType,
+        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnMobGone)
+    )
 
 }
 
@@ -81,7 +91,7 @@ class SettersToolPanel
 
 class ToolButton(val title: String,
                  val toolType: ToolType,
-                 val controllerFactoryFunction: () => GlassPanelController[Expression[Any]])
+                 val dropFunction: () => ExpressionPanelController[Expression[Any]])
         extends Button {
 
     text = title
@@ -90,10 +100,12 @@ class ToolButton(val title: String,
     reactions += {
         case event: MousePressed =>
             GlassIDE.eventBus.post(
-                new ToolDraggedEvent(title, toolType, event.point, controllerFactoryFunction))
+                new ToolDraggedEvent(title, toolType, event.point, dropFunction)
+            )
         case event: MouseReleased =>
             GlassIDE.eventBus.post(
-                new ToolDroppedEvent(title, toolType, event.point, controllerFactoryFunction))
+                new ToolDroppedEvent(title, toolType, event.point, dropFunction)
+            )
     }
 
 }
@@ -101,13 +113,13 @@ class ToolButton(val title: String,
 class ToolDraggedEvent(val tool: String,
                        val toolType: ToolType,
                        val point: Point,
-                       val controllerFactoryFunction: () => GlassPanelController[Expression[Any]])
+                       val controllerFactoryFunction: () => ExpressionPanelController[Expression[Any]])
         extends Event
 
 class ToolDroppedEvent(val tool: String,
                        val toolType: ToolType,
                        val point: Point,
-                       val controllerFactoryFunction: () => GlassPanelController[Expression[Any]])
+                       val controllerFactoryFunction: () => ExpressionPanelController[Expression[Any]])
         extends Event
 
 sealed trait ToolType
