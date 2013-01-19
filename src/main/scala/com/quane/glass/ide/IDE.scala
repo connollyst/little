@@ -4,11 +4,11 @@ import scala.swing.BorderPanel
 import scala.swing.Dimension
 import scala.swing.MainFrame
 import scala.swing.SimpleSwingApplication
+
+import org.eintr.loglady.Logging
+
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
-import com.quane.glass.ide.language.ProgramEnteredEvent
-import com.quane.glass.ide.language.ProgramExitedEvent
-import org.eintr.loglady.Logging
 
 // TODO
 // X add toolkit on left
@@ -29,7 +29,7 @@ import org.eintr.loglady.Logging
 // - add better memory handling (types, limit, visualization, etc.)
 // - code should be time controlled (eg one Expression per frame)
 // - add camera scrolling, tracking, etc.
-object GlassIDE extends SimpleSwingApplication {
+object IDE extends SimpleSwingApplication {
 
     // Set the window title in Mac 
     System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Glass");
@@ -41,7 +41,7 @@ object GlassIDE extends SimpleSwingApplication {
         title = "GlassIDE"
         minimumSize = new Dimension(1024, 768)
         contents = new BasePanel
-        menuBar = new GlassMenuBar
+        menuBar = new MenuBar
     }
 
 }
@@ -51,14 +51,14 @@ class BasePanel
 
     val toolkitPanel = new ToolkitPanel
     val workspacePanel = new WorkspacePanel
-    val toolbar = new GlassToolBar
+    val toolbar = new ToolBar
 
     layout(toolkitPanel) = BorderPanel.Position.West
     layout(workspacePanel) = BorderPanel.Position.Center
     layout(toolbar) = BorderPanel.Position.South
 
-    GlassIDE.eventBus.register(new MenuBarListener(this))
-    GlassIDE.eventBus.register(new DragAndDropEventListener)
+    IDE.eventBus.register(new MenuBarListener(this))
+    IDE.eventBus.register(new DragAndDropEventListener)
 
 }
 
@@ -81,39 +81,3 @@ class MenuBarListener(ide: BasePanel)
 
 }
 
-class DragAndDropEventListener {
-
-    var dragging = None: Option[String]
-
-    @Subscribe
-    def dragEvent(event: ToolDraggedEvent) {
-        dragging = Option(event.tool);
-    }
-
-    @Subscribe
-    def dropEvent(event: ToolDroppedEvent) {
-        dragging = None;
-        GlassIDE.eventBus.post(
-            new DropExpressionEvent(event.tool, event.toolType, event.point, event.controllerFactoryFunction)
-        )
-    }
-
-    @Subscribe
-    def enterRecipientEvent(event: WorkspaceEnteredEvent) {
-        if (dragging isDefined) {
-            GlassIDE.eventBus.post(
-                new DragOverWorkspaceEvent(dragging.get)
-            )
-        }
-    }
-
-    @Subscribe
-    def exitRecipientEvent(event: WorkspaceExitedEvent) {
-        if (dragging isDefined) {
-            GlassIDE.eventBus.post(
-                new DragOutWorkspaceEvent(dragging.get)
-            )
-        }
-    }
-
-}

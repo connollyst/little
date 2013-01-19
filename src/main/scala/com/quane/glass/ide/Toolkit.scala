@@ -13,6 +13,8 @@ import com.quane.glass.core.language.Expression
 import com.quane.glass.ide.language.GlassPanelFactory
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.ide.language.ExpressionPanelController
+import scala.swing.event.MouseEvent
+import scala.swing.Component
 
 class ToolkitPanel
         extends BoxPanel(Orientation.Vertical) {
@@ -99,24 +101,26 @@ class ToolButton(val title: String,
     listenTo(mouse.clicks)
     reactions += {
         case event: MousePressed =>
-            GlassIDE.eventBus.post(
-                new ToolDraggedEvent(title, toolType, event.point, dropFunction)
+            println("ToolButton.MousePressed")
+            IDE.eventBus.post(
+                new ToolDraggedEvent(this, toolType, event.point, dropFunction)
             )
         case event: MouseReleased =>
-            GlassIDE.eventBus.post(
-                new ToolDroppedEvent(title, toolType, event.point, dropFunction)
+            println("ToolButton.MouseReleased")
+            IDE.eventBus.post(
+                new ToolDroppedEvent(this, toolType, event.point, dropFunction)
             )
     }
 
 }
 
-class ToolDraggedEvent(val tool: String,
+class ToolDraggedEvent(val source: Component,
                        val toolType: ToolType,
                        val point: Point,
                        val controllerFactoryFunction: () => ExpressionPanelController[Expression[Any]])
         extends Event
 
-class ToolDroppedEvent(val tool: String,
+class ToolDroppedEvent(val source: Component,
                        val toolType: ToolType,
                        val point: Point,
                        val controllerFactoryFunction: () => ExpressionPanelController[Expression[Any]])

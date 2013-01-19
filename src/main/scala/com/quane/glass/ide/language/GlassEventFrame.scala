@@ -17,7 +17,7 @@ import com.quane.glass.core.language.Expression
 import com.quane.glass.ide.DragOutEvent
 import com.quane.glass.ide.DragOverEvent
 import com.quane.glass.ide.DropExpressionEvent
-import com.quane.glass.ide.GlassIDE
+import com.quane.glass.ide.IDE
 import com.quane.glass.ide.swing.HighlightableComponent
 
 class GlassFrame(title: String)
@@ -40,13 +40,13 @@ class GlassFrame(title: String)
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>
-            GlassIDE.eventBus.post(new ProgramEnteredEvent)
+            IDE.eventBus.post(new ProgramEnteredEvent)
         case event: MouseExited =>
-            GlassIDE.eventBus.post(new ProgramExitedEvent)
+            IDE.eventBus.post(new ProgramExitedEvent)
     }
 
     // Listen for drag & drop events on the event bus
-    GlassIDE.eventBus.register(new ProgramDragAndDropEventListener(this))
+    IDE.eventBus.register(new ProgramDragAndDropEventListener(this))
 
     def highlight {
         rootPanel.highlight
@@ -72,22 +72,22 @@ class ProgramDragAndDropEventListener(frame: GlassFrame)
     var overMe = false;
 
     @Subscribe
-    def dragOverEvent(event: DragOverEvent[Any]) {
+    def dragOverEvent(event: DragOverEvent) {
         // TODO check if I accept the dragged item
         overMe = true;
         frame.highlight
     }
     @Subscribe
-    def dragOutEvent(event: DragOutEvent[Any]) {
+    def dragOutEvent(event: DragOutEvent) {
         // TODO check if I accept the dragged item
         overMe = false
         frame.unhighlight
     }
 
     @Subscribe
-    def dropEvent(event: DropExpressionEvent[GlassFrame]) {
+    def dropEvent(event: DropExpressionEvent) {
         if (overMe) {
-            log.info("Dropping tool: " + event.name)
+            log.info("Dropping " + event.toolType)
             val controller = event.dropFunction()
             //            frame.addStep(controller)
             frame.unhighlight

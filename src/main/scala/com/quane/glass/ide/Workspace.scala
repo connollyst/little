@@ -26,7 +26,8 @@ import com.quane.glass.ide.swing.HighlightableComponent
   */
 class WorkspacePanel
         extends DesktopPanel
-        with HighlightableComponent {
+        with HighlightableComponent
+        with Logging {
 
     background = Color.white
 
@@ -36,14 +37,31 @@ class WorkspacePanel
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>
-            GlassIDE.eventBus.post(new WorkspaceEnteredEvent)
+            println("WorkspacePanel.MouseEntered")
+            IDE.eventBus.post(event)
         case event: MouseExited =>
-            GlassIDE.eventBus.post(new WorkspaceExitedEvent)
+            println("WorkspacePanel.MouseExited")
+            IDE.eventBus.post(event)
+        case event: DragOverEvent =>
+            println("WorkspacePanel.DragOverEvent")
+            highlight
+        case event: DragOutEvent =>
+            println("WorkspacePanel.DragOutEvent")
+            unhighlight
+        case event: DropExpressionEvent =>
+            println("WorkspacePanel.DropExpressionEvent")
+            // TODO compensate for offset in header
+            val eventX = event.point.x
+            val eventY = event.point.y
+            val workspaceX = bounds.x
+            val workspaceY = bounds.y
+            val itemX = eventX - workspaceX
+            val itemY = eventY - workspaceY
+            log.info("Dropping " + event.toolType)
+            val controller = event.dropFunction();
+            addEventFrame(controller, itemX, itemY)
+            unhighlight
     }
-
-    // Listen for drag & drop events on the event bus
-    GlassIDE.eventBus.register(new WorkspaceDragAndDropEventListener(this))
-    GlassIDE.eventBus.register(new WorkspaceCommandEventListener(this))
 
     /** Add a frame to the workspace.
       *
@@ -76,50 +94,5 @@ class WorkspacePanel
         )
         eventListeners toList
     }
-
-}
-
-class WorkspaceEnteredEvent extends Event
-
-class WorkspaceExitedEvent extends Event
-
-class WorkspaceDragAndDropEventListener(workspace: WorkspacePanel)
-        extends Logging {
-
-    var overMe = false
-
-    @Subscribe
-    def dragOverEvent(event: DragOverWorkspaceEvent) {
-        overMe = true
-        workspace.highlight
-    }
-
-    @Subscribe
-    def dragOutEvent(event: DragOutWorkspaceEvent) {
-        overMe = false
-        workspace.unhighlight
-    }
-
-    @Subscribe
-    def dropEvent(event: DropExpressionEvent[WorkspacePanel]) {
-        if (overMe) {
-            // TODO compensate for offset in header
-            val eventX = event.point.x
-            val eventY = event.point.y
-            val workspaceX = workspace.bounds.x
-            val workspaceY = workspace.bounds.y
-            val itemX = eventX - workspaceX
-            val itemY = eventY - workspaceY
-            log.info("Dropping tool: " + event.name)
-            val controller = event.dropFunction();
-            workspace.addEventFrame(controller, itemX, itemY)
-            workspace.unhighlight
-        }
-    }
-}
-
-class WorkspaceCommandEventListener(workspace: WorkspacePanel) {
-
-    // TODO nothing to listen for yet
 
 }
