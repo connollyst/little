@@ -94,19 +94,17 @@ class SettersToolPanel
 class ToolButton(val title: String,
                  val toolType: ToolType,
                  val dropFunction: () => ExpressionPanelController[Expression[Any]])
-        extends Button {
+        extends Button{
 
     text = title
 
     listenTo(mouse.clicks)
     reactions += {
         case event: MousePressed =>
-            println("ToolButton.MousePressed")
             IDE.eventBus.post(
                 new ToolDraggedEvent(this, toolType, event.point, dropFunction)
             )
         case event: MouseReleased =>
-            println("ToolButton.MouseReleased")
             IDE.eventBus.post(
                 new ToolDroppedEvent(this, toolType, event.point, dropFunction)
             )
@@ -117,16 +115,16 @@ class ToolButton(val title: String,
 class ToolDraggedEvent(val source: Component,
                        val toolType: ToolType,
                        val point: Point,
-                       val controllerFactoryFunction: () => ExpressionPanelController[Expression[Any]])
+                       val dropFunction: () => ExpressionPanelController[Expression[Any]])
         extends Event
 
 class ToolDroppedEvent(val source: Component,
                        val toolType: ToolType,
                        val point: Point,
-                       val controllerFactoryFunction: () => ExpressionPanelController[Expression[Any]])
+                       val dropFunction: () => ExpressionPanelController[Expression[Any]])
         extends Event
 
-sealed trait ToolType
+sealed trait ToolType extends DragAndDropItem
 
 object EventToolType extends ToolType
 

@@ -5,13 +5,11 @@ import java.awt.Point
 
 import scala.collection.mutable.ListBuffer
 import scala.swing.DesktopPanel
-import scala.swing.event.Event
 import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
 
 import org.eintr.loglady.Logging
 
-import com.google.common.eventbus.Subscribe
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.Expression
@@ -26,6 +24,7 @@ import com.quane.glass.ide.swing.HighlightableComponent
   */
 class WorkspacePanel
         extends DesktopPanel
+        with DragAndDropTarget
         with HighlightableComponent
         with Logging {
 
@@ -37,19 +36,20 @@ class WorkspacePanel
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>
-            println("WorkspacePanel.MouseEntered")
+            log.info("WorkspacePanel.MouseEntered")
             IDE.eventBus.post(event)
         case event: MouseExited =>
-            println("WorkspacePanel.MouseExited")
+            log.info("WorkspacePanel.MouseExited")
             IDE.eventBus.post(event)
         case event: DragOverEvent =>
-            println("WorkspacePanel.DragOverEvent")
+            log.info("WorkspacePanel.DragOverEvent")
             highlight
         case event: DragOutEvent =>
-            println("WorkspacePanel.DragOutEvent")
+            log.info("WorkspacePanel.DragOutEvent")
             unhighlight
         case event: DropExpressionEvent =>
-            println("WorkspacePanel.DropExpressionEvent")
+            log.info("WorkspacePanel.DropExpressionEvent")
+            unhighlight
             // TODO compensate for offset in header
             val eventX = event.point.x
             val eventY = event.point.y
@@ -57,10 +57,22 @@ class WorkspacePanel
             val workspaceY = bounds.y
             val itemX = eventX - workspaceX
             val itemY = eventY - workspaceY
-            log.info("Dropping " + event.toolType)
-            val controller = event.dropFunction();
-            addEventFrame(controller, itemX, itemY)
-            unhighlight
+            log.info("Accepting " + event.toolType)
+            val controller = event.dropFunction()
+            addEventFrame(controller, event.toolType, itemX, itemY)
+    }
+
+    /** Returns true/false if the specified item can/cannot be dropped here,
+      * respectively.
+      *
+      * @param item
+      * 		the drag and drop item
+      */
+    def accepts(item: DragAndDropItem): Boolean = {
+        return item match {
+            case EventToolType => true
+            case _             => false
+        }
     }
 
     /** Add a frame to the workspace.
@@ -72,8 +84,11 @@ class WorkspacePanel
       * @param y
       * 		the y coordinate of the upper left corner of the frame
       */
-    def addEventFrame(panelController: ExpressionPanelController[Expression[Any]], x: Int, y: Int) = {
-        val controller = new GlassFrameController(GlassEvent.OnSpawn, new GlassFrame("Sean Is Cool"))
+    def addEventFrame(panelController: ExpressionPanelController[Expression[Any]],
+                      toolType: ToolType,
+                      x: Int,
+                      y: Int) = {
+        val controller = new GlassFrameController(GlassEvent.OnSpawn, new GlassFrame(toolType toString))
         frameControllers += controller
         controller.view.location = new Point(x, y)
         controller.view.pack
