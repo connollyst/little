@@ -7,6 +7,8 @@ import com.quane.glass.core.language.PrintStatement
 import com.quane.glass.core.language.SetSpeedStatement
 import com.quane.glass.core.language.Scope
 import com.quane.glass.core.language.data.Text
+import com.quane.glass.core.language.data.Number
+import com.quane.glass.core.language.data.Direction
 import com.quane.glass.core.Guy
 import com.quane.glass.core.language.SetDirectionStatement
 
@@ -46,7 +48,7 @@ class SetSpeedStatementPanelController(override val view: SetSpeedStatementPanel
 
     override def compile(scope: Scope): SetSpeedStatement = {
         log.info("Compiling: Set " + Guy.VAR_SPEED + "='" + view.value + "'");
-        new SetSpeedStatement(scope, new Text(view.value))
+        new SetSpeedStatement(scope, new Number(view.value))
     }
 
 }
@@ -61,7 +63,7 @@ class SetDirectionStatementPanelController(override val view: SetDirectionStatem
 
     override def compile(scope: Scope): SetDirectionStatement = {
         log.info("Compiling: Set " + Guy.VAR_DIRECTION + "='" + view.value + "'");
-        new SetDirectionStatement(scope, new Text(view.value))
+        new SetDirectionStatement(scope, new Direction(view.value))
     }
 
 }
