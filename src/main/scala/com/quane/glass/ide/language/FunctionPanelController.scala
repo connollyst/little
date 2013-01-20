@@ -15,8 +15,6 @@ class FunctionPanelController(view: FunctionPanel)
 
     val steps = new ListBuffer[ExpressionPanelController[Expression[Any]]]()
 
-    def stepPanels: List[ExpressionPanelController[Expression[Any]]] = steps toList
-
     def addStep(controller: ExpressionPanelController[Expression[Any]]) = {
         steps += controller
     }
@@ -28,8 +26,8 @@ class FunctionPanelController(view: FunctionPanel)
 
     override def compile(scope: Scope): Function = {
         log.info("Compiling: function..")
-        val fun = new Function
-        stepPanels.foreach(
+        val fun = new Function(scope) // TODO this will always be null, yeah?
+        steps.foreach(
             step =>
                 fun.addStep(step.compile(fun))
         );
@@ -39,6 +37,9 @@ class FunctionPanelController(view: FunctionPanel)
     listenTo(view)
     reactions += {
         case event: StepAddedEvent =>
+            log.info("StepAddedEvent")
             addStep(event.controller)
+        case _ =>
+            log.error("whats this?")
     }
 }

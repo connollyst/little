@@ -8,7 +8,7 @@ import com.quane.glass.core.language.Expression
 
 class WorkspaceFrameController(
     view: WorkspaceFrame,
-    panelController: ExpressionPanelController[Expression[Any]])
+    panelController: ListenerPanelController)
         extends Logging {
 
     def validate: Unit = {
@@ -18,6 +18,7 @@ class WorkspaceFrameController(
 
     def compile: EventListener = {
         log.info("Compiling: glass frame..")
+        panelController.compile(null);
         //        val function = view.
         //        val listener = new EventListener(event, function: Function)
         null // TODO

@@ -27,23 +27,24 @@ class FunctionPanel
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>
-            log.info("GlassFrame.MouseEntered")
+            log.info("MouseEntered")
             IDE.eventBus.post(event)
         case event: MouseExited =>
-            log.info("GlassFrame.MouseExited")
+            log.info("MouseExited")
             IDE.eventBus.post(event)
         case event: DragOverEvent =>
-            log.info("GlassFrame.DragOverEvent")
+            log.info("DragOverEvent")
             highlight
         case event: DragOutEvent =>
-            log.info("GlassFrame.DragOutEvent")
+            log.info("DragOutEvent")
             unhighlight
         case event: DropExpressionEvent =>
-            log.info("GlassFrame.DropExpressionEvent")
+            log.info("DropExpressionEvent")
             unhighlight
-            log.info("Accepting " + event.toolType)
+            log.info("Accepting a " + event.toolType.getClass().getSimpleName())
             val controller = event.dropFunction()
             contents += controller.view
+            log.info("publishing a StepAddedEvent")
             publish(new StepAddedEvent(controller))
     }
 

@@ -19,6 +19,7 @@ import com.quane.glass.ide.DropExpressionEvent
 import com.quane.glass.ide.IDE
 import com.quane.glass.ide.swing.HighlightableComponent
 import com.quane.glass.ide.SetterToolType
+import com.quane.glass.ide.StepAddedEvent
 
 class WorkspaceFrame(title: String)
         extends InternalFrame
@@ -43,6 +44,8 @@ class WorkspaceFramePanel(frame: InternalFrame)
         case event: DropExpressionEvent =>
             // TODO there's probably a more efficient way to do this
             frame.pack
+            log.info("publishing a StepAddedEvent")
+            publish(new StepAddedEvent(null))
     }
 
 }
