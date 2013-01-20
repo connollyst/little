@@ -33,7 +33,7 @@ class Guy(val body: Body)
         with Logging {
 
     // TODO the Guy is not the highest scope, yeah?
-    val scope: Scope = null;
+    var scope: Scope = null;
 
     val uuid = UUID.randomUUID;
 
@@ -60,6 +60,7 @@ class Guy(val body: Body)
     def addEventListener(eventListener: EventListener) {
         log.info("Guy will listen for " + eventListener.event.getClass().getSimpleName() + " events.")
         // TODO set the function's scope to this guy
+        eventListener.function.scope = this
         eventListeners += eventListener
     }
 
@@ -91,23 +92,33 @@ class Guy(val body: Body)
     override def save(variable: Variable) = {
         log.info("Guy is saving " + variable.name);
         if (variable.name.equals(Guy.VAR_SPEED)) {
-            speed = variable.value match {
-                case number: Number =>
-                    number.evaluate
-                case _ =>
-                    throw new ClassCastException("Cannot set "
-                        + Guy.VAR_SPEED + " as a "
-                        + variable.getClass.getSimpleName)
-            }
+            setSpeed(
+                variable.value match {
+                    case number: Number =>
+                        number.evaluate
+                    case other: Any =>
+                        throw new ClassCastException(
+                            "Cannot set " + Guy.VAR_SPEED + " to a "
+                                + other.getClass.getSimpleName
+                                + ", it must be a "
+                                + classOf[Number].getSimpleName
+                        )
+                }
+            )
         } else if (variable.name.equals(Guy.VAR_DIRECTION)) {
-            direction = variable.value match {
-                case direction: Direction =>
-                    direction.evaluate
-                case _ =>
-                    throw new ClassCastException("Cannot set "
-                        + Guy.VAR_DIRECTION + " as a "
-                        + variable.getClass.getSimpleName)
-            }
+            setDirection(
+                variable.value match {
+                    case direction: Direction =>
+                        direction.evaluate
+                    case other: Any =>
+                        throw new ClassCastException(
+                            "Cannot set " + Guy.VAR_DIRECTION + " to a "
+                                + other.getClass.getSimpleName
+                                + ", it must be a "
+                                + classOf[Direction].getSimpleName
+                        )
+                }
+            )
         } else {
             // It's not a special variable, store it in normal memory
             super.save(variable);

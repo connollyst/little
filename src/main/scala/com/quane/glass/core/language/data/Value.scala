@@ -19,11 +19,21 @@ class Location(value: Point)
 
 class Number(value: Int)
         extends Value[Int] {
+
+    def this(value: String) = {
+        this(value.toInt)
+    }
+
     def evaluate: Int = value
 }
 
 class Direction(value: Int)
         extends Value[Int] {
+
+    def this(value: String) = {
+        this(value.toInt)
+    }
+
     def evaluate: Int = value
 }
 

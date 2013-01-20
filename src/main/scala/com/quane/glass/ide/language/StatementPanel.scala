@@ -1,12 +1,11 @@
 package com.quane.glass.ide.language
 
 import scala.swing.BoxPanel
-import scala.swing.Orientation
 import scala.swing.Label
+import scala.swing.Orientation
 import scala.swing.TextField
 import scala.swing.event.ValueChanged
-import scala.swing.event.EditDone
-import scala.swing.event.KeyTyped
+import java.awt.Dimension
 
 trait StatementPanel
     extends ExpressionPanel
@@ -16,7 +15,7 @@ trait StatementPanel
 class AssignmentStatementPanel(varName: String, varValue: String)
         extends BoxPanel(Orientation.Horizontal)
         with StatementPanel {
-
+    
     /** Construct an assignment statement initialized with the given name. The
       * value field will be blank.
       */
@@ -31,8 +30,8 @@ class AssignmentStatementPanel(varName: String, varValue: String)
         this("")
     }
 
-    private val nameField = new TextField(varName)
-    private val valueField = new TextField(varValue)
+    private val nameField = new TextField(varName, 16)
+    private val valueField = new TextField(varValue, 16)
 
     contents += new Label("Set")
     contents += nameField

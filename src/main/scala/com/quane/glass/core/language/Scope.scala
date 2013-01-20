@@ -18,7 +18,7 @@ import org.eintr.loglady.Logging
 trait Scope
         extends Logging {
 
-    val scope: Scope
+    var scope: Scope
 
     private val memory = Map[String, Variable]()
 

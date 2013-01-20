@@ -9,7 +9,7 @@ import scala.collection.mutable.ListBuffer
   *
   * @param steps
   */
-class Function(scope: Scope, steps: ListBuffer[Expression[Any]])
+class Function(var scope: Scope, steps: ListBuffer[Expression[Any]])
         extends Block(scope) {
 
     /** Alternative constructor; create an empty function.

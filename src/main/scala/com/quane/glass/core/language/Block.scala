@@ -5,7 +5,7 @@ package com.quane.glass.core.language
   *
   * @author Sean Connolly
   */
-abstract class Block(val scope: Scope)
+abstract class Block(scope: Scope)
         extends Expression[Any]
         with Scope {
 
