@@ -6,9 +6,7 @@ import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.Function
 import com.quane.glass.core.language.Expression
 
-class WorkspaceFrameController(
-    view: WorkspaceFrame,
-    panelController: ListenerPanelController)
+class WorkspaceFrameController(view: WorkspaceFrame, panelController: ListenerPanelController)
         extends Logging {
 
     def validate: Unit = {

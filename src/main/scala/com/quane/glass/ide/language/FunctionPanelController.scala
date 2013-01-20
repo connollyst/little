@@ -8,7 +8,7 @@ import com.quane.glass.ide.StepAddedEvent
 import scala.collection.mutable.ListBuffer
 import com.quane.glass.core.language.Expression
 
-class FunctionPanelController(view: FunctionPanel)
+class FunctionPanelController(override val view: FunctionPanel)
         extends ExpressionPanelController[Function](view)
         with Reactor
         with Logging {

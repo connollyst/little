@@ -12,7 +12,7 @@ import com.quane.glass.core.language.SetDirectionStatement
 
 /** @author Sean Connolly
   */
-abstract class StatementPanelController[E <: Expression[Any]](view: StatementPanel)
+abstract class StatementPanelController[E <: Expression[Any]](override val view: StatementPanel)
     extends ExpressionPanelController[E](view)
 
 /** The controller for the {@link AssignmentStatementPanel} is  responsible for
@@ -21,7 +21,7 @@ abstract class StatementPanelController[E <: Expression[Any]](view: StatementPan
   *
   * @author Sean Connolly
   */
-class AssignmentStatementPanelController(view: AssignmentStatementPanel)
+class AssignmentStatementPanelController(override val view: AssignmentStatementPanel)
         extends StatementPanelController[AssignmentStatement](view)
         with Logging {
 
@@ -36,7 +36,7 @@ class AssignmentStatementPanelController(view: AssignmentStatementPanel)
 
 }
 
-class SetSpeedStatementPanelController(view: SetSpeedStatementPanel)
+class SetSpeedStatementPanelController(override val view: SetSpeedStatementPanel)
         extends StatementPanelController[SetSpeedStatement](view)
         with Logging {
 
@@ -51,7 +51,7 @@ class SetSpeedStatementPanelController(view: SetSpeedStatementPanel)
 
 }
 
-class SetDirectionStatementPanelController(view: SetDirectionStatementPanel)
+class SetDirectionStatementPanelController(override val view: SetDirectionStatementPanel)
         extends StatementPanelController[SetDirectionStatement](view)
         with Logging {
 
@@ -72,7 +72,7 @@ class SetDirectionStatementPanelController(view: SetDirectionStatementPanel)
   *
   * @author Sean Connolly
   */
-class PrintStatementPanelController(view: PrintStatementPanel)
+class PrintStatementPanelController(override val view: PrintStatementPanel)
         extends StatementPanelController[PrintStatement](view)
         with Logging {
 

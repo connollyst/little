@@ -11,7 +11,7 @@ import com.quane.glass.core.language.data.Text
 import scala.swing.Reactor
 import com.quane.glass.ide.StepAddedEvent
 
-class ListenerPanelController(event: GlassEvent, view: ListenerPanel)
+class ListenerPanelController(val event: GlassEvent, override val view: ListenerPanel)
         extends ExpressionPanelController[EventListener](view)
         with Reactor
         with Logging {

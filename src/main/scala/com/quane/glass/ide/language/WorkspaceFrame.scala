@@ -22,7 +22,7 @@ import com.quane.glass.ide.SetterToolType
 import com.quane.glass.ide.StepAddedEvent
 import scala.swing.Panel
 
-class WorkspaceFrame(title: String, panel: ExpressionPanel)
+class WorkspaceFrame(title: String, panel: FunctionPanel)
         extends InternalFrame
         with Logging {
 
