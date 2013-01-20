@@ -2,8 +2,7 @@ package com.quane.glass.ide.language
 
 import java.awt.Dimension
 
-import scala.swing.GridBagPanel
-import scala.swing.GridBagPanel.Fill
+import scala.swing.GridPanel
 import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
 
@@ -20,7 +19,7 @@ import com.quane.glass.ide.StepAddedEvent
 import com.quane.glass.ide.swing.HighlightableComponent
 
 class FunctionPanel
-        extends GridBagPanel
+        extends GridPanel(0, 1)
         with ExpressionPanel
         with DragAndDropTarget
         with HighlightableComponent
@@ -49,10 +48,7 @@ class FunctionPanel
             unhighlight
             log.info("Accepting a " + event.toolType.getClass().getSimpleName())
             val controller = event.dropFunction()
-            val constraint = new Constraints
-            constraint.fill = Fill.Horizontal
-            add(controller.view, constraint)
-            log.info("publishing a StepAddedEvent")
+            contents += controller.view
             publish(new StepAddedEvent(controller))
     }
 
