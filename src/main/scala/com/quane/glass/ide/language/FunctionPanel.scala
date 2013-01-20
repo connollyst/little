@@ -25,9 +25,12 @@ class FunctionPanel
         with HighlightableComponent
         with Logging {
 
-    log.info("Creating a FunctionPanel")
-
-    preferredSize = new Dimension(200, 200)
+    def accepts(item: DragAndDropItem): Boolean = {
+        return item match {
+            case SetterToolType => true
+            case _              => false
+        }
+    }
 
     listenTo(mouse.moves)
     reactions += {
@@ -50,13 +53,6 @@ class FunctionPanel
             val controller = event.dropFunction()
             contents += controller.view
             publish(new StepAddedEvent(controller))
-    }
-
-    def accepts(item: DragAndDropItem): Boolean = {
-        return item match {
-            case SetterToolType => true
-            case _              => false
-        }
     }
 
 }
