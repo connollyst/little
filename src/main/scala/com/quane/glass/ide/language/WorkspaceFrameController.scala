@@ -1,11 +1,14 @@
 package com.quane.glass.ide.language
 
 import org.eintr.loglady.Logging
-import com.quane.glass.core.language.Function
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.core.language.Function
+import com.quane.glass.core.language.Expression
 
-class GlassFrameController(event: GlassEvent, val view: GlassFrame)
+class WorkspaceFrameController(
+    view: WorkspaceFrame,
+    panelController: ExpressionPanelController[Expression[Any]])
         extends Logging {
 
     def validate: Unit = {
@@ -15,6 +18,8 @@ class GlassFrameController(event: GlassEvent, val view: GlassFrame)
 
     def compile: EventListener = {
         log.info("Compiling: glass frame..")
+        //        val function = view.
+        //        val listener = new EventListener(event, function: Function)
         null // TODO
     }
 

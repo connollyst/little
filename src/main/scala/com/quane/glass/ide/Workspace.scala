@@ -14,8 +14,8 @@ import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.Expression
 import com.quane.glass.ide.language.ExpressionPanelController
-import com.quane.glass.ide.language.GlassFrame
-import com.quane.glass.ide.language.GlassFrameController
+import com.quane.glass.ide.language.WorkspaceFrame
+import com.quane.glass.ide.language.WorkspaceFrameController
 import com.quane.glass.ide.swing.HighlightableComponent
 
 /** The workspace is the area in which programs are created and edited.
@@ -30,7 +30,7 @@ class WorkspacePanel
 
     background = Color.white
 
-    val frameControllers = new ListBuffer[GlassFrameController]()
+    val frameControllers = new ListBuffer[WorkspaceFrameController]()
 
     // Listen for the mouse entering and exiting the workspace
     listenTo(mouse.moves)
@@ -88,12 +88,14 @@ class WorkspacePanel
                       toolType: ToolType,
                       x: Int,
                       y: Int) = {
-        val controller = new GlassFrameController(GlassEvent.OnSpawn, new GlassFrame(toolType toString))
-        frameControllers += controller
-        controller.view.location = new Point(x, y)
-        controller.view.pack
-        add(controller.view)
+        val frameView = new WorkspaceFrame(toolType.getClass().getSimpleName());
+        frameView.location = new Point(x, y)
+        frameView.pack
+        add(frameView)
         repaint
+        // TODO I think this should be coming from the workspace controller
+        val frameController = new WorkspaceFrameController(frameView, panelController)
+        frameControllers += frameController
     }
 
     /** Compiles all active frames into their respective Glass code.<br/>

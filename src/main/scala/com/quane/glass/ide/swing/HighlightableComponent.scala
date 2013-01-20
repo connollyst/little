@@ -1,7 +1,6 @@
 package com.quane.glass.ide.swing
 
 import scala.swing.Component
-import com.quane.glass.ide.GlassIDE
 import javax.swing.BorderFactory
 import java.awt.Color
 

@@ -14,18 +14,26 @@ class ListenerPanelController(event: GlassEvent, view: ListenerPanel)
         extends ExpressionPanelController[EventListener](view)
         with Logging {
 
+    // An event listener is just a function tied to an event, as such the event
+    // listener panel is just a wrapper for the function panel with an event
+    // attached. When an event listener panel is created, in turn, we create a
+    // function panel. 
+    val functionController = new FunctionPanelController(new FunctionPanel)
+    view.contents += functionController.view
+
+    /** {@inheritDoc}
+      */
     override def validate: Unit = {
         // TODO
         log.error("TODO: implement ListenerPanelController.validate")
     }
 
+    /** {@inheritDoc}
+      */
     override def compile(scope: Scope): EventListener = {
         log.info("Compiling: " + event.getClass().getSimpleName() + " listener..")
-        val fun = new Function
-        view.stepPanels.foreach(
-            step =>
-                fun.addStep(step.compile(fun))
-        );
+        val fun = functionController.compile(scope)
         new EventListener(event, fun)
     }
+    
 }
