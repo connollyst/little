@@ -16,6 +16,8 @@ class ListenerPanelController(event: GlassEvent, view: ListenerPanel)
         with Reactor
         with Logging {
 
+    log.info("Creating a ListenerPanelController for " + event.getClass().getSimpleName())
+
     // An event listener is just a function tied to an event, as such the event
     // listener panel is just a wrapper for the function panel with an event
     // attached. When an event listener panel is created, in turn, we create a
@@ -23,28 +25,18 @@ class ListenerPanelController(event: GlassEvent, view: ListenerPanel)
     val functionController = new FunctionPanelController(new FunctionPanel)
     view.contents += functionController.view
 
-    listenTo(view, functionController.view)
-    reactions += {
-        case event: StepAddedEvent =>
-            log.info("StepAddedEvent")
-//            addStep(event.controller)
-        case _ =>
-            log.error("whats this?")
-    }
-
     /** {@inheritDoc}
       */
     override def validate: Unit = {
-        // TODO
-        log.error("TODO: implement ListenerPanelController.validate")
+        log.error("TODO: implement validate")
     }
 
     /** {@inheritDoc}
       */
     override def compile(scope: Scope): EventListener = {
         log.info("Compiling: " + event.getClass().getSimpleName() + " listener..")
-        val fun = functionController.compile(scope)
-        new EventListener(event, fun)
+        val function = functionController.compile(scope)
+        new EventListener(event, function)
     }
 
 }

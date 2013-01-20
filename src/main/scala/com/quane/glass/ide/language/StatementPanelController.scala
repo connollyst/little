@@ -26,8 +26,7 @@ class AssignmentStatementPanelController(view: AssignmentStatementPanel)
         with Logging {
 
     override def validate: Unit = {
-        // TODO
-        log.error("TODO: implement AssignmentStatementPanelController.validate")
+        log.error("TODO: implement validate")
     }
 
     override def compile(scope: Scope): AssignmentStatement = {
@@ -42,8 +41,7 @@ class SetSpeedStatementPanelController(view: SetSpeedStatementPanel)
         with Logging {
 
     override def validate: Unit = {
-        // TODO
-        log.error("TODO: implement SetSpeedStatementPanelController.validate")
+        log.error("TODO: implement validate")
     }
 
     override def compile(scope: Scope): SetSpeedStatement = {
@@ -58,8 +56,7 @@ class SetDirectionStatementPanelController(view: SetDirectionStatementPanel)
         with Logging {
 
     override def validate: Unit = {
-        // TODO
-        log.error("TODO: implement SetSpeedStatementPanelController.validate")
+        log.error("TODO: implement validate")
     }
 
     override def compile(scope: Scope): SetDirectionStatement = {

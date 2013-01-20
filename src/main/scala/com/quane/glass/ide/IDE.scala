@@ -50,11 +50,11 @@ class BasePanel
         extends BorderPanel {
 
     val toolkitPanel = new ToolkitPanel
-    val workspacePanel = new WorkspacePanel
+    val workspace = new WorkspaceController(new WorkspacePanel)
     val toolbar = new ToolBar
 
     layout(toolkitPanel) = BorderPanel.Position.West
-    layout(workspacePanel) = BorderPanel.Position.Center
+    layout(workspace.view) = BorderPanel.Position.Center
     layout(toolbar) = BorderPanel.Position.South
 
     IDE.eventBus.register(new MenuBarListener(this))
@@ -68,13 +68,13 @@ class MenuBarListener(ide: BasePanel)
     @Subscribe
     def compileEvent(event: DoCompileEvent) {
         log.info("Compiling..")
-        ide.workspacePanel.compileAll
+        ide.workspace.compileAll
     }
 
     @Subscribe
     def runEvent(event: DoRunEvent) {
         log.info("Compiling..")
-        val eventListeners = ide.workspacePanel.compileAll
+        val eventListeners = ide.workspace.compileAll
         log.info("Running..");
         new GlassGameFrame().run(eventListeners)
     }

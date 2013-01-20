@@ -16,6 +16,8 @@ import com.quane.glass.ide.DragOutEvent
 import com.quane.glass.ide.DropExpressionEvent
 import com.quane.glass.ide.swing.HighlightableComponent
 import com.quane.glass.ide.StepAddedEvent
+import scala.swing.Label
+import java.awt.Dimension
 
 class FunctionPanel
         extends BoxPanel(Orientation.Vertical)
@@ -24,6 +26,10 @@ class FunctionPanel
         with HighlightableComponent
         with Logging {
 
+    log.info("Creating a FunctionPanel")
+    
+    preferredSize = new Dimension(200, 200)
+    
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>

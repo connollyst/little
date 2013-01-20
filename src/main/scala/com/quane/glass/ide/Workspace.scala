@@ -28,8 +28,6 @@ class WorkspacePanel
 
     background = Color.white
 
-    val frameControllers = new ListBuffer[WorkspaceFrameController]()
-
     /** Returns true/false if the specified item can/cannot be dropped here,
       * respectively.
       *
@@ -43,76 +41,74 @@ class WorkspacePanel
         }
     }
 
+    /** Adds a {@link WorkspaceFrame} to the workspace.
+      *
+      * @param frame
+      * 		the {@link WorkspaceFrame} to be added to the
+      * 		{@link WorkspacePanel}
+      */
+    def add(frame: WorkspaceFrame) = {
+        super.add(frame);
+    }
+
     // Listen for the mouse entering and exiting the workspace
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>
-            log.info("WorkspacePanel.MouseEntered")
+            log.info("MouseEntered")
             IDE.eventBus.post(event)
         case event: MouseExited =>
-            log.info("WorkspacePanel.MouseExited")
+            log.info("MouseExited")
             IDE.eventBus.post(event)
         case event: DragOverEvent =>
-            log.info("WorkspacePanel.DragOverEvent")
+            log.info("DragOverEvent")
             highlight
         case event: DragOutEvent =>
-            log.info("WorkspacePanel.DragOutEvent")
+            log.info("DragOutEvent")
             unhighlight
         case event: DropExpressionEvent =>
-            log.info("WorkspacePanel.DropExpressionEvent")
+            log.info("DropExpressionEvent")
             unhighlight
             val controller = event.dropFunction()
             controller match {
                 case listenerController: ListenerPanelController =>
-                    // TODO compensate for offset in header
-                    val eventX = event.point.x
-                    val eventY = event.point.y
-                    val workspaceX = bounds.x
-                    val workspaceY = bounds.y
-                    val itemX = eventX - workspaceX
-                    val itemY = eventY - workspaceY
                     log.info("Accepting a " + event.toolType.getClass().getSimpleName())
-                    addEventFrame(listenerController, event.toolType, itemX, itemY)
+                    val point = relativeCoordinates(event.point)
+                    publish(
+                        new ListenerAddedEvent(
+                            listenerController,
+                            event.toolType,
+                            point.x,
+                            point.y
+                        )
+                    )
                 case _ =>
-                    log.error("??? can't accept drop of " + controller.getClass().getSimpleName())
+                    log.error(
+                        classOf[WorkspacePanel].getSimpleName()
+                            + " can't accept drop of "
+                            + controller.getClass().getSimpleName()
+                    )
             }
     }
 
-    /** Add a frame to the workspace.
+    /** Translates an absolute {@link Point} to a relative point. That is, the
+      * x and y coordinates of the point are adjusted to be relative to the
+      * {@link WorkspacePanel}.
       *
-      * @param controller
-      * 		the controller for the frame
-      * @param x
-      * 		the x coordinate of the upper left corner of the frame
-      * @param y
-      * 		the y coordinate of the upper left corner of the frame
+      * @param point
+      * 		the {@link Point} with absolute coordinates
+      * @return
+      * 		a {@link Point} with relative coordinates
       */
-    def addEventFrame(panelController: ListenerPanelController,
-                      toolType: ToolType,
-                      x: Int,
-                      y: Int) = {
-        val frameView = new WorkspaceFrame(toolType.getClass().getSimpleName());
-        frameView.location = new Point(x, y)
-        frameView.pack
-        add(frameView)
-        repaint
-        // TODO I think this should be coming from the workspace controller
-        val frameController = new WorkspaceFrameController(frameView, panelController)
-        frameControllers += frameController
-    }
-
-    /** Compiles all active frames into their respective Glass code.<br/>
-      * TODO9 Sean.. this doesn't make any sense. What would be the purpose of
-      * compiling all _visible_ code?
-      */
-    def compileAll: List[EventListener] = {
-        val eventListeners = new ListBuffer[EventListener]
-        frameControllers.foreach(
-            controller => {
-                eventListeners += controller.compile
-            }
-        )
-        eventListeners toList
+    def relativeCoordinates(point: Point): Point = {
+        val eventX = point.x
+        val eventY = point.y
+        // TODO compensate for offset in header
+        val workspaceX = bounds.x
+        val workspaceY = bounds.y
+        val relativeX = eventX - workspaceX
+        val relativeY = eventY - workspaceY
+        new Point(relativeX, relativeY)
     }
 
 }

@@ -12,16 +12,12 @@ class WorkspaceFrameController(
         extends Logging {
 
     def validate: Unit = {
-        // TODO
-        log.error("TODO: implement EventFrameController.validate")
+        log.error("TODO: implement validate")
     }
 
     def compile: EventListener = {
-        log.info("Compiling: glass frame..")
+        log.info("Compiling: WorkspaceFrameController..")
         panelController.compile(null);
-        //        val function = view.
-        //        val listener = new EventListener(event, function: Function)
-        null // TODO
     }
 
 }

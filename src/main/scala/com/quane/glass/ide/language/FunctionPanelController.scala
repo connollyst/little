@@ -13,20 +13,17 @@ class FunctionPanelController(view: FunctionPanel)
         with Reactor
         with Logging {
 
+    log.info("Creating a FunctionPanelController")
+
     val steps = new ListBuffer[ExpressionPanelController[Expression[Any]]]()
 
-    def addStep(controller: ExpressionPanelController[Expression[Any]]) = {
-        steps += controller
-    }
-
     override def validate: Unit = {
-        // TODO
-        log.error("TODO: implement FunctionPanelController.validate")
+        log.error("TODO: implement validate")
     }
 
     override def compile(scope: Scope): Function = {
         log.info("Compiling: function..")
-        val fun = new Function(scope) // TODO this will always be null, yeah?
+        val fun = new Function(scope) // TODO scope will always be null, yeah?
         steps.foreach(
             step =>
                 fun.addStep(step.compile(fun))
@@ -37,9 +34,6 @@ class FunctionPanelController(view: FunctionPanel)
     listenTo(view)
     reactions += {
         case event: StepAddedEvent =>
-            log.info("StepAddedEvent")
-            addStep(event.controller)
-        case _ =>
-            log.error("whats this?")
+            steps += event.controller
     }
 }

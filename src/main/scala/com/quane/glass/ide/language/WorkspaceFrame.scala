@@ -20,8 +20,9 @@ import com.quane.glass.ide.IDE
 import com.quane.glass.ide.swing.HighlightableComponent
 import com.quane.glass.ide.SetterToolType
 import com.quane.glass.ide.StepAddedEvent
+import scala.swing.Panel
 
-class WorkspaceFrame(title: String)
+class WorkspaceFrame(title: String, panel: ExpressionPanel)
         extends InternalFrame
         with Logging {
 
@@ -33,19 +34,6 @@ class WorkspaceFrame(title: String)
     selected = true
     preferredSize = new Dimension(300, 150)
 
-    add(new WorkspaceFramePanel(this))
-
-}
-
-class WorkspaceFramePanel(frame: InternalFrame)
-        extends FunctionPanel {
-
-    reactions += {
-        case event: DropExpressionEvent =>
-            // TODO there's probably a more efficient way to do this
-            frame.pack
-            log.info("publishing a StepAddedEvent")
-            publish(new StepAddedEvent(null))
-    }
+    add(panel)
 
 }
