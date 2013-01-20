@@ -1,35 +1,35 @@
 package com.quane.glass.ide.language
 
-import scala.collection.mutable.ListBuffer
-import scala.swing.BoxPanel
-import scala.swing.Orientation
-import scala.swing.event.MouseEntered
-import scala.swing.event.MouseExited
-import org.eintr.loglady.Logging
-import com.quane.glass.core.language.Expression
-import com.quane.glass.ide.SetterToolType
-import com.quane.glass.ide.DragAndDropItem
-import com.quane.glass.ide.IDE
-import com.quane.glass.ide.DragAndDropTarget
-import com.quane.glass.ide.DragOverEvent
-import com.quane.glass.ide.DragOutEvent
-import com.quane.glass.ide.DropExpressionEvent
-import com.quane.glass.ide.swing.HighlightableComponent
-import com.quane.glass.ide.StepAddedEvent
-import scala.swing.Label
 import java.awt.Dimension
 
+import scala.swing.GridBagPanel
+import scala.swing.GridBagPanel.Fill
+import scala.swing.event.MouseEntered
+import scala.swing.event.MouseExited
+
+import org.eintr.loglady.Logging
+
+import com.quane.glass.ide.DragAndDropItem
+import com.quane.glass.ide.DragAndDropTarget
+import com.quane.glass.ide.DragOutEvent
+import com.quane.glass.ide.DragOverEvent
+import com.quane.glass.ide.DropExpressionEvent
+import com.quane.glass.ide.IDE
+import com.quane.glass.ide.SetterToolType
+import com.quane.glass.ide.StepAddedEvent
+import com.quane.glass.ide.swing.HighlightableComponent
+
 class FunctionPanel
-        extends BoxPanel(Orientation.Vertical)
+        extends GridBagPanel
         with ExpressionPanel
         with DragAndDropTarget
         with HighlightableComponent
         with Logging {
 
     log.info("Creating a FunctionPanel")
-    
+
     preferredSize = new Dimension(200, 200)
-    
+
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>
@@ -49,7 +49,9 @@ class FunctionPanel
             unhighlight
             log.info("Accepting a " + event.toolType.getClass().getSimpleName())
             val controller = event.dropFunction()
-            contents += controller.view
+            val constraint = new Constraints
+            constraint.fill = Fill.Horizontal
+            add(controller.view, constraint)
             log.info("publishing a StepAddedEvent")
             publish(new StepAddedEvent(controller))
     }

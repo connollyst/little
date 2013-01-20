@@ -36,4 +36,10 @@ class WorkspaceFrame(title: String, panel: ExpressionPanel)
 
     add(panel)
 
+    listenTo(panel)
+    reactions += {
+        case event: StepAddedEvent =>
+            log.info("StepAddedEvent")
+            pack
+    }
 }

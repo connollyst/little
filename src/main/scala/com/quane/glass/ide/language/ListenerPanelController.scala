@@ -22,8 +22,7 @@ class ListenerPanelController(event: GlassEvent, view: ListenerPanel)
     // listener panel is just a wrapper for the function panel with an event
     // attached. When an event listener panel is created, in turn, we create a
     // function panel. 
-    val functionController = new FunctionPanelController(new FunctionPanel)
-    view.contents += functionController.view
+    val functionController = new FunctionPanelController(view)
 
     /** {@inheritDoc}
       */
