@@ -1,9 +1,11 @@
 package com.quane.glass.core.language
 
+import com.quane.glass.core.language.data.Bool
+
 class Test(
-    left: Expression[Boolean],
+    left: Expression[Bool],
     operator: LogicalOperator,
-    right: Expression[Boolean])
+    right: Expression[Bool])
         extends Expression[Boolean] {
 
     def evaluate: Boolean = isTrue
@@ -11,10 +13,10 @@ class Test(
     def isTrue: Boolean = {
         operator match {
             case AND => {
-                (left.evaluate && right.evaluate)
+                (left.evaluate.primitive && right.evaluate.primitive)
             }
             case OR => {
-                (left.evaluate || right.evaluate)
+                (left.evaluate.primitive || right.evaluate.primitive)
             }
         }
     }
@@ -26,3 +28,5 @@ class Test(
 sealed trait LogicalOperator
 object AND extends LogicalOperator
 object OR extends LogicalOperator
+// TODO
+// XOR etc?

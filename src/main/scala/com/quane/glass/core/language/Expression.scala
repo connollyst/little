@@ -1,11 +1,11 @@
 package com.quane.glass.core.language
 
-/**
- *
- * @author Sean Connolly
- */
+import com.quane.glass.core.language.data.Value
+
+/** @author Sean Connolly
+  */
 trait Expression[+T] {
 
-  def evaluate: T
+    def evaluate: T
 
 }

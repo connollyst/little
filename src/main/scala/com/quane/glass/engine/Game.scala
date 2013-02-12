@@ -13,13 +13,12 @@ import org.newdawn.slick.SlickException
 import org.newdawn.slick.geom.Circle
 import org.newdawn.slick.geom.Line
 import org.newdawn.slick.geom.Rectangle
-import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.core.event.EventListener
-import com.quane.glass.entities.WorldEdge
 import com.quane.glass.core.Guy
+import com.quane.glass.core.event.EventListener
+import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.core.language.data.Number
+import com.quane.glass.entities.WorldEdge
 import com.quane.glass.core.Programs
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
 
 /** The Glass game.
   *
@@ -51,8 +50,10 @@ class Game extends BasicGame("Glass") {
         engine.world.setContactListener(new GlassContactListener(this))
         container.setMinimumLogicUpdateInterval(-1) // Default
         container.setMaximumLogicUpdateInterval(50)
-        //        guy.addEventListener(new EventListener(GlassEvent.OnSpawn, Programs.move(guy, 10)))
+        val speed = new Number(100);
+        guy.addEventListener(new EventListener(GlassEvent.OnSpawn, Programs.move(guy, speed)));
         //        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.stop(guy)))
+        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.turnRandom(guy)));
         //        Programs.inTime(4, Programs.stop(guy));
         //        Programs.inTime(4, Programs.turn(guy, 10))
         //        Programs.inTime(5, Programs.move(guy, 50))

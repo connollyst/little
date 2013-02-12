@@ -19,6 +19,28 @@ import com.google.common.eventbus.Subscribe
 // X compile programs to expressions
 // X add game into ide
 // X add menu to run game
+
+// V1:
+// OnSpawn - Move forward
+// OnContact - Turn Randomly
+// OnCloseToFood - Go Toward Food
+// OnGotFood - Stop
+// V2:
+// Backed by GUI
+// V3:
+// Other objects.. can bounce off anything
+// V4:
+// Remove Walls.
+// Scrolling - limited distance from dude
+// Large World - not procedural ATM
+
+// - game always running
+// - push changes to game on 'Run'
+// - game follows guy 
+
+
+
+
 // ~ add support for other events
 // - add support for multiple guys
 // - add support for obstacles

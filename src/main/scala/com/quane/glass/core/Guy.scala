@@ -79,11 +79,11 @@ class Guy(val body: Body)
         this.speed = math.max(Guy.MIN_SPEED, math.min(speed, Guy.MAX_SPEED))
     }
 
-    def setDirection(direction: Int): Unit = {
-        if (direction < 0) {
-            setDirection(360 + direction)
+    def setDirection(degrees: Int): Unit = {
+        if (degrees < 0) {
+            setDirection(360 + degrees)
         } else {
-            this.direction = direction % 360
+            this.direction = degrees % 360
         }
     }
 
@@ -95,7 +95,7 @@ class Guy(val body: Body)
             setSpeed(
                 variable.value match {
                     case number: Number =>
-                        number.evaluate
+                        number.primitive
                     case other: Any =>
                         throw new ClassCastException(
                             "Cannot set " + Guy.VAR_SPEED + " to a "
@@ -109,7 +109,7 @@ class Guy(val body: Body)
             setDirection(
                 variable.value match {
                     case direction: Direction =>
-                        direction.evaluate
+                        direction.primitive
                     case other: Any =>
                         throw new ClassCastException(
                             "Cannot set " + Guy.VAR_DIRECTION + " to a "

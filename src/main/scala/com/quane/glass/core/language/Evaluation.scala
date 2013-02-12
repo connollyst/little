@@ -1,13 +1,16 @@
 package com.quane.glass.core.language
 
+import com.quane.glass.core.language.data.Bool
+
 class Evaluation[T](
     left: Expression[T],
     operator: EvaluationOperator,
     right: Expression[T])
-        extends Expression[Boolean] {
+        extends Expression[Bool] {
 
-    def evaluate: Boolean = {
-        operator match {
+    def evaluate: Bool = {
+        // TODO clean this up, gross!
+        val retVal = operator match {
             case Equals => {
                 left equals right
             }
@@ -15,9 +18,14 @@ class Evaluation[T](
                 !(left equals right)
             }
         }
+        new Bool(retVal)
     }
 }
 
 sealed trait EvaluationOperator
 object Equals extends EvaluationOperator
 object NotEquals extends EvaluationOperator
+// TODO
+// GreaterThan
+// LessThan
+// Contains??

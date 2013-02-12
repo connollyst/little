@@ -1,48 +1,82 @@
 package com.quane.glass.core.language.data
 
-import com.quane.glass.core.language.Expression
 import java.awt.Point
 import java.util.Date
 
-sealed trait Value[+T]
-    extends Expression[T]
+import com.quane.glass.core.language.Expression
+
+/** Values are the primitive data types exposed to the user. A Value is an
+  * Expression in an of itself, a Value evaluates to itself.
+  *
+  * @author Sean Connolly
+  */
+sealed trait Value
 
 class Bool(value: Boolean)
-        extends Value[Boolean] {
-    def evaluate: Boolean = value
+        extends Expression[Bool]
+        with Value {
+
+    def evaluate: Bool = this;
+
+    def primitive: Boolean = value
+
 }
 
+// TODO replace java.awt.Point
 class Location(value: Point)
-        extends Value[Point] { // TODO replace java.awt.Point
-    def evaluate: Point = value
+        extends Expression[Location]
+        with Value {
+
+    def evaluate: Location = this;
+
+    def primitive: Point = value
+
 }
 
 class Number(value: Int)
-        extends Value[Int] {
+        extends Expression[Number]
+        with Value {
 
     def this(value: String) = {
         this(value.toInt)
     }
 
-    def evaluate: Int = value
+    def evaluate: Number = this;
+
+    def primitive: Int = value
+
 }
 
 class Direction(value: Int)
-        extends Value[Int] {
+        extends Expression[Direction]
+        with Value {
 
     def this(value: String) = {
         this(value.toInt)
     }
 
-    def evaluate: Int = value
+    def evaluate: Direction = this;
+
+    def primitive: Int = value
+
 }
 
 class Text(value: String)
-        extends Value[String] {
-    def evaluate: String = value
+        extends Expression[Text]
+        with Value {
+
+    def evaluate: Text = this;
+
+    def primitive: String = value
+
 }
 
 class Time(value: Date)
-        extends Value[Date] {
-    def evaluate: Date = value
+        extends Expression[Time]
+        with Value {
+
+    def evaluate: Time = this;
+
+    def primitive: Date = value
+
 }

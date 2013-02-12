@@ -31,7 +31,7 @@ trait Scope
       * @param variable the variable to be stored in memory
       */
     def save(variable: Variable): Unit = {
-        log.info("Remembering '" + variable.name + "' as '" + variable.value.evaluate + "'")
+        log.info("Remembering '" + variable.name + "' as '" + variable.value + "'")
         if (scope != null && scope.isDefined(variable.name)) {
             scope.save(variable)
         } else {

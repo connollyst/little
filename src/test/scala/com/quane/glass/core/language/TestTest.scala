@@ -9,8 +9,8 @@ import com.quane.glass.core.language.data.False
 @RunWith(classOf[JUnitRunner])
 class TestTest extends FunSuite {
 
-    val t: True = new True
-    val f: False = new False
+    val t = new True
+    val f = new False
 
     // Test AND
     test("t && t == t") {

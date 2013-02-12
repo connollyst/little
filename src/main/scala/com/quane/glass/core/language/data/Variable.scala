@@ -4,4 +4,4 @@ package com.quane.glass.core.language.data
   *
   * @author Sean Connolly
   */
-class Variable(val name: String, val value: Value[Any])
+class Variable(val name: String, val value: Value) // can it be locked down more than Any?
