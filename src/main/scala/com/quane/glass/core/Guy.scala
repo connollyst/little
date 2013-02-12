@@ -95,7 +95,7 @@ class Guy(val body: Body)
             setSpeed(
                 variable.value match {
                     case number: Number =>
-                        number.primitive
+                        number.int
                     case other: Any =>
                         throw new ClassCastException(
                             "Cannot set " + Guy.VAR_SPEED + " to a "
@@ -109,7 +109,7 @@ class Guy(val body: Body)
             setDirection(
                 variable.value match {
                     case direction: Direction =>
-                        direction.primitive
+                        direction.degrees
                     case other: Any =>
                         throw new ClassCastException(
                             "Cannot set " + Guy.VAR_DIRECTION + " to a "

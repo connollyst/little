@@ -29,7 +29,7 @@ class Location(value: Point)
 
     def evaluate: Location = this;
 
-    def primitive: Point = value
+    def point: Point = value
 
 }
 
@@ -43,7 +43,7 @@ class Number(value: Int)
 
     def evaluate: Number = this;
 
-    def primitive: Int = value
+    def int: Int = value
 
 }
 
@@ -54,10 +54,14 @@ class Direction(value: Int)
     def this(value: String) = {
         this(value.toInt)
     }
+    
+    def this(value: Number) = {
+        this(value.int);
+    }
 
     def evaluate: Direction = this;
 
-    def primitive: Int = value
+    def degrees: Int = value
 
 }
 
@@ -67,7 +71,7 @@ class Text(value: String)
 
     def evaluate: Text = this;
 
-    def primitive: String = value
+    def string: String = value
 
 }
 
@@ -77,6 +81,6 @@ class Time(value: Date)
 
     def evaluate: Time = this;
 
-    def primitive: Date = value
+    def date: Date = value
 
 }

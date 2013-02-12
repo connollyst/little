@@ -53,7 +53,7 @@ class Game extends BasicGame("Glass") {
         val speed = new Number(100);
         guy.addEventListener(new EventListener(GlassEvent.OnSpawn, Programs.move(guy, speed)));
         //        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.stop(guy)))
-        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.turnRandom(guy)));
+        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.turnRelative(guy)));
         //        Programs.inTime(4, Programs.stop(guy));
         //        Programs.inTime(4, Programs.turn(guy, 10))
         //        Programs.inTime(5, Programs.move(guy, 50))

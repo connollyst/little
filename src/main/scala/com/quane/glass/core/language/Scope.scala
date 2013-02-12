@@ -52,7 +52,7 @@ trait Scope
         } else if (scope != null) {
             scope.fetch(name)
         } else {
-            null
+            null // TODO null bad
         }
     }
 

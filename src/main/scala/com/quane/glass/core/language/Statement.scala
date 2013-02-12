@@ -10,6 +10,16 @@ import com.quane.glass.core.Guy
 abstract class Statement[T]
     extends Expression[T]
 
+class GetterStatement(scope: Scope, name: String)
+        extends Statement[Value]
+        with Logging {
+
+    def evaluate: Value = {
+        log.info("Getting the value of '" + name + "'...");
+        scope.fetch(name).value; // TODO check is null
+    }
+}
+
 // TODO can names be dynamic?.. not at the moment (KISS)
 class AssignmentStatement(scope: Scope, name: String, value: Expression[Value])
         extends Statement[Unit]

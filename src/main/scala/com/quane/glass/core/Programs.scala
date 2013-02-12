@@ -2,7 +2,6 @@ package com.quane.glass.core
 
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-
 import com.quane.glass.core.language.AssignmentStatement
 import com.quane.glass.core.language.Conditional
 import com.quane.glass.core.language.Equals
@@ -11,7 +10,11 @@ import com.quane.glass.core.language.Expression
 import com.quane.glass.core.language.Function
 import com.quane.glass.core.language.data.Direction
 import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.Value
+import com.quane.glass.core.language.math.RandomNumber
+import com.quane.glass.core.language.GetterStatement
+import com.quane.glass.core.language.AssignmentStatement
+import com.quane.glass.core.language.PrintStatement
+import com.quane.glass.core.language.math.Addition
 
 /** A set programs used during development - mostly to sanity check the
   * language and how it compiles.
@@ -50,7 +53,24 @@ object Programs {
     }
 
     def turnRandom(guy: Guy): Function = {
-        turn(guy, new Direction(120));
+        val min = new Number(1)
+        val max = new Number(360)
+        // Generates one number up front:
+        val degrees = new RandomNumber(min, max)
+        turn(guy, new Direction(degrees))
+        // val randomFun = new Function(guy) // TODO must return a Number
+        // turn(guy, randomFun)
+    }
+
+    def turnRelative(guy: Guy): Function = {
+        val relativelyFun = new Function(guy)
+        val getCurrentSpeed = new GetterStatement(relativelyFun, Guy.VAR_DIRECTION)
+        // TODO instead of a map of String->Variables, let's have a Memory
+        // object with preallocated, typed, variables at compile time
+//        val newSpeed = new Addition(getCurrentSpeed, new Number(60))
+//        val setNewSpeed = new AssignmentStatement(relativelyFun, Guy.VAR_DIRECTION, newSpeed)
+//        relativelyFun.addStep(setNewSpeed)
+        relativelyFun
     }
 
     def voyage(guy: Guy): Function = {
