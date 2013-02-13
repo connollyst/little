@@ -11,9 +11,16 @@ import com.quane.glass.core.language.Expression
   * @author Sean Connolly
   */
 sealed trait Value {
-    
+
     def primitive: Any
-    
+
+}
+
+sealed trait NumericValue
+        extends Value {
+
+    def primitive: Int
+
 }
 
 class Bool(value: Boolean)
@@ -34,14 +41,14 @@ class Location(value: Point)
     def evaluate: Location = this;
 
     def primitive: Point = value
-    
+
     def point: Point = primitive
-    
+
 }
 
 class Number(value: Int)
         extends Expression[Number]
-        with Value {
+        with NumericValue {
 
     def this(value: String) = {
         this(value.toInt)
@@ -50,19 +57,19 @@ class Number(value: Int)
     def evaluate: Number = this;
 
     def primitive: Int = value
-    
+
     def int: Int = primitive
-    
+
 }
 
 class Direction(value: Int)
         extends Expression[Direction]
-        with Value {
+        with NumericValue {
 
     def this(value: String) = {
         this(value.toInt)
     }
-    
+
     def this(value: Number) = {
         this(value.int);
     }
@@ -70,9 +77,10 @@ class Direction(value: Int)
     def evaluate: Direction = this;
 
     def primitive: Int = value
-    
+
     def degrees: Int = primitive
 
+    def asNumber: Number = new Number(degrees)
 }
 
 class Text(value: String)
@@ -82,7 +90,7 @@ class Text(value: String)
     def evaluate: Text = this;
 
     def primitive: String = value
-    
+
     def string: String = primitive
 
 }
@@ -94,7 +102,7 @@ class Time(value: Date)
     def evaluate: Time = this;
 
     def primitive: Date = value
-    
+
     def date: Date = primitive
 
 }

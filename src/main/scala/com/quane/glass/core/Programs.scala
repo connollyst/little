@@ -2,7 +2,6 @@ package com.quane.glass.core
 
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-
 import com.quane.glass.core.language.Conditional
 import com.quane.glass.core.language.Equals
 import com.quane.glass.core.language.Evaluation
@@ -10,12 +9,16 @@ import com.quane.glass.core.language.Expression
 import com.quane.glass.core.language.Function
 import com.quane.glass.core.language.SetDirectionStatement
 import com.quane.glass.core.language.SetSpeedStatement
+import com.quane.glass.core.language.GetterStatement
 import com.quane.glass.core.language.SetterStatement
 import com.quane.glass.core.language.data.Direction
 import com.quane.glass.core.language.data.Location
 import com.quane.glass.core.language.data.Number
 import com.quane.glass.core.language.math.RandomNumber
 import com.quane.glass.core.language.memory.Pointer
+import com.quane.glass.core.language.math.Addition
+import com.quane.glass.core.language.CastDirectionToNumber
+import com.quane.glass.core.language.CastNumberToDirection
 
 /** A set programs used during development - mostly to sanity check the
   * language and how it compiles.
@@ -56,27 +59,23 @@ object Programs {
     def turnRandom(guy: Guy): Function = {
         val min = new Number(1)
         val max = new Number(360)
-        // Generates one number up front:
-        val degrees = new RandomNumber(min, max)
-        turn(guy, new Direction(degrees))
-        // val randomFun = new Function(guy) // TODO must return a Number
+        val randomDirection = new RandomNumber(min, max)
+
         // TODO add a step to get a random number when evaluated
-        // turn(guy, randomFun)
+        val randomFun = new Function(guy)
+        val directionPointer = new Pointer(randomFun, Guy.VAR_DIRECTION, classOf[Direction])
+        //        randomFun.addStep(new SetterStatement(directionPointer, randomDirection))
+        null
     }
 
-    def turnRelative(guy: Guy): Function = {
+    def turnRelative(guy: Guy, degrees: Int): Function = {
         val relativelyFun = new Function(guy)
-        val randSpeed = new RandomNumber(new Number(0), new Number(10))
-        val randPointer = new Pointer(relativelyFun, "x", classOf[Number])
-        val rememberStep = new SetterStatement(randPointer, randSpeed)
-        
-//        val getCurrentSpeed = new GetterStatement(relativelyFun, Guy.VAR_DIRECTION, classOf[Number])
-        // TODO instead of a map of String->Variables, let's have a Memory
-        // object with preallocated, typed, variables at compile time
-//        val newSpeed = new Addition(getCurrentSpeed, new Number(60))
-//        val setNewSpeed = new SetterStatement(relativelyFun, Guy.VAR_DIRECTION, newSpeed)
-//        relativelyFun.addStep(setNewSpeed)
-        relativelyFun
+        val dirPointer = new Pointer(relativelyFun, Guy.VAR_DIRECTION, classOf[Direction])
+        val getCurrentDir = new GetterStatement(dirPointer)
+        val getNewDirectionNumber = new Addition(getCurrentDir, new Number(degrees))
+        val getNewDirection = new CastNumberToDirection(getNewDirectionNumber)
+        val setNewDirection = new SetterStatement(dirPointer, getNewDirection)
+        relativelyFun.addStep(setNewDirection)
     }
 
     def voyage(guy: Guy): Function = {

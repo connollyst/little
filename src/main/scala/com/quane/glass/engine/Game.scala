@@ -52,12 +52,7 @@ class Game extends BasicGame("Glass") {
         container.setMaximumLogicUpdateInterval(50)
         val speed = new Number(100);
         guy.addEventListener(new EventListener(GlassEvent.OnSpawn, Programs.move(guy, speed)));
-        //        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.stop(guy)))
-        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.turnRelative(guy)));
-        //        Programs.inTime(4, Programs.stop(guy));
-        //        Programs.inTime(4, Programs.turn(guy, 10))
-        //        Programs.inTime(5, Programs.move(guy, 50))
-        //        Programs.inTime(6, Programs.turn(guy, -60))
+        guy.addEventListener(new EventListener(GlassEvent.OnContact, Programs.turnRelative(guy, 260)));
     }
 
     /** Update to the next state of the game.

@@ -18,8 +18,9 @@ class Function(var scope: Scope, steps: ListBuffer[Expression[Any]])
 
     def this() = this(null) // TODO we should avoid null, yeah?
 
-    def addStep(step: Expression[Any]): Unit = {
+    def addStep(step: Expression[Any]): Function = {
         steps += step
+        this
     }
 
     def evaluate: Any = {
