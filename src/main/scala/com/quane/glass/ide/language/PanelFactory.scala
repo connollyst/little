@@ -12,8 +12,8 @@ object GlassPanelFactory {
         new PrintStatementPanelController(new PrintStatementPanel)
     }
 
-    def createAssignmentStatementPanel(): AssignmentStatementPanelController = {
-        new AssignmentStatementPanelController(new AssignmentStatementPanel)
+    def createAssignmentStatementPanel(): SetterStatementPanelController = {
+        new SetterStatementPanelController(new SetterStatementPanel)
     }
 
     def createSetSpeedStatementPanel(): SetSpeedStatementPanelController = {

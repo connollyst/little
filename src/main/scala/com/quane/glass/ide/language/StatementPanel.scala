@@ -12,7 +12,7 @@ trait StatementPanel
 
 /** @author Sean Connolly
   */
-class AssignmentStatementPanel(varName: String, varValue: String)
+class SetterStatementPanel(varName: String, varValue: String)
         extends BoxPanel(Orientation.Horizontal)
         with StatementPanel {
     

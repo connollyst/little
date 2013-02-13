@@ -10,7 +10,11 @@ import com.quane.glass.core.language.Expression
   *
   * @author Sean Connolly
   */
-sealed trait Value
+sealed trait Value {
+    
+    def primitive: Any
+    
+}
 
 class Bool(value: Boolean)
         extends Expression[Bool]
@@ -29,8 +33,10 @@ class Location(value: Point)
 
     def evaluate: Location = this;
 
-    def point: Point = value
-
+    def primitive: Point = value
+    
+    def point: Point = primitive
+    
 }
 
 class Number(value: Int)
@@ -43,8 +49,10 @@ class Number(value: Int)
 
     def evaluate: Number = this;
 
-    def int: Int = value
-
+    def primitive: Int = value
+    
+    def int: Int = primitive
+    
 }
 
 class Direction(value: Int)
@@ -61,7 +69,9 @@ class Direction(value: Int)
 
     def evaluate: Direction = this;
 
-    def degrees: Int = value
+    def primitive: Int = value
+    
+    def degrees: Int = primitive
 
 }
 
@@ -71,7 +81,9 @@ class Text(value: String)
 
     def evaluate: Text = this;
 
-    def string: String = value
+    def primitive: String = value
+    
+    def string: String = primitive
 
 }
 
@@ -81,6 +93,8 @@ class Time(value: Date)
 
     def evaluate: Time = this;
 
-    def date: Date = value
+    def primitive: Date = value
+    
+    def date: Date = primitive
 
 }

@@ -1,16 +1,19 @@
 package com.quane.glass.ide.language
 
 import org.eintr.loglady.Logging
-import com.quane.glass.core.language.AssignmentStatement
+
+import com.quane.glass.core.Guy
 import com.quane.glass.core.language.Expression
 import com.quane.glass.core.language.PrintStatement
-import com.quane.glass.core.language.SetSpeedStatement
 import com.quane.glass.core.language.Scope
-import com.quane.glass.core.language.data.Text
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.Direction
-import com.quane.glass.core.Guy
 import com.quane.glass.core.language.SetDirectionStatement
+import com.quane.glass.core.language.SetSpeedStatement
+import com.quane.glass.core.language.SetterStatement
+import com.quane.glass.core.language.data.Direction
+import com.quane.glass.core.language.data.Number
+import com.quane.glass.core.language.data.Text
+import com.quane.glass.core.language.data.Value
+import com.quane.glass.core.language.memory.Pointer
 
 /** @author Sean Connolly
   */
@@ -23,17 +26,18 @@ abstract class StatementPanelController[E <: Expression[Any]](override val view:
   *
   * @author Sean Connolly
   */
-class AssignmentStatementPanelController(override val view: AssignmentStatementPanel)
-        extends StatementPanelController[AssignmentStatement](view)
+class SetterStatementPanelController(override val view: SetterStatementPanel)
+        extends StatementPanelController[SetterStatement[_ <: Value]](view)
         with Logging {
 
     override def validate: Unit = {
         log.error("TODO: implement validate")
     }
 
-    override def compile(scope: Scope): AssignmentStatement = {
+    override def compile(scope: Scope): SetterStatement[_ <: Value] = {
         log.info("Compiling: Set " + view.variableName + "='" + view.variableValue + "'");
-        new AssignmentStatement(scope, view.variableName, new Text(view.variableValue))
+        val pointer = new Pointer(scope, view.variableName, classOf[Text])
+        new SetterStatement(pointer, new Text(view.variableValue))
     }
 
 }

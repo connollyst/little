@@ -90,8 +90,9 @@ class Guy(val body: Body)
     /* Intercept the Scope memory functions to access keyword variables */
 
     override def save(variable: Variable) = {
-        log.info("Guy is saving " + variable.name);
-        if (variable.name.equals(Guy.VAR_SPEED)) {
+        val name = variable.name
+        log.info("Guy is saving " + name);
+        if (name.equals(Guy.VAR_SPEED)) {
             setSpeed(
                 variable.value match {
                     case number: Number =>
@@ -105,7 +106,7 @@ class Guy(val body: Body)
                         )
                 }
             )
-        } else if (variable.name.equals(Guy.VAR_DIRECTION)) {
+        } else if (name.equals(Guy.VAR_DIRECTION)) {
             setDirection(
                 variable.value match {
                     case direction: Direction =>

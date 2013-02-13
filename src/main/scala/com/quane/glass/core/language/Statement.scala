@@ -1,43 +1,59 @@
 package com.quane.glass.core.language
 
 import org.eintr.loglady.Logging
-import com.quane.glass.core.language.data.Value
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.Direction
-import com.quane.glass.core.language.data.Variable
+
 import com.quane.glass.core.Guy
+import com.quane.glass.core.exceptions.GlassCastException
+import com.quane.glass.core.language.data.Direction
+import com.quane.glass.core.language.data.Number
+import com.quane.glass.core.language.data.Value
+import com.quane.glass.core.language.data.Variable
+import com.quane.glass.core.language.memory.Pointer
 
 abstract class Statement[T]
     extends Expression[T]
 
-class GetterStatement(scope: Scope, name: String)
-        extends Statement[Value]
-        with Logging {
-
-    def evaluate: Value = {
-        log.info("Getting the value of '" + name + "'...");
-        scope.fetch(name).value; // TODO check is null
-    }
-}
-
-// TODO can names be dynamic?.. not at the moment (KISS)
-class AssignmentStatement(scope: Scope, name: String, value: Expression[Value])
+class SetterStatement[+V <: Value](pointer: Pointer[V], value: Expression[V]) // TODO we need a compiler check that its the right value type..?
         extends Statement[Unit]
         with Logging {
 
     def evaluate: Unit = {
-        log.info("Setting the value of '" + name + "' to '" + value + "'");
-        scope.save(new Variable(name, value.evaluate))
+        val name = pointer.variableName
+        val valueClass = pointer.valueClass
+        val actualValue = value.evaluate
+        log.info("Setting '" + name + "' to " + valueClass.getSimpleName + "(" + actualValue.primitive + ")");
+        pointer.scope.save(new Variable(name, actualValue))
         // TODO could return value!
     }
 
 }
 
 class SetSpeedStatement(scope: Scope, value: Expression[Number])
-    extends AssignmentStatement(scope, Guy.VAR_SPEED, value);
+    extends SetterStatement(new Pointer[Number](scope, Guy.VAR_SPEED, classOf[Number]), value);
 
 class SetDirectionStatement(scope: Scope, value: Expression[Direction])
-    extends AssignmentStatement(scope, Guy.VAR_DIRECTION, value);
+    extends SetterStatement[Direction](new Pointer[Direction](scope, Guy.VAR_DIRECTION, classOf[Direction]), value);
+
+class GetterStatement[V <: Value](pointer: Pointer[V])
+        extends Statement[V]
+        with Logging {
+    
+    def evaluate: V = {
+        val name = pointer.variableName
+        log.info("Getting the value of '" + name + "'...");
+        val scope = pointer.scope
+        val clazz = pointer.valueClass
+        val value = scope.fetch(name).value; // TODO null check please
+        if (value.getClass == clazz) {
+            return value.asInstanceOf[V]
+        } else {
+            throw new GlassCastException(
+                "'" + name + "' is a " + value
+                    + ", expected " + pointer.valueClass
+            );
+        }
+    }
+}
 
 class PrintStatement(text: String)
         extends Statement[Unit]

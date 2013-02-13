@@ -16,25 +16,27 @@ class TestScope extends FunSuite {
     test("test scope: fetch from parent scope") {
         val fun1 = new Function(null)
         val fun2 = new Function(fun1)
-        fun1.save(new Variable("MyA", new Text("A")))
-        fun2.save(new Variable("MyB", new Text("B")))
-        val myA = fun2.fetch("MyA")
-        val myB = fun2.fetch("MyB")
-        assert(myA.value == "A", "expected 'MyA' to be 'A' but is: " + myA.value)
-        assert(myB.value == "B", "expected 'MyB' to be 'B' but is: " + myB.value)
+        fun1.save(new Variable("Obj1", new Text("A")))
+        fun2.save(new Variable("Obj2", new Text("B")))
+        val obj1 = fun2.fetch("Obj1")
+        val obj2 = fun2.fetch("Obj2")
+        val obj1Value = obj1.value.primitive
+        val obj2Value = obj2.value.primitive
+        assert(obj1Value == "A", "expected 'Obj1' to be 'A' but is: " + obj1Value)
+        assert(obj2Value == "B", "expected 'Obj2' to be 'B' but is: " + obj2Value)
     }
 
     test("test scope: is defined: positive") {
         val fun1 = new Function(null)
-        fun1.save(new Variable("MyA", new Text("A")))
-        val defined = fun1.isDefined("MyA");
-        assert(defined, "expected 'MyA' to be defined")
+        fun1.save(new Variable("Obj1", new Text("A")))
+        val defined = fun1.isDefined("Obj1");
+        assert(defined, "expected 'Obj1' to be defined")
     }
 
     test("test scope: is defined: negative") {
         val fun1 = new Function(null)
-        val defined = fun1.isDefined("MyA");
-        assert(!defined, "didn't expect 'MyA' to be defined")
+        val defined = fun1.isDefined("Obj1");
+        assert(!defined, "didn't expect 'Obj1' to be defined")
     }
 
 }

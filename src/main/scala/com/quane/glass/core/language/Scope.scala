@@ -31,11 +31,13 @@ trait Scope
       * @param variable the variable to be stored in memory
       */
     def save(variable: Variable): Unit = {
-        log.info("Remembering '" + variable.name + "' as '" + variable.value + "'")
-        if (scope != null && scope.isDefined(variable.name)) {
+        val name = variable.name
+        val value = variable.value
+        log.info("Saving '" + name + "' as '" + value.primitive + "'")
+        if (scope != null && scope.isDefined(name)) {
             scope.save(variable)
         } else {
-            memory(variable.name) = variable
+            memory(name) = variable
         }
     }
 

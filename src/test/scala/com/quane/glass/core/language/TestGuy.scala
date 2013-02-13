@@ -20,7 +20,7 @@ class TestGuy extends FunSuite {
         val fun1 = new Function(guy)
         guy.save(new Variable("MyA", new Text("A")))
         val obj1 = fun1.fetch("MyA")
-        assert(obj1.value == "A", "expected 'MyA' to be 'A' but is: " + obj1.value)
+        assert(obj1.value.primitive == "A", "expected 'MyA' to be 'A' but is: " + obj1.value)
     }
 
     test("test guy: 'speed' is defined") {

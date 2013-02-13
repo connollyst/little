@@ -4,6 +4,8 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.glass.core.language.data.Text
+import com.quane.glass.core.language.data.Number
+import com.quane.glass.core.language.memory.Pointer
 
 /** @author Sean Connolly
   */
@@ -15,30 +17,37 @@ class TestFunction extends FunSuite {
       */
     test("test function: new") {
         val fun = new Function(null)
-        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("A")))
-        fun.addStep(new AssignmentStatement(fun, "Obj2", new Text("B")))
+        val pointer1 = new Pointer(fun, "Obj1", classOf[Text])
+        val pointer2 = new Pointer(fun, "Obj2", classOf[Text])
+        fun.addStep(new SetterStatement(pointer1, new Text("A")))
+        fun.addStep(new SetterStatement(pointer2, new Text("B")))
         fun.evaluate
         val obj1 = fun.fetch("Obj1")
         val obj2 = fun.fetch("Obj2")
-        assert(obj1.value == "A", "expected Obj1 to be 'A' but is: " + obj1.value)
-        assert(obj2.value == "B", "expected Obj2 to be 'B' but is: " + obj2.value)
+        val obj1Value = obj1.value.primitive
+        val obj2Value = obj2.value.primitive
+        assert(obj1Value == "A", "expected Obj1 to be 'A' but is: " + obj1Value)
+        assert(obj2Value == "B", "expected Obj2 to be 'B' but is: " + obj2Value)
     }
 
     /** Test evaluating a {@code Function} where two objects are created and then
-      * the value of the former changed to that of the latter.<br/>
+      * the value of one changed to that of the other.<br/>
       * Assert their stored values are accurate.
       */
     test("test function: assignment") {
         val fun = new Function(null)
-        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("A")))
-        fun.addStep(new AssignmentStatement(fun, "Obj2", new Text("B")))
-        // TODO we need a new AssignmentStatement that sets one Variable to another?
-        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("Obj2")))
+        val pointer1 = new Pointer(fun, "Obj1", classOf[Text])
+        val pointer2 = new Pointer(fun, "Obj2", classOf[Text])
+        fun.addStep(new SetterStatement(pointer1, new Text("A")))
+        fun.addStep(new SetterStatement(pointer2, new Text("B")))
+        fun.addStep(new SetterStatement(pointer1, new GetterStatement(pointer2)))
         fun.evaluate
         val obj1 = fun.fetch("Obj1")
         val obj2 = fun.fetch("Obj2")
-        assert(obj1.value == "B", "expected Obj1 to be 'B' but is: " + obj1.value)
-        assert(obj2.value == "B", "expected Obj2 to be 'B' but is: " + obj2.value)
+        val obj1Value = obj1.value.primitive
+        val obj2Value = obj2.value.primitive
+        assert(obj1Value == "B", "expected Obj1 to be 'B' but is: " + obj1Value)
+        assert(obj2Value == "B", "expected Obj2 to be 'B' but is: " + obj2Value)
     }
 
     /** Test evaluating a {@code Function} with a return value.<br/>
@@ -47,7 +56,8 @@ class TestFunction extends FunSuite {
       */
     test("test function: return step") {
         val fun = new Function(null)
-        fun.addStep(new AssignmentStatement(fun, "Obj1", new Text("A")))
+        val pointer = new Pointer(fun, "Obj1", classOf[Text])
+        fun.addStep(new SetterStatement(pointer, new Text("A")))
         fun.addStep(new ReturnStatement("Obj1", fun))
         val obj1 = fun.evaluate
         // assert(obj1.value == "A", "expected Obj1 to be 'A' but is: " + obj1.value)
