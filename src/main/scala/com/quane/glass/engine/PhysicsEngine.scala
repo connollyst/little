@@ -16,8 +16,8 @@ import org.jbox2d.dynamics.BodyType
 import org.jbox2d.dynamics.FixtureDef
 import org.jbox2d.dynamics.World
 
-import com.quane.glass.entities.Food
-import com.quane.glass.entities.WorldEdge
+import com.quane.glass.entity.Food
+import com.quane.glass.entity.WorldEdge
 
 class PhysicsEngine()
         extends Logging {

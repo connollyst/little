@@ -1,7 +1,7 @@
 package com.quane.glass.engine
 
-import com.quane.glass.entities.Food
-import com.quane.glass.entities.WorldEdge
+import com.quane.glass.entity.Food
+import com.quane.glass.entity.WorldEdge
 import com.quane.glass.core.Guy
 import org.newdawn.slick.geom.Rectangle
 import org.newdawn.slick.geom.Circle

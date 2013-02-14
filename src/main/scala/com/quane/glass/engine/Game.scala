@@ -1,25 +1,22 @@
 package com.quane.glass.engine
 
 import java.lang.Override
+
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.MultiMap
 import scala.collection.mutable.Set
+
 import org.jbox2d.common.Vec2
-import org.jbox2d.dynamics.Body
 import org.newdawn.slick.BasicGame
 import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
-import org.newdawn.slick.geom.Circle
-import org.newdawn.slick.geom.Line
-import org.newdawn.slick.geom.Rectangle
+
 import com.quane.glass.core.Guy
+import com.quane.glass.core.Programs
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.data.Number
-import com.quane.glass.entities.WorldEdge
-import com.quane.glass.core.Programs
-import com.quane.glass.entities.Food
 
 /** The Glass game.
   *
@@ -66,9 +63,6 @@ class Game extends BasicGame("Glass") {
     @Override
     @throws(classOf[SlickException])
     def update(container: GameContainer, delta: Int): Unit = {
-        // Fire any events on the guy
-        // TODO check events; mod nearby, food nearby, etc
-
         // Fire all events which occurred
         eventQueue.keys foreach (
             uuid => {
@@ -132,16 +126,6 @@ class Game extends BasicGame("Glass") {
         val impulseY = targetVelocity * math.sin(impulseAngle) toFloat;
         val impulse = new Vec2(impulseX, impulseY)
         guy.body.applyLinearImpulse(impulse, guy.body.getWorldCenter())
-
-        // View these numbers live
-        //        graphics.drawString("ACCELERATION:", 25, 150)
-        //        graphics.drawString("Impulse Strength: " + impulseStrength, 50, 175)
-        //        graphics.drawString("Impulse Angle: " + math.toDegrees(impulseAngle), 50, 200)
-        //        graphics.drawString("Impulse x: " + impulse.x, 50, 225)
-        //        graphics.drawString("Impulse y: " + impulse.y, 50, 250)
-        //        graphics.drawString("Actual Velocity.x: " + actualVelocity.x, 50, 275)
-        //        graphics.drawString("Actual Velocity.y: " + actualVelocity.y, 50, 300)
-
     }
 
     def rotateGuyToDirection: Unit = {
@@ -150,19 +134,15 @@ class Game extends BasicGame("Glass") {
         val bodyAngle = guy.body.getAngle;
         val nextAngle = bodyAngle + guy.body.getAngularVelocity / 4.5 toFloat;
         var totalRotation = desiredAngle - nextAngle toFloat;
-        while (totalRotation < math.toRadians(-180)) totalRotation += math.toRadians(360).toFloat;
-        while (totalRotation > math.toRadians(180)) totalRotation -= math.toRadians(360).toFloat;
+        while (totalRotation < math.toRadians(-180))
+            totalRotation += math.toRadians(360).toFloat;
+        while (totalRotation > math.toRadians(180))
+            totalRotation -= math.toRadians(360).toFloat;
         var desiredAngularVelocity = totalRotation * 60;
         val change = math.toRadians(1) toFloat; //allow 1 degree rotation per time step
         desiredAngularVelocity = math.min(change, math.max(-change, desiredAngularVelocity));
         val impulse = guy.body.getInertia * desiredAngularVelocity;
         guy.body.applyAngularImpulse(impulse);
-
-        // View these numbers live
-        //        graphics.drawString("ROTATION", 25, 25);
-        //        graphics.drawString("Target Angle: " + desiredAngle, 50, 50);
-        //        graphics.drawString("Body Angle: " + math.toDegrees(bodyAngle), 50, 75);
-        //        graphics.drawString("Next Angle: " + math.toDegrees(nextAngle), 50, 100);
     }
 
     def queueEvent(event: GlassEvent, uuid: String) = {
