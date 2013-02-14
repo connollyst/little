@@ -29,11 +29,12 @@ class Game extends BasicGame("Glass") {
 
     val engine = new PhysicsEngine
     val guy = createGuy
-    val walls = engine.createWalls
-    val foods = engine.createFoodList
+    val walls = engine.builder.buildWalls
+    val foods = engine.builder.buildFoodList
 
     def createGuy: Guy = {
-        val newGuy = new Guy(engine.createBody);
+        val body = engine.builder.buildBody;
+        val newGuy = new Guy(body);
         queueEvent(GlassEvent.OnSpawn, newGuy.uuid toString)
         newGuy
     }
