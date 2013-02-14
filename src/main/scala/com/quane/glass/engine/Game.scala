@@ -19,6 +19,7 @@ import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.data.Number
 import com.quane.glass.entities.WorldEdge
 import com.quane.glass.core.Programs
+import com.quane.glass.entities.Food
 
 /** The Glass game.
   *
@@ -30,8 +31,9 @@ class Game extends BasicGame("Glass") {
     val eventQueue = new HashMap[String, Set[GlassEvent]]() with MultiMap[String, GlassEvent]
 
     val engine = new PhysicsEngine
-    val walls = engine.createWalls;
-    val guy = createGuy;
+    val guy = createGuy
+    val walls = engine.createWalls
+    val foods = engine.createFoodList
 
     def createGuy: Guy = {
         val newGuy = new Guy(engine.createBody);
@@ -98,8 +100,13 @@ class Game extends BasicGame("Glass") {
     @Override
     @throws(classOf[SlickException])
     def render(container: GameContainer, graphics: Graphics): Unit = {
-        walls.foreach(wall => drawWall(graphics, wall))
-        drawGuy(graphics, guy)
+        GameDrawer.drawGuy(graphics, guy)
+        walls.foreach(
+            wall => GameDrawer.drawWall(graphics, wall)
+        )
+        foods.foreach(
+            food => GameDrawer.drawFood(graphics, food)
+        )
     }
 
     /** Apply forces to the guy's physical body in order to maintain correct
@@ -156,29 +163,6 @@ class Game extends BasicGame("Glass") {
         //        graphics.drawString("Target Angle: " + desiredAngle, 50, 50);
         //        graphics.drawString("Body Angle: " + math.toDegrees(bodyAngle), 50, 75);
         //        graphics.drawString("Next Angle: " + math.toDegrees(nextAngle), 50, 100);
-    }
-
-    def drawGuy(graphics: Graphics, guy: Guy): Unit = {
-        drawBody(graphics, guy.body);
-        graphics.drawString("GUY", 700, 25);
-        graphics.drawString("Speed: " + guy.speed, 700, 50)
-        graphics.drawString("Direction: " + guy.direction, 700, 75)
-    }
-
-    def drawBody(graphics: Graphics, body: Body): Unit = {
-        val x = body.getPosition().x;
-        val y = body.getPosition().y;
-        val shape = new Circle(x, y, 20);
-        val angle = body.getAngle();
-        val x2 = x + 10 * math.cos(angle) toFloat;
-        val y2 = y + 10 * math.sin(angle) toFloat;
-        val line = new Line(x, y, x2, y2);
-        graphics.draw(shape);
-        graphics.draw(line);
-    }
-
-    def drawWall(graphics: Graphics, wall: WorldEdge): Unit = {
-        graphics.draw(new Rectangle(wall.x, wall.y, wall.w, wall.h));
     }
 
     def queueEvent(event: GlassEvent, uuid: String) = {

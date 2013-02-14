@@ -4,10 +4,12 @@ import org.jbox2d.callbacks.ContactImpulse
 import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.contacts.Contact
-
 import com.quane.glass.core.event.GlassEvent
+import org.eintr.loglady.Logging
 
-class GlassContactListener(val game: Game) extends ContactListener {
+class GlassContactListener(val game: Game)
+        extends ContactListener
+        with Logging {
 
     def beginContact(contact: Contact) = {
         reportContact(GlassEvent.OnContact, contact);
@@ -25,9 +27,11 @@ class GlassContactListener(val game: Game) extends ContactListener {
         val userDataB = Option(bodyB.getUserData)
 
         if (userDataA.isDefined) {
+            log.info("Contact: A = " + userDataA toString)
             reportContactWithUUID(event, userDataA toString)
         }
         if (userDataB.isDefined) {
+            log.info("Contact: B = " + userDataB toString)
             reportContactWithUUID(event, userDataB toString)
         }
     }
