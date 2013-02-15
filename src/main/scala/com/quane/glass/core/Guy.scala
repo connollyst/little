@@ -8,6 +8,7 @@ import scala.collection.mutable.ListBuffer
 
 import org.eintr.loglady.Logging
 import org.jbox2d.dynamics.Body
+import org.newdawn.slick.Graphics
 
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
@@ -17,6 +18,7 @@ import com.quane.glass.core.language.data.Location
 import com.quane.glass.core.language.data.Number
 import com.quane.glass.core.language.data.Variable
 import com.quane.glass.engine.Game
+import com.quane.glass.engine.GameDrawer
 import com.quane.glass.entity.Entity
 
 object Guy {
@@ -151,6 +153,10 @@ class Guy(body: Body, game: Game)
             // It's not a special variable, fetch it from normal memory
             super.fetch(name);
         }
+    }
+
+    def render(graphics: Graphics) {
+        GameDrawer.drawGuy(graphics, this)
     }
 
 }

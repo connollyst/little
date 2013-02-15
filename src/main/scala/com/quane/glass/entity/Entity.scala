@@ -3,11 +3,14 @@ package com.quane.glass.entity
 import org.jbox2d.dynamics.Body
 import com.quane.glass.core.Guy
 import com.quane.glass.engine.Game
+import org.newdawn.slick.Graphics
 
 abstract class Entity(val body: Body, val game: Game) {
 
+    val isRemoved = false
+
     // TODO body and guy shouldn't be so directly attached
-    body.setUserData(this);
+    body.setUserData(this)
 
     def x: Float = {
         body.getPosition().x
@@ -21,6 +24,8 @@ abstract class Entity(val body: Body, val game: Game) {
         false
     }
 
+    def render(graphics: Graphics)
+    
     def touchedBy(other: Entity)
 
 }

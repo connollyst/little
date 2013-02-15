@@ -33,10 +33,10 @@ trait Scope
     def save(variable: Variable) {
         val name = variable.name
         val value = variable.value
-        log.info("Saving '" + name + "' as '" + value.primitive + "'")
         if (scope != null && scope.isDefined(name)) {
             scope.save(variable)
         } else {
+            log.info("Saving '" + name + "' as '" + value.primitive + "'")
             memory(name) = variable
         }
     }

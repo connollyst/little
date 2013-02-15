@@ -31,7 +31,13 @@ class PhysicsEngine(eventBus: EventBus) {
     val velocityIterations = 8 //how strongly to correct velocity
     val positionIterations = 3 //how strongly to correct position
 
-    def update() {
+    def updateAll(mobs: List[Guy]) {
+        mobs foreach (
+            mob => {
+                accelerateGuyToSpeed(mob)
+                rotateGuyToDirection(mob)
+            }
+        )
         world.step(timeStep, velocityIterations, positionIterations)
     }
 

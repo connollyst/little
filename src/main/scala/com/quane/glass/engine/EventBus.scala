@@ -14,8 +14,7 @@ class EventBus
     // Events that have occurred and are waiting to be handled
     val queue = new HashMap[Guy, Set[GlassEvent]]() with MultiMap[Guy, GlassEvent]
 
-    // TODO what a stupid fucking name..
-    def unload() {
+    def evaluateAll() {
         // TODO check the time and only execute what we can in 1 step
         queue.keys foreach (
             entity => {

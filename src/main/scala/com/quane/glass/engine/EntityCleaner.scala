@@ -7,7 +7,7 @@ import org.jbox2d.dynamics.World
 
 import com.quane.glass.entity.Entity
 
-class WorldCleaner(world: World)
+class WorldCleaner(game: Game, world: World)
         extends Logging {
 
     val queue = new ListBuffer[Entity]
@@ -16,11 +16,14 @@ class WorldCleaner(world: World)
         queue += entity
     }
 
-    def clean {
-        if (!queue.isEmpty) {
-            // TODO clean
-            log.error("TODO clean world")
-        }
+    def cleanAll {
+        queue foreach (
+            entity => {
+                world.destroyBody(entity.body)
+                game.entities -= entity
+            }
+        )
+        queue clear
     }
 
 }
