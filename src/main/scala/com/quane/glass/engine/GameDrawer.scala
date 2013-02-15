@@ -11,14 +11,14 @@ import org.jbox2d.dynamics.Body
 
 object GameDrawer {
 
-    def drawGuy(graphics: Graphics, guy: Guy): Unit = {
+    def drawGuy(graphics: Graphics, guy: Guy) {
         drawBody(graphics, guy.body);
         graphics.drawString("GUY", 700, 25);
         graphics.drawString("Speed: " + guy.speed, 700, 50)
         graphics.drawString("Direction: " + guy.direction, 700, 75)
     }
 
-    def drawBody(graphics: Graphics, body: Body): Unit = {
+    def drawBody(graphics: Graphics, body: Body) {
         val x = body.getPosition().x;
         val y = body.getPosition().y;
         val shape = new Circle(x, y, 20);
@@ -30,11 +30,11 @@ object GameDrawer {
         graphics.draw(line);
     }
 
-    def drawWall(graphics: Graphics, wall: WorldEdge): Unit = {
+    def drawWall(graphics: Graphics, wall: WorldEdge) {
         graphics.draw(new Rectangle(wall.x, wall.y, wall.w, wall.h));
     }
 
-    def drawFood(graphics: Graphics, food: Food): Unit = {
+    def drawFood(graphics: Graphics, food: Food) {
         val x = food.x;
         val y = food.y;
         val shape = new Rectangle(x, y, 5, 5);

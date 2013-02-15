@@ -17,7 +17,7 @@ class FunctionPanelController(override val view: FunctionPanel)
 
     val steps = new ListBuffer[ExpressionPanelController[Expression[Any]]]()
 
-    override def validate: Unit = {
+    override def validate {
         log.error("TODO: implement validate")
     }
 

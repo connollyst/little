@@ -30,7 +30,7 @@ class SetterStatementPanelController(override val view: SetterStatementPanel)
         extends StatementPanelController[SetterStatement[_ <: Value]](view)
         with Logging {
 
-    override def validate: Unit = {
+    override def validate {
         log.error("TODO: implement validate")
     }
 
@@ -46,7 +46,7 @@ class SetSpeedStatementPanelController(override val view: SetSpeedStatementPanel
         extends StatementPanelController[SetSpeedStatement](view)
         with Logging {
 
-    override def validate: Unit = {
+    override def validate {
         log.error("TODO: implement validate")
     }
 
@@ -61,7 +61,7 @@ class SetDirectionStatementPanelController(override val view: SetDirectionStatem
         extends StatementPanelController[SetDirectionStatement](view)
         with Logging {
 
-    override def validate: Unit = {
+    override def validate {
         log.error("TODO: implement validate")
     }
 
@@ -82,7 +82,7 @@ class PrintStatementPanelController(override val view: PrintStatementPanel)
         extends StatementPanelController[PrintStatement](view)
         with Logging {
 
-    override def validate: Unit = {
+    override def validate {
         // There's no way a print statement can be invalid, worst case scenario
         // is we are only printing an empty string
     }

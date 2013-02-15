@@ -13,7 +13,7 @@ import com.quane.glass.core.language.data.Text
 class TestPrograms extends FunSuite {
 
     test("test programs: turn relative") {
-        val guy = new Guy(null)
+        val guy = new Guy(null, null)
         val program = Programs.turnRelative(guy, 60)
         program.evaluate // 0 + 60 = 60
         program.evaluate // 60 + 60 = 120

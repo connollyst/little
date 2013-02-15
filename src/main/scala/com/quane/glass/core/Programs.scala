@@ -29,9 +29,9 @@ object Programs {
 
     private val worker = Executors.newSingleThreadScheduledExecutor()
 
-    def inTime(seconds: Int, fun: Expression[Any]) = {
+    def inTime(seconds: Int, fun: Expression[Any]) {
         val task = new Runnable() {
-            def run() = {
+            def run() {
                 fun.evaluate
             }
         };

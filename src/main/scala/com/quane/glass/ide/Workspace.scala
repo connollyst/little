@@ -47,7 +47,7 @@ class WorkspacePanel
       * 		the {@link WorkspaceFrame} to be added to the
       * 		{@link WorkspacePanel}
       */
-    def add(frame: WorkspaceFrame) = {
+    def add(frame: WorkspaceFrame) {
         super.add(frame);
     }
 

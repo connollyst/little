@@ -27,7 +27,7 @@ class WorkspaceController(val view: WorkspacePanel)
     def addEventFrame(panelController: ListenerPanelController,
                       toolType: ToolType,
                       x: Int,
-                      y: Int) = {
+                      y: Int) {
         val frameTitle = toolType.getClass().getSimpleName()
         val panelView = panelController.view
         val frameView = new WorkspaceFrame(frameTitle, panelView);

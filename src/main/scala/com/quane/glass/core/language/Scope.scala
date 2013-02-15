@@ -30,7 +30,7 @@ trait Scope
       *
       * @param variable the variable to be stored in memory
       */
-    def save(variable: Variable): Unit = {
+    def save(variable: Variable) {
         val name = variable.name
         val value = variable.value
         log.info("Saving '" + name + "' as '" + value.primitive + "'")

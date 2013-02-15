@@ -26,7 +26,7 @@ class ListenerPanelController(val event: GlassEvent, override val view: Listener
 
     /** {@inheritDoc}
       */
-    override def validate: Unit = {
+    override def validate {
         log.error("TODO: implement validate")
     }
 

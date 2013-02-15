@@ -17,7 +17,7 @@ import org.jbox2d.dynamics.World
 import com.quane.glass.entity.Food
 import com.quane.glass.entity.WorldEdge
 
-class WorldBuilder(world: World) {
+class WorldBuilder(game: Game, world: World) {
 
     def buildBody(): Body = {
         val polygonShape = new CircleShape
@@ -50,7 +50,6 @@ class WorldBuilder(world: World) {
         foodBodyDef.`type` = BodyType.STATIC
         foodBodyDef.allowSleep = true
         foodBodyDef.position.set(randX, randY)
-        foodBodyDef.userData = uuid
         val foodShape = new PolygonShape
         val foodFixture = new FixtureDef
         foodFixture.shape = foodShape
@@ -58,7 +57,7 @@ class WorldBuilder(world: World) {
         val foodBody = world.createBody(foodBodyDef)
         foodShape.setAsBox(5, 5)
         foodBody.createFixture(foodFixture)
-        new Food(uuid, randX, randY)
+        new Food(foodBody, game, Random.nextInt(20))
     }
 
     def buildWalls(): List[WorldEdge] = {
@@ -92,7 +91,7 @@ class WorldBuilder(world: World) {
         val wallBody = world.createBody(wallBodyDef);
         wallShape.setAsBox(halfWidth, halfHeight);
         wallBody.createFixture(wallFixture);
-        new WorldEdge(x - halfWidth, y - halfHeight, halfWidth * 2, halfHeight * 2);
+        new WorldEdge(wallBody, game, x - halfWidth, y - halfHeight, halfWidth * 2, halfHeight * 2);
     }
 
 }

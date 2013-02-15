@@ -17,7 +17,7 @@ class SetterStatement[+V <: Value](pointer: Pointer[V], value: Expression[V]) //
         extends Statement[Unit]
         with Logging {
 
-    def evaluate: Unit = {
+    def evaluate {
         val name = pointer.variableName
         val valueClass = pointer.valueClass
         val actualValue = value.evaluate
@@ -59,7 +59,7 @@ class PrintStatement(text: String)
         extends Statement[Unit]
         with Logging {
 
-    def evaluate: Unit = {
+    def evaluate {
         // TODO this should display a speech bubble over the guy
         log.error(text);
     }

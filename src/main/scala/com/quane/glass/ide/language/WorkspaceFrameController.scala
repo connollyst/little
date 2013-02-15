@@ -9,7 +9,7 @@ import com.quane.glass.core.language.Expression
 class WorkspaceFrameController(view: WorkspaceFrame, panelController: ListenerPanelController)
         extends Logging {
 
-    def validate: Unit = {
+    def validate {
         log.error("TODO: implement validate")
     }
 

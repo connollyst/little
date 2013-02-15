@@ -17,11 +17,11 @@ class GlassGameFrame
 
     preferredSize = new Dimension(1024, 768 + 24) // add 24 for the menu bar
 
-    def run(eventListeners: List[EventListener]) = {
+    def run(eventListeners: List[EventListener]) {
         val game = new Game()
         eventListeners.foreach(
             eventListener =>
-                game.guy.addEventListener(eventListener)
+                game.player.addEventListener(eventListener)
         )
         val canvas = new CanvasGameContainer(game)
         peer.getContentPane().add(canvas)

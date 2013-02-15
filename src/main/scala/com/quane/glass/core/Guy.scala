@@ -1,10 +1,10 @@
 package com.quane.glass.core
 
 import java.awt.Point
+import java.lang.Override
 import java.util.UUID
 
 import scala.collection.mutable.ListBuffer
-import scala.collection.mutable.MultiMap
 
 import org.eintr.loglady.Logging
 import org.jbox2d.dynamics.Body
@@ -16,6 +16,8 @@ import com.quane.glass.core.language.data.Direction
 import com.quane.glass.core.language.data.Location
 import com.quane.glass.core.language.data.Number
 import com.quane.glass.core.language.data.Variable
+import com.quane.glass.engine.Game
+import com.quane.glass.entity.Entity
 
 object Guy {
 
@@ -28,19 +30,15 @@ object Guy {
     val MIN_SPEED = 0
 }
 
-class Guy(val body: Body)
-        extends Scope
+class Guy(body: Body, game: Game)
+        extends Entity(body, game)
+        with Scope
         with Logging {
 
-    // TODO the Guy is not the highest scope, yeah?
+    // TODO is there a 'community' scope above this?
     var scope: Scope = null;
 
     val uuid = UUID.randomUUID;
-
-    // TODO body and guy shouldn't be so directly attached
-    if (body != null) { // it's only null in tests.. I'm drinking
-        body.setUserData(uuid);
-    }
 
     // Range of 1-10
     var speed = 0;
@@ -49,10 +47,27 @@ class Guy(val body: Body)
     var direction = 0;
 
     def location: Location = {
-        val position = body.getPosition()
-        val x = body.getPosition().x toInt;
-        val y = body.getPosition().y toInt;
-        new Location(new Point(x, y))
+        new Location(new Point(x toInt, y toInt))
+    }
+
+    @Override
+    override def isGuy: Boolean = {
+        // TODO I don't feel good about this..
+        true
+    }
+
+    def touchedBy(other: Entity) {
+        if (other isGuy) {
+            touchedByOtherGuy(other.asInstanceOf[Guy])
+        }
+    }
+
+    def touchedByOtherGuy(other: Guy) {
+        log.error("TODO touched by another guy.. ewe!");
+    }
+
+    def heal(amount: Int) {
+        log.error("TODO heal by " + amount);
     }
 
     val eventListeners = new ListBuffer[EventListener]
@@ -75,11 +90,11 @@ class Guy(val body: Body)
         listening toList
     }
 
-    def setSpeed(speed: Int): Unit = {
+    def setSpeed(speed: Int) {
         this.speed = math.max(Guy.MIN_SPEED, math.min(speed, Guy.MAX_SPEED))
     }
 
-    def setDirection(degrees: Int): Unit = {
+    def setDirection(degrees: Int) {
         if (degrees < 0) {
             setDirection(360 + degrees)
         } else {
@@ -89,7 +104,7 @@ class Guy(val body: Body)
 
     /* Intercept the Scope memory functions to access keyword variables */
 
-    override def save(variable: Variable) = {
+    override def save(variable: Variable) {
         val name = variable.name
         log.info("Guy is saving " + name);
         if (name.equals(Guy.VAR_SPEED)) {

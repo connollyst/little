@@ -50,7 +50,7 @@ class Number(value: Int)
         extends Expression[Number]
         with NumericValue {
 
-    def this(value: String) = {
+    def this(value: String) {
         this(value.toInt)
     }
 
@@ -66,11 +66,11 @@ class Direction(value: Int)
         extends Expression[Direction]
         with NumericValue {
 
-    def this(value: String) = {
+    def this(value: String) {
         this(value.toInt)
     }
 
-    def this(value: Number) = {
+    def this(value: Number) {
         this(value.int);
     }
 
