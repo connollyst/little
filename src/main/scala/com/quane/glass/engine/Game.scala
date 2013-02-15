@@ -65,7 +65,7 @@ class Game extends BasicGame("Glass") {
       */
     @Override
     @throws(classOf[SlickException])
-    def update(container: GameContainer, delta: Int) {
+    override def update(container: GameContainer, delta: Int) {
         cleaner.cleanAll
         eventBus.evaluateAll
         engine.updateAll(List(player))
@@ -79,7 +79,7 @@ class Game extends BasicGame("Glass") {
       */
     @Override
     @throws(classOf[SlickException])
-    def render(container: GameContainer, graphics: Graphics) {
+    override def render(container: GameContainer, graphics: Graphics) {
         entities foreach (
             entity =>
                 entity.render(graphics)
