@@ -26,7 +26,7 @@ class Game extends BasicGame("Glass") {
     val eventBus = new EventBus
     val engine = new PhysicsEngine(eventBus)
     val builder = new WorldBuilder(this, engine.world)
-    val cleaner = new WorldCleaner(this, engine.world)
+    val cleaner = new WorldCleaner(this, engine)
     val entities = (builder.buildWalls ::: builder.buildFoodList).toBuffer
     val player = createGuy
 

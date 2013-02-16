@@ -2,9 +2,9 @@ package com.quane.glass.game.physics
 
 import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.World
-
 import com.quane.glass.core.Guy
 import com.quane.glass.game.EventBus
+import com.quane.glass.game.physics.bodies.EntityBody
 
 class PhysicsEngine(eventBus: EventBus) {
 
@@ -45,21 +45,21 @@ class PhysicsEngine(eventBus: EventBus) {
     def accelerateGuyToSpeed(guy: Guy) {
         // Translate the 'speed' change, if any, to an applied force
         val targetVelocity = guy.speed
-        val actualVelocity = guy.body.getLinearVelocity
+        val actualVelocity = guy.body.physicalBody.getLinearVelocity
         val changeVelocity = math.max(0, targetVelocity - actualVelocity.x)
-        val impulseStrength = guy.body.getMass * changeVelocity
-        val impulseAngle = guy.body.getAngle
+        val impulseStrength = guy.body.physicalBody.getMass * changeVelocity
+        val impulseAngle = guy.body.physicalBody.getAngle
         val impulseX = targetVelocity * math.cos(impulseAngle) toFloat;
         val impulseY = targetVelocity * math.sin(impulseAngle) toFloat;
         val impulse = new Vec2(impulseX, impulseY)
-        guy.body.applyLinearImpulse(impulse, guy.body.getWorldCenter())
+        guy.body.physicalBody.applyLinearImpulse(impulse, guy.body.physicalBody.getWorldCenter())
     }
 
     def rotateGuyToDirection(guy: Guy) {
         // Translate the 'direction' change, if any, to an applied force
         val desiredAngle = math.toRadians(guy.direction);
-        val bodyAngle = guy.body.getAngle;
-        val nextAngle = bodyAngle + guy.body.getAngularVelocity / 4.5 toFloat;
+        val bodyAngle = guy.body.physicalBody.getAngle;
+        val nextAngle = bodyAngle + guy.body.physicalBody.getAngularVelocity / 4.5 toFloat;
         var totalRotation = desiredAngle - nextAngle toFloat;
         while (totalRotation < math.toRadians(-180))
             totalRotation += math.toRadians(360).toFloat;
@@ -68,8 +68,12 @@ class PhysicsEngine(eventBus: EventBus) {
         var desiredAngularVelocity = totalRotation * 60;
         val change = math.toRadians(1) toFloat; //allow 1 degree rotation per time step
         desiredAngularVelocity = math.min(change, math.max(-change, desiredAngularVelocity));
-        val impulse = guy.body.getInertia * desiredAngularVelocity;
-        guy.body.applyAngularImpulse(impulse);
+        val impulse = guy.body.physicalBody.getInertia * desiredAngularVelocity;
+        guy.body.physicalBody.applyAngularImpulse(impulse);
+    }
+
+    def removeEntity(entity: EntityBody) {
+        world.destroyBody(entity.physicalBody)
     }
 
 }

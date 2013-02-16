@@ -14,10 +14,11 @@ import org.jbox2d.dynamics.World
 import com.quane.glass.game.entity.Food
 import com.quane.glass.game.entity.WorldEdge
 import com.quane.glass.game.Game
+import com.quane.glass.game.physics.bodies.EntityBody
 
 class WorldBuilder(game: Game, world: World) {
 
-    def buildBody(): Body = {
+    def buildBody(): EntityBody = {
         val polygonShape = new CircleShape
         polygonShape.m_radius = 20
         val bodyDef = new BodyDef
@@ -28,7 +29,7 @@ class WorldBuilder(game: Game, world: World) {
         bodyDef.linearDamping = 0.2 toFloat
         val body = world.createBody(bodyDef)
         body.createFixture(polygonShape, 1.0f)
-        body
+        new EntityBody(body)
     }
 
     def buildFoodList(): List[Food] = {
@@ -55,7 +56,8 @@ class WorldBuilder(game: Game, world: World) {
         val foodBody = world.createBody(foodBodyDef)
         foodShape.setAsBox(5, 5)
         foodBody.createFixture(foodFixture)
-        new Food(foodBody, game, Random.nextInt(20))
+        val realFoodBody = new EntityBody(foodBody)
+        new Food(realFoodBody, game, Random.nextInt(20))
     }
 
     def buildWalls(): List[WorldEdge] = {
@@ -89,7 +91,8 @@ class WorldBuilder(game: Game, world: World) {
         val wallBody = world.createBody(wallBodyDef);
         wallShape.setAsBox(halfWidth, halfHeight);
         wallBody.createFixture(wallFixture);
-        new WorldEdge(wallBody, game, x - halfWidth, y - halfHeight, halfWidth * 2, halfHeight * 2);
+        val realWallBody = new EntityBody(wallBody)
+        new WorldEdge(realWallBody, game, x - halfWidth, y - halfHeight, halfWidth * 2, halfHeight * 2);
     }
 
 }

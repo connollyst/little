@@ -14,7 +14,7 @@ import com.quane.glass.game.entity.WorldEdge
 object GameDrawer {
 
     def drawGuy(graphics: Graphics, guy: Guy) {
-        drawBody(graphics, guy.body);
+        drawBody(graphics, guy.body.physicalBody);
         graphics.drawString("GUY", 700, 25);
         graphics.drawString("Speed: " + guy.speed, 700, 50)
         graphics.drawString("Direction: " + guy.direction, 700, 75)

@@ -7,7 +7,7 @@ import com.quane.glass.game.entity.Entity
 import com.quane.glass.game.Game
 import com.quane.glass.game.Game
 
-class WorldCleaner(game: Game, world: World)
+class WorldCleaner(game: Game, engine: PhysicsEngine)
         extends Logging {
 
     val queue = new ListBuffer[Entity]
@@ -19,7 +19,7 @@ class WorldCleaner(game: Game, world: World)
     def cleanAll {
         queue foreach (
             entity => {
-                world.destroyBody(entity.body)
+                engine.removeEntity(entity.body)
                 game.entities -= entity
             }
         )

@@ -1,13 +1,13 @@
 package com.quane.glass.game.entity
 
-import org.jbox2d.dynamics.Body
 import com.quane.glass.game.Game
 import com.quane.glass.core.Guy
 import org.newdawn.slick.Graphics
 import com.quane.glass.game.view.GameDrawer
 import com.quane.glass.language.event.GlassEvent
+import com.quane.glass.game.physics.bodies.EntityBody
 
-class Food(body: Body, game: Game, health: Int)
+class Food(body: EntityBody, game: Game, health: Int)
         extends Entity(body, game) {
 
     def touchedBy(other: Entity) {

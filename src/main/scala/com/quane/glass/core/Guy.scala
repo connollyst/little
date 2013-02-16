@@ -7,7 +7,7 @@ import java.util.UUID
 import scala.collection.mutable.ListBuffer
 
 import org.eintr.loglady.Logging
-import org.jbox2d.dynamics.Body
+
 import org.newdawn.slick.Graphics
 
 import com.quane.glass.game.Game
@@ -21,6 +21,7 @@ import com.quane.glass.language.data.Number
 import com.quane.glass.language.data.Variable
 import com.quane.glass.language.event.EventListener
 import com.quane.glass.language.event.GlassEvent
+import com.quane.glass.game.physics.bodies.EntityBody
 
 object Guy {
 
@@ -33,7 +34,7 @@ object Guy {
     val MIN_SPEED = 0
 }
 
-class Guy(body: Body, game: Game)
+class Guy(body: EntityBody, game: Game)
         extends Entity(body, game)
         with Scope
         with Logging {
