@@ -1,13 +1,12 @@
-package com.quane.glass.engine
-
-import com.quane.glass.entity.Food
-import com.quane.glass.entity.WorldEdge
+package com.quane.glass.game.view
 import com.quane.glass.core.Guy
 import org.newdawn.slick.geom.Rectangle
 import org.newdawn.slick.geom.Circle
 import org.newdawn.slick.geom.Line
 import org.newdawn.slick.Graphics
 import org.jbox2d.dynamics.Body
+import com.quane.glass.game.entity.Food
+import com.quane.glass.game.entity.WorldEdge
 
 object GameDrawer {
 

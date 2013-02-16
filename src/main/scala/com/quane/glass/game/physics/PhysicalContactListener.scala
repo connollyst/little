@@ -1,16 +1,16 @@
-package com.quane.glass.engine
+package com.quane.glass.game.physics
 
 import java.lang.Override
-
 import org.eintr.loglady.Logging
 import org.jbox2d.callbacks.ContactImpulse
 import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.contacts.Contact
-
 import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.entity.Entity
+import com.quane.glass.game.entity.Entity
+import com.quane.glass.game.EventBus
+import java.lang.Override
 
 class GlassContactListener(eventBus: EventBus)
         extends ContactListener

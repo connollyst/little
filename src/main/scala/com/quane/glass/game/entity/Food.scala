@@ -1,11 +1,12 @@
-package com.quane.glass.entity
+package com.quane.glass.game.entity
 
 import org.jbox2d.dynamics.Body
-import com.quane.glass.engine.Game
-import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.game.Game
 import com.quane.glass.core.Guy
-import com.quane.glass.engine.GameDrawer
 import org.newdawn.slick.Graphics
+import com.quane.glass.game.view.GameDrawer
+import com.quane.glass.entity.Entity
+import com.quane.glass.game.entity.Entity
 
 class Food(body: Body, game: Game, health: Int)
         extends Entity(body, game) {

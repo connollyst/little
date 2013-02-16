@@ -1,11 +1,10 @@
-package com.quane.glass.engine
+package com.quane.glass.game
 
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.MultiMap
 import scala.collection.mutable.Set
 import com.quane.glass.core.Guy
 import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.entity.Entity
 import org.eintr.loglady.Logging
 
 class EventBus

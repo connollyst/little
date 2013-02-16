@@ -1,8 +1,7 @@
-package com.quane.glass.entity
+package com.quane.glass.game.entity
 
 import org.jbox2d.dynamics.Body
-import com.quane.glass.core.Guy
-import com.quane.glass.engine.Game
+import com.quane.glass.game.Game
 import org.newdawn.slick.Graphics
 
 abstract class Entity(val body: Body, val game: Game) {

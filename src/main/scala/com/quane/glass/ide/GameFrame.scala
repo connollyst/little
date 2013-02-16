@@ -7,7 +7,7 @@ import scala.swing.Frame
 import org.newdawn.slick.CanvasGameContainer
 
 import com.quane.glass.core.event.EventListener
-import com.quane.glass.engine.Game
+import com.quane.glass.game.Game
 
 class GlassGameFrame
         extends Frame {

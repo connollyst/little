@@ -1,6 +1,7 @@
-package com.quane.glass.engine
+package com.quane.glass.game
 
 import org.newdawn.slick.AppGameContainer
+import com.quane.glass.game.Game
 
 object GameRunner
         extends App {

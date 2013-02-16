@@ -1,20 +1,21 @@
-package com.quane.glass.engine
+package com.quane.glass.game
 
 import java.lang.Override
-import scala.collection.mutable.HashMap
-import scala.collection.mutable.MultiMap
-import scala.collection.mutable.Set
-import org.jbox2d.common.Vec2
+
 import org.newdawn.slick.BasicGame
 import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
+
 import com.quane.glass.core.Guy
 import com.quane.glass.core.Programs
 import com.quane.glass.core.event.EventListener
 import com.quane.glass.core.event.GlassEvent
 import com.quane.glass.core.language.data.Number
-import com.quane.glass.entity.Entity
+import com.quane.glass.game.physics.PhysicsEngine
+import com.quane.glass.game.physics.WorldBuilder
+import com.quane.glass.game.physics.WorldCleaner
+import com.quane.glass.game.view.GameDrawer
 
 /** The Glass game.
   *

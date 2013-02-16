@@ -1,11 +1,11 @@
-package com.quane.glass.engine
+package com.quane.glass.game.physics
 
 import scala.collection.mutable.ListBuffer
-
 import org.eintr.loglady.Logging
 import org.jbox2d.dynamics.World
-
-import com.quane.glass.entity.Entity
+import com.quane.glass.game.entity.Entity
+import com.quane.glass.game.Game
+import com.quane.glass.game.Game
 
 class WorldCleaner(game: Game, world: World)
         extends Logging {
