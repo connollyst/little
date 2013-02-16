@@ -1,4 +1,4 @@
-package com.quane.glass.core.language.memory
+package com.quane.glass.language.memory
 
 import com.quane.glass.core.language.data.Value
 import com.quane.glass.core.language.Scope

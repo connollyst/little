@@ -1,4 +1,4 @@
-package com.quane.glass.core.language.data
+package com.quane.glass.language.data
 
 class True extends Bool(true)
 

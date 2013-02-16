@@ -6,6 +6,8 @@ import org.scalatest.junit.JUnitRunner
 import com.quane.glass.core.language.data.Text
 import com.quane.glass.core.language.data.Number
 import com.quane.glass.core.language.memory.Pointer
+import com.quane.glass.language.Function;
+import com.quane.glass.language.ReturnStatement;
 
 /** @author Sean Connolly
   */

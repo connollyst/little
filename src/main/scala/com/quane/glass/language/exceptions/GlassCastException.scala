@@ -1,3 +1,3 @@
-package com.quane.glass.core.exceptions
+package com.quane.glass.language.exceptions
 
 class GlassCastException(message: String) extends RuntimeException(message)

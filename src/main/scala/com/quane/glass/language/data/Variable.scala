@@ -1,4 +1,4 @@
-package com.quane.glass.core.language.data
+package com.quane.glass.language.data
 
 /** A variable: the mutable association between a name and a value.
   *

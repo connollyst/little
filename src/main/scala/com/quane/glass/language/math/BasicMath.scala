@@ -1,4 +1,4 @@
-package com.quane.glass.core.language.math
+package com.quane.glass.language.math
 
 import com.quane.glass.core.language.Expression
 import com.quane.glass.core.language.data.Number

@@ -1,4 +1,4 @@
-package com.quane.glass.core.event
+package com.quane.glass.language.event
 
 import com.quane.glass.core.language.Expression
 import com.quane.glass.core.language.Function

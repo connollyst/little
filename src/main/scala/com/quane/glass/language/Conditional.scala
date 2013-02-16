@@ -1,4 +1,4 @@
-package com.quane.glass.core.language
+package com.quane.glass.language
 
 import com.quane.glass.core.language.data.Bool
 

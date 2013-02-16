@@ -1,4 +1,4 @@
-package com.quane.glass.core.language.data
+package com.quane.glass.language.data
 
 import java.awt.Point
 import java.util.Date

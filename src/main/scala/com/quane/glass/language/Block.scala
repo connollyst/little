@@ -1,4 +1,4 @@
-package com.quane.glass.core.language
+package com.quane.glass.language
 
 /** A block is a piece of code with it's own scope. For example: a function or
   * a while loop.

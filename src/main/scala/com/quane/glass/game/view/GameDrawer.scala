@@ -8,6 +8,9 @@ import org.jbox2d.dynamics.Body
 import com.quane.glass.game.entity.Food
 import com.quane.glass.game.entity.WorldEdge
 
+/**
+ * A static set of drawing utilities.
+ */
 object GameDrawer {
 
     def drawGuy(graphics: Graphics, guy: Guy) {

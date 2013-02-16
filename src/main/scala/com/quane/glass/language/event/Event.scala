@@ -1,4 +1,4 @@
-package com.quane.glass.core.event
+package com.quane.glass.language.event
 
 sealed trait GlassEvent {
 
