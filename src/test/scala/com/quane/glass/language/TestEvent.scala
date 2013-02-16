@@ -1,4 +1,4 @@
-package com.quane.glass.core.language
+package com.quane.glass.language
 
 import org.junit.runner.RunWith
 import org.scalatest.BeforeAndAfter

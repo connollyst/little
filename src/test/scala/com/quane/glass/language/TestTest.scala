@@ -1,13 +1,10 @@
-package com.quane.glass.core.language
+package com.quane.glass.language
 
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.glass.language.data.True
 import com.quane.glass.language.data.False
-import com.quane.glass.language.AND;
-import com.quane.glass.language.OR;
-import com.quane.glass.language.Test;
 
 @RunWith(classOf[JUnitRunner])
 class TestTest extends FunSuite {
