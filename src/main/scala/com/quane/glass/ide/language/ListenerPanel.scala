@@ -1,7 +1,7 @@
 package com.quane.glass.ide.language
 
 import scala.collection.mutable.ListBuffer
-import com.quane.glass.core.language.Expression
+import com.quane.glass.language.Expression
 import scala.swing.BoxPanel
 import scala.swing.Orientation
 import org.eintr.loglady.Logging

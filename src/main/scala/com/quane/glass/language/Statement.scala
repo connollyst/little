@@ -3,12 +3,12 @@ package com.quane.glass.language
 import org.eintr.loglady.Logging
 
 import com.quane.glass.core.Guy
-import com.quane.glass.core.exceptions.GlassCastException
-import com.quane.glass.core.language.data.Direction
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.Value
-import com.quane.glass.core.language.data.Variable
-import com.quane.glass.core.language.memory.Pointer
+import com.quane.glass.language.exceptions.GlassCastException
+import com.quane.glass.language.data.Direction
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.data.Value
+import com.quane.glass.language.data.Variable
+import com.quane.glass.language.memory.Pointer
 
 abstract class Statement[T]
     extends Expression[T]

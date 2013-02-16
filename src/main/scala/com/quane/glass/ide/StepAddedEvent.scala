@@ -1,7 +1,7 @@
 package com.quane.glass.ide
 
 import scala.swing.event.Event
-import com.quane.glass.core.language.Expression
+import com.quane.glass.language.Expression
 import com.quane.glass.ide.language.ExpressionPanelController
 import com.quane.glass.ide.language.ListenerPanelController
 

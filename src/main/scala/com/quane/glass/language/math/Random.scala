@@ -1,7 +1,7 @@
 package com.quane.glass.language.math
 
-import com.quane.glass.core.language.Expression
-import com.quane.glass.core.language.data.Number
+import com.quane.glass.language.Expression
+import com.quane.glass.language.data.Number
 import scala.util.Random
 
 /** A {@link Number}, generated randomly within the specified range, inclusive.

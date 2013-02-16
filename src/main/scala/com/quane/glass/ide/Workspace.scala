@@ -7,8 +7,8 @@ import scala.swing.DesktopPanel
 import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
 import org.eintr.loglady.Logging
-import com.quane.glass.core.event.EventListener
-import com.quane.glass.core.language.Expression
+import com.quane.glass.language.event.EventListener
+import com.quane.glass.language.Expression
 import com.quane.glass.ide.language.ExpressionPanelController
 import com.quane.glass.ide.language.WorkspaceFrame
 import com.quane.glass.ide.language.WorkspaceFrameController

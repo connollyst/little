@@ -9,9 +9,9 @@ import scala.swing.Orientation
 import scala.swing.event.Event
 import scala.swing.event.MousePressed
 import scala.swing.event.MouseReleased
-import com.quane.glass.core.language.Expression
+import com.quane.glass.language.Expression
 import com.quane.glass.ide.language.GlassPanelFactory
-import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.language.event.GlassEvent
 import com.quane.glass.ide.language.ExpressionPanelController
 import scala.swing.event.MouseEvent
 import scala.swing.Component

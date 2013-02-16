@@ -9,9 +9,9 @@ import org.newdawn.slick.SlickException
 
 import com.quane.glass.core.Guy
 import com.quane.glass.core.Programs
-import com.quane.glass.core.event.EventListener
-import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.core.language.data.Number
+import com.quane.glass.language.event.EventListener
+import com.quane.glass.language.event.GlassEvent
+import com.quane.glass.language.data.Number
 import com.quane.glass.game.physics.PhysicsEngine
 import com.quane.glass.game.physics.WorldBuilder
 import com.quane.glass.game.physics.WorldCleaner

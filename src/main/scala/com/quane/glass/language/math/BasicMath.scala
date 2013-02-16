@@ -1,8 +1,8 @@
 package com.quane.glass.language.math
 
-import com.quane.glass.core.language.Expression
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.NumericValue
+import com.quane.glass.language.Expression
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.data.NumericValue
 import org.eintr.loglady.Logging
 
 sealed trait BasicMath

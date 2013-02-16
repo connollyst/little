@@ -1,7 +1,7 @@
 package com.quane.glass.language.event
 
-import com.quane.glass.core.language.Expression
-import com.quane.glass.core.language.Function
+import com.quane.glass.language.Expression
+import com.quane.glass.language.Function
 
 class EventListener(val event: GlassEvent, val function: Function)
         extends Expression[Boolean] {

@@ -4,7 +4,7 @@ import scala.collection.mutable.ListBuffer
 import com.quane.glass.ide.language.WorkspaceFrameController
 import com.quane.glass.ide.language.ListenerPanelController
 import com.quane.glass.ide.language.WorkspaceFrame
-import com.quane.glass.core.event.EventListener
+import com.quane.glass.language.event.EventListener
 import java.awt.Point
 import scala.swing.Reactor
 import org.eintr.loglady.Logging

@@ -1,7 +1,7 @@
 package com.quane.glass.language.memory
 
-import com.quane.glass.core.language.data.Value
-import com.quane.glass.core.language.Scope
+import com.quane.glass.language.data.Value
+import com.quane.glass.language.Scope
 
 /** Represents a pointer to a variable in memory.<br/>
   * Of course, this is not a real pointer to real memory. Instead, it is used

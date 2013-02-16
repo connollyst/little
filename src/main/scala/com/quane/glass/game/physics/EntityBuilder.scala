@@ -13,6 +13,7 @@ import org.jbox2d.dynamics.FixtureDef
 import org.jbox2d.dynamics.World
 import com.quane.glass.game.entity.Food
 import com.quane.glass.game.entity.WorldEdge
+import com.quane.glass.game.Game
 
 class WorldBuilder(game: Game, world: World) {
 

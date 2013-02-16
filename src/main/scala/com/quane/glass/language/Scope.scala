@@ -1,7 +1,7 @@
 package com.quane.glass.language
 
 import scala.collection.mutable.Map
-import com.quane.glass.core.language.data.Variable
+import com.quane.glass.language.data.Variable
 import org.eintr.loglady.Logging
 
 /** A Scope defines a space in which {@code Variable} objects can be stored

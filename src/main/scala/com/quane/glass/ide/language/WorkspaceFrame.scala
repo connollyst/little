@@ -10,7 +10,7 @@ import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
 import org.eintr.loglady.Logging
 import com.google.common.eventbus.Subscribe
-import com.quane.glass.core.language.Expression
+import com.quane.glass.language.Expression
 import com.quane.glass.ide.DragAndDropItem
 import com.quane.glass.ide.DragAndDropTarget
 import com.quane.glass.ide.DragOutEvent

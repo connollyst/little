@@ -2,23 +2,23 @@ package com.quane.glass.core
 
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import com.quane.glass.core.language.Conditional
-import com.quane.glass.core.language.Equals
-import com.quane.glass.core.language.Evaluation
-import com.quane.glass.core.language.Expression
-import com.quane.glass.core.language.Function
-import com.quane.glass.core.language.SetDirectionStatement
-import com.quane.glass.core.language.SetSpeedStatement
-import com.quane.glass.core.language.GetterStatement
-import com.quane.glass.core.language.SetterStatement
-import com.quane.glass.core.language.data.Direction
-import com.quane.glass.core.language.data.Location
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.math.RandomNumber
-import com.quane.glass.core.language.memory.Pointer
-import com.quane.glass.core.language.math.Addition
-import com.quane.glass.core.language.CastDirectionToNumber
-import com.quane.glass.core.language.CastNumberToDirection
+import com.quane.glass.language.Conditional
+import com.quane.glass.language.Equals
+import com.quane.glass.language.Evaluation
+import com.quane.glass.language.Expression
+import com.quane.glass.language.Function
+import com.quane.glass.language.SetDirectionStatement
+import com.quane.glass.language.SetSpeedStatement
+import com.quane.glass.language.GetterStatement
+import com.quane.glass.language.SetterStatement
+import com.quane.glass.language.data.Direction
+import com.quane.glass.language.data.Location
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.math.RandomNumber
+import com.quane.glass.language.memory.Pointer
+import com.quane.glass.language.math.Addition
+import com.quane.glass.language.CastDirectionToNumber
+import com.quane.glass.language.CastNumberToDirection
 
 /** A set programs used during development - mostly to sanity check the
   * language and how it compiles.

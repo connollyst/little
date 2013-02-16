@@ -1,6 +1,6 @@
 package com.quane.glass.language
 
-import com.quane.glass.core.language.data.Value
+import com.quane.glass.language.data.Value
 
 /** @author Sean Connolly
   */

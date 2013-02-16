@@ -1,12 +1,12 @@
 package com.quane.glass.ide.language
 
 import org.eintr.loglady.Logging
-import com.quane.glass.core.language.Function
-import com.quane.glass.core.language.Scope
+import com.quane.glass.language.Function
+import com.quane.glass.language.Scope
 import scala.swing.Reactor
 import com.quane.glass.ide.StepAddedEvent
 import scala.collection.mutable.ListBuffer
-import com.quane.glass.core.language.Expression
+import com.quane.glass.language.Expression
 
 class FunctionPanelController(override val view: FunctionPanel)
         extends ExpressionPanelController[Function](view)

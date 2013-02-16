@@ -1,13 +1,13 @@
 package com.quane.glass.ide.language
 
 import org.eintr.loglady.Logging
-import com.quane.glass.core.event.EventListener
-import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.core.language.SetterStatement
-import com.quane.glass.core.language.Expression
-import com.quane.glass.core.language.Function
-import com.quane.glass.core.language.Scope
-import com.quane.glass.core.language.data.Text
+import com.quane.glass.language.event.EventListener
+import com.quane.glass.language.event.GlassEvent
+import com.quane.glass.language.SetterStatement
+import com.quane.glass.language.Expression
+import com.quane.glass.language.Function
+import com.quane.glass.language.Scope
+import com.quane.glass.language.data.Text
 import scala.swing.Reactor
 import com.quane.glass.ide.StepAddedEvent
 

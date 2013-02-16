@@ -3,7 +3,7 @@ package com.quane.glass.language.data
 import java.awt.Point
 import java.util.Date
 
-import com.quane.glass.core.language.Expression
+import com.quane.glass.language.Expression
 
 /** Values are the primitive data types exposed to the user. A Value is an
   * Expression in an of itself, a Value evaluates to itself.

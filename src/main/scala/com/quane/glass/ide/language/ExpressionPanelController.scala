@@ -1,7 +1,7 @@
 package com.quane.glass.ide.language
 
-import com.quane.glass.core.language.Expression
-import com.quane.glass.core.language.Scope
+import com.quane.glass.language.Expression
+import com.quane.glass.language.Scope
 
 /** The Glass panel controller is, well, the controller for the
   * {@code GlassPanel}. If the 'view' is responsible for rendering the UI and

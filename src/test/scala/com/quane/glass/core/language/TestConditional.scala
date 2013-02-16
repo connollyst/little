@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.BeforeAndAfter
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import com.quane.glass.core.language.data.True
+import com.quane.glass.language.data.True
 import com.quane.glass.language.Conditional;
 import com.quane.glass.language.Function;
 import com.quane.glass.language.PrintStatement;

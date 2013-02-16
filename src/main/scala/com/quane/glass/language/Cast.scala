@@ -1,8 +1,8 @@
 package com.quane.glass.language
 
-import com.quane.glass.core.language.data.Direction
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.Value
+import com.quane.glass.language.data.Direction
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.data.Value
 
 trait Cast[V <: Value]
     extends Expression[V]

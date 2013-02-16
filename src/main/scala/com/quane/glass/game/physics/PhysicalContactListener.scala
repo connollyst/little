@@ -7,7 +7,7 @@ import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.contacts.Contact
-import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.language.event.GlassEvent
 import com.quane.glass.game.entity.Entity
 import com.quane.glass.game.EventBus
 import java.lang.Override

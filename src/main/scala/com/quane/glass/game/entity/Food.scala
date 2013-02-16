@@ -5,8 +5,7 @@ import com.quane.glass.game.Game
 import com.quane.glass.core.Guy
 import org.newdawn.slick.Graphics
 import com.quane.glass.game.view.GameDrawer
-import com.quane.glass.entity.Entity
-import com.quane.glass.game.entity.Entity
+import com.quane.glass.language.event.GlassEvent
 
 class Food(body: Body, game: Game, health: Int)
         extends Entity(body, game) {
@@ -26,6 +25,6 @@ class Food(body: Body, game: Game, health: Int)
     def render(graphics: Graphics) {
         GameDrawer.drawFood(graphics, this)
     }
-    
+
 } 
 

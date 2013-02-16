@@ -1,6 +1,6 @@
 package com.quane.glass.language
 
-import com.quane.glass.core.language.data.Bool
+import com.quane.glass.language.data.Bool
 
 class Evaluation[T](
     left: Expression[T],

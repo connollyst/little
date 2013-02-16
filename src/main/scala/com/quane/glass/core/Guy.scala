@@ -3,21 +3,24 @@ package com.quane.glass.core
 import java.awt.Point
 import java.lang.Override
 import java.util.UUID
+
 import scala.collection.mutable.ListBuffer
+
 import org.eintr.loglady.Logging
 import org.jbox2d.dynamics.Body
 import org.newdawn.slick.Graphics
-import com.quane.glass.core.event.EventListener
-import com.quane.glass.core.event.GlassEvent
-import com.quane.glass.core.language.Scope
-import com.quane.glass.core.language.data.Direction
-import com.quane.glass.core.language.data.Location
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.Variable
+
 import com.quane.glass.game.Game
-import com.quane.glass.engine.GameDrawer
 import com.quane.glass.game.entity.Entity
 import com.quane.glass.game.view.GameDrawer
+import com.quane.glass.language.Scope
+import com.quane.glass.language.Scope
+import com.quane.glass.language.data.Direction
+import com.quane.glass.language.data.Location
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.data.Variable
+import com.quane.glass.language.event.EventListener
+import com.quane.glass.language.event.GlassEvent
 
 object Guy {
 

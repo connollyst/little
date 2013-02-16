@@ -3,11 +3,13 @@ package com.quane.glass.core.language
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import com.quane.glass.core.language.data.Text
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.memory.Pointer
+import com.quane.glass.language.data.Text
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.memory.Pointer
 import com.quane.glass.language.Function;
 import com.quane.glass.language.ReturnStatement;
+import com.quane.glass.language.SetterStatement;
+import com.quane.glass.language.GetterStatement;
 
 /** @author Sean Connolly
   */

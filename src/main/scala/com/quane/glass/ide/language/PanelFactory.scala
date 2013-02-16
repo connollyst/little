@@ -1,6 +1,6 @@
 package com.quane.glass.ide.language
 
-import com.quane.glass.core.event.GlassEvent
+import com.quane.glass.language.event.GlassEvent
 
 object GlassPanelFactory {
 

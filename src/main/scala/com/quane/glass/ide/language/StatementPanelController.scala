@@ -3,17 +3,17 @@ package com.quane.glass.ide.language
 import org.eintr.loglady.Logging
 
 import com.quane.glass.core.Guy
-import com.quane.glass.core.language.Expression
-import com.quane.glass.core.language.PrintStatement
-import com.quane.glass.core.language.Scope
-import com.quane.glass.core.language.SetDirectionStatement
-import com.quane.glass.core.language.SetSpeedStatement
-import com.quane.glass.core.language.SetterStatement
-import com.quane.glass.core.language.data.Direction
-import com.quane.glass.core.language.data.Number
-import com.quane.glass.core.language.data.Text
-import com.quane.glass.core.language.data.Value
-import com.quane.glass.core.language.memory.Pointer
+import com.quane.glass.language.Expression
+import com.quane.glass.language.PrintStatement
+import com.quane.glass.language.Scope
+import com.quane.glass.language.SetDirectionStatement
+import com.quane.glass.language.SetSpeedStatement
+import com.quane.glass.language.SetterStatement
+import com.quane.glass.language.data.Direction
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.data.Text
+import com.quane.glass.language.data.Value
+import com.quane.glass.language.memory.Pointer
 
 /** @author Sean Connolly
   */
