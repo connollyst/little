@@ -4,7 +4,7 @@ import org.jbox2d.dynamics.Body
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import com.quane.glass.core.Guy
+import com.quane.glass.language.Operator
 import com.quane.glass.language.Programs
 import com.quane.glass.language.data.Variable
 import com.quane.glass.language.data.Text
@@ -13,7 +13,7 @@ import com.quane.glass.language.data.Text
 class TestPrograms extends FunSuite {
 
     test("test programs: turn relative") {
-        val guy = new Guy(null, null)
+        val guy = new Operator(null)
         val program = Programs.turnRelative(guy, 60)
         program.evaluate // 0 + 60 = 60
         program.evaluate // 60 + 60 = 120

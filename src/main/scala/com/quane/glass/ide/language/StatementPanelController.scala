@@ -1,8 +1,6 @@
 package com.quane.glass.ide.language
 
 import org.eintr.loglady.Logging
-
-import com.quane.glass.core.Guy
 import com.quane.glass.language.Expression
 import com.quane.glass.language.PrintStatement
 import com.quane.glass.language.Scope
@@ -14,6 +12,7 @@ import com.quane.glass.language.data.Number
 import com.quane.glass.language.data.Text
 import com.quane.glass.language.data.Value
 import com.quane.glass.language.memory.Pointer
+import com.quane.glass.game.entity.Mob
 
 /** @author Sean Connolly
   */
@@ -51,7 +50,7 @@ class SetSpeedStatementPanelController(override val view: SetSpeedStatementPanel
     }
 
     override def compile(scope: Scope): SetSpeedStatement = {
-        log.info("Compiling: Set " + Guy.VAR_SPEED + "='" + view.value + "'");
+        log.info("Compiling: Set " + Mob.VAR_SPEED + "='" + view.value + "'");
         new SetSpeedStatement(scope, new Number(view.value))
     }
 
@@ -66,7 +65,7 @@ class SetDirectionStatementPanelController(override val view: SetDirectionStatem
     }
 
     override def compile(scope: Scope): SetDirectionStatement = {
-        log.info("Compiling: Set " + Guy.VAR_DIRECTION + "='" + view.value + "'");
+        log.info("Compiling: Set " + Mob.VAR_DIRECTION + "='" + view.value + "'");
         new SetDirectionStatement(scope, new Direction(view.value))
     }
 

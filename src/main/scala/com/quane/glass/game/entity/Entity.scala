@@ -1,5 +1,7 @@
 package com.quane.glass.game.entity
 
+import java.util.UUID
+
 import com.quane.glass.game.Game
 import org.newdawn.slick.Graphics
 import com.quane.glass.game.physics.bodies.EntityBody
@@ -15,6 +17,8 @@ import com.quane.glass.game.physics.bodies.EntityBody
 abstract class Entity(val body: EntityBody, val game: Game) {
 
     body.attach(this)
+
+    val uuid = UUID.randomUUID;
 
     val isRemoved = false
 

@@ -1,5 +1,4 @@
-package com.quane.glass.core
-
+package com.quane.glass.language
 import java.awt.Point
 import java.lang.Override
 import java.util.UUID
@@ -13,8 +12,6 @@ import org.newdawn.slick.Graphics
 import com.quane.glass.game.Game
 import com.quane.glass.game.entity.Entity
 import com.quane.glass.game.view.GameDrawer
-import com.quane.glass.language.Scope
-import com.quane.glass.language.Scope
 import com.quane.glass.language.data.Direction
 import com.quane.glass.language.data.Location
 import com.quane.glass.language.data.Number
@@ -22,57 +19,40 @@ import com.quane.glass.language.data.Variable
 import com.quane.glass.language.event.EventListener
 import com.quane.glass.language.event.GlassEvent
 import com.quane.glass.game.physics.bodies.EntityBody
+import com.quane.glass.game.entity.Mob
 
-object Guy {
-
-    val VAR_SPEED = "GuySpeed"
-
-    val VAR_DIRECTION = "GuyDirection"
-
-    val MAX_SPEED = 50
-
-    val MIN_SPEED = 0
-}
-
-class Guy(body: EntityBody, game: Game)
-        extends Entity(body, game)
-        with Scope
+class Operator(mob: Mob)
+        extends Scope
         with Logging {
 
     // TODO is there a 'community' scope above this?
     var scope: Scope = null;
 
-    val uuid = UUID.randomUUID;
-
-    // Range of 1-10
-    var speed = 0;
-
-    // Range of 0-360
-    var direction = 0;
-
     def location: Location = {
-        new Location(new Point(x toInt, y toInt))
+        new Location(new Point(mob.x toInt, mob.y toInt))
     }
 
-    @Override
-    override def isGuy: Boolean = {
-        // TODO I don't feel good about this..
-        true
+    def speed(speed: Int) {
+        mob.speed = Math.max(Mob.MIN_SPEED, Math.min(speed, Mob.MAX_SPEED))
     }
 
-    def touchedBy(other: Entity) {
-        if (other isGuy) {
-            touchedByOtherGuy(other.asInstanceOf[Guy])
+    def speed: Int = {
+        mob.speed
+    }
+
+    def direction(degrees: Int) {
+        if (degrees < 0) {
+            direction(360 + degrees)
+        } else {
+            mob.direction = degrees % 360
         }
     }
 
-    def touchedByOtherGuy(other: Guy) {
-        log.error("TODO touched by another guy.. ewe!");
+    def direction: Int = {
+        mob.direction
     }
 
-    def heal(amount: Int) {
-        log.error("TODO heal by " + amount);
-    }
+    /* Listen for events */
 
     val eventListeners = new ListBuffer[EventListener]
 
@@ -94,45 +74,33 @@ class Guy(body: EntityBody, game: Game)
         listening toList
     }
 
-    def setSpeed(speed: Int) {
-        this.speed = math.max(Guy.MIN_SPEED, math.min(speed, Guy.MAX_SPEED))
-    }
-
-    def setDirection(degrees: Int) {
-        if (degrees < 0) {
-            setDirection(360 + degrees)
-        } else {
-            this.direction = degrees % 360
-        }
-    }
-
     /* Intercept the Scope memory functions to access keyword variables */
 
     override def save(variable: Variable) {
         val name = variable.name
         log.info("Guy is saving " + name);
-        if (name.equals(Guy.VAR_SPEED)) {
-            setSpeed(
+        if (name.equals(Mob.VAR_SPEED)) {
+            speed(
                 variable.value match {
                     case number: Number =>
                         number.int
                     case other: Any =>
                         throw new ClassCastException(
-                            "Cannot set " + Guy.VAR_SPEED + " to a "
+                            "Cannot set " + Mob.VAR_SPEED + " to a "
                                 + other.getClass.getSimpleName
                                 + ", it must be a "
                                 + classOf[Number].getSimpleName
                         )
                 }
             )
-        } else if (name.equals(Guy.VAR_DIRECTION)) {
-            setDirection(
+        } else if (name.equals(Mob.VAR_DIRECTION)) {
+            direction(
                 variable.value match {
                     case direction: Direction =>
                         direction.degrees
                     case other: Any =>
                         throw new ClassCastException(
-                            "Cannot set " + Guy.VAR_DIRECTION + " to a "
+                            "Cannot set " + Mob.VAR_DIRECTION + " to a "
                                 + other.getClass.getSimpleName
                                 + ", it must be a "
                                 + classOf[Direction].getSimpleName
@@ -147,18 +115,14 @@ class Guy(body: EntityBody, game: Game)
 
     override def fetch(name: String): Variable = {
         log.info("Guy is remembering " + name);
-        if (name.equals(Guy.VAR_SPEED)) {
-            new Variable(name, new Number(speed))
-        } else if (name.equals(Guy.VAR_DIRECTION)) {
-            new Variable(name, new Direction(direction))
+        if (name.equals(Mob.VAR_SPEED)) {
+            new Variable(name, new Number(mob.speed))
+        } else if (name.equals(Mob.VAR_DIRECTION)) {
+            new Variable(name, new Direction(mob.direction))
         } else {
             // It's not a special variable, fetch it from normal memory
             super.fetch(name);
         }
-    }
-
-    def render(graphics: Graphics) {
-        GameDrawer.drawGuy(graphics, this)
     }
 
 }

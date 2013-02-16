@@ -1,7 +1,6 @@
 package com.quane.glass.game.entity
 
 import com.quane.glass.game.Game
-import com.quane.glass.core.Guy
 import org.newdawn.slick.Graphics
 import com.quane.glass.game.view.GameDrawer
 import com.quane.glass.language.event.GlassEvent
@@ -12,14 +11,14 @@ class Food(body: EntityBody, game: Game, health: Int)
 
     def touchedBy(other: Entity) {
         if (other isGuy) {
-            consumedBy(other.asInstanceOf[Guy])
+            consumedBy(other.asInstanceOf[Mob])
         }
     }
 
-    def consumedBy(guy: Guy) {
-        game.eventBus.report(guy, GlassEvent.OnFoodConsumed)
+    def consumedBy(mob: Mob) {
+        game.eventBus.report(mob, GlassEvent.OnFoodConsumed)
         game.cleaner.remove(this)
-        guy.heal(health)
+        mob.heal(health)
     }
 
     def render(graphics: Graphics) {

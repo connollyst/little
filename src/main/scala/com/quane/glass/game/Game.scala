@@ -7,11 +7,11 @@ import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
 
-import com.quane.glass.core.Guy
 import com.quane.glass.language.Programs
 import com.quane.glass.language.event.EventListener
 import com.quane.glass.language.event.GlassEvent
 import com.quane.glass.language.data.Number
+import com.quane.glass.game.entity.Mob
 import com.quane.glass.game.physics.PhysicsEngine
 import com.quane.glass.game.physics.WorldBuilder
 import com.quane.glass.game.physics.WorldCleaner
@@ -28,13 +28,8 @@ class Game extends BasicGame("Glass") {
     val builder = new WorldBuilder(this, engine.world)
     val cleaner = new WorldCleaner(this, engine)
     val entities = (builder.buildWalls ::: builder.buildFoodList).toBuffer
-    val player = createGuy
-
-    def createGuy: Guy = {
-        val guy = new Guy(builder.buildBody, this)
-        eventBus.report(guy, GlassEvent.OnSpawn)
-        guy
-    }
+    val mobFactory = new MobFactory(eventBus, this)
+    val player = mobFactory.createGuy
 
     /** Initialize the game.
       *
@@ -51,8 +46,18 @@ class Game extends BasicGame("Glass") {
 
     def initPlayer() {
         val speed = new Number(100);
-        player.addEventListener(new EventListener(GlassEvent.OnSpawn, Programs.move(player, speed)));
-        player.addEventListener(new EventListener(GlassEvent.OnContact, Programs.turnRelative(player, 260)));
+        player.operator.addEventListener(
+            new EventListener(
+                GlassEvent.OnSpawn,
+                Programs.move(player.operator, speed)
+            )
+        );
+        player.operator.addEventListener(
+            new EventListener(
+                GlassEvent.OnContact,
+                Programs.turnRelative(player.operator, 260)
+            )
+        );
     }
 
     /** Update to the next state of the game:<br/>

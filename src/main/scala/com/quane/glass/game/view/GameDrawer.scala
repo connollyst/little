@@ -1,5 +1,5 @@
 package com.quane.glass.game.view
-import com.quane.glass.core.Guy
+import com.quane.glass.game.entity.Mob
 import org.newdawn.slick.geom.Rectangle
 import org.newdawn.slick.geom.Circle
 import org.newdawn.slick.geom.Line
@@ -13,11 +13,11 @@ import com.quane.glass.game.entity.WorldEdge
  */
 object GameDrawer {
 
-    def drawGuy(graphics: Graphics, guy: Guy) {
-        drawBody(graphics, guy.body.physicalBody);
+    def drawGuy(graphics: Graphics, mob: Mob) {
+        drawBody(graphics, mob.body.physicalBody);
         graphics.drawString("GUY", 700, 25);
-        graphics.drawString("Speed: " + guy.speed, 700, 50)
-        graphics.drawString("Direction: " + guy.direction, 700, 75)
+        graphics.drawString("Speed: " + mob.speed, 700, 50)
+        graphics.drawString("Direction: " + mob.direction, 700, 75)
     }
 
     def drawBody(graphics: Graphics, body: Body) {

@@ -1,14 +1,13 @@
 package com.quane.glass.language
 
 import org.eintr.loglady.Logging
-
-import com.quane.glass.core.Guy
 import com.quane.glass.language.exceptions.GlassCastException
 import com.quane.glass.language.data.Direction
 import com.quane.glass.language.data.Number
 import com.quane.glass.language.data.Value
 import com.quane.glass.language.data.Variable
 import com.quane.glass.language.memory.Pointer
+import com.quane.glass.game.entity.Mob
 
 abstract class Statement[T]
     extends Expression[T]
@@ -29,15 +28,21 @@ class SetterStatement[+V <: Value](pointer: Pointer[V], value: Expression[V]) //
 }
 
 class SetSpeedStatement(scope: Scope, value: Expression[Number])
-    extends SetterStatement(new Pointer[Number](scope, Guy.VAR_SPEED, classOf[Number]), value);
+    extends SetterStatement(
+        new Pointer[Number](scope, Mob.VAR_SPEED, classOf[Number]),
+        value
+    );
 
 class SetDirectionStatement(scope: Scope, value: Expression[Direction])
-    extends SetterStatement[Direction](new Pointer[Direction](scope, Guy.VAR_DIRECTION, classOf[Direction]), value);
+    extends SetterStatement[Direction](
+        new Pointer[Direction](scope, Mob.VAR_DIRECTION, classOf[Direction]),
+        value
+    );
 
 class GetterStatement[V <: Value](pointer: Pointer[V])
         extends Statement[V]
         with Logging {
-    
+
     def evaluate: V = {
         val name = pointer.variableName
         log.info("Getting the value of '" + name + "'...");

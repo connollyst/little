@@ -2,25 +2,15 @@ package com.quane.glass.language
 
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
-import com.quane.glass.language.Conditional
-import com.quane.glass.language.Equals
-import com.quane.glass.language.Evaluation
-import com.quane.glass.language.Expression
-import com.quane.glass.language.Function
-import com.quane.glass.language.SetDirectionStatement
-import com.quane.glass.language.SetSpeedStatement
-import com.quane.glass.language.GetterStatement
-import com.quane.glass.language.SetterStatement
 import com.quane.glass.language.data.Direction
 import com.quane.glass.language.data.Location
 import com.quane.glass.language.data.Number
 import com.quane.glass.language.math.RandomNumber
 import com.quane.glass.language.memory.Pointer
 import com.quane.glass.language.math.Addition
-import com.quane.glass.language.CastNumberToDirection
-import com.quane.glass.core.Guy
 import com.quane.glass.language.data.Direction
 import com.quane.glass.language.data.Location
+import com.quane.glass.game.entity.Mob
 
 /** A set programs used during development - mostly to sanity check the
   * language and how it compiles.
@@ -40,39 +30,39 @@ object Programs {
         worker.schedule(task, seconds, TimeUnit.SECONDS);
     }
 
-    def move(guy: Guy, speed: Expression[Number]): Function = {
-        val fun = new Function(guy)
+    def move(mob: Operator, speed: Expression[Number]): Function = {
+        val fun = new Function(mob)
         fun.addStep(new SetSpeedStatement(fun, speed))
         fun
     }
 
-    def stop(guy: Guy): Function = {
-        val fun = new Function(guy)
+    def stop(mob: Operator): Function = {
+        val fun = new Function(mob)
         fun.addStep(new SetSpeedStatement(fun, new Number(0)))
         fun
     }
 
-    def turn(guy: Guy, degrees: Expression[Direction]): Function = {
-        val fun = new Function(guy)
+    def turn(mob: Operator, degrees: Expression[Direction]): Function = {
+        val fun = new Function(mob)
         fun.addStep(new SetDirectionStatement(fun, degrees))
         fun
     }
 
-    def turnRandom(guy: Guy): Function = {
+    def turnRandom(mob: Operator): Function = {
         val min = new Number(1)
         val max = new Number(360)
         val randomDirection = new RandomNumber(min, max)
 
         // TODO add a step to get a random number when evaluated
-        val randomFun = new Function(guy)
-        val directionPointer = new Pointer(randomFun, Guy.VAR_DIRECTION, classOf[Direction])
+        val randomFun = new Function(mob)
+        val directionPointer = new Pointer(randomFun, Mob.VAR_DIRECTION, classOf[Direction])
         //        randomFun.addStep(new SetterStatement(directionPointer, randomDirection))
         null
     }
 
-    def turnRelative(guy: Guy, degrees: Int): Function = {
-        val relativelyFun = new Function(guy)
-        val dirPointer = new Pointer(relativelyFun, Guy.VAR_DIRECTION, classOf[Direction])
+    def turnRelative(mob: Operator, degrees: Int): Function = {
+        val relativelyFun = new Function(mob)
+        val dirPointer = new Pointer(relativelyFun, Mob.VAR_DIRECTION, classOf[Direction])
         val getCurrentDir = new GetterStatement(dirPointer)
         val getNewDirectionNumber = new Addition(getCurrentDir, new Number(degrees))
         val getNewDirection = new CastNumberToDirection(getNewDirectionNumber)
@@ -80,20 +70,20 @@ object Programs {
         relativelyFun.addStep(setNewDirection)
     }
 
-    def voyage(guy: Guy): Function = {
-        val fun = new Function(guy)
+    def voyage(mob: Operator): Function = {
+        val fun = new Function(mob)
         // Step #1: Turn South if I'm facing North
-        val myDirection = new Direction(guy.direction)
+        val myDirection = new Direction(mob.direction)
         val north = new Direction(270)
         val south = new Direction(90)
         val isNorth = new Evaluation(myDirection, Equals, north)
-        val turnSouth = new Function(guy)
+        val turnSouth = new Function(mob)
         val assignmentStep = new SetDirectionStatement(turnSouth, south)
         turnSouth.addStep(assignmentStep)
         fun.addStep(new Conditional(isNorth, turnSouth))
         // Step #2: Remember _Home_ is _Here_
         val homePointer = new Pointer(fun, "Home", classOf[Location])
-        fun.addStep(new SetterStatement(homePointer, guy.location))
+        fun.addStep(new SetterStatement(homePointer, mob.location))
         // Step #3: Set speed to 10
         fun.addStep(new SetSpeedStatement(fun, new Number(10)))
         fun

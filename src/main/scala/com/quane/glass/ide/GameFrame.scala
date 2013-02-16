@@ -12,7 +12,7 @@ import com.quane.glass.game.Game
 class GlassGameFrame
         extends Frame {
 
-    // Set the window title in Mac 
+    // Window title on Mac OSX 
     System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Glass");
 
     preferredSize = new Dimension(1024, 768 + 24) // add 24 for the menu bar
@@ -21,7 +21,8 @@ class GlassGameFrame
         val game = new Game()
         eventListeners.foreach(
             eventListener =>
-                game.player.addEventListener(eventListener)
+                // TODO not cool
+                game.player.operator.addEventListener(eventListener)
         )
         val canvas = new CanvasGameContainer(game)
         peer.getContentPane().add(canvas)
