@@ -1,4 +1,4 @@
-package com.quane.glass.core
+package com.quane.glass.language
 
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
@@ -17,8 +17,10 @@ import com.quane.glass.language.data.Number
 import com.quane.glass.language.math.RandomNumber
 import com.quane.glass.language.memory.Pointer
 import com.quane.glass.language.math.Addition
-import com.quane.glass.language.CastDirectionToNumber
 import com.quane.glass.language.CastNumberToDirection
+import com.quane.glass.core.Guy
+import com.quane.glass.language.data.Direction
+import com.quane.glass.language.data.Location
 
 /** A set programs used during development - mostly to sanity check the
   * language and how it compiles.

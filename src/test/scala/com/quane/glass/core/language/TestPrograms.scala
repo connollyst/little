@@ -5,7 +5,7 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.glass.core.Guy
-import com.quane.glass.core.Programs
+import com.quane.glass.language.Programs
 import com.quane.glass.language.data.Variable
 import com.quane.glass.language.data.Text
 

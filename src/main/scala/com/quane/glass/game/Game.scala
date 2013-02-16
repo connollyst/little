@@ -8,7 +8,7 @@ import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
 
 import com.quane.glass.core.Guy
-import com.quane.glass.core.Programs
+import com.quane.glass.language.Programs
 import com.quane.glass.language.event.EventListener
 import com.quane.glass.language.event.GlassEvent
 import com.quane.glass.language.data.Number

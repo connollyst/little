@@ -19,11 +19,11 @@ abstract class Entity(val body: EntityBody, val game: Game) {
     val isRemoved = false
 
     def x: Float = {
-        body.position.x
+        body.coords.x
     }
 
     def y: Float = {
-        body.position.y
+        body.coords.y
     }
 
     def isGuy: Boolean = {
