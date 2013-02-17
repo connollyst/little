@@ -9,7 +9,6 @@ import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.contacts.Contact
 import com.quane.glass.language.event.GlassEvent
 import com.quane.glass.game.entity.Entity
-import com.quane.glass.game.EventBus
 import java.lang.Override
 
 class GlassContactListener
@@ -17,22 +16,22 @@ class GlassContactListener
         with Logging {
 
     @Override
-    def preSolve(contact: Contact, manifold: Manifold) {
+    override def preSolve(contact: Contact, manifold: Manifold) {
         // do nothing
     }
 
     @Override
-    def postSolve(contact: Contact, impulse: ContactImpulse) {
+    override def postSolve(contact: Contact, impulse: ContactImpulse) {
         // do nothing
     }
 
     @Override
-    def beginContact(contact: Contact) {
+    override def beginContact(contact: Contact) {
         reportContact(GlassEvent.OnContact, contact);
     }
 
     @Override
-    def endContact(contact: Contact) {
+    override def endContact(contact: Contact) {
         reportContact(GlassEvent.OnContactEnded, contact);
     }
 

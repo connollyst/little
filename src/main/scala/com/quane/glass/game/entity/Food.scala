@@ -17,7 +17,7 @@ class Food(body: EntityBody, game: Game, health: Int)
     }
 
     def consumedBy(mob: Mob) {
-        EventBus.report(mob, GlassEvent.OnFoodConsumed)
+        game.eventBus.report(mob, GlassEvent.OnFoodConsumed)
         game.cleaner.remove(this)
         mob.heal(health)
     }

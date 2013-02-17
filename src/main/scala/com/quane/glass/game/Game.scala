@@ -1,28 +1,28 @@
 package com.quane.glass.game
 
 import java.lang.Override
-
 import org.newdawn.slick.BasicGame
 import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
-
 import com.quane.glass.language.Programs
 import com.quane.glass.language.event.EventListener
 import com.quane.glass.language.event.GlassEvent
 import com.quane.glass.language.data.Number
 import com.quane.glass.game.entity.Mob
-import com.quane.glass.game.physics.PhysicsEngine
 import com.quane.glass.game.physics.WorldBuilder
 import com.quane.glass.game.physics.WorldCleaner
 import com.quane.glass.game.view.GameDrawer
+import com.quane.glass.game.physics.PhysicsEngine
 
 /** The Glass game.
   *
   * @author Sean Connolly
   */
-class Game extends BasicGame("Glass") {
+class Game
+        extends BasicGame("Glass") {
 
+    val eventBus = new EventBus
     val engine = new PhysicsEngine
     val builder = new WorldBuilder(this, engine.world)
     val cleaner = new WorldCleaner(this, engine)
@@ -56,7 +56,7 @@ class Game extends BasicGame("Glass") {
     override def update(container: GameContainer, delta: Int) {
         cleaner.cleanAll
         engine.updateAll(List(player))
-        EventBus.evaluateAll
+        eventBus.evaluateAll
     }
 
     /** Render the current state of the game.

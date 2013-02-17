@@ -3,7 +3,6 @@ package com.quane.glass.game.physics
 import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.World
 import com.quane.glass.game.entity.Mob
-import com.quane.glass.game.EventBus
 import com.quane.glass.game.physics.bodies.EntityBody
 
 class PhysicsEngine {
@@ -12,9 +11,7 @@ class PhysicsEngine {
     val doSleep = true
     val world = new World(gravity, doSleep)
 
-    world.setContactListener(
-        new GlassContactListener
-    )
+    world.setContactListener(new GlassContactListener)
 
     val timeStep = 1 / 60f //the length of time passed to simulate (seconds)
     val velocityIterations = 8 //how strongly to correct velocity

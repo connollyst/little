@@ -7,21 +7,23 @@ import com.quane.glass.language.event.GlassEvent
 import org.eintr.loglady.Logging
 import com.quane.glass.game.entity.Mob
 
-object EventBus
+class EventBus
         extends Logging {
 
     // Events that have occurred and are waiting to be handled
     val queue = new HashMap[Mob, Set[GlassEvent]]() with MultiMap[Mob, GlassEvent]
 
+    /** Evaluate all queued events.
+      */
     def evaluateAll() {
         // TODO check the time and only execute what we can in 1 step
         queue.keys foreach (
-            entity => {
+            mob => {
                 // TODO replace with orElse?
-                val events = queue.get(entity).orNull
+                val events = queue.get(mob).orNull
                 events foreach (
                     event => {
-                        entity.operator.getEventListeners(event) foreach (
+                        mob.operator.getEventListeners(event) foreach (
                             listener =>
                                 listener.evaluate
                         )

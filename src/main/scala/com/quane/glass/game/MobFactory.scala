@@ -15,7 +15,7 @@ class MobFactory(game: Game) {
 
     def createGuy: Mob = {
         val mob = new Mob(game.builder.buildBody, game)
-        EventBus.report(mob, GlassEvent.OnSpawn)
+        game.eventBus.report(mob, GlassEvent.OnSpawn)
         val speed = new Number(100);
         mob.operator.addEventListener(
             new EventListener(

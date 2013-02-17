@@ -24,12 +24,17 @@ class Mob(body: EntityBody, game: Game)
         with Logging {
 
     val operator = new Operator(this)
-    
+
     // Range of 1-10
     var speed = 0;
 
     // Range of 0-360
     var direction = 0;
+
+    override def isGuy: Boolean = {
+        // TODO I hate this
+        true
+    }
 
     def heal(amount: Int) {
         log.error("TODO heal by " + amount);
