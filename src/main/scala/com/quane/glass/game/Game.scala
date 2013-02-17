@@ -1,19 +1,22 @@
 package com.quane.glass.game
 
 import java.lang.Override
+
+import scala.collection.mutable.ListBuffer
+
 import org.newdawn.slick.BasicGame
 import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
-import com.quane.glass.language.Programs
-import com.quane.glass.language.event.EventListener
-import com.quane.glass.language.event.GlassEvent
-import com.quane.glass.language.data.Number
+
+import com.quane.glass.game.entity.Entity
 import com.quane.glass.game.entity.Mob
+import com.quane.glass.game.physics.PhysicsEngine
 import com.quane.glass.game.physics.WorldBuilder
 import com.quane.glass.game.physics.WorldCleaner
 import com.quane.glass.game.view.GameDrawer
-import com.quane.glass.game.physics.PhysicsEngine
+import com.quane.glass.language.data.Number
+import com.quane.glass.language.event.EventListener
 
 /** The Glass game.
   *
@@ -27,8 +30,15 @@ class Game
     val builder = new WorldBuilder(this, engine.world)
     val cleaner = new WorldCleaner(this, engine)
     val mobFactory = new MobFactory(this)
-    val entities = (builder.buildWalls ::: builder.buildFoodList).toBuffer
+    val entities = initEntities()
     val player = mobFactory.createGuy
+
+    def initEntities(): ListBuffer[Entity] = {
+        val all = new ListBuffer[Entity]
+        all ++= mobFactory.worldEdges
+        all ++= mobFactory.foodList
+        all
+    }
 
     /** Initialize the game.
       *

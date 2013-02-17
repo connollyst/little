@@ -15,6 +15,7 @@ import com.quane.glass.game.entity.Food
 import com.quane.glass.game.entity.WorldEdge
 import com.quane.glass.game.Game
 import com.quane.glass.game.physics.bodies.EntityBody
+import com.quane.glass.game.physics.bodies.PositionedBody
 
 class WorldBuilder(game: Game, world: World) {
 
@@ -32,16 +33,7 @@ class WorldBuilder(game: Game, world: World) {
         new EntityBody(body)
     }
 
-    def buildFoodList(): List[Food] = {
-        val food = new ListBuffer[Food]
-        var foodCount = Random.nextInt(10)
-        for (i <- 0 until foodCount) {
-            food ++= Option(buildFood)
-        }
-        food.toList
-    }
-
-    def buildFood(): Food = {
+    def buildFood(): EntityBody = {
         val uuid = UUID.randomUUID toString
         val randX = Random.nextInt(900) + 50
         val randY = Random.nextInt(700) + 50
@@ -56,31 +48,30 @@ class WorldBuilder(game: Game, world: World) {
         val foodBody = world.createBody(foodBodyDef)
         foodShape.setAsBox(5, 5)
         foodBody.createFixture(foodFixture)
-        val realFoodBody = new EntityBody(foodBody)
-        new Food(realFoodBody, game, Random.nextInt(20))
+        new EntityBody(foodBody)
     }
 
-    def buildWalls(): List[WorldEdge] = {
+    def buildWalls(): List[PositionedBody] = {
         List(buildCeiling, buildGround, buildLeftWall, buildRightWall);
     }
 
-    def buildCeiling(): WorldEdge = {
+    def buildCeiling(): PositionedBody = {
         buildWall(510, 10, 490, 2);
     }
 
-    def buildGround(): WorldEdge = {
+    def buildGround(): PositionedBody = {
         buildWall(510, 750, 490, 2);
     }
 
-    def buildLeftWall(): WorldEdge = {
+    def buildLeftWall(): PositionedBody = {
         buildWall(24, 380, 2, 365);
     }
 
-    def buildRightWall(): WorldEdge = {
+    def buildRightWall(): PositionedBody = {
         buildWall(1000, 380, 2, 365);
     }
 
-    def buildWall(x: Float, y: Float, halfWidth: Float, halfHeight: Float): WorldEdge = {
+    def buildWall(x: Float, y: Float, halfWidth: Float, halfHeight: Float): PositionedBody = {
         val wallBodyDef = new BodyDef;
         wallBodyDef.`type` = BodyType.STATIC;
         wallBodyDef.allowSleep = true;
@@ -91,8 +82,13 @@ class WorldBuilder(game: Game, world: World) {
         val wallBody = world.createBody(wallBodyDef);
         wallShape.setAsBox(halfWidth, halfHeight);
         wallBody.createFixture(wallFixture);
-        val realWallBody = new EntityBody(wallBody)
-        new WorldEdge(realWallBody, game, x - halfWidth, y - halfHeight, halfWidth * 2, halfHeight * 2);
+        new PositionedBody(
+            wallBody,
+            x - halfWidth,
+            y - halfHeight,
+            halfWidth * 2,
+            halfHeight * 2
+        );
     }
 
 }

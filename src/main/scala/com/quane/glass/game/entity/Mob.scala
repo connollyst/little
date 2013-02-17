@@ -1,6 +1,6 @@
 package com.quane.glass.game.entity
 
-import com.quane.glass.game.Game
+import com.quane.glass.game.InteractionManager
 import org.newdawn.slick.Graphics
 import com.quane.glass.game.view.GameDrawer
 import com.quane.glass.language.event.GlassEvent
@@ -19,8 +19,8 @@ object Mob {
     val MIN_SPEED = 0
 }
 
-class Mob(body: EntityBody, game: Game)
-        extends Entity(body, game)
+class Mob(body: EntityBody, manager: InteractionManager)
+        extends Entity(body, manager)
         with Logging {
 
     val operator = new Operator(this)

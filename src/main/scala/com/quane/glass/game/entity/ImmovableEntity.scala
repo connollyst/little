@@ -1,7 +1,6 @@
 package com.quane.glass.game.entity
 
 import com.quane.glass.game.physics.bodies.EntityBody
-import com.quane.glass.game.Game
+import com.quane.glass.game.InteractionManager
 
-abstract class ImmovableEntity(body: EntityBody, game: Game)
-    extends Entity(body, game)
+trait ImmovableEntity

@@ -8,9 +8,8 @@ import org.jbox2d.dynamics.Body
 import com.quane.glass.game.entity.Food
 import com.quane.glass.game.entity.WorldEdge
 
-/**
- * A static set of drawing utilities.
- */
+/** A static set of drawing utilities.
+  */
 object GameDrawer {
 
     def drawGuy(graphics: Graphics, mob: Mob) {
@@ -33,7 +32,13 @@ object GameDrawer {
     }
 
     def drawWall(graphics: Graphics, wall: WorldEdge) {
-        graphics.draw(new Rectangle(wall.x, wall.y, wall.w, wall.h));
+        val body = wall.body
+        val x = body.coords.x
+        val y = body.coords.y
+        val w = body.w
+        val h = body.h
+        val shape = new Rectangle(x, y, w, h)
+        graphics.draw(shape);
     }
 
     def drawFood(graphics: Graphics, food: Food) {
