@@ -41,10 +41,13 @@ class EntityFactory(game: Game) {
         );
         mob
     }
+    
     def foodList: List[Food] = {
+        foodList(Random.nextInt(10) + 10)
+    }
+    def foodList(number: Int): List[Food] = {
         val foods = new ListBuffer[Food]
-        var foodCount = Random.nextInt(10)
-        for (i <- 0 until foodCount) {
+        for (i <- 0 until number) {
             val body = game.builder.buildFood
             val food = new Food(body, manager, Random.nextInt(20))
             foods ++= Option(food)

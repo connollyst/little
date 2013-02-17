@@ -55,8 +55,9 @@ object Programs {
 
         // TODO add a step to get a random number when evaluated
         val randomFun = new Function(mob)
+        
         val directionPointer = new Pointer(randomFun, Mob.VAR_DIRECTION, classOf[Direction])
-        //        randomFun.addStep(new SetterStatement(directionPointer, randomDirection))
+        //        randomFun.addStep(new SetterStatement(directionPointer, randomFun))
         null
     }
 

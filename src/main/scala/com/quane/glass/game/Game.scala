@@ -11,7 +11,7 @@ import org.newdawn.slick.SlickException
 
 import com.quane.glass.game.entity.Entity
 import com.quane.glass.game.entity.EntityFactory
-import com.quane.glass.game.physics.BodyBuilder
+import com.quane.glass.game.physics.bodies.BodyBuilder
 import com.quane.glass.game.physics.PhysicsEngine
 
 /** The Glass game.
@@ -32,7 +32,7 @@ class Game
     def initEntities(): ListBuffer[Entity] = {
         val all = new ListBuffer[Entity]
         all ++= entityFactory.worldEdges
-        all ++= entityFactory.foodList
+        all ++= entityFactory.foodList(20)
         all
     }
 

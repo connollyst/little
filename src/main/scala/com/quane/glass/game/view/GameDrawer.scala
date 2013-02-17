@@ -23,11 +23,13 @@ object GameDrawer {
         val x = body.getPosition().x;
         val y = body.getPosition().y;
         val shape = new Circle(x, y, 20);
+        val sensor = new Circle(x, y, 60);
         val angle = body.getAngle();
         val x2 = x + 10 * math.cos(angle) toFloat;
         val y2 = y + 10 * math.sin(angle) toFloat;
         val line = new Line(x, y, x2, y2);
         graphics.draw(shape);
+        graphics.draw(sensor);
         graphics.draw(line);
     }
 

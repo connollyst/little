@@ -1,27 +1,26 @@
-package com.quane.glass.game.physics
+package com.quane.glass.game.physics.bodies
 
 import java.util.UUID
-import scala.Option.option2Iterable
-import scala.collection.mutable.ListBuffer
+
 import scala.util.Random
+
 import org.jbox2d.collision.shapes.CircleShape
 import org.jbox2d.collision.shapes.PolygonShape
-import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.BodyDef
 import org.jbox2d.dynamics.BodyType
 import org.jbox2d.dynamics.FixtureDef
 import org.jbox2d.dynamics.World
-import com.quane.glass.game.entity.Food
-import com.quane.glass.game.entity.WorldEdge
+
 import com.quane.glass.game.Game
-import com.quane.glass.game.physics.bodies.EntityBody
-import com.quane.glass.game.physics.bodies.StaticBody
 
 class BodyBuilder(game: Game, world: World) {
 
     def buildBody(): EntityBody = {
-        val polygonShape = new CircleShape
-        polygonShape.m_radius = 20
+        val bodyShape = new CircleShape
+        bodyShape.m_radius = 20
+        val sensorShape = new CircleShape
+        sensorShape.m_radius = 60
+        val sensorFixture = buildBodySensor(sensorShape)
         val bodyDef = new BodyDef
         bodyDef.`type` = BodyType.DYNAMIC
         bodyDef.angle = (math.Pi / 8) toFloat;
@@ -29,8 +28,16 @@ class BodyBuilder(game: Game, world: World) {
         bodyDef.position.set(50, 500)
         bodyDef.linearDamping = 0.2 toFloat
         val body = world.createBody(bodyDef)
-        body.createFixture(polygonShape, 1.0f)
+        body.createFixture(bodyShape, 1.0f)
+        body.createFixture(sensorFixture)
         new EntityBody(body)
+    }
+
+    def buildBodySensor(shape: CircleShape): FixtureDef = {
+        val sensorFixture = new FixtureDef
+        sensorFixture.isSensor = true
+        sensorFixture.shape = shape
+        sensorFixture
     }
 
     def buildFood(): EntityBody = {
