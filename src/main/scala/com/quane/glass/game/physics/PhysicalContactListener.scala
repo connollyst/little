@@ -27,21 +27,40 @@ class GlassContactListener
 
     @Override
     override def beginContact(contact: Contact) {
-        reportContact(GlassEvent.OnContact, contact);
+        report(GlassEvent.OnContact, contact);
     }
 
     @Override
     override def endContact(contact: Contact) {
-        reportContact(GlassEvent.OnContactEnded, contact);
+        report(GlassEvent.OnContactEnded, contact);
     }
 
-    def reportContact(event: GlassEvent, contact: Contact) {
-        val bodyA = contact.getFixtureA.getBody
-        val bodyB = contact.getFixtureB.getBody
-
+    def report(event: GlassEvent, contact: Contact) {
+        val fixtureA = contact.getFixtureA
+        val fixtureB = contact.getFixtureB
+        val bodyA = fixtureA.getBody
+        val bodyB = fixtureB.getBody
         val entityA = getContactEntity(bodyA)
         val entityB = getContactEntity(bodyB)
+        if (fixtureA.isSensor && fixtureB.isSensor) {
+            // Two sensors do not substantiate an interaction
+        } else if (fixtureA.isSensor) {
+            // One sensor and one entity
+            reportProximity(event, entityB, entityA)
+        } else if (fixtureB.isSensor) {
+            // One sensor and one entity
+            reportProximity(event, entityA, entityB)
+        } else {
+            // Two entities
+            reportContact(event, entityA, entityB)
+        }
+    }
 
+    def reportProximity(event: GlassEvent, entity: Entity, sensor: Entity) {
+        sensor.approachedBy(entity);
+    }
+
+    def reportContact(event: GlassEvent, entityA: Entity, entityB: Entity) {
         entityA.touchedBy(entityB)
         entityB.touchedBy(entityA)
     }

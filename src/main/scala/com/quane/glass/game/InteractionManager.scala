@@ -28,7 +28,12 @@ class InteractionManagerImpl(game: Game)
         mob.heal(food.health)
     }
 
+    def mobApproachesFood(mob: Mob, food: Food) = {
+        game.eventBus.report(mob, GlassEvent.OnFoodNearby)
+    }
+
     def mobContactsImmovableObject(mob: Mob) = {
         game.eventBus.report(mob, GlassEvent.OnContact);
     }
+
 }

@@ -44,6 +44,10 @@ class Mob(body: EntityBody, manager: InteractionManager)
         // TODO
     }
 
+    def approachedBy(other: Entity) {
+        // TODO
+    }
+
     def render(graphics: Graphics) {
         GameDrawer.drawGuy(graphics, this)
     }

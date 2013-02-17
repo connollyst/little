@@ -24,6 +24,18 @@ class Food(body: EntityBody, manager: InteractionManager, val health: Int)
         }
     }
 
+    def approachedBy(other: Entity) {
+        if (other isGuy) {
+            consumedBy(other.asInstanceOf[Mob])
+        }
+    }
+
+    def approachedByMob(mob: Mob) {
+        if (!isConsumed) {
+            manager.mobConsumesFood(mob, this)
+        }
+    }
+
     def render(graphics: Graphics) {
         GameDrawer.drawFood(graphics, this)
     }

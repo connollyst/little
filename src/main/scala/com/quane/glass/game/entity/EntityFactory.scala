@@ -39,9 +39,21 @@ class EntityFactory(game: Game) {
                 Programs.turnRelative(mob.operator, 260)
             )
         );
+        mob.operator.addEventListener(
+            new EventListener(
+                GlassEvent.OnFoodNearby,
+                Programs.stop(mob.operator)
+            )
+        );
+        mob.operator.addEventListener(
+            new EventListener(
+                GlassEvent.OnFoodConsumed,
+                Programs.stop(mob.operator)
+            )
+        );
         mob
     }
-    
+
     def foodList: List[Food] = {
         foodList(Random.nextInt(10) + 10)
     }

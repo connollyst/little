@@ -18,6 +18,10 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
         }
     }
 
+    def approachedBy(other: Entity) {
+        // TODO
+    }
+
     def render(graphics: Graphics) {
         GameDrawer.drawWall(graphics, this)
     }

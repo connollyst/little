@@ -35,8 +35,10 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager) {
         false
     }
 
-    def render(graphics: Graphics)
-
     def touchedBy(other: Entity)
+
+    def approachedBy(other: Entity)
+
+    def render(graphics: Graphics)
 
 }
