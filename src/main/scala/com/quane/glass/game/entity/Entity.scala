@@ -20,7 +20,7 @@ abstract class Entity(val body: EntityBody, val game: Game) {
 
     val uuid = UUID.randomUUID;
 
-    val isRemoved = false
+    var isRemoved = false
 
     def x: Float = {
         body.coords.x

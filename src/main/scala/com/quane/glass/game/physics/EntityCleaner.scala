@@ -18,8 +18,9 @@ class WorldCleaner(game: Game, engine: PhysicsEngine)
     def cleanAll {
         queue foreach (
             entity => {
-                engine.removeEntity(entity.body)
                 game.entities -= entity
+                entity.isRemoved = true
+                engine.removeEntity(entity.body)
             }
         )
         queue clear
