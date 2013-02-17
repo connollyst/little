@@ -10,6 +10,8 @@ import com.quane.glass.language.event.GlassEvent
 class Food(body: EntityBody, game: Game, health: Int)
         extends Entity(body, game) {
 
+    var isConsumed = false;
+
     def touchedBy(other: Entity) {
         if (other isGuy) {
             consumedBy(other.asInstanceOf[Mob])
@@ -17,9 +19,11 @@ class Food(body: EntityBody, game: Game, health: Int)
     }
 
     def consumedBy(mob: Mob) {
-        game.eventBus.report(mob, GlassEvent.OnFoodConsumed)
-        game.cleaner.remove(this)
-        mob.heal(health)
+        if (!isConsumed) {
+            game.eventBus.report(mob, GlassEvent.OnFoodConsumed)
+            game.cleaner.remove(this)
+            mob.heal(health)
+        }
     }
 
     def render(graphics: Graphics) {
