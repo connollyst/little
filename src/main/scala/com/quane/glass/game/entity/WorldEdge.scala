@@ -5,9 +5,9 @@ import com.quane.glass.game.InteractionManager
 import com.quane.glass.game.physics.bodies.EntityBody
 import com.quane.glass.game.view.GameDrawer
 import com.quane.glass.language.event.GlassEvent
-import com.quane.glass.game.physics.bodies.PositionedBody
+import com.quane.glass.game.physics.bodies.StaticBody
 
-class WorldEdge(override val body: PositionedBody, manager: InteractionManager)
+class WorldEdge(override val body: StaticBody, manager: InteractionManager)
         extends Entity(body, manager)
         with ImmovableEntity {
 

@@ -15,9 +15,9 @@ import com.quane.glass.game.entity.Food
 import com.quane.glass.game.entity.WorldEdge
 import com.quane.glass.game.Game
 import com.quane.glass.game.physics.bodies.EntityBody
-import com.quane.glass.game.physics.bodies.PositionedBody
+import com.quane.glass.game.physics.bodies.StaticBody
 
-class WorldBuilder(game: Game, world: World) {
+class BodyBuilder(game: Game, world: World) {
 
     def buildBody(): EntityBody = {
         val polygonShape = new CircleShape
@@ -51,27 +51,27 @@ class WorldBuilder(game: Game, world: World) {
         new EntityBody(foodBody)
     }
 
-    def buildWalls(): List[PositionedBody] = {
+    def buildWalls(): List[StaticBody] = {
         List(buildCeiling, buildGround, buildLeftWall, buildRightWall);
     }
 
-    def buildCeiling(): PositionedBody = {
+    def buildCeiling(): StaticBody = {
         buildWall(510, 10, 490, 2);
     }
 
-    def buildGround(): PositionedBody = {
+    def buildGround(): StaticBody = {
         buildWall(510, 750, 490, 2);
     }
 
-    def buildLeftWall(): PositionedBody = {
+    def buildLeftWall(): StaticBody = {
         buildWall(24, 380, 2, 365);
     }
 
-    def buildRightWall(): PositionedBody = {
+    def buildRightWall(): StaticBody = {
         buildWall(1000, 380, 2, 365);
     }
 
-    def buildWall(x: Float, y: Float, halfWidth: Float, halfHeight: Float): PositionedBody = {
+    def buildWall(x: Float, y: Float, halfWidth: Float, halfHeight: Float): StaticBody = {
         val wallBodyDef = new BodyDef;
         wallBodyDef.`type` = BodyType.STATIC;
         wallBodyDef.allowSleep = true;
@@ -82,7 +82,7 @@ class WorldBuilder(game: Game, world: World) {
         val wallBody = world.createBody(wallBodyDef);
         wallShape.setAsBox(halfWidth, halfHeight);
         wallBody.createFixture(wallFixture);
-        new PositionedBody(
+        new StaticBody(
             wallBody,
             x - halfWidth,
             y - halfHeight,

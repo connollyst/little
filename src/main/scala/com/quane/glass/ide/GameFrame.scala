@@ -21,8 +21,11 @@ class GlassGameFrame
         val game = new Game()
         eventListeners.foreach(
             eventListener =>
-                // TODO not cool
-                game.player.operator.addEventListener(eventListener)
+                // TODO not cool:
+                game.players foreach (
+                    player =>
+                        player.operator.addEventListener(eventListener)
+                )
         )
         val canvas = new CanvasGameContainer(game)
         peer.getContentPane().add(canvas)

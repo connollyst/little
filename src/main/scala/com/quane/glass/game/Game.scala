@@ -10,13 +10,9 @@ import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
 
 import com.quane.glass.game.entity.Entity
-import com.quane.glass.game.entity.Mob
+import com.quane.glass.game.entity.EntityFactory
+import com.quane.glass.game.physics.BodyBuilder
 import com.quane.glass.game.physics.PhysicsEngine
-import com.quane.glass.game.physics.WorldBuilder
-import com.quane.glass.game.physics.WorldCleaner
-import com.quane.glass.game.view.GameDrawer
-import com.quane.glass.language.data.Number
-import com.quane.glass.language.event.EventListener
 
 /** The Glass game.
   *
@@ -27,16 +23,16 @@ class Game
 
     val eventBus = new EventBus
     val engine = new PhysicsEngine
-    val builder = new WorldBuilder(this, engine.world)
-    val cleaner = new WorldCleaner(this, engine)
-    val mobFactory = new MobFactory(this)
+    val builder = new BodyBuilder(this, engine.world)
+    val cleaner = new GameCleaner(this, engine)
+    val entityFactory = new EntityFactory(this)
     val entities = initEntities()
-    val player = mobFactory.createGuy
+    val players = entityFactory.createMobs(10)
 
     def initEntities(): ListBuffer[Entity] = {
         val all = new ListBuffer[Entity]
-        all ++= mobFactory.worldEdges
-        all ++= mobFactory.foodList
+        all ++= entityFactory.worldEdges
+        all ++= entityFactory.foodList
         all
     }
 
@@ -52,10 +48,7 @@ class Game
         container.setMaximumLogicUpdateInterval(50)
     }
 
-    /** Update to the next state of the game:<br/>
-      * Remove any entities to be deleted.<br/>
-      * Execute all queued events.<br/>
-      * Run a step of the engine and draw the next state.
+    /** Update to the next state of the game.
       *
       * @param container
       * @param delta
@@ -65,7 +58,7 @@ class Game
     @throws(classOf[SlickException])
     override def update(container: GameContainer, delta: Int) {
         cleaner.cleanAll
-        engine.updateAll(List(player))
+        engine.updateAll(players)
         eventBus.evaluateAll
     }
 
@@ -78,12 +71,8 @@ class Game
     @Override
     @throws(classOf[SlickException])
     override def render(container: GameContainer, graphics: Graphics) {
-        entities foreach (
-            entity =>
-                entity.render(graphics)
-        )
-        // TODO guy can be rendered in the same way
-        GameDrawer.drawGuy(graphics, player)
+        entities foreach (_.render(graphics))
+        players foreach (_.render(graphics))
     }
 
 }

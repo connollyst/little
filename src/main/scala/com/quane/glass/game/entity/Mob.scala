@@ -45,7 +45,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
     }
 
     def render(graphics: Graphics) {
-        // TODO
+        GameDrawer.drawGuy(graphics, this)
     }
 
 }

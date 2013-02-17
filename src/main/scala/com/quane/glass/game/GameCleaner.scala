@@ -1,12 +1,13 @@
-package com.quane.glass.game.physics
+package com.quane.glass.game
 
 import scala.collection.mutable.ListBuffer
-import org.eintr.loglady.Logging
-import org.jbox2d.dynamics.World
-import com.quane.glass.game.entity.Entity
-import com.quane.glass.game.Game
 
-class WorldCleaner(game: Game, engine: PhysicsEngine)
+import org.eintr.loglady.Logging
+
+import com.quane.glass.game.entity.Entity
+import com.quane.glass.game.physics.PhysicsEngine
+
+class GameCleaner(game: Game, engine: PhysicsEngine)
         extends Logging {
 
     val queue = new ListBuffer[Entity]

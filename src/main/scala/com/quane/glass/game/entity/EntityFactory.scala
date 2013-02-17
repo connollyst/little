@@ -1,22 +1,29 @@
-package com.quane.glass.game
+package com.quane.glass.game.entity
 
 import scala.Option.option2Iterable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
-import com.quane.glass.game.entity.Food
-import com.quane.glass.game.entity.Mob
-import com.quane.glass.game.entity.WorldEdge
+
+import com.quane.glass.game.Game
+import com.quane.glass.game.InteractionManagerImpl
 import com.quane.glass.language.Programs
 import com.quane.glass.language.data.Number
 import com.quane.glass.language.event.EventListener
 import com.quane.glass.language.event.GlassEvent
-import com.quane.glass.game.entity.WorldEdge
 
-class MobFactory(game: Game) {
+class EntityFactory(game: Game) {
 
     val manager = new InteractionManagerImpl(game)
 
-    def createGuy: Mob = {
+    def createMobs(number: Int): List[Mob] = {
+        val mobs = new ListBuffer[Mob]
+        for (i <- 0 until number) {
+            mobs += createMob
+        }
+        mobs toList
+    }
+
+    def createMob: Mob = {
         val mob = new Mob(game.builder.buildBody, manager)
         game.eventBus.report(mob, GlassEvent.OnSpawn)
         val speed = new Number(100);
@@ -34,7 +41,6 @@ class MobFactory(game: Game) {
         );
         mob
     }
-
     def foodList: List[Food] = {
         val foods = new ListBuffer[Food]
         var foodCount = Random.nextInt(10)
