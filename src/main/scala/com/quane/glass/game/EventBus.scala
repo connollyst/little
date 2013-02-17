@@ -7,7 +7,7 @@ import com.quane.glass.language.event.GlassEvent
 import org.eintr.loglady.Logging
 import com.quane.glass.game.entity.Mob
 
-class EventBus
+object EventBus
         extends Logging {
 
     // Events that have occurred and are waiting to be handled

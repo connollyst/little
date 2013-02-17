@@ -11,12 +11,24 @@ import com.quane.glass.game.physics.WorldCleaner
 import com.quane.glass.game.view.GameDrawer
 import com.quane.glass.language.Operator
 
-class MobFactory(eventBus: EventBus, game: Game) {
+class MobFactory(game: Game) {
 
     def createGuy: Mob = {
-        val guy = new Mob(game.builder.buildBody, game)
-        eventBus.report(guy, GlassEvent.OnSpawn)
-        guy
+        val mob = new Mob(game.builder.buildBody, game)
+        EventBus.report(mob, GlassEvent.OnSpawn)
+        val speed = new Number(100);
+        mob.operator.addEventListener(
+            new EventListener(
+                GlassEvent.OnSpawn,
+                Programs.move(mob.operator, speed)
+            )
+        );
+        mob.operator.addEventListener(
+            new EventListener(
+                GlassEvent.OnContact,
+                Programs.turnRelative(mob.operator, 260)
+            )
+        );
+        mob
     }
-
 }

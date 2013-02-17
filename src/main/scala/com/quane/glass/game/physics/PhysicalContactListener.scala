@@ -12,7 +12,7 @@ import com.quane.glass.game.entity.Entity
 import com.quane.glass.game.EventBus
 import java.lang.Override
 
-class GlassContactListener(eventBus: EventBus)
+class GlassContactListener
         extends ContactListener
         with Logging {
 
@@ -39,10 +39,10 @@ class GlassContactListener(eventBus: EventBus)
     def reportContact(event: GlassEvent, contact: Contact) {
         val bodyA = contact.getFixtureA.getBody
         val bodyB = contact.getFixtureB.getBody
-        
+
         val entityA = getContactEntity(bodyA)
         val entityB = getContactEntity(bodyB)
-        
+
         entityA.touchedBy(entityB)
         entityB.touchedBy(entityA)
     }

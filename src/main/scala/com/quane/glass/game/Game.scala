@@ -23,12 +23,11 @@ import com.quane.glass.game.view.GameDrawer
   */
 class Game extends BasicGame("Glass") {
 
-    val eventBus = new EventBus
-    val engine = new PhysicsEngine(eventBus)
+    val engine = new PhysicsEngine
     val builder = new WorldBuilder(this, engine.world)
     val cleaner = new WorldCleaner(this, engine)
+    val mobFactory = new MobFactory(this)
     val entities = (builder.buildWalls ::: builder.buildFoodList).toBuffer
-    val mobFactory = new MobFactory(eventBus, this)
     val player = mobFactory.createGuy
 
     /** Initialize the game.
@@ -41,23 +40,6 @@ class Game extends BasicGame("Glass") {
     def init(container: GameContainer) {
         container.setMinimumLogicUpdateInterval(-1) // Default
         container.setMaximumLogicUpdateInterval(50)
-        initPlayer()
-    }
-
-    def initPlayer() {
-        val speed = new Number(100);
-        player.operator.addEventListener(
-            new EventListener(
-                GlassEvent.OnSpawn,
-                Programs.move(player.operator, speed)
-            )
-        );
-        player.operator.addEventListener(
-            new EventListener(
-                GlassEvent.OnContact,
-                Programs.turnRelative(player.operator, 260)
-            )
-        );
     }
 
     /** Update to the next state of the game:<br/>
@@ -73,8 +55,8 @@ class Game extends BasicGame("Glass") {
     @throws(classOf[SlickException])
     override def update(container: GameContainer, delta: Int) {
         cleaner.cleanAll
-        eventBus.evaluateAll
         engine.updateAll(List(player))
+        EventBus.evaluateAll
     }
 
     /** Render the current state of the game.

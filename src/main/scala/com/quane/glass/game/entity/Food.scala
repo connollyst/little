@@ -1,10 +1,11 @@
 package com.quane.glass.game.entity
 
-import com.quane.glass.game.Game
 import org.newdawn.slick.Graphics
-import com.quane.glass.game.view.GameDrawer
-import com.quane.glass.language.event.GlassEvent
+import com.quane.glass.game.Game
 import com.quane.glass.game.physics.bodies.EntityBody
+import com.quane.glass.game.view.GameDrawer
+import com.quane.glass.game.EventBus
+import com.quane.glass.language.event.GlassEvent
 
 class Food(body: EntityBody, game: Game, health: Int)
         extends Entity(body, game) {
@@ -16,7 +17,7 @@ class Food(body: EntityBody, game: Game, health: Int)
     }
 
     def consumedBy(mob: Mob) {
-        game.eventBus.report(mob, GlassEvent.OnFoodConsumed)
+        EventBus.report(mob, GlassEvent.OnFoodConsumed)
         game.cleaner.remove(this)
         mob.heal(health)
     }

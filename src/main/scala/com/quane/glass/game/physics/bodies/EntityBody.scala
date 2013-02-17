@@ -14,9 +14,9 @@ class EntityBody(val physicalBody: Body) {
 
     def coords: Coordinates = {
         val position = physicalBody.getPosition();
-        coords.x = position.x
-        coords.y = position.y
-        coords
+        coordinates.x = position.x
+        coordinates.y = position.y
+        coordinates
     }
 
     class Coordinates(var x: Float, var y: Float) {

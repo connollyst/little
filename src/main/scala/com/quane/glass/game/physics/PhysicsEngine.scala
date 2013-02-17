@@ -6,14 +6,14 @@ import com.quane.glass.game.entity.Mob
 import com.quane.glass.game.EventBus
 import com.quane.glass.game.physics.bodies.EntityBody
 
-class PhysicsEngine(eventBus: EventBus) {
+class PhysicsEngine {
 
     val gravity = new Vec2(0, 0)
     val doSleep = true
     val world = new World(gravity, doSleep)
 
     world.setContactListener(
-        new GlassContactListener(eventBus)
+        new GlassContactListener
     )
 
     val timeStep = 1 / 60f //the length of time passed to simulate (seconds)
