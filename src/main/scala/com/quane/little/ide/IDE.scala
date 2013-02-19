@@ -54,13 +54,13 @@ import com.google.common.eventbus.Subscribe
 object IDE extends SimpleSwingApplication {
 
     // Set the window title in Mac 
-    System.setProperty("com.apple.mrj.application.apple.menu.about.name", "Glass");
+    System.setProperty("com.apple.mrj.application.apple.menu.about.name", "little");
 
     // TODO replace static event bus with dependency injection
     val eventBus = new EventBus
 
     def top = new MainFrame {
-        title = "GlassIDE"
+        title = "little IDE"
         minimumSize = new Dimension(1024, 768)
         contents = new BasePanel
         menuBar = new MenuBar

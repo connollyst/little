@@ -19,7 +19,7 @@ import com.quane.little.game.physics.PhysicsEngine
   * @author Sean Connolly
   */
 class Game
-        extends BasicGame("Glass") {
+        extends BasicGame("little") {
 
     val eventBus = new EventBus
     val engine = new PhysicsEngine
