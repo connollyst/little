@@ -1,18 +1,16 @@
 package com.quane.little.game
 
 import java.lang.Override
-
 import scala.collection.mutable.ListBuffer
-
 import org.newdawn.slick.BasicGame
 import org.newdawn.slick.GameContainer
 import org.newdawn.slick.Graphics
 import org.newdawn.slick.SlickException
-
 import com.quane.little.game.entity.Entity
 import com.quane.little.game.entity.EntityFactory
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.physics.PhysicsEngine
+import com.quane.little.game.view.GameDrawer
 
 /** The Glass game.
   *
@@ -71,6 +69,7 @@ class Game
     @Override
     @throws(classOf[SlickException])
     override def render(container: GameContainer, graphics: Graphics) {
+        GameDrawer.drawBackground(graphics)
         entities foreach (_.render(graphics))
         players foreach (_.render(graphics))
     }
