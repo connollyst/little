@@ -1,1 +1,1 @@
-Main-Class: com.quane.glass.engine.GameRunner
+Main-Class: com.quane.little.engine.GameRunner
