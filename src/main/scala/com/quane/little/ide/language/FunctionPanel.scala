@@ -35,19 +35,14 @@ class FunctionPanel
     listenTo(mouse.moves)
     reactions += {
         case event: MouseEntered =>
-            log.info("MouseEntered")
             IDE.eventBus.post(event)
         case event: MouseExited =>
-            log.info("MouseExited")
             IDE.eventBus.post(event)
         case event: DragOverEvent =>
-            log.info("DragOverEvent")
             highlight
         case event: DragOutEvent =>
-            log.info("DragOutEvent")
             unhighlight
         case event: DropExpressionEvent =>
-            log.info("DropExpressionEvent")
             unhighlight
             log.info("Accepting a " + event.toolType.getClass().getSimpleName())
             val controller = event.dropFunction()

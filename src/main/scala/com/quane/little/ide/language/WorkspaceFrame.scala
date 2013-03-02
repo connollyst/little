@@ -39,7 +39,6 @@ class WorkspaceFrame(title: String, panel: FunctionPanel)
     listenTo(panel)
     reactions += {
         case event: StepAddedEvent =>
-            log.info("StepAddedEvent")
             pack
     }
 }
