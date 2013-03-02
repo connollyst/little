@@ -4,6 +4,10 @@ import com.quane.little.language.event.GlassEvent
 
 object GlassPanelFactory {
 
+    def getFunctionFrameFunction() = {
+        () => new FunctionPanelController(new FunctionPanel)
+    }
+    
     def getEventFrameFunction(event: GlassEvent) = {
         () => new ListenerPanelController(event, new ListenerPanel)
     }

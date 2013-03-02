@@ -77,6 +77,17 @@ class WorkspacePanel
                             point.y
                         )
                     )
+                case functionController: FunctionPanelController =>
+                    log.info("Accepting a "+event.toolType.getClass().getSimpleName())
+                    val point = relativeCoordinates(event.point)
+                    publish(
+                        new FunctionAddedEvent(
+                            functionController,
+                            event.toolType,
+                            point.x,
+                            point.y
+                        )
+                    )
                 case _ =>
                     log.error(
                         classOf[WorkspacePanel].getSimpleName()

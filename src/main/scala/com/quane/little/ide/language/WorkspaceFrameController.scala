@@ -6,16 +6,35 @@ import com.quane.little.language.event.GlassEvent
 import com.quane.little.language.Function
 import com.quane.little.language.Expression
 
-class WorkspaceFrameController(view: WorkspaceFrame, panelController: ListenerPanelController)
-        extends Logging {
+sealed trait WorkspaceFrameController
+
+class WorkspaceFunctionFrameController(view: WorkspaceFrame, panelController: FunctionPanelController)
+        extends WorkspaceFrameController
+        with Logging {
+
+    def validate {
+        log.error("TODO: implement validate")
+    }
+
+    def compile: Function = {
+        log.info("Compiling: WorkspaceFunctionFrameController..")
+        panelController.compile(null);
+    }
+
+}
+
+class WorkspaceListenerFrameController(view: WorkspaceFrame, panelController: ListenerPanelController)
+        extends WorkspaceFrameController
+        with Logging {
 
     def validate {
         log.error("TODO: implement validate")
     }
 
     def compile: EventListener = {
-        log.info("Compiling: WorkspaceFrameController..")
+        log.info("Compiling: WorkspaceListenerFrameController..")
         panelController.compile(null);
     }
 
 }
+

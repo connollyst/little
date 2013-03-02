@@ -44,6 +44,9 @@ class ToolPanel(title: String, val toolType: ToolType)
 class EventsToolPanel
         extends ToolPanel("Events", EventToolType) {
 
+    toolList.contents += new ToolButton("Function", toolType,
+        GlassPanelFactory.getFunctionFrameFunction()
+    )
     toolList.contents += new ToolButton("OnSpawn", toolType,
         GlassPanelFactory.getEventFrameFunction(GlassEvent.OnSpawn)
     )

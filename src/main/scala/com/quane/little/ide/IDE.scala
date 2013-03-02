@@ -49,13 +49,14 @@ class MenuBarListener(ide: BasePanel)
     @Subscribe
     def compileEvent(event: DoCompileEvent) {
         log.info("Compiling..")
-        ide.workspace.compileAll
+        ide.workspace.compileAllFunctions
+        ide.workspace.compileAllListeners
     }
 
     @Subscribe
     def runEvent(event: DoRunEvent) {
         log.info("Compiling..")
-        val eventListeners = ide.workspace.compileAll
+        val eventListeners = ide.workspace.compileAllListeners
         log.info("Running..");
         new GlassGameFrame().run(eventListeners)
     }

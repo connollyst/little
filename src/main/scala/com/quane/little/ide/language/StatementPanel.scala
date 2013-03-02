@@ -15,7 +15,7 @@ trait StatementPanel
 class SetterStatementPanel(varName: String, varValue: String)
         extends BoxPanel(Orientation.Horizontal)
         with StatementPanel {
-    
+
     /** Construct an assignment statement initialized with the given name. The
       * value field will be blank.
       */
@@ -59,6 +59,12 @@ class SetDirectionStatementPanel
 class PrintStatementPanel
     extends LabeledStatementPanel("Say");
 
+/** A labeled statement has the format: Label: [value]
+  * Where the value is represented by an input box or an
+  * {@link ExpressionPanel} of some sort.
+  *
+  * @author Sean Connolly
+  */
 abstract class LabeledStatementPanel(label: String)
         extends BoxPanel(Orientation.Horizontal)
         with StatementPanel {
@@ -72,7 +78,7 @@ abstract class LabeledStatementPanel(label: String)
         field.text
     }
 
-    listenTo(field)
+    listenTo(field, field.mouse.moves)
     reactions += {
         case event: ValueChanged =>
         // TODO publish event to controller somehow

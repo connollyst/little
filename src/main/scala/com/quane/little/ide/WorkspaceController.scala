@@ -1,21 +1,53 @@
 package com.quane.little.ide
 
+import java.awt.Point
+
 import scala.collection.mutable.ListBuffer
-import com.quane.little.ide.language.WorkspaceFrameController
+import scala.swing.Reactor
+
+import org.eintr.loglady.Logging
+
+import com.quane.little.ide.language.FunctionPanelController
 import com.quane.little.ide.language.ListenerPanelController
 import com.quane.little.ide.language.WorkspaceFrame
+import com.quane.little.ide.language.WorkspaceFrameController
+import com.quane.little.ide.language.WorkspaceFunctionFrameController
+import com.quane.little.ide.language.WorkspaceListenerFrameController
 import com.quane.little.language.event.EventListener
-import java.awt.Point
-import scala.swing.Reactor
-import org.eintr.loglady.Logging
+import com.quane.little.language.Function
 
 class WorkspaceController(val view: WorkspacePanel)
         extends Reactor
         with Logging {
 
-    val frameControllers = new ListBuffer[WorkspaceFrameController]()
+    val functionControllers = new ListBuffer[WorkspaceFunctionFrameController]()
+    val listenerControllers = new ListBuffer[WorkspaceListenerFrameController]()
 
-    /** Add a frame to the workspace.
+    /** Add a function frame to the workspace.
+      *
+      * @param controller
+      * 		the controller for the frame
+      * @param x
+      * 		the x coordinate of the upper left corner of the frame
+      * @param y
+      * 		the y coordinate of the upper left corner of the frame
+      */
+    def addFunctionFrame(panelController: FunctionPanelController,
+                         toolType: ToolType,
+                         x: Int,
+                         y: Int) {
+        val frameTitle = toolType.getClass().getSimpleName()
+        val panelView = panelController.view
+        val frameView = new WorkspaceFrame(frameTitle, panelView);
+        val frameController = new WorkspaceFunctionFrameController(frameView, panelController)
+        frameView.location = new Point(x, y)
+        frameView.pack
+        view.add(frameView)
+        view.repaint
+        functionControllers += frameController
+    }
+
+    /** Add a listener frame to the workspace.
       *
       * @param controller
       * 		the controller for the frame
@@ -31,22 +63,33 @@ class WorkspaceController(val view: WorkspacePanel)
         val frameTitle = toolType.getClass().getSimpleName()
         val panelView = panelController.view
         val frameView = new WorkspaceFrame(frameTitle, panelView);
-        val frameController = new WorkspaceFrameController(frameView, panelController)
+        val frameController = new WorkspaceListenerFrameController(frameView, panelController)
         frameView.location = new Point(x, y)
         frameView.pack
         view.add(frameView)
         view.repaint
-        frameControllers += frameController
+        listenerControllers += frameController
     }
 
-    /** Compiles all active frames into their respective Glass code.<br/>
+    /** Compiles all active frames into their respective little code.<br/>
       * TODO: Sean.. this doesn't make any sense. What would be the purpose of
       * compiling all _visible_ code?
       */
-    def compileAll: List[EventListener] = {
-        log.info("Compiling all workspace frames..")
+    def compileAllFunctions: List[Function] = {
+        log.info("Compiling all functions..")
+        val functions = new ListBuffer[Function]
+        functionControllers.foreach(
+            controller => {
+                functions += controller.compile
+            }
+        )
+        functions toList
+    }
+
+    def compileAllListeners: List[EventListener] = {
+        log.info("Compiling all event listeners..")
         val eventListeners = new ListBuffer[EventListener]
-        frameControllers.foreach(
+        listenerControllers.foreach(
             controller => {
                 eventListeners += controller.compile
             }
@@ -56,8 +99,12 @@ class WorkspaceController(val view: WorkspacePanel)
 
     listenTo(view)
     reactions += {
+        case event: FunctionAddedEvent =>
+            log.info("FunctionAddedEvent")
+            addFunctionFrame(event.controller, event.toolType, event.x, event.y)
         case event: ListenerAddedEvent =>
             log.info("ListenerAddedEvent")
             addEventFrame(event.controller, event.toolType, event.x, event.y)
     }
+
 }
