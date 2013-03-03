@@ -1,4 +1,4 @@
-package com.quane.little.ide.language
+package com.quane.little.ide.language.data
 
 import scala.swing.TextField
 import scala.swing.event.MouseEntered
@@ -13,6 +13,7 @@ import com.quane.little.ide.DropExpressionEvent
 import org.eintr.loglady.Logging
 import com.quane.little.ide.NumberToolType
 import scala.swing.FlowPanel
+import com.quane.little.ide.language.ExpressionPanel
 
 trait NumberPanel
     extends ExpressionPanel

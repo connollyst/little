@@ -5,9 +5,6 @@ import org.eintr.loglady.Logging
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Number
 import com.quane.little.ide.language.ExpressionPanelController
-import com.quane.little.ide.language.NumberExpressionPanel
-import com.quane.little.ide.language.NumberFieldPanel
-import com.quane.little.ide.language.NumberPanel
 
 abstract class NumberPanelController(override val view: NumberPanel)
         extends ExpressionPanelController[Number](view)

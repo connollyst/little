@@ -5,9 +5,6 @@ import org.eintr.loglady.Logging
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Text
 import com.quane.little.ide.language.ExpressionPanelController
-import com.quane.little.ide.language.TextExpressionPanel
-import com.quane.little.ide.language.TextFieldPanel
-import com.quane.little.ide.language.TextPanel
 
 abstract class TextPanelController(override val view: TextPanel)
         extends ExpressionPanelController[Text](view)

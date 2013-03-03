@@ -1,5 +1,6 @@
-package com.quane.little.ide.language
+package com.quane.little.ide.language.data
 
+import com.quane.little.ide.language.ExpressionPanel
 import scala.swing.TextField
 import scala.swing.event.MouseEntered
 import com.quane.little.ide.SetterToolType

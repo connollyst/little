@@ -10,7 +10,6 @@ import scala.swing.event.Event
 import scala.swing.event.MousePressed
 import scala.swing.event.MouseReleased
 import com.quane.little.language.Expression
-import com.quane.little.ide.language.GlassPanelFactory
 import com.quane.little.language.event.GlassEvent
 import com.quane.little.ide.language.ExpressionPanelController
 import scala.swing.event.MouseEvent

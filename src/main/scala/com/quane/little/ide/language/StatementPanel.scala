@@ -9,6 +9,7 @@ import java.awt.Dimension
 import org.eintr.loglady.Logging
 import com.quane.little.language.Expression
 import com.quane.little.ide.language.memory.PointerPanel
+import com.quane.little.ide.language.data.NumberExpressionPanel
 
 trait StatementPanel
     extends ExpressionPanel
