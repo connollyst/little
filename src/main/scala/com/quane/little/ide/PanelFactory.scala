@@ -19,7 +19,7 @@ import com.quane.little.ide.language.data.NumberExpressionPanelController
 import com.quane.little.ide.language.data.TextExpressionPanel
 import com.quane.little.ide.language.data.TextExpressionPanelController
 
-object GlassPanelFactory {
+object PanelFactory {
 
     def getFunctionFrameFunction() = {
         () => new FunctionPanelController(new FunctionPanel)

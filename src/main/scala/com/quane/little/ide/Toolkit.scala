@@ -45,37 +45,37 @@ class EventsToolPanel
         extends ToolPanel("Events", EventToolType) {
 
     toolList.contents += new ToolButton("Function", toolType,
-        GlassPanelFactory.getFunctionFrameFunction()
+        PanelFactory.getFunctionFrameFunction()
     )
     toolList.contents += new ToolButton("OnSpawn", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnSpawn)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnSpawn)
     )
     toolList.contents += new ToolButton("OnContact", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnContact)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnContact)
     )
     toolList.contents += new ToolButton("OnContactEnded", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnContactEnded)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnContactEnded)
     )
     toolList.contents += new ToolButton("WhenDone", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.WhenDone)
+        PanelFactory.getEventFrameFunction(GlassEvent.WhenDone)
     )
     toolList.contents += new ToolButton("In5Seconds", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.In5Seconds)
+        PanelFactory.getEventFrameFunction(GlassEvent.In5Seconds)
     )
     toolList.contents += new ToolButton("OnFoodNearby", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnFoodNearby)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnFoodNearby)
     )
     toolList.contents += new ToolButton("OnFoodConsumed", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnFoodConsumed)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnFoodConsumed)
     )
     toolList.contents += new ToolButton("OnMobNearby", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnMobNearby)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnMobNearby)
     )
     toolList.contents += new ToolButton("OnMobMoved", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnMobMoved)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnMobMoved)
     )
     toolList.contents += new ToolButton("OnMobGone", toolType,
-        GlassPanelFactory.getEventFrameFunction(GlassEvent.OnMobGone)
+        PanelFactory.getEventFrameFunction(GlassEvent.OnMobGone)
     )
 
 }
@@ -84,13 +84,13 @@ class SettersToolPanel
         extends ToolPanel("Setters", SetterToolType) {
 
     // Say something
-    //    toolList.contents += new ToolButton("Say", toolType, GlassPanelFactory.createPrintStatementPanel)
+    //    toolList.contents += new ToolButton("Say", toolType, PanelFactory.createPrintStatementPanel)
     // Set Speed
-    toolList.contents += new ToolButton("Speed", toolType, GlassPanelFactory.createSetSpeedStatementPanel)
+    toolList.contents += new ToolButton("Speed", toolType, PanelFactory.createSetSpeedStatementPanel)
     // Set Direction
-    toolList.contents += new ToolButton("Direction", toolType, GlassPanelFactory.createSetDirectionStatementPanel)
+    toolList.contents += new ToolButton("Direction", toolType, PanelFactory.createSetDirectionStatementPanel)
     // Set any Variable
-    toolList.contents += new ToolButton("Set Text", toolType, GlassPanelFactory.createAssignmentStatementPanel)
+    toolList.contents += new ToolButton("Set Text", toolType, PanelFactory.createAssignmentStatementPanel)
 
 }
 
