@@ -45,18 +45,16 @@ object PanelFactory {
     //    }
 
     def createSetTextWithFieldStatementPanel(): SetTextPointerStatementPanelController = {
-        val pointerPanel = createTextPointerPanel
-        val valuePanel = createTextStatementPanel(FieldPanelType)
-        new SetTextPointerStatementPanelController(
-            new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
-            pointerPanel,
-            valuePanel
-        )
+        createSetTextStatementPanel(FieldPanelType)
     }
 
     def createSetTextWithExpressionStatementPanel(): SetTextPointerStatementPanelController = {
+        createSetTextStatementPanel(ExpressionPanelType)
+    }
+
+    def createSetTextStatementPanel(panelType: PanelType): SetTextPointerStatementPanelController = {
         val pointerPanel = createTextPointerPanel
-        val valuePanel = createTextStatementPanel(ExpressionPanelType)
+        val valuePanel = createTextStatementPanel(panelType)
         new SetTextPointerStatementPanelController(
             new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
             pointerPanel,
