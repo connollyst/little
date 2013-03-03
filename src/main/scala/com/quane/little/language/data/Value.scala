@@ -16,13 +16,6 @@ sealed trait Value {
 
 }
 
-sealed trait NumericValue
-        extends Value {
-
-    def primitive: Int
-
-}
-
 class Bool(value: Boolean)
         extends Expression[Bool]
         with Value {
@@ -35,7 +28,7 @@ class Bool(value: Boolean)
 
 class Number(value: Int)
         extends Expression[Number]
-        with NumericValue {
+        with Value {
 
     def this(value: String) {
         this(value.toInt)
