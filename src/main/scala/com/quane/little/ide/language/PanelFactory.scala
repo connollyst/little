@@ -2,6 +2,8 @@ package com.quane.little.ide.language
 
 import com.quane.little.language.event.GlassEvent
 import com.quane.little.language.data.Text
+import com.quane.little.ide.language.memory.PointerPanel
+import com.quane.little.ide.language.memory.PointerPanelController
 
 object GlassPanelFactory {
 

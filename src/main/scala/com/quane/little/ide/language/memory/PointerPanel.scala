@@ -1,6 +1,4 @@
-package com.quane.little.ide.language
-
-import scala.swing.Panel
+package com.quane.little.ide.language.memory
 import scala.swing.TextField
 import scala.swing.FlowPanel
 

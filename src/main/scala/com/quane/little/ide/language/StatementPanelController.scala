@@ -13,6 +13,7 @@ import com.quane.little.language.data.Value
 import com.quane.little.language.Statement
 import com.quane.little.language.Expression
 import com.quane.little.game.entity.Mob
+import com.quane.little.ide.language.memory.PointerPanelController
 
 /** @author Sean Connolly
   */
@@ -88,7 +89,6 @@ class SetDirectionStatementPanelController(
         new SetDirectionStatement(scope, valueController.compile(scope))
     }
 }
-
 
 /** The controller for the {@link PrintStatementPanel} is responsible for
   * creating a {@link PrintStatement} to represent that

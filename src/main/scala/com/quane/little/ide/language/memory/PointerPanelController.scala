@@ -1,4 +1,4 @@
-package com.quane.little.ide.language
+package com.quane.little.ide.language.memory
 
 import com.quane.little.language.Scope
 import com.quane.little.language.memory.Pointer

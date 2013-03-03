@@ -8,6 +8,7 @@ import scala.swing.event.ValueChanged
 import java.awt.Dimension
 import org.eintr.loglady.Logging
 import com.quane.little.language.Expression
+import com.quane.little.ide.language.memory.PointerPanel
 
 trait StatementPanel
     extends ExpressionPanel
