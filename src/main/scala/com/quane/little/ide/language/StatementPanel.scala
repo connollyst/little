@@ -14,37 +14,9 @@ trait StatementPanel
 
 /** @author Sean Connolly
   */
-class SetStatementPanel(varName: String, varValue: String)
-        extends BoxPanel(Orientation.Horizontal)
-        with StatementPanel {
-
-    /** Construct an assignment statement initialized with the given name. The
-      * value field will be blank.
-      */
-    def this(variableName: String) {
-        this(variableName, "")
-    }
-
-    /** Construct a blank assignment statement; both the name and value fields
-      * will be blank.
-      */
-    def this() {
-        this("")
-    }
-
-    private val nameField = new TextField(varName, 16)
-    private val valueField = new TextField(varValue, 16)
-
-    contents += new Label("Set")
-    contents += nameField
-    contents += new Label("to")
-    contents += valueField
-
-    def variableName: String = nameField.text
-
-    def variableValue: String = valueField.text
-
-}
+abstract class SetStatementPanel()
+    extends BoxPanel(Orientation.Horizontal)
+    with StatementPanel
 
 class SetSpeedStatementPanel(override val valuePanel: NumberExpressionPanel)
     extends LabeledNumberExpressionStatementPanel("Speed", valuePanel);
@@ -98,10 +70,8 @@ abstract class LabeledDirectionExpressionStatementPanel(
   *
   * @author Sean Connolly
   */
-abstract class LabeledStatementPanel(
-    label: String,
-    val valuePanel: ExpressionPanel)
-        extends SetStatementPanel(label)
+abstract class LabeledStatementPanel(label: String, val valuePanel: ExpressionPanel)
+        extends SetStatementPanel
         with Logging {
 
     contents += new Label(label + ":")
