@@ -3,12 +3,10 @@ package com.quane.little.language
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-import com.quane.little.language.data.Direction
 import com.quane.little.language.data.Number
 import com.quane.little.language.math.RandomNumber
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.math.Addition
-import com.quane.little.language.data.Direction
 
 import com.quane.little.game.entity.Mob
 
@@ -42,7 +40,7 @@ object Programs {
         fun
     }
 
-    def turn(mob: Operator, degrees: Expression[Direction]): Function = {
+    def turn(mob: Operator, degrees: Expression[Number]): Function = {
         val fun = new Function(mob)
         fun.addStep(new SetDirectionStatement(fun, degrees))
         fun
@@ -56,18 +54,17 @@ object Programs {
         // TODO add a step to get a random number when evaluated
         val randomFun = new Function(mob)
         
-        val directionPointer = new Pointer(randomFun, Mob.VAR_DIRECTION, classOf[Direction])
+        val directionPointer = new Pointer(randomFun, Mob.VAR_DIRECTION, classOf[Number])
         //        randomFun.addStep(new SetStatement(directionPointer, randomFun))
         null
     }
 
     def turnRelative(mob: Operator, degrees: Int): Function = {
         val relativelyFun = new Function(mob)
-        val dirPointer = new Pointer(relativelyFun, Mob.VAR_DIRECTION, classOf[Direction])
+        val dirPointer = new Pointer(relativelyFun, Mob.VAR_DIRECTION, classOf[Number])
         val getCurrentDir = new GetStatement(dirPointer)
         val dirChange = new Number(degrees);
-        val getNewDirectionNumber = new Addition(getCurrentDir, dirChange)
-        val getNewDirection = new CastNumberToDirection(getNewDirectionNumber)
+        val getNewDirection = new Addition(getCurrentDir, dirChange)
         val setNewDirection = new SetStatement(dirPointer, getNewDirection)
         relativelyFun.addStep(setNewDirection)
     }
@@ -75,9 +72,9 @@ object Programs {
     def voyage(mob: Operator): Function = {
         val fun = new Function(mob)
         // Step #1: Turn South if I'm facing North
-        val myDirection = new Direction(mob.direction)
-        val north = new Direction(270)
-        val south = new Direction(90)
+        val myDirection = mob.direction
+        val north = new Number(270)
+        val south = new Number(90)
         val isNorth = new Evaluation(myDirection, Equals, north)
         val turnSouth = new Function(mob)
         val assignmentStep = new SetDirectionStatement(turnSouth, south)
@@ -95,7 +92,7 @@ object Programs {
     
     def printDirection(mob: Operator): Function = {
         val fun = new Function(mob)
-        fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Mob.VAR_DIRECTION, classOf[Direction]))))
+        fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Mob.VAR_DIRECTION, classOf[Number]))))
         fun
     }
 }

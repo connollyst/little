@@ -2,7 +2,6 @@ package com.quane.little.language
 
 import org.eintr.loglady.Logging
 import com.quane.little.language.exceptions.GlassCastException
-import com.quane.little.language.data.Direction
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Value
 import com.quane.little.language.data.Variable
@@ -34,9 +33,9 @@ class SetSpeedStatement(scope: Scope, value: Expression[Number])
         value
     );
 
-class SetDirectionStatement(scope: Scope, value: Expression[Direction])
-    extends SetStatement[Direction](
-        new Pointer[Direction](scope, Mob.VAR_DIRECTION, classOf[Direction]),
+class SetDirectionStatement(scope: Scope, value: Expression[Number])
+    extends SetStatement[Number](
+        new Pointer[Number](scope, Mob.VAR_DIRECTION, classOf[Number]),
         value
     );
 

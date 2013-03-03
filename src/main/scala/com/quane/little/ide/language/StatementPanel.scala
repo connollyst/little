@@ -67,9 +67,6 @@ class SetSpecialStatementPanel(label: String, valuePanel: ExpressionPanel)
 abstract class LabeledNumberExpressionStatementPanel(label: String, valuePanel: NumberExpressionPanel)
     extends LabeledStatementPanel(label, valuePanel)
 
-abstract class LabeledDirectionExpressionStatementPanel(label: String, valuePanel: DirectionExpressionPanel)
-    extends LabeledStatementPanel(label, valuePanel)
-
 /** A labeled statement has the format: "Label: [value]"
   * Where the value is represented by an input box or an
   * {@link ExpressionPanel} of some sort.
@@ -82,8 +79,8 @@ abstract class LabeledStatementPanel(label: String, valuePanel: ExpressionPanel)
 class SetSpeedStatementPanel(valuePanel: NumberExpressionPanel)
     extends LabeledNumberExpressionStatementPanel("Speed", valuePanel);
 
-class SetDirectionStatementPanel(valuePanel: DirectionExpressionPanel)
-    extends LabeledDirectionExpressionStatementPanel("Direction", valuePanel);
+class SetDirectionStatementPanel(valuePanel: NumberExpressionPanel)
+    extends LabeledNumberExpressionStatementPanel("Direction", valuePanel);
 
 //class PrintStatementPanel(override val valuePanel: TextExpressionPanel)
 //    extends LabeledTextExpressionStatementPanel("Say", valuePanel);

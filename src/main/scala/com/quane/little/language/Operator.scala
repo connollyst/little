@@ -12,7 +12,6 @@ import org.newdawn.slick.Graphics
 import com.quane.little.game.Game
 import com.quane.little.game.entity.Entity
 import com.quane.little.game.view.GameDrawer
-import com.quane.little.language.data.Direction
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Variable
 import com.quane.little.language.event.EventListener
@@ -39,16 +38,17 @@ class Operator(mob: Mob)
         mob.speed
     }
 
-    def direction(degrees: Int) {
-        if (degrees < 0) {
-            direction(360 + degrees)
+    def direction(degrees: Number) {
+        if (degrees.int < 0) {
+            // TODO avoid creating a new Number here
+            direction(new Number(360 + degrees.int))
         } else {
-            mob.direction = degrees % 360
+            mob.direction = degrees.int % 360
         }
     }
 
-    def direction: Int = {
-        mob.direction
+    def direction: Number = {
+        new Number(mob.direction)
     }
 
     /* Listen for events */
@@ -95,14 +95,14 @@ class Operator(mob: Mob)
         } else if (name.equals(Mob.VAR_DIRECTION)) {
             direction(
                 variable.value match {
-                    case direction: Direction =>
-                        direction.degrees
+                    case direction: Number =>
+                        direction
                     case other: Any =>
                         throw new ClassCastException(
                             "Cannot set " + Mob.VAR_DIRECTION + " to a "
                                 + other.getClass.getSimpleName
                                 + ", it must be a "
-                                + classOf[Direction].getSimpleName
+                                + classOf[Number].getSimpleName
                         )
                 }
             )
@@ -113,11 +113,11 @@ class Operator(mob: Mob)
     }
 
     override def fetch(name: String): Variable = {
-        log.info("Guy is remembering " + name);
+        log.info("Guy is returning " + name);
         if (name.equals(Mob.VAR_SPEED)) {
             new Variable(name, new Number(mob.speed))
         } else if (name.equals(Mob.VAR_DIRECTION)) {
-            new Variable(name, new Direction(mob.direction))
+            new Variable(name, new Number(mob.direction))
         } else {
             // It's not a special variable, fetch it from normal memory
             super.fetch(name);

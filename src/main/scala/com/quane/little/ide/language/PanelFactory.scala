@@ -13,13 +13,13 @@ object GlassPanelFactory {
         () => new ListenerPanelController(event, new ListenerPanel)
     }
 
-//    def createPrintStatementPanel(): PrintStatementPanelController = {
-//        val childController = createTextStatementPanel
-//        val childView = childController.view
-//        new PrintStatementPanelController(
-//            new PrintStatementPanel(childView), childController
-//        )
-//    }
+    //    def createPrintStatementPanel(): PrintStatementPanelController = {
+    //        val childController = createTextStatementPanel
+    //        val childView = childController.view
+    //        new PrintStatementPanelController(
+    //            new PrintStatementPanel(childView), childController
+    //        )
+    //    }
 
     def createAssignmentStatementPanel(): SetTextPointerExpressionStatementPanelController = {
         val pointerPanel = createTextPointerPanel
@@ -40,7 +40,7 @@ object GlassPanelFactory {
     }
 
     def createSetDirectionStatementPanel(): SetDirectionStatementPanelController = {
-        val directionPanelController = createDirectionStatementPanel
+        val directionPanelController = createNumberStatementPanel
         new SetDirectionStatementPanelController(
             new SetDirectionStatementPanel(directionPanelController.view),
             directionPanelController
@@ -50,17 +50,13 @@ object GlassPanelFactory {
     def createTextPointerPanel(): PointerPanelController[Text] = {
         new PointerPanelController(new PointerPanel, classOf[Text])
     }
-    
+
     def createTextStatementPanel(): TextExpressionPanelController = {
         new TextExpressionPanelController(new TextExpressionPanel)
     }
 
     def createNumberStatementPanel(): NumberExpressionPanelController = {
         new NumberExpressionPanelController(new NumberExpressionPanel)
-    }
-
-    def createDirectionStatementPanel(): DirectionExpressionPanelController = {
-        new DirectionExpressionPanelController(new DirectionExpressionPanel)
     }
 
 }

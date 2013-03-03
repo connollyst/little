@@ -6,7 +6,6 @@ import com.quane.little.language.Scope
 import com.quane.little.language.SetDirectionStatement
 import com.quane.little.language.SetSpeedStatement
 import com.quane.little.language.SetStatement
-import com.quane.little.language.data.Direction
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
 import com.quane.little.language.memory.Pointer
@@ -68,23 +67,6 @@ class SetNumberStatementPanelController(
 
 }
 
-class SetAngleStatementPanelController(
-    override val view: SetStatementPanel,
-    override val valueController: DirectionExpressionPanelController)
-        extends SetStatementPanelController[Direction](view, valueController)
-        with Logging {
-
-    override def validate {
-        log.error("TODO: implement validate")
-    }
-
-    override def compile(scope: Scope): SetStatement[Direction] = {
-        log.info("Compiling: Set DIRECTION = EXPRESSION[DIRECTION]");
-        // new SetStatement(pointerController.compile(scope), valueController.compile(scope))
-        null
-    }
-}
-
 class SetSpeedStatementPanelController(
     override val view: SetSpeedStatementPanel,
     override val valueController: NumberExpressionPanelController)
@@ -98,8 +80,8 @@ class SetSpeedStatementPanelController(
 
 class SetDirectionStatementPanelController(
     override val view: SetDirectionStatementPanel,
-    override val valueController: DirectionExpressionPanelController)
-        extends SetAngleStatementPanelController(view, valueController) {
+    override val valueController: NumberExpressionPanelController)
+        extends SetNumberStatementPanelController(view, valueController) {
 
     override def compile(scope: Scope): SetDirectionStatement = {
         log.info("Compiling: Set " + Mob.VAR_DIRECTION + " = EXPRESSION[DIRECTION]");

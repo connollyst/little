@@ -49,27 +49,6 @@ class Number(value: Int)
 
 }
 
-class Direction(value: Int)
-        extends Expression[Direction]
-        with NumericValue {
-
-    def this(value: String) {
-        this(value.toInt)
-    }
-
-    def this(value: Number) {
-        this(value.int);
-    }
-
-    def evaluate: Direction = this;
-
-    def primitive: Int = value
-
-    def degrees: Int = primitive
-
-    def asNumber: Number = new Number(degrees)
-}
-
 class Text(value: String)
         extends Expression[Text]
         with Value {

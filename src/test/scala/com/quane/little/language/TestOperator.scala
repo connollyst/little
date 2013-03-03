@@ -5,6 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 
 import com.quane.little.game.entity.Mob
+import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
 import com.quane.little.language.data.Variable
 
@@ -37,31 +38,31 @@ class TestOperator extends FunSuite {
 
     test("test guy: set direction") {
         val guy = new Operator(null)
-        guy.direction(42)
+        guy.direction(new Number(42))
         assert(guy.direction == 42, "expected direction to be 42 but it was " + guy.direction)
     }
 
     test("test guy: set direction: low limit") {
         val guy = new Operator(null)
-        guy.direction(0) // A-Ok
+        guy.direction(new Number(0)) // A-Ok
         assert(guy.direction == 0, "expected direction to be 0 but it was " + guy.direction)
     }
 
     test("test guy: set direction: high limit") {
         val guy = new Operator(null)
-        guy.direction(360) // is really 0 degrees
+        guy.direction(new Number(360)) // is really 0 degrees
         assert(guy.direction == 0, "expected direction to be 0 but it was " + guy.direction)
     }
 
     test("test guy: set direction: very high") {
         val guy = new Operator(null)
-        guy.direction(360 * 42 + 137) // modulus should remove the excess
+        guy.direction(new Number(360 * 42 + 137)) // modulus should remove the excess
         assert(guy.direction == 137, "expected direction to be 137 but it was " + guy.direction)
     }
 
     test("test guy: set direction: very low") {
         val guy = new Operator(null)
-        guy.direction(0 - 137) // negative degrees should loop around
+        guy.direction(new Number(0 - 137)) // negative degrees should loop around
         assert(guy.direction == (360 - 137), "expected direction to be " + (360 - 137) + " but it was " + guy.direction)
     }
 }
