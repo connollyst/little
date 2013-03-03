@@ -14,6 +14,9 @@ import org.eintr.loglady.Logging
 import com.quane.little.ide.NumberToolType
 import scala.swing.FlowPanel
 import com.quane.little.ide.language.ExpressionPanel
+import scala.swing.BoxPanel
+import com.quane.little.ide.StepAddedEvent
+import scala.swing.Orientation
 
 trait NumberPanel
     extends ExpressionPanel
@@ -31,7 +34,8 @@ class NumberFieldPanel
 }
 
 class NumberExpressionPanel
-        extends NumberPanel
+        extends BoxPanel(Orientation.Vertical)
+        with NumberPanel
         with HighlightableComponent
         with Logging {
 
@@ -56,8 +60,8 @@ class NumberExpressionPanel
             unhighlight
             log.info("Accepting a " + event.toolType.getClass().getSimpleName())
             val controller = event.dropFunction()
-        //contents += controller.view
-        //publish(new StepAddedEvent(controller))
+            contents += controller.view
+            publish(new StepAddedEvent(controller))
     }
 
 }
