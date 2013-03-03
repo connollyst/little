@@ -16,6 +16,8 @@ import com.quane.little.game.entity.Mob
 import com.quane.little.ide.language.memory.PointerPanelController
 import com.quane.little.ide.language.data.NumberExpressionPanelController
 import com.quane.little.ide.language.data.TextExpressionPanelController
+import com.quane.little.ide.language.data.TextFieldPanelController
+import com.quane.little.ide.language.data.TextPanelController
 
 /** @author Sean Connolly
   */
@@ -33,10 +35,10 @@ abstract class SetStatementPanelController[V <: Value](
     val valueController: ExpressionPanelController[Expression[V]])
         extends StatementPanelController[SetStatement[V]](view)
 
-class SetTextPointerExpressionStatementPanelController(
+class SetTextPointerStatementPanelController(
     override val view: SetStatementPanel,
     val pointerController: PointerPanelController[Text],
-    override val valueController: TextExpressionPanelController)
+    override val valueController: TextPanelController)
         extends SetStatementPanelController[Text](view, valueController)
         with Logging {
 
@@ -46,8 +48,7 @@ class SetTextPointerExpressionStatementPanelController(
 
     override def compile(scope: Scope): SetStatement[Text] = {
         log.info("Compiling: Set TEXT = EXPRESSION[TEXT]");
-        // new SetStatement(pointerController.compile(scope), valueController.compile(scope))
-        null
+        new SetStatement(pointerController.compile(scope), valueController.compile(scope))
     }
 
 }
@@ -91,24 +92,4 @@ class SetDirectionStatementPanelController(
         new SetDirectionStatement(scope, valueController.compile(scope))
     }
 }
-
-/** The controller for the PrintStatementPanel is responsible for creating a
- * PrintStatement to represent that represented by the panel.
-  *
-  * @author Sean Connolly
-  */
-//class PrintStatementPanelController(
-//    override val view: PrintStatementPanel,
-//    override val valueController: TextExpressionPanelController)
-//        extends SetTextStatementPanelController(view, valueController) {
-//
-//    override def validate {
-//        // There's no way a print statement can be invalid, worst case scenario
-//        // is we are only printing an empty string
-//    }
-//
-//    override def compile(scope: Scope): PrintStatement = {
-//        //        log.info("Compiling: Say '" + view.value + "'");
-//        new PrintStatement("todo")
-//    }
 //}

@@ -2,19 +2,21 @@ package com.quane.little.ide
 
 import java.awt.Dimension
 import java.awt.Point
+
 import scala.swing.BoxPanel
 import scala.swing.Button
+import scala.swing.Component
 import scala.swing.Label
 import scala.swing.Orientation
 import scala.swing.event.Event
+import scala.swing.event.MouseEvent
 import scala.swing.event.MousePressed
 import scala.swing.event.MouseReleased
+
+import com.quane.little.ide.dnd.DragAndDropItem
+import com.quane.little.ide.language.ExpressionPanelController
 import com.quane.little.language.Expression
 import com.quane.little.language.event.GlassEvent
-import com.quane.little.ide.language.ExpressionPanelController
-import scala.swing.event.MouseEvent
-import scala.swing.Component
-import com.quane.little.ide.dnd.DragAndDropItem
 
 class ToolkitPanel
         extends BoxPanel(Orientation.Vertical) {
@@ -83,20 +85,17 @@ class EventsToolPanel
 class SettersToolPanel
         extends ToolPanel("Setters", SetterToolType) {
 
-    // Say something
     //    toolList.contents += new ToolButton("Say", toolType, PanelFactory.createPrintStatementPanel)
-    // Set Speed
     toolList.contents += new ToolButton("Speed", toolType, PanelFactory.createSetSpeedStatementPanel)
-    // Set Direction
     toolList.contents += new ToolButton("Direction", toolType, PanelFactory.createSetDirectionStatementPanel)
-    // Set any Variable
-    toolList.contents += new ToolButton("Set Text", toolType, PanelFactory.createAssignmentStatementPanel)
+    toolList.contents += new ToolButton("Set Text", toolType, PanelFactory.createSetTextWithFieldStatementPanel)
+    toolList.contents += new ToolButton("Set Text (Expression)", toolType, PanelFactory.createSetTextWithExpressionStatementPanel)
 
 }
 
 class ToolButton(val title: String,
                  val toolType: ToolType,
-                 val dropFunction: () => ExpressionPanelController[_ <: Expression[Any]])
+                 val dropFunction: () => ExpressionPanelController[_ <: Expression[_]])
         extends Button {
 
     text = title
