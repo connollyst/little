@@ -1,4 +1,4 @@
-package com.quane.little.ide
+package com.quane.little.ide.dnd
 
 import scala.swing.Component
 

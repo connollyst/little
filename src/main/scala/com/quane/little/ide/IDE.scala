@@ -4,11 +4,10 @@ import scala.swing.BorderPanel
 import scala.swing.Dimension
 import scala.swing.MainFrame
 import scala.swing.SimpleSwingApplication
-
 import org.eintr.loglady.Logging
-
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
+import com.quane.little.ide.dnd.DragAndDropEventListener
 
 object IDE extends SimpleSwingApplication {
 

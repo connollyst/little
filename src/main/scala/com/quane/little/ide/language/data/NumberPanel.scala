@@ -3,7 +3,7 @@ package com.quane.little.ide.language.data
 import scala.swing.TextField
 import scala.swing.event.MouseEntered
 import com.quane.little.ide.SetterToolType
-import com.quane.little.ide.DragAndDropItem
+import com.quane.little.ide.dnd.DragAndDropItem
 import com.quane.little.ide.IDE
 import scala.swing.event.MouseExited
 import com.quane.little.ide.DragOverEvent

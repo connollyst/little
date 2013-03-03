@@ -14,6 +14,7 @@ import com.quane.little.language.event.GlassEvent
 import com.quane.little.ide.language.ExpressionPanelController
 import scala.swing.event.MouseEvent
 import scala.swing.Component
+import com.quane.little.ide.dnd.DragAndDropItem
 
 class ToolkitPanel
         extends BoxPanel(Orientation.Vertical) {

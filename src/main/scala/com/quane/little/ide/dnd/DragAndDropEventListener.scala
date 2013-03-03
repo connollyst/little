@@ -1,10 +1,16 @@
-package com.quane.little.ide
+package com.quane.little.ide.dnd
 
 import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
 import com.google.common.eventbus.Subscribe
-import scala.swing.Component
 import org.eintr.loglady.Logging
+import com.google.common.eventbus.Subscribe
+import com.quane.little.ide.DragOutEvent
+import com.quane.little.ide.DragOverEvent
+import com.quane.little.ide.DropExpressionEvent
+import com.quane.little.ide.ToolDraggedEvent
+import com.quane.little.ide.ToolDroppedEvent
+import com.quane.little.ide.ToolType
 
 class DragAndDropEventListener
         extends Logging {

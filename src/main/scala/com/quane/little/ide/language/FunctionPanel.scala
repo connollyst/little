@@ -8,8 +8,8 @@ import scala.swing.event.MouseExited
 
 import org.eintr.loglady.Logging
 
-import com.quane.little.ide.DragAndDropItem
-import com.quane.little.ide.DragAndDropTarget
+import com.quane.little.ide.dnd.DragAndDropItem
+import com.quane.little.ide.dnd.DragAndDropTarget
 import com.quane.little.ide.DragOutEvent
 import com.quane.little.ide.DragOverEvent
 import com.quane.little.ide.DropExpressionEvent

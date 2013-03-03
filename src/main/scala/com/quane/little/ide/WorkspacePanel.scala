@@ -15,6 +15,8 @@ import com.quane.little.ide.language.WorkspaceFrameController
 import com.quane.little.ide.swing.HighlightableComponent
 import com.quane.little.ide.language.FunctionPanelController
 import com.quane.little.ide.language.ListenerPanelController
+import com.quane.little.ide.dnd.DragAndDropItem
+import com.quane.little.ide.dnd.DragAndDropTarget
 
 /** The workspace is the area in which programs are created and edited.
   *
