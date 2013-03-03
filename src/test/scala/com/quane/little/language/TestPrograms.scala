@@ -6,8 +6,6 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.data.Variable
 import com.quane.little.language.data.Text
-import com.quane.little.language.Operator;
-import com.quane.little.language.Programs;
 
 @RunWith(classOf[JUnitRunner])
 class TestPrograms extends FunSuite {

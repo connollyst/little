@@ -6,8 +6,6 @@ import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.data.Text
 import com.quane.little.language.data.Number
 import com.quane.little.language.memory.Pointer
-import com.quane.little.language.Function;
-import com.quane.little.language.ReturnStatement;
 
 /** @author Sean Connolly
   */

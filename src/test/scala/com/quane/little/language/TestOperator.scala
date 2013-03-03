@@ -7,8 +7,6 @@ import org.scalatest.junit.JUnitRunner
 import com.quane.little.game.entity.Mob
 import com.quane.little.language.data.Text
 import com.quane.little.language.data.Variable
-import com.quane.little.language.Function;
-import com.quane.little.language.Operator;
 
 /** Tests for the {@code Operator} class.
   *

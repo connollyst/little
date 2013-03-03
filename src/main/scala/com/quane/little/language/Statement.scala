@@ -8,6 +8,7 @@ import com.quane.little.language.data.Value
 import com.quane.little.language.data.Variable
 import com.quane.little.language.memory.Pointer
 import com.quane.little.game.entity.Mob
+import com.quane.little.language.data.Text
 
 abstract class Statement[T]
     extends Expression[T]
@@ -60,13 +61,13 @@ class GetStatement[V <: Value](pointer: Pointer[V])
     }
 }
 
-class PrintStatement(text: String)
+class PrintStatement(text: Expression[Value])
         extends Statement[Unit]
         with Logging {
 
     def evaluate {
         // TODO this should display a speech bubble over the guy
-        log.error(text);
+        log.error(text toString); // TODO this is the Java toString, not ours!
     }
 
 }

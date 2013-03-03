@@ -5,7 +5,6 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.data.Variable
 import com.quane.little.language.data.Text
-import com.quane.little.language.Function;
 
 /** Tests for the {@code Scope} trait.
   *

@@ -5,9 +5,6 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.data.True
 import com.quane.little.language.data.False
-import com.quane.little.language.AND;
-import com.quane.little.language.OR;
-import com.quane.little.language.Test;
 
 @RunWith(classOf[JUnitRunner])
 class TestTest extends FunSuite {

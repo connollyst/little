@@ -90,4 +90,10 @@ object Programs {
         fun.addStep(new SetSpeedStatement(fun, new Number(10)))
         fun
     }
+    
+    def printDirection(mob: Operator): Function = {
+        val fun = new Function(mob)
+        fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Mob.VAR_DIRECTION, classOf[Direction]))))
+        fun
+    }
 }
