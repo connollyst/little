@@ -13,8 +13,6 @@ class FunctionPanelController(override val view: FunctionPanel)
         with Reactor
         with Logging {
 
-    log.info("Creating a FunctionPanelController")
-
     val steps = new ListBuffer[ExpressionPanelController[Expression[Any]]]()
 
     override def validate {

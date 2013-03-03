@@ -34,24 +34,24 @@ object GlassPanelFactory {
         )
     }
 
-//    def createSetDirectionStatementPanel(): SetDirectionStatementPanelController = {
-//        val directionPanelController = createDirectionStatementPanel
-//        new SetDirectionStatementPanelController(
-//            new SetDirectionStatementPanel(directionPanelController.view),
-//            directionPanelController
-//        )
-//    }
-//
-//    def createTextStatementPanel(): TextExpressionPanelController = {
-//        new TextExpressionPanelController(new TextExpressionPanel)
-//    }
+    def createSetDirectionStatementPanel(): SetDirectionStatementPanelController = {
+        val directionPanelController = createDirectionStatementPanel
+        new SetDirectionStatementPanelController(
+            new SetDirectionStatementPanel(directionPanelController.view),
+            directionPanelController
+        )
+    }
+
+    def createTextStatementPanel(): TextExpressionPanelController = {
+        new TextExpressionPanelController(new TextExpressionPanel)
+    }
 
     def createNumberStatementPanel(): NumberExpressionPanelController = {
         new NumberExpressionPanelController(new NumberExpressionPanel)
     }
 
-//    def createDirectionStatementPanel(): DirectionExpressionPanelController = {
-//        new DirectionExpressionPanelController(new DirectionExpressionPanel)
-//    }
+    def createDirectionStatementPanel(): DirectionExpressionPanelController = {
+        new DirectionExpressionPanelController(new DirectionExpressionPanel)
+    }
 
 }

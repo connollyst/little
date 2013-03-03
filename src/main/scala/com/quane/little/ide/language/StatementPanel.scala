@@ -49,8 +49,8 @@ class SetterStatementPanel(varName: String, varValue: String)
 class SetSpeedStatementPanel(override val valuePanel: NumberExpressionPanel)
     extends LabeledNumberExpressionStatementPanel("Speed", valuePanel);
 
-//class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPanel)
-//    extends LabeledDirectionExpressionStatementPanel("Direction", valuePanel);
+class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPanel)
+    extends LabeledDirectionExpressionStatementPanel("Direction", valuePanel);
 
 //class PrintStatementPanel(override val valuePanel: TextExpressionPanel)
 //    extends LabeledTextExpressionStatementPanel("Say", valuePanel);
@@ -87,10 +87,10 @@ abstract class LabeledNumberExpressionStatementPanel(
     override val valuePanel: NumberExpressionPanel)
         extends LabeledStatementPanel(label, valuePanel)
 
-//abstract class LabeledDirectionExpressionStatementPanel(
-//    label: String,
-//    override val valuePanel: DirectionExpressionPanel)
-//        extends LabeledStatementPanel(label, valuePanel)
+abstract class LabeledDirectionExpressionStatementPanel(
+    label: String,
+    override val valuePanel: DirectionExpressionPanel)
+        extends LabeledStatementPanel(label, valuePanel)
 
 /** A labeled statement has the format: "Label: [value]"
   * Where the value is represented by an input box or an

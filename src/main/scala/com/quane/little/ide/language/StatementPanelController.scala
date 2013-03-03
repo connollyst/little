@@ -13,6 +13,7 @@ import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
 import com.quane.little.language.Statement
 import com.quane.little.language.Expression
+import com.quane.little.game.entity.Mob
 
 /** @author Sean Connolly
   */
@@ -30,10 +31,23 @@ abstract class SetterStatementPanelController[V <: Value](
     val valueController: ExpressionPanelController[Expression[V]])
         extends StatementPanelController[SetterStatement[V]](view)
 
-//abstract class SetAngleStatementPanelController(
-//    override val view: SetterStatementPanel,
-//    override val valueController: DirectionExpressionPanelController)
-//        extends SetterStatementPanelController[Direction](view, valueController)
+class SetTextStatementPanelController(
+    override val view: SetterStatementPanel,
+    override val valueController: TextExpressionPanelController)
+        extends SetterStatementPanelController[Text](view, valueController)
+        with Logging {
+
+    override def validate {
+        log.error("TODO: implement validate")
+    }
+
+    override def compile(scope: Scope): SetterStatement[Text] = {
+        log.info("Compiling: Set TEXT = EXPRESSION[TEXT]");
+        // new SetterStatement(pointerController.compile(scope), valueController.compile(scope))
+        null
+    }
+
+}
 
 class SetNumberStatementPanelController(
     override val view: SetterStatementPanel,
@@ -46,17 +60,29 @@ class SetNumberStatementPanelController(
     }
 
     override def compile(scope: Scope): SetterStatement[Number] = {
-        // log.info("Compiling: Set " + Mob.VAR_SPEED + "='" + view.value + "'");
-        // new SetSpeedStatement(scope, valueController.compile(scope))
+        log.info("Compiling: Set NUMBER = EXPRESSION[NUMBER]");
+        // new SetterStatement(pointerController.compile(scope), valueController.compile(scope))
         null
     }
 
 }
 
-//abstract class SetTextStatementPanelController(
-//    override val view: SetterStatementPanel,
-//    override val valueController: TextExpressionPanelController)
-//        extends SetterStatementPanelController[Text](view, valueController)
+class SetAngleStatementPanelController(
+    override val view: SetterStatementPanel,
+    override val valueController: DirectionExpressionPanelController)
+        extends SetterStatementPanelController[Direction](view, valueController)
+        with Logging {
+
+    override def validate {
+        log.error("TODO: implement validate")
+    }
+
+    override def compile(scope: Scope): SetterStatement[Direction] = {
+        log.info("Compiling: Set DIRECTION = EXPRESSION[DIRECTION]");
+        // new SetterStatement(pointerController.compile(scope), valueController.compile(scope))
+        null
+    }
+}
 
 class SetSpeedStatementPanelController(
     override val view: SetSpeedStatementPanel,
@@ -64,29 +90,22 @@ class SetSpeedStatementPanelController(
         extends SetNumberStatementPanelController(view, valueController) {
 
     override def compile(scope: Scope): SetSpeedStatement = {
-        // log.info("Compiling: Set " + Mob.VAR_SPEED + "='" + view.value + "'");
+        log.info("Compiling: Set " + Mob.VAR_SPEED + " = EXPRESSION[NUMBER]");
         new SetSpeedStatement(scope, valueController.compile(scope))
     }
-
 }
-//
-//class SetDirectionStatementPanelController(
-//    override val view: SetDirectionStatementPanel,
-//    override val valueController: DirectionExpressionPanelController)
-//        extends SetAngleStatementPanelController(view, valueController)
-//        with Logging {
-//
-//    override def validate {
-//        log.error("TODO: implement validate")
-//    }
-//
-//    override def compile(scope: Scope): SetDirectionStatement = {
-//        // log.info("Compiling: Set " + Mob.VAR_DIRECTION + "='" + view.value + "'");
-//        //        new SetDirectionStatement(scope, valueController.compile(scope))
-//        new SetDirectionStatement(scope, new Direction(10))
-//    }
-//
-//}
+
+class SetDirectionStatementPanelController(
+    override val view: SetDirectionStatementPanel,
+    override val valueController: DirectionExpressionPanelController)
+        extends SetAngleStatementPanelController(view, valueController) {
+
+    override def compile(scope: Scope): SetDirectionStatement = {
+        log.info("Compiling: Set " + Mob.VAR_DIRECTION + " = EXPRESSION[DIRECTION]");
+        new SetDirectionStatement(scope, valueController.compile(scope))
+    }
+}
+
 
 /** The controller for the {@link PrintStatementPanel} is responsible for
   * creating a {@link PrintStatement} to represent that

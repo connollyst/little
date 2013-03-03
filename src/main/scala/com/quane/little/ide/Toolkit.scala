@@ -88,7 +88,7 @@ class SettersToolPanel
     // Set Speed
     toolList.contents += new ToolButton("Speed", toolType, GlassPanelFactory.createSetSpeedStatementPanel)
     // Set Direction
-//    toolList.contents += new ToolButton("Direction", toolType, GlassPanelFactory.createSetDirectionStatementPanel)
+    toolList.contents += new ToolButton("Direction", toolType, GlassPanelFactory.createSetDirectionStatementPanel)
     // Set any Variable
 //      toolList.contents += new ToolButton("Set", toolType, GlassPanelFactory.createAssignmentStatementPanel)
 
