@@ -6,6 +6,8 @@ import scala.swing.Orientation
 import scala.swing.TextField
 import scala.swing.event.ValueChanged
 import java.awt.Dimension
+import org.eintr.loglady.Logging
+import com.quane.little.language.Expression
 
 trait StatementPanel
     extends ExpressionPanel
@@ -44,44 +46,72 @@ class SetterStatementPanel(varName: String, varValue: String)
 
 }
 
-/** @author Sean Connolly
-  */
-class SetSpeedStatementPanel
-    extends LabeledStatementPanel("Speed");
+class SetSpeedStatementPanel(override val valuePanel: NumberExpressionPanel)
+    extends LabeledNumberExpressionStatementPanel("Speed", valuePanel);
 
-/** @author Sean Connolly
-  */
-class SetDirectionStatementPanel
-    extends LabeledStatementPanel("Direction");
+//class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPanel)
+//    extends LabeledDirectionExpressionStatementPanel("Direction", valuePanel);
 
-/** @author Sean Connolly
-  */
-class PrintStatementPanel
-    extends LabeledStatementPanel("Say");
+//class PrintStatementPanel(override val valuePanel: TextExpressionPanel)
+//    extends LabeledTextExpressionStatementPanel("Say", valuePanel);
 
-/** A labeled statement has the format: Label: [value]
+//abstract class LabeledTextFieldStatementPanel(label: String)
+//        extends SetterStatementPanel(label) {
+//
+//    protected val field = new TextFieldPanel
+//
+//    contents += new Label(label + ":")
+//    contents += field
+//
+//}
+
+//abstract class LabeledNumberFieldStatementPanel(label: String)
+//        extends BoxPanel(Orientation.Horizontal)
+//        with StatementPanel
+//        with Logging {
+//
+//    protected val field = new NumberFieldPanel
+//
+//    contents += new Label(label + ":")
+//    contents += field
+//
+//}
+
+//abstract class LabeledTextExpressionStatementPanel(
+//    label: String,
+//    override val valuePanel: TextExpressionPanel)
+//        extends LabeledStatementPanel(label, valuePanel)
+
+abstract class LabeledNumberExpressionStatementPanel(
+    label: String,
+    override val valuePanel: NumberExpressionPanel)
+        extends LabeledStatementPanel(label, valuePanel)
+
+//abstract class LabeledDirectionExpressionStatementPanel(
+//    label: String,
+//    override val valuePanel: DirectionExpressionPanel)
+//        extends LabeledStatementPanel(label, valuePanel)
+
+/** A labeled statement has the format: "Label: [value]"
   * Where the value is represented by an input box or an
   * {@link ExpressionPanel} of some sort.
   *
   * @author Sean Connolly
   */
-abstract class LabeledStatementPanel(label: String)
-        extends BoxPanel(Orientation.Horizontal)
-        with StatementPanel {
-
-    protected val field = new TextField
+abstract class LabeledStatementPanel(
+    label: String,
+    val valuePanel: ExpressionPanel)
+        extends SetterStatementPanel(label)
+        with Logging {
 
     contents += new Label(label + ":")
-    contents += field
+    contents += valuePanel
 
-    def value: String = {
-        field.text
-    }
-
-    listenTo(field, field.mouse.moves)
+    listenTo(valuePanel, valuePanel.mouse.moves)
     reactions += {
         case event: ValueChanged =>
-        // TODO publish event to controller somehow
+            // TODO publish event to controller somehow
+            log.info("Size: " + preferredSize)
     }
 
 }

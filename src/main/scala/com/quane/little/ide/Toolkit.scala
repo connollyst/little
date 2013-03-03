@@ -84,20 +84,20 @@ class SettersToolPanel
         extends ToolPanel("Setters", SetterToolType) {
 
     // Say something
-    toolList.contents += new ToolButton("Say", toolType, GlassPanelFactory.createPrintStatementPanel)
+//    toolList.contents += new ToolButton("Say", toolType, GlassPanelFactory.createPrintStatementPanel)
     // Set Speed
     toolList.contents += new ToolButton("Speed", toolType, GlassPanelFactory.createSetSpeedStatementPanel)
     // Set Direction
-    toolList.contents += new ToolButton("Direction", toolType, GlassPanelFactory.createSetDirectionStatementPanel)
+//    toolList.contents += new ToolButton("Direction", toolType, GlassPanelFactory.createSetDirectionStatementPanel)
     // Set any Variable
-    toolList.contents += new ToolButton("Set", toolType, GlassPanelFactory.createAssignmentStatementPanel)
+//      toolList.contents += new ToolButton("Set", toolType, GlassPanelFactory.createAssignmentStatementPanel)
 
 }
 
 class ToolButton(val title: String,
                  val toolType: ToolType,
-                 val dropFunction: () => ExpressionPanelController[Expression[Any]])
-        extends Button{
+                 val dropFunction: () => ExpressionPanelController[_ <: Expression[Any]])
+        extends Button {
 
     text = title
 
@@ -132,3 +132,5 @@ sealed trait ToolType extends DragAndDropItem
 object EventToolType extends ToolType
 
 object SetterToolType extends ToolType
+
+object NumberToolType extends ToolType

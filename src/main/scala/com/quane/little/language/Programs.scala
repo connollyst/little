@@ -65,7 +65,8 @@ object Programs {
         val relativelyFun = new Function(mob)
         val dirPointer = new Pointer(relativelyFun, Mob.VAR_DIRECTION, classOf[Direction])
         val getCurrentDir = new GetterStatement(dirPointer)
-        val getNewDirectionNumber = new Addition(getCurrentDir, new Number(degrees))
+        val dirChange = new Number(degrees);
+        val getNewDirectionNumber = new Addition(getCurrentDir, dirChange)
         val getNewDirection = new CastNumberToDirection(getNewDirectionNumber)
         val setNewDirection = new SetterStatement(dirPointer, getNewDirection)
         relativelyFun.addStep(setNewDirection)
