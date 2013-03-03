@@ -33,19 +33,6 @@ class Bool(value: Boolean)
 
 }
 
-// TODO replace java.awt.Point
-class Location(value: Point)
-        extends Expression[Location]
-        with Value {
-
-    def evaluate: Location = this;
-
-    def primitive: Point = value
-
-    def point: Point = primitive
-
-}
-
 class Number(value: Int)
         extends Expression[Number]
         with NumericValue {

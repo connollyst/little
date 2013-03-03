@@ -13,7 +13,6 @@ import com.quane.little.game.Game
 import com.quane.little.game.entity.Entity
 import com.quane.little.game.view.GameDrawer
 import com.quane.little.language.data.Direction
-import com.quane.little.language.data.Location
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Variable
 import com.quane.little.language.event.EventListener
@@ -28,9 +27,9 @@ class Operator(mob: Mob)
     // TODO is there a 'community' scope above this?
     var scope: Scope = null;
 
-    def location: Location = {
-        new Location(new Point(mob.x toInt, mob.y toInt))
-    }
+    def x: Number = new Number(mob.x toInt)
+    
+    def y: Number = new Number(mob.y toInt)
 
     def speed(speed: Int) {
         mob.speed = Math.max(Mob.MIN_SPEED, Math.min(speed, Mob.MAX_SPEED))

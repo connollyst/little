@@ -2,14 +2,14 @@ package com.quane.little.language
 
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
+
 import com.quane.little.language.data.Direction
-import com.quane.little.language.data.Location
 import com.quane.little.language.data.Number
 import com.quane.little.language.math.RandomNumber
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.math.Addition
 import com.quane.little.language.data.Direction
-import com.quane.little.language.data.Location
+
 import com.quane.little.game.entity.Mob
 
 /** A set programs used during development - mostly to sanity check the
@@ -84,8 +84,10 @@ object Programs {
         turnSouth.addStep(assignmentStep)
         fun.addStep(new Conditional(isNorth, turnSouth))
         // Step #2: Remember _Home_ is _Here_
-        val homePointer = new Pointer(fun, "Home", classOf[Location])
-        fun.addStep(new SetStatement(homePointer, mob.location))
+        val homeXPointer = new Pointer(fun, "HomeX", classOf[Number])
+        val homeYPointer = new Pointer(fun, "HomeY", classOf[Number])
+        fun.addStep(new SetStatement(homeXPointer, mob.x))
+        fun.addStep(new SetStatement(homeYPointer, mob.y))
         // Step #3: Set speed to 10
         fun.addStep(new SetSpeedStatement(fun, new Number(10)))
         fun
