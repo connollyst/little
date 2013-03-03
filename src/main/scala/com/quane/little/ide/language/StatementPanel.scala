@@ -14,7 +14,7 @@ trait StatementPanel
 
 /** @author Sean Connolly
   */
-class SetterStatementPanel(varName: String, varValue: String)
+class SetStatementPanel(varName: String, varValue: String)
         extends BoxPanel(Orientation.Horizontal)
         with StatementPanel {
 
@@ -56,7 +56,7 @@ class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPan
 //    extends LabeledTextExpressionStatementPanel("Say", valuePanel);
 
 //abstract class LabeledTextFieldStatementPanel(label: String)
-//        extends SetterStatementPanel(label) {
+//        extends SetStatementPanel(label) {
 //
 //    protected val field = new TextFieldPanel
 //
@@ -101,7 +101,7 @@ abstract class LabeledDirectionExpressionStatementPanel(
 abstract class LabeledStatementPanel(
     label: String,
     val valuePanel: ExpressionPanel)
-        extends SetterStatementPanel(label)
+        extends SetStatementPanel(label)
         with Logging {
 
     contents += new Label(label + ":")

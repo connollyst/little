@@ -57,18 +57,18 @@ object Programs {
         val randomFun = new Function(mob)
         
         val directionPointer = new Pointer(randomFun, Mob.VAR_DIRECTION, classOf[Direction])
-        //        randomFun.addStep(new SetterStatement(directionPointer, randomFun))
+        //        randomFun.addStep(new SetStatement(directionPointer, randomFun))
         null
     }
 
     def turnRelative(mob: Operator, degrees: Int): Function = {
         val relativelyFun = new Function(mob)
         val dirPointer = new Pointer(relativelyFun, Mob.VAR_DIRECTION, classOf[Direction])
-        val getCurrentDir = new GetterStatement(dirPointer)
+        val getCurrentDir = new GetStatement(dirPointer)
         val dirChange = new Number(degrees);
         val getNewDirectionNumber = new Addition(getCurrentDir, dirChange)
         val getNewDirection = new CastNumberToDirection(getNewDirectionNumber)
-        val setNewDirection = new SetterStatement(dirPointer, getNewDirection)
+        val setNewDirection = new SetStatement(dirPointer, getNewDirection)
         relativelyFun.addStep(setNewDirection)
     }
 
@@ -85,7 +85,7 @@ object Programs {
         fun.addStep(new Conditional(isNorth, turnSouth))
         // Step #2: Remember _Home_ is _Here_
         val homePointer = new Pointer(fun, "Home", classOf[Location])
-        fun.addStep(new SetterStatement(homePointer, mob.location))
+        fun.addStep(new SetStatement(homePointer, mob.location))
         // Step #3: Set speed to 10
         fun.addStep(new SetSpeedStatement(fun, new Number(10)))
         fun

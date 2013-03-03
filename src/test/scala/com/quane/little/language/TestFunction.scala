@@ -21,8 +21,8 @@ class TestFunction extends FunSuite {
         val fun = new Function(null)
         val pointer1 = new Pointer(fun, "Obj1", classOf[Text])
         val pointer2 = new Pointer(fun, "Obj2", classOf[Text])
-        fun.addStep(new SetterStatement(pointer1, new Text("A")))
-        fun.addStep(new SetterStatement(pointer2, new Text("B")))
+        fun.addStep(new SetStatement(pointer1, new Text("A")))
+        fun.addStep(new SetStatement(pointer2, new Text("B")))
         fun.evaluate
         val obj1 = fun.fetch("Obj1")
         val obj2 = fun.fetch("Obj2")
@@ -40,9 +40,9 @@ class TestFunction extends FunSuite {
         val fun = new Function(null)
         val pointer1 = new Pointer(fun, "Obj1", classOf[Text])
         val pointer2 = new Pointer(fun, "Obj2", classOf[Text])
-        fun.addStep(new SetterStatement(pointer1, new Text("A")))
-        fun.addStep(new SetterStatement(pointer2, new Text("B")))
-        fun.addStep(new SetterStatement(pointer1, new GetterStatement(pointer2)))
+        fun.addStep(new SetStatement(pointer1, new Text("A")))
+        fun.addStep(new SetStatement(pointer2, new Text("B")))
+        fun.addStep(new SetStatement(pointer1, new GetStatement(pointer2)))
         fun.evaluate
         val obj1 = fun.fetch("Obj1")
         val obj2 = fun.fetch("Obj2")
@@ -59,7 +59,7 @@ class TestFunction extends FunSuite {
     test("test function: return step") {
         val fun = new Function(null)
         val pointer = new Pointer(fun, "Obj1", classOf[Text])
-        fun.addStep(new SetterStatement(pointer, new Text("A")))
+        fun.addStep(new SetStatement(pointer, new Text("A")))
         fun.addStep(new ReturnStatement("Obj1", fun))
         val obj1 = fun.evaluate
         // assert(obj1.value == "A", "expected Obj1 to be 'A' but is: " + obj1.value)

@@ -12,7 +12,7 @@ import com.quane.little.game.entity.Mob
 abstract class Statement[T]
     extends Expression[T]
 
-class SetterStatement[+V <: Value](pointer: Pointer[V], value: Expression[V]) // TODO we need a compiler check that its the right value type..?
+class SetStatement[+V <: Value](pointer: Pointer[V], value: Expression[V]) // TODO we need a compiler check that its the right value type..?
         extends Statement[Unit]
         with Logging {
 
@@ -28,18 +28,18 @@ class SetterStatement[+V <: Value](pointer: Pointer[V], value: Expression[V]) //
 }
 
 class SetSpeedStatement(scope: Scope, value: Expression[Number])
-    extends SetterStatement(
+    extends SetStatement(
         new Pointer[Number](scope, Mob.VAR_SPEED, classOf[Number]),
         value
     );
 
 class SetDirectionStatement(scope: Scope, value: Expression[Direction])
-    extends SetterStatement[Direction](
+    extends SetStatement[Direction](
         new Pointer[Direction](scope, Mob.VAR_DIRECTION, classOf[Direction]),
         value
     );
 
-class GetterStatement[V <: Value](pointer: Pointer[V])
+class GetStatement[V <: Value](pointer: Pointer[V])
         extends Statement[V]
         with Logging {
 

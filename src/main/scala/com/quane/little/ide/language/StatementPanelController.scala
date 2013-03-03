@@ -5,7 +5,7 @@ import com.quane.little.language.PrintStatement
 import com.quane.little.language.Scope
 import com.quane.little.language.SetDirectionStatement
 import com.quane.little.language.SetSpeedStatement
-import com.quane.little.language.SetterStatement
+import com.quane.little.language.SetStatement
 import com.quane.little.language.data.Direction
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
@@ -26,60 +26,60 @@ abstract class StatementPanelController[S <: Statement[_]](override val view: St
   *
   * @author Sean Connolly
   */
-abstract class SetterStatementPanelController[V <: Value](
-    override val view: SetterStatementPanel,
+abstract class SetStatementPanelController[V <: Value](
+    override val view: SetStatementPanel,
     val valueController: ExpressionPanelController[Expression[V]])
-        extends StatementPanelController[SetterStatement[V]](view)
+        extends StatementPanelController[SetStatement[V]](view)
 
 class SetTextStatementPanelController(
-    override val view: SetterStatementPanel,
+    override val view: SetStatementPanel,
     override val valueController: TextExpressionPanelController)
-        extends SetterStatementPanelController[Text](view, valueController)
+        extends SetStatementPanelController[Text](view, valueController)
         with Logging {
 
     override def validate {
         log.error("TODO: implement validate")
     }
 
-    override def compile(scope: Scope): SetterStatement[Text] = {
+    override def compile(scope: Scope): SetStatement[Text] = {
         log.info("Compiling: Set TEXT = EXPRESSION[TEXT]");
-        // new SetterStatement(pointerController.compile(scope), valueController.compile(scope))
+        // new SetStatement(pointerController.compile(scope), valueController.compile(scope))
         null
     }
 
 }
 
 class SetNumberStatementPanelController(
-    override val view: SetterStatementPanel,
+    override val view: SetStatementPanel,
     override val valueController: NumberExpressionPanelController)
-        extends SetterStatementPanelController[Number](view, valueController)
+        extends SetStatementPanelController[Number](view, valueController)
         with Logging {
 
     override def validate {
         log.error("TODO: implement validate")
     }
 
-    override def compile(scope: Scope): SetterStatement[Number] = {
+    override def compile(scope: Scope): SetStatement[Number] = {
         log.info("Compiling: Set NUMBER = EXPRESSION[NUMBER]");
-        // new SetterStatement(pointerController.compile(scope), valueController.compile(scope))
+        // new SetStatement(pointerController.compile(scope), valueController.compile(scope))
         null
     }
 
 }
 
 class SetAngleStatementPanelController(
-    override val view: SetterStatementPanel,
+    override val view: SetStatementPanel,
     override val valueController: DirectionExpressionPanelController)
-        extends SetterStatementPanelController[Direction](view, valueController)
+        extends SetStatementPanelController[Direction](view, valueController)
         with Logging {
 
     override def validate {
         log.error("TODO: implement validate")
     }
 
-    override def compile(scope: Scope): SetterStatement[Direction] = {
+    override def compile(scope: Scope): SetStatement[Direction] = {
         log.info("Compiling: Set DIRECTION = EXPRESSION[DIRECTION]");
-        // new SetterStatement(pointerController.compile(scope), valueController.compile(scope))
+        // new SetStatement(pointerController.compile(scope), valueController.compile(scope))
         null
     }
 }

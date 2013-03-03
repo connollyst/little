@@ -20,9 +20,9 @@ object GlassPanelFactory {
 //        )
 //    }
 //
-//    def createAssignmentStatementPanel(): SetterStatementPanelController = {
-//        new SetterStatementPanelController(
-//            new SetterStatementPanel
+//    def createAssignmentStatementPanel(): SetStatementPanelController = {
+//        new SetStatementPanelController(
+//            new SetStatementPanel
 //        )
 //    }
 
