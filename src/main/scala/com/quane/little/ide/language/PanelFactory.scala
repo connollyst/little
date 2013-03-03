@@ -4,6 +4,8 @@ import com.quane.little.language.event.GlassEvent
 import com.quane.little.language.data.Text
 import com.quane.little.ide.language.memory.PointerPanel
 import com.quane.little.ide.language.memory.PointerPanelController
+import com.quane.little.ide.language.data.NumberExpressionPanelController
+import com.quane.little.ide.language.data.TextExpressionPanelController
 
 object GlassPanelFactory {
 

@@ -14,6 +14,8 @@ import com.quane.little.language.Statement
 import com.quane.little.language.Expression
 import com.quane.little.game.entity.Mob
 import com.quane.little.ide.language.memory.PointerPanelController
+import com.quane.little.ide.language.data.NumberExpressionPanelController
+import com.quane.little.ide.language.data.TextExpressionPanelController
 
 /** @author Sean Connolly
   */
@@ -90,9 +92,8 @@ class SetDirectionStatementPanelController(
     }
 }
 
-/** The controller for the {@link PrintStatementPanel} is responsible for
-  * creating a {@link PrintStatement} to represent that
-  * represented by the panel.
+/** The controller for the PrintStatementPanel is responsible for creating a
+ * PrintStatement to represent that represented by the panel.
   *
   * @author Sean Connolly
   */
@@ -110,5 +111,4 @@ class SetDirectionStatementPanelController(
 //        //        log.info("Compiling: Say '" + view.value + "'");
 //        new PrintStatement("todo")
 //    }
-//
 //}
