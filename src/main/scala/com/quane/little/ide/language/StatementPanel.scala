@@ -14,18 +14,30 @@ trait StatementPanel
 
 /** @author Sean Connolly
   */
-abstract class SetStatementPanel()
+abstract class SetStatementPanel
     extends BoxPanel(Orientation.Horizontal)
     with StatementPanel
 
-class SetSpeedStatementPanel(override val valuePanel: NumberExpressionPanel)
-    extends LabeledNumberExpressionStatementPanel("Speed", valuePanel);
+class SetPointerStatementPanel(pointerPanel: PointerPanel, valuePanel: ExpressionPanel)
+        extends SetStatementPanel {
 
-class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPanel)
-    extends LabeledDirectionExpressionStatementPanel("Direction", valuePanel);
+    contents += pointerPanel
+    contents += new Label("=")
+    contents += valuePanel
+}
 
-//class PrintStatementPanel(override val valuePanel: TextExpressionPanel)
-//    extends LabeledTextExpressionStatementPanel("Say", valuePanel);
+class SetSpecialStatementPanel(label: String, valuePanel: ExpressionPanel)
+        extends SetStatementPanel {
+
+    contents += new Label(label + "=")
+    contents += valuePanel
+
+    listenTo(valuePanel, valuePanel.mouse.moves)
+    reactions += {
+        case event: ValueChanged =>
+        // TODO publish event to controller somehow
+    }
+}
 
 //abstract class LabeledTextFieldStatementPanel(label: String)
 //        extends SetStatementPanel(label) {
@@ -34,7 +46,6 @@ class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPan
 //
 //    contents += new Label(label + ":")
 //    contents += field
-//
 //}
 
 //abstract class LabeledNumberFieldStatementPanel(label: String)
@@ -46,7 +57,6 @@ class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPan
 //
 //    contents += new Label(label + ":")
 //    contents += field
-//
 //}
 
 //abstract class LabeledTextExpressionStatementPanel(
@@ -54,15 +64,11 @@ class SetDirectionStatementPanel(override val valuePanel: DirectionExpressionPan
 //    override val valuePanel: TextExpressionPanel)
 //        extends LabeledStatementPanel(label, valuePanel)
 
-abstract class LabeledNumberExpressionStatementPanel(
-    label: String,
-    override val valuePanel: NumberExpressionPanel)
-        extends LabeledStatementPanel(label, valuePanel)
+abstract class LabeledNumberExpressionStatementPanel(label: String, valuePanel: NumberExpressionPanel)
+    extends LabeledStatementPanel(label, valuePanel)
 
-abstract class LabeledDirectionExpressionStatementPanel(
-    label: String,
-    override val valuePanel: DirectionExpressionPanel)
-        extends LabeledStatementPanel(label, valuePanel)
+abstract class LabeledDirectionExpressionStatementPanel(label: String, valuePanel: DirectionExpressionPanel)
+    extends LabeledStatementPanel(label, valuePanel)
 
 /** A labeled statement has the format: "Label: [value]"
   * Where the value is represented by an input box or an
@@ -70,18 +76,14 @@ abstract class LabeledDirectionExpressionStatementPanel(
   *
   * @author Sean Connolly
   */
-abstract class LabeledStatementPanel(label: String, val valuePanel: ExpressionPanel)
-        extends SetStatementPanel
-        with Logging {
+abstract class LabeledStatementPanel(label: String, valuePanel: ExpressionPanel)
+    extends SetSpecialStatementPanel(label, valuePanel)
 
-    contents += new Label(label + ":")
-    contents += valuePanel
+class SetSpeedStatementPanel(valuePanel: NumberExpressionPanel)
+    extends LabeledNumberExpressionStatementPanel("Speed", valuePanel);
 
-    listenTo(valuePanel, valuePanel.mouse.moves)
-    reactions += {
-        case event: ValueChanged =>
-            // TODO publish event to controller somehow
-            log.info("Size: " + preferredSize)
-    }
+class SetDirectionStatementPanel(valuePanel: DirectionExpressionPanel)
+    extends LabeledDirectionExpressionStatementPanel("Direction", valuePanel);
 
-}
+//class PrintStatementPanel(override val valuePanel: TextExpressionPanel)
+//    extends LabeledTextExpressionStatementPanel("Say", valuePanel);

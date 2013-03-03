@@ -12,14 +12,18 @@ import com.quane.little.ide.DragOutEvent
 import com.quane.little.ide.DropExpressionEvent
 import org.eintr.loglady.Logging
 import com.quane.little.ide.NumberToolType
+import scala.swing.FlowPanel
 
 trait NumberPanel
     extends ExpressionPanel
 
 class NumberFieldPanel
-        extends NumberPanel {
+        extends FlowPanel
+        with NumberPanel {
 
     private val field = new TextField("", 16)
+
+    contents += field
 
     def value: Int = field.text.toInt
 
@@ -51,8 +55,8 @@ class NumberExpressionPanel
             unhighlight
             log.info("Accepting a " + event.toolType.getClass().getSimpleName())
             val controller = event.dropFunction()
-            //contents += controller.view
-            //publish(new StepAddedEvent(controller))
+        //contents += controller.view
+        //publish(new StepAddedEvent(controller))
     }
 
 }

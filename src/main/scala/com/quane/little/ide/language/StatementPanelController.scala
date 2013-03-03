@@ -31,8 +31,9 @@ abstract class SetStatementPanelController[V <: Value](
     val valueController: ExpressionPanelController[Expression[V]])
         extends StatementPanelController[SetStatement[V]](view)
 
-class SetTextStatementPanelController(
+class SetTextPointerExpressionStatementPanelController(
     override val view: SetStatementPanel,
+    val pointerController: PointerPanelController[Text],
     override val valueController: TextExpressionPanelController)
         extends SetStatementPanelController[Text](view, valueController)
         with Logging {

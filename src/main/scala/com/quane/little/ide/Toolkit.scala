@@ -84,13 +84,13 @@ class SettersToolPanel
         extends ToolPanel("Setters", SetterToolType) {
 
     // Say something
-//    toolList.contents += new ToolButton("Say", toolType, GlassPanelFactory.createPrintStatementPanel)
+    //    toolList.contents += new ToolButton("Say", toolType, GlassPanelFactory.createPrintStatementPanel)
     // Set Speed
     toolList.contents += new ToolButton("Speed", toolType, GlassPanelFactory.createSetSpeedStatementPanel)
     // Set Direction
     toolList.contents += new ToolButton("Direction", toolType, GlassPanelFactory.createSetDirectionStatementPanel)
     // Set any Variable
-//      toolList.contents += new ToolButton("Set", toolType, GlassPanelFactory.createAssignmentStatementPanel)
+    toolList.contents += new ToolButton("Set Text", toolType, GlassPanelFactory.createAssignmentStatementPanel)
 
 }
 
@@ -134,3 +134,5 @@ object EventToolType extends ToolType
 object SetterToolType extends ToolType
 
 object NumberToolType extends ToolType
+
+object TextToolType extends ToolType

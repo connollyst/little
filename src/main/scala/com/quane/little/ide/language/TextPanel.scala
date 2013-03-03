@@ -12,28 +12,37 @@ import com.quane.little.ide.DragOutEvent
 import com.quane.little.ide.DropExpressionEvent
 import org.eintr.loglady.Logging
 import com.quane.little.ide.NumberToolType
+import scala.swing.FlowPanel
+import com.quane.little.ide.TextToolType
+import scala.swing.BoxPanel
+import scala.swing.Orientation
+import com.quane.little.ide.StepAddedEvent
 
 trait TextPanel
     extends ExpressionPanel
 
 class TextFieldPanel
-        extends TextPanel {
+        extends FlowPanel
+        with TextPanel {
 
     private val field = new TextField("", 16)
+
+    contents += field
 
     def value: String = field.text
 
 }
 
 class TextExpressionPanel
-        extends TextPanel
+        extends BoxPanel(Orientation.Vertical)
+        with TextPanel
         with HighlightableComponent
         with Logging {
 
     def accepts(item: DragAndDropItem): Boolean = {
         return item match {
-//            case NumberToolType => true
-            case _              => false
+            case TextToolType => true
+            case _            => false
         }
     }
 
@@ -51,8 +60,8 @@ class TextExpressionPanel
             unhighlight
             log.info("Accepting a " + event.toolType.getClass().getSimpleName())
             val controller = event.dropFunction()
-        //contents += controller.view
-        //publish(new StepAddedEvent(controller))
+            contents += controller.view
+            publish(new StepAddedEvent(controller))
     }
 
 }
