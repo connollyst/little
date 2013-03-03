@@ -6,7 +6,7 @@ import java.util.Date
 import com.quane.little.language.Expression
 
 /** Values are the primitive data types exposed to the user. A Value is an
-  * Expression in an of itself, a Value evaluates to itself.
+  * {@link Expression} in and of itself; a Value {@code evaluate}s to itself.
   *
   * @author Sean Connolly
   */
@@ -21,6 +21,10 @@ sealed trait Value {
     def asText: Text
 }
 
+/** Boolean data; wraps a native {@link Boolean}.
+  *
+  * @author Sean Connolly
+  */
 class Bool(value: Boolean)
         extends Expression[Bool]
         with Value {
@@ -48,6 +52,10 @@ class Bool(value: Boolean)
     }
 }
 
+/** Numeric data; wraps a native {@link Int}.
+  *
+  * @author Sean Connolly
+  */
 class Number(value: Int)
         extends Expression[Number]
         with Value {
@@ -79,6 +87,10 @@ class Number(value: Int)
     }
 }
 
+/** Textual data; wraps a native {@link String}.
+  *
+  * @author Sean Connolly
+  */
 class Text(value: String)
         extends Expression[Text]
         with Value {
