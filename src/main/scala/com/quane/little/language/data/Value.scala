@@ -81,15 +81,3 @@ class Text(value: String)
     def string: String = primitive
 
 }
-
-class Time(value: Date)
-        extends Expression[Time]
-        with Value {
-
-    def evaluate: Time = this;
-
-    def primitive: Date = value
-
-    def date: Date = primitive
-
-}
