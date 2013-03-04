@@ -86,8 +86,8 @@ class SettersToolPanel
         extends ToolPanel("Setters", SetterToolType) {
 
     //    toolList.contents += new ToolButton("Say", toolType, PanelFactory.createPrintStatementPanel)
-    toolList.contents += new ToolButton("Speed", toolType, PanelFactory.createSetSpeedStatementPanel)
-    toolList.contents += new ToolButton("Direction", toolType, PanelFactory.createSetDirectionStatementPanel)
+    toolList.contents += new ToolButton("Set Speed", toolType, PanelFactory.createSetSpeedStatementPanel)
+    toolList.contents += new ToolButton("Set Direction", toolType, PanelFactory.createSetDirectionStatementPanel)
     toolList.contents += new ToolButton("Set Text", toolType, PanelFactory.createSetTextWithFieldStatementPanel)
     toolList.contents += new ToolButton("Set Text (Expression)", toolType, PanelFactory.createSetTextWithExpressionStatementPanel)
 
