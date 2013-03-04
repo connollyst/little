@@ -19,6 +19,7 @@ import com.quane.little.ide.dnd.DragAndDropTarget
 import com.quane.little.ide.language.ExpressionPanel
 import com.quane.little.ide.swing.HighlightableComponent
 import com.quane.little.ide.GetterToolType
+import com.quane.little.ide.GetTextStatementAddedEvent
 
 trait TextPanel
     extends ExpressionPanel
@@ -49,7 +50,6 @@ class TextExpressionPanel
     def accepts(item: DragAndDropItem): Boolean = {
         return item match {
             case GetTextToolType => true
-            case GetterToolType  => true
             case _               => false
         }
     }
@@ -66,11 +66,21 @@ class TextExpressionPanel
             unhighlight
         case event: DropExpressionEvent =>
             unhighlight
-            log.info("Accepting a " + event.toolType.getClass().getSimpleName())
-            emptyLabel.visible = false
-            val controller = event.dropFunction()
-            contents += controller.view
-            publish(new StepAddedEvent(controller))
+            publishDropEvent(event)
+    }
+
+    def publishDropEvent(event: DropExpressionEvent) = {
+        log.info("Accepting a " + event.toolType.getClass().getSimpleName())
+        event.toolType match {
+            case GetTextToolType =>
+                val controller = event.dropFunction()
+                contents.clear
+                contents += controller.view
+                publish(new GetTextStatementAddedEvent(controller, toolType, event.x, event.y))
+            case _ =>
+                log.warn("Cannot accept unrecognized tool type.");
+        }
+
     }
 
 }

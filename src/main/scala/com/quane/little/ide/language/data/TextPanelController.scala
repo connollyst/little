@@ -41,5 +41,7 @@ class TextExpressionPanelController(override val view: TextExpressionPanel)
     reactions += {
         case event: GetTextStatementAddedEvent =>
             expression = Option(event.controller)
+        case _ =>
+            log.error(getClass().getSimpleName + " does not react to posted event.")
     }
 }

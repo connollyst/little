@@ -104,7 +104,7 @@ class SettersToolPanel
 class GettersToolPanel
         extends ToolPanel("Getters", GetterToolType) {
 
-    toolList.contents += new ToolButton("Get Text", toolType,
+    toolList.contents += new ToolButton("Get Text", GetTextToolType,
         PanelFactory.createGetTextStatementPanel)
     
 }
