@@ -46,7 +46,9 @@ class DragAndDropEventListener
                             new DragOverEvent(target.get, toolType.get, event.point)
                         )
                     } else {
-                        log.debug("doesnt accept tool")
+                        val targetClass = event.source.getClass().getSimpleName
+                        val toolTypeClass = toolType.get.getClass().getSimpleName
+                        log.debug(targetClass + " doesnt accept " + toolTypeClass)
                     }
                 case _ =>
                     log.error("A tool was dragged over a " + event.source.getClass().getSimpleName()
