@@ -6,9 +6,7 @@ import scala.swing.Orientation
 import scala.swing.TextField
 import scala.swing.event.MouseEntered
 import scala.swing.event.MouseExited
-
 import org.eintr.loglady.Logging
-
 import com.quane.little.ide.DragOutEvent
 import com.quane.little.ide.DragOverEvent
 import com.quane.little.ide.DropExpressionEvent
@@ -18,6 +16,7 @@ import com.quane.little.ide.StepAddedEvent
 import com.quane.little.ide.dnd.DragAndDropItem
 import com.quane.little.ide.language.ExpressionPanel
 import com.quane.little.ide.swing.HighlightableComponent
+import com.quane.little.ide.GetterToolType
 
 trait NumberPanel
     extends ExpressionPanel
@@ -43,6 +42,7 @@ class NumberExpressionPanel
     def accepts(item: DragAndDropItem): Boolean = {
         return item match {
             case GetNumberToolType => true
+            case GetterToolType    => true
             case _                 => false
         }
     }
