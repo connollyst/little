@@ -2,6 +2,7 @@ package com.quane.little.ide.language.data
 
 import com.quane.little.ide.language.ExpressionPanel
 import scala.swing.TextField
+import scala.swing.Image
 import scala.swing.event.MouseEntered
 import com.quane.little.ide.SetterToolType
 import com.quane.little.ide.dnd.DragAndDropItem
@@ -18,6 +19,11 @@ import com.quane.little.ide.TextToolType
 import scala.swing.BoxPanel
 import scala.swing.Orientation
 import com.quane.little.ide.StepAddedEvent
+import java.awt.Dimension
+import scala.swing.ImageIcon
+import scala.swing.LabelIcon
+import scala.swing.Label
+import com.quane.little.ide.dnd.DragAndDropTarget
 
 trait TextPanel
     extends ExpressionPanel
@@ -38,7 +44,12 @@ class TextExpressionPanel
         extends BoxPanel(Orientation.Vertical)
         with TextPanel
         with HighlightableComponent
+        with DragAndDropTarget
         with Logging {
+
+    val emptyLabel = new Label("Add")
+
+    contents += emptyLabel
 
     def accepts(item: DragAndDropItem): Boolean = {
         return item match {
@@ -60,6 +71,7 @@ class TextExpressionPanel
         case event: DropExpressionEvent =>
             unhighlight
             log.info("Accepting a " + event.toolType.getClass().getSimpleName())
+            emptyLabel.visible = false
             val controller = event.dropFunction()
             contents += controller.view
             publish(new StepAddedEvent(controller))
