@@ -20,6 +20,10 @@ abstract class SetStatementPanel
     extends BoxPanel(Orientation.Horizontal)
     with StatementPanel
 
+abstract class GetStatementPanel
+    extends BoxPanel(Orientation.Horizontal)
+    with StatementPanel
+
 class SetPointerStatementPanel(pointerPanel: PointerPanel, valuePanel: ExpressionPanel)
         extends SetStatementPanel {
 
@@ -86,3 +90,10 @@ class SetDirectionStatementPanel(valuePanel: NumberExpressionPanel)
 
 //class PrintStatementPanel(override val valuePanel: TextExpressionPanel)
 //    extends LabeledTextExpressionStatementPanel("Say", valuePanel);
+
+class GetPointerStatementPanel(pointerPanel: PointerPanel)
+        extends GetStatementPanel {
+
+    contents += pointerPanel
+
+}

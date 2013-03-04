@@ -26,31 +26,31 @@ class EntityFactory(game: Game) {
     def createMob: Mob = {
         val mob = new Mob(game.builder.buildBody, manager)
         game.eventBus.report(mob, GlassEvent.OnSpawn)
-        val speed = new Number(100);
-        mob.operator.addEventListener(
-            new EventListener(
-                GlassEvent.OnSpawn,
-                Programs.move(mob.operator, speed)
-            )
-        );
-        mob.operator.addEventListener(
-            new EventListener(
-                GlassEvent.OnContact,
-                Programs.turnRelative(mob.operator, 260)
-            )
-        );
-        mob.operator.addEventListener(
-            new EventListener(
-                GlassEvent.OnFoodNearby,
-                Programs.stop(mob.operator)
-            )
-        );
-        mob.operator.addEventListener(
-            new EventListener(
-                GlassEvent.OnFoodConsumed,
-                Programs.stop(mob.operator)
-            )
-        );
+//        val speed = new Number(100);
+//        mob.operator.addEventListener(
+//            new EventListener(
+//                GlassEvent.OnSpawn,
+//                Programs.move(mob.operator, speed)
+//            )
+//        );
+//        mob.operator.addEventListener(
+//            new EventListener(
+//                GlassEvent.OnContact,
+//                Programs.turnRelative(mob.operator, 260)
+//            )
+//        );
+//        mob.operator.addEventListener(
+//            new EventListener(
+//                GlassEvent.OnFoodNearby,
+//                Programs.stop(mob.operator)
+//            )
+//        );
+//        mob.operator.addEventListener(
+//            new EventListener(
+//                GlassEvent.OnFoodConsumed,
+//                Programs.stop(mob.operator)
+//            )
+//        );
         mob
     }
 
