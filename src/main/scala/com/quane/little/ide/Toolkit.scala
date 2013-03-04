@@ -9,7 +9,6 @@ import scala.swing.Component
 import scala.swing.Label
 import scala.swing.Orientation
 import scala.swing.event.Event
-import scala.swing.event.MouseEvent
 import scala.swing.event.MousePressed
 import scala.swing.event.MouseReleased
 
@@ -26,9 +25,11 @@ class ToolkitPanel
 
     val eventsToolPanel = new EventsToolPanel
     val settersToolPanel = new SettersToolPanel
+    val gettersToolPanel = new GettersToolPanel
 
     contents += eventsToolPanel
     contents += settersToolPanel
+    contents += gettersToolPanel
 
 }
 
@@ -86,11 +87,26 @@ class SettersToolPanel
         extends ToolPanel("Setters", SetterToolType) {
 
     //    toolList.contents += new ToolButton("Say", toolType, PanelFactory.createPrintStatementPanel)
-    toolList.contents += new ToolButton("Set Speed", toolType, PanelFactory.createSetSpeedStatementPanel)
-    toolList.contents += new ToolButton("Set Direction", toolType, PanelFactory.createSetDirectionStatementPanel)
-    toolList.contents += new ToolButton("Set Text", toolType, PanelFactory.createSetTextWithFieldStatementPanel)
-    toolList.contents += new ToolButton("Set Text (Expression)", toolType, PanelFactory.createSetTextWithExpressionStatementPanel)
+    toolList.contents += new ToolButton("Set Speed", toolType,
+        PanelFactory.createSetSpeedStatementPanel)
+    
+    toolList.contents += new ToolButton("Set Direction", toolType,
+        PanelFactory.createSetDirectionStatementPanel)
+    
+    toolList.contents += new ToolButton("Set Text", toolType,
+        PanelFactory.createSetTextWithFieldStatementPanel)
+    
+    toolList.contents += new ToolButton("Set Text (Expression)", toolType,
+        PanelFactory.createSetTextWithExpressionStatementPanel)
 
+}
+
+class GettersToolPanel
+        extends ToolPanel("Getters", GetterToolType) {
+
+    toolList.contents += new ToolButton("Get Text", toolType,
+        PanelFactory.createGetTextStatementPanel)
+    
 }
 
 class ToolButton(val title: String,
@@ -132,6 +148,8 @@ object EventToolType extends ToolType
 
 object SetterToolType extends ToolType
 
-object NumberToolType extends ToolType
+object GetterToolType extends ToolType
 
-object TextToolType extends ToolType
+object GetNumberToolType extends ToolType
+
+object GetTextToolType extends ToolType

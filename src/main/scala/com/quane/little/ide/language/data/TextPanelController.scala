@@ -1,10 +1,12 @@
 package com.quane.little.ide.language.data
 
 import scala.swing.Reactor
+
 import org.eintr.loglady.Logging
+
+import com.quane.little.ide.language.ExpressionPanelController
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Text
-import com.quane.little.ide.language.ExpressionPanelController
 
 abstract class TextPanelController(override val view: TextPanel)
         extends ExpressionPanelController[Text](view)

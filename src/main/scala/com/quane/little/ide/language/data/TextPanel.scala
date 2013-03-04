@@ -1,29 +1,25 @@
 package com.quane.little.ide.language.data
 
-import com.quane.little.ide.language.ExpressionPanel
-import scala.swing.TextField
-import scala.swing.Image
-import scala.swing.event.MouseEntered
-import com.quane.little.ide.SetterToolType
-import com.quane.little.ide.dnd.DragAndDropItem
-import com.quane.little.ide.IDE
-import scala.swing.event.MouseExited
-import com.quane.little.ide.DragOverEvent
-import com.quane.little.ide.swing.HighlightableComponent
-import com.quane.little.ide.DragOutEvent
-import com.quane.little.ide.DropExpressionEvent
-import org.eintr.loglady.Logging
-import com.quane.little.ide.NumberToolType
-import scala.swing.FlowPanel
-import com.quane.little.ide.TextToolType
 import scala.swing.BoxPanel
-import scala.swing.Orientation
-import com.quane.little.ide.StepAddedEvent
-import java.awt.Dimension
-import scala.swing.ImageIcon
-import scala.swing.LabelIcon
+import scala.swing.FlowPanel
 import scala.swing.Label
+import scala.swing.Orientation
+import scala.swing.TextField
+import scala.swing.event.MouseEntered
+import scala.swing.event.MouseExited
+
+import org.eintr.loglady.Logging
+
+import com.quane.little.ide.DragOutEvent
+import com.quane.little.ide.DragOverEvent
+import com.quane.little.ide.DropExpressionEvent
+import com.quane.little.ide.GetTextToolType
+import com.quane.little.ide.IDE
+import com.quane.little.ide.StepAddedEvent
+import com.quane.little.ide.dnd.DragAndDropItem
 import com.quane.little.ide.dnd.DragAndDropTarget
+import com.quane.little.ide.language.ExpressionPanel
+import com.quane.little.ide.swing.HighlightableComponent
 
 trait TextPanel
     extends ExpressionPanel
@@ -53,8 +49,8 @@ class TextExpressionPanel
 
     def accepts(item: DragAndDropItem): Boolean = {
         return item match {
-            case TextToolType => true
-            case _            => false
+            case GetTextToolType => true
+            case _               => false
         }
     }
 
