@@ -20,6 +20,9 @@ import com.quane.little.ide.language.ExpressionPanel
 import com.quane.little.ide.swing.HighlightableComponent
 import com.quane.little.ide.GetterToolType
 import com.quane.little.ide.GetTextStatementAddedEvent
+import com.quane.little.ide.language.GetStatementPanelController
+import com.quane.little.ide.language.GetStatementPanelController
+import com.quane.little.ide.language.GetTextStatementPanelController
 
 trait TextPanel
     extends ExpressionPanel
@@ -74,11 +77,19 @@ class TextExpressionPanel
         event.toolType match {
             case GetTextToolType =>
                 val controller = event.dropFunction()
-                contents.clear
-                contents += controller.view
-                publish(new GetTextStatementAddedEvent(controller, toolType, event.x, event.y))
+                controller match {
+                    case foo: GetTextStatementPanelController => {
+                        contents.clear
+                        contents += controller.view;
+                        val x = event.point.x;
+                        val y = event.point.y;
+                        publish(new GetTextStatementAddedEvent(foo, event.toolType, x, y))
+                    }
+                    case _ =>
+                        log.error("Cannot accept unrecognized controller: " + controller.getClass)
+                }
             case _ =>
-                log.warn("Cannot accept unrecognized tool type.");
+                log.warn("Cannot accept unrecognized tool type: " + event.toolType);
         }
 
     }

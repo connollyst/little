@@ -23,9 +23,17 @@ import com.quane.little.ide.language.data.NumberPanelController
 abstract class StatementPanelController[S <: Statement[_]](override val view: StatementPanel)
     extends ExpressionPanelController[S](view)
 
-/** The controller for the  AssignmentStatementPanel is  responsible for
-  * creating a  AssignmentStatement to represent that
-  * represented by the panel.
+/** The controller for the [[GetStatementPanel]] is responsible for creating a
+  * [[GetStatement]] as represented by the view.
+  *
+  * @author Sean Connolly
+  */
+abstract class GetStatementPanelController[V <: Value](
+    override val view: GetStatementPanel)
+        extends StatementPanelController[GetStatement[V]](view)
+
+/** The controller for the [[SetStatementPanel]] is responsible for creating a
+  * [[SetStatement]] as represented by the view.
   *
   * @author Sean Connolly
   */
@@ -34,9 +42,9 @@ abstract class SetStatementPanelController[V <: Value](
     val valueController: ExpressionPanelController[Expression[V]])
         extends StatementPanelController[SetStatement[V]](view)
 
-abstract class GetStatementPanelController[V <: Value](
-    override val view: GetStatementPanel)
-        extends StatementPanelController[GetStatement[V]](view)
+abstract class GetTextStatementPanelController(
+    override val view: GetTextStatementPanel)
+        extends GetStatementPanelController[Text](view)
 
 class SetPointerStatementPanelController[V <: Value](
     override val view: SetStatementPanel,
@@ -106,11 +114,11 @@ class SetDirectionStatementPanelController(
     override val valueController: NumberExpressionPanelController)
         extends SetStatementPanelController[Number](view, valueController)
         with Logging {
-    
+
     override def validate {
         log.error("TODO: implement validate")
     }
-    
+
     override def compile(scope: Scope): SetDirectionStatement = {
         log.info("Compiling: Set " + Mob.VAR_DIRECTION + " = EXPRESSION[DIRECTION]");
         new SetDirectionStatement(scope, valueController.compile(scope))

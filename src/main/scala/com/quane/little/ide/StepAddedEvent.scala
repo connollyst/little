@@ -9,6 +9,7 @@ import com.quane.little.ide.language.SetStatementPanelController
 import com.quane.little.language.Expression
 import com.quane.little.language.data.Value
 import com.quane.little.language.data.Text
+import com.quane.little.ide.language.GetTextStatementPanelController
 
 class StepAddedEvent(val controller: ExpressionPanelController[Expression[Any]])
     extends Event
@@ -31,7 +32,7 @@ class GetterAddedEvent[V <: Value](override val controller: GetStatementPanelCon
                                    val y: Int)
         extends StepAddedEvent(controller)
 
-class GetTextStatementAddedEvent(override val controller: GetStatementPanelController[Text],
+class GetTextStatementAddedEvent(override val controller: GetTextStatementPanelController,
                                  override val toolType: ToolType,
                                  override val x: Int,
                                  override val y: Int)

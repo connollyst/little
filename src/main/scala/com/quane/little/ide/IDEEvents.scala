@@ -14,12 +14,6 @@ abstract class DragAndDropEvent(val source: Component,
                                 val point: Point)
         extends Event
 
-class DropExpressionEvent(override val source: Component,
-                          override val toolType: ToolType,
-                          override val point: Point,
-                          val dropFunction: () => ExpressionPanelController[Expression[Any]])
-        extends DragAndDropEvent(source, toolType, point)
-
 class MouseEnteredEvent(override val source: Component,
                         override val toolType: ToolType,
                         override val point: Point)
@@ -38,6 +32,12 @@ class DragOverEvent(override val source: Component,
 class DragOutEvent(override val source: Component,
                    override val toolType: ToolType,
                    override val point: Point)
+        extends DragAndDropEvent(source, toolType, point)
+
+class DropExpressionEvent(override val source: Component,
+                          override val toolType: ToolType,
+                          override val point: Point,
+                          val dropFunction: () => ExpressionPanelController[Expression[Any]])
         extends DragAndDropEvent(source, toolType, point)
 
 /* Menu bar events are those fired from the IDE's top menu bar.
