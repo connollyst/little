@@ -16,7 +16,7 @@ import com.quane.little.ide.language.WorkspaceListenerFrameController
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.Function
 
-class WorkspaceController(val view: WorkspacePanel)
+class WorkspacePanelController(val view: WorkspacePanel)
         extends Reactor
         with Logging {
 
