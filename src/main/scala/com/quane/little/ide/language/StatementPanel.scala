@@ -24,13 +24,6 @@ abstract class GetStatementPanel
     extends BoxPanel(Orientation.Horizontal)
     with StatementPanel
 
-class GetTextStatementPanel
-        extends GetStatementPanel {
-
-    // TODO what does it look like?
-
-}
-
 class SetPointerStatementPanel(pointerPanel: PointerPanel, valuePanel: ExpressionPanel)
         extends SetStatementPanel {
 

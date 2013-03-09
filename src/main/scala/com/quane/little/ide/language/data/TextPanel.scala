@@ -83,7 +83,10 @@ class TextExpressionPanel
                         contents += controller.view;
                         val x = event.point.x;
                         val y = event.point.y;
-                        publish(new GetTextStatementAddedEvent(foo, event.toolType, x, y))
+                        publish(
+                            new GetTextStatementAddedEvent(foo, event.toolType, x, y)
+                        )
+                        log.info("published GetTextStatementAddedEvent")
                     }
                     case _ =>
                         log.error("Cannot accept unrecognized controller: " + controller.getClass)

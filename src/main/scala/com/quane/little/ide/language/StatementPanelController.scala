@@ -42,9 +42,22 @@ abstract class SetStatementPanelController[V <: Value](
     val valueController: ExpressionPanelController[Expression[V]])
         extends StatementPanelController[SetStatement[V]](view)
 
-abstract class GetTextStatementPanelController(
-    override val view: GetTextStatementPanel)
-        extends GetStatementPanelController[Text](view)
+class GetPointerStatementPanelController[V <: Value](
+    override val view: GetStatementPanel,
+    val pointerController: PointerPanelController[V])
+        extends GetStatementPanelController[V](view)
+        with Logging {
+
+    override def validate {
+        // TODO check that the variable specified by the view is valid
+        log.error("TODO: implement validate")
+    }
+
+    override def compile(scope: Scope): GetStatement[V] = {
+        log.info("Compiling: Get TEXT");
+        new GetStatement(pointerController.compile(scope))
+    }
+}
 
 class SetPointerStatementPanelController[V <: Value](
     override val view: SetStatementPanel,
@@ -64,22 +77,10 @@ class SetPointerStatementPanelController[V <: Value](
     }
 }
 
-class GetPointerStatementPanelController[V <: Value](
-    override val view: GetStatementPanel,
-    val pointerController: PointerPanelController[V])
-        extends GetStatementPanelController[V](view)
-        with Logging {
-
-    override def validate {
-        // TODO check that the variable specified by the view is valid
-        log.error("TODO: implement validate")
-    }
-
-    override def compile(scope: Scope): GetStatement[V] = {
-        log.info("Compiling: Get TEXT");
-        new GetStatement(pointerController.compile(scope))
-    }
-}
+class GetTextStatementPanelController(
+    override val view: GetPointerStatementPanel,
+    override val pointerController: PointerPanelController[Text])
+        extends GetPointerStatementPanelController[Text](view, pointerController)
 
 class SetTextPointerStatementPanelController(
     override val view: SetStatementPanel,

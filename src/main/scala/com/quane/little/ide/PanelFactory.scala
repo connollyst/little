@@ -27,6 +27,7 @@ import com.quane.little.ide.language.data.TextPanelController
 import com.quane.little.ide.language.data.TextFieldPanel
 import com.quane.little.ide.language.GetPointerStatementPanelController
 import com.quane.little.ide.language.GetPointerStatementPanel
+import com.quane.little.ide.language.GetTextStatementPanelController
 
 object PanelFactory {
 
@@ -46,9 +47,9 @@ object PanelFactory {
     //        )
     //    }
 
-    def createGetTextStatementPanel(): GetPointerStatementPanelController[Text] = {
+    def createGetTextStatementPanel(): GetTextStatementPanelController = {
         val pointerPanel = createTextPointerPanel
-        new GetPointerStatementPanelController[Text](
+        new GetTextStatementPanelController(
             new GetPointerStatementPanel(pointerPanel.view),
             pointerPanel
         )
