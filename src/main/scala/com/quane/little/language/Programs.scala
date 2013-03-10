@@ -3,12 +3,11 @@ package com.quane.little.language
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
+import com.quane.little.game.entity.Mob
 import com.quane.little.language.data.Number
+import com.quane.little.language.math.Addition
 import com.quane.little.language.math.RandomNumber
 import com.quane.little.language.memory.Pointer
-import com.quane.little.language.math.Addition
-
-import com.quane.little.game.entity.Mob
 
 /** A set programs used during development - mostly to sanity check the
   * language and how it compiles.
@@ -53,7 +52,7 @@ object Programs {
 
         // TODO add a step to get a random number when evaluated
         val randomFun = new Function(mob)
-        
+
         val directionPointer = new Pointer(randomFun, Mob.VAR_DIRECTION, classOf[Number])
         //        randomFun.addStep(new SetStatement(directionPointer, randomFun))
         null
@@ -62,7 +61,7 @@ object Programs {
     def turnRelative(mob: Operator, degrees: Int): Function = {
         val relativelyFun = new Function(mob)
         val dirPointer = new Pointer(relativelyFun, Mob.VAR_DIRECTION, classOf[Number])
-        val getCurrentDir = new GetStatement(dirPointer)
+        val getCurrentDir = new GetNumberStatement(dirPointer)
         val dirChange = new Number(degrees);
         val getNewDirection = new Addition(getCurrentDir, dirChange)
         val setNewDirection = new SetStatement(dirPointer, getNewDirection)
@@ -89,10 +88,10 @@ object Programs {
         fun.addStep(new SetSpeedStatement(fun, new Number(10)))
         fun
     }
-    
+
     def printDirection(mob: Operator): Function = {
         val fun = new Function(mob)
-        fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Mob.VAR_DIRECTION, classOf[Number]))))
+        fun.addStep(new PrintStatement(new GetNumberStatement(new Pointer(fun, Mob.VAR_DIRECTION, classOf[Number]))))
         fun
     }
 }

@@ -3,8 +3,8 @@ package com.quane.little.language
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+
 import com.quane.little.language.data.Text
-import com.quane.little.language.data.Number
 import com.quane.little.language.memory.Pointer
 
 /** @author Sean Connolly
@@ -40,7 +40,7 @@ class TestFunction extends FunSuite {
         val pointer2 = new Pointer(fun, "Obj2", classOf[Text])
         fun.addStep(new SetStatement(pointer1, new Text("A")))
         fun.addStep(new SetStatement(pointer2, new Text("B")))
-        fun.addStep(new SetStatement(pointer1, new GetStatement(pointer2)))
+        fun.addStep(new SetStatement(pointer1, new GetTextStatement(pointer2)))
         fun.evaluate
         val obj1 = fun.fetch("Obj1")
         val obj2 = fun.fetch("Obj2")

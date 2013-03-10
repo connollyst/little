@@ -3,6 +3,7 @@ package com.quane.little.language
 import scala.collection.mutable.Map
 import com.quane.little.language.data.Variable
 import org.eintr.loglady.Logging
+import com.quane.little.language.data.Nada
 
 /** A Scope defines a space in which {@code Variable} objects can be stored
   * and retrieved.
@@ -22,11 +23,10 @@ trait Scope
 
     private val memory = Map[String, Variable]()
 
-    /** Stores the given {@code Variable} in memory.
+    /** Stores the given [[Variable]] in memory.
       *
-      * If a {@code Variable} of the same name exists in this, or a higher
-      * {@code Scope}, it is updated. Otherwise it is created in this
-      * {@code Scope}.
+      * If a [[Variable]] of the same name exists in this, or a higher
+      * [[Scope]], it is updated. Otherwise it is created in this [[Scope]].
       *
       * @param variable the variable to be stored in memory
       */
@@ -41,12 +41,11 @@ trait Scope
         }
     }
 
-    /** Returns the {@code Variable} by the given name if it is defined in
-      * this, <i>or any greater</i> {@code Scope}. If not, {@value null} is
-      * returned.
+    /** Returns the [[Variable]] by the given name if it is defined in this,
+      * ''or any greater'' [[Scope]]. If not, [[Nada]] is returned.
       *
       * @param name the name of the variable to fetch
-      * @return the variable if it is defined, null otherwise
+      * @return the variable if it is defined, None otherwise
       */
     def fetch(name: String): Variable = {
         if (memory.contains(name)) {
@@ -54,12 +53,12 @@ trait Scope
         } else if (scope != null) {
             scope.fetch(name)
         } else {
-            null // TODO null bad
+            new Variable(name, new Nada)
         }
     }
 
-    /** Returns true/false if a {@code Variable} by the given name is defined
-      * in this, <b>or any greater</b> {@code Scope}.
+    /** Returns true/false if a [[Variable]] by the given name is defined in
+      * this, ''or any greater'' [[Scope]].
       *
       * @param name is a variable for the given name defined?
       */

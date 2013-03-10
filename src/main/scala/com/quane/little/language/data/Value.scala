@@ -2,8 +2,8 @@ package com.quane.little.language.data
 
 import java.awt.Point
 import java.util.Date
-
 import com.quane.little.language.Expression
+import scala.None
 
 /** Values are the primitive data types exposed to the user. A Value is an
   * {@link Expression} in and of itself; a Value {@code evaluate}s to itself.
@@ -121,4 +121,20 @@ class Text(value: String)
     }
 
     def asText: Text = this
+}
+
+class Nada
+        extends Expression[Nada]
+        with Value {
+
+    def evaluate: Nada = this
+    
+    def primitive: Option[_] = None
+
+    def asBool: Bool = new False
+
+    def asNumber: Number = new Number(0)
+
+    def asText: Text = new Text("nada")
+
 }

@@ -8,6 +8,7 @@ import com.quane.little.language.data.Variable
 import com.quane.little.language.memory.Pointer
 import com.quane.little.game.entity.Mob
 import com.quane.little.language.data.Text
+import com.quane.little.language.data.Bool
 
 abstract class Statement[T]
     extends Expression[T]
@@ -39,25 +40,39 @@ class SetDirectionStatement(scope: Scope, value: Expression[Number])
         value
     );
 
-class GetStatement[V <: Value](pointer: Pointer[V])
+abstract class GetStatement[V <: Value](pointer: Pointer[V])
         extends Statement[V]
         with Logging {
 
-    def evaluate: V = {
+    def value: Value = {
         val name = pointer.variableName
         log.info("Getting the value of '" + name + "'...");
         val scope = pointer.scope
         val clazz = pointer.valueClass
-        val value = scope.fetch(name).value; // TODO null check please
-        if (value.getClass == clazz) {
-            return value.asInstanceOf[V]
-        } else {
-            throw new GlassCastException(
-                "'" + name + "' is a " + value
-                    + ", expected " + pointer.valueClass
-            );
-        }
+        val variable = scope.fetch(name)
+        variable.value
     }
+
+}
+
+class GetBoolStatement(pointer: Pointer[Bool])
+        extends GetStatement[Bool](pointer) {
+
+    def evaluate: Bool = value.asBool
+
+}
+
+class GetNumberStatement(pointer: Pointer[Number])
+        extends GetStatement[Number](pointer) {
+
+    def evaluate: Number = value.asNumber
+
+}
+
+class GetTextStatement(pointer: Pointer[Text])
+        extends GetStatement[Text](pointer) {
+
+    def evaluate: Text = value.asText
 }
 
 class PrintStatement(text: Expression[Value])

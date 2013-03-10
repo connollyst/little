@@ -17,6 +17,7 @@ import com.quane.little.language.data.Text
 import com.quane.little.language.data.Value
 import com.quane.little.language.memory.Pointer
 import com.quane.little.ide.language.data.NumberPanelController
+import com.quane.little.language.GetTextStatement
 
 /** @author Sean Connolly
   */
@@ -42,7 +43,7 @@ abstract class SetStatementPanelController[V <: Value](
     val valueController: ExpressionPanelController[Expression[V]])
         extends StatementPanelController[SetStatement[V]](view)
 
-class GetPointerStatementPanelController[V <: Value](
+abstract class GetPointerStatementPanelController[V <: Value](
     override val view: GetStatementPanel,
     val pointerController: PointerPanelController[V])
         extends GetStatementPanelController[V](view)
@@ -51,11 +52,6 @@ class GetPointerStatementPanelController[V <: Value](
     override def validate {
         // TODO check that the variable specified by the view is valid
         log.error("TODO: implement validate")
-    }
-
-    override def compile(scope: Scope): GetStatement[V] = {
-        log.info("Compiling: Get TEXT");
-        new GetStatement(pointerController.compile(scope))
     }
 }
 
@@ -80,7 +76,13 @@ class SetPointerStatementPanelController[V <: Value](
 class GetTextStatementPanelController(
     override val view: GetPointerStatementPanel,
     override val pointerController: PointerPanelController[Text])
-        extends GetPointerStatementPanelController[Text](view, pointerController)
+        extends GetPointerStatementPanelController[Text](view, pointerController) {
+
+    override def compile(scope: Scope): GetStatement[Text] = {
+        log.info("Compiling: Get TEXT");
+        new GetTextStatement(pointerController.compile(scope))
+    }
+}
 
 class SetTextPointerStatementPanelController(
     override val view: SetStatementPanel,
