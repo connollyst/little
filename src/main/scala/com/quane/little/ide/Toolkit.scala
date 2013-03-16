@@ -89,24 +89,44 @@ class SettersToolPanel
     //    toolList.contents += new ToolButton("Say", toolType, PanelFactory.createPrintStatementPanel)
     toolList.contents += new ToolButton("Set Speed", toolType,
         PanelFactory.createSetSpeedStatementPanel)
-    
+
     toolList.contents += new ToolButton("Set Direction", toolType,
         PanelFactory.createSetDirectionStatementPanel)
+
+    toolList.contents += new ToolButton("Set Boolean", toolType,
+        PanelFactory.createSetBoolWithFieldStatementPanel)
+    
+    toolList.contents += new ToolButton("Set Boolean (Expression)", toolType,
+        PanelFactory.createSetBoolWithExpressionStatementPanel)
+    
+    toolList.contents += new ToolButton("Set Number", toolType,
+        PanelFactory.createSetNumberWithFieldStatementPanel)
+    
+    toolList.contents += new ToolButton("Set Number (Expression)", toolType,
+        PanelFactory.createSetNumberWithExpressionStatementPanel)
     
     toolList.contents += new ToolButton("Set Text", toolType,
         PanelFactory.createSetTextWithFieldStatementPanel)
-    
+
     toolList.contents += new ToolButton("Set Text (Expression)", toolType,
         PanelFactory.createSetTextWithExpressionStatementPanel)
+
+    
 
 }
 
 class GettersToolPanel
         extends ToolPanel("Getters", GetterToolType) {
 
+    toolList.contents += new ToolButton("Get Bool", GetBoolToolType,
+        PanelFactory.createGetBoolStatementPanel)
+
+    toolList.contents += new ToolButton("Get Number", GetNumberToolType,
+        PanelFactory.createGetNumberStatementPanel)
+
     toolList.contents += new ToolButton("Get Text", GetTextToolType,
         PanelFactory.createGetTextStatementPanel)
-    
+
 }
 
 class ToolButton(val title: String,
@@ -149,6 +169,8 @@ object EventToolType extends ToolType
 object SetterToolType extends ToolType
 
 object GetterToolType extends ToolType
+
+object GetBoolToolType extends ToolType
 
 object GetNumberToolType extends ToolType
 

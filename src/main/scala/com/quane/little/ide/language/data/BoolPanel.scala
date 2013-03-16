@@ -13,7 +13,7 @@ import org.eintr.loglady.Logging
 import com.quane.little.ide.DragOutEvent
 import com.quane.little.ide.DragOverEvent
 import com.quane.little.ide.DropExpressionEvent
-import com.quane.little.ide.GetNumberToolType
+import com.quane.little.ide.GetBoolToolType
 import com.quane.little.ide.GetterToolType
 import com.quane.little.ide.IDE
 import com.quane.little.ide.StepAddedEvent
@@ -24,24 +24,25 @@ import com.quane.little.ide.swing.HighlightableComponent
 
 import javax.swing.BorderFactory
 
-trait NumberPanel
+trait BoolPanel
     extends ExpressionPanel
 
-class NumberFieldPanel
+class BoolFieldPanel
         extends FlowPanel
-        with NumberPanel {
+        with BoolPanel {
 
     private val field = new TextField("", 16)
 
     contents += field
 
-    def value: Int = field.text.toInt
+    // TODO flush this out
+    def value: Boolean = field.text.equalsIgnoreCase("false")
 
 }
 
-class NumberExpressionPanel
+class BoolExpressionPanel
         extends BoxPanel(Orientation.Vertical)
-        with NumberPanel
+        with BoolPanel
         with HighlightableComponent
         with DragAndDropTarget
         with Logging {
@@ -53,9 +54,9 @@ class NumberExpressionPanel
 
     def accepts(item: DragAndDropItem): Boolean = {
         return item match {
-            case GetNumberToolType => true
-            case GetterToolType    => true
-            case _                 => false
+            case GetBoolToolType => true
+            case GetterToolType  => true
+            case _               => false
         }
     }
 

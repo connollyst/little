@@ -3,21 +3,24 @@ package com.quane.little.ide.language
 import org.eintr.loglady.Logging
 import com.quane.little.game.entity.Mob
 import com.quane.little.ide.language.data.NumberExpressionPanelController
+import com.quane.little.ide.language.data.NumberPanelController
 import com.quane.little.ide.language.data.TextPanelController
 import com.quane.little.ide.language.memory.PointerPanelController
 import com.quane.little.language.Expression
+import com.quane.little.language.GetBoolStatement
+import com.quane.little.language.GetNumberStatement
 import com.quane.little.language.GetStatement
+import com.quane.little.language.GetTextStatement
 import com.quane.little.language.Scope
 import com.quane.little.language.SetDirectionStatement
 import com.quane.little.language.SetSpeedStatement
 import com.quane.little.language.SetStatement
 import com.quane.little.language.Statement
+import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
 import com.quane.little.language.data.Value
-import com.quane.little.language.memory.Pointer
-import com.quane.little.ide.language.data.NumberPanelController
-import com.quane.little.language.GetTextStatement
+import com.quane.little.ide.language.data.BoolPanelController
 
 /** @author Sean Connolly
   */
@@ -72,7 +75,27 @@ class SetPointerStatementPanelController[V <: Value](
         new SetStatement(pointerController.compile(scope), valueController.compile(scope))
     }
 }
+class GetBoolStatementPanelController(
+    override val view: GetPointerStatementPanel,
+    override val pointerController: PointerPanelController[Bool])
+        extends GetPointerStatementPanelController[Bool](view, pointerController) {
 
+    override def compile(scope: Scope): GetStatement[Bool] = {
+        log.info("Compiling: Get BOOL");
+        new GetBoolStatement(pointerController.compile(scope))
+    }
+}
+
+class GetNumberStatementPanelController(
+    override val view: GetPointerStatementPanel,
+    override val pointerController: PointerPanelController[Number])
+        extends GetPointerStatementPanelController[Number](view, pointerController) {
+
+    override def compile(scope: Scope): GetStatement[Number] = {
+        log.info("Compiling: Get NUMBER");
+        new GetNumberStatement(pointerController.compile(scope))
+    }
+}
 class GetTextStatementPanelController(
     override val view: GetPointerStatementPanel,
     override val pointerController: PointerPanelController[Text])
@@ -84,17 +107,23 @@ class GetTextStatementPanelController(
     }
 }
 
-class SetTextPointerStatementPanelController(
+class SetBoolPointerStatementPanelController(
     override val view: SetStatementPanel,
-    override val pointerController: PointerPanelController[Text],
-    override val valueController: TextPanelController)
-        extends SetPointerStatementPanelController[Text](view, pointerController, valueController)
-
+    override val pointerController: PointerPanelController[Bool],
+    override val valueController: BoolPanelController)
+        extends SetPointerStatementPanelController[Bool](view, pointerController, valueController)
+        
 class SetNumberPointerStatementPanelController(
     override val view: SetStatementPanel,
     override val pointerController: PointerPanelController[Number],
     override val valueController: NumberPanelController)
         extends SetPointerStatementPanelController[Number](view, pointerController, valueController)
+
+class SetTextPointerStatementPanelController(
+    override val view: SetStatementPanel,
+    override val pointerController: PointerPanelController[Text],
+    override val valueController: TextPanelController)
+        extends SetPointerStatementPanelController[Text](view, pointerController, valueController)
 
 class SetSpeedStatementPanelController(
     override val view: SetSpeedStatementPanel,
