@@ -1,29 +1,41 @@
 package com.quane.little.ide.language
 
 import scala.swing.BoxPanel
+import scala.swing.GridBagPanel
+import scala.swing.GridBagPanel.Fill
 import scala.swing.Label
 import scala.swing.Orientation
-import scala.swing.TextField
 import scala.swing.event.ValueChanged
-import java.awt.Dimension
-import org.eintr.loglady.Logging
-import com.quane.little.language.Expression
-import com.quane.little.ide.language.memory.PointerPanel
 import com.quane.little.ide.language.data.NumberExpressionPanel
+import com.quane.little.ide.language.memory.PointerPanel
+import javax.swing.BorderFactory
+import java.awt.Color
+import java.awt.Dimension
+import com.quane.little.ide.IDELayout
+import scala.swing.Component
+import javax.swing.JComponent
 
-trait StatementPanel
-    extends ExpressionPanel
+abstract class StatementPanel
+    extends BoxPanel(Orientation.Horizontal)
+    with ExpressionPanel
 
-/** @author Sean Connolly
+/** A Swing panel to represent a [[SetStatementExpression]].
+  *
+  * @author Sean Connolly
   */
-abstract class SetStatementPanel
-    extends BoxPanel(Orientation.Horizontal)
-    with StatementPanel
+abstract class SetStatementPanel extends StatementPanel
 
-abstract class GetStatementPanel
-    extends BoxPanel(Orientation.Horizontal)
-    with StatementPanel
+/** A Swing panel to represent a [[GetStatementExpression]].
+  *
+  * @author Sean Connolly
+  */
+abstract class GetStatementPanel extends StatementPanel
 
+/** A Swing panel to represent a [[SetStatementExpression]] which accepts an
+  * [[ExpressionPanel]] as input.
+  *
+  * @author Sean Connolly
+  */
 class SetPointerStatementPanel(pointerPanel: PointerPanel, valuePanel: ExpressionPanel)
         extends SetStatementPanel {
 
@@ -32,7 +44,7 @@ class SetPointerStatementPanel(pointerPanel: PointerPanel, valuePanel: Expressio
     contents += valuePanel
 }
 
-class SetSpecialStatementPanel(label: String, valuePanel: ExpressionPanel)
+abstract class SetSpecialStatementPanel(label: String, valuePanel: ExpressionPanel)
         extends SetStatementPanel {
 
     contents += new Label(label + "=")
@@ -70,9 +82,6 @@ class SetSpecialStatementPanel(label: String, valuePanel: ExpressionPanel)
 //    override val valuePanel: TextExpressionPanel)
 //        extends LabeledStatementPanel(label, valuePanel)
 
-abstract class LabeledNumberExpressionStatementPanel(label: String, valuePanel: NumberExpressionPanel)
-    extends LabeledStatementPanel(label, valuePanel)
-
 /** A labeled statement has the format: "Label: [value]"
   * Where the value is represented by an input box or an
   * {@link ExpressionPanel} of some sort.
@@ -81,6 +90,9 @@ abstract class LabeledNumberExpressionStatementPanel(label: String, valuePanel: 
   */
 abstract class LabeledStatementPanel(label: String, valuePanel: ExpressionPanel)
     extends SetSpecialStatementPanel(label, valuePanel)
+
+abstract class LabeledNumberExpressionStatementPanel(label: String, valuePanel: NumberExpressionPanel)
+    extends LabeledStatementPanel(label, valuePanel)
 
 class SetSpeedStatementPanel(valuePanel: NumberExpressionPanel)
     extends LabeledNumberExpressionStatementPanel("Speed", valuePanel);

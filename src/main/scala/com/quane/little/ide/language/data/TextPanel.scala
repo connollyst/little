@@ -23,6 +23,9 @@ import com.quane.little.ide.GetTextStatementAddedEvent
 import com.quane.little.ide.language.GetStatementPanelController
 import com.quane.little.ide.language.GetStatementPanelController
 import com.quane.little.ide.language.GetTextStatementPanelController
+import javax.swing.BorderFactory
+import java.awt.Color
+import java.awt.Dimension
 
 trait TextPanel
     extends ExpressionPanel
@@ -47,6 +50,7 @@ class TextExpressionPanel
         with Logging {
 
     val emptyLabel = new Label("Add")
+    emptyLabel.border = BorderFactory.createEmptyBorder(20, 20, 20, 20);
 
     contents += emptyLabel
 
