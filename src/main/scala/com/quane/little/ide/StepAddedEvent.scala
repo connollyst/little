@@ -3,13 +3,13 @@ package com.quane.little.ide
 import scala.swing.event.Event
 import com.quane.little.ide.language.ExpressionPanelController
 import com.quane.little.ide.language.FunctionPanelController
-import com.quane.little.ide.language.GetStatementPanelController
+import com.quane.little.ide.language.statement.GetStatementPanelController
 import com.quane.little.ide.language.ListenerPanelController
-import com.quane.little.ide.language.SetStatementPanelController
+import com.quane.little.ide.language.statement.SetStatementPanelController
 import com.quane.little.language.Expression
 import com.quane.little.language.data.Value
 import com.quane.little.language.data.Text
-import com.quane.little.ide.language.GetTextStatementPanelController
+import com.quane.little.ide.language.statement.GetTextStatementPanelController
 
 class StepAddedEvent(val controller: ExpressionPanelController[Expression[Any]])
     extends Event

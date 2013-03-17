@@ -2,9 +2,9 @@ package com.quane.little.ide.language
 
 import scala.swing.MainFrame
 import scala.swing.SimpleSwingApplication
-
 import com.quane.little.ide.language.data.TextFieldPanel
 import com.quane.little.ide.language.memory.PointerPanel
+import com.quane.little.ide.language.statement.SetPointerStatementPanel
 
 object SetStatementPanelDemo extends SimpleSwingApplication {
 

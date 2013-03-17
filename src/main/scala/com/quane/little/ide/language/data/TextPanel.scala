@@ -20,9 +20,9 @@ import com.quane.little.ide.language.ExpressionPanel
 import com.quane.little.ide.swing.HighlightableComponent
 import com.quane.little.ide.GetterToolType
 import com.quane.little.ide.GetTextStatementAddedEvent
-import com.quane.little.ide.language.GetStatementPanelController
-import com.quane.little.ide.language.GetStatementPanelController
-import com.quane.little.ide.language.GetTextStatementPanelController
+import com.quane.little.ide.language.statement.GetStatementPanelController
+import com.quane.little.ide.language.statement.GetStatementPanelController
+import com.quane.little.ide.language.statement.GetTextStatementPanelController
 import javax.swing.BorderFactory
 import java.awt.Color
 import java.awt.Dimension
