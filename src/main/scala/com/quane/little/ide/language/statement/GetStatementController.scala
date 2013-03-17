@@ -55,6 +55,7 @@ class GetNumberStatementController(
         new GetNumberStatement(pointerController.compile(scope))
     }
 }
+
 class GetTextStatementController(
     override val view: GetPointerStatementPanel,
     override val pointerController: PointerController[Text])

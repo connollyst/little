@@ -64,25 +64,27 @@ class TextExpressionPanel
         log.info("Accepting a " + event.toolType.getClass().getSimpleName())
         event.toolType match {
             case GetTextToolType =>
-                val controller = event.dropFunction()
-                controller match {
-                    case foo: GetTextStatementController => {
-                        contents.clear
-                        contents += controller.view;
-                        val x = event.point.x;
-                        val y = event.point.y;
-                        publish(
-                            new GetTextStatementAddedEvent(foo, event.toolType, x, y)
-                        )
-                        log.info("published GetTextStatementAddedEvent")
-                    }
-                    case _ =>
-                        log.error("Cannot accept unrecognized controller: " + controller.getClass)
-                }
+                publishDropEvent(event)
             case _ =>
                 log.warn("Cannot accept unrecognized tool type: " + event.toolType);
         }
-
     }
 
+    private def publishDropEvent(event: DropExpressionEvent) = {
+        val controller = event.dropFunction()
+        controller match {
+            case foo: GetTextStatementController => {
+                contents.clear
+                contents += controller.view;
+                val x = event.point.x;
+                val y = event.point.y;
+                publish(
+                    new GetTextStatementAddedEvent(foo, event.toolType, x, y)
+                )
+                log.info("published GetTextStatementAddedEvent")
+            }
+            case _ =>
+                log.error("Cannot accept unrecognized controller: " + controller.getClass)
+        }
+    }
 }
