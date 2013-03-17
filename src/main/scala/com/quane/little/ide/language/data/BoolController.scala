@@ -4,12 +4,15 @@ import scala.swing.Reactor
 
 import org.eintr.loglady.Logging
 
+import com.quane.little.ide.GetBoolStatementAddedEvent
+import com.quane.little.ide.StepAddedEvent
 import com.quane.little.ide.language.ExpressionController
+import com.quane.little.language.Expression
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Bool
 
 abstract class BoolController(override val view: BoolPanel)
-        extends ExpressionController[Bool](view)
+        extends ExpressionController[Expression[Bool]](view)
         with Reactor
         with Logging {
 
@@ -34,8 +37,17 @@ class BoolFieldController(override val view: BoolFieldPanel)
 class BoolExpressionController(override val view: BoolExpressionPanel)
         extends BoolController(view) {
 
-    override def compile(scope: Scope): Bool = {
-        // TODO get Expression
-        return new Bool(false)
+    var expression = None: Option[ExpressionController[Expression[Bool]]]
+
+    override def compile(scope: Scope): Expression[Bool] = {
+        expression.get.compile(scope);
+    }
+
+    listenTo(view)
+    reactions += {
+        case event: GetBoolStatementAddedEvent =>
+            expression = Option(event.controller)
+        case event: StepAddedEvent =>
+            log.error("Does not react to posted event: " + event)
     }
 }

@@ -11,7 +11,7 @@ import com.quane.little.ide.GetTextStatementAddedEvent
 
 abstract class TextController(override val view: TextPanel)
         extends ExpressionController[Expression[Text]](view)
-        with Reactor
+
         with Logging {
 
     override def validate {
@@ -29,7 +29,8 @@ class TextFieldController(override val view: TextFieldPanel)
 }
 
 class TextExpressionController(override val view: TextExpressionPanel)
-        extends TextController(view) {
+        extends TextController(view)
+        with Reactor {
 
     var expression = None: Option[ExpressionController[Expression[Text]]]
 

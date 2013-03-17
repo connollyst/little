@@ -4,13 +4,16 @@ import scala.swing.Reactor
 
 import org.eintr.loglady.Logging
 
+import com.quane.little.ide.GetNumberStatementAddedEvent
+import com.quane.little.ide.GetTextStatementAddedEvent
+import com.quane.little.ide.StepAddedEvent
 import com.quane.little.ide.language.ExpressionController
+import com.quane.little.language.Expression
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Number
 
 abstract class NumberController(override val view: NumberPanel)
-        extends ExpressionController[Number](view)
-        with Reactor
+        extends ExpressionController[Expression[Number]](view)
         with Logging {
 
     override def validate {
@@ -30,10 +33,20 @@ class NumberFieldController(override val view: NumberFieldPanel)
 }
 
 class NumberExpressionController(override val view: NumberExpressionPanel)
-        extends NumberController(view) {
+        extends NumberController(view)
+        with Reactor {
 
-    override def compile(scope: Scope): Number = {
-        // TODO get Expression
-        return new Number(137)
+    var expression = None: Option[ExpressionController[Expression[Number]]]
+
+    override def compile(scope: Scope): Expression[Number] = {
+        expression.get.compile(scope);
+    }
+
+    listenTo(view)
+    reactions += {
+        case event: GetNumberStatementAddedEvent =>
+            expression = Option(event.controller)
+        case event: StepAddedEvent =>
+            log.error("Does not react to posted event: " + event)
     }
 }
