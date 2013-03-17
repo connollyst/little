@@ -28,15 +28,8 @@ class FunctionPanel
         extends BoxPanel(Orientation.Vertical)
         with ExpressionPanel
         with DragAndDropTarget
-        with HighlightableComponent
         with Logging {
-    
-    /** Returns true/false if the specified item can/cannot be dropped here,
-      * respectively.
-      *
-      * @param item
-      * 		the drag and drop item
-      */
+
     def accepts(item: DragAndDropItem): Boolean = {
         return item match {
             case SetterToolType => true
@@ -45,23 +38,10 @@ class FunctionPanel
         }
     }
 
-    // Listen for the mouse entering and exiting the workspace
-    listenTo(mouse.moves)
-    reactions += {
-        case event: MouseEntered =>
-            IDE.eventBus.post(event)
-        case event: MouseExited =>
-            IDE.eventBus.post(event)
-        case event: DragOverEvent =>
-            highlight
-        case event: DragOutEvent =>
-            unhighlight
-        case event: DropExpressionEvent =>
-            unhighlight
-            log.info("Accepting a " + event.toolType.getClass().getSimpleName())
-            val controller = event.dropFunction()
-            contents += controller.view
-            publish(new StepAddedEvent(controller))
+    def onDrop(event: DropExpressionEvent): Unit = {
+        log.info("Accepting a " + event.toolType.getClass().getSimpleName())
+        val controller = event.dropFunction()
+        contents += controller.view
+        publish(new StepAddedEvent(controller))
     }
-
 }

@@ -45,7 +45,6 @@ class TextFieldPanel
 class TextExpressionPanel
         extends BoxPanel(Orientation.Vertical)
         with TextPanel
-        with HighlightableComponent
         with DragAndDropTarget
         with Logging {
 
@@ -61,22 +60,7 @@ class TextExpressionPanel
         }
     }
 
-    listenTo(mouse.moves)
-    reactions += {
-        case event: MouseEntered =>
-            IDE.eventBus.post(event)
-        case event: MouseExited =>
-            IDE.eventBus.post(event)
-        case event: DragOverEvent =>
-            highlight
-        case event: DragOutEvent =>
-            unhighlight
-        case event: DropExpressionEvent =>
-            unhighlight
-            publishDropEvent(event)
-    }
-
-    def publishDropEvent(event: DropExpressionEvent) = {
+    def onDrop(event: DropExpressionEvent): Unit = {
         log.info("Accepting a " + event.toolType.getClass().getSimpleName())
         event.toolType match {
             case GetTextToolType =>

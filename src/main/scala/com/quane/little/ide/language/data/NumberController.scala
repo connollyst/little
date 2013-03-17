@@ -19,7 +19,6 @@ abstract class NumberController(override val view: NumberPanel)
     override def validate {
         log.error("TODO: implement validate")
     }
-
 }
 
 class NumberFieldController(override val view: NumberFieldPanel)
@@ -29,7 +28,6 @@ class NumberFieldController(override val view: NumberFieldPanel)
         val num = view.value
         return new Number(num)
     }
-
 }
 
 class NumberExpressionController(override val view: NumberExpressionPanel)

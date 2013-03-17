@@ -42,7 +42,6 @@ class NumberFieldPanel
 class NumberExpressionPanel
         extends BoxPanel(Orientation.Vertical)
         with NumberPanel
-        with HighlightableComponent
         with DragAndDropTarget
         with Logging {
 
@@ -59,22 +58,10 @@ class NumberExpressionPanel
         }
     }
 
-    listenTo(mouse.moves)
-    reactions += {
-        case event: MouseEntered =>
-            IDE.eventBus.post(event)
-        case event: MouseExited =>
-            IDE.eventBus.post(event)
-        case event: DragOverEvent =>
-            highlight
-        case event: DragOutEvent =>
-            unhighlight
-        case event: DropExpressionEvent =>
-            unhighlight
-            log.info("Accepting a " + event.toolType.getClass().getSimpleName())
-            val controller = event.dropFunction()
-            contents += controller.view
-            publish(new StepAddedEvent(controller))
+    def onDrop(event: DropExpressionEvent): Unit = {
+        log.info("Accepting a " + event.toolType.getClass().getSimpleName())
+        val controller = event.dropFunction()
+        contents += controller.view
+        publish(new StepAddedEvent(controller))
     }
-
 }
