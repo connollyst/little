@@ -9,7 +9,7 @@ import com.quane.little.language.data.Value
   *
   * @author Sean Connolly
   */
-class PointerPanelController[V <: Value](val view: PointerPanel, valueClass: Class[V]) {
+class PointerController[V <: Value](val view: PointerPanel, valueClass: Class[V]) {
 
     def compile(scope: Scope): Pointer[V] = {
         new Pointer(scope, view.variableName, valueClass)

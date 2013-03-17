@@ -13,7 +13,7 @@ import scala.swing.event.MousePressed
 import scala.swing.event.MouseReleased
 
 import com.quane.little.ide.dnd.DragAndDropItem
-import com.quane.little.ide.language.ExpressionPanelController
+import com.quane.little.ide.language.ExpressionController
 import com.quane.little.language.Expression
 import com.quane.little.language.event.GlassEvent
 
@@ -132,7 +132,7 @@ class MathToolPanel
 
 class ToolButton(val title: String,
                  val toolType: ToolType,
-                 val dropFunction: () => ExpressionPanelController[_ <: Expression[_]])
+                 val dropFunction: () => ExpressionController[_ <: Expression[_]])
         extends Button {
 
     text = title
@@ -153,13 +153,13 @@ class ToolButton(val title: String,
 class ToolDraggedEvent(val source: Component,
                        val toolType: ToolType,
                        val point: Point,
-                       val dropFunction: () => ExpressionPanelController[Expression[Any]])
+                       val dropFunction: () => ExpressionController[Expression[Any]])
         extends Event
 
 class ToolDroppedEvent(val source: Component,
                        val toolType: ToolType,
                        val point: Point,
-                       val dropFunction: () => ExpressionPanelController[Expression[Any]])
+                       val dropFunction: () => ExpressionController[Expression[Any]])
         extends Event
 
 sealed trait ToolType extends DragAndDropItem

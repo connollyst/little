@@ -2,7 +2,7 @@ package com.quane.little.ide.language.statement
 
 import org.eintr.loglady.Logging
 
-import com.quane.little.ide.language.memory.PointerPanelController
+import com.quane.little.ide.language.memory.PointerController
 import com.quane.little.language.GetBoolStatement
 import com.quane.little.language.GetNumberStatement
 import com.quane.little.language.GetStatement
@@ -18,14 +18,14 @@ import com.quane.little.language.data.Number
   *
   * @author Sean Connolly
   */
-abstract class GetStatementPanelController[V <: Value](
+abstract class GetStatementController[V <: Value](
     override val view: GetStatementPanel)
-        extends StatementPanelController[GetStatement[V]](view)
+        extends StatementController[GetStatement[V]](view)
 
-abstract class GetPointerStatementPanelController[V <: Value](
+abstract class GetPointerStatementController[V <: Value](
     override val view: GetStatementPanel,
-    val pointerController: PointerPanelController[V])
-        extends GetStatementPanelController[V](view)
+    val pointerController: PointerController[V])
+        extends GetStatementController[V](view)
         with Logging {
 
     override def validate {
@@ -34,10 +34,10 @@ abstract class GetPointerStatementPanelController[V <: Value](
     }
 }
 
-class GetBoolStatementPanelController(
+class GetBoolStatementController(
     override val view: GetPointerStatementPanel,
-    override val pointerController: PointerPanelController[Bool])
-        extends GetPointerStatementPanelController[Bool](view, pointerController) {
+    override val pointerController: PointerController[Bool])
+        extends GetPointerStatementController[Bool](view, pointerController) {
 
     override def compile(scope: Scope): GetStatement[Bool] = {
         log.info("Compiling: Get BOOL");
@@ -45,20 +45,20 @@ class GetBoolStatementPanelController(
     }
 }
 
-class GetNumberStatementPanelController(
+class GetNumberStatementController(
     override val view: GetPointerStatementPanel,
-    override val pointerController: PointerPanelController[Number])
-        extends GetPointerStatementPanelController[Number](view, pointerController) {
+    override val pointerController: PointerController[Number])
+        extends GetPointerStatementController[Number](view, pointerController) {
 
     override def compile(scope: Scope): GetStatement[Number] = {
         log.info("Compiling: Get NUMBER");
         new GetNumberStatement(pointerController.compile(scope))
     }
 }
-class GetTextStatementPanelController(
+class GetTextStatementController(
     override val view: GetPointerStatementPanel,
-    override val pointerController: PointerPanelController[Text])
-        extends GetPointerStatementPanelController[Text](view, pointerController) {
+    override val pointerController: PointerController[Text])
+        extends GetPointerStatementController[Text](view, pointerController) {
 
     override def compile(scope: Scope): GetStatement[Text] = {
         log.info("Compiling: Get TEXT");

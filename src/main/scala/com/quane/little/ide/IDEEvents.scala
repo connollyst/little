@@ -3,7 +3,7 @@ package com.quane.little.ide
 import java.awt.Point
 import scala.swing.event.Event
 import com.quane.little.language.Expression
-import com.quane.little.ide.language.ExpressionPanelController
+import com.quane.little.ide.language.ExpressionController
 import scala.swing.Component
 
 /* Drag and drop events are those fired when a user drags an item from the
@@ -37,7 +37,7 @@ class DragOutEvent(override val source: Component,
 class DropExpressionEvent(override val source: Component,
                           override val toolType: ToolType,
                           override val point: Point,
-                          val dropFunction: () => ExpressionPanelController[Expression[Any]])
+                          val dropFunction: () => ExpressionController[Expression[Any]])
         extends DragAndDropEvent(source, toolType, point)
 
 /* Menu bar events are those fired from the IDE's top menu bar.

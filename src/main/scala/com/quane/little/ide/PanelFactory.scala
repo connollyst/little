@@ -1,43 +1,43 @@
 package com.quane.little.ide
 
 import com.quane.little.ide.language.FunctionPanel
-import com.quane.little.ide.language.FunctionPanelController
-import com.quane.little.ide.language.statement.GetBoolStatementPanelController
-import com.quane.little.ide.language.statement.GetNumberStatementPanelController
+import com.quane.little.ide.language.FunctionController
+import com.quane.little.ide.language.statement.GetBoolStatementController
+import com.quane.little.ide.language.statement.GetNumberStatementController
 import com.quane.little.ide.language.statement.GetPointerStatementPanel
-import com.quane.little.ide.language.statement.GetTextStatementPanelController
+import com.quane.little.ide.language.statement.GetTextStatementController
 import com.quane.little.ide.language.ListenerPanel
-import com.quane.little.ide.language.ListenerPanelController
-import com.quane.little.ide.language.statement.SetBoolPointerStatementPanelController
+import com.quane.little.ide.language.ListenerController
+import com.quane.little.ide.language.statement.SetBoolPointerStatementController
 import com.quane.little.ide.language.statement.SetDirectionStatementPanel
-import com.quane.little.ide.language.statement.SetDirectionStatementPanelController
-import com.quane.little.ide.language.statement.SetNumberPointerStatementPanelController
+import com.quane.little.ide.language.statement.SetDirectionStatementController
+import com.quane.little.ide.language.statement.SetNumberPointerStatementController
 import com.quane.little.ide.language.statement.SetPointerStatementPanel
 import com.quane.little.ide.language.statement.SetSpeedStatementPanel
-import com.quane.little.ide.language.statement.SetSpeedStatementPanelController
-import com.quane.little.ide.language.statement.SetTextPointerStatementPanelController
+import com.quane.little.ide.language.statement.SetSpeedStatementController
+import com.quane.little.ide.language.statement.SetTextPointerStatementController
 import com.quane.little.ide.language.data.BoolExpressionPanel
-import com.quane.little.ide.language.data.BoolExpressionPanelController
+import com.quane.little.ide.language.data.BoolExpressionController
 import com.quane.little.ide.language.data.BoolFieldPanel
-import com.quane.little.ide.language.data.BoolFieldPanelController
-import com.quane.little.ide.language.data.BoolPanelController
+import com.quane.little.ide.language.data.BoolFieldController
+import com.quane.little.ide.language.data.BoolController
 import com.quane.little.ide.language.data.NumberExpressionPanel
-import com.quane.little.ide.language.data.NumberExpressionPanelController
-import com.quane.little.ide.language.data.NumberExpressionPanelController
+import com.quane.little.ide.language.data.NumberExpressionController
+import com.quane.little.ide.language.data.NumberExpressionController
 import com.quane.little.ide.language.data.NumberFieldPanel
-import com.quane.little.ide.language.data.NumberFieldPanelController
-import com.quane.little.ide.language.data.NumberFieldPanelController
-import com.quane.little.ide.language.data.NumberPanelController
-import com.quane.little.ide.language.data.NumberPanelController
+import com.quane.little.ide.language.data.NumberFieldController
+import com.quane.little.ide.language.data.NumberFieldController
+import com.quane.little.ide.language.data.NumberController
+import com.quane.little.ide.language.data.NumberController
 import com.quane.little.ide.language.data.TextExpressionPanel
-import com.quane.little.ide.language.data.TextExpressionPanelController
+import com.quane.little.ide.language.data.TextExpressionController
 import com.quane.little.ide.language.data.TextFieldPanel
-import com.quane.little.ide.language.data.TextFieldPanelController
-import com.quane.little.ide.language.data.TextPanelController
+import com.quane.little.ide.language.data.TextFieldController
+import com.quane.little.ide.language.data.TextController
 import com.quane.little.ide.language.math.MathPanel
-import com.quane.little.ide.language.math.MathPanelController
+import com.quane.little.ide.language.math.MathController
 import com.quane.little.ide.language.memory.PointerPanel
-import com.quane.little.ide.language.memory.PointerPanelController
+import com.quane.little.ide.language.memory.PointerController
 import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
@@ -46,121 +46,121 @@ import com.quane.little.language.event.GlassEvent
 object PanelFactory {
 
     def getFunctionFrameFunction() = {
-        () => new FunctionPanelController(new FunctionPanel)
+        () => new FunctionController(new FunctionPanel)
     }
 
     def getEventFrameFunction(event: GlassEvent) = {
-        () => new ListenerPanelController(event, new ListenerPanel)
+        () => new ListenerController(event, new ListenerPanel)
     }
 
-    //    def createPrintStatementPanel(): PrintStatementPanelController = {
+    //    def createPrintStatementPanel(): PrintStatementController = {
     //        val childController = createTextStatementPanel
     //        val childView = childController.view
-    //        new PrintStatementPanelController(
+    //        new PrintStatementController(
     //            new PrintStatementPanel(childView), childController
     //        )
     //    }
 
-    def createMathPanel(): MathPanelController = {
-        new MathPanelController(new MathPanel)
+    def createMathPanel(): MathController = {
+        new MathController(new MathPanel)
     }
 
-    def createGetBoolStatementPanel(): GetBoolStatementPanelController = {
+    def createGetBoolStatementPanel(): GetBoolStatementController = {
         val pointerPanel = createBoolPointerPanel
-        new GetBoolStatementPanelController(
+        new GetBoolStatementController(
             new GetPointerStatementPanel(pointerPanel.view),
             pointerPanel
         )
     }
 
-    def createGetNumberStatementPanel(): GetNumberStatementPanelController = {
+    def createGetNumberStatementPanel(): GetNumberStatementController = {
         val pointerPanel = createNumberPointerPanel
-        new GetNumberStatementPanelController(
+        new GetNumberStatementController(
             new GetPointerStatementPanel(pointerPanel.view),
             pointerPanel
         )
     }
 
-    def createGetTextStatementPanel(): GetTextStatementPanelController = {
+    def createGetTextStatementPanel(): GetTextStatementController = {
         val pointerPanel = createTextPointerPanel
-        new GetTextStatementPanelController(
+        new GetTextStatementController(
             new GetPointerStatementPanel(pointerPanel.view),
             pointerPanel
         )
     }
 
-    def createSetBoolStatementPanel(): SetBoolPointerStatementPanelController = {
+    def createSetBoolStatementPanel(): SetBoolPointerStatementController = {
         val pointerPanel = createBoolPointerPanel
-        val valuePanel = new BoolExpressionPanelController(new BoolExpressionPanel)
-        new SetBoolPointerStatementPanelController(
+        val valuePanel = new BoolExpressionController(new BoolExpressionPanel)
+        new SetBoolPointerStatementController(
             new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
             pointerPanel,
             valuePanel
         )
     }
 
-    def createSetNumberStatementPanel(): SetNumberPointerStatementPanelController = {
+    def createSetNumberStatementPanel(): SetNumberPointerStatementController = {
         val pointerPanel = createNumberPointerPanel
-        val valuePanel = new NumberExpressionPanelController(new NumberExpressionPanel)
-        new SetNumberPointerStatementPanelController(
+        val valuePanel = new NumberExpressionController(new NumberExpressionPanel)
+        new SetNumberPointerStatementController(
             new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
             pointerPanel,
             valuePanel
         )
     }
 
-    def createSetTextStatementPanel(): SetTextPointerStatementPanelController = {
+    def createSetTextStatementPanel(): SetTextPointerStatementController = {
         val pointerPanel = createTextPointerPanel
-        val valuePanel = new TextExpressionPanelController(new TextExpressionPanel)
-        new SetTextPointerStatementPanelController(
+        val valuePanel = new TextExpressionController(new TextExpressionPanel)
+        new SetTextPointerStatementController(
             new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
             pointerPanel,
             valuePanel
         )
     }
 
-    def createSetSpeedStatementPanel(): SetSpeedStatementPanelController = {
-        val numberPanelController = createNumberStatementPanel
-        new SetSpeedStatementPanelController(
-            new SetSpeedStatementPanel(numberPanelController.view),
-            numberPanelController
+    def createSetSpeedStatementPanel(): SetSpeedStatementController = {
+        val numberController = createNumberStatementPanel
+        new SetSpeedStatementController(
+            new SetSpeedStatementPanel(numberController.view),
+            numberController
         )
     }
 
-    def createSetDirectionStatementPanel(): SetDirectionStatementPanelController = {
-        val directionPanelController = createNumberStatementPanel
-        new SetDirectionStatementPanelController(
-            new SetDirectionStatementPanel(directionPanelController.view),
-            directionPanelController
+    def createSetDirectionStatementPanel(): SetDirectionStatementController = {
+        val directionController = createNumberStatementPanel
+        new SetDirectionStatementController(
+            new SetDirectionStatementPanel(directionController.view),
+            directionController
         )
     }
 
-    def createBoolPointerPanel(): PointerPanelController[Bool] = {
-        new PointerPanelController(new PointerPanel, classOf[Bool])
+    def createBoolPointerPanel(): PointerController[Bool] = {
+        new PointerController(new PointerPanel, classOf[Bool])
     }
 
-    def createNumberPointerPanel(): PointerPanelController[Number] = {
-        new PointerPanelController(new PointerPanel, classOf[Number])
+    def createNumberPointerPanel(): PointerController[Number] = {
+        new PointerController(new PointerPanel, classOf[Number])
     }
 
-    def createTextPointerPanel(): PointerPanelController[Text] = {
-        new PointerPanelController(new PointerPanel, classOf[Text])
+    def createTextPointerPanel(): PointerController[Text] = {
+        new PointerController(new PointerPanel, classOf[Text])
     }
 
-    def createNumberStatementPanel(): NumberExpressionPanelController = {
-        new NumberExpressionPanelController(new NumberExpressionPanel)
+    def createNumberStatementPanel(): NumberExpressionController = {
+        new NumberExpressionController(new NumberExpressionPanel)
     }
 
-    def createBoolFieldPanel(): BoolFieldPanelController = {
-        new BoolFieldPanelController(new BoolFieldPanel)
+    def createBoolFieldPanel(): BoolFieldController = {
+        new BoolFieldController(new BoolFieldPanel)
     }
     
-    def createNumberFieldPanel(): NumberFieldPanelController = {
-        new NumberFieldPanelController(new NumberFieldPanel)
+    def createNumberFieldPanel(): NumberFieldController = {
+        new NumberFieldController(new NumberFieldPanel)
     }
     
-    def createTextFieldPanel(): TextFieldPanelController = {
-        new TextFieldPanelController(new TextFieldPanel)
+    def createTextFieldPanel(): TextFieldController = {
+        new TextFieldController(new TextFieldPanel)
     }
 }
 

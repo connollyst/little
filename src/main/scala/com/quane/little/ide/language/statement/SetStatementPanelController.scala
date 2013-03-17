@@ -3,12 +3,12 @@ package com.quane.little.ide.language.statement
 import org.eintr.loglady.Logging
 
 import com.quane.little.game.entity.Mob
-import com.quane.little.ide.language.ExpressionPanelController
-import com.quane.little.ide.language.data.BoolPanelController
-import com.quane.little.ide.language.data.NumberExpressionPanelController
-import com.quane.little.ide.language.data.NumberPanelController
-import com.quane.little.ide.language.data.TextPanelController
-import com.quane.little.ide.language.memory.PointerPanelController
+import com.quane.little.ide.language.ExpressionController
+import com.quane.little.ide.language.data.BoolController
+import com.quane.little.ide.language.data.NumberExpressionController
+import com.quane.little.ide.language.data.NumberController
+import com.quane.little.ide.language.data.TextController
+import com.quane.little.ide.language.memory.PointerController
 import com.quane.little.language.Expression
 import com.quane.little.language.Scope
 import com.quane.little.language.SetDirectionStatement
@@ -24,16 +24,16 @@ import com.quane.little.language.data.Value
   *
   * @author Sean Connolly
   */
-abstract class SetStatementPanelController[V <: Value](
+abstract class SetStatementController[V <: Value](
     override val view: SetStatementPanel,
-    val valueController: ExpressionPanelController[Expression[V]])
-        extends StatementPanelController[SetStatement[V]](view)
+    val valueController: ExpressionController[Expression[V]])
+        extends StatementController[SetStatement[V]](view)
 
-class SetPointerStatementPanelController[V <: Value](
+class SetPointerStatementController[V <: Value](
     override val view: SetPointerStatementPanel,
-    val pointerController: PointerPanelController[V],
-    override val valueController: ExpressionPanelController[Expression[V]])
-        extends SetStatementPanelController[V](view, valueController)
+    val pointerController: PointerController[V],
+    override val valueController: ExpressionController[Expression[V]])
+        extends SetStatementController[V](view, valueController)
         with Logging {
 
     override def validate {
@@ -47,28 +47,28 @@ class SetPointerStatementPanelController[V <: Value](
     }
 }
 
-class SetBoolPointerStatementPanelController(
+class SetBoolPointerStatementController(
     override val view: SetPointerStatementPanel,
-    override val pointerController: PointerPanelController[Bool],
-    override val valueController: BoolPanelController)
-        extends SetPointerStatementPanelController[Bool](view, pointerController, valueController)
+    override val pointerController: PointerController[Bool],
+    override val valueController: BoolController)
+        extends SetPointerStatementController[Bool](view, pointerController, valueController)
 
-class SetNumberPointerStatementPanelController(
+class SetNumberPointerStatementController(
     override val view: SetPointerStatementPanel,
-    override val pointerController: PointerPanelController[Number],
-    override val valueController: NumberPanelController)
-        extends SetPointerStatementPanelController[Number](view, pointerController, valueController)
+    override val pointerController: PointerController[Number],
+    override val valueController: NumberController)
+        extends SetPointerStatementController[Number](view, pointerController, valueController)
 
-class SetTextPointerStatementPanelController(
+class SetTextPointerStatementController(
     override val view: SetPointerStatementPanel,
-    override val pointerController: PointerPanelController[Text],
-    override val valueController: TextPanelController)
-        extends SetPointerStatementPanelController[Text](view, pointerController, valueController)
+    override val pointerController: PointerController[Text],
+    override val valueController: TextController)
+        extends SetPointerStatementController[Text](view, pointerController, valueController)
 
-class SetSpeedStatementPanelController(
+class SetSpeedStatementController(
     override val view: SetSpeedStatementPanel,
-    override val valueController: NumberExpressionPanelController)
-        extends SetStatementPanelController[Number](view, valueController)
+    override val valueController: NumberExpressionController)
+        extends SetStatementController[Number](view, valueController)
         with Logging {
 
     override def validate {
@@ -81,10 +81,10 @@ class SetSpeedStatementPanelController(
     }
 }
 
-class SetDirectionStatementPanelController(
+class SetDirectionStatementController(
     override val view: SetDirectionStatementPanel,
-    override val valueController: NumberExpressionPanelController)
-        extends SetStatementPanelController[Number](view, valueController)
+    override val valueController: NumberExpressionController)
+        extends SetStatementController[Number](view, valueController)
         with Logging {
 
     override def validate {

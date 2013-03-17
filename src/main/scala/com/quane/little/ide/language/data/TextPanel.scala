@@ -20,9 +20,9 @@ import com.quane.little.ide.language.ExpressionPanel
 import com.quane.little.ide.swing.HighlightableComponent
 import com.quane.little.ide.GetterToolType
 import com.quane.little.ide.GetTextStatementAddedEvent
-import com.quane.little.ide.language.statement.GetStatementPanelController
-import com.quane.little.ide.language.statement.GetStatementPanelController
-import com.quane.little.ide.language.statement.GetTextStatementPanelController
+import com.quane.little.ide.language.statement.GetStatementController
+import com.quane.little.ide.language.statement.GetStatementController
+import com.quane.little.ide.language.statement.GetTextStatementController
 import javax.swing.BorderFactory
 import java.awt.Color
 import java.awt.Dimension
@@ -82,7 +82,7 @@ class TextExpressionPanel
             case GetTextToolType =>
                 val controller = event.dropFunction()
                 controller match {
-                    case foo: GetTextStatementPanelController => {
+                    case foo: GetTextStatementController => {
                         contents.clear
                         contents += controller.view;
                         val x = event.point.x;

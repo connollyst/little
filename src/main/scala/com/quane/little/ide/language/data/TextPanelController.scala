@@ -3,14 +3,14 @@ package com.quane.little.ide.language.data
 import scala.swing.Reactor
 import org.eintr.loglady.Logging
 import com.quane.little.ide.StepAddedEvent
-import com.quane.little.ide.language.ExpressionPanelController
+import com.quane.little.ide.language.ExpressionController
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Text
 import com.quane.little.language.Expression
 import com.quane.little.ide.GetTextStatementAddedEvent
 
-abstract class TextPanelController(override val view: TextPanel)
-        extends ExpressionPanelController[Expression[Text]](view)
+abstract class TextController(override val view: TextPanel)
+        extends ExpressionController[Expression[Text]](view)
         with Reactor
         with Logging {
 
@@ -19,8 +19,8 @@ abstract class TextPanelController(override val view: TextPanel)
     }
 }
 
-class TextFieldPanelController(override val view: TextFieldPanel)
-        extends TextPanelController(view) {
+class TextFieldController(override val view: TextFieldPanel)
+        extends TextController(view) {
 
     override def compile(scope: Scope): Expression[Text] = {
         val text = view.value
@@ -28,10 +28,10 @@ class TextFieldPanelController(override val view: TextFieldPanel)
     }
 }
 
-class TextExpressionPanelController(override val view: TextExpressionPanel)
-        extends TextPanelController(view) {
+class TextExpressionController(override val view: TextExpressionPanel)
+        extends TextController(view) {
 
-    var expression = None: Option[ExpressionPanelController[Expression[Text]]]
+    var expression = None: Option[ExpressionController[Expression[Text]]]
 
     override def compile(scope: Scope): Expression[Text] = {
         expression.get.compile(scope);

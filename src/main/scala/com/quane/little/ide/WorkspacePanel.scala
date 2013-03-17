@@ -9,12 +9,12 @@ import scala.swing.event.MouseExited
 import org.eintr.loglady.Logging
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.Expression
-import com.quane.little.ide.language.ExpressionPanelController
+import com.quane.little.ide.language.ExpressionController
 import com.quane.little.ide.language.WorkspaceFrame
 import com.quane.little.ide.language.WorkspaceFrameController
 import com.quane.little.ide.swing.HighlightableComponent
-import com.quane.little.ide.language.FunctionPanelController
-import com.quane.little.ide.language.ListenerPanelController
+import com.quane.little.ide.language.FunctionController
+import com.quane.little.ide.language.ListenerController
 import com.quane.little.ide.dnd.DragAndDropItem
 import com.quane.little.ide.dnd.DragAndDropTarget
 
@@ -68,7 +68,7 @@ class WorkspacePanel
             unhighlight
             val controller = event.dropFunction()
             controller match {
-                case listenerController: ListenerPanelController =>
+                case listenerController: ListenerController =>
                     log.info("Accepting a " + event.toolType.getClass().getSimpleName())
                     val point = relativeCoordinates(event.point)
                     publish(
@@ -79,7 +79,7 @@ class WorkspacePanel
                             point.y
                         )
                     )
-                case functionController: FunctionPanelController =>
+                case functionController: FunctionController =>
                     log.info("Accepting a "+event.toolType.getClass().getSimpleName())
                     val point = relativeCoordinates(event.point)
                     publish(

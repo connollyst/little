@@ -8,7 +8,7 @@ import org.eintr.loglady.Logging
 
 /** A listener panel is simply a specific type of {@link FunctionPanel}.
   * That is, the UI for an event listener and a function behaves exactly the
-  * same. The {@link ListenerPanelController}, however, can {@code compile}
+  * same. The {@link ListenerController}, however, can {@code compile}
   * down to an {@link EventListener} by known what kind of {@link GlassEvent}
   * the {@link Function} is related to.
   *

@@ -11,18 +11,18 @@ import com.quane.little.language.data.Text
 import scala.swing.Reactor
 import com.quane.little.ide.StepAddedEvent
 
-class ListenerPanelController(val event: GlassEvent, override val view: ListenerPanel)
-        extends ExpressionPanelController[EventListener](view)
+class ListenerController(val event: GlassEvent, override val view: ListenerPanel)
+        extends ExpressionController[EventListener](view)
         with Reactor
         with Logging {
 
-    log.info("Creating a ListenerPanelController for " + event.getClass().getSimpleName())
+    log.info("Creating a ListenerController for " + event.getClass().getSimpleName())
 
     // An event listener is just a function tied to an event, as such the event
     // listener panel is just a wrapper for the function panel with an event
     // attached. When an event listener panel is created, in turn, we create a
     // function panel. 
-    val functionController = new FunctionPanelController(view)
+    val functionController = new FunctionController(view)
 
     /** {@inheritDoc}
       */

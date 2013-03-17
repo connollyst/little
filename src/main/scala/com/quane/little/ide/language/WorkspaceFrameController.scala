@@ -8,7 +8,7 @@ import com.quane.little.language.Expression
 
 sealed trait WorkspaceFrameController
 
-class WorkspaceFunctionFrameController(view: WorkspaceFrame, panelController: FunctionPanelController)
+class WorkspaceFunctionFrameController(view: WorkspaceFrame, panelController: FunctionController)
         extends WorkspaceFrameController
         with Logging {
 
@@ -23,7 +23,7 @@ class WorkspaceFunctionFrameController(view: WorkspaceFrame, panelController: Fu
 
 }
 
-class WorkspaceListenerFrameController(view: WorkspaceFrame, panelController: ListenerPanelController)
+class WorkspaceListenerFrameController(view: WorkspaceFrame, panelController: ListenerController)
         extends WorkspaceFrameController
         with Logging {
 

@@ -7,8 +7,8 @@ import scala.swing.Reactor
 
 import org.eintr.loglady.Logging
 
-import com.quane.little.ide.language.FunctionPanelController
-import com.quane.little.ide.language.ListenerPanelController
+import com.quane.little.ide.language.FunctionController
+import com.quane.little.ide.language.ListenerController
 import com.quane.little.ide.language.WorkspaceFrame
 import com.quane.little.ide.language.WorkspaceFrameController
 import com.quane.little.ide.language.WorkspaceFunctionFrameController
@@ -16,7 +16,7 @@ import com.quane.little.ide.language.WorkspaceListenerFrameController
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.Function
 
-class WorkspacePanelController(val view: WorkspacePanel)
+class WorkspaceController(val view: WorkspacePanel)
         extends Reactor
         with Logging {
 
@@ -32,7 +32,7 @@ class WorkspacePanelController(val view: WorkspacePanel)
       * @param y
       * 		the y coordinate of the upper left corner of the frame
       */
-    def addFunctionFrame(panelController: FunctionPanelController,
+    def addFunctionFrame(panelController: FunctionController,
                          toolType: ToolType,
                          x: Int,
                          y: Int) {
@@ -56,7 +56,7 @@ class WorkspacePanelController(val view: WorkspacePanel)
       * @param y
       * 		the y coordinate of the upper left corner of the frame
       */
-    def addEventFrame(panelController: ListenerPanelController,
+    def addEventFrame(panelController: ListenerController,
                       toolType: ToolType,
                       x: Int,
                       y: Int) {

@@ -10,7 +10,7 @@ import com.quane.little.language.Scope
   *
   * @author Sean Connolly
   */
-abstract class ExpressionPanelController[+E <: Expression[Any]](val view: ExpressionPanel) {
+abstract class ExpressionController[+E <: Expression[Any]](val view: ExpressionPanel) {
 
     def validate: Unit
 

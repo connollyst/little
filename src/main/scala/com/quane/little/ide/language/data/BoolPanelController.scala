@@ -4,12 +4,12 @@ import scala.swing.Reactor
 
 import org.eintr.loglady.Logging
 
-import com.quane.little.ide.language.ExpressionPanelController
+import com.quane.little.ide.language.ExpressionController
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Bool
 
-abstract class BoolPanelController(override val view: BoolPanel)
-        extends ExpressionPanelController[Bool](view)
+abstract class BoolController(override val view: BoolPanel)
+        extends ExpressionController[Bool](view)
         with Reactor
         with Logging {
 
@@ -19,10 +19,10 @@ abstract class BoolPanelController(override val view: BoolPanel)
 
 }
 
-// TODO the BoolFieldPanel controller and BoolExpressionPanelController should be combined!?!??!!!!
+// TODO the BoolFieldPanel controller and BoolExpressionController should be combined!?!??!!!!
 
-class BoolFieldPanelController(override val view: BoolFieldPanel)
-        extends BoolPanelController(view) {
+class BoolFieldController(override val view: BoolFieldPanel)
+        extends BoolController(view) {
 
     override def compile(scope: Scope): Bool = {
         val num = view.value
@@ -31,8 +31,8 @@ class BoolFieldPanelController(override val view: BoolFieldPanel)
 
 }
 
-class BoolExpressionPanelController(override val view: BoolExpressionPanel)
-        extends BoolPanelController(view) {
+class BoolExpressionController(override val view: BoolExpressionPanel)
+        extends BoolController(view) {
 
     override def compile(scope: Scope): Bool = {
         // TODO get Expression

@@ -30,7 +30,7 @@ class BasePanel
         extends BorderPanel {
 
     val toolkitPanel = new ToolkitPanel
-    val workspace = new WorkspacePanelController(new WorkspacePanel)
+    val workspace = new WorkspaceController(new WorkspacePanel)
     val toolbar = new ToolBar
 
     layout(toolkitPanel) = BorderPanel.Position.West

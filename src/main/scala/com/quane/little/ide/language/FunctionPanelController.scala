@@ -8,12 +8,12 @@ import com.quane.little.ide.StepAddedEvent
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.Expression
 
-class FunctionPanelController(override val view: FunctionPanel)
-        extends ExpressionPanelController[Function](view)
+class FunctionController(override val view: FunctionPanel)
+        extends ExpressionController[Function](view)
         with Reactor
         with Logging {
 
-    val steps = new ListBuffer[ExpressionPanelController[Expression[Any]]]()
+    val steps = new ListBuffer[ExpressionController[Expression[Any]]]()
 
     override def validate {
         log.error("TODO: implement validate")
