@@ -26,11 +26,12 @@ class ToolkitPanel
     val eventsToolPanel = new EventsToolPanel
     val settersToolPanel = new SettersToolPanel
     val gettersToolPanel = new GettersToolPanel
+    val mathToolPanel = new MathToolPanel
 
     contents += eventsToolPanel
     contents += settersToolPanel
     contents += gettersToolPanel
-
+    contents += mathToolPanel
 }
 
 class ToolPanel(title: String, val toolType: ToolType)
@@ -41,7 +42,6 @@ class ToolPanel(title: String, val toolType: ToolType)
 
     contents += titleLabel
     contents += toolList
-
 }
 
 class EventsToolPanel
@@ -80,39 +80,25 @@ class EventsToolPanel
     toolList.contents += new ToolButton("OnMobGone", toolType,
         PanelFactory.getEventFrameFunction(GlassEvent.OnMobGone)
     )
-
 }
 
 class SettersToolPanel
         extends ToolPanel("Setters", SetterToolType) {
 
-    //    toolList.contents += new ToolButton("Say", toolType, PanelFactory.createPrintStatementPanel)
+    toolList.contents += new ToolButton("Set Boolean", toolType,
+        PanelFactory.createSetBoolStatementPanel)
+
+    toolList.contents += new ToolButton("Set Number", toolType,
+        PanelFactory.createSetNumberStatementPanel)
+
+    toolList.contents += new ToolButton("Set Text", toolType,
+        PanelFactory.createSetTextStatementPanel)
+
     toolList.contents += new ToolButton("Set Speed", toolType,
         PanelFactory.createSetSpeedStatementPanel)
 
     toolList.contents += new ToolButton("Set Direction", toolType,
         PanelFactory.createSetDirectionStatementPanel)
-
-    toolList.contents += new ToolButton("Set Boolean", toolType,
-        PanelFactory.createSetBoolWithFieldStatementPanel)
-    
-    toolList.contents += new ToolButton("Set Boolean (Expression)", toolType,
-        PanelFactory.createSetBoolWithExpressionStatementPanel)
-    
-    toolList.contents += new ToolButton("Set Number", toolType,
-        PanelFactory.createSetNumberWithFieldStatementPanel)
-    
-    toolList.contents += new ToolButton("Set Number (Expression)", toolType,
-        PanelFactory.createSetNumberWithExpressionStatementPanel)
-    
-    toolList.contents += new ToolButton("Set Text", toolType,
-        PanelFactory.createSetTextWithFieldStatementPanel)
-
-    toolList.contents += new ToolButton("Set Text (Expression)", toolType,
-        PanelFactory.createSetTextWithExpressionStatementPanel)
-
-    
-
 }
 
 class GettersToolPanel
@@ -121,12 +107,27 @@ class GettersToolPanel
     toolList.contents += new ToolButton("Get Bool", GetBoolToolType,
         PanelFactory.createGetBoolStatementPanel)
 
+    toolList.contents += new ToolButton("Any Bool", GetBoolToolType,
+            PanelFactory.createBoolFieldPanel)
+    
     toolList.contents += new ToolButton("Get Number", GetNumberToolType,
         PanelFactory.createGetNumberStatementPanel)
 
+    toolList.contents += new ToolButton("Any Number", GetNumberToolType,
+            PanelFactory.createNumberFieldPanel)
+    
     toolList.contents += new ToolButton("Get Text", GetTextToolType,
         PanelFactory.createGetTextStatementPanel)
+    
+    toolList.contents += new ToolButton("Any Text", GetTextToolType,
+            PanelFactory.createTextFieldPanel)
+}
 
+class MathToolPanel
+        extends ToolPanel("Math", GetNumberToolType) {
+
+    toolList.contents += new ToolButton("Math", toolType,
+        PanelFactory.createMathPanel)
 }
 
 class ToolButton(val title: String,
@@ -147,7 +148,6 @@ class ToolButton(val title: String,
                 new ToolDroppedEvent(this, toolType, event.point, dropFunction)
             )
     }
-
 }
 
 class ToolDraggedEvent(val source: Component,

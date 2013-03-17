@@ -16,7 +16,9 @@ import com.quane.little.ide.language.SetPointerStatementPanel
 import com.quane.little.ide.language.SetSpeedStatementPanel
 import com.quane.little.ide.language.SetSpeedStatementPanelController
 import com.quane.little.ide.language.SetTextPointerStatementPanelController
+import com.quane.little.ide.language.data.BoolExpressionPanel
 import com.quane.little.ide.language.data.BoolExpressionPanelController
+import com.quane.little.ide.language.data.BoolFieldPanel
 import com.quane.little.ide.language.data.BoolFieldPanelController
 import com.quane.little.ide.language.data.BoolPanelController
 import com.quane.little.ide.language.data.NumberExpressionPanel
@@ -32,14 +34,14 @@ import com.quane.little.ide.language.data.TextExpressionPanelController
 import com.quane.little.ide.language.data.TextFieldPanel
 import com.quane.little.ide.language.data.TextFieldPanelController
 import com.quane.little.ide.language.data.TextPanelController
+import com.quane.little.ide.language.math.MathPanel
+import com.quane.little.ide.language.math.MathPanelController
 import com.quane.little.ide.language.memory.PointerPanel
 import com.quane.little.ide.language.memory.PointerPanelController
 import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
 import com.quane.little.language.event.GlassEvent
-import com.quane.little.ide.language.data.BoolFieldPanel
-import com.quane.little.ide.language.data.BoolExpressionPanel
 
 object PanelFactory {
 
@@ -58,6 +60,10 @@ object PanelFactory {
     //            new PrintStatementPanel(childView), childController
     //        )
     //    }
+
+    def createMathPanel(): MathPanelController = {
+        new MathPanelController(new MathPanel)
+    }
 
     def createGetBoolStatementPanel(): GetBoolStatementPanelController = {
         val pointerPanel = createBoolPointerPanel
@@ -83,33 +89,9 @@ object PanelFactory {
         )
     }
 
-    def createSetBoolWithFieldStatementPanel(): SetBoolPointerStatementPanelController = {
-        createSetBoolStatementPanel(FieldPanelType)
-    }
-
-    def createSetBoolWithExpressionStatementPanel(): SetBoolPointerStatementPanelController = {
-        createSetBoolStatementPanel(ExpressionPanelType)
-    }
-
-    def createSetNumberWithFieldStatementPanel(): SetNumberPointerStatementPanelController = {
-        createSetNumberStatementPanel(FieldPanelType)
-    }
-
-    def createSetNumberWithExpressionStatementPanel(): SetNumberPointerStatementPanelController = {
-        createSetNumberStatementPanel(ExpressionPanelType)
-    }
-
-    def createSetTextWithFieldStatementPanel(): SetTextPointerStatementPanelController = {
-        createSetTextStatementPanel(FieldPanelType)
-    }
-
-    def createSetTextWithExpressionStatementPanel(): SetTextPointerStatementPanelController = {
-        createSetTextStatementPanel(ExpressionPanelType)
-    }
-
-    def createSetBoolStatementPanel(panelType: PanelType): SetBoolPointerStatementPanelController = {
+    def createSetBoolStatementPanel(): SetBoolPointerStatementPanelController = {
         val pointerPanel = createBoolPointerPanel
-        val valuePanel = createBoolStatementPanel(panelType)
+        val valuePanel = new BoolExpressionPanelController(new BoolExpressionPanel)
         new SetBoolPointerStatementPanelController(
             new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
             pointerPanel,
@@ -117,9 +99,9 @@ object PanelFactory {
         )
     }
 
-    def createSetNumberStatementPanel(panelType: PanelType): SetNumberPointerStatementPanelController = {
+    def createSetNumberStatementPanel(): SetNumberPointerStatementPanelController = {
         val pointerPanel = createNumberPointerPanel
-        val valuePanel = createNumberStatementPanel(panelType)
+        val valuePanel = new NumberExpressionPanelController(new NumberExpressionPanel)
         new SetNumberPointerStatementPanelController(
             new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
             pointerPanel,
@@ -127,9 +109,9 @@ object PanelFactory {
         )
     }
 
-    def createSetTextStatementPanel(panelType: PanelType): SetTextPointerStatementPanelController = {
+    def createSetTextStatementPanel(): SetTextPointerStatementPanelController = {
         val pointerPanel = createTextPointerPanel
-        val valuePanel = createTextStatementPanel(panelType)
+        val valuePanel = new TextExpressionPanelController(new TextExpressionPanel)
         new SetTextPointerStatementPanelController(
             new SetPointerStatementPanel(pointerPanel.view, valuePanel.view),
             pointerPanel,
@@ -169,27 +151,17 @@ object PanelFactory {
         new NumberExpressionPanelController(new NumberExpressionPanel)
     }
 
-    def createBoolStatementPanel(panelType: PanelType): BoolPanelController = {
-        panelType match {
-            case FieldPanelType      => new BoolFieldPanelController(new BoolFieldPanel)
-            case ExpressionPanelType => new BoolExpressionPanelController(new BoolExpressionPanel)
-        }
+    def createBoolFieldPanel(): BoolFieldPanelController = {
+        new BoolFieldPanelController(new BoolFieldPanel)
     }
-
-    def createNumberStatementPanel(panelType: PanelType): NumberPanelController = {
-        panelType match {
-            case FieldPanelType      => new NumberFieldPanelController(new NumberFieldPanel)
-            case ExpressionPanelType => new NumberExpressionPanelController(new NumberExpressionPanel)
-        }
+    
+    def createNumberFieldPanel(): NumberFieldPanelController = {
+        new NumberFieldPanelController(new NumberFieldPanel)
     }
-
-    def createTextStatementPanel(panelType: PanelType): TextPanelController = {
-        panelType match {
-            case FieldPanelType      => new TextFieldPanelController(new TextFieldPanel)
-            case ExpressionPanelType => new TextExpressionPanelController(new TextExpressionPanel)
-        }
+    
+    def createTextFieldPanel(): TextFieldPanelController = {
+        new TextFieldPanelController(new TextFieldPanel)
     }
-
 }
 
 sealed trait PanelType

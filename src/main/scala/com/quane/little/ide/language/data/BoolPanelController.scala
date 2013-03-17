@@ -19,6 +19,8 @@ abstract class BoolPanelController(override val view: BoolPanel)
 
 }
 
+// TODO the BoolFieldPanel controller and BoolExpressionPanelController should be combined!?!??!!!!
+
 class BoolFieldPanelController(override val view: BoolFieldPanel)
         extends BoolPanelController(view) {
 
