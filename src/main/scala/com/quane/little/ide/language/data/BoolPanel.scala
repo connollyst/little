@@ -76,7 +76,7 @@ class BoolExpressionPanel
                 log.info("published GetBoolStatementAddedEvent")
             }
             case _ =>
-                log.error("Cannot accept unrecognized controller: " + controller.getClass)
+                log.error("Cannot accept unrecognized controller: " + controller.getClass.getSimpleName)
         }
     }
 }

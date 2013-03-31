@@ -52,7 +52,7 @@ class NumberExpressionPanel
     }
 
     def onDrop(event: DropExpressionEvent): Unit = {
-        log.info("Accepting a " + event.toolType.getClass().getSimpleName())
+        log.info("Accepting a " + event.toolType.getClass.getSimpleName)
         event.toolType match {
             case GetNumberToolType =>
                 publishDropEvent(event)
@@ -75,7 +75,7 @@ class NumberExpressionPanel
                 log.info("published GetNumberStatementAddedEvent")
             }
             case _ =>
-                log.error("Cannot accept unrecognized controller: " + controller.getClass)
+                log.error("Cannot accept unrecognized controller: " + controller.getClass.getSimpleName)
         }
     }
 }

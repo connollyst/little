@@ -84,7 +84,7 @@ class TextExpressionPanel
                 log.info("published GetTextStatementAddedEvent")
             }
             case _ =>
-                log.error("Cannot accept unrecognized controller: " + controller.getClass)
+                log.error("Cannot accept unrecognized controller: " + controller.getClass.getSimpleName)
         }
     }
 }
