@@ -3,6 +3,7 @@ package com.quane.little.ide.controls
 import javafx.scene.layout.Pane
 import javafx.fxml.FXML
 import javafx.scene.control.Label
+import com.quane.little.ide.CustomControl
 
 /**
  *
@@ -15,7 +16,7 @@ class ToolboxItem extends Pane with CustomControl {
     this.label.setText(label)
   }
 
-  abstract def fxml: String = "ToolboxItem.fxml"
+  def fxml: String = "ToolboxItem.fxml"
 
   @FXML
   private val label: Label = null

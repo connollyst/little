@@ -7,6 +7,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import javafx.scene.paint.*?>
+<?import com.quane.little.ide.layout.*?>
 
 <BorderPane id="root"
             maxHeight="-Infinity" maxWidth="-Infinity"
@@ -15,10 +16,10 @@
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.quane.little.ide.IDEController">
     <center>
-        <FlowPane fx:id="workspace" prefHeight="200.0" prefWidth="200.0"/>
+        <Workspace fx:id="workspace" prefHeight="200.0" prefWidth="200.0"/>
     </center>
     <left>
-        <VBox fx:id="toolkit" alignment="TOP_CENTER" prefHeight="400.0"
+        <Toolbox fx:id="toolkit" alignment="TOP_CENTER" prefHeight="400.0"
               prefWidth="150.0" spacing="10.0">
             <children>
                 <Button fx:id="newListenerButton" mnemonicParsing="false"
@@ -32,9 +33,9 @@
             <padding>
                 <Insets bottom="20.0" left="10.0" right="10.0" top="20.0"/>
             </padding>
-        </VBox>
+        </Toolbox>
     </left>
     <stylesheets>
-        <URL value="@ide.css"/>
+        <URL value="@IDE.css"/>
     </stylesheets>
 </BorderPane>

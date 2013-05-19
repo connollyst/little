@@ -1,6 +1,7 @@
-package com.quane.little.ide.controls
+package com.quane.little.ide.layout
 
 import javafx.scene.layout.VBox
+import com.quane.little.ide.CustomControl
 
 /**
  *
@@ -8,6 +9,6 @@ import javafx.scene.layout.VBox
  */
 class Toolbox extends VBox with CustomControl {
 
-  abstract def fxml: String = "Toolbox.fxml"
+  def fxml: String = "Toolbox.fxml"
 
 }

@@ -1,4 +1,4 @@
-package com.quane.little.ide.controls
+package com.quane.little.ide
 
 import javafx.fxml.FXMLLoader
 
@@ -8,7 +8,7 @@ import javafx.fxml.FXMLLoader
  */
 trait CustomControl {
 
-  abstract def fxml: String
+  def fxml: String
 
   private val resource = getClass.getResource(fxml)
   private val loader = new FXMLLoader(resource)
