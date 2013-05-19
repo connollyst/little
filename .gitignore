@@ -3,3 +3,7 @@
 *.cache
 *.DS_Store
 *.prefs
+
+.idea/
+
+*.iml
