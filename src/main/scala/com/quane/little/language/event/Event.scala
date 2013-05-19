@@ -6,27 +6,30 @@ sealed trait GlassEvent {
 
 object GlassEvent {
 
-    // Generic events
-    object OnSpawn extends GlassEvent
+  // Generic events
+  object OnSpawn extends GlassEvent
 
-    object OnContact extends GlassEvent
+  object OnContact extends GlassEvent
 
-    object OnContactEnded extends GlassEvent
-    
-    object WhenDone extends GlassEvent
-    
-    object In5Seconds extends GlassEvent
-    
-    // Food related events
-    object OnFoodNearby extends GlassEvent
+  object OnContactEnded extends GlassEvent
 
-    object OnFoodConsumed extends GlassEvent
+  object WhenDone extends GlassEvent
 
-    // Mobs (bad guys) related events
-    object OnMobNearby extends GlassEvent
+  object In5Seconds extends GlassEvent
 
-    object OnMobMoved extends GlassEvent
+  // Food related events
+  object OnFoodNearby extends GlassEvent
 
-    object OnMobGone extends GlassEvent
+  object OnFoodConsumed extends GlassEvent
+
+  // Mobs (bad guys) related events
+  object OnMobNearby extends GlassEvent
+
+  object OnMobMoved extends GlassEvent
+
+  object OnMobGone extends GlassEvent
+
+  val values = Vector(OnSpawn, OnContact, OnContactEnded, WhenDone,
+    In5Seconds, OnFoodNearby, OnFoodConsumed, OnMobNearby, OnMobMoved, OnMobGone)
 
 }

@@ -1,28 +1,26 @@
 package com.quane.little.ide.controls
 
-import javafx.scene.layout.Pane
-import javafx.fxml.FXML
 import javafx.scene.control.Label
 import com.quane.little.ide.CustomControl
+import com.quane.little.language.event.GlassEvent
 
 /**
  *
  * @author Sean Connolly
  */
-class ToolboxItem extends Pane with CustomControl {
+class ToolboxItem extends Label with CustomControl {
+
 
   def this(label: String) = {
     this
-    this.label.setText(label)
+    setText(label)
+  }
+
+  def this(event: GlassEvent) = {
+    this
+    setText(event.getClass.getSimpleName)
   }
 
   def fxml: String = "ToolboxItem.fxml"
-
-  @FXML
-  private val label: Label = null
-
-  def getLabel: String = label.getText
-
-  def setLabel(label: String) = this.label.setText(label)
 
 }
