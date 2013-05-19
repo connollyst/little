@@ -6,6 +6,17 @@
     <artifactId>little</artifactId>
     <version>0.0.3-SNAPSHOT</version>
 
+    <organization>
+        <name>Sean Is Cool, Inc.</name>
+    </organization>
+
+    <developers>
+        <developer>
+            <name>Sean Connolly</name>
+            <email>connolly.st@gmail.com</email>
+        </developer>
+    </developers>
+
     <properties>
         <scala.level>2.10</scala.level>
         <scala.version>2.10.1</scala.version>
@@ -34,6 +45,14 @@
                 <configuration>
                     <nativesTargetDir>target/natives</nativesTargetDir>
                     <separateDirs>true</separateDirs>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.zenjava</groupId>
+                <artifactId>javafx-maven-plugin</artifactId>
+                <version>1.5</version>
+                <configuration>
+                    <mainClass>com.quane.litte.ide.IDE</mainClass>
                 </configuration>
             </plugin>
         </plugins>
@@ -81,6 +100,13 @@
                     <artifactId>lwjgl</artifactId>
                 </exclusion>
             </exclusions>
+        </dependency>
+
+        <!-- ScalaFX: Scala Bindings for JavaFX 2 -->
+        <dependency>
+            <groupId>org.scalafx</groupId>
+            <artifactId>scalafx_${scala.level}</artifactId>
+            <version>1.0.0-M3</version>
         </dependency>
 
         <!-- Guava: Google Core Libraries -->
