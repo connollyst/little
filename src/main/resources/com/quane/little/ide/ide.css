@@ -1,3 +1,12 @@
 #library {
+    -fx-background-color: lightslategray;
+}
+
+#library .separator {
+    -fx-background-color: dimgrey;
+    -fx-background-radius: 1;
+}
+
+#workspace {
     -fx-background-color: lightgray;
 }
