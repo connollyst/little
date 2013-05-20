@@ -1,9 +1,9 @@
 package com.quane.little.ide.layout
 
 import javafx.scene.layout.VBox
-import com.quane.little.ide.CustomControl
-import com.quane.little.ide.controls.ToolboxItem
+import com.quane.little.ide.{Tools, CustomControl}
 import com.quane.little.language.event.GlassEvent
+import com.quane.little.ide.controls.ToolboxItem
 
 /**
  *
@@ -13,19 +13,38 @@ class Toolbox extends VBox with CustomControl {
 
   def fxml: String = "Toolbox.fxml"
 
-  var isDirty = true
+  getChildren.addAll(
+    eventsToolboxGroup,
+    settersToolboxGroup,
+    gettersToolboxGroup,
+    mathToolboxGroup
+  )
 
+  def eventsToolboxGroup: ToolboxGroup = {
+    makeGroup("Events", Tools.events)
+  }
 
-  override def layoutChildren() {
-    super.layoutChildren()
-    if (isDirty) {
-      isDirty = false
-      getChildren.clear()
+  def settersToolboxGroup: ToolboxGroup = {
+    makeGroup("Setters", Tools.events)
+  }
 
-      for (event <- GlassEvent.values) {
-        getChildren.add(new ToolboxItem(event))
-      }
+  def gettersToolboxGroup: ToolboxGroup = {
+    makeGroup("Getters", Tools.events)
+  }
+
+  def mathToolboxGroup: ToolboxGroup = {
+    makeGroup("Math", Tools.events)
+  }
+
+  def makeGroup(title: String, tools: Vector[Any]) = {
+    val group = new ToolboxGroup
+    group.setTitle(title)
+    for (tool <- tools) {
+      val item = new ToolboxItem
+      item.setName(tool.getClass.getSimpleName)
+      group.getChildren.add(item)
     }
+    group
   }
 
 }

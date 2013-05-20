@@ -1,8 +1,6 @@
 package com.quane.little.language.event
 
-sealed trait GlassEvent {
-
-}
+sealed trait GlassEvent
 
 object GlassEvent {
 
@@ -28,8 +26,5 @@ object GlassEvent {
   object OnMobMoved extends GlassEvent
 
   object OnMobGone extends GlassEvent
-
-  val values = Vector(OnSpawn, OnContact, OnContactEnded, WhenDone,
-    In5Seconds, OnFoodNearby, OnFoodConsumed, OnMobNearby, OnMobMoved, OnMobGone)
 
 }

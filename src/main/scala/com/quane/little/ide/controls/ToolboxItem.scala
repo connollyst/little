@@ -1,8 +1,10 @@
 package com.quane.little.ide.controls
 
+
 import javafx.scene.control.Label
 import com.quane.little.ide.CustomControl
-import com.quane.little.language.event.GlassEvent
+import javafx.scene.input.{MouseEvent, DragEvent}
+import javafx.event.EventHandler
 
 /**
  *
@@ -10,17 +12,19 @@ import com.quane.little.language.event.GlassEvent
  */
 class ToolboxItem extends Label with CustomControl {
 
-
-  def this(label: String) = {
-    this
-    setText(label)
-  }
-
-  def this(event: GlassEvent) = {
-    this
-    setText(event.getClass.getSimpleName)
-  }
-
   def fxml: String = "ToolboxItem.fxml"
+
+  def setName(name: String) {
+    setText(name)
+  }
+
+  def getName: String = getText
+
+
+  setOnDragDetected(new EventHandler[MouseEvent] {
+    def handle(event: MouseEvent) {
+      println("were dragging " + getName)
+    }
+  })
 
 }

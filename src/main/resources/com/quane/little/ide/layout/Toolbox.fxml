@@ -1,1 +1,6 @@
-<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml"/>
+<?import java.net.URL?>
+<fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml">
+    <stylesheets>
+        <URL value="@Toolbox.css"/>
+    </stylesheets>
+</fx:root>
