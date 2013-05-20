@@ -4,7 +4,7 @@ import org.newdawn.slick.Graphics
 import com.quane.little.game.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.view.GameDrawer
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.physics.bodies.StaticBody
 
 class WorldEdge(override val body: StaticBody, manager: InteractionManager)

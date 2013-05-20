@@ -2,7 +2,7 @@ package com.quane.little.game
 
 import com.quane.little.game.entity.Mob
 import com.quane.little.game.entity.Food
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 
 trait InteractionManager {
 
@@ -23,17 +23,17 @@ class InteractionManagerImpl(game: Game)
         extends InteractionManager {
 
     def mobConsumesFood(mob: Mob, food: Food) = {
-        game.eventBus.report(mob, GlassEvent.OnFoodConsumed)
+        game.eventBus.report(mob, LittleEvent.OnFoodConsumed)
         game.cleaner.remove(food)
         mob.heal(food.health)
     }
 
     def mobApproachesFood(mob: Mob, food: Food) = {
-        game.eventBus.report(mob, GlassEvent.OnFoodNearby)
+        game.eventBus.report(mob, LittleEvent.OnFoodNearby)
     }
 
     def mobContactsImmovableObject(mob: Mob) = {
-        game.eventBus.report(mob, GlassEvent.OnContact);
+        game.eventBus.report(mob, LittleEvent.OnContact);
     }
 
 }

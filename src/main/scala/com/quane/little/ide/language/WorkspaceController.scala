@@ -2,7 +2,7 @@ package com.quane.little.ide.language
 
 import org.eintr.loglady.Logging
 import com.quane.little.language.event.EventListener
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 import com.quane.little.language.Function
 import com.quane.little.language.Expression
 

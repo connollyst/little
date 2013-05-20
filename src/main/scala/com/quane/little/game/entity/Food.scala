@@ -5,7 +5,7 @@ import com.quane.little.game.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.view.GameDrawer
 import com.quane.little.game.EventBus
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 
 class Food(body: EntityBody, manager: InteractionManager, val health: Int)
         extends Entity(body, manager) {

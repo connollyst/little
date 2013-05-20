@@ -4,7 +4,7 @@ import javafx.scene.layout.VBox
 import javafx.fxml.FXML
 import javafx.scene.control.Label
 import com.quane.little.ide.CustomControl
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 
 /**
  *
@@ -17,7 +17,7 @@ class ToolboxGroup extends VBox with CustomControl {
   @FXML
   private var titleLabel: Label = _
 
-  private var tools: Class[GlassEvent] = _
+  private var tools: Class[LittleEvent] = _
 
   def setTitle(title: String) {
     titleLabel.setText(title)
@@ -25,10 +25,10 @@ class ToolboxGroup extends VBox with CustomControl {
 
   def getTitle: String = titleLabel.getText
 
-  def setTools(tools: Class[GlassEvent]) {
+  def setTools(tools: Class[LittleEvent]) {
     this.tools = tools
   }
 
-  def getTools: Class[GlassEvent] = tools
+  def getTools: Class[LittleEvent] = tools
 
 }

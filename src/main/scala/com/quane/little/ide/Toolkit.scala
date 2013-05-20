@@ -15,7 +15,7 @@ import scala.swing.event.MouseReleased
 import com.quane.little.ide.dnd.DragAndDropItem
 import com.quane.little.ide.language.ExpressionController
 import com.quane.little.language.Expression
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 
 class ToolkitPanel
         extends BoxPanel(Orientation.Vertical) {
@@ -51,34 +51,34 @@ class EventsToolPanel
         PanelFactory.getFunctionFrameFunction()
     )
     toolList.contents += new ToolButton("OnSpawn", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnSpawn)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnSpawn)
     )
     toolList.contents += new ToolButton("OnContact", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnContact)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnContact)
     )
     toolList.contents += new ToolButton("OnContactEnded", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnContactEnded)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnContactEnded)
     )
     toolList.contents += new ToolButton("WhenDone", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.WhenDone)
+        PanelFactory.getEventFrameFunction(LittleEvent.WhenDone)
     )
     toolList.contents += new ToolButton("In5Seconds", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.In5Seconds)
+        PanelFactory.getEventFrameFunction(LittleEvent.In5Seconds)
     )
     toolList.contents += new ToolButton("OnFoodNearby", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnFoodNearby)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnFoodNearby)
     )
     toolList.contents += new ToolButton("OnFoodConsumed", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnFoodConsumed)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnFoodConsumed)
     )
     toolList.contents += new ToolButton("OnMobNearby", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnMobNearby)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnMobNearby)
     )
     toolList.contents += new ToolButton("OnMobMoved", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnMobMoved)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnMobMoved)
     )
     toolList.contents += new ToolButton("OnMobGone", toolType,
-        PanelFactory.getEventFrameFunction(GlassEvent.OnMobGone)
+        PanelFactory.getEventFrameFunction(LittleEvent.OnMobGone)
     )
 }
 

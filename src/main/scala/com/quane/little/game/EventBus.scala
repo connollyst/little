@@ -3,7 +3,7 @@ package com.quane.little.game
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.MultiMap
 import scala.collection.mutable.Set
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 import org.eintr.loglady.Logging
 import com.quane.little.game.entity.Mob
 
@@ -11,7 +11,7 @@ class EventBus
         extends Logging {
 
     // Events that have occurred and are waiting to be handled
-    val queue = new HashMap[Mob, Set[GlassEvent]]() with MultiMap[Mob, GlassEvent]
+    val queue = new HashMap[Mob, Set[LittleEvent]]() with MultiMap[Mob, LittleEvent]
 
     /** Evaluate all queued events.
       */
@@ -32,7 +32,7 @@ class EventBus
         queue.clear
     }
 
-    def report(mob: Mob, event: GlassEvent) {
+    def report(mob: Mob, event: LittleEvent) {
         queue.addBinding(mob, event)
     }
 

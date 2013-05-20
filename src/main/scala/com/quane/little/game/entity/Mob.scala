@@ -3,7 +3,7 @@ package com.quane.little.game.entity
 import com.quane.little.game.InteractionManager
 import org.newdawn.slick.Graphics
 import com.quane.little.game.view.GameDrawer
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.physics.bodies.EntityBody
 import org.eintr.loglady.Logging
 import com.quane.little.language.Operator

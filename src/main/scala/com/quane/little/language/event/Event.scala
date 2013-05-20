@@ -1,30 +1,30 @@
 package com.quane.little.language.event
 
-sealed trait GlassEvent
+sealed trait LittleEvent
 
-object GlassEvent {
+object LittleEvent {
 
   // Generic events
-  object OnSpawn extends GlassEvent
+  object OnSpawn extends LittleEvent
 
-  object OnContact extends GlassEvent
+  object OnContact extends LittleEvent
 
-  object OnContactEnded extends GlassEvent
+  object OnContactEnded extends LittleEvent
 
-  object WhenDone extends GlassEvent
+  object WhenDone extends LittleEvent
 
-  object In5Seconds extends GlassEvent
+  object In5Seconds extends LittleEvent
 
   // Food related events
-  object OnFoodNearby extends GlassEvent
+  object OnFoodNearby extends LittleEvent
 
-  object OnFoodConsumed extends GlassEvent
+  object OnFoodConsumed extends LittleEvent
 
   // Mobs (bad guys) related events
-  object OnMobNearby extends GlassEvent
+  object OnMobNearby extends LittleEvent
 
-  object OnMobMoved extends GlassEvent
+  object OnMobMoved extends LittleEvent
 
-  object OnMobGone extends GlassEvent
+  object OnMobGone extends LittleEvent
 
 }

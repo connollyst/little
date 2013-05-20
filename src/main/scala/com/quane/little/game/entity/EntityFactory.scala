@@ -9,7 +9,7 @@ import com.quane.little.game.InteractionManagerImpl
 import com.quane.little.language.Programs
 import com.quane.little.language.data.Number
 import com.quane.little.language.event.EventListener
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 
 class EntityFactory(game: Game) {
 
@@ -25,29 +25,29 @@ class EntityFactory(game: Game) {
 
     def createMob: Mob = {
         val mob = new Mob(game.builder.buildBody, manager)
-        game.eventBus.report(mob, GlassEvent.OnSpawn)
+        game.eventBus.report(mob, LittleEvent.OnSpawn)
 //        val speed = new Number(100);
 //        mob.operator.addEventListener(
 //            new EventListener(
-//                GlassEvent.OnSpawn,
+//                LittleEvent.OnSpawn,
 //                Programs.move(mob.operator, speed)
 //            )
 //        );
 //        mob.operator.addEventListener(
 //            new EventListener(
-//                GlassEvent.OnContact,
+//                LittleEvent.OnContact,
 //                Programs.turnRelative(mob.operator, 260)
 //            )
 //        );
 //        mob.operator.addEventListener(
 //            new EventListener(
-//                GlassEvent.OnFoodNearby,
+//                LittleEvent.OnFoodNearby,
 //                Programs.stop(mob.operator)
 //            )
 //        );
 //        mob.operator.addEventListener(
 //            new EventListener(
-//                GlassEvent.OnFoodConsumed,
+//                LittleEvent.OnFoodConsumed,
 //                Programs.stop(mob.operator)
 //            )
 //        );
@@ -57,6 +57,7 @@ class EntityFactory(game: Game) {
     def foodList: List[Food] = {
         foodList(Random.nextInt(10) + 10)
     }
+
     def foodList(number: Int): List[Food] = {
         val foods = new ListBuffer[Food]
         for (i <- 0 until number) {

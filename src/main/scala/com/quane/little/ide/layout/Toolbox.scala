@@ -2,7 +2,7 @@ package com.quane.little.ide.layout
 
 import javafx.scene.layout.VBox
 import com.quane.little.ide.{Tools, CustomControl}
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 import com.quane.little.ide.controls.ToolboxItem
 
 /**

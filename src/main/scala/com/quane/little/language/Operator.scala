@@ -15,7 +15,7 @@ import com.quane.little.game.view.GameDrawer
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Variable
 import com.quane.little.language.event.EventListener
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.entity.Mob
 
@@ -62,7 +62,7 @@ class Operator(mob: Mob)
         eventListeners += eventListener
     }
 
-    def getEventListeners(event: GlassEvent): List[EventListener] = {
+    def getEventListeners(event: LittleEvent): List[EventListener] = {
         val listening = new ListBuffer[EventListener]
         eventListeners.foreach(
             listener =>

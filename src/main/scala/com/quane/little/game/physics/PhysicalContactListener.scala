@@ -7,7 +7,7 @@ import org.jbox2d.callbacks.ContactListener
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.contacts.Contact
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.entity.Entity
 import java.lang.Override
 
@@ -27,15 +27,15 @@ class GlassContactListener
 
     @Override
     override def beginContact(contact: Contact) {
-        report(GlassEvent.OnContact, contact);
+        report(LittleEvent.OnContact, contact);
     }
 
     @Override
     override def endContact(contact: Contact) {
-        report(GlassEvent.OnContactEnded, contact);
+        report(LittleEvent.OnContactEnded, contact);
     }
 
-    def report(event: GlassEvent, contact: Contact) {
+    def report(event: LittleEvent, contact: Contact) {
         val fixtureA = contact.getFixtureA
         val fixtureB = contact.getFixtureB
         val bodyA = fixtureA.getBody
@@ -56,11 +56,11 @@ class GlassContactListener
         }
     }
 
-    def reportProximity(event: GlassEvent, entity: Entity, sensor: Entity) {
+    def reportProximity(event: LittleEvent, entity: Entity, sensor: Entity) {
         sensor.approachedBy(entity);
     }
 
-    def reportContact(event: GlassEvent, entityA: Entity, entityB: Entity) {
+    def reportContact(event: LittleEvent, entityA: Entity, entityB: Entity) {
         entityA.touchedBy(entityB)
         entityB.touchedBy(entityA)
     }

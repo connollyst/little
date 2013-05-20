@@ -1,6 +1,6 @@
 package com.quane.little.ide
 
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 
 sealed trait Tools
 
@@ -11,16 +11,16 @@ sealed trait Tools
 object Tools {
 
   val events = Vector(
-    GlassEvent.OnSpawn,
-    GlassEvent.OnContact,
-    GlassEvent.OnContactEnded,
-    GlassEvent.WhenDone,
-    GlassEvent.In5Seconds,
-    GlassEvent.OnFoodNearby,
-    GlassEvent.OnFoodConsumed,
-    GlassEvent.OnMobNearby,
-    GlassEvent.OnMobMoved,
-    GlassEvent.OnMobGone
+    LittleEvent.OnSpawn,
+    LittleEvent.OnContact,
+    LittleEvent.OnContactEnded,
+    LittleEvent.WhenDone,
+    LittleEvent.In5Seconds,
+    LittleEvent.OnFoodNearby,
+    LittleEvent.OnFoodConsumed,
+    LittleEvent.OnMobNearby,
+    LittleEvent.OnMobMoved,
+    LittleEvent.OnMobGone
   )
 
 }

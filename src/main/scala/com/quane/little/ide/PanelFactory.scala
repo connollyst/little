@@ -41,7 +41,7 @@ import com.quane.little.ide.language.memory.PointerController
 import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
-import com.quane.little.language.event.GlassEvent
+import com.quane.little.language.event.LittleEvent
 
 object PanelFactory {
 
@@ -49,7 +49,7 @@ object PanelFactory {
         () => new FunctionController(new FunctionPanel)
     }
 
-    def getEventFrameFunction(event: GlassEvent) = {
+    def getEventFrameFunction(event: LittleEvent) = {
         () => new ListenerController(event, new ListenerPanel)
     }
 
