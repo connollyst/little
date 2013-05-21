@@ -10,9 +10,7 @@ import org.eintr.loglady.Logging
 
 import com.quane.little.ide.DropExpressionEvent
 import com.quane.little.ide.GetBoolStatementAddedEvent
-import com.quane.little.ide.GetBoolToolType
-import com.quane.little.ide.dnd.DragAndDropItem
-import com.quane.little.ide.dnd.DragAndDropTarget
+import com.quane.little.ide.dnd.{GetBoolToolType, DragAndDropItem, DragAndDropTarget}
 import com.quane.little.ide.language.ExpressionPanel
 import com.quane.little.ide.language.statement.GetBoolStatementController
 

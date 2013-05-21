@@ -2,32 +2,46 @@ package com.quane.little.ide.dnd
 
 import com.quane.little.ide.layout.Highlightable
 import com.quane.little.ide.DropExpressionEvent
-import javafx.scene.input.{TransferMode, DragEvent}
+import javafx.scene.input.{DataFormat, TransferMode, DragEvent}
 import javafx.event.EventHandler
+import org.eintr.loglady.Logging
+
+object DnDTarget {
+
+  val DndItem = new DataFormat("little.dnd.item")
+
+}
 
 /**
  *
  * @author Sean Connolly
  */
-trait DnDTarget extends Highlightable {
-
-
-  /** Can the item be dropped here?
-    *
-    * @param item the drag and drop item
-    */
-  def accepts(item: DragAndDropItem): Boolean
-
-  def onDrop(event: DropExpressionEvent)
+trait DnDTarget
+  extends Highlightable
+  with Logging {
 
   setOnDragOver(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
       if (valid(event)) {
-        event.acceptTransferModes(TransferMode.COPY)
+        val data = item(event)
+        if (accepts(data)) {
+          event.acceptTransferModes(TransferMode.COPY)
+        } else {
+          log.error(getClass.getSimpleName + " doesn't accept this!")
+        }
       }
       event.consume()
     }
   })
+
+  private def item(event: DragEvent): DragAndDropItem = {
+    val content = event.getDragboard.getContent(DnDTarget.DndItem)
+    content match {
+      case g2: DragAndDropItem => g2
+      case _ => throw new ClassCastException(content.getClass.getSimpleName
+        + " is not a " + classOf[DragAndDropItem].getSimpleName)
+    }
+  }
 
   setOnDragEntered(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
@@ -60,7 +74,14 @@ trait DnDTarget extends Highlightable {
   })
 
   private def valid(event: DragEvent): Boolean = {
-    event.getGestureSource != this && event.getDragboard.hasString
+    event.getGestureSource != this && event.getDragboard.hasContent(DnDTarget.DndItem)
   }
 
+  /** Can the item be dropped here?
+    *
+    * @param item the drag and drop item
+    */
+  def accepts(item: DragAndDropItem): Boolean
+
+  def onDrop(event: DropExpressionEvent)
 }

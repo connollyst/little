@@ -5,27 +5,13 @@ import scala.swing.FlowPanel
 import scala.swing.Label
 import scala.swing.Orientation
 import scala.swing.TextField
-import scala.swing.event.MouseEntered
-import scala.swing.event.MouseExited
 import org.eintr.loglady.Logging
-import com.quane.little.ide.DragOutEvent
-import com.quane.little.ide.DragOverEvent
 import com.quane.little.ide.DropExpressionEvent
-import com.quane.little.ide.GetTextToolType
-import com.quane.little.ide.IDE
-import com.quane.little.ide.StepAddedEvent
-import com.quane.little.ide.dnd.DragAndDropItem
-import com.quane.little.ide.dnd.DragAndDropTarget
+import com.quane.little.ide.dnd.{GetTextToolType, DragAndDropItem, DragAndDropTarget}
 import com.quane.little.ide.language.ExpressionPanel
-import com.quane.little.ide.swing.HighlightableComponent
-import com.quane.little.ide.GetterToolType
 import com.quane.little.ide.GetTextStatementAddedEvent
-import com.quane.little.ide.language.statement.GetStatementController
-import com.quane.little.ide.language.statement.GetStatementController
 import com.quane.little.ide.language.statement.GetTextStatementController
 import javax.swing.BorderFactory
-import java.awt.Color
-import java.awt.Dimension
 
 trait TextPanel
     extends ExpressionPanel

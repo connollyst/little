@@ -1,21 +1,9 @@
 package com.quane.little.ide.language
 
-import scala.swing.GridPanel
-import scala.swing.event.MouseEntered
-import scala.swing.event.MouseExited
 import org.eintr.loglady.Logging
-import com.quane.little.ide.DragOutEvent
-import com.quane.little.ide.DragOverEvent
 import com.quane.little.ide.DropExpressionEvent
-import com.quane.little.ide.IDE
-import com.quane.little.ide.SetterToolType
-import com.quane.little.ide.GetterToolType
 import com.quane.little.ide.StepAddedEvent
-import com.quane.little.ide.dnd.DragAndDropItem
-import com.quane.little.ide.dnd.DragAndDropTarget
-import com.quane.little.ide.swing.HighlightableComponent
-import javax.swing.BorderFactory
-import java.awt.Color
+import com.quane.little.ide.dnd.{SetterToolType, GetterToolType, DragAndDropItem, DragAndDropTarget}
 import scala.swing.BoxPanel
 import scala.swing.Orientation
 

@@ -15,6 +15,7 @@ import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
 import com.quane.little.language.data.Value
+import com.quane.little.ide.dnd.ToolType
 
 class StepAddedEvent(val controller: ExpressionController[Expression[Any]])
     extends Event

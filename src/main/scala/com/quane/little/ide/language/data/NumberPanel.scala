@@ -10,9 +10,7 @@ import org.eintr.loglady.Logging
 
 import com.quane.little.ide.DropExpressionEvent
 import com.quane.little.ide.GetNumberStatementAddedEvent
-import com.quane.little.ide.GetNumberToolType
-import com.quane.little.ide.dnd.DragAndDropItem
-import com.quane.little.ide.dnd.DragAndDropTarget
+import com.quane.little.ide.dnd.{GetNumberToolType, DragAndDropItem, DragAndDropTarget}
 import com.quane.little.ide.language.ExpressionPanel
 import com.quane.little.ide.language.statement.GetNumberStatementController
 

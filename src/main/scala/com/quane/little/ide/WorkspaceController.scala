@@ -15,6 +15,7 @@ import com.quane.little.ide.language.WorkspaceFunctionFrameController
 import com.quane.little.ide.language.WorkspaceListenerFrameController
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.Function
+import com.quane.little.ide.dnd.ToolType
 
 class WorkspaceController(val view: WorkspacePanel)
         extends Reactor
@@ -25,7 +26,7 @@ class WorkspaceController(val view: WorkspacePanel)
 
     /** Add a function frame to the workspace.
       *
-      * @param controller
+      * @param panelController
       * 		the controller for the frame
       * @param x
       * 		the x coordinate of the upper left corner of the frame
@@ -49,7 +50,7 @@ class WorkspaceController(val view: WorkspacePanel)
 
     /** Add a listener frame to the workspace.
       *
-      * @param controller
+      * @param panelController
       * 		the controller for the frame
       * @param x
       * 		the x coordinate of the upper left corner of the frame
