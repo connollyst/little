@@ -2,7 +2,7 @@ package com.quane.little.ide.dnd
 
 import com.quane.little.ide.layout.Highlightable
 import com.quane.little.ide.DropExpressionEvent
-import javafx.scene.input.DragEvent
+import javafx.scene.input.{TransferMode, DragEvent}
 import javafx.event.EventHandler
 
 /**
@@ -11,45 +11,56 @@ import javafx.event.EventHandler
  */
 trait DnDTarget extends Highlightable {
 
-  /** Returns true/false if the specified item can/cannot be dropped here,
-    * respectively.
-    *
-    * @param item
-      * the drag and drop item
-    */
-  def accepts(item: DragAndDropItem): Boolean;
 
-  def onDrop(event: DropExpressionEvent): Unit;
+  /** Can the item be dropped here?
+    *
+    * @param item the drag and drop item
+    */
+  def accepts(item: DragAndDropItem): Boolean
+
+  def onDrop(event: DropExpressionEvent)
+
+  setOnDragOver(new EventHandler[DragEvent]() {
+    def handle(event: DragEvent) {
+      if (valid(event)) {
+        event.acceptTransferModes(TransferMode.COPY)
+      }
+      event.consume()
+    }
+  })
 
   setOnDragEntered(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
-      highlight
+      if (valid(event)) {
+        highlight()
+      }
+      event.consume()
     }
   })
 
   setOnDragExited(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
-      unhighlight
+      unhighlight()
+      event.consume()
     }
   })
 
   setOnDragDropped(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
-      unhighlight
-      //      onDrop(event)
+      unhighlight()
+      val db = event.getDragboard
+      var success = false
+      if (db.hasString) {
+        // onDrop(event)
+        success = true
+      }
+      event.setDropCompleted(success)
+      event.consume()
     }
   })
 
-  //    case event: MouseEntered =>
-  //      IDE.eventBus.post(event)
-  //    case event: MouseExited =>
-  //      IDE.eventBus.post(event)
-  //    case event: DragOverEvent =>
-  //      highlight
-  //    case event: DragOutEvent =>
-  //      unhighlight
-  //    case event: DropExpressionEvent =>
-  //      unhighlight
-  //      onDrop(event)
+  private def valid(event: DragEvent): Boolean = {
+    event.getGestureSource != this && event.getDragboard.hasString
+  }
 
 }

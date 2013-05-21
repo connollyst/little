@@ -13,37 +13,50 @@ sealed trait Tools
 object Tools {
 
   val events = Vector(
-    new Tool(LittleEvent.OnSpawn.getClass.getSimpleName),
-    new Tool(LittleEvent.OnContact.getClass.getSimpleName),
-    new Tool(LittleEvent.OnContactEnded.getClass.getSimpleName),
-    new Tool(LittleEvent.WhenDone.getClass.getSimpleName),
-    new Tool(LittleEvent.In5Seconds.getClass.getSimpleName),
-    new Tool(LittleEvent.OnFoodNearby.getClass.getSimpleName),
-    new Tool(LittleEvent.OnFoodConsumed.getClass.getSimpleName),
-    new Tool(LittleEvent.OnMobNearby.getClass.getSimpleName),
-    new Tool(LittleEvent.OnMobMoved.getClass.getSimpleName),
-    new Tool(LittleEvent.OnMobGone.getClass.getSimpleName)
+    new Tool("Spawn",
+      new ListenerPaneFactory(LittleEvent.OnSpawn)
+    ),
+    new Tool("Contact",
+      new ListenerPaneFactory(LittleEvent.OnContact)
+    ),
+    new Tool("Contact Ended",
+      new ListenerPaneFactory(LittleEvent.OnContactEnded)
+    ),
+    new Tool("When Done",
+      new ListenerPaneFactory(LittleEvent.WhenDone)
+    ),
+    new Tool("In 5s",
+      new ListenerPaneFactory(LittleEvent.In5Seconds)
+    ),
+    new Tool("Food Nearby",
+      new ListenerPaneFactory(LittleEvent.OnFoodNearby)
+    ),
+    new Tool("Food Consumed",
+      new ListenerPaneFactory(LittleEvent.OnFoodConsumed)
+    ),
+    new Tool("Mob Nearby",
+      new ListenerPaneFactory(LittleEvent.OnMobNearby)
+    ),
+    new Tool("Mob Moved",
+      new ListenerPaneFactory(LittleEvent.OnMobMoved)
+    ),
+    new Tool("Mob Gone",
+      new ListenerPaneFactory(LittleEvent.OnMobGone)
+    )
   )
 
   val setters = Vector(
-    new Tool("TODO")
   )
 
   val getters = Vector(
-    new Tool("TODO")
   )
 
   val math = Vector(
-    new Tool("TODO")
   )
 
 }
 
-class Tool(val title: String) {
+class Tool(val title: String, val factory: ExpressionPaneFactory) {
 
-  val factory = new ExpressionPaneFactory {
-    // TODO the factory should be provided in the constructor
-    def make: ExpressionPane[_ <: Expression[Any]] = null
-  }
 
 }

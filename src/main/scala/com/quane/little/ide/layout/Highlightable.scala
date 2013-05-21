@@ -8,10 +8,12 @@ import javafx.scene.Node
  */
 trait Highlightable extends Node {
 
-  // TODO highlight
+  def highlight() {
+    // TODO highlight
+  }
 
-  def highlight
-
-  def unhighlight
+  def unhighlight() {
+    // TODO unhighlight
+  }
 
 }
