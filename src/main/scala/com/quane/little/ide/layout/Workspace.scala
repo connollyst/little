@@ -1,6 +1,6 @@
 package com.quane.little.ide.layout
 
-import javafx.scene.layout.{FlowPane, VBox}
+import javafx.scene.layout.FlowPane
 import com.quane.little.ide.CustomControl
 
 /**

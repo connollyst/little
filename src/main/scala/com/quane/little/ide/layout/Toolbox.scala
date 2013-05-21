@@ -1,7 +1,7 @@
 package com.quane.little.ide.layout
 
 import javafx.scene.layout.VBox
-import com.quane.little.ide.{Tools, CustomControl}
+import com.quane.little.ide.{Tool, Tools, CustomControl}
 import com.quane.little.language.event.LittleEvent
 import com.quane.little.ide.controls.ToolboxItem
 
@@ -25,23 +25,23 @@ class Toolbox extends VBox with CustomControl {
   }
 
   def settersToolboxGroup: ToolboxGroup = {
-    makeGroup("Setters", Tools.events)
+    makeGroup("Setters", Tools.setters)
   }
 
   def gettersToolboxGroup: ToolboxGroup = {
-    makeGroup("Getters", Tools.events)
+    makeGroup("Getters", Tools.getters)
   }
 
   def mathToolboxGroup: ToolboxGroup = {
-    makeGroup("Math", Tools.events)
+    makeGroup("Math", Tools.math)
   }
 
-  def makeGroup(title: String, tools: Vector[Any]) = {
+  def makeGroup(title: String, tools: Vector[Tool]) = {
     val group = new ToolboxGroup
     group.setTitle(title)
     for (tool <- tools) {
       val item = new ToolboxItem
-      item.setName(tool.getClass.getSimpleName)
+      item.setName(tool.title)
       group.getChildren.add(item)
     }
     group
