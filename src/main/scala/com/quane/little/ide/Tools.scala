@@ -2,6 +2,7 @@ package com.quane.little.ide
 
 import com.quane.little.language.event.LittleEvent
 import com.quane.little.ide.layout.language.ExpressionPane
+import com.quane.little.language.Expression
 
 sealed trait Tools
 
@@ -42,7 +43,7 @@ class Tool(val title: String) {
 
   val factory = new ExpressionPaneFactory {
     // TODO the factory should be provided in the constructor
-    def make: ExpressionPane = null
+    def make: ExpressionPane[_ <: Expression[Any]] = null
   }
 
 }

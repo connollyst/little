@@ -1,6 +1,7 @@
 package com.quane.little.ide
 
 import com.quane.little.ide.layout.language.ExpressionPane
+import com.quane.little.language.Expression
 
 /**
  *
@@ -8,6 +9,6 @@ import com.quane.little.ide.layout.language.ExpressionPane
  */
 abstract class ExpressionPaneFactory {
 
-  def make: ExpressionPane
+  def make: ExpressionPane[_ <: Expression[Any]]
 
 }
