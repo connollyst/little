@@ -6,11 +6,11 @@ import com.quane.little.language.Expression
 import scala.None
 
 /** Values are the primitive data types exposed to the user. A Value is an
-  * {@link Expression} in and of itself; a Value {@code evaluate}s to itself.
+  * {@link Expression} in and of itself; a ValueTypeSafe {@code evaluate}s to itself.
   *
   * @author Sean Connolly
   */
-sealed trait Value {
+sealed trait ValueTypeSafe {
 
     def primitive: Any
 
@@ -27,7 +27,7 @@ sealed trait Value {
   */
 class Bool(value: Boolean)
         extends Expression[Bool]
-        with Value {
+        with ValueTypeSafe {
 
     def evaluate: Bool = this
 
@@ -58,7 +58,7 @@ class Bool(value: Boolean)
   */
 class Number(value: Int)
         extends Expression[Number]
-        with Value {
+        with ValueTypeSafe {
 
     def this(value: String) {
         this(value.toInt)
@@ -93,7 +93,7 @@ class Number(value: Int)
   */
 class Text(value: String)
         extends Expression[Text]
-        with Value {
+        with ValueTypeSafe {
 
     def evaluate: Text = this
 
@@ -125,7 +125,7 @@ class Text(value: String)
 
 class Nada
         extends Expression[Nada]
-        with Value {
+        with ValueTypeSafe {
 
     def evaluate: Nada = this
     

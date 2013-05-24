@@ -3,6 +3,7 @@ package com.quane.little.ide
 import com.quane.little.ide.layout.language.{SetterPane, ListenerPane, ExpressionPane}
 import com.quane.little.language.Expression
 import com.quane.little.language.event.LittleEvent
+import com.quane.little.language.data.{ValueTypeSafe, Bool, Number, Text}
 
 /**
  *
@@ -24,11 +25,11 @@ class ListenerPaneFactory(event: LittleEvent)
 
 }
 
-class SetterPaneFactory
+class SetterPaneFactory[V <: ValueTypeSafe]
   extends ExpressionPaneFactory {
 
-  override def make: SetterPane = {
-    new SetterPane()
+  override def make: SetterPane[V] = {
+    new SetterPane[V]
   }
 
 }

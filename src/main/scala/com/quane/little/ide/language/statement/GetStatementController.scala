@@ -10,7 +10,7 @@ import com.quane.little.language.GetTextStatement
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Text
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueTypeSafe
 import com.quane.little.language.data.Number
 
 /** The controller for the [[GetStatementPanel]] is responsible for creating a
@@ -18,11 +18,11 @@ import com.quane.little.language.data.Number
   *
   * @author Sean Connolly
   */
-abstract class GetStatementController[V <: Value](
+abstract class GetStatementController[V <: ValueTypeSafe](
     override val view: GetStatementPanel)
         extends StatementController[GetStatement[V]](view)
 
-abstract class GetPointerStatementController[V <: Value](
+abstract class GetPointerStatementController[V <: ValueTypeSafe](
     override val view: GetStatementPanel,
     val pointerController: PointerController[V])
         extends GetStatementController[V](view)

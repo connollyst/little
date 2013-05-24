@@ -1,8 +1,7 @@
 package com.quane.little.ide.layout.language
 
-import javafx.scene.layout.Pane
 import com.quane.little.language.{Scope, Expression}
-import com.quane.little.ide.dnd.DnDTarget
+import javafx.scene.Node
 
 /** An expression pane is a JavaFX pane that represents a piece of the
   * little programming language. Specifically, it is the 'view' component of
@@ -16,7 +15,7 @@ import com.quane.little.ide.dnd.DnDTarget
   * @author Sean Connolly
   */
 trait ExpressionPane[+E <: Expression[Any]]
-  extends Pane {
+  extends Node {
 
   def compile(scope: Scope): E
 

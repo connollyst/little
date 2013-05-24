@@ -14,7 +14,7 @@ import com.quane.little.language.Expression
 import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueTypeSafe
 import com.quane.little.ide.dnd.ToolType
 
 class StepAddedEvent(val controller: ExpressionController[Expression[Any]])
@@ -32,7 +32,7 @@ class FunctionAddedEvent(override val controller: FunctionController,
                          val y: Int)
         extends StepAddedEvent(controller)
 
-class GetterAddedEvent[V <: Value](override val controller: GetStatementController[V],
+class GetterAddedEvent[V <: ValueTypeSafe](override val controller: GetStatementController[V],
                                    val toolType: ToolType,
                                    val x: Int,
                                    val y: Int)
@@ -56,7 +56,7 @@ class GetTextStatementAddedEvent(override val controller: GetTextStatementContro
                                  override val y: Int)
         extends GetterAddedEvent[Text](controller, toolType, x, y)
 
-class SetterAddedEvent[V <: Value](override val controller: SetStatementController[V],
+class SetterAddedEvent[V <: ValueTypeSafe](override val controller: SetStatementController[V],
                                    val toolType: ToolType,
                                    val x: Int,
                                    val y: Int)

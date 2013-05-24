@@ -6,6 +6,7 @@ import org.eintr.loglady.Logging
 import com.quane.little.ide.dnd.{DnDTarget, GetterToolType, SetterToolType, DragAndDropItem}
 import javafx.scene.layout.VBox
 import com.quane.little.ide.CustomControl
+import javafx.fxml.FXML
 
 /** A listener panel is simply a specific type of {@link FunctionPane}.
   * That is, the UI for an event listener and a function behaves exactly the
@@ -44,9 +45,11 @@ class ListenerPane(val event: LittleEvent)
     */
   override def onDrop(pane: ExpressionPane[Expression[Any]]) {
     log.info("Accepting a " + pane)
+    functionPane.steps += pane
     getChildren.add(pane)
   }
 
+  @FXML
   def compile() {
     compile(null)
   }

@@ -1,6 +1,6 @@
 package com.quane.little.language.memory
 
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueTypeSafe
 import com.quane.little.language.Scope
 
 /** Represents a pointer to a variable in memory.<br/>
@@ -18,6 +18,6 @@ import com.quane.little.language.Scope
   *
   * @author Sean Connolly
   */
-class Pointer[V <: Value](val scope: Scope, val variableName: String, val valueClass: Class[V])
+class Pointer[V <: ValueTypeSafe](val scope: Scope, val variableName: String, val valueClass: Class[V])
 
 // TODO if the constructor requires a value, we can avoid nulls!

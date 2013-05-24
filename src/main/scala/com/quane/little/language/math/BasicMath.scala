@@ -11,7 +11,7 @@ class Addition(a: Expression[Number], b: Expression[Number])
         extends BasicMath
         with Logging {
 
-    // TODO support dynamic casting so any Value can be passed in
+    // TODO support dynamic casting so any ValueTypeSafe can be passed in
     
     def evaluate: Number = {
         val numberA = a.evaluate.primitive

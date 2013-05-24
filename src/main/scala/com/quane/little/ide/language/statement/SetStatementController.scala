@@ -17,19 +17,19 @@ import com.quane.little.language.SetStatement
 import com.quane.little.language.data.Bool
 import com.quane.little.language.data.Number
 import com.quane.little.language.data.Text
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueTypeSafe
 
 /** The controller for the [[SetStatementPanel]] is responsible for creating a
   * [[SetStatement]] as represented by the view.
   *
   * @author Sean Connolly
   */
-abstract class SetStatementController[V <: Value](
+abstract class SetStatementController[V <: ValueTypeSafe](
     override val view: SetStatementPanel,
     val valueController: ExpressionController[Expression[V]])
         extends StatementController[SetStatement[V]](view)
 
-class SetPointerStatementController[V <: Value](
+class SetPointerStatementController[V <: ValueTypeSafe](
     override val view: SetPointerStatementPanel,
     val pointerController: PointerController[V],
     override val valueController: ExpressionController[Expression[V]])

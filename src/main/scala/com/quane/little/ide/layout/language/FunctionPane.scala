@@ -19,7 +19,7 @@ class FunctionPane
   with DnDTarget
   with Logging {
 
-  val steps = new ListBuffer[ExpressionController[Expression[Any]]]()
+  val steps = new ListBuffer[ExpressionPane[Expression[Any]]]()
 
   override def fxml = "FunctionPane.fxml"
 
@@ -42,6 +42,7 @@ class FunctionPane
     */
   override def onDrop(pane: ExpressionPane[Expression[Any]]) {
     log.info("Accepting a " + pane)
+    steps += pane
     getChildren.add(pane)
   }
 

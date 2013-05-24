@@ -3,7 +3,7 @@ package com.quane.little.language
 import org.eintr.loglady.Logging
 import com.quane.little.language.exceptions.GlassCastException
 import com.quane.little.language.data.Number
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueTypeSafe
 import com.quane.little.language.data.Variable
 import com.quane.little.language.memory.Pointer
 import com.quane.little.game.entity.Mob
@@ -13,7 +13,7 @@ import com.quane.little.language.data.Bool
 abstract class Statement[T]
     extends Expression[T]
 
-class SetStatement[+V <: Value](pointer: Pointer[V], value: Expression[V]) // TODO we need a compiler check that its the right value type..?
+class SetStatement[+V <: ValueTypeSafe](pointer: Pointer[V], value: Expression[V]) // TODO we need a compiler check that its the right value type..?
         extends Statement[Unit]
         with Logging {
 
@@ -40,11 +40,11 @@ class SetDirectionStatement(scope: Scope, value: Expression[Number])
         value
     );
 
-abstract class GetStatement[V <: Value](pointer: Pointer[V])
+abstract class GetStatement[V <: ValueTypeSafe](pointer: Pointer[V])
         extends Statement[V]
         with Logging {
 
-    def value: Value = {
+    def value: ValueTypeSafe = {
         val name = pointer.variableName
         log.info("Getting the value of '" + name + "'...");
         val scope = pointer.scope
@@ -75,7 +75,7 @@ class GetTextStatement(pointer: Pointer[Text])
     def evaluate: Text = value.asText
 }
 
-class PrintStatement(text: Expression[Value])
+class PrintStatement(text: Expression[ValueTypeSafe])
         extends Statement[Unit]
         with Logging {
 
