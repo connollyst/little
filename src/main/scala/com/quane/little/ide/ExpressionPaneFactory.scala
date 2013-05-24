@@ -8,7 +8,8 @@ import com.quane.little.language.event.LittleEvent
  *
  * @author Sean Connolly
  */
-abstract class ExpressionPaneFactory {
+abstract class ExpressionPaneFactory
+  extends Serializable {
 
   def make: ExpressionPane[_ <: Expression[Any]]
 

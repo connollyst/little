@@ -2,12 +2,13 @@ package com.quane.little.ide.layout
 
 import javafx.scene.layout.FlowPane
 import com.quane.little.ide.{DropExpressionEvent, CustomControl}
-import com.quane.little.language.Function
+import com.quane.little.language.{Expression, Function}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.event.EventListener
 import org.eintr.loglady.Logging
 import com.quane.little.ide.language._
 import com.quane.little.ide.dnd.{EventToolType, DragAndDropItem, DnDTarget}
+import com.quane.little.ide.layout.language.ExpressionPane
 
 /**
  *
@@ -33,8 +34,10 @@ class Workspace
     }
   }
 
-  def onDrop(event: DropExpressionEvent) {
-    log.error("onDrop")
+
+  override def onDrop(pane: ExpressionPane[Expression[Any]]) {
+    println("Dropped a " + pane)
+    getChildren.add(pane)
   }
 
   /** Compiles all active frames into their respective little code.<br/>

@@ -2,7 +2,7 @@ package com.quane.little.ide.controls
 
 
 import javafx.scene.control.Label
-import com.quane.little.ide.{Tool, CustomControl}
+import com.quane.little.ide.{ExpressionPaneFactory, Tool, CustomControl}
 import javafx.scene.input.{ClipboardContent, TransferMode, MouseEvent}
 import javafx.event.EventHandler
 import com.quane.little.ide.dnd.DnDTarget
@@ -28,8 +28,8 @@ class ToolboxItem(tool: Tool)
       val db = startDragAndDrop(TransferMode.COPY)
       val content = new ClipboardContent()
       content.putString(tool.title)
-      content.put(DnDTarget.DndItem, tool.toolType)
-      DnDTarget.currentDnDItem = Some(tool.toolType)
+      content.put(DnDTarget.Tool, tool)
+      DnDTarget.currentDnDTool = Some(tool)
       db.setContent(content)
       event.consume()
     }

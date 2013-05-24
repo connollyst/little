@@ -1,6 +1,6 @@
 package com.quane.little.language.event
 
-sealed trait LittleEvent
+sealed trait LittleEvent extends Serializable
 
 object LittleEvent {
 

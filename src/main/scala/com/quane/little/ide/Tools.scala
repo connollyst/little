@@ -68,3 +68,4 @@ object Tools {
 class Tool(val title: String,
            val toolType: ToolType,
            val factory: ExpressionPaneFactory)
+  extends Serializable

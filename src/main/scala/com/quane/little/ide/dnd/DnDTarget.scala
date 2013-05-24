@@ -1,17 +1,19 @@
 package com.quane.little.ide.dnd
 
 import com.quane.little.ide.layout.Highlightable
-import com.quane.little.ide.DropExpressionEvent
+import com.quane.little.ide.{Tool, ExpressionPaneFactory}
 import javafx.scene.input.{DataFormat, TransferMode, DragEvent}
 import javafx.event.EventHandler
 import org.eintr.loglady.Logging
+import com.quane.little.ide.layout.language.ExpressionPane
+import com.quane.little.language.Expression
 
 object DnDTarget {
 
-  val DndItem = new DataFormat("little.dnd.item")
+  val Tool = new DataFormat("little.dnd.data.tool")
 
   // TODO figure out how to get data from the dragboard
-  var currentDnDItem: Option[DragAndDropItem] = null
+  var currentDnDTool: Option[Tool] = null
 
 }
 
@@ -26,8 +28,8 @@ trait DnDTarget
   setOnDragOver(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
       if (valid(event)) {
-        val data = getDragData(event)
-        if (accepts(data)) {
+        val tool = getPaneType(event)
+        if (accepts(tool.toolType)) {
           event.acceptTransferModes(TransferMode.COPY)
         } else {
           log.error(getClass.getSimpleName + " doesn't accept this!")
@@ -37,14 +39,12 @@ trait DnDTarget
     }
   })
 
-  private def getDragData(event: DragEvent): DragAndDropItem = {
-    val name = event.getDragboard.getString
-    log.info("Getting d&d content for '" + name + "': "
-      + DnDTarget.currentDnDItem.get)
+  private def getPaneType(event: DragEvent): Tool = {
     // val content = event.getDragboard.getContent(DnDTarget.DndItem)
-    DnDTarget.currentDnDItem.get
+    DnDTarget.currentDnDTool.get
   }
 
+  // Handle 'Drag Entered' events
   setOnDragEntered(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
       if (valid(event)) {
@@ -54,6 +54,7 @@ trait DnDTarget
     }
   })
 
+  // Handle 'Drag Exited' events
   setOnDragExited(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
       unhighlight()
@@ -61,13 +62,16 @@ trait DnDTarget
     }
   })
 
+  // Handle 'Drop' events
   setOnDragDropped(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
       unhighlight()
-      val db = event.getDragboard
       var success = false
-      if (db.hasString) {
-        // onDrop(event)
+      val tool = DnDTarget.currentDnDTool
+      if (tool.isDefined) {
+        val factory = tool.get.factory
+        val panel = factory.make
+        onDrop(panel)
         success = true
       }
       event.setDropCompleted(success)
@@ -75,8 +79,14 @@ trait DnDTarget
     }
   })
 
+  /** Is the [[javafx.scene.input.DragEvent]] accepted here?
+    *
+    * @param event the drag event
+    * @return if the event is valid
+    */
   private def valid(event: DragEvent): Boolean = {
-    event.getGestureSource != this && event.getDragboard.hasContent(DnDTarget.DndItem)
+    event.getGestureSource != this &&
+      event.getDragboard.hasContent(DnDTarget.Tool)
   }
 
   /** Can the getDragData be dropped here?
@@ -85,5 +95,11 @@ trait DnDTarget
     */
   def accepts(item: DragAndDropItem): Boolean
 
-  def onDrop(event: DropExpressionEvent)
+  /** Handle a new [[com.quane.little.ide.layout.language.ExpressionPane]]
+    * being dropped.
+    *
+    * @param pane the pane that was dropped
+    */
+  def onDrop(pane: ExpressionPane[Expression[Any]])
+
 }
