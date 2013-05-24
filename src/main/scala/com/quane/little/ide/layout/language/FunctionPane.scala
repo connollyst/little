@@ -4,6 +4,8 @@ import com.quane.little.language.{Expression, Scope, Function}
 import org.eintr.loglady.Logging
 import scala.collection.mutable.ListBuffer
 import com.quane.little.ide.language.ExpressionController
+import com.quane.little.ide.dnd.{GetterToolType, SetterToolType, DragAndDropItem}
+import com.quane.little.ide.StepAddedEvent
 
 /**
  *
@@ -23,6 +25,28 @@ class FunctionPane
         fun.addStep(step.compile(fun))
     );
     fun
+  }
+
+  /** Can the getDragData be dropped here?
+    *
+    * @param item the drag and drop getDragData
+    */
+  def accepts(item: DragAndDropItem): Boolean = {
+    item match {
+      case SetterToolType => true
+      case GetterToolType => true
+      case _ => false
+    }
+  }
+
+  /** Handle a new [[com.quane.little.ide.layout.language.ExpressionPane]]
+    * being dropped.
+    *
+    * @param pane the pane that was dropped
+    */
+  def onDrop(pane: ExpressionPane[Expression[Any]]) {
+    log.info("Accepting a " + pane)
+    getChildren.add(pane)
   }
 
 }

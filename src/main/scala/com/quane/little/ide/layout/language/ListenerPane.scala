@@ -1,8 +1,9 @@
 package com.quane.little.ide.layout.language
 
-import com.quane.little.language.Scope
+import com.quane.little.language.{Expression, Scope}
 import com.quane.little.language.event.{LittleEvent, EventListener}
 import org.eintr.loglady.Logging
+import com.quane.little.ide.dnd.{GetterToolType, SetterToolType, DragAndDropItem}
 
 /** A listener panel is simply a specific type of {@link FunctionPane}.
   * That is, the UI for an event listener and a function behaves exactly the
@@ -27,6 +28,28 @@ class ListenerPane(val event: LittleEvent)
     log.info("Compiling: " + event.getClass.getSimpleName + " listener..")
     val function = functionPane.compile(scope)
     new EventListener(event, function)
+  }
+
+  /** Can the getDragData be dropped here?
+    *
+    * @param item the drag and drop getDragData
+    */
+  def accepts(item: DragAndDropItem): Boolean = {
+    item match {
+      case SetterToolType => true
+      case GetterToolType => true
+      case _ => false
+    }
+  }
+
+  /** Handle a new [[com.quane.little.ide.layout.language.ExpressionPane]]
+    * being dropped.
+    *
+    * @param pane the pane that was dropped
+    */
+  def onDrop(pane: ExpressionPane[Expression[Any]]) {
+    log.info("Accepting a " + pane)
+    getChildren.add(pane)
   }
 
 }

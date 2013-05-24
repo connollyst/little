@@ -10,3 +10,15 @@
 #workspace {
     -fx-background-color: lightgray;
 }
+
+.highlight {
+    -fx-border-color: rgb(136, 187, 198);
+}
+
+.no-highlight {
+    -fx-border-color: null
+}
+
+.seaniscool {
+    -fx-background-color: red;
+}

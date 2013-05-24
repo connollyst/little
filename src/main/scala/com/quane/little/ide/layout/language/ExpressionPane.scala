@@ -16,7 +16,8 @@ import com.quane.little.ide.dnd.DnDTarget
   * @author Sean Connolly
   */
 trait ExpressionPane[+E <: Expression[Any]]
-  extends Pane {
+  extends Pane
+  with DnDTarget {
 
   def compile(scope: Scope): E
 
@@ -25,4 +26,5 @@ trait ExpressionPane[+E <: Expression[Any]]
   setMinSize(200, 200)
   setMaxSize(200, 200)
   setPrefSize(200, 200)
+
 }
