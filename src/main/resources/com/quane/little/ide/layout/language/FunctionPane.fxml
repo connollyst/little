@@ -1,3 +1,4 @@
 <fx:root type="javafx.scene.layout.VBox" xmlns:fx="http://javafx.com/fxml"
+         minHeight="100" minWidth="200"
          styleClass="function-pane">
 </fx:root>

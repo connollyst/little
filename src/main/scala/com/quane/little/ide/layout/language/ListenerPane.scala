@@ -47,6 +47,10 @@ class ListenerPane(val event: LittleEvent)
     getChildren.add(pane)
   }
 
+  def compile() {
+    compile(null)
+  }
+
   override def compile(scope: Scope): EventListener = {
     log.info("Compiling: " + event.getClass.getSimpleName + " listener..")
     val function = functionPane.compile(scope)

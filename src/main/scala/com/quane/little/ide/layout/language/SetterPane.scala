@@ -4,7 +4,6 @@ import com.quane.little.language.{Scope, SetStatement}
 import com.quane.little.ide.CustomControl
 import javafx.fxml.FXML
 import javafx.scene.control.TextField
-import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
 import javafx.scene.layout.HBox
 

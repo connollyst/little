@@ -20,6 +20,4 @@ trait ExpressionPane[+E <: Expression[Any]]
 
   def compile(scope: Scope): E
 
-  setMinSize(200, 100)
-
 }
