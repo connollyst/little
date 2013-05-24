@@ -10,6 +10,9 @@ object DnDTarget {
 
   val DndItem = new DataFormat("little.dnd.item")
 
+  // TODO figure out how to get data from the dragboard
+  var currentDnDItem: Option[DragAndDropItem] = null
+
 }
 
 /**
@@ -23,7 +26,7 @@ trait DnDTarget
   setOnDragOver(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
       if (valid(event)) {
-        val data = item(event)
+        val data = getDragData(event)
         if (accepts(data)) {
           event.acceptTransferModes(TransferMode.COPY)
         } else {
@@ -34,13 +37,12 @@ trait DnDTarget
     }
   })
 
-  private def item(event: DragEvent): DragAndDropItem = {
-    val content = event.getDragboard.getContent(DnDTarget.DndItem)
-    content match {
-      case g2: DragAndDropItem => g2
-      case _ => throw new ClassCastException(content.getClass.getSimpleName
-        + " is not a " + classOf[DragAndDropItem].getSimpleName)
-    }
+  private def getDragData(event: DragEvent): DragAndDropItem = {
+    val name = event.getDragboard.getString
+    log.info("Getting d&d content for '" + name + "': "
+      + DnDTarget.currentDnDItem.get)
+    // val content = event.getDragboard.getContent(DnDTarget.DndItem)
+    DnDTarget.currentDnDItem.get
   }
 
   setOnDragEntered(new EventHandler[DragEvent]() {
@@ -77,9 +79,9 @@ trait DnDTarget
     event.getGestureSource != this && event.getDragboard.hasContent(DnDTarget.DndItem)
   }
 
-  /** Can the item be dropped here?
+  /** Can the getDragData be dropped here?
     *
-    * @param item the drag and drop item
+    * @param item the drag and drop getDragData
     */
   def accepts(item: DragAndDropItem): Boolean
 

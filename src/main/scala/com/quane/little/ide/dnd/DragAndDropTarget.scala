@@ -12,11 +12,11 @@ import com.quane.little.ide.DropExpressionEvent
 trait DragAndDropTarget
         extends HighlightableComponent {
 
-    /** Returns true/false if the specified item can/cannot be dropped here,
+    /** Returns true/false if the specified getDragData can/cannot be dropped here,
       * respectively.
       *
       * @param item
-      * 		the drag and drop item
+      * 		the drag and drop getDragData
       */
     def accepts(item: DragAndDropItem): Boolean;
 

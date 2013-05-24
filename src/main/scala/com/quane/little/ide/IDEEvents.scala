@@ -7,7 +7,7 @@ import com.quane.little.ide.language.ExpressionController
 import scala.swing.Component
 import com.quane.little.ide.dnd.ToolType
 
-/* Drag and drop events are those fired when a user drags an item from the
+/* Drag and drop events are those fired when a user drags an getDragData from the
  * toolkit to the workspace.
  */
 abstract class DragAndDropEvent(val source: Component,

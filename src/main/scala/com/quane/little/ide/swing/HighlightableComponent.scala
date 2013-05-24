@@ -11,7 +11,7 @@ trait HighlightableComponent extends Component {
 
     border = DEFAULT_BORDER
     
-    /** Highlight the {@code WorkspacePanel} to indicate to the user an item
+    /** Highlight the {@code WorkspacePanel} to indicate to the user an getDragData
       * can be dropped on it.
       */
     def highlight {
