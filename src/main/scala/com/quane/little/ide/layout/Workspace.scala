@@ -36,7 +36,6 @@ class Workspace
 
 
   override def onDrop(pane: ExpressionPane[Expression[Any]]) {
-    println("Dropped a " + pane)
     getChildren.add(pane)
   }
 

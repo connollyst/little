@@ -17,13 +17,28 @@ object DnDTarget {
 
 }
 
-/**
- *
- * @author Sean Connolly
- */
+/** A drag and drop target trait specifies how [[com.quane.little.ide.Tools]]
+  * can be dragged onto workspace components.
+  *
+  * @author Sean Connolly
+  */
 trait DnDTarget
   extends Highlightable
   with Logging {
+
+
+  /** Can the getDragData be dropped here?
+    *
+    * @param item the drag and drop getDragData
+    */
+  def accepts(item: DragAndDropItem): Boolean
+
+  /** Handle a new [[com.quane.little.ide.layout.language.ExpressionPane]]
+    * being dropped.
+    *
+    * @param pane the pane that was dropped
+    */
+  def onDrop(pane: ExpressionPane[Expression[Any]])
 
   setOnDragOver(new EventHandler[DragEvent]() {
     def handle(event: DragEvent) {
@@ -31,8 +46,6 @@ trait DnDTarget
         val tool = getPaneType(event)
         if (accepts(tool.toolType)) {
           event.acceptTransferModes(TransferMode.COPY)
-        } else {
-          log.error(getClass.getSimpleName + " doesn't accept this!")
         }
       }
       event.consume()
@@ -88,18 +101,5 @@ trait DnDTarget
     event.getGestureSource != this &&
       event.getDragboard.hasContent(DnDTarget.Tool)
   }
-
-  /** Can the getDragData be dropped here?
-    *
-    * @param item the drag and drop getDragData
-    */
-  def accepts(item: DragAndDropItem): Boolean
-
-  /** Handle a new [[com.quane.little.ide.layout.language.ExpressionPane]]
-    * being dropped.
-    *
-    * @param pane the pane that was dropped
-    */
-  def onDrop(pane: ExpressionPane[Expression[Any]])
 
 }

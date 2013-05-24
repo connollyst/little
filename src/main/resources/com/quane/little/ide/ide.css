@@ -19,6 +19,14 @@
     -fx-border-color: null
 }
 
-.seaniscool {
-    -fx-background-color: red;
+.listener-pane {
+    -fx-background-color: #9fffeb;
+}
+
+.function-pane {
+    -fx-background-color: #b6ff82;
+}
+
+.setter-pane {
+    -fx-border-color: black;
 }

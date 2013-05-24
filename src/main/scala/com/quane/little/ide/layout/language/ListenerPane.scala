@@ -3,7 +3,9 @@ package com.quane.little.ide.layout.language
 import com.quane.little.language.{Expression, Scope}
 import com.quane.little.language.event.{LittleEvent, EventListener}
 import org.eintr.loglady.Logging
-import com.quane.little.ide.dnd.{GetterToolType, SetterToolType, DragAndDropItem}
+import com.quane.little.ide.dnd.{DnDTarget, GetterToolType, SetterToolType, DragAndDropItem}
+import javafx.scene.layout.VBox
+import com.quane.little.ide.CustomControl
 
 /** A listener panel is simply a specific type of {@link FunctionPane}.
   * That is, the UI for an event listener and a function behaves exactly the
@@ -14,7 +16,10 @@ import com.quane.little.ide.dnd.{GetterToolType, SetterToolType, DragAndDropItem
   * @author Sean Connolly
   */
 class ListenerPane(val event: LittleEvent)
-  extends ExpressionPane[EventListener]
+  extends VBox
+  with ExpressionPane[EventListener]
+  with CustomControl
+  with DnDTarget
   with Logging {
 
   // An event listener is just a function tied to an event, as such the event
@@ -22,24 +27,14 @@ class ListenerPane(val event: LittleEvent)
   // attached.
   private val functionPane = new FunctionPane
 
-  /** {@inheritDoc}
-    */
-  override def compile(scope: Scope): EventListener = {
-    log.info("Compiling: " + event.getClass.getSimpleName + " listener..")
-    val function = functionPane.compile(scope)
-    new EventListener(event, function)
-  }
+  override def fxml = "ListenerPane.fxml"
 
   /** Can the getDragData be dropped here?
     *
     * @param item the drag and drop getDragData
     */
-  def accepts(item: DragAndDropItem): Boolean = {
-    item match {
-      case SetterToolType => true
-      case GetterToolType => true
-      case _ => false
-    }
+  override def accepts(item: DragAndDropItem): Boolean = {
+    functionPane.accepts(item)
   }
 
   /** Handle a new [[com.quane.little.ide.layout.language.ExpressionPane]]
@@ -47,9 +42,15 @@ class ListenerPane(val event: LittleEvent)
     *
     * @param pane the pane that was dropped
     */
-  def onDrop(pane: ExpressionPane[Expression[Any]]) {
+  override def onDrop(pane: ExpressionPane[Expression[Any]]) {
     log.info("Accepting a " + pane)
     getChildren.add(pane)
+  }
+
+  override def compile(scope: Scope): EventListener = {
+    log.info("Compiling: " + event.getClass.getSimpleName + " listener..")
+    val function = functionPane.compile(scope)
+    new EventListener(event, function)
   }
 
 }

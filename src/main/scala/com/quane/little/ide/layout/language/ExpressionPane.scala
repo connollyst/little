@@ -16,15 +16,10 @@ import com.quane.little.ide.dnd.DnDTarget
   * @author Sean Connolly
   */
 trait ExpressionPane[+E <: Expression[Any]]
-  extends Pane
-  with DnDTarget {
+  extends Pane {
 
   def compile(scope: Scope): E
 
-  getStyleClass.add("seaniscool")
-
-  setMinSize(200, 200)
-  setMaxSize(200, 200)
-  setPrefSize(200, 200)
+  setMinSize(200, 100)
 
 }

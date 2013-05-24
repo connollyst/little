@@ -1,7 +1,7 @@
 package com.quane.little.ide
 
 import com.quane.little.language.event.LittleEvent
-import com.quane.little.ide.dnd.{EventToolType, ToolType}
+import com.quane.little.ide.dnd.{SetterToolType, EventToolType, ToolType}
 
 sealed trait Tools
 
@@ -55,6 +55,10 @@ object Tools {
   )
 
   val setters = Vector(
+    new Tool("Set String",
+      SetterToolType,
+      new SetterPaneFactory
+    )
   )
 
   val getters = Vector(

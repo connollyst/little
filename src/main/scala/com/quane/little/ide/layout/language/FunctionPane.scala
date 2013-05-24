@@ -4,34 +4,30 @@ import com.quane.little.language.{Expression, Scope, Function}
 import org.eintr.loglady.Logging
 import scala.collection.mutable.ListBuffer
 import com.quane.little.ide.language.ExpressionController
-import com.quane.little.ide.dnd.{GetterToolType, SetterToolType, DragAndDropItem}
-import com.quane.little.ide.StepAddedEvent
+import com.quane.little.ide.dnd.{DnDTarget, GetterToolType, SetterToolType, DragAndDropItem}
+import javafx.scene.layout.VBox
+import com.quane.little.ide.CustomControl
 
 /**
  *
  * @author Sean Connolly
  */
 class FunctionPane
-  extends ExpressionPane[Function]
+  extends VBox
+  with ExpressionPane[Function]
+  with CustomControl
+  with DnDTarget
   with Logging {
 
   val steps = new ListBuffer[ExpressionController[Expression[Any]]]()
 
-  def compile(scope: Scope): Function = {
-    log.info("Compiling: function..")
-    val fun = new Function(scope) // TODO scope will always be null, yeah?
-    steps.foreach(
-      step =>
-        fun.addStep(step.compile(fun))
-    );
-    fun
-  }
+  override def fxml = "FunctionPane.fxml"
 
   /** Can the getDragData be dropped here?
     *
     * @param item the drag and drop getDragData
     */
-  def accepts(item: DragAndDropItem): Boolean = {
+  override def accepts(item: DragAndDropItem): Boolean = {
     item match {
       case SetterToolType => true
       case GetterToolType => true
@@ -44,9 +40,17 @@ class FunctionPane
     *
     * @param pane the pane that was dropped
     */
-  def onDrop(pane: ExpressionPane[Expression[Any]]) {
+  override def onDrop(pane: ExpressionPane[Expression[Any]]) {
     log.info("Accepting a " + pane)
     getChildren.add(pane)
   }
 
+  override def compile(scope: Scope): Function = {
+    log.info("Compiling: function..")
+    val fun = new Function(scope) // TODO scope will always be null, yeah?
+    for (step <- steps) {
+      fun.addStep(step.compile(fun))
+    }
+    fun
+  }
 }
