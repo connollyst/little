@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import com.quane.little.ide.layout.Toolbox?>
 <?import com.quane.little.ide.layout.Workspace?>
 <?import javafx.geometry.Insets?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.layout.BorderPane?>
 <?import java.net.URL?>
-
+<?import com.quane.little.ide.controls.MenuBar?>
 <BorderPane id="root"
             maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="600.0" prefWidth="800.0"
             xmlns:fx="http://javafx.com/fxml"
             fx:controller="com.quane.little.ide.IDEController">
+    <top>
+        <MenuBar fx:id="menubar"/>
+    </top>
     <center>
         <Workspace fx:id="workspace" prefHeight="200.0" prefWidth="200.0"/>
     </center>
