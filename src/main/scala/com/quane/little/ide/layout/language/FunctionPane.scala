@@ -3,8 +3,7 @@ package com.quane.little.ide.layout.language
 import com.quane.little.language.{Expression, Scope, Function}
 import org.eintr.loglady.Logging
 import scala.collection.mutable.ListBuffer
-import com.quane.little.ide.language.ExpressionController
-import com.quane.little.ide.dnd.{DnDTarget, GetterToolType, SetterToolType, DragAndDropItem}
+import com.quane.little.ide.dnd.{DnDTarget, SetterToolType, DragAndDropItem}
 import javafx.scene.layout.VBox
 import com.quane.little.ide.CustomControl
 

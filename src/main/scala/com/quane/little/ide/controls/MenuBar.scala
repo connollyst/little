@@ -1,6 +1,6 @@
 package com.quane.little.ide.controls
 
-import com.quane.little.ide.CustomControl
+import com.quane.little.ide.{IDEFX, CustomControl}
 import javafx.fxml.FXML
 import org.eintr.loglady.Logging
 
@@ -17,7 +17,12 @@ class MenuBar
 
   @FXML
   def compile() {
-    log.error("TODO implement " + getClass + ".compile")
+    IDEFX.compile()
+  }
+
+  @FXML
+  def run() {
+    IDEFX.run()
   }
 
 }

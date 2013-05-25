@@ -15,9 +15,3 @@ object EventToolType extends ToolType
 object SetterToolType extends ToolType
 
 object GetterToolType extends ToolType
-
-object GetBoolToolType extends ToolType
-
-object GetNumberToolType extends ToolType
-
-object GetTextToolType extends ToolType
