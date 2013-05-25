@@ -1,6 +1,5 @@
 package com.quane.little.language.memory
 
-import com.quane.little.language.data.ValueTypeSafe
 import com.quane.little.language.Scope
 
 /** Represents a pointer to a variable in memory.<br/>
@@ -10,14 +9,12 @@ import com.quane.little.language.Scope
   * of a {@link Variable} at runtime.
   *
   * @param scope
-  * 		the scope of the variable
+  * the scope of the variable
   * @param variableName
-  * 		the name of the variable in memory, unique in scope
-  * @param valueClass
-  * 		the Class of the stored value (note: we are strongly typed)
+  * the name of the variable in memory, unique in scope
   *
   * @author Sean Connolly
   */
-class Pointer[V <: ValueTypeSafe](val scope: Scope, val variableName: String, val valueClass: Class[V])
+class Pointer(val scope: Scope, val variableName: String)
 
 // TODO if the constructor requires a value, we can avoid nulls!

@@ -56,17 +56,9 @@ object Tools {
   )
 
   val setters = Vector(
-    new Tool("Set Text",
+    new Tool("Set",
       SetterToolType,
-      new SetterPaneFactory[Text]
-    ),
-    new Tool("Set Number",
-      SetterToolType,
-      new SetterPaneFactory[Number]
-    ),
-    new Tool("Set True/False",
-      SetterToolType,
-      new SetterPaneFactory[Bool]
+      new SetterPaneFactory
     )
   )
 

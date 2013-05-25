@@ -3,7 +3,6 @@ package com.quane.little.ide.language
 import java.awt.Dimension
 import scala.swing.InternalFrame
 import org.eintr.loglady.Logging
-import com.quane.little.ide.StepAddedEvent
 
 class WorkspaceFrame(title: String, panel: FunctionPanel)
         extends InternalFrame
@@ -19,9 +18,4 @@ class WorkspaceFrame(title: String, panel: FunctionPanel)
 
     add(panel)
 
-    listenTo(panel)
-    reactions += {
-        case event: StepAddedEvent =>
-            pack
-    }
 }

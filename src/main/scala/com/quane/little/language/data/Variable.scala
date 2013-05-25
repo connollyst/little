@@ -4,4 +4,4 @@ package com.quane.little.language.data
   *
   * @author Sean Connolly
   */
-class Variable(val name: String, val value: ValueTypeSafe)
+class Variable(val name: String, val value: Value)

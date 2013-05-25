@@ -9,68 +9,52 @@ import org.eintr.loglady.Logging
 import com.quane.little.ide.DropExpressionEvent
 import com.quane.little.ide.dnd.{GetTextToolType, DragAndDropItem, DragAndDropTarget}
 import com.quane.little.ide.language.ExpressionPanel
-import com.quane.little.ide.GetTextStatementAddedEvent
-import com.quane.little.ide.language.statement.GetTextStatementController
 import javax.swing.BorderFactory
 
 trait TextPanel
-    extends ExpressionPanel
+  extends ExpressionPanel
 
 class TextFieldPanel
-        extends FlowPanel
-        with TextPanel {
+  extends FlowPanel
+  with TextPanel {
 
-    private val field = new TextField("", 16)
+  private val field = new TextField("", 16)
 
-    contents += field
+  contents += field
 
-    def value: String = field.text
+  def value: String = field.text
 
 }
 
 class TextExpressionPanel
-        extends BoxPanel(Orientation.Vertical)
-        with TextPanel
-        with DragAndDropTarget
-        with Logging {
+  extends BoxPanel(Orientation.Vertical)
+  with TextPanel
+  with DragAndDropTarget
+  with Logging {
 
-    val emptyLabel = new Label("Add")
-    emptyLabel.border = BorderFactory.createEmptyBorder(20, 20, 20, 20);
+  val emptyLabel = new Label("Add")
+  emptyLabel.border = BorderFactory.createEmptyBorder(20, 20, 20, 20);
 
-    contents += emptyLabel
+  contents += emptyLabel
 
-    def accepts(item: DragAndDropItem): Boolean = {
-        return item match {
-            case GetTextToolType => true
-            case _               => false
-        }
+  def accepts(item: DragAndDropItem): Boolean = {
+    return item match {
+      case GetTextToolType => true
+      case _ => false
     }
+  }
 
-    def onDrop(event: DropExpressionEvent): Unit = {
-        log.info("Accepting a " + event.toolType.getClass().getSimpleName())
-        event.toolType match {
-            case GetTextToolType =>
-                publishDropEvent(event)
-            case _ =>
-                log.warn("Cannot accept unrecognized tool type: " + event.toolType);
-        }
+  def onDrop(event: DropExpressionEvent): Unit = {
+    log.info("Accepting a " + event.toolType.getClass().getSimpleName())
+    event.toolType match {
+      case GetTextToolType =>
+        publishDropEvent(event)
+      case _ =>
+        log.warn("Cannot accept unrecognized tool type: " + event.toolType);
     }
+  }
 
-    private def publishDropEvent(event: DropExpressionEvent) = {
-        val controller = event.dropFunction()
-        controller match {
-            case foo: GetTextStatementController => {
-                contents.clear
-                contents += controller.view;
-                val x = event.point.x;
-                val y = event.point.y;
-                publish(
-                    new GetTextStatementAddedEvent(foo, event.toolType, x, y)
-                )
-                log.info("published GetTextStatementAddedEvent")
-            }
-            case _ =>
-                log.error("Cannot accept unrecognized controller: " + controller.getClass.getSimpleName)
-        }
-    }
+  private def publishDropEvent(event: DropExpressionEvent) = {
+    // deleted publish
+  }
 }

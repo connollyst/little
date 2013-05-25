@@ -1,6 +1,10 @@
 package com.quane.little.language.data
 
-class Value(val primitive: Any) {
+import com.quane.little.language.Expression
+
+class Value(val primitive: Any)
+  extends Expression[Value] {
+
 
   private val primitiveType: ValueType = {
     primitive match {
@@ -61,6 +65,12 @@ class Value(val primitive: Any) {
 
   def asText: String = primitive.toString
 
+  /** A value is an expression which evaluates to itself.
+    *
+    * @return this
+    */
+  def evaluate: Value = this
+
 }
 
 sealed trait ValueType
@@ -70,3 +80,14 @@ object BooleanValueType extends ValueType
 object IntValueType extends ValueType
 
 object StringValueType extends ValueType
+
+class Nada
+  extends Value(None) {
+
+  override def asBool: Boolean = false
+
+  override def asNumber: Int = 0
+
+  override def asText: String = "nada"
+
+}

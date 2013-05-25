@@ -5,5 +5,5 @@ import com.quane.little.language.Statement
 
 /** @author Sean Connolly
   */
-abstract class StatementController[S <: Statement[_]](override val view: StatementPanel)
+abstract class StatementController[S <: Statement](override val view: StatementPanel)
     extends ExpressionController[S](view)

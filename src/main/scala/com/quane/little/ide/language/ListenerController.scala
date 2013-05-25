@@ -3,13 +3,8 @@ package com.quane.little.ide.language
 import org.eintr.loglady.Logging
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.event.LittleEvent
-import com.quane.little.language.SetStatement
-import com.quane.little.language.Expression
-import com.quane.little.language.Function
 import com.quane.little.language.Scope
-import com.quane.little.language.data.Text
 import scala.swing.Reactor
-import com.quane.little.ide.StepAddedEvent
 
 class ListenerController(val event: LittleEvent, override val view: ListenerPanel)
         extends ExpressionController[EventListener](view)

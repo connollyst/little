@@ -11,8 +11,8 @@ import com.quane.little.language.data.ValueTypeSafe
   */
 class PointerController[V <: ValueTypeSafe](val view: PointerPanel, valueClass: Class[V]) {
 
-    def compile(scope: Scope): Pointer[V] = {
-        new Pointer(scope, view.variableName, valueClass)
+    def compile(scope: Scope): Pointer = {
+        new Pointer(scope, view.variableName)
     }
 
 }

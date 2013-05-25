@@ -4,8 +4,6 @@ import scala.swing.Reactor
 
 import org.eintr.loglady.Logging
 
-import com.quane.little.ide.GetBoolStatementAddedEvent
-import com.quane.little.ide.StepAddedEvent
 import com.quane.little.ide.language.ExpressionController
 import com.quane.little.language.Expression
 import com.quane.little.language.Scope
@@ -43,11 +41,4 @@ class BoolExpressionController(override val view: BoolExpressionPanel)
         expression.get.compile(scope);
     }
 
-    listenTo(view)
-    reactions += {
-        case event: GetBoolStatementAddedEvent =>
-            expression = Option(event.controller)
-        case event: StepAddedEvent =>
-            log.error("Does not react to posted event: " + event)
-    }
 }

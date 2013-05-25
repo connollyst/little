@@ -98,14 +98,4 @@ class WorkspaceController(val view: WorkspacePanel)
         eventListeners toList
     }
 
-    listenTo(view)
-    reactions += {
-        case event: FunctionAddedEvent =>
-            log.info("FunctionAddedEvent")
-            addFunctionFrame(event.controller, event.toolType, event.x, event.y)
-        case event: ListenerAddedEvent =>
-            log.info("ListenerAddedEvent")
-            addEventFrame(event.controller, event.toolType, event.x, event.y)
-    }
-
 }

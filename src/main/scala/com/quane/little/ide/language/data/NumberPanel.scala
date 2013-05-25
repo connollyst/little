@@ -9,10 +9,8 @@ import scala.swing.TextField
 import org.eintr.loglady.Logging
 
 import com.quane.little.ide.DropExpressionEvent
-import com.quane.little.ide.GetNumberStatementAddedEvent
 import com.quane.little.ide.dnd.{GetNumberToolType, DragAndDropItem, DragAndDropTarget}
 import com.quane.little.ide.language.ExpressionPanel
-import com.quane.little.ide.language.statement.GetNumberStatementController
 
 import javax.swing.BorderFactory
 
@@ -60,20 +58,6 @@ class NumberExpressionPanel
     }
 
     private def publishDropEvent(event: DropExpressionEvent) = {
-        val controller = event.dropFunction()
-        controller match {
-            case foo: GetNumberStatementController => {
-                contents.clear
-                contents += controller.view;
-                val x = event.point.x;
-                val y = event.point.y;
-                publish(
-                    new GetNumberStatementAddedEvent(foo, event.toolType, x, y)
-                )
-                log.info("published GetNumberStatementAddedEvent")
-            }
-            case _ =>
-                log.error("Cannot accept unrecognized controller: " + controller.getClass.getSimpleName)
-        }
+      // deleted publish
     }
 }

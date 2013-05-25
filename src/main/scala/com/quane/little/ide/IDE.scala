@@ -7,11 +7,10 @@ import scala.swing.SimpleSwingApplication
 import org.eintr.loglady.Logging
 import com.google.common.eventbus.EventBus
 import com.google.common.eventbus.Subscribe
-import com.quane.little.ide.dnd.DragAndDropEventListener
 
 object IDE extends SimpleSwingApplication {
 
-    // Set the window title in Mac 
+    // Set the window title in Mac
     System.setProperty("com.apple.mrj.application.apple.menu.about.name", "little");
 
     // TODO replace static event bus with dependency injection
@@ -29,16 +28,13 @@ object IDE extends SimpleSwingApplication {
 class BasePanel
         extends BorderPanel {
 
-    val toolkitPanel = new ToolkitPanel
     val workspace = new WorkspaceController(new WorkspacePanel)
     val toolbar = new ToolBar
 
-    layout(toolkitPanel) = BorderPanel.Position.West
     layout(workspace.view) = BorderPanel.Position.Center
     layout(toolbar) = BorderPanel.Position.South
 
     IDE.eventBus.register(new MenuBarListener(this))
-    IDE.eventBus.register(new DragAndDropEventListener)
 
 }
 

@@ -1,94 +1,56 @@
 package com.quane.little.language
 
 import org.eintr.loglady.Logging
-import com.quane.little.language.exceptions.GlassCastException
-import com.quane.little.language.data.Number
-import com.quane.little.language.data.ValueTypeSafe
-import com.quane.little.language.data.Variable
 import com.quane.little.language.memory.Pointer
-import com.quane.little.game.entity.Mob
-import com.quane.little.language.data.Text
-import com.quane.little.language.data.Bool
+import com.quane.little.language.data.{Value, Variable}
 
-abstract class Statement[T]
-    extends Expression[T]
+abstract class Statement
+  extends Expression[Value]
 
-class SetStatement[+V <: ValueTypeSafe](pointer: Pointer[V], value: Expression[V]) // TODO we need a compiler check that its the right value type..?
-        extends Statement[Unit]
-        with Logging {
+class SetStatement(pointer: Pointer, value: Expression[Value])
+  extends Statement
+  with Logging {
 
-    def evaluate {
-        val name = pointer.variableName
-        val valueClass = pointer.valueClass
-        val actualValue = value.evaluate
-        log.info("Setting '" + name + "' to " + valueClass.getSimpleName + "(" + actualValue.primitive + ")");
-        pointer.scope.save(new Variable(name, actualValue))
-        // TODO could return value!
-    }
+  def evaluate: Value = {
+    val name = pointer.variableName
+    val actualValue = value.evaluate
+    log.info("Setting '" + name + "' to " + actualValue.primitive)
+    pointer.scope.save(new Variable(name, actualValue))
+    actualValue
+  }
 
 }
 
-class SetSpeedStatement(scope: Scope, value: Expression[Number])
-    extends SetStatement(
-        new Pointer[Number](scope, Mob.VAR_SPEED, classOf[Number]),
-        value
-    );
+class GetStatement(pointer: Pointer)
+  extends Statement
+  with Logging {
 
-class SetDirectionStatement(scope: Scope, value: Expression[Number])
-    extends SetStatement[Number](
-        new Pointer[Number](scope, Mob.VAR_DIRECTION, classOf[Number]),
-        value
-    );
-
-abstract class GetStatement[V <: ValueTypeSafe](pointer: Pointer[V])
-        extends Statement[V]
-        with Logging {
-
-    def value: ValueTypeSafe = {
-        val name = pointer.variableName
-        log.info("Getting the value of '" + name + "'...");
-        val scope = pointer.scope
-        val clazz = pointer.valueClass
-        val variable = scope.fetch(name)
-        variable.value
-    }
+  def evaluate: Value = {
+    val name = pointer.variableName
+    log.info("Getting the value of '" + name + "'...")
+    val scope = pointer.scope
+    val variable = scope.fetch(name)
+    variable.value
+  }
 
 }
 
-class GetBoolStatement(pointer: Pointer[Bool])
-        extends GetStatement[Bool](pointer) {
+class PrintStatement(value: Expression[Value])
+  extends Statement
+  with Logging {
 
-    def evaluate: Bool = value.asBool
-
-}
-
-class GetNumberStatement(pointer: Pointer[Number])
-        extends GetStatement[Number](pointer) {
-
-    def evaluate: Number = value.asNumber
-
-}
-
-class GetTextStatement(pointer: Pointer[Text])
-        extends GetStatement[Text](pointer) {
-
-    def evaluate: Text = value.asText
-}
-
-class PrintStatement(text: Expression[ValueTypeSafe])
-        extends Statement[Unit]
-        with Logging {
-
-    def evaluate {
-        // TODO this should display a speech bubble over the guy
-        log.error(text toString); // TODO this is the Java toString, not ours!
-    }
+  def evaluate: Value = {
+    val text = value.evaluate
+    // TODO this should display a speech bubble over the guy
+    log.error(text.asText)
+    text
+  }
 
 }
 
 class ReturnStatement(name: String, scope: Scope)
-        extends Statement[Variable] {
+  extends Statement {
 
-    def evaluate: Variable = scope.fetch(name);
+  def evaluate: Value = scope.fetch(name).value
 
 }

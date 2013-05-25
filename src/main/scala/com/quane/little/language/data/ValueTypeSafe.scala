@@ -123,11 +123,11 @@ class Text(value: String)
     def asText: Text = this
 }
 
-class Nada
-        extends Expression[Nada]
+class NadaTypeSafe
+        extends Expression[NadaTypeSafe]
         with ValueTypeSafe {
 
-    def evaluate: Nada = this
+    def evaluate: NadaTypeSafe = this
     
     def primitive: Option[_] = None
 
