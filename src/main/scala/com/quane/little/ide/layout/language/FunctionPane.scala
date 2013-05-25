@@ -23,14 +23,13 @@ class FunctionPane
 
   override def fxml = "FunctionPane.fxml"
 
-  /** Can the getDragData be dropped here?
+  /** Can the item be dropped here?
     *
-    * @param item the drag and drop getDragData
+    * @param item the drag and drop item
     */
   override def accepts(item: DragAndDropItem): Boolean = {
     item match {
       case SetterToolType => true
-      case GetterToolType => true
       case _ => false
     }
   }

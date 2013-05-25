@@ -1,7 +1,7 @@
 package com.quane.little.ide
 
 import com.quane.little.language.event.LittleEvent
-import com.quane.little.ide.dnd.{SetterToolType, EventToolType, ToolType}
+import com.quane.little.ide.dnd.{GetterToolType, SetterToolType, EventToolType, ToolType}
 import com.quane.little.language.data.{Bool, Number, Text}
 
 sealed trait Tools
@@ -63,6 +63,10 @@ object Tools {
   )
 
   val getters = Vector(
+    new Tool("Get",
+      GetterToolType,
+      new GetterPaneFactory
+    )
   )
 
   val math = Vector(

@@ -3,7 +3,5 @@
 <?import com.quane.little.ide.controls.PointerField?>
 <?import com.quane.little.ide.controls.ValueField?>
 <fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml">
-    <PointerField fx:id="a"/>
-    <Label text="="/>
-    <ValueField fx:id="b"/>
+    <TextField fx:id="textField"/>
 </fx:root>

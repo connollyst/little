@@ -17,6 +17,13 @@ import javafx.scene.Node
 trait ExpressionPane[+E <: Expression[Any]]
   extends Node {
 
+  /** Generate the [[com.quane.little.language.Expression]] corresponding to
+    * this [[com.quane.little.ide.layout.language.ExpressionPane]] in the
+    * given [[com.quane.little.language.Scope]].
+    *
+    * @param scope the parent scope of the expression
+    * @return the expression
+    */
   def compile(scope: Scope): E
 
 }

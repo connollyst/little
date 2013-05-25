@@ -27,6 +27,10 @@ class Workspace
   private val listenerControllers = new
       ListBuffer[WorkspaceListenerFrameController]()
 
+  /** Can the item be dropped here?
+    *
+    * @param item the drag and drop item
+    */
   def accepts(item: DragAndDropItem): Boolean = {
     item match {
       case EventToolType => true

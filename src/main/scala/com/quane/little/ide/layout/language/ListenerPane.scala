@@ -30,9 +30,9 @@ class ListenerPane(val event: LittleEvent)
 
   override def fxml = "ListenerPane.fxml"
 
-  /** Can the getDragData be dropped here?
+  /** Can the item be dropped here?
     *
-    * @param item the drag and drop getDragData
+    * @param item the drag and drop item
     */
   override def accepts(item: DragAndDropItem): Boolean = {
     functionPane.accepts(item)
