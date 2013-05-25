@@ -5,6 +5,7 @@ import javafx.fxml.FXML
 import com.quane.little.ide.controls.MenuBar
 import org.eintr.loglady.Logging
 import javafx.scene.Group
+import com.google.common.eventbus.Subscribe
 
 /**
  *
@@ -39,16 +40,3 @@ class IDE
 
 }
 
-class MenuBarListener {
-
-  //  @Subscribe
-  //  def compileEvent(event: DoCompileEvent) {
-  //    IDEFX.compile()
-  //  }
-
-  //  @Subscribe
-  //  def runEvent(event: DoRunEvent) {
-  //    IDEFX.run();
-  //  }
-
-}
