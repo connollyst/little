@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>com.quane</groupId>
+        <artifactId>little</artifactId>
+        <version>0.0.4-SNAPSHOT</version>
+    </parent>
+
+    <artifactId>little-game</artifactId>
+	<packaging>pom</packaging>
+	<name>Little Game</name>
+
+	<properties>
+		<gdx.version>0.9.9-SNAPSHOT</gdx.version>
+		<android.version>4.1.1.4</android.version>
+		<android.maven.version>3.6.0</android.maven.version>
+		<gwt.version>2.5.0</gwt.version>
+		<gwt.maven.version>2.5.0</gwt.maven.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>gdx-nightlies</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+		</repository>
+	</repositories>
+
+	<profiles>
+		<profile>
+			<id>desktop</id>
+			<modules>
+				<module>desktop</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>android</id>
+			<modules>
+				<module>android</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>html</id>
+			<modules>
+				<module>html</module>
+			</modules>
+		</profile>
+		<profile>
+			<id>ios</id>
+			<modules>
+				<module>ios</module>
+			</modules>
+		</profile>
+	</profiles>
+
+	<modules>
+		<module>core</module>
+	</modules>
+</project>
