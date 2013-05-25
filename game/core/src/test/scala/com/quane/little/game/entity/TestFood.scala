@@ -1,14 +1,5 @@
 package com.quane.little.game.entity
 
-import org.junit.runner.RunWith
-import org.scalatest.BeforeAndAfter
-import org.scalatest.FunSuite
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.mock.MockitoSugar
-
-import com.quane.little.game.InteractionManager
-import com.quane.little.game.physics.bodies.EntityBody
-
 @RunWith(classOf[JUnitRunner])
 class TestFood
         extends FunSuite
