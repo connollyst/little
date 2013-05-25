@@ -1,14 +1,16 @@
 package com.quane.little.game
 
 import scala.collection.mutable.ListBuffer
-
-import org.eintr.loglady.Logging
-
 import com.quane.little.game.entity.Entity
 import com.quane.little.game.physics.PhysicsEngine
 
-class GameCleaner(game: Little, engine: PhysicsEngine)
-  extends Logging {
+/** The cleaner is responsible for removing entities from the game and the
+  * [[com.quane.little.game.physics.PhysicsEngine]]
+  *
+  * @param game the game
+  * @param engine the physics engine
+  */
+class LittleCleaner(game: Little, engine: PhysicsEngine) {
 
   val queue = new ListBuffer[Entity]
 

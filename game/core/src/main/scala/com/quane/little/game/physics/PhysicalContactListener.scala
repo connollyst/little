@@ -1,15 +1,10 @@
 package com.quane.little.game.physics
 
-import java.lang.Override
 import org.eintr.loglady.Logging
-import org.jbox2d.callbacks.ContactImpulse
-import org.jbox2d.callbacks.ContactListener
-import org.jbox2d.collision.Manifold
-import org.jbox2d.dynamics.Body
-import org.jbox2d.dynamics.contacts.Contact
 import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.entity.Entity
 import java.lang.Override
+import com.badlogic.gdx.physics.box2d._
 
 class GlassContactListener
         extends ContactListener

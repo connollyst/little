@@ -19,8 +19,6 @@
         <android.maven.version>3.6.0</android.maven.version>
         <gwt.version>2.5.0</gwt.version>
         <gwt.maven.version>2.5.0</gwt.maven.version>
-        <!-- TODO use Box2D wrapper in libGDX -->
-        <jbox2d.version>2.1.2.2</jbox2d.version>
     </properties>
 
     <repositories>
@@ -61,12 +59,4 @@
         <module>core</module>
     </modules>
 
-    <dependencies>
-        <!-- JBox2D: A Java Physics Engine -->
-        <dependency>
-            <groupId>org.jbox2d</groupId>
-            <artifactId>jbox2d-library</artifactId>
-            <version>${jbox2d.version}</version>
-        </dependency>
-    </dependencies>
 </project>

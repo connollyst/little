@@ -9,6 +9,10 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
   extends Entity(body, manager)
   with ImmovableEntity {
 
+  def w: Float = body.w
+
+  def h: Float = body.h
+
   override def touchedBy(other: Entity) {
     if (other.isGuy) {
       val mob = other.asInstanceOf[Mob]

@@ -5,7 +5,9 @@ import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
 import com.quane.little.game.{Little, InteractionManagerImpl}
-import com.quane.little.language.event.LittleEvent
+import com.quane.little.language.event.{EventListener, LittleEvent}
+import com.quane.little.language.Programs
+import com.quane.little.language.data.Value
 
 class EntityFactory(game: Little) {
 
@@ -22,31 +24,31 @@ class EntityFactory(game: Little) {
   def createMob: Mob = {
     val mob = new Mob(game.builder.buildBody(), manager)
     game.eventBus.report(mob, LittleEvent.OnSpawn)
-//    val speed = new Number(100)
-//    mob.operator.addEventListener(
-//      new EventListener(
-//        LittleEvent.OnSpawn,
-//        Programs.move(mob.operator, speed)
-//      )
-//    )
-//    mob.operator.addEventListener(
-//      new EventListener(
-//        LittleEvent.OnContact,
-//        Programs.turnRelative(mob.operator, 260)
-//      )
-//    )
-//    mob.operator.addEventListener(
-//      new EventListener(
-//        LittleEvent.OnFoodNearby,
-//        Programs.stop(mob.operator)
-//      )
-//    )
-//    mob.operator.addEventListener(
-//      new EventListener(
-//        LittleEvent.OnFoodConsumed,
-//        Programs.stop(mob.operator)
-//      )
-//    )
+    val speed = new Value(100)
+    mob.operator.addEventListener(
+      new EventListener(
+        LittleEvent.OnSpawn,
+        Programs.move(mob.operator, speed)
+      )
+    )
+    mob.operator.addEventListener(
+      new EventListener(
+        LittleEvent.OnContact,
+        Programs.turnRelative(mob.operator, 260)
+      )
+    )
+    mob.operator.addEventListener(
+      new EventListener(
+        LittleEvent.OnFoodNearby,
+        Programs.stop(mob.operator)
+      )
+    )
+    mob.operator.addEventListener(
+      new EventListener(
+        LittleEvent.OnFoodConsumed,
+        Programs.stop(mob.operator)
+      )
+    )
     mob
   }
 

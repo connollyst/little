@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.{GL10, Texture}
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
 import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
-import com.quane.little.game.entity.{Entity, EntityFactory}
+import com.quane.little.game.entity.{Mob, Entity, EntityFactory}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.game.view.LittleDrawer
 
@@ -18,15 +18,14 @@ class Little
 
   var elapsed: Float = 0
   var batch: SpriteBatch = _
-
-  val eventBus = new EventBus
-  val engine = new PhysicsEngine
-  val builder = new BodyBuilder(this, engine.world)
-  val drawer = new LittleDrawer
-  val cleaner = new GameCleaner(this, engine)
-  val entityFactory = new EntityFactory(this)
-  val entities = initEntities()
-  val players = entityFactory.createMobs(10)
+  var eventBus: EventBus = _
+  var engine: PhysicsEngine = _
+  var builder: BodyBuilder = _
+  var drawer: LittleDrawer = _
+  var cleaner: LittleCleaner = _
+  var entityFactory: EntityFactory = _
+  var entities: ListBuffer[Entity] = _
+  var players: List[Mob] = _
 
   def initEntities(): ListBuffer[Entity] = {
     val all = new ListBuffer[Entity]
@@ -36,8 +35,15 @@ class Little
   }
 
   override def create() {
-    drawer.create()
     batch = new SpriteBatch()
+    eventBus = new EventBus
+    engine = new PhysicsEngine
+    builder = new BodyBuilder(this, engine.world)
+    drawer = new LittleDrawer
+    cleaner = new LittleCleaner(this, engine)
+    entityFactory = new EntityFactory(this)
+    entities = initEntities()
+    players = entityFactory.createMobs(10)
   }
 
   override def resize(width: Int, height: Int) {}

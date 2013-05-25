@@ -10,8 +10,8 @@ public class LittleDesktop {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
 		config.title = "little";
 		config.useGL20 = true;
-		config.width = 800;
-		config.height = 480;
+		config.width = 1024;
+		config.height = 768;
 		new LwjglApplication(new Little(), config);
 	}
 
