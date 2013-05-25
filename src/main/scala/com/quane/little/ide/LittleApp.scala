@@ -13,7 +13,7 @@ import com.quane.little.ide.events.MenuBarEventListener
  *
  * @author Sean Connolly
  */
-object IDEFX
+object LittleApp
   extends JFXApp
   with Logging {
 
@@ -31,7 +31,7 @@ object IDEFX
   eventBus.register(new MenuBarEventListener(ide: IDE))
 
   // Set the window title in Mac
-  System.setProperty("com.apple.mrj.application.apple.menu.about.name", "little");
+  System.setProperty("com.apple.mrj.application.apple.menu.about.name", "little")
 
 
 }

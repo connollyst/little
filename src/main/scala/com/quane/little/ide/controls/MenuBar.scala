@@ -1,6 +1,6 @@
 package com.quane.little.ide.controls
 
-import com.quane.little.ide.{IDEFX, CustomControl}
+import com.quane.little.ide.{LittleApp, CustomControl}
 import javafx.fxml.FXML
 import org.eintr.loglady.Logging
 import com.quane.little.ide.events.{MenuBarDoRunEvent, MenuBarDoCompileEvent}
@@ -20,12 +20,12 @@ class MenuBar
 
   @FXML
   def compile() {
-    IDEFX.eventBus.post(new MenuBarDoCompileEvent)
+    LittleApp.eventBus.post(new MenuBarDoCompileEvent)
   }
 
   @FXML
   def run() {
-    IDEFX.eventBus.post(new MenuBarDoRunEvent)
+    LittleApp.eventBus.post(new MenuBarDoRunEvent)
   }
 
 }
