@@ -13,6 +13,11 @@
     <packaging>jar</packaging>
     <name>Little Core</name>
 
+    <properties>
+        <!-- TODO use Box2D wrapper in libGDX -->
+        <jbox2d.version>2.1.2.2</jbox2d.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -46,6 +51,13 @@
             <version>${gdx.version}</version>
         </dependency>
 
+        <!-- JBox2D: A Java Physics Engine -->
+        <dependency>
+            <groupId>org.jbox2d</groupId>
+            <artifactId>jbox2d-library</artifactId>
+            <version>${jbox2d.version}</version>
+        </dependency>
+
         <!-- Logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
@@ -57,6 +69,36 @@
             <groupId>org.eintr.loglady</groupId>
             <artifactId>loglady_${scala.level}</artifactId>
             <version>${loglady.version}</version>
+        </dependency>
+
+        <!-- Unit Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.level}</artifactId>
+            <version>${scalatest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scala-tools.testing</groupId>
+            <artifactId>specs</artifactId>
+            <version>${scalatest.specs.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- mockito: simpler & better mocking -->
+        <dependency>
+            <groupId>org.mockito</groupId>
+            <artifactId>mockito-all</artifactId>
+            <version>${mockito.version}</version>
+            <scope>test</scope>
         </dependency>
     </dependencies>
 

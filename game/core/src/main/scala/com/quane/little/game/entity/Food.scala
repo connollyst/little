@@ -1,11 +1,9 @@
 package com.quane.little.game.entity
 
-import org.newdawn.slick.Graphics
 import com.quane.little.game.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.view.GameDrawer
-import com.quane.little.game.EventBus
-import com.quane.little.language.event.LittleEvent
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class Food(body: EntityBody, manager: InteractionManager, val health: Int)
         extends Entity(body, manager) {
@@ -36,7 +34,7 @@ class Food(body: EntityBody, manager: InteractionManager, val health: Int)
         }
     }
 
-    def render(graphics: Graphics) {
+    def render(graphics: SpriteBatch) {
         GameDrawer.drawFood(graphics, this)
     }
 

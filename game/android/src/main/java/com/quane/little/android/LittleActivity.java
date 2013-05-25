@@ -1,6 +1,6 @@
 package com.quane.little.android;
 
-import com.quane.little.core.Little;
+import com.quane.little.game.Little;
 
 import android.os.Bundle;
 

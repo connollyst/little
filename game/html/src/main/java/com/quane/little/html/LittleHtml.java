@@ -1,6 +1,6 @@
 package com.quane.little.html;
 
-import com.quane.little.core.Little;
+import com.quane.little.game.Little;
 
 import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.backends.gwt.GwtApplication;

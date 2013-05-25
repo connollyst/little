@@ -1,13 +1,12 @@
 package com.quane.little.game.entity
 
 import com.quane.little.game.InteractionManager
-import org.newdawn.slick.Graphics
 import com.quane.little.game.view.GameDrawer
-import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.physics.bodies.EntityBody
 import org.eintr.loglady.Logging
 import com.quane.little.language.{Operable, Operator}
 import scala.util.Random
+import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class Mob(body: EntityBody, manager: InteractionManager)
   extends Entity(body, manager)
@@ -51,7 +50,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
     // TODO
   }
 
-  def render(graphics: Graphics) {
+  def render(graphics: SpriteBatch) {
     GameDrawer.drawMob(graphics, this)
   }
 

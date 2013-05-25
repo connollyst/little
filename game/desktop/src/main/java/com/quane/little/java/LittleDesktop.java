@@ -2,7 +2,7 @@ package com.quane.little.java;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import com.quane.little.core.Little;
+import com.quane.little.game.Little;
 
 public class LittleDesktop {
 

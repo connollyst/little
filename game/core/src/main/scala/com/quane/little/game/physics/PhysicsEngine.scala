@@ -36,8 +36,7 @@ class PhysicsEngine {
       * lower than the body is actually moving, a force is applied to slow it
       * down.
       *
-      * @param container
-      * @param graphics
+      * @param mob
       */
     def accelerateGuyToSpeed(mob: Mob) {
         // Translate the 'speed' change, if any, to an applied force

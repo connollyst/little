@@ -11,16 +11,16 @@ import org.jbox2d.dynamics.BodyType
 import org.jbox2d.dynamics.FixtureDef
 import org.jbox2d.dynamics.World
 
-import com.quane.little.game.Game
+import com.quane.little.game.Little
 
 object BodyBuilder {
 
-    val MOB_BODY_SIZE = 10;
-    val MOB_SENSOR_SIZE = 100;
+    val MOB_BODY_SIZE = 10
+    val MOB_SENSOR_SIZE = 100
 
 }
 
-class BodyBuilder(game: Game, world: World) {
+class BodyBuilder(game: Little, world: World) {
 
     def buildBody(): EntityBody = {
         val bodyShape = new CircleShape
