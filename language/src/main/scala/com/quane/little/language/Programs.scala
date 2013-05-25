@@ -3,7 +3,6 @@ package com.quane.little.language
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-import com.quane.little.game.entity.Mob
 import com.quane.little.language.data.{Value, Number}
 import com.quane.little.language.math.Addition
 import com.quane.little.language.math.RandomNumber
@@ -29,19 +28,19 @@ object Programs {
 
   def move(mob: Operator, speed: Expression[Value]): Function = {
     val fun = new Function(mob)
-    val pointer = new Pointer(fun, Mob.VAR_SPEED)
+    val pointer = new Pointer(fun, Operable.VAR_SPEED)
     fun.addStep(new SetStatement(pointer, speed))
   }
 
   def stop(mob: Operator): Function = {
     val fun = new Function(mob)
-    val pointer = new Pointer(fun, Mob.VAR_SPEED)
+    val pointer = new Pointer(fun, Operable.VAR_SPEED)
     fun.addStep(new SetStatement(pointer, new Value(0)))
   }
 
   def turn(mob: Operator, degrees: Expression[Value]): Function = {
     val fun = new Function(mob)
-    val pointer = new Pointer(fun, Mob.VAR_DIRECTION)
+    val pointer = new Pointer(fun, Operable.VAR_DIRECTION)
     fun.addStep(new SetStatement(pointer, degrees))
   }
 
@@ -53,14 +52,14 @@ object Programs {
     // TODO add a step to get a random number when evaluated
     val randomFun = new Function(mob)
 
-    val directionPointer = new Pointer(randomFun, Mob.VAR_DIRECTION)
+    val directionPointer = new Pointer(randomFun, Operable.VAR_DIRECTION)
     //            randomFun.addStep(new SetStatement(directionPointer, randomFun))
     null
   }
 
   def turnRelative(mob: Operator, degrees: Int): Function = {
     val relativelyFun = new Function(mob)
-    val dirPointer = new Pointer(relativelyFun, Mob.VAR_DIRECTION)
+    val dirPointer = new Pointer(relativelyFun, Operable.VAR_DIRECTION)
     val getCurrentDir = new GetStatement(dirPointer)
     val dirChange = new Value(degrees);
     val getNewDirection = new Addition(getCurrentDir, dirChange)
@@ -84,12 +83,10 @@ object Programs {
     fun.addStep(new SetStatement(homeYPointer, mob.y))
     // Step #3: Set speed to 10
     fun.addStep(move(mob, new Value(10)))
-    fun
   }
 
   def printDirection(mob: Operator): Function = {
     val fun = new Function(mob)
-    fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Mob.VAR_DIRECTION))))
-    fun
+    fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Operable.VAR_DIRECTION))))
   }
 }

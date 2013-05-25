@@ -20,11 +20,6 @@
         </developer>
     </developers>
 
-    <properties>
-        <scala.level>2.10</scala.level>
-        <scala.version>2.10.1</scala.version>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -44,5 +39,24 @@
         <module>game</module>
         <module>language</module>
     </modules>
+
+    <properties>
+        <scala.level>2.10</scala.level>
+        <scala.version>2.10.1</scala.version>
+        <guava.version>14.0.1</guava.version>
+        <junit.version>4.11</junit.version>
+        <mockito.version>1.9.5</mockito.version>
+        <scalatest.specs.version>1.4.4</scalatest.specs.version>
+        <scalatest.version>1.9.1</scalatest.version>
+    </properties>
+
+    <dependencies>
+        <!-- Guava: Google Core Libraries -->
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>${guava.version}</version>
+        </dependency>
+    </dependencies>
 
 </project>

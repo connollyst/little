@@ -8,9 +8,8 @@ import org.eintr.loglady.Logging
 import com.quane.little.language.data.{Value, Variable}
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.event.LittleEvent
-import com.quane.little.game.entity.Mob
 
-class Operator(mob: Mob)
+class Operator(mob: Operable)
   extends Scope
   with Logging {
 
@@ -22,7 +21,7 @@ class Operator(mob: Mob)
   def y: Value = new Value(mob.y toInt)
 
   def speed(speed: Int) {
-    mob.speed = Math.max(Mob.MIN_SPEED, Math.min(speed, Mob.MAX_SPEED))
+    mob.speed = Math.max(Operable.MIN_SPEED, Math.min(speed, Operable.MAX_SPEED))
   }
 
   def speed: Int = {
@@ -69,9 +68,9 @@ class Operator(mob: Mob)
   override def save(variable: Variable) {
     val name = variable.name
     log.info("Guy is saving " + name)
-    if (name.equals(Mob.VAR_SPEED)) {
+    if (name.equals(Operable.VAR_SPEED)) {
       speed(variable.value.asNumber)
-    } else if (name.equals(Mob.VAR_DIRECTION)) {
+    } else if (name.equals(Operable.VAR_DIRECTION)) {
       direction(variable.value)
     } else {
       // It's not a special variable, store it in normal memory
@@ -81,9 +80,9 @@ class Operator(mob: Mob)
 
   override def fetch(name: String): Variable = {
     log.info("Guy is returning " + name)
-    if (name.equals(Mob.VAR_SPEED)) {
+    if (name.equals(Operable.VAR_SPEED)) {
       new Variable(name, new Value(mob.speed))
-    } else if (name.equals(Mob.VAR_DIRECTION)) {
+    } else if (name.equals(Operable.VAR_DIRECTION)) {
       new Variable(name, new Value(mob.direction))
     } else {
       // It's not a special variable, fetch it from normal memory
