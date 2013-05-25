@@ -1,37 +1,41 @@
 package com.quane.little.ide
 
 
-import scalafx.application.JFXApp
-import scalafx.application.JFXApp.PrimaryStage
+import javafx.application.Application
 import com.google.common.eventbus.EventBus
 import org.eintr.loglady.Logging
 import com.quane.little.ide.layout.IDE
-import scalafx.scene.{Group, Scene}
+import javafx.scene.Scene
 import com.quane.little.ide.events.MenuBarEventListener
+import javafx.stage.Stage
 
 /**
  *
  * @author Sean Connolly
  */
-object LittleApp
-  extends JFXApp
+class LittleApp
+  extends Application
   with Logging {
 
-  val ide = new IDE
-  stage = new PrimaryStage {
-    title = "little"
-    width = 800
-    height = 600
-    scene = new Scene(new Group(ide))
+  override def start(primaryStage: Stage) {
+    val ide = new IDE
+    primaryStage.setTitle("little")
+    primaryStage.setWidth(800)
+    primaryStage.setHeight(600)
+    primaryStage.setScene(new Scene(ide))
+    primaryStage.show()
+    LittleApp.eventBus.register(new MenuBarEventListener(ide: IDE))
   }
+
+}
+
+object LittleApp {
 
   // TODO replace static event bus with dependency injection
   val eventBus = new EventBus
 
-  eventBus.register(new MenuBarEventListener(ide: IDE))
-
-  // Set the window title in Mac
-  System.setProperty("com.apple.mrj.application.apple.menu.about.name", "little")
-
+  def main(args: Array[String]) {
+    Application.launch(classOf[LittleApp], args: _*)
+  }
 
 }

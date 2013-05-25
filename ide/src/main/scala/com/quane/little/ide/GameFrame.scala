@@ -4,10 +4,8 @@ import java.awt.Dimension
 
 import scala.swing.Frame
 
-import org.newdawn.slick.CanvasGameContainer
 
 import com.quane.little.language.event.EventListener
-import com.quane.little.game.Game
 
 class GlassGameFrame
         extends Frame {
@@ -18,21 +16,22 @@ class GlassGameFrame
     preferredSize = new Dimension(1024, 768 + 24) // add 24 for the menu bar
 
     def run(eventListeners: List[EventListener]) {
-        val game = new Game()
-        eventListeners.foreach(
-            eventListener =>
-                // TODO not cool:
-                game.players foreach (
-                    player =>
-                        player.operator.addEventListener(eventListener)
-                )
-        )
-        val canvas = new CanvasGameContainer(game)
-        peer.getContentPane().add(canvas)
-        peer.pack()
-        peer.setVisible(true)
-        canvas.start()
-        canvas.requestFocus()
+      println("Nope.. doesn't exist.")
+//        val game = new Game()
+//        eventListeners.foreach(
+//            eventListener =>
+//                // TODO not cool:
+//                game.players foreach (
+//                    player =>
+//                        player.operator.addEventListener(eventListener)
+//                )
+//        )
+//        val canvas = new CanvasGameContainer(game)
+//        peer.getContentPane().add(canvas)
+//        peer.pack()
+//        peer.setVisible(true)
+//        canvas.start()
+//        canvas.requestFocus()
     }
 
 }
