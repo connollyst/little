@@ -2,6 +2,7 @@
 <?import javafx.scene.control.MenuItem?>
 <fx:root type="javafx.scene.control.MenuBar" xmlns:fx="http://javafx.com/fxml">
     <Menu text="File">
-        <MenuItem text="Compile"/>
+        <MenuItem text="Compile" onAction="#compile"/>
+        <MenuItem text="Run" onAction="#run"/>
     </Menu>
 </fx:root>

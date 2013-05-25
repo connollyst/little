@@ -17,12 +17,12 @@ class MenuBar
 
   @FXML
   def compile() {
-    IDEFX.compile()
+//    IDEFX.compile()
   }
 
   @FXML
   def run() {
-    IDEFX.run()
+//    IDEFX.run()
   }
 
 }
