@@ -7,6 +7,7 @@ import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.entity.{Entity, EntityFactory}
 import scala.collection.mutable.ListBuffer
+import com.quane.little.game.view.LittleDrawer
 
 /**
  *
@@ -16,12 +17,12 @@ class Little
   extends ApplicationListener {
 
   var elapsed: Float = 0
-  var texture: Texture = _
   var batch: SpriteBatch = _
 
   val eventBus = new EventBus
   val engine = new PhysicsEngine
   val builder = new BodyBuilder(this, engine.world)
+  val drawer = new LittleDrawer
   val cleaner = new GameCleaner(this, engine)
   val entityFactory = new EntityFactory(this)
   val entities = initEntities()
@@ -35,7 +36,7 @@ class Little
   }
 
   override def create() {
-    texture = new Texture(Gdx.files.internal("libgdx-logo.png"))
+    drawer.create()
     batch = new SpriteBatch()
   }
 
@@ -43,14 +44,14 @@ class Little
 
   override def render() {
     elapsed += Gdx.graphics.getDeltaTime
-    Gdx.gl.glClearColor(0, 0, 0, 0)
+    Gdx.gl.glClearColor(0, 0, 0.2f, 1)
     Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT)
     cleaner.cleanAll()
     engine.updateAll(players)
     eventBus.evaluateAll()
     batch.begin()
-    entities foreach (_.render(batch))
-    players foreach (_.render(batch))
+    entities foreach (_.render(batch, drawer))
+    players foreach (_.render(batch, drawer))
     batch.end()
   }
 

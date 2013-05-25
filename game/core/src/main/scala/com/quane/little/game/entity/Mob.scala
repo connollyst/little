@@ -1,7 +1,7 @@
 package com.quane.little.game.entity
 
 import com.quane.little.game.InteractionManager
-import com.quane.little.game.view.GameDrawer
+import com.quane.little.game.view.{LittleDrawer, GameDrawer}
 import com.quane.little.game.physics.bodies.EntityBody
 import org.eintr.loglady.Logging
 import com.quane.little.language.{Operable, Operator}
@@ -42,16 +42,16 @@ class Mob(body: EntityBody, manager: InteractionManager)
     log.error("TODO heal by " + amount)
   }
 
-  def touchedBy(other: Entity) {
+  override def touchedBy(other: Entity) {
     // TODO
   }
 
-  def approachedBy(other: Entity) {
+  override def approachedBy(other: Entity) {
     // TODO
   }
 
-  def render(graphics: SpriteBatch) {
-    GameDrawer.drawMob(graphics, this)
+  override def render(graphics: SpriteBatch, drawer: LittleDrawer) {
+    drawer.drawMob(graphics, this)
   }
 
 }

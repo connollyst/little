@@ -5,6 +5,7 @@ import java.util.UUID
 import com.quane.little.game.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.quane.little.game.view.LittleDrawer
 
 /** An entity, any object that exists in the game.
   *
@@ -38,6 +39,6 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager) {
 
   def approachedBy(other: Entity)
 
-  def render(graphics: SpriteBatch)
+  def render(graphics: SpriteBatch, drawer: LittleDrawer)
 
 }
