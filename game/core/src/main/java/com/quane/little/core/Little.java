@@ -7,6 +7,7 @@ import com.badlogic.gdx.ApplicationListener;
 import com.badlogic.gdx.Gdx;
 
 public class Little implements ApplicationListener {
+
 	Texture texture;
 	SpriteBatch batch;
 	float elapsed;
