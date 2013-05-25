@@ -1,19 +1,19 @@
-/target
+target
+game/android/target
+game/core/target
+game/desktop/target
+game/html/target
+game/ios/target
+ide/target
+language/target
 
 *.cache
 *.DS_Store
 *.prefs
 
 .idea/
-
 *.iml
 
 .classpath
-
-.classpath
-
 .project
-
-.settings/org.eclipse.jdt.core.prefs
-
-src/.DS_Store
+.settings
