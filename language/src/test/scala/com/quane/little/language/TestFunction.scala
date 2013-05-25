@@ -1,8 +1,5 @@
 package com.quane.little.language
 
-import org.junit.runner.RunWith
-import org.scalatest.FunSuite
-import org.scalatest.junit.JUnitRunner
 
 import com.quane.little.language.data.Value
 import com.quane.little.language.memory.Pointer

@@ -1,10 +1,6 @@
 package com.quane.little.language
 
-import org.junit.runner.RunWith
-import org.scalatest.FunSuite
-import org.scalatest.junit.JUnitRunner
 
-import com.quane.little.game.entity.Mob
 import com.quane.little.language.data.{Value, Number, Text, Variable}
 
 /** Tests for the [[com.quane.little.language.Operator]] class.
