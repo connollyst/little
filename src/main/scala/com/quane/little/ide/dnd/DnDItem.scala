@@ -1,14 +1,12 @@
 package com.quane.little.ide.dnd
 
-trait DragAndDropItem extends Serializable {
+trait DnDItem extends Serializable {
 
-  override def toString: String = {
-    getClass.getSimpleName
-  }
+  override def toString: String = getClass.getSimpleName
 
 }
 
-sealed trait ToolType extends DragAndDropItem
+sealed trait ToolType extends DnDItem
 
 object EventToolType extends ToolType
 

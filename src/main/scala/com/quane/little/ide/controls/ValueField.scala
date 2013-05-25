@@ -6,7 +6,7 @@ import com.quane.little.ide.layout.language.ExpressionPane
 import com.quane.little.language.{Expression, Scope}
 import javafx.scene.layout.HBox
 import com.quane.little.ide.CustomControl
-import com.quane.little.ide.dnd.{GetterToolType, DragAndDropItem, DnDTarget}
+import com.quane.little.ide.dnd.{GetterToolType, DnDItem, DnDTarget}
 import javafx.fxml.FXML
 
 /** A value field control wraps two different methods for providing a
@@ -52,7 +52,7 @@ class ValueField
     *
     * @param item the drag and drop item
     */
-  def accepts(item: DragAndDropItem): Boolean = item match {
+  def accepts(item: DnDItem): Boolean = item match {
     case GetterToolType => true
     case _ => false
   }

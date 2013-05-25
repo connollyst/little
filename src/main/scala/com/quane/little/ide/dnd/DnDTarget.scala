@@ -31,7 +31,7 @@ trait DnDTarget
     *
     * @param item the drag and drop item
     */
-  def accepts(item: DragAndDropItem): Boolean
+  def accepts(item: DnDItem): Boolean
 
   /** Handle a new [[com.quane.little.ide.layout.language.ExpressionPane]]
     * being dropped.

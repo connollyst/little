@@ -3,7 +3,7 @@ package com.quane.little.ide.layout.language
 import com.quane.little.language.{Expression, Scope}
 import com.quane.little.language.event.{LittleEvent, EventListener}
 import org.eintr.loglady.Logging
-import com.quane.little.ide.dnd.{DnDTarget, GetterToolType, SetterToolType, DragAndDropItem}
+import com.quane.little.ide.dnd.{DnDTarget, GetterToolType, SetterToolType, DnDItem}
 import javafx.scene.layout.VBox
 import com.quane.little.ide.CustomControl
 import javafx.fxml.FXML
@@ -34,7 +34,7 @@ class ListenerPane(val event: LittleEvent)
     *
     * @param item the drag and drop item
     */
-  override def accepts(item: DragAndDropItem): Boolean = {
+  override def accepts(item: DnDItem): Boolean = {
     functionPane.accepts(item)
   }
 

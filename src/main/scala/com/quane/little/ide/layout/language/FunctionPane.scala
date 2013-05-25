@@ -3,7 +3,7 @@ package com.quane.little.ide.layout.language
 import com.quane.little.language.{Expression, Scope, Function}
 import org.eintr.loglady.Logging
 import scala.collection.mutable.ListBuffer
-import com.quane.little.ide.dnd.{DnDTarget, SetterToolType, DragAndDropItem}
+import com.quane.little.ide.dnd.{DnDTarget, SetterToolType, DnDItem}
 import javafx.scene.layout.VBox
 import com.quane.little.ide.CustomControl
 
@@ -26,7 +26,7 @@ class FunctionPane
     *
     * @param item the drag and drop item
     */
-  override def accepts(item: DragAndDropItem): Boolean = {
+  override def accepts(item: DnDItem): Boolean = {
     item match {
       case SetterToolType => true
       case _ => false

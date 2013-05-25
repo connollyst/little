@@ -6,7 +6,7 @@ import com.quane.little.language.{Expression, Function}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.event.EventListener
 import org.eintr.loglady.Logging
-import com.quane.little.ide.dnd.{EventToolType, DragAndDropItem, DnDTarget}
+import com.quane.little.ide.dnd.{EventToolType, DnDItem, DnDTarget}
 import com.quane.little.ide.layout.language.{FunctionPane, ListenerPane, ExpressionPane}
 
 /**
@@ -28,7 +28,7 @@ class Workspace
     *
     * @param item the drag and drop item
     */
-  def accepts(item: DragAndDropItem): Boolean = {
+  def accepts(item: DnDItem): Boolean = {
     item match {
       case EventToolType => true
       case _ => false
