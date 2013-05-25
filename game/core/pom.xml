@@ -3,7 +3,7 @@
 				 xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
-		<groupId>com.quane</groupId>
+        <groupId>com.quane.little</groupId>
 		<artifactId>little-game</artifactId>
 		<version>0.0.4-SNAPSHOT</version>
 	</parent>
