@@ -13,11 +13,6 @@
     <packaging>jar</packaging>
     <name>Little Core</name>
 
-    <properties>
-        <!-- TODO use Box2D wrapper in libGDX -->
-        <jbox2d.version>2.1.2.2</jbox2d.version>
-    </properties>
-
     <build>
         <plugins>
             <plugin>
@@ -49,13 +44,6 @@
             <groupId>com.badlogicgames.gdx</groupId>
             <artifactId>gdx</artifactId>
             <version>${gdx.version}</version>
-        </dependency>
-
-        <!-- JBox2D: A Java Physics Engine -->
-        <dependency>
-            <groupId>org.jbox2d</groupId>
-            <artifactId>jbox2d-library</artifactId>
-            <version>${jbox2d.version}</version>
         </dependency>
 
         <!-- Logging -->
