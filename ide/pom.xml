@@ -5,16 +5,14 @@
     <parent>
         <groupId>com.quane.little</groupId>
         <artifactId>little-parent</artifactId>
-		<version>0.0.4-SNAPSHOT</version>
-	</parent>
+        <version>0.0.4-SNAPSHOT</version>
+    </parent>
 
-	<artifactId>little-ide</artifactId>
-	<packaging>jar</packaging>
-	<name>Little IDE</name>
+    <artifactId>little-ide</artifactId>
+    <packaging>jar</packaging>
+    <name>Little IDE</name>
 
     <properties>
-        <scala.level>2.10</scala.level>
-        <scala.version>2.10.1</scala.version>
         <slick2d.version>0.0.1</slick2d.version>
         <jbox2d.version>2.1.2.2</jbox2d.version>
         <lwjgl.version>2.9.1-SNAPSHOT</lwjgl.version>
