@@ -1,11 +1,10 @@
 package com.quane.little.ide.layout
 
-import com.quane.little.ide.{GlassGameFrame, CustomControl}
+import com.quane.little.ide.CustomControl
 import javafx.fxml.FXML
 import com.quane.little.ide.controls.MenuBar
 import org.eintr.loglady.Logging
 import javafx.scene.Group
-import com.google.common.eventbus.Subscribe
 
 /**
  *
@@ -35,7 +34,6 @@ class IDE
     log.info("Compiling..")
     val eventListeners = workspace.compileAllListeners
     log.info("Running..")
-    new GlassGameFrame().run(eventListeners)
   }
 
 }
