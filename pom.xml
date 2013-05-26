@@ -35,12 +35,13 @@
     </build>
 
     <modules>
-        <module>ide</module>
-        <module>game</module>
         <module>language</module>
+        <module>game</module>
+        <module>ide</module>
     </modules>
 
     <properties>
+        <gdx.version>0.9.9-SNAPSHOT</gdx.version>
         <scala.level>2.10</scala.level>
         <scala.version>2.10.1</scala.version>
         <guava.version>14.0.1</guava.version>
@@ -50,6 +51,8 @@
         <scalatest.version>1.9.1</scalatest.version>
         <logback.version>1.0.9</logback.version>
         <loglady.version>1.1.0</loglady.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     </properties>
 
     <dependencies>
@@ -60,5 +63,6 @@
             <version>${guava.version}</version>
         </dependency>
     </dependencies>
+
 
 </project>
