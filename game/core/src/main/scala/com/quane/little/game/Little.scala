@@ -6,7 +6,7 @@ import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.entity.{Mob, Entity, EntityFactory}
 import scala.collection.mutable.ListBuffer
-import com.quane.little.game.view.{ShapeDrawer, MeshDrawer, SpriteDrawer}
+import com.quane.little.game.view.{LineDrawer, ShapeDrawer, MeshDrawer, SpriteDrawer}
 
 /**
  *
@@ -19,6 +19,7 @@ class Little
   var engine: PhysicsEngine = _
   var builder: BodyBuilder = _
   var meshDrawer: MeshDrawer = _
+  var lineDrawer: LineDrawer = _
   var shapeDrawer: ShapeDrawer = _
   var spriteDrawer: SpriteDrawer = _
   var cleaner: LittleCleaner = _
@@ -38,6 +39,7 @@ class Little
     engine = new PhysicsEngine
     builder = new BodyBuilder(this, engine.world)
     meshDrawer = new MeshDrawer
+    lineDrawer = new LineDrawer
     shapeDrawer = new ShapeDrawer
     spriteDrawer = new SpriteDrawer
     cleaner = new LittleCleaner(this, engine)
@@ -51,6 +53,7 @@ class Little
   override def render() {
     updateState()
     renderBackground()
+    renderLines()
     renderShapes()
     renderSprites()
   }
@@ -71,6 +74,13 @@ class Little
     entities foreach (_.render(meshDrawer))
     players foreach (_.render(meshDrawer))
     meshDrawer.end()
+  }
+
+  private def renderLines() {
+    lineDrawer.begin()
+    entities foreach (_.render(lineDrawer))
+    players foreach (_.render(lineDrawer))
+    lineDrawer.end()
   }
 
   private def renderShapes() {
@@ -94,6 +104,7 @@ class Little
 
   override def dispose() {
     meshDrawer.dispose()
+    lineDrawer.dispose()
     shapeDrawer.dispose()
     spriteDrawer.dispose()
   }

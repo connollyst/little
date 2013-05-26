@@ -5,7 +5,7 @@ import java.util.UUID
 import com.quane.little.game.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
 import com.badlogic.gdx.graphics.g2d.SpriteBatch
-import com.quane.little.game.view.{ShapeDrawer, MeshDrawer, SpriteDrawer}
+import com.quane.little.game.view.{LineDrawer, ShapeDrawer, MeshDrawer, SpriteDrawer}
 
 /** An entity, any object that exists in the game.
   *
@@ -44,5 +44,7 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager) {
   def render(meshDrawer: MeshDrawer) {}
 
   def render(shapeDrawer: ShapeDrawer) {}
+
+  def render(lineDrawer: LineDrawer) {}
 
 }

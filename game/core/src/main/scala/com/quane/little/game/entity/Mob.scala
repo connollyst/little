@@ -1,7 +1,7 @@
 package com.quane.little.game.entity
 
 import com.quane.little.game.InteractionManager
-import com.quane.little.game.view.{MeshDrawer, SpriteDrawer}
+import com.quane.little.game.view.{LineDrawer, ShapeDrawer, SpriteDrawer}
 import com.quane.little.game.physics.bodies.EntityBody
 import org.eintr.loglady.Logging
 import com.quane.little.language.{Operable, Operator}
@@ -49,8 +49,12 @@ class Mob(body: EntityBody, manager: InteractionManager)
     // TODO
   }
 
-  override def render(spriteDrawer: SpriteDrawer) {
-    spriteDrawer.drawMob(this)
+  override def render(shapeDrawer: ShapeDrawer) {
+    shapeDrawer.drawMob(this)
+  }
+
+  override def render(lineDrawer: LineDrawer) {
+    lineDrawer.drawMob(this)
   }
 
 }
