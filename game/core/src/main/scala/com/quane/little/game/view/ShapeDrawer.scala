@@ -15,7 +15,7 @@ class ShapeDrawer {
 
   private val shapeRenderer = new ShapeRenderer()
 
-  private val wallColor = new Color(1, 1, 1, 1)
+  private val wallColor = new Color(1, 1, 1, 0.5f)
   private val mobSensorColor = new Color(1, 1, 1, 0.05f)
 
   def begin() {
