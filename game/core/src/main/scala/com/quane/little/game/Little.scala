@@ -65,7 +65,7 @@ class Little
   }
 
   private def renderBackground() {
-    Gdx.gl.glClearColor(0, 0, 0.2f, 1)
+    Gdx.gl.glClearColor(0, 0.62f, 0.89f, 1)
     Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT)
   }
 
