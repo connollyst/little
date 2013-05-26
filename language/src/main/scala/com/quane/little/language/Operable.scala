@@ -6,7 +6,7 @@ object Operable {
 
   val VAR_DIRECTION = "GuyDirection"
 
-  val MAX_SPEED = 10
+  val MAX_SPEED = 50
 
   val MIN_SPEED = 0
 

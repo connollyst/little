@@ -2,8 +2,7 @@ package com.quane.little.game.entity
 
 import com.quane.little.game.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
-import com.quane.little.game.view.{LittleDrawer, GameDrawer}
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.quane.little.game.view.{MeshDrawer, SpriteDrawer}
 
 class Food(body: EntityBody, manager: InteractionManager, val health: Int)
   extends Entity(body, manager) {
@@ -34,8 +33,8 @@ class Food(body: EntityBody, manager: InteractionManager, val health: Int)
     }
   }
 
-  override def render(graphics: SpriteBatch, drawer: LittleDrawer) {
-    drawer.drawFood(graphics, this)
+  override def render(spriteDrawer: SpriteDrawer) {
+    spriteDrawer.drawFood(this)
   }
 
 } 

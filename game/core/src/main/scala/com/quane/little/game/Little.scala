@@ -1,13 +1,12 @@
 package com.quane.little.game
 
 import com.badlogic.gdx.{Gdx, ApplicationListener}
-import com.badlogic.gdx.graphics.{GL10, Texture}
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
+import com.badlogic.gdx.graphics.GL10
 import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.entity.{Mob, Entity, EntityFactory}
 import scala.collection.mutable.ListBuffer
-import com.quane.little.game.view.LittleDrawer
+import com.quane.little.game.view.{ShapeDrawer, MeshDrawer, SpriteDrawer}
 
 /**
  *
@@ -16,12 +15,12 @@ import com.quane.little.game.view.LittleDrawer
 class Little
   extends ApplicationListener {
 
-  var elapsed: Float = 0
-  var batch: SpriteBatch = _
   var eventBus: EventBus = _
   var engine: PhysicsEngine = _
   var builder: BodyBuilder = _
-  var drawer: LittleDrawer = _
+  var meshDrawer: MeshDrawer = _
+  var shapeDrawer: ShapeDrawer = _
+  var spriteDrawer: SpriteDrawer = _
   var cleaner: LittleCleaner = _
   var entityFactory: EntityFactory = _
   var entities: ListBuffer[Entity] = _
@@ -35,11 +34,12 @@ class Little
   }
 
   override def create() {
-    batch = new SpriteBatch()
     eventBus = new EventBus
     engine = new PhysicsEngine
     builder = new BodyBuilder(this, engine.world)
-    drawer = new LittleDrawer
+    meshDrawer = new MeshDrawer
+    shapeDrawer = new ShapeDrawer
+    spriteDrawer = new SpriteDrawer
     cleaner = new LittleCleaner(this, engine)
     entityFactory = new EntityFactory(this)
     entities = initEntities()
@@ -49,22 +49,53 @@ class Little
   override def resize(width: Int, height: Int) {}
 
   override def render() {
-    elapsed += Gdx.graphics.getDeltaTime
-    Gdx.gl.glClearColor(0, 0, 0.2f, 1)
-    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT)
+    updateState()
+    renderBackground()
+    renderShapes()
+    renderSprites()
+  }
+
+  private def updateState() {
     cleaner.cleanAll()
     engine.updateAll(players)
     eventBus.evaluateAll()
-    batch.begin()
-    entities foreach (_.render(batch, drawer))
-    players foreach (_.render(batch, drawer))
-    batch.end()
   }
+
+  private def renderBackground() {
+    Gdx.gl.glClearColor(0, 0, 0.2f, 1)
+    Gdx.gl.glClear(GL10.GL_COLOR_BUFFER_BIT)
+  }
+
+  private def renderMeshes() {
+    meshDrawer.begin()
+    entities foreach (_.render(meshDrawer))
+    players foreach (_.render(meshDrawer))
+    meshDrawer.end()
+  }
+
+  private def renderShapes() {
+    shapeDrawer.begin()
+    entities foreach (_.render(shapeDrawer))
+    players foreach (_.render(shapeDrawer))
+    shapeDrawer.end()
+  }
+
+  private def renderSprites() {
+    spriteDrawer.begin()
+    entities foreach (_.render(spriteDrawer))
+    players foreach (_.render(spriteDrawer))
+    spriteDrawer.end()
+  }
+
 
   override def pause() {}
 
   override def resume() {}
 
-  override def dispose() {}
+  override def dispose() {
+    meshDrawer.dispose()
+    shapeDrawer.dispose()
+    spriteDrawer.dispose()
+  }
 
 }

@@ -29,7 +29,6 @@ class BodyBuilder(game: Little, world: World)
     val bodyDef = new BodyDef
     bodyDef.`type` = BodyType.DynamicBody
     bodyDef.angle = randomAngle
-    log.info("random angle: " + bodyDef.angle)
     bodyDef.position.set(randomX, randomY)
     bodyDef.allowSleep = false
     bodyDef.linearDamping = 0.2.toFloat

@@ -1,9 +1,8 @@
 package com.quane.little.game.entity
 
 import com.quane.little.game.InteractionManager
-import com.quane.little.game.view.{LittleDrawer, GameDrawer}
+import com.quane.little.game.view.ShapeDrawer
 import com.quane.little.game.physics.bodies.StaticBody
-import com.badlogic.gdx.graphics.g2d.SpriteBatch
 
 class WorldEdge(override val body: StaticBody, manager: InteractionManager)
   extends Entity(body, manager)
@@ -24,8 +23,8 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
     // TODO
   }
 
-  override def render(graphics: SpriteBatch, drawer: LittleDrawer) {
-    drawer.drawWall(graphics, this)
+  override def render(shapeDrawer: ShapeDrawer) {
+    shapeDrawer.drawWall(this)
   }
 
 }

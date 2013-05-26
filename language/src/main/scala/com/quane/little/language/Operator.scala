@@ -46,7 +46,9 @@ class Operator(mob: Operable)
   val eventListeners = new ListBuffer[EventListener]
 
   def addEventListener(eventListener: EventListener) {
-    log.info("Guy will listen for " + eventListener.event.getClass.getSimpleName + " events.")
+    log.debug(
+      "Guy will listen for " + eventListener.event.getClass.getSimpleName + " events."
+    )
     // TODO set the function's scope to this guy
     eventListener.function.scope = this
     eventListeners += eventListener
@@ -67,7 +69,7 @@ class Operator(mob: Operable)
 
   override def save(variable: Variable) {
     val name = variable.name
-    log.info("Guy is saving " + name)
+    log.debug("Guy is saving " + name)
     if (name.equals(Operable.VAR_SPEED)) {
       speed(variable.value.asNumber)
     } else if (name.equals(Operable.VAR_DIRECTION)) {
@@ -79,7 +81,7 @@ class Operator(mob: Operable)
   }
 
   override def fetch(name: String): Variable = {
-    log.info("Guy is returning " + name)
+    log.debug("Guy is returning " + name)
     if (name.equals(Operable.VAR_SPEED)) {
       new Variable(name, new Value(mob.speed))
     } else if (name.equals(Operable.VAR_DIRECTION)) {
