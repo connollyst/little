@@ -5,6 +5,7 @@ game/desktop/target
 game/html/target
 game/ios/target
 ide/target
+little-ide/target
 language/target
 
 *.cache
@@ -13,6 +14,8 @@ language/target
 
 .idea/
 *.iml
+
+*/rebel.xml
 
 .classpath
 .project
