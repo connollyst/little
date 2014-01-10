@@ -35,9 +35,10 @@
     </build>
 
     <modules>
-        <module>language</module>
-        <module>ide-jfx</module>
-        <module>game</module>
+        <module>little-language</module>
+        <module>little-ide-jfx</module>
+        <module>little-ide</module>
+        <module>little-game</module>
     </modules>
 
     <properties>
