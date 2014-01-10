@@ -1,12 +1,8 @@
 target
-game/android/target
-game/core/target
-game/desktop/target
-game/html/target
-game/ios/target
-ide/target
+little-game/core/target
+little-game/html/target
 little-ide/target
-language/target
+little-language/target
 
 *.cache
 *.DS_Store
@@ -15,8 +11,10 @@ language/target
 .idea/
 *.iml
 
-*/rebel.xml
+rebel.xml
 
 .classpath
 .project
 .settings
+
+little-ide/src/main/resources/rebel.xml
