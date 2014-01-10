@@ -8,9 +8,9 @@
         <version>0.0.4-SNAPSHOT</version>
     </parent>
 
-    <artifactId>little-ide</artifactId>
+    <artifactId>little-ide-jfk</artifactId>
     <packaging>jar</packaging>
-    <name>Little IDE</name>
+    <name>Little IDE (JavaFX)</name>
 
     <properties>
         <javafx.plugin.version>1.5</javafx.plugin.version>

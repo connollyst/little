@@ -36,7 +36,7 @@
 
     <modules>
         <module>language</module>
-        <module>ide</module>
+        <module>ide-jfx</module>
         <module>game</module>
     </modules>
 
