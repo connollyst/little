@@ -19,7 +19,7 @@
 
 	<dependencies>
 		<dependency>
-            <groupId>com.quane.little</groupId>
+            <groupId>${project.groupId}</groupId>
 			<artifactId>little-core</artifactId>
 			<version>${project.version}</version>
 		</dependency>
@@ -31,7 +31,7 @@
 		</dependency>
 
 		<dependency>
-            <groupId>com.quane.little</groupId>
+            <groupId>${project.groupId}</groupId>
 			<artifactId>little-core</artifactId>
 			<version>${project.version}</version>
 			<classifier>sources</classifier>
