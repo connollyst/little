@@ -8,9 +8,12 @@
   /* Include all the styles from the reindeer theme */
   @include reindeer;
 
+  /* Function */
   .l-function-head {
-    background-color: blue;
     height: 20px;
+    min-width: 100px;
+    border: 1px solid red;
+    background-color: orange;
   }
   .l-function-body {
 
@@ -20,10 +23,29 @@
     width: 10px;
   }
   .l-function-body-inner {
-    background-color: orange;
+    background-color: wheat;
   }
   .l-function-foot {
-    background-color: green;
+    height: 10px;
+    width: 100px;
+    border: 1px solid red;
+    background-color: orange;
+  }
+
+  /* Steps */
+  .l-step-list {
+  }
+
+  .l-step {
+  	min-width: 200px;
+  }
+  
+  .l-step-empty {
+    min-height: 10px;
+  }
+  
+  .l-step-empty:hover {
+  background-color: green;
   }
 
 }

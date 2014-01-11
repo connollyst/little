@@ -32,10 +32,10 @@ public class LittleFunctionWidget extends VerticalLayout {
 
 	private Component initFunctionBody() {
 		HorizontalLayout body = new HorizontalLayout();
-		Component bodyLeft = new Label("hi");
-		Component bodyInner = new VerticalLayout();
+		Component bodyLeft = new Label();
+		Component bodyInner = new LittleStepList();
+		bodyLeft.setHeight("100%");
 		bodyLeft.setStyleName(STYLE_BODY_LEFT);
-		bodyInner.setStyleName(STYLE_BODY_INNER);
 		body.addComponent(bodyLeft);
 		body.addComponent(bodyInner);
 		body.setStyleName(STYLE_BODY);
