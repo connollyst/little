@@ -1,6 +1,7 @@
 /* Import the reindeer theme. */
 /* This only allows us to use the mixins defined in it and does not add any styles by itself. */
 @import "../reindeer/reindeer.scss";
+@import "styles/littlestep.scss";
 
 /* This contains all of your theme. */
 /* If somebody wants to extend the theme she will include this mixin. */
@@ -37,9 +38,11 @@
   }
 
   .l-step {
+  /*
   	height: 20px;
   	min-width: 200px;
-  	background-color: blue; 
+  	background-color: blue;
+  */ 
   }
   
   .l-step-empty {

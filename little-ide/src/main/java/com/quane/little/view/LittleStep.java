@@ -1,13 +1,15 @@
 package com.quane.little.view;
 
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.CustomLayout;
 
-public class LittleStep extends HorizontalLayout {
+public class LittleStep extends CustomLayout {
 
+	private static final String TEMPLATE = "littlestep";
 	private static final String STYLE = "l-step";
 
 	public LittleStep() {
-		setStyleName(STYLE);
+		super(TEMPLATE);
+//		setStyleName(STYLE);
 	}
 
 }
