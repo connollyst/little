@@ -37,15 +37,19 @@
   }
 
   .l-step {
+  	height: 20px;
   	min-width: 200px;
+  	background-color: blue; 
   }
   
   .l-step-empty {
-    min-height: 10px;
+    height: 10px;
+  	min-width: 200px;
+  	background-color: wheat; 
   }
   
   .l-step-empty:hover {
-  background-color: green;
+  	background-color: green;
   }
 
 }
