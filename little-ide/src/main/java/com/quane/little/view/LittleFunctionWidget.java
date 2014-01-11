@@ -17,8 +17,6 @@ public class LittleFunctionWidget extends VerticalLayout {
 	private static final String STYLE_BODY_INNER = "l-function-body-inner";
 
 	public LittleFunctionWidget() {
-		setWidth("400px");
-		setHeight("200px");
 		setSpacing(false);
 		addComponent(initFunctionHeader());
 		addComponent(initFunctionBody());
@@ -29,7 +27,6 @@ public class LittleFunctionWidget extends VerticalLayout {
 		HorizontalLayout header = new HorizontalLayout();
 		header.setStyleName(STYLE_HEAD);
 		header.setSpacing(false);
-        header.setSizeFull();
 		return header;
 	}
 
@@ -39,20 +36,16 @@ public class LittleFunctionWidget extends VerticalLayout {
 		Component bodyInner = new VerticalLayout();
 		bodyLeft.setStyleName(STYLE_BODY_LEFT);
 		bodyInner.setStyleName(STYLE_BODY_INNER);
-        bodyLeft.setSizeFull();
-		bodyInner.setSizeUndefined();
 		body.addComponent(bodyLeft);
 		body.addComponent(bodyInner);
 		body.setStyleName(STYLE_BODY);
         body.setSpacing(false);
-        body.setSizeFull();
 		return body;
 	}
 
 	private Component initFunctionFooter() {
 		Component footer = new Label();
 		footer.setStyleName(STYLE_FOOT);
-        footer.setSizeFull();
 		return footer;
 	}
 }
