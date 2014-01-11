@@ -35,16 +35,22 @@
 
   /* Steps */
   .l-step-list {
+  	padding-left: 3px;
   }
   
   .l-step-empty {
-    height: 10px;
   	min-width: 200px;
-  	background-color: wheat; 
+    padding: 5px;
+    margin: 10px;
+    border: 1px dashed lightgrey;
+    color: #2e2e2e;
+    background-color: white;
+    
   }
   
   .l-step-empty:hover {
-  	background-color: green;
+    border-color: crimson;
+  	box-shadow: 0 0 0 4px white, 2px 1px 6px 4px rgba(10, 10, 0, 0.1);
   }
 
 }
