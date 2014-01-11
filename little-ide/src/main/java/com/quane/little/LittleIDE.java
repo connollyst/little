@@ -2,7 +2,7 @@ package com.quane.little;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.quane.little.view.LittleFunctionWidget;
+import com.quane.little.view.LittleFunction;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Sizeable;
@@ -45,8 +45,8 @@ public class LittleIDE extends UI {
 	protected void initWorkspace(HorizontalLayout workspace) {
 		// TODO initialize workspace
         workspace.setSpacing(true);
-		workspace.addComponent(new LittleFunctionWidget());
-		workspace.addComponent(new LittleFunctionWidget());
+		workspace.addComponent(new LittleFunction());
+		workspace.addComponent(new LittleFunction());
 	}
 
 }

@@ -1,7 +1,8 @@
-$bg-color: whitesmoke;
+$bg-color: #fff;
+$fg-color: #262626;
 $text-color: whitesmoke;
-$step-color: #262626;
 $border-color: crimson;
+
 $notch-male-width: 20px;
 $notch-male-height: 8px;
 $notch-male-height-half: $notch-male-height / 2;
@@ -29,7 +30,7 @@ $notch-width-difference-half: $notch-width-difference / 2;
   padding-right: $notch-indent * 2 + $notch-female-width;
   padding-left:  $notch-indent * 2 + $notch-female-width;
   color: $text-color;
-  background-color: $step-color;
+  background-color: $fg-color;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
@@ -50,7 +51,7 @@ $notch-width-difference-half: $notch-width-difference / 2;
   padding: 0;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
-  background-color: $step-color;
+  background-color: $fg-color;
   z-index: 5;
 }
 

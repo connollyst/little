@@ -5,10 +5,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * @author Sean Connolly
- */
-public class LittleFunctionWidget extends VerticalLayout {
+public class LittleFunction extends VerticalLayout {
 
 	private static final String STYLE_HEAD = "l-function-head";
 	private static final String STYLE_FOOT = "l-function-foot";
@@ -16,7 +13,7 @@ public class LittleFunctionWidget extends VerticalLayout {
 	private static final String STYLE_BODY_LEFT = "l-function-body-left";
 	private static final String STYLE_BODY_INNER = "l-function-body-inner";
 
-	public LittleFunctionWidget() {
+	public LittleFunction() {
 		setSpacing(false);
 		addComponent(initFunctionHeader());
 		addComponent(initFunctionBody());

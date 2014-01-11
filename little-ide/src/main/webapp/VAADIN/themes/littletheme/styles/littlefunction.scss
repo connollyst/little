@@ -1,17 +1,22 @@
+$bg-color: #fff;
+$fg-color: #262626;
+$text-color: whitesmoke;
+$border-color: crimson;
+
 .l-function-head {
 	height: 20px;
 	min-width: 100px;
-	border: 1px solid red;
-	background-color: orange;
+	border: 1px solid $border-color;
+	background-color: $fg-color;
 }
 
 .l-function-body {
-	
+	background-color: $bg-color;
 }
 
 .l-function-body-left {
-	background-color: red;
 	width: 10px;
+	background-color: $fg-color;
 }
 
 .l-function-body-inner {
@@ -21,6 +26,6 @@
 .l-function-foot {
 	height: 10px;
 	width: 100px;
-	border: 1px solid red;
-	background-color: orange;
+	border: 1px solid $border-color;
+	background-color: $fg-color;
 }
