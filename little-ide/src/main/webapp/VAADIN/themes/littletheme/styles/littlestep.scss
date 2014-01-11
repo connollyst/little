@@ -13,6 +13,15 @@ $notch-indent: 20px;
 $notch-width-difference: $notch-female-width - $notch-male-width;
 $notch-width-difference-half: $notch-width-difference / 2;
 
+.l-step {
+  /*
+  	height: 20px;
+  	min-width: 200px;
+  	background-color: blue;
+  */
+  overflow: visible !important;
+}
+  
 .step-container {
   position: relative;
   margin: 2px 0;
@@ -25,6 +34,7 @@ $notch-width-difference-half: $notch-width-difference / 2;
   -moz-border-radius: 6px;
   -webkit-border-radius: 6px;
   border-radius: 6px;
+  z-index: 1;
 }
 
 .step-container .step-notch-top-2 {
@@ -38,7 +48,7 @@ $notch-width-difference-half: $notch-width-difference / 2;
   border-top-left-radius: 5px;
   border-top-right-radius: 5px;
   background-color: $step-color;
-  z-index: 101;
+  z-index: 5;
 }
 
 .step-container .step-notch-bottom-2 {
@@ -52,7 +62,7 @@ $notch-width-difference-half: $notch-width-difference / 2;
   border-top-left-radius: 7px;
   border-top-right-radius: 7px;
   background-color: $bg-color;
-  z-index: 101;
+  z-index: 3;
 }
 
 .step-container.step-border {
@@ -70,7 +80,7 @@ $notch-width-difference-half: $notch-width-difference / 2;
   height: $notch-male-height + 2;
   width: $notch-male-width + 2;
   background-color: $border-color;
-  z-index: 100;
+  z-index: 4;
 }
 
 .step-container.step-border .step-notch-bottom-2.notch-border {
@@ -78,5 +88,5 @@ $notch-width-difference-half: $notch-width-difference / 2;
   left: $notch-indent - $notch-width-difference-half - 1;
   width: $notch-female-width + 2;
   background-color: $border-color;
-  z-index: 100;
+  z-index: 2;
 }

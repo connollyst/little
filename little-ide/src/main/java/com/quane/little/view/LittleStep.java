@@ -9,7 +9,7 @@ public class LittleStep extends CustomLayout {
 
 	public LittleStep() {
 		super(TEMPLATE);
-//		setStyleName(STYLE);
+		setStyleName(STYLE);
 	}
 
 }
