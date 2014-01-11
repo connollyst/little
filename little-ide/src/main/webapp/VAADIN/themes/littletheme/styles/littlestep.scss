@@ -3,14 +3,12 @@ $fg-color: #262626;
 $text-color: whitesmoke;
 $border-color: crimson;
 
+$notch-indent: 20px;
 $notch-male-width: 20px;
 $notch-male-height: 8px;
 $notch-male-height-half: $notch-male-height / 2;
-$notch-male-size: 20px;
 $notch-female-width: 25px;
 $notch-female-height: 10px;
-$notch-female-size: 30px;
-$notch-indent: 20px;
 $notch-width-difference: $notch-female-width - $notch-male-width;
 $notch-width-difference-half: $notch-width-difference / 2;
 

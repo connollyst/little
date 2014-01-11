@@ -11,7 +11,6 @@ public class LittleFunction extends VerticalLayout {
 	private static final String STYLE_FOOT = "l-function-foot";
 	private static final String STYLE_BODY = "l-function-body";
 	private static final String STYLE_BODY_LEFT = "l-function-body-left";
-	private static final String STYLE_BODY_INNER = "l-function-body-inner";
 
 	public LittleFunction() {
 		setSpacing(false);

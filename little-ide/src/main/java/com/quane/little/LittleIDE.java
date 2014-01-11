@@ -3,6 +3,8 @@ package com.quane.little;
 import javax.servlet.annotation.WebServlet;
 
 import com.quane.little.view.LittleFunction;
+import com.quane.little.view.LittleToolbox;
+import com.quane.little.view.LittleWorkspace;
 import com.vaadin.annotations.Theme;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Sizeable;
@@ -22,31 +24,12 @@ public class LittleIDE extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		initIDE();
-	}
-
-	protected void initIDE() {
 		HorizontalSplitPanel ide = new HorizontalSplitPanel();
 		ide.setSplitPosition(25, Sizeable.UNITS_PERCENTAGE);
 		ide.setSizeFull();
-		Layout left = new VerticalLayout();
-        HorizontalLayout right = new HorizontalLayout();
-		ide.addComponent(left);
-		ide.addComponent(right);
+		ide.addComponent(new LittleToolbox());
+		ide.addComponent(new LittleWorkspace());
 		setContent(ide);
-		initToolkit(left);
-		initWorkspace(right);
-	}
-
-	protected void initToolkit(Component toolkit) {
-		// TODO initialize toolkit
-	}
-
-	protected void initWorkspace(HorizontalLayout workspace) {
-		// TODO initialize workspace
-        workspace.setSpacing(true);
-		workspace.addComponent(new LittleFunction());
-		workspace.addComponent(new LittleFunction());
 	}
 
 }
