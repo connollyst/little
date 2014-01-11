@@ -18,7 +18,6 @@ public class LittleStepEmpty extends CssLayout {
 
 		@Override
 		public void layoutClick(LayoutClickEvent event) {
-			System.out.println("Adding a new step!");
 			LittleStepEmpty stepEmpty = LittleStepEmpty.this;
 			LittleStepList stepList = (LittleStepList) stepEmpty.getParent();
 			int stepCount = stepList.getComponentCount();

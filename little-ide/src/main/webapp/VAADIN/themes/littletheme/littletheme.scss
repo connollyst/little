@@ -1,56 +1,16 @@
 /* Import the reindeer theme. */
 /* This only allows us to use the mixins defined in it and does not add any styles by itself. */
 @import "../reindeer/reindeer.scss";
+
+/* Import the Little styles. */
+@import "styles/littlefunction.scss";
+@import "styles/littlesteplist.scss";
 @import "styles/littlestep.scss";
+@import "styles/littlestepempty.scss";
 
 /* This contains all of your theme. */
 /* If somebody wants to extend the theme she will include this mixin. */
 @mixin littletheme {
   /* Include all the styles from the reindeer theme */
   @include reindeer;
-
-  /* Function */
-  .l-function-head {
-    height: 20px;
-    min-width: 100px;
-    border: 1px solid red;
-    background-color: orange;
-  }
-  .l-function-body {
-
-  }
-  .l-function-body-left {
-    background-color: red;
-    width: 10px;
-  }
-  .l-function-body-inner {
-    background-color: wheat;
-  }
-  .l-function-foot {
-    height: 10px;
-    width: 100px;
-    border: 1px solid red;
-    background-color: orange;
-  }
-
-  /* Steps */
-  .l-step-list {
-  	padding-left: 3px;
-  }
-  
-  .l-step-empty {
-  	min-width: 200px;
-    padding: 5px;
-    margin: 10px;
-    border: 1px dashed lightgrey;
-    color: #2e2e2e;
-    background-color: white;
-    
-  }
-  
-  .l-step-empty:hover {
-    border-color: crimson;
-  	box-shadow: 0 0 0 4px white, 2px 1px 6px 4px rgba(10, 10, 0, 0.1);
-  }
-
 }
