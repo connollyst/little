@@ -17,12 +17,11 @@ $notch-width-difference-half: $notch-width-difference / 2;
   /*
   	height: 20px;
   	min-width: 200px;
-  	background-color: blue;
   */
   overflow: visible !important;
 }
   
-.step-container {
+.l-step-container {
   position: relative;
   margin: 2px 0;
   padding-top: $notch-female-height;
@@ -37,12 +36,16 @@ $notch-width-difference-half: $notch-width-difference / 2;
   z-index: 1;
 }
 
-.step-container .step-notch-top-2 {
+.l-step-container.l-step-border {
+  border: 1px solid $border-color;
+}
+
+.l-step-container .l-step-notch-top {
   position: absolute;
-  top: -1 * $notch-male-height-half;
+  top: -1 * $notch-male-height;
   left: $notch-indent;
   width: $notch-male-width;
-  height: $notch-male-height-half;
+  height: $notch-male-height;
   margin: 0;
   padding: 0;
   border-top-left-radius: 5px;
@@ -51,7 +54,17 @@ $notch-width-difference-half: $notch-width-difference / 2;
   z-index: 5;
 }
 
-.step-container .step-notch-bottom-2 {
+.l-step-container.l-step-border .l-step-notch-top.l-step-notch-border {
+  position: absolute;
+  top: -1 * $notch-male-height - 1;
+  left: $notch-indent - 1;
+  height: $notch-male-height + 1;
+  width: $notch-male-width + 2;
+  background-color: $border-color;
+  z-index: 4;
+}
+
+.l-step-container .l-step-notch-bottom {
   position: absolute;
   bottom: 0;
   left: $notch-indent - $notch-width-difference-half;
@@ -65,25 +78,12 @@ $notch-width-difference-half: $notch-width-difference / 2;
   z-index: 3;
 }
 
-.step-container.step-border {
-  border: 1px solid $border-color;
-}
-
-.step-container.step-border .step-notch-bottom-2 {
+.l-step-container.l-step-border .l-step-notch-bottom {
+  /* TODO this can all be simplified if we say steps always have a border*/
   margin-bottom: -1px;
 }
 
-.step-container.step-border .step-notch-top-2.notch-border {
-  position: absolute;
-  top: -1 * $notch-male-height - 3;
-  left: $notch-indent - 1;
-  height: $notch-male-height + 2;
-  width: $notch-male-width + 2;
-  background-color: $border-color;
-  z-index: 4;
-}
-
-.step-container.step-border .step-notch-bottom-2.notch-border {
+.l-step-container.l-step-border .l-step-notch-bottom.l-step-notch-border {
   bottom: 1px;
   left: $notch-indent - $notch-width-difference-half - 1;
   width: $notch-female-width + 2;

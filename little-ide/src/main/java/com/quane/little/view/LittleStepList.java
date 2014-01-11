@@ -8,6 +8,10 @@ public class LittleStepList extends VerticalLayout {
 
 	public LittleStepList() {
 		setStyleName(STYLE);
+		addComponent(new LittleStep());
+		addComponent(new LittleStep());
+		addComponent(new LittleStep());
+		addComponent(new LittleStep());
 		initEmptyStep();
 	}
 
