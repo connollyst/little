@@ -17,4 +17,6 @@ rebel.xml
 .project
 .settings
 
-little-ide/src/main/resources/rebel.xml
+*.cache.js
+*.symbolmap
+gwt-unitCache
