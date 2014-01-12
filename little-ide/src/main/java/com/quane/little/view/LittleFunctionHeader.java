@@ -1,14 +1,10 @@
 package com.quane.little.view;
 
-import com.quane.little.view.window.LittleFunctionArgumentWindow;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.UI;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Window;
 
 public class LittleFunctionHeader extends HorizontalLayout {
 
@@ -23,7 +19,7 @@ public class LittleFunctionHeader extends HorizontalLayout {
 
 	public LittleFunctionHeader(String functionName) {
 		setStyleName(STYLE);
-		setSpacing(false);
+		setSpacing(true);
 		initNameField(functionName);
 		initAddArgumentButton();
 	}
@@ -37,10 +33,14 @@ public class LittleFunctionHeader extends HorizontalLayout {
 
 	protected void initAddArgumentButton() {
 		Button addArgumentButton = new Button("+");
-		addArgumentButton.addClickListener(new Button.ClickListener() {
+		addArgumentButton.addClickListener(new ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				UI.getCurrent().addWindow(new LittleFunctionArgumentWindow());
+				LittleFunctionHeader header = LittleFunctionHeader.this;
+				int children = header.getComponentCount();
+				header.addComponent(new LittleArgument(), children - 1);
+				// UI.getCurrent().addWindow(new
+				// LittleFunctionArgumentWindow());
 			}
 		});
 		addComponent(addArgumentButton);

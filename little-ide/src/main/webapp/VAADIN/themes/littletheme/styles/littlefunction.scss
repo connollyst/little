@@ -20,7 +20,11 @@ $border-radius-small: 2px;
 .l-function-head-name {
 	
 }
-	
+
+.l-function-argument {
+	color: $text-color;
+}
+
 .l-function-body {
 	background-color: $bg-color;
 }
