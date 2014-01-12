@@ -5,7 +5,7 @@ import com.vaadin.ui.VerticalLayout;
 
 public class LittleStepList extends VerticalLayout {
 
-	public static final String STYLE = "l-step-list";
+	private static final String STYLE = "l-step-list";
 
 	public LittleStepList() {
 		setStyleName(STYLE);

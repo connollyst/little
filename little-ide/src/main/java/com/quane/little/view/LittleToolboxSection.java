@@ -1,6 +1,9 @@
 package com.quane.little.view;
 
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.DragAndDropWrapper;
+import com.vaadin.ui.DragAndDropWrapper.DragStartMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -13,19 +16,26 @@ public class LittleToolboxSection extends VerticalLayout {
 		setStyleName(STYLE);
 	}
 
+	public static DragAndDropWrapper draggable(Component component) {
+		DragAndDropWrapper dnd = new DragAndDropWrapper(component);
+		dnd.setDragStartMode(DragStartMode.COMPONENT);
+		dnd.setSizeUndefined();
+		return dnd;
+	}
+
 	public static LittleToolboxSection getMotionSection() {
-		LittleToolboxSection motionSection = new LittleToolboxSection();
-		motionSection.addComponent(new LittleStep("move forward"));
-		motionSection.addComponent(new LittleStep("move backward"));
-		motionSection.addComponent(new LittleToolboxSectionSeparator());
-		motionSection.addComponent(new LittleStep("turn clockwise"));
-		motionSection.addComponent(new LittleStep("turn counter clockwise"));
-		motionSection.addComponent(new LittleStep("turn toward"));
-		motionSection.addComponent(new LittleStep("turn away from"));
-		motionSection.addComponent(new LittleToolboxSectionSeparator());
-		motionSection.addComponent(new LittleStep("change x by"));
-		motionSection.addComponent(new LittleStep("change y by"));
-		return motionSection;
+		LittleToolboxSection motion = new LittleToolboxSection();
+		motion.addComponent(draggable(new LittleStep("move forward")));
+		motion.addComponent(draggable(new LittleStep("move backward")));
+		motion.addComponent(draggable(new LittleToolboxSectionSeparator()));
+		motion.addComponent(draggable(new LittleStep("turn clockwise")));
+		motion.addComponent(draggable(new LittleStep("turn counter clockwise")));
+		motion.addComponent(draggable(new LittleStep("turn toward")));
+		motion.addComponent(draggable(new LittleStep("turn away from")));
+		motion.addComponent(draggable(new LittleToolboxSectionSeparator()));
+		motion.addComponent(draggable(new LittleStep("change x by")));
+		motion.addComponent(draggable(new LittleStep("change y by")));
+		return motion;
 	}
 
 	public static LittleToolboxSection SENSING = new LittleToolboxSection();
