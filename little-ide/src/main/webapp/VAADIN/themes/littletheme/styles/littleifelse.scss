@@ -1,0 +1,47 @@
+$bg-color: #fff;
+$fg-color: #262626;
+$text-color: whitesmoke;
+$border-color: grey;
+
+$border-radius-big: 5px;
+$border-radius-small: 2px;
+
+.l-if {
+	
+}
+
+.l-if-head,
+.l-if-else-head {
+	padding: 5px 10px;
+	min-width: 100px;
+	color: $text-color;
+	background-color: $fg-color;
+	border-left: 1px solid $border-color;
+	border-top-right-radius: $border-radius-big;
+	border-bottom-right-radius: $border-radius-small;
+}
+.l-if-head {
+}
+
+.l-if-else-head {
+}
+
+.l-if-body {
+	background-color: $bg-color;
+}
+
+.l-if-body-left {
+	width: 10px;
+	background-color: $fg-color;
+	border-left: 1px solid $border-color;
+}
+
+.l-if-foot {
+	height: 10px;
+	width: 100px;
+	background-color: $fg-color;
+	border-left: 1px solid $border-color;
+	border-top-right-radius: $border-radius-small;
+	border-bottom-left-radius: $border-radius-big;
+	border-bottom-right-radius: $border-radius-big;
+}
