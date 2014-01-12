@@ -73,11 +73,11 @@ public class LittleIfElse extends VerticalLayout {
 	}
 
 	public void addThenStep(Component component) {
-		thenStepList.addStep(component);
+		thenStepList.addComponent(component);
 	}
 
 	public void addElseStep(Component component) {
-		elseStepList.addStep(component);
+		elseStepList.addComponent(component);
 	}
 
 	private class LittleIfHeader extends HorizontalLayout {

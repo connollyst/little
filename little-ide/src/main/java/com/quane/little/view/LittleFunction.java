@@ -47,13 +47,13 @@ public class LittleFunction extends VerticalLayout {
 	}
 
 	private void initMockData(LittleStepList stepList) {
-		stepList.addStep(new LittleStep("point toward [location]"));
-		stepList.addStep(new LittleStep("move forward [1]"));
+		stepList.addComponent(new LittleStep("point toward [location]"));
+		stepList.addComponent(new LittleStep("move forward [1]"));
 		LittleIfElse ifElse = new LittleIfElse("touching [location]");
 		ifElse.addThenStep(new LittleStep("done"));
 		ifElse.addElseStep(new LittleStep("<move toward [location]>"));
-		stepList.addStep(ifElse);
-		stepList.addStep(new LittleStep("done"));
+		stepList.addComponent(ifElse);
+		stepList.addComponent(new LittleStep("done"));
 	}
 
 	private static final class LittleFunctionHeader extends HorizontalLayout {
