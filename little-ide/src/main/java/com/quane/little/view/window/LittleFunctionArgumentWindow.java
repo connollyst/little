@@ -1,7 +1,8 @@
 package com.quane.little.view.window;
 
 import com.quane.little.ide.model.FunctionArgumentDefinition;
-import com.quane.little.view.ArgumentTypeOptionGroup;
+import com.quane.little.ide.model.FunctionArgumentType;
+import com.quane.little.view.LittleArgumentTypeOptionGroup;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.OptionGroup;
@@ -11,6 +12,8 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class LittleFunctionArgumentWindow extends Window {
+
+	private static final String WIDTH = "300px";
 
 	private final FunctionArgumentDefinition argument;
 
@@ -26,6 +29,7 @@ public class LittleFunctionArgumentWindow extends Window {
 	protected void initWindow() {
 		initArgumentForm();
 		setCaption("New Argument");
+		setWidth(WIDTH);
 		center();
 	}
 
@@ -34,8 +38,11 @@ public class LittleFunctionArgumentWindow extends Window {
 		final TextField nameField = new TextField("Name:", argument.getName());
 		final TextArea descField = new TextArea("Description:",
 				argument.getDescription());
-		final ArgumentTypeOptionGroup typeOptions = new ArgumentTypeOptionGroup(
+		final LittleArgumentTypeOptionGroup typeOptions = new LittleArgumentTypeOptionGroup(
 				"Type:");
+		nameField.setSizeFull();
+		descField.setSizeFull();
+		typeOptions.setValue(FunctionArgumentType.BOOLEAN);
 		form.setMargin(true);
 		form.addComponent(nameField);
 		form.addComponent(descField);

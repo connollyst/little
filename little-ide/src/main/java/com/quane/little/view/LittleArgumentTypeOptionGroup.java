@@ -5,9 +5,9 @@ import java.util.Arrays;
 import com.quane.little.ide.model.FunctionArgumentType;
 import com.vaadin.ui.OptionGroup;
 
-public class ArgumentTypeOptionGroup extends OptionGroup {
+public class LittleArgumentTypeOptionGroup extends OptionGroup {
 
-	public ArgumentTypeOptionGroup(String caption) {
+	public LittleArgumentTypeOptionGroup(String caption) {
 		super(caption, Arrays.asList(FunctionArgumentType.values()));
 	}
 
