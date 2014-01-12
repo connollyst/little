@@ -2,17 +2,18 @@ package com.quane.little;
 
 import javax.servlet.annotation.WebServlet;
 
-import com.quane.little.view.LittleFunction;
 import com.quane.little.view.LittleToolbox;
 import com.quane.little.view.LittleWorkspace;
 import com.vaadin.annotations.Theme;
+import com.vaadin.annotations.Title;
 import com.vaadin.annotations.VaadinServletConfiguration;
 import com.vaadin.server.Sizeable;
 import com.vaadin.server.VaadinRequest;
 import com.vaadin.server.VaadinServlet;
-import com.vaadin.ui.*;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.UI;
 
+@Title("Little")
 @Theme("littletheme")
 @SuppressWarnings("serial")
 public class LittleIDE extends UI {
