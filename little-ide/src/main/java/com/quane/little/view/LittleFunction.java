@@ -1,6 +1,7 @@
 package com.quane.little.view;
 
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -33,7 +34,7 @@ public class LittleFunction extends VerticalLayout {
 	}
 
 	private Component initFunctionFooter() {
-		Component footer = new Label();
+		Component footer = new CssLayout();
 		footer.setStyleName(STYLE_FOOT);
 		return footer;
 	}
