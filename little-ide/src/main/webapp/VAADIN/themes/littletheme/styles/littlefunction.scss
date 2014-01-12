@@ -7,7 +7,8 @@ $border-radius-big: 5px;
 $border-radius-small: 2px;
 
 .l-function-head {
-	height: 20px;
+	padding: 10px;
+	min-height: 20px;
 	min-width: 100px;
 	background-color: $fg-color;
 	border-left: 1px solid $border-color;
@@ -16,6 +17,10 @@ $border-radius-small: 2px;
 	border-bottom-right-radius: $border-radius-small;
 }
 
+.l-function-head-name {
+	
+}
+	
 .l-function-body {
 	background-color: $bg-color;
 }

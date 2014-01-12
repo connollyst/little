@@ -7,23 +7,15 @@ import com.vaadin.ui.VerticalLayout;
 
 public class LittleFunction extends VerticalLayout {
 
-	private static final String STYLE_HEAD = "l-function-head";
 	private static final String STYLE_FOOT = "l-function-foot";
 	private static final String STYLE_BODY = "l-function-body";
 	private static final String STYLE_BODY_LEFT = "l-function-body-left";
 
-	public LittleFunction() {
+	public LittleFunction(String functionName) {
 		setSpacing(false);
-		addComponent(initFunctionHeader());
+		addComponent(new LittleFunctionHeader(functionName));
 		addComponent(initFunctionBody());
 		addComponent(initFunctionFooter());
-	}
-
-	private Component initFunctionHeader() {
-		HorizontalLayout header = new HorizontalLayout();
-		header.setStyleName(STYLE_HEAD);
-		header.setSpacing(false);
-		return header;
 	}
 
 	private Component initFunctionBody() {
@@ -35,7 +27,7 @@ public class LittleFunction extends VerticalLayout {
 		body.addComponent(bodyLeft);
 		body.addComponent(bodyInner);
 		body.setStyleName(STYLE_BODY);
-        body.setSpacing(false);
+		body.setSpacing(false);
 		return body;
 	}
 
