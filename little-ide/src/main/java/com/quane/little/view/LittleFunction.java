@@ -1,16 +1,23 @@
 package com.quane.little.view;
 
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 
 public class LittleFunction extends VerticalLayout {
 
-	private static final String STYLE_BODY = "l-function-body";
-	private static final String STYLE_BODY_LEFT = "l-function-body-left";
-	private static final String STYLE_FOOT = "l-function-foot";
+	private static final String STYLE = "l-function";
+	private static final String STYLE_BODY = STYLE + "-body";
+	private static final String STYLE_BODY_LEFT = STYLE + "-body-left";
+	private static final String STYLE_FOOT = STYLE + "-foot";
+	private static final String STYLE_HEAD = STYLE + "-head";
+	private static final String STYLE_HEAD_NAME_FIELD = STYLE_HEAD + "-name";
 
 	public LittleFunction(String functionName) {
 		setSpacing(false);
@@ -47,5 +54,44 @@ public class LittleFunction extends VerticalLayout {
 		ifElse.addElseStep(new LittleStep("<move toward [location]>"));
 		stepList.addStep(ifElse);
 		stepList.addStep(new LittleStep("done"));
+	}
+
+	private static final class LittleFunctionHeader extends HorizontalLayout {
+
+		// TODO should be a label that, when clicked, becomes a text field
+
+		public LittleFunctionHeader() {
+			this("");
+		}
+
+		public LittleFunctionHeader(String functionName) {
+			setStyleName(STYLE_HEAD);
+			setSpacing(true);
+			initNameField(functionName);
+			initAddArgumentButton();
+		}
+
+		protected void initNameField(String name) {
+			TextField nameField = new TextField();
+			nameField.setValue(name);
+			nameField.setStyleName(STYLE_HEAD_NAME_FIELD);
+			addComponent(nameField);
+		}
+
+		protected void initAddArgumentButton() {
+			Button addArgumentButton = new Button("+");
+			addArgumentButton.addClickListener(new ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					LittleFunctionHeader header = LittleFunctionHeader.this;
+					int children = header.getComponentCount();
+					header.addComponent(new LittleArgument(), children - 1);
+					// UI.getCurrent().addWindow(new
+					// LittleFunctionArgumentWindow());
+				}
+			});
+			addComponent(addArgumentButton);
+		}
+
 	}
 }
