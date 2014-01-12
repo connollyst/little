@@ -24,12 +24,15 @@ public class LittleIDE extends UI {
 
 	@Override
 	protected void init(VaadinRequest request) {
-		HorizontalSplitPanel ide = new HorizontalSplitPanel();
-		ide.setSplitPosition(25, Sizeable.UNITS_PERCENTAGE);
-		ide.setSizeFull();
-		ide.addComponent(new LittleToolbox());
-		ide.addComponent(new LittleWorkspace());
-		setContent(ide);
+//		HorizontalSplitPanel ide = new HorizontalSplitPanel();
+//		ide.setSplitPosition(25, Sizeable.UNITS_PERCENTAGE);
+//		ide.setSizeFull();
+//		ide.addComponent(new LittleToolbox());
+//		ide.addComponent(new LittleWorkspace());
+//		setContent(ide);
+		
+		// (Temporary) Full screen workspace for development
+		setContent(new LittleWorkspace());
 	}
 
 }
