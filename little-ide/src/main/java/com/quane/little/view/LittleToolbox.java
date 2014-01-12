@@ -1,9 +1,19 @@
 package com.quane.little.view;
 
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Accordion;
 
-public class LittleToolbox extends VerticalLayout {
+public class LittleToolbox extends Accordion {
 
-	// TODO implement toolbox
-	
+	public static final String STYLE = "l-toolbox";
+
+	public LittleToolbox() {
+		setSizeFull();
+		setStyleName(STYLE);
+		addTab(LittleToolboxSection.SENSING, "Sensing");
+		addTab(LittleToolboxSection.getMotionSection(), "Motion");
+		addTab(LittleToolboxSection.OPERATORS, "Operators");
+		addTab(LittleToolboxSection.VARIABLES, "Variables");
+		setSelectedTab(1);
+	}
+
 }
