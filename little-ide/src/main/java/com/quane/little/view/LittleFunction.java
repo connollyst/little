@@ -1,14 +1,17 @@
 package com.quane.little.view;
 
+import com.quane.little.ide.model.FunctionArgument;
+import com.quane.little.ide.model.FunctionArgumentDefinition;
+import com.quane.little.ide.model.FunctionArgumentType;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Button.ClickListener;
 
 public class LittleFunction extends VerticalLayout {
 
@@ -48,7 +51,11 @@ public class LittleFunction extends VerticalLayout {
 
 	private void initMockData(LittleStepList stepList) {
 		stepList.addComponent(new LittleStep("point toward [location]"));
-		stepList.addComponent(new LittleStep("move forward [1]"));
+		stepList.addComponent(new LittleStep("move forward",
+				new LittleArgumentNumber(
+						new FunctionArgument(new FunctionArgumentDefinition(
+								"steps", "how far to move",
+								FunctionArgumentType.NUMBER), "1")), "steps"));
 		LittleIfElse ifElse = new LittleIfElse("touching [location]");
 		ifElse.addThenStep(new LittleStep("done"));
 		ifElse.addElseStep(new LittleStep("<move toward [location]>"));
@@ -85,7 +92,8 @@ public class LittleFunction extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					LittleFunctionHeader header = LittleFunctionHeader.this;
 					int children = header.getComponentCount();
-					header.addComponent(new LittleArgumentDefinition(), children - 1);
+					header.addComponent(new LittleArgumentDefinition(),
+							children - 1);
 					// UI.getCurrent().addWindow(new
 					// LittleFunctionArgumentWindow());
 				}

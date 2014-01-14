@@ -43,4 +43,7 @@ public class FunctionArgumentDefinition {
 		this.type = type;
 	}
 
+	public String getHelpText() {
+		return name + ": " + description;
+	}
 }

@@ -42,6 +42,7 @@ public class LittleStepList extends VerticalLayout {
 
 		public LittleStepSeparator() {
 			super(new CssLayout());
+			// TODO this style is set on the D&D wrapper, not the CssLayout!
 			setStyleName(STYLE);
 			setDropHandler(new DropHandler() {
 
@@ -55,7 +56,7 @@ public class LittleStepList extends VerticalLayout {
 				public void drop(DragAndDropEvent event) {
 					// TODO send LittleStep as transferable and add to list here
 					Component sourceComponent = (Component) event
-							.getTransferable().getData("component");
+							.getTransferable().getSourceComponent();
 					if (!(sourceComponent instanceof LittleStep)) {
 						throw new ClassCastException("Drop not supported for "
 								+ sourceComponent.getClass().getSimpleName());
