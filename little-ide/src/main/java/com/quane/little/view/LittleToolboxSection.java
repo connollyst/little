@@ -1,9 +1,10 @@
 package com.quane.little.view;
 
-import com.vaadin.ui.Component;
+import java.util.HashMap;
+import java.util.Map;
+
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DragAndDropWrapper;
-import com.vaadin.ui.DragAndDropWrapper.DragStartMode;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -16,25 +17,18 @@ public class LittleToolboxSection extends VerticalLayout {
 		setStyleName(STYLE);
 	}
 
-	public static DragAndDropWrapper draggable(Component component) {
-		DragAndDropWrapper dnd = new DragAndDropWrapper(component);
-		dnd.setDragStartMode(DragStartMode.COMPONENT);
-		dnd.setSizeUndefined();
-		return dnd;
-	}
-
 	public static LittleToolboxSection getMotionSection() {
 		LittleToolboxSection motion = new LittleToolboxSection();
-		motion.addComponent(draggable(new LittleStep("move forward")));
-		motion.addComponent(draggable(new LittleStep("move backward")));
-		motion.addComponent(draggable(new LittleToolboxSectionSeparator()));
-		motion.addComponent(draggable(new LittleStep("turn clockwise")));
-		motion.addComponent(draggable(new LittleStep("turn counter clockwise")));
-		motion.addComponent(draggable(new LittleStep("turn toward")));
-		motion.addComponent(draggable(new LittleStep("turn away from")));
-		motion.addComponent(draggable(new LittleToolboxSectionSeparator()));
-		motion.addComponent(draggable(new LittleStep("change x by")));
-		motion.addComponent(draggable(new LittleStep("change y by")));
+		motion.addComponent(new LittleToolboxIcon("move forward"));
+		motion.addComponent(new LittleToolboxIcon("move backward"));
+		motion.addComponent(new LittleToolboxSectionSeparator());
+		motion.addComponent(new LittleToolboxIcon("turn clockwise"));
+		motion.addComponent(new LittleToolboxIcon("turn counter clockwise"));
+		motion.addComponent(new LittleToolboxIcon("turn toward"));
+		motion.addComponent(new LittleToolboxIcon("turn away from"));
+		motion.addComponent(new LittleToolboxSectionSeparator());
+		motion.addComponent(new LittleToolboxIcon("change x by"));
+		motion.addComponent(new LittleToolboxIcon("change y by"));
 		return motion;
 	}
 
@@ -49,6 +43,16 @@ public class LittleToolboxSection extends VerticalLayout {
 	public static LittleToolboxSection VARIABLES = new LittleToolboxSection();
 	static {
 		VARIABLES.addComponent(new Label("Not Configured"));
+	}
+
+	private static final class LittleToolboxIcon extends DragAndDropWrapper {
+
+		public LittleToolboxIcon(String name) {
+			super(new LittleStep(name));
+			setDragStartMode(DragStartMode.COMPONENT);
+			setSizeUndefined();
+		}
+
 	}
 
 	public static final class LittleToolboxSectionSeparator extends CssLayout {

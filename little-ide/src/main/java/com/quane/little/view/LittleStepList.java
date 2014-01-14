@@ -54,8 +54,24 @@ public class LittleStepList extends VerticalLayout {
 				@Override
 				public void drop(DragAndDropEvent event) {
 					// TODO send LittleStep as transferable and add to list here
-					System.out
-							.println(event.getTransferable().getDataFlavors());
+					Component sourceComponent = (Component) event
+							.getTransferable().getData("component");
+					if (!(sourceComponent instanceof LittleStep)) {
+						throw new ClassCastException("Drop not supported for "
+								+ sourceComponent.getClass().getSimpleName());
+					}
+					try {
+						LittleStep sourceStep = (LittleStep) sourceComponent;
+						LittleStep droppedStep = (LittleStep) sourceStep
+								.clone();
+						LittleStepSeparator separator = LittleStepSeparator.this;
+						LittleStepList list = (LittleStepList) separator
+								.getParent();
+						int separatorIndex = list.getComponentIndex(separator);
+						list.addComponent(droppedStep, separatorIndex + 1);
+					} catch (CloneNotSupportedException e) {
+						throw new RuntimeException("Failed to drop step.", e);
+					}
 				}
 			});
 		}

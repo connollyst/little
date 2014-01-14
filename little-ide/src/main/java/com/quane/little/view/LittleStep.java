@@ -40,4 +40,9 @@ public class LittleStep extends CustomLayout {
 		addComponent(body, "body");
 	}
 
+	@Override
+	protected Object clone() throws CloneNotSupportedException {
+		// TODO I don't think this is the way to d&d, but it works for now
+		return new LittleStep(prefix, suffix);
+	}
 }
