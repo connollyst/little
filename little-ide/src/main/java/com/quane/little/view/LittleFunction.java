@@ -85,7 +85,7 @@ public class LittleFunction extends VerticalLayout {
 				public void buttonClick(ClickEvent event) {
 					LittleFunctionHeader header = LittleFunctionHeader.this;
 					int children = header.getComponentCount();
-					header.addComponent(new LittleArgument(), children - 1);
+					header.addComponent(new LittleArgumentDefinition(), children - 1);
 					// UI.getCurrent().addWindow(new
 					// LittleFunctionArgumentWindow());
 				}

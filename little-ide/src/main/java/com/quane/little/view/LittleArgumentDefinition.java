@@ -13,18 +13,18 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 
-public class LittleArgument extends HorizontalLayout {
+public class LittleArgumentDefinition extends HorizontalLayout {
 
 	private static final String STYLE = "l-function-argument";
 	private static final String DEFAULT_NAME = "myValue";
 
 	private final FunctionArgumentDefinition argument;
 
-	public LittleArgument() {
+	public LittleArgumentDefinition() {
 		this(new FunctionArgumentDefinition(DEFAULT_NAME));
 	}
 
-	public LittleArgument(FunctionArgumentDefinition argument) {
+	public LittleArgumentDefinition(FunctionArgumentDefinition argument) {
 		this.argument = argument;
 		setStyleName(STYLE);
 		addLayoutClickListener(new LittleArgumentClickListener());
@@ -54,7 +54,7 @@ public class LittleArgument extends HorizontalLayout {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				System.out.println("Cancelling");
-				LittleArgument.this.showLabel();
+				LittleArgumentDefinition.this.showLabel();
 			}
 		});
 		saveButton.addClickListener(new ClickListener() {
@@ -63,8 +63,8 @@ public class LittleArgument extends HorizontalLayout {
 				// TODO validate new argument name
 				String newName = textField.getValue();
 				System.out.println("Setting argument name to " + newName);
-				LittleArgument.this.argument.setName(newName);
-				LittleArgument.this.showLabel();
+				LittleArgumentDefinition.this.argument.setName(newName);
+				LittleArgumentDefinition.this.showLabel();
 			}
 		});
 		addComponent(textField);
@@ -88,7 +88,7 @@ public class LittleArgument extends HorizontalLayout {
 
 		@Override
 		public void layoutClick(LayoutClickEvent event) {
-			LittleArgument.this.showTextField();
+			LittleArgumentDefinition.this.showTextField();
 		}
 
 	}
