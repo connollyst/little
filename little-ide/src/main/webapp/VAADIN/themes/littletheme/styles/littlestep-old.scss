@@ -1,0 +1,91 @@
+$bg-color: #fff;
+$fg-color: #262626;
+$text-color: whitesmoke;
+$border-color: crimson;
+
+$notch-indent: 20px;
+$notch-male-width: 20px;
+$notch-male-height: 8px;
+$notch-male-height-half: $notch-male-height / 2;
+$notch-female-width: 25px;
+$notch-female-height: 10px;
+$notch-width-difference: $notch-female-width - $notch-male-width;
+$notch-width-difference-half: $notch-width-difference / 2;
+
+.l-step {
+  /*
+  	height: 20px;
+  	min-width: 200px;
+  */
+  overflow: visible !important;
+}
+  
+.l-step-container {
+  position: relative;
+  margin: 2px 0;
+  padding-top: $notch-female-height;
+  padding-bottom: $notch-female-height;
+  padding-right: $notch-indent * 2 + $notch-female-width;
+  padding-left:  $notch-indent * 2 + $notch-female-width;
+  color: $text-color;
+  background-color: $fg-color;
+  -moz-border-radius: 6px;
+  -webkit-border-radius: 6px;
+  border-radius: 6px;
+  z-index: 1;
+}
+
+.l-step-container.l-step-border {
+  border: 1px solid $border-color;
+}
+
+.l-step-container .l-step-notch-top {
+  position: absolute;
+  top: -1 * $notch-male-height;
+  left: $notch-indent;
+  width: $notch-male-width;
+  height: $notch-male-height;
+  margin: 0;
+  padding: 0;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  background-color: $fg-color;
+  z-index: 5;
+}
+
+.l-step-container.l-step-border .l-step-notch-top.l-step-notch-border {
+  position: absolute;
+  top: -1 * $notch-male-height - 1;
+  left: $notch-indent - 1;
+  height: $notch-male-height + 1;
+  width: $notch-male-width + 2;
+  background-color: $border-color;
+  z-index: 4;
+}
+
+.l-step-container .l-step-notch-bottom {
+  position: absolute;
+  bottom: 0;
+  left: $notch-indent - $notch-width-difference-half;
+  width: $notch-female-width;
+  height: $notch-female-height;
+  margin: 0;
+  padding: 0;
+  border-top-left-radius: 7px;
+  border-top-right-radius: 7px;
+  background-color: $bg-color;
+  z-index: 3;
+}
+
+.l-step-container.l-step-border .l-step-notch-bottom {
+  /* TODO this can all be simplified if we say steps always have a border*/
+  margin-bottom: -1px;
+}
+
+.l-step-container.l-step-border .l-step-notch-bottom.l-step-notch-border {
+  bottom: 1px;
+  left: $notch-indent - $notch-width-difference-half - 1;
+  width: $notch-female-width + 2;
+  background-color: $border-color;
+  z-index: 2;
+}
