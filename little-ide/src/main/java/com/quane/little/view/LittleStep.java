@@ -1,11 +1,16 @@
 package com.quane.little.view;
 
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Button.ClickListener;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 public class LittleStep extends HorizontalLayout {
 
 	private static final String STYLE = "l-step";
+	private static final String STYLE_BUTTON_DELETE = STYLE + "-btn-delete";
 
 	private final String prefix;
 	private final String suffix;
@@ -52,6 +57,18 @@ public class LittleStep extends HorizontalLayout {
 		if (suffix != null && !suffix.isEmpty()) {
 			addComponent(new Label(suffix));
 		}
+		Button deleteButton = new Button("X");
+		deleteButton.setPrimaryStyleName(STYLE_BUTTON_DELETE);
+		deleteButton.addClickListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				LittleStep step = LittleStep.this;
+				LittleStepList parent = (LittleStepList) step.getParent();
+				parent.removeComponent(step);
+			}
+		});
+		addComponent(deleteButton);
 	}
 
 	@Override

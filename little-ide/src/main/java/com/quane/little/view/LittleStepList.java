@@ -36,6 +36,14 @@ public class LittleStepList extends VerticalLayout {
 		super.addComponent(new LittleStepSeparator(), 1);
 	}
 
+	@Override
+	public void removeComponent(Component c) {
+		int index = getComponentIndex(c);
+		Component separator = getComponent(index + 1);
+		super.removeComponent(separator);
+		super.removeComponent(c);
+	}
+
 	private final class LittleStepSeparator extends DragAndDropWrapper {
 
 		private static final String STYLE = "l-step-list-separator";
