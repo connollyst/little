@@ -3,18 +3,21 @@ package com.quane.little.view;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.DragAndDropWrapper;
+import com.vaadin.ui.DragAndDropWrapper.DragStartMode;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
-public class LittleStep extends HorizontalLayout {
+public class LittleStep extends DragAndDropComponent<HorizontalLayout> {
 
 	private static final String STYLE = "l-step";
 	private static final String STYLE_BUTTON_DELETE = STYLE + "-btn-delete";
 
 	private final String prefix;
 	private final String suffix;
-	private final LittleArgument[] arguments;
+	private final LittleArgument<?>[] arguments;
+	private final HorizontalLayout layout;
 
 	public LittleStep() {
 		this("<PREFIX>");
@@ -24,38 +27,45 @@ public class LittleStep extends HorizontalLayout {
 		this(prefix, new LittleArgument[0]);
 	}
 
-	public LittleStep(String prefix, LittleArgument argument) {
+	public LittleStep(String prefix, LittleArgument<?> argument) {
 		this(prefix, argument, null);
 	}
 
-	public LittleStep(String prefix, LittleArgument argument, String suffix) {
+	public LittleStep(String prefix, LittleArgument<?> argument, String suffix) {
 		this(prefix, new LittleArgument[] { argument }, suffix);
 	}
 
-	public LittleStep(String prefix, LittleArgument[] arguments) {
+	public LittleStep(String prefix, LittleArgument<?>[] arguments) {
 		this(prefix, arguments, null);
 	}
 
-	public LittleStep(String prefix, LittleArgument[] arguments, String suffix) {
+	public LittleStep(String prefix, LittleArgument<?>[] arguments,
+			String suffix) {
+		super(new HorizontalLayout());
 		this.prefix = prefix;
 		this.arguments = arguments;
 		this.suffix = suffix;
-		setStyleName(STYLE);
-		setSpacing(true);
-		initStepBody();
+		this.layout = getComponent();
+		initLayout();
+		initBody();
 	}
 
-	private void initStepBody() {
+	private void initLayout() {
+		layout.setStyleName(STYLE);
+		layout.setSpacing(true);
+	}
+
+	private void initBody() {
 		if (prefix != null && !prefix.isEmpty()) {
-			addComponent(new Label(prefix));
+			layout.addComponent(new Label(prefix));
 		}
 		if (arguments != null) {
-			for (LittleArgument argument : arguments) {
-				addComponent(argument);
+			for (LittleArgument<?> argument : arguments) {
+				layout.addComponent(argument);
 			}
 		}
 		if (suffix != null && !suffix.isEmpty()) {
-			addComponent(new Label(suffix));
+			layout.addComponent(new Label(suffix));
 		}
 		Button deleteButton = new Button("X");
 		deleteButton.setPrimaryStyleName(STYLE_BUTTON_DELETE);
@@ -68,12 +78,7 @@ public class LittleStep extends HorizontalLayout {
 				parent.removeComponent(step);
 			}
 		});
-		addComponent(deleteButton);
+		layout.addComponent(deleteButton);
 	}
 
-	@Override
-	protected Object clone() throws CloneNotSupportedException {
-		// TODO I don't think this is the way to d&d, but it works for now
-		return new LittleStep(prefix, arguments, suffix);
-	}
 }

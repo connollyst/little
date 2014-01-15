@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DragAndDropWrapper;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -45,17 +44,7 @@ public class LittleToolboxSection extends VerticalLayout {
 		VARIABLES.addComponent(new Label("Not Configured"));
 	}
 
-	private static final class LittleToolboxIcon extends DragAndDropWrapper {
-
-		public LittleToolboxIcon(String name) {
-			super(new LittleStep(name));
-			setDragStartMode(DragStartMode.COMPONENT);
-			setSizeUndefined();
-		}
-
-	}
-
-	public static final class LittleToolboxSectionSeparator extends CssLayout {
+	private static final class LittleToolboxSectionSeparator extends CssLayout {
 
 		public static final String STYLE = LittleToolboxSection.STYLE
 				+ "separator";
