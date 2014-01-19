@@ -13,7 +13,7 @@ import com.vaadin.server.VaadinServlet;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.UI;
 
-@Title("Little")
+@Title("little")
 @Theme("littletheme")
 @SuppressWarnings("serial")
 public class LittleIDE extends UI {
