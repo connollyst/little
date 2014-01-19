@@ -13,7 +13,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class LittleFunction extends VerticalLayout {
+/**
+ * Visual layout of a function definition.
+ * 
+ * @author Sean Connolly
+ */
+public class LittleFunctionDefinition extends VerticalLayout {
 
 	private static final String STYLE = "l-function";
 	private static final String STYLE_BODY = STYLE + "-body";
@@ -22,7 +27,7 @@ public class LittleFunction extends VerticalLayout {
 	private static final String STYLE_HEAD = STYLE + "-head";
 	private static final String STYLE_HEAD_NAME_FIELD = STYLE_HEAD + "-name";
 
-	public LittleFunction(String functionName) {
+	public LittleFunctionDefinition(String functionName) {
 		setSpacing(false);
 		addComponent(new LittleFunctionHeader(functionName));
 		addComponent(initFunctionBody());

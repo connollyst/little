@@ -10,7 +10,7 @@ public class LittleWorkspace extends HorizontalLayout {
 		setSizeFull();
 		setSpacing(true);
 		setStyleName(STYLE);
-		addComponent(new LittleFunction("move toward"));
+		addComponent(new LittleFunctionDefinition("move toward"));
 	}
 
 }

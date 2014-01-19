@@ -1,13 +1,18 @@
 package com.quane.little.view;
 
-import java.util.HashMap;
-import java.util.Map;
-
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
+/**
+ * A logical grouping of {@link LittleToolboxIcon}s to be displayed together in
+ * the {@link LittleToolbox}.
+ * 
+ * @author Sean Connolly
+ */
 public class LittleToolboxSection extends VerticalLayout {
+
+	private static final long serialVersionUID = 140119L;
 
 	public static final String STYLE = "l-toolbox-section";
 
@@ -39,12 +44,25 @@ public class LittleToolboxSection extends VerticalLayout {
 	static {
 		OPERATORS.addComponent(new Label("Not Configured"));
 	}
-	public static LittleToolboxSection VARIABLES = new LittleToolboxSection();
-	static {
-		VARIABLES.addComponent(new Label("Not Configured"));
+
+	public static LittleToolboxSection getVariablesSection() {
+		LittleToolboxSection variables = new LittleToolboxSection();
+		variables.addComponent(new LittleToolboxIcon("my x"));
+		variables.addComponent(new LittleToolboxIcon("my y"));
+		variables.addComponent(new LittleToolboxIcon("my speed"));
+		variables.addComponent(new LittleToolboxSectionSeparator());
+		variables.addComponent(new LittleToolboxIcon("<local variable>"));
+		return variables;
 	}
 
+	/**
+	 * Visually separates groups of related {@link LittleToolboxIcon}s.
+	 * 
+	 * @author Sean Connolly
+	 */
 	private static final class LittleToolboxSectionSeparator extends CssLayout {
+
+		private static final long serialVersionUID = 140119L;
 
 		public static final String STYLE = LittleToolboxSection.STYLE
 				+ "separator";
@@ -53,6 +71,7 @@ public class LittleToolboxSection extends VerticalLayout {
 			setStyleName(STYLE);
 			setHeight(20, Unit.PIXELS);
 		}
+
 	}
 
 }
