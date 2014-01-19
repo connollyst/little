@@ -3,14 +3,14 @@ package com.quane.little.view;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.DragAndDropWrapper;
-import com.vaadin.ui.DragAndDropWrapper.DragStartMode;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
-public class LittleStep extends DragAndDropComponent<HorizontalLayout> {
+public class LittleStep extends DraggableComponent<HorizontalLayout> {
 
+	private static final long serialVersionUID = 140119L;
+	
 	private static final String STYLE = "l-step";
 	private static final String STYLE_BUTTON_DELETE = STYLE + "-btn-delete";
 
@@ -71,10 +71,13 @@ public class LittleStep extends DragAndDropComponent<HorizontalLayout> {
 		deleteButton.setPrimaryStyleName(STYLE_BUTTON_DELETE);
 		deleteButton.addClickListener(new ClickListener() {
 
+			private static final long serialVersionUID = 140119L;
+			
 			@Override
 			public void buttonClick(ClickEvent event) {
 				LittleStep step = LittleStep.this;
-				LittleStepList parent = (LittleStepList) step.getParent();
+				ComponentContainer parent = (ComponentContainer) step
+						.getParent();
 				parent.removeComponent(step);
 			}
 		});

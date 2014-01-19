@@ -11,6 +11,8 @@ import com.vaadin.ui.VerticalLayout;
 
 public class LittleStepList extends VerticalLayout {
 
+	private static final long serialVersionUID = 140119L;
+
 	private static final String STYLE = "l-step-list";
 
 	public LittleStepList() {
@@ -57,6 +59,8 @@ public class LittleStepList extends VerticalLayout {
 
 	private final class LittleStepListSeparator extends DragAndDropWrapper {
 
+		private static final long serialVersionUID = 140119L;
+
 		private static final String STYLE = "l-step-list-separator";
 
 		public LittleStepListSeparator() {
@@ -64,6 +68,8 @@ public class LittleStepList extends VerticalLayout {
 			// TODO this style is set on the D&D wrapper, not the CssLayout!
 			setStyleName(STYLE);
 			setDropHandler(new DropHandler() {
+
+				private static final long serialVersionUID = 140119L;
 
 				@Override
 				public AcceptCriterion getAcceptCriterion() {

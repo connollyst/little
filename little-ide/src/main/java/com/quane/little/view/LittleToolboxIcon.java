@@ -1,6 +1,6 @@
 package com.quane.little.view;
 
-public final class LittleToolboxIcon extends DragAndDropComponent<LittleStep> {
+public final class LittleToolboxIcon extends DraggableComponent<LittleStep> {
 
 	private final String name;
 
