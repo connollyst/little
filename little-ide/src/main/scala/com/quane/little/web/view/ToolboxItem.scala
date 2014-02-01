@@ -4,8 +4,6 @@ import vaadin.scala.Label
 
 class ToolboxItem(name: String) extends DraggableComponent[Expression](null) {
 
-  private val label = new Label
-  label.value = name
-  add(label)
+  add(Label(name))
 
 }
