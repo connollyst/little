@@ -9,10 +9,9 @@ object Toolbox {
 class Toolbox extends Accordion {
   sizeFull
   styleName = Toolbox.Style
-//  addTab(LittleToolboxSection.SENSING, "Sensing");
-//  addTab(LittleToolboxSection.getMotionSection(), "Motion");
-//  addTab(LittleToolboxSection.OPERATORS, "Operators");
-//  addTab(LittleToolboxSection.getVariablesSection(), "Variables");
-  selectedTab = getTab(3).get
-
+  addTab(ToolboxSection.Sensing, "Sensing")
+  addTab(ToolboxSection.Motion, "Motion")
+  addTab(ToolboxSection.Operators, "Operators")
+  addTab(ToolboxSection.Variables, "Variables")
+  selectedTab = getTab(0).get
 }
