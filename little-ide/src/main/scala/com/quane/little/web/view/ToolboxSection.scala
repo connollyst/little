@@ -9,10 +9,7 @@ import vaadin.scala.VerticalLayout
 object ToolboxSection {
   val Style = "l-toolbox-section"
   val StyleSeparator = Style + "-separator"
-
-  private val ToDo = new Label
-  ToDo.value = "Not Implemented"
-
+  
   val Motion = new ToolboxSection() {
     add(new ToolboxItem("move forward"));
     add(new ToolboxItem("move backward"));
@@ -26,10 +23,10 @@ object ToolboxSection {
     add(new ToolboxItem("change y by"));
   }
   val Sensing = new ToolboxSection() {
-    add(ToDo)
+    // TODO add items
   }
   val Operators = new ToolboxSection() {
-    add(ToDo)
+    // TODO add items
   }
   val Variables = new ToolboxSection() {
     add(new ToolboxItem("my x"));
