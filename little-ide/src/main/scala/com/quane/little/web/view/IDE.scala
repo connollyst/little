@@ -6,9 +6,10 @@ import vaadin.scala.Units
 
 class IDE extends HorizontalSplitPanel {
 
-  splitPosition = new Measure(25, Units.pct);
-  sizeFull;
-  //addComponent(new LittleToolbox());
-  addComponent(new LittleWorkspace());
+  sizeFull
+  splitPosition = new Measure(25, Units.pct)
+
+  addComponent(new Toolbox())
+  addComponent(new Workspace())
 
 }

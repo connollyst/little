@@ -2,16 +2,16 @@ package com.quane.little.web.view
 
 import vaadin.scala.HorizontalLayout
 
-object LittleWorkspace {
+object Workspace {
   val STYLE = "l-workspace"
 }
 
-class LittleWorkspace extends HorizontalLayout {
+class Workspace extends HorizontalLayout {
 
   sizeFull
   spacing = true
-  styleName = LittleWorkspace.STYLE
-  addComponent(new LittleFunctionDefinition("move toward"));
+  styleName = Workspace.STYLE
+  addComponent(new FunctionDefinition("move toward"));
 
 }
 

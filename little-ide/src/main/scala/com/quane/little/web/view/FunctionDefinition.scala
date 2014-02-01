@@ -8,7 +8,7 @@ import vaadin.scala.Measure
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
 
-object LittleFunctionDefinition {
+object FunctionDefinition {
   val STYLE = "l-function";
   val STYLE_BODY = STYLE + "-body";
   val STYLE_BODY_LEFT = STYLE + "-body-left";
@@ -17,7 +17,7 @@ object LittleFunctionDefinition {
   val STYLE_HEAD_NAME_FIELD = STYLE_HEAD + "-name";
 }
 
-class LittleFunctionDefinition(name: String) extends VerticalLayout {
+class FunctionDefinition(name: String) extends VerticalLayout {
 
   spacing = false;
   addComponent(header());
@@ -31,12 +31,12 @@ class LittleFunctionDefinition(name: String) extends VerticalLayout {
   def body(): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
-//    val bodyInner = new LittleStepList
+    //    val bodyInner = new LittleStepList
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = LittleFunctionDefinition.STYLE_BODY_LEFT
+    bodyLeft.styleName = FunctionDefinition.STYLE_BODY_LEFT
     body.addComponent(bodyLeft);
     // body.addComponent(bodyInner);
-    body.styleName = LittleFunctionDefinition.STYLE_BODY;
+    body.styleName = FunctionDefinition.STYLE_BODY;
     body.spacing = false;
     // initMockData(bodyInner);
     body;
@@ -44,7 +44,7 @@ class LittleFunctionDefinition(name: String) extends VerticalLayout {
 
   def footer(): Component = {
     val footer = new CssLayout();
-    footer.styleName = LittleFunctionDefinition.STYLE_FOOT;
+    footer.styleName = FunctionDefinition.STYLE_FOOT;
     footer;
   }
 
