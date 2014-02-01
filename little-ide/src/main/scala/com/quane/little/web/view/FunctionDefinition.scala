@@ -9,12 +9,12 @@ import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
 
 object FunctionDefinition {
-  val STYLE = "l-function";
-  val STYLE_BODY = STYLE + "-body";
-  val STYLE_BODY_LEFT = STYLE + "-body-left";
-  val STYLE_FOOT = STYLE + "-foot";
-  val STYLE_HEAD = STYLE + "-head";
-  val STYLE_HEAD_NAME_FIELD = STYLE_HEAD + "-name";
+  val Style = "l-function";
+  val StyleBody = Style + "-body";
+  val StyleHeadLeft = StyleBody + "-left";
+  val StyleFoot = Style + "-foot";
+  val StyleHead = Style + "-head";
+  val StyleHeadNameField = StyleHead + "-name";
 }
 
 class FunctionDefinition(name: String) extends VerticalLayout {
@@ -33,10 +33,10 @@ class FunctionDefinition(name: String) extends VerticalLayout {
     val bodyLeft = new Label
     //    val bodyInner = new LittleStepList
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = FunctionDefinition.STYLE_BODY_LEFT
+    bodyLeft.styleName = FunctionDefinition.StyleHeadLeft
     body.addComponent(bodyLeft);
     // body.addComponent(bodyInner);
-    body.styleName = FunctionDefinition.STYLE_BODY;
+    body.styleName = FunctionDefinition.StyleBody;
     body.spacing = false;
     // initMockData(bodyInner);
     body;
@@ -44,7 +44,7 @@ class FunctionDefinition(name: String) extends VerticalLayout {
 
   def footer(): Component = {
     val footer = new CssLayout();
-    footer.styleName = FunctionDefinition.STYLE_FOOT;
+    footer.styleName = FunctionDefinition.StyleFoot;
     footer;
   }
 
