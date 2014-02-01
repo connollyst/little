@@ -13,5 +13,5 @@ class Toolbox extends Accordion {
   addTab(ToolboxSection.Motion, "Motion")
   addTab(ToolboxSection.Operators, "Operators")
   addTab(ToolboxSection.Variables, "Variables")
-  selectedTab = getTab(0).get
+  selectedTab = getTab(1).get
 }
