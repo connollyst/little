@@ -6,7 +6,7 @@
 	<artifactId>little-ide</artifactId>
 	<packaging>war</packaging>
 	<version>0.0.4-SNAPSHOT</version>
-	<name>Vaadin Web Application</name>
+	<name>Little IDE (Vaadin)</name>
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -42,6 +42,13 @@
 		</pluginRepository>
 	</pluginRepositories>
 	<dependencies>
+        <!-- The IDE speaks Little -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>little-language</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+        <!-- The IDE is built on Vaadin -->
 		<dependency>
 			<groupId>com.vaadin</groupId>
 			<artifactId>vaadin-server</artifactId>
@@ -54,7 +61,7 @@
 		</dependency>
 		<!--
 		  Needed when using the widgetset optimizer (custom ConnectorBundleLoaderFactory).
-		  
+
 		  For widgetset compilation, vaadin-client-compiler is automatically added on the
 		  compilation classpath by vaadin-maven-plugin so normally there is no need for an
 		  explicit dependency.
@@ -129,7 +136,7 @@
 				<configuration>
 					<extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
 					<!-- <runTarget>mobilemail</runTarget> -->
-					<!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This 
+					<!-- We are doing "inplace" but into subdir VAADIN/widgetsets. This
 						way compatible with Vaadin eclipse plugin. -->
 					<webappDirectory>${basedir}/src/main/webapp/VAADIN/widgetsets
 					</webappDirectory>
@@ -147,7 +154,7 @@
 					<execution>
 						<configuration>
 							<!-- if you don't specify any modules, the plugin will find them -->
-							<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module> 
+							<!-- <modules> <module>com.vaadin.demo.mobilemail.gwt.ColorPickerWidgetSet</module>
 								</modules> -->
 						</configuration>
 						<goals>
