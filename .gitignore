@@ -18,5 +18,9 @@ rebel.xml
 .settings
 
 *.cache.js
+*.nocache.js
 *.symbolmap
 gwt-unitCache
+compilation-mappings.txt
+
+little-ide/src/main/webapp/VAADIN/themes/*/styles.css
