@@ -11,7 +11,7 @@
 
     <artifactId>little-core</artifactId>
     <packaging>jar</packaging>
-    <name>Little Core</name>
+    <name>Little Game Core</name>
 
     <build>
         <plugins>

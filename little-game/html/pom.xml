@@ -10,7 +10,7 @@
 
 	<artifactId>little-html</artifactId>
 	<packaging>war</packaging>
-	<name>Little HTML</name>
+	<name>Little Game HTML</name>
 
 	<properties>
 		<gwt.module>com.quane.little.Little</gwt.module>
