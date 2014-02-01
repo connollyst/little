@@ -10,6 +10,7 @@ import vaadin.scala.TextField
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
 import vaadin.scala.Button.ClickEvent
+import com.quane.little.view.LittleArgumentNumber
 
 object FunctionDefinition {
   val Style = "l-function";
@@ -34,14 +35,14 @@ class FunctionDefinition(name: String) extends VerticalLayout {
   def body(): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
-    //    val bodyInner = new LittleStepList
+    val bodyInner = new ExpressionList
     bodyLeft.height = new Measure(100, Units.pct)
     bodyLeft.styleName = FunctionDefinition.StyleHeadLeft
     body.addComponent(bodyLeft);
-    // body.addComponent(bodyInner);
+    body.addComponent(bodyInner);
     body.styleName = FunctionDefinition.StyleBody;
     body.spacing = false;
-    // initMockData(bodyInner);
+    initMockData(bodyInner);
     body;
   }
 
@@ -51,6 +52,19 @@ class FunctionDefinition(name: String) extends VerticalLayout {
     footer;
   }
 
+  def initMockData(stepList: ExpressionList) = {
+    stepList.add(new Expression("point toward [location]"));
+    stepList.add(new Expression("move forward",
+      new LittleArgumentNumber(
+        new FunctionArgument(new FunctionArgumentDefinition(
+          "steps", "how far to move",
+          FunctionArgumentType.NUMBER), "1")), "steps"));
+    val ifElse = new Conditional("touching [location]");
+    ifElse.addThen(new Expression("done"));
+    ifElse.addElse(new Expression("<move toward [location]>"));
+    stepList.add(ifElse);
+    stepList.add(new Expression("done"));
+  }
 }
 
 class FunctionDefinitionHeader(name: String) extends HorizontalLayout {
