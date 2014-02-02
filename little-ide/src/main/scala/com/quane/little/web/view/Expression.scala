@@ -2,6 +2,10 @@ package com.quane.little.web.view
 
 import vaadin.scala.Label
 
+object Expression {
+  val Style = "l-step"
+  val StyleButtonDelete = Style + "-btn-delete"
+}
 class Expression(label: String) extends Label {
 
   def this() {
@@ -9,5 +13,6 @@ class Expression(label: String) extends Label {
   }
 
   value = label
+  styleName = Expression.Style
 
 }
