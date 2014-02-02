@@ -13,11 +13,11 @@ import com.vaadin.ui.Label
 package mixins {
   trait DragAndDropWrapperMixin extends AbstractComponentMixin { self: com.vaadin.ui.DragAndDropWrapper => }
 }
-class DragAndDropWrapper(override val p: com.vaadin.ui.DragAndDropWrapper with DragAndDropWrapperMixin = new com.vaadin.ui.DragAndDropWrapper(null) with DragAndDropWrapperMixin)
+class DragAndDropWrapper[C <: Component](val component: C, override val p: com.vaadin.ui.DragAndDropWrapper with DragAndDropWrapperMixin)
   extends AbstractComponent(p) {
 
-  def this(component: Component) {
-    this(new com.vaadin.ui.DragAndDropWrapper(component.p) with DragAndDropWrapperMixin)
+  def this(c: C) = {
+    this(c, new com.vaadin.ui.DragAndDropWrapper(c.p) with DragAndDropWrapperMixin)
   }
 
 }

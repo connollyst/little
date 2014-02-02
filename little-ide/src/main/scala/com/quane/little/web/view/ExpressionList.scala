@@ -8,6 +8,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptCriterion
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.vaadin.event.dd.DragAndDropEvent
 import vaadin.scala.Component
+import com.quane.vaadin.scala.DroppableTarget
 
 object ExpressionList {
   val Style = "l-step-list"
@@ -17,6 +18,23 @@ class ExpressionList extends VerticalLayout {
   styleName = ExpressionList.Style
   spacing = false
 
+  override def add[C <: Component](component: C): C = {
+    super.add(component);
+    super.add(new ExpressionListSeparator());
+    component
+  }
+
+  override def addComponent[C <: Component](component: C): C = {
+    add(component)
+  }
+
+  override def removeComponent(c: Component) {
+    val index = componentIndex(c);
+    //    val separator = component(index + 1);
+    //    super.removeComponent(separator);
+    super.removeComponent(c);
+  }
+
   def contains(c: Component): Boolean = {
     componentIndex(c) != -1;
   }
@@ -25,12 +43,15 @@ class ExpressionList extends VerticalLayout {
     p.getComponentIndex(c.p)
   }
 
-}
-class ExpressionListSeparator extends DragAndDropWrapper(new CssLayout) {
+  //  def component(index: Int): Component = {
+  //    super.components[index]
+  //  }
 
-  // TODO this style is set on the D&D wrapper, not the CssLayout!
-  p.setStyleName(ExpressionList.StyleSeparator);
-  p.setDropHandler(new DropHandler() {
+}
+class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
+
+  component.styleName = ExpressionList.StyleSeparator
+  dropHandler = new DropHandler() {
 
     override def getAcceptCriterion(): AcceptCriterion = {
       // TODO only accept appropriate Little components
@@ -69,5 +90,5 @@ class ExpressionListSeparator extends DragAndDropWrapper(new CssLayout) {
       }
     }
 
-  });
+  }
 }
