@@ -12,7 +12,7 @@ import com.vaadin.ui.DragAndDropWrapper.DragStartMode
  * @param <T>
  *            the child component type
  */
-class DraggableComponent[T <: Component](val component: T) extends DragAndDropWrapper(component) {
+class DraggableComponent[C <: Component](val component: C) extends DragAndDropWrapper(component) {
 
   p.setDragStartMode(DragStartMode.WRAPPER);
   p.setSizeUndefined();
