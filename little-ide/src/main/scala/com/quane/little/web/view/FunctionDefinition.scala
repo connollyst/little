@@ -24,9 +24,9 @@ object FunctionDefinition {
 class FunctionDefinition(name: String) extends VerticalLayout {
 
   spacing = false;
-  addComponent(header());
-  addComponent(body());
-  addComponent(footer());
+  add(header());
+  add(body());
+  add(footer());
 
   def header(): Component = {
     new FunctionDefinitionHeader(name)
