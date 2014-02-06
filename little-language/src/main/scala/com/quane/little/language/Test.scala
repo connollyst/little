@@ -2,21 +2,25 @@ package com.quane.little.language
 
 import com.quane.little.language.data.Value
 
-class Test(left: Expression[Value],
+/** A logical test of boolean values.
+  *
+  * @param left the left operand
+  * @param operator the test operator
+  * @param right the right operand
+  */
+class Test(left: Expression[_ <: Value],
            operator: LogicalOperator,
-           right: Expression[Value])
-  extends Expression[Boolean] {
+           right: Expression[_ <: Value])
+  extends Expression[Value] {
 
-  def evaluate: Boolean = isTrue
+  def evaluate: Value = new Value(isTrue)
 
   def isTrue: Boolean = {
+    val l = left.evaluate.asBool
+    val r = right.evaluate.asBool
     operator match {
-      case AND => {
-        (left.evaluate.asBool && right.evaluate.asBool)
-      }
-      case OR => {
-        (left.evaluate.asBool || right.evaluate.asBool)
-      }
+      case AND => l && r
+      case OR => l || r
     }
   }
 

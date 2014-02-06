@@ -3,7 +3,7 @@ package com.quane.little.language
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-import com.quane.little.language.data.{Value, Number}
+import com.quane.little.language.data.Value
 import com.quane.little.language.math.Addition
 import com.quane.little.language.math.RandomNumber
 import com.quane.little.language.memory.Pointer
@@ -17,7 +17,7 @@ object Programs {
 
   private val worker = Executors.newSingleThreadScheduledExecutor()
 
-  def inTime(seconds: Int, fun: Expression[Any]) {
+  def inTime(seconds: Int, fun: Expression[_]) {
     val task = new Runnable() {
       def run() {
         fun.evaluate
@@ -47,21 +47,19 @@ object Programs {
   def turnRandom(mob: Operator): Function = {
     val min = new Value(1)
     val max = new Value(360)
-    val randomDirection = new RandomNumber(min, max)
-
-    // TODO add a step to get a random number when evaluated
     val randomFun = new Function(mob)
-
-    val directionPointer = new Pointer(randomFun, Operable.VAR_DIRECTION)
-    //            randomFun.addStep(new SetStatement(directionPointer, randomFun))
-    null
+    randomFun.addStep(
+      new SetStatement(
+        new Pointer(randomFun, Operable.VAR_DIRECTION), new RandomNumber(min, max)
+      )
+    )
   }
 
   def turnRelative(mob: Operator, degrees: Int): Function = {
     val relativelyFun = new Function(mob)
     val dirPointer = new Pointer(relativelyFun, Operable.VAR_DIRECTION)
     val getCurrentDir = new GetStatement(dirPointer)
-    val dirChange = new Value(degrees);
+    val dirChange = new Value(degrees)
     val getNewDirection = new Addition(getCurrentDir, dirChange)
     val setNewDirection = new SetStatement(dirPointer, getNewDirection)
     relativelyFun.addStep(setNewDirection)
@@ -71,7 +69,7 @@ object Programs {
     val fun = new Function(mob)
     // Step #1: Turn South if I'm facing North
     val myDirection = mob.direction
-    val north = new Number(270)
+    val north = new Value(270)
     val south = new Value(90)
     val isNorth = new Evaluation(myDirection, Equals, north)
     val turnSouth = turn(mob, south)
@@ -89,4 +87,5 @@ object Programs {
     val fun = new Function(mob)
     fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Operable.VAR_DIRECTION))))
   }
+
 }

@@ -1,27 +1,24 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.{Nada, Value}
 
 
-/** A conditional statement is an {@code Expression} which evaluates a
-  * {@code Function} if the test, an {@code Expression} itself, evaluates to
-  * {@value true}.
+/** A conditional is an [[com.quane.little.language.Expression]] which evaluates
+  * a [[com.quane.little.language.Function]] if its test evaluates to {@code true}.
   *
   * @author Sean Connolly
   */
-class Conditional(test: Expression[Value], function: Function)
-  extends Expression[Boolean] {
+class Conditional(test: Expression[_ <: Value], function: Function)
+  extends Expression[Nada] {
 
   /** Evaluate the conditional statement; only if the <i>test</i> evaluates
     * to {@code true}, the <i>function</i> is evaluated.
     */
-  def evaluate: Boolean = {
+  def evaluate: Nada = {
     if (test.evaluate.asBool) {
       function.evaluate
-      true
-    } else {
-      false
     }
+    new Nada
   }
 
 }

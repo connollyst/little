@@ -1,11 +1,11 @@
 package com.quane.little.language
 
-
 import com.quane.little.language.data.Value
 import com.quane.little.language.memory.Pointer
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.junit.runner.RunWith
 
-/** @author Sean Connolly
-  */
 @RunWith(classOf[JUnitRunner])
 class TestFunction extends FunSuite {
 
@@ -61,6 +61,7 @@ class TestFunction extends FunSuite {
     fun.addStep(new ReturnStatement("Obj1", fun))
     val obj1 = fun.evaluate
     // assert(obj1.value == "A", "expected Obj1 to be 'A' but is: " + obj1.value)
+    fail("TODO implement test")
   }
 
 }

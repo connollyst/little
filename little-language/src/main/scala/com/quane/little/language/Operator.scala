@@ -83,6 +83,9 @@ class Operator(mob: Operable)
   override def fetch(name: String): Variable = {
     log.debug("Guy is returning " + name)
     if (name.equals(Operable.VAR_SPEED)) {
+      log.debug("mob: " + mob)
+      mob.speed
+      name
       new Variable(name, new Value(mob.speed))
     } else if (name.equals(Operable.VAR_DIRECTION)) {
       new Variable(name, new Value(mob.direction))

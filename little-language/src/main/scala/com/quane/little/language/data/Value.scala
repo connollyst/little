@@ -1,16 +1,17 @@
 package com.quane.little.language.data
 
 import com.quane.little.language.Expression
+import scala.None
 
 class Value(val primitive: Any)
   extends Expression[Value] {
-
 
   private val primitiveType: ValueType = {
     primitive match {
       case b: Boolean => BooleanValueType
       case i: Int => IntValueType
       case s: String => StringValueType
+      case _ => NoValueType
     }
   }
 
@@ -80,6 +81,8 @@ object BooleanValueType extends ValueType
 object IntValueType extends ValueType
 
 object StringValueType extends ValueType
+
+object NoValueType extends ValueType
 
 class Nada
   extends Value(None) {

@@ -2,22 +2,28 @@ package com.quane.little.language
 
 import com.quane.little.language.data.Value
 
-class Evaluation[T](left: Expression[T],
-                    operator: EvaluationOperator,
-                    right: Expression[T])
+/** A logical evaluation of the relationship between two arguments expressions.
+  *
+  * @param left the left operand
+  * @param operator the evaluation operator
+  * @param right the right operand
+  * @tparam T the operand expression type
+  */
+class Evaluation[T <: Expression[_]](left: T,
+                                     operator: EvaluationOperator,
+                                     right: T)
   extends Expression[Value] {
 
   def evaluate: Value = {
     // TODO clean this up, gross!
-    val retVal = operator match {
+    new Value(operator match {
       case Equals => {
         left equals right
       }
       case NotEquals => {
         !(left equals right)
       }
-    }
-    new Value(retVal)
+    })
   }
 }
 

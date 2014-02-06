@@ -1,9 +1,8 @@
 package com.quane.little.language
 
 import scala.collection.mutable.Map
-import com.quane.little.language.data.Variable
+import com.quane.little.language.data.{Value, Variable, Nada}
 import org.eintr.loglady.Logging
-import com.quane.little.language.data.Nada
 
 /** A Scope defines a space in which
   * [[com.quane.little.language.data.Variable]] objects can be stored and
@@ -24,7 +23,8 @@ trait Scope
 
   var scope: Scope
 
-  private val memory = Map[String, Variable]()
+  private val variables = Map[String, Variable]()
+  private val functions = Map[String, Function]()
 
   /** Stores the given [[com.quane.little.language.data.Variable]] in memory.
     *
@@ -41,7 +41,7 @@ trait Scope
       scope.save(variable)
     } else {
       log.info("Saving '" + name + "' as '" + value.primitive + "'")
-      memory(name) = variable
+      variables(name) = variable
     }
   }
 
@@ -50,12 +50,13 @@ trait Scope
     * [[com.quane.little.language.Scope]]. If not found,
     * [[com.quane.little.language.data.Nada]] is returned.
     *
-    * @param name the name of the variable to fetch
-    * @return the variable if it is defined, None otherwise
+    * @param name the name of the variable
+    * @return the variable if it is defined,
+    *         [[com.quane.little.language.data.Nada]] otherwise
     */
   def fetch(name: String): Variable = {
-    if (memory.contains(name)) {
-      memory(name)
+    if (variables.contains(name)) {
+      variables(name)
     } else if (scope != null) {
       scope.fetch(name)
     } else {
@@ -63,13 +64,32 @@ trait Scope
     }
   }
 
-  /** Returns true/false if a [[com.quane.little.language.data.Variable]] by the given name is defined in
-    * this, ''or any greater'' [[com.quane.little.language.Scope]].
+  /** Returns true/false if a [[com.quane.little.language.data.Variable]] by the
+    * given name is defined in this, ''or any greater''
+    * [[com.quane.little.language.Scope]].
     *
-    * @param name is a variable for the given name defined?
+    * @param name the name of the variable
+    * @return is a variable for the given name defined?
     */
   def isDefined(name: String): Boolean = {
     fetch(name) != null
+  }
+
+  /** Returns the [[com.quane.little.language.Function]] by the given name if it
+    * is defined in this, ''or any greater'' [[com.quane.little.language.Scope]].
+    *
+    * @param name the name of the function
+    * @return the function if defined
+    */
+  def fetchFunction(name: String): Function = {
+    if (functions.contains(name)) {
+      functions(name)
+    } else if (scope != null) {
+      scope.fetchFunction(name)
+    } else {
+      // TODO what to do?
+      throw new RuntimeException("No function '" + name + "' in scope.")
+    }
   }
 
 }

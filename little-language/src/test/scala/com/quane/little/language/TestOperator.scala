@@ -1,7 +1,10 @@
 package com.quane.little.language
 
 
-import com.quane.little.language.data.{Value, Number, Text, Variable}
+import com.quane.little.language.data.{Value, Variable}
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.junit.runner.RunWith
 
 /** Tests for the [[com.quane.little.language.Operator]] class.
   *
@@ -20,14 +23,14 @@ class TestOperator extends FunSuite {
 
   test("test guy: 'speed' is defined") {
     val guy = new Operator(null)
-    val defined = guy.isDefined(Mob.VAR_SPEED)
-    assert(defined, "expected '" + Mob.VAR_SPEED + "' to be defined")
+    val defined = guy.isDefined(Operable.VAR_SPEED)
+    assert(defined, "expected '" + Operable.VAR_SPEED + "' to be defined")
   }
 
   test("test guy: 'direction' is defined") {
     val guy = new Operator(null)
-    val defined = guy.isDefined(Mob.VAR_DIRECTION)
-    assert(defined, "expected '" + Mob.VAR_DIRECTION + "' to be defined")
+    val defined = guy.isDefined(Operable.VAR_DIRECTION)
+    assert(defined, "expected '" + Operable.VAR_DIRECTION + "' to be defined")
   }
 
   test("test guy: set direction") {

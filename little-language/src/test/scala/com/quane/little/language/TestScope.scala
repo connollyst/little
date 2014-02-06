@@ -1,6 +1,9 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.{Value, Variable}
+import org.scalatest.junit.JUnitRunner
+import org.junit.runner.RunWith
+import org.scalatest.FunSuite
 
 /** Tests for the [[com.quane.little.language.Scope]] trait.
   *

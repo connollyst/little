@@ -5,8 +5,8 @@ import com.quane.little.language.Scope
 /** Represents a pointer to a variable in memory.<br/>
   * Of course, this is not a real pointer to real memory. Instead, it is used
   * as a 'key' of sorts. Without a Pointer, we cannot <i>get</i> or <i>set</i>
-  * a {@link Variable} in memory and thus it allows us to assert the validity
-  * of a {@link Variable} at runtime.
+  * a [[com.quane.little.language.data.Variable]] in memory and thus it allows
+  * us to assert the validity of a Variable at runtime.
   *
   * @param scope
   * the scope of the variable
