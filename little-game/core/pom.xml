@@ -75,14 +75,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.scala-tools.testing</groupId>
-            <artifactId>specs</artifactId>
-            <version>${scalatest.specs.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- mockito: simpler & better mocking -->
-        <dependency>
             <groupId>org.mockito</groupId>
             <artifactId>mockito-all</artifactId>
             <version>${mockito.version}</version>

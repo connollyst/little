@@ -3,10 +3,9 @@ package com.quane.little.language
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import org.scalamock.scalatest.MockFactory
 
 @RunWith(classOf[JUnitRunner])
-class TestPrograms extends FunSuite with MockFactory {
+class TestPrograms extends FunSuite {
 
   test("test programs: turn relative") {
     val guy = new Operator(new StubOperable)
