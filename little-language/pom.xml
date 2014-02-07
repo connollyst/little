@@ -35,13 +35,6 @@
         </dependency>
 
         <dependency>
-            <groupId>org.scalatest</groupId>
-            <artifactId>scalatest_${scala.level}</artifactId>
-            <version>${scalatest.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.scalamock</groupId>
             <artifactId>scalamock-core_${scala.level}</artifactId>
             <version>${scalamock.version}</version>
@@ -52,21 +45,6 @@
             <groupId>org.scalamock</groupId>
             <artifactId>scalamock-scalatest-support_${scala.level}</artifactId>
             <version>${scalamock.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.scala-tools.testing</groupId>
-            <artifactId>specs</artifactId>
-            <version>${scalatest.specs.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <!-- mockito: simpler & better mocking -->
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
