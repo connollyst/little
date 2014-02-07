@@ -7,7 +7,7 @@ import com.google.common.base.Objects
 class Value(val primitive: Any)
   extends Expression[Value] {
 
-  private val primitiveType: ValueType = {
+  val valueType: ValueType = {
     primitive match {
       case b: Boolean => BooleanValueType
       case i: Int => IntValueType
@@ -17,7 +17,7 @@ class Value(val primitive: Any)
   }
 
   def asBool: Boolean = {
-    primitiveType match {
+    valueType match {
       case BooleanValueType =>
         primitive.asInstanceOf[Boolean]
       case IntValueType =>
@@ -43,7 +43,7 @@ class Value(val primitive: Any)
   }
 
   def asNumber: Int = {
-    primitiveType match {
+    valueType match {
       case BooleanValueType =>
         val boolean = primitive.asInstanceOf[Boolean]
         if (boolean) {
@@ -90,7 +90,7 @@ class Value(val primitive: Any)
   }
 
   override def toString: String = {
-    getClass.getSimpleName + "{" + asText + "}"
+    getClass.getSimpleName + "{" + asText + ", type=" + valueType + "}"
   }
 
 }

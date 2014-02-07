@@ -1,7 +1,7 @@
 package com.quane.little.language
 
 import scala.collection.mutable.Map
-import com.quane.little.language.data.{Value, Variable, Nada}
+import com.quane.little.language.data.{NoValueType, Value, Variable, Nada}
 import org.eintr.loglady.Logging
 
 /** A Scope defines a space in which
@@ -72,7 +72,7 @@ trait Scope
     * @return is a variable for the given name defined?
     */
   def isDefined(name: String): Boolean = {
-    fetch(name) != null
+    fetch(name).value.valueType != NoValueType
   }
 
   /** Returns the [[com.quane.little.language.Function]] by the given name if it
