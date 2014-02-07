@@ -13,7 +13,7 @@ class TestFunction extends FunSuite {
     * objects are created.<br/>
     * Assert their stored values are accurate.
     */
-  test("test function: new") {
+  test("test function with new values") {
     val fun = new Function(null)
     val pointer1 = new Pointer(fun, "Obj1")
     val pointer2 = new Pointer(fun, "Obj2")
@@ -33,7 +33,7 @@ class TestFunction extends FunSuite {
     * other.<br/>
     * Assert their stored values are accurate.
     */
-  test("test function: assignment") {
+  test("test function with value assignment") {
     val fun = new Function(null)
     val pointer1 = new Pointer(fun, "Obj1")
     val pointer2 = new Pointer(fun, "Obj2")
@@ -49,19 +49,29 @@ class TestFunction extends FunSuite {
     assert(obj2Value == "B", "expected Obj2 to be 'B' but is: " + obj2Value)
   }
 
-  /** Test evaluating a [[com.quane.little.language.Function]] with a return
-    * value.<br/>
-    * Note: this doesn't work yet. I'm not sure how exactly to implement it,
-    * but, more importantly I don't know if we need it yet..
-    */
-  test("test function: return step") {
+  test("test function with return from print statement") {
     val fun = new Function(null)
-    val pointer = new Pointer(fun, "Obj1")
-    fun.addStep(new SetStatement(pointer, new Value("A")))
-    fun.addStep(new ReturnStatement("Obj1", fun))
-    val obj1 = fun.evaluate
-    // assert(obj1.value == "A", "expected Obj1 to be 'A' but is: " + obj1.value)
-    fail("TODO implement test")
+    fun.lastStep = new PrintStatement(new Value("A"))
+    val obj = fun.evaluate
+    assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
+
+  test("test function with return from set statement") {
+    val fun = new Function(null)
+    val pointer = new Pointer(fun, "Obj")
+    fun.lastStep = new SetStatement(pointer, new Value("A"))
+    val obj = fun.evaluate
+    assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
+  }
+
+  test("test function with return from get statement") {
+    val fun = new Function(null)
+    val pointer = new Pointer(fun, "Obj")
+    fun.addStep(new SetStatement(pointer, new Value("A")))
+    fun.lastStep = new GetStatement(pointer)
+    val obj = fun.evaluate
+    assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
+  }
+
 
 }
