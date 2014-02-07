@@ -20,26 +20,20 @@ class Operator(mob: Operable)
 
   def y: Value = new Value(mob.y toInt)
 
-  def speed(speed: Int) {
-    mob.speed = Math.max(Operable.MIN_SPEED, Math.min(speed, Operable.MAX_SPEED))
-  }
+  def speed(speed: Int) = mob.speed = Math.max(Operable.MIN_SPEED, Math.min(speed, Operable.MAX_SPEED))
 
-  def speed: Int = {
-    mob.speed
-  }
+  def speed: Int = mob.speed
 
   def direction(degrees: Value) {
     if (degrees.asNumber < 0) {
-      // TODO avoid creating a new Number here
+      // TODO avoid creating a new Value here
       direction(new Value(360 + degrees.asNumber))
     } else {
       mob.direction = degrees.asNumber % 360
     }
   }
 
-  def direction: Value = {
-    new Value(mob.direction)
-  }
+  def direction: Value = new Value(mob.direction)
 
   /* Listen for events */
 
@@ -83,9 +77,6 @@ class Operator(mob: Operable)
   override def fetch(name: String): Variable = {
     log.debug("Guy is returning " + name)
     if (name.equals(Operable.VAR_SPEED)) {
-      log.debug("mob: " + mob)
-      mob.speed
-      name
       new Variable(name, new Value(mob.speed))
     } else if (name.equals(Operable.VAR_DIRECTION)) {
       new Variable(name, new Value(mob.direction))

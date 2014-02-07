@@ -12,10 +12,10 @@ object Operable {
 
 }
 
-/**
- *
- * @author Sean Connolly
- */
+/** An object that can be operated: has a location, a speed, and a direction.
+  *
+  * @author Sean Connolly
+  */
 trait Operable {
 
   def x: Float

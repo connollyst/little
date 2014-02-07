@@ -2,6 +2,7 @@ package com.quane.little.language.data
 
 import com.quane.little.language.Expression
 import scala.None
+import com.google.common.base.Objects
 
 class Value(val primitive: Any)
   extends Expression[Value] {
@@ -71,6 +72,26 @@ class Value(val primitive: Any)
     * @return this
     */
   def evaluate: Value = this
+
+
+  override def equals(other: Any): Boolean = {
+    other match {
+      case that: Value =>
+        (this.primitive == that.primitive) && super.equals(that)
+      case that: Int =>
+        this.asNumber == that
+      case that: Boolean =>
+        this.asBool == that
+      case that: String =>
+        this.asText == that
+      case _ =>
+        false
+    }
+  }
+
+  override def toString: String = {
+    getClass.getSimpleName + "{" + asText + "}"
+  }
 
 }
 
