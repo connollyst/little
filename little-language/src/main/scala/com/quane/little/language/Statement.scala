@@ -47,10 +47,3 @@ class PrintStatement(value: Expression[Value])
   }
 
 }
-
-class ReturnStatement(name: String, scope: Scope)
-  extends Statement {
-
-  def evaluate: Value = scope.fetch(name).value
-
-}
