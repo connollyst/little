@@ -15,20 +15,20 @@ class Operator(override val runtime: Runtime, mob: Operable)
 
   var scope: Scope = runtime
 
-  def x: Value = new Value(mob.x toInt)
+  def x: Value = new Value(mob.x toDouble)
 
-  def y: Value = new Value(mob.y toInt)
+  def y: Value = new Value(mob.y toDouble)
 
   def speed(speed: Int) = mob.speed = Math.max(Operable.MIN_SPEED, Math.min(speed, Operable.MAX_SPEED))
 
   def speed: Int = mob.speed
 
   def direction(degrees: Value) {
-    if (degrees.asNumber < 0) {
+    if (degrees.asInt < 0) {
       // TODO avoid creating a new Value here
-      direction(new Value(360 + degrees.asNumber))
+      direction(new Value(360 + degrees.asInt))
     } else {
-      mob.direction = degrees.asNumber % 360
+      mob.direction = degrees.asInt % 360
     }
   }
 
@@ -63,25 +63,27 @@ class Operator(override val runtime: Runtime, mob: Operable)
   override def save(variable: Variable) {
     val name = variable.name
     log.debug("Guy is saving " + name)
-    if (name.equals(Operable.VAR_SPEED)) {
-      speed(variable.value.asNumber)
-    } else if (name.equals(Operable.VAR_DIRECTION)) {
-      direction(variable.value)
-    } else {
-      // It's not a special variable, store it in normal memory
-      super.save(variable)
+    name match {
+      case Operable.X => throw new IllegalAccessException("Cannot set X")
+      case Operable.Y => throw new IllegalAccessException("Cannot set Y")
+      case Operable.VAR_SPEED => speed(variable.value.asInt)
+      case Operable.VAR_DIRECTION => direction(variable.value)
+      case _ =>
+        // It's not a special variable, store it in normal memory
+        super.save(variable)
     }
   }
 
   override def fetch(name: String): Variable = {
     log.debug("Guy is returning " + name)
-    if (name.equals(Operable.VAR_SPEED)) {
-      new Variable(name, new Value(mob.speed))
-    } else if (name.equals(Operable.VAR_DIRECTION)) {
-      new Variable(name, new Value(mob.direction))
-    } else {
-      // It's not a special variable, fetch it from normal memory
-      super.fetch(name)
+    name match {
+      case Operable.X => new Variable(name, x)
+      case Operable.Y => new Variable(name, y)
+      case Operable.VAR_SPEED => new Variable(name, new Value(mob.speed))
+      case Operable.VAR_DIRECTION => new Variable(name, direction)
+      case _ =>
+        // It's not a special variable, fetch it from normal memory
+        super.fetch(name)
     }
   }
 

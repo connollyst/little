@@ -10,9 +10,9 @@ import com.quane.little.language.Expression
   * @param high the maximum possible value
   */
 class RandomNumber(low: Value, high: Value)
-  extends Expression[Value] {
+  extends Expression {
 
-  override def evaluate: Value = new Value(low.asNumber + Random.nextInt(high.asNumber - low.asNumber + 1))
+  override def evaluate: Value = new Value(low.asInt + Random.nextInt(high.asInt - low.asInt + 1))
 
 }
 

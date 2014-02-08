@@ -8,8 +8,8 @@ import com.quane.little.language.data.{Nada, Value}
   *
   * @author Sean Connolly
   */
-class Conditional(test: Expression[_ <: Value], function: Function)
-  extends Expression[Nada] {
+class Conditional(test: Expression, function: Function)
+  extends Expression {
 
   /** Evaluate the conditional statement; only if the <i>test</i> evaluates
     * to {@code true}, the <i>function</i> is evaluated.

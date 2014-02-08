@@ -5,7 +5,7 @@ import com.quane.little.language.Function
 import com.quane.little.language.data.Nada
 
 class EventListener(val event: LittleEvent, val function: Function)
-  extends Expression[Nada] {
+  extends Expression {
 
   def evaluate: Nada = {
     function.evaluate

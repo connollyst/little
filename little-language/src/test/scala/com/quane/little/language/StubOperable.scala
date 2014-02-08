@@ -4,9 +4,12 @@ package com.quane.little.language
   *
   * @author Sean Connolly
   */
-class StubOperable extends Operable {
+class StubOperable(var x: Float, var y: Float) extends Operable {
+
+  def this() = this(0.0f, 0.0f)
+
   var direction: Int = 0
-  var x: Float = 0.0f
-  var y: Float = 0.0f
+
   var speed: Int = 0
+
 }

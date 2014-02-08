@@ -10,15 +10,15 @@ import com.quane.little.language.data.{Value, Nada}
   * has a [[com.quane.little.language.Scope]]. Thus, any variables defined
   * within are limited to this scope.
   */
-class Function(var scope: Scope, steps: ListBuffer[Expression[_]])
-  extends Block[Value](scope) {
+class Function(var scope: Scope, steps: ListBuffer[Expression])
+  extends Block(scope) {
 
   val runtime: Runtime = scope.runtime
-  var lastStep: Expression[_ <: Value] = new Nada
+  var lastStep: Expression = new Nada
 
-  def this(scope: Scope) = this(scope, ListBuffer[Expression[_]]())
+  def this(scope: Scope) = this(scope, ListBuffer[Expression]())
 
-  def addStep(step: Expression[_]): Function = {
+  def addStep(step: Expression): Function = {
     steps += step
     this
   }
@@ -36,7 +36,7 @@ class Function(var scope: Scope, steps: ListBuffer[Expression[_]])
   * @param name the name of the function
   */
 class FunctionReference(val scope: Scope, val name: String)
-  extends Expression[Value] {
+  extends Expression {
 
   /** Evaluate the referenced function within the current
     * [[com.quane.little.language.Scope]].

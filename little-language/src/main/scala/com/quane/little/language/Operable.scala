@@ -2,6 +2,10 @@ package com.quane.little.language
 
 object Operable {
 
+  val X = "GuyX"
+
+  val Y = "GuyY"
+
   val VAR_SPEED = "GuySpeed"
 
   val VAR_DIRECTION = "GuyDirection"

@@ -3,31 +3,29 @@ package com.quane.little.language.data
 import com.quane.little.language.Expression
 import scala.None
 import com.google.common.base.Objects
+import org.eintr.loglady.Logging
 
 class Value(val primitive: Any)
-  extends Expression[Value] {
+  extends Expression
+  with Ordered[Value]
+  with Logging {
 
   val valueType: ValueType = {
     primitive match {
       case b: Boolean => BooleanValueType
       case i: Int => IntValueType
+      case d: Double => DoubleValueType
       case s: String => StringValueType
-      case _ => NoValueType
+      case _ =>
+        log.warn("Cannot resolve value type for " + primitive)
+        NoValueType
     }
   }
 
+  def asText: String = primitive.toString
+
   def asBool: Boolean = {
     valueType match {
-      case BooleanValueType =>
-        primitive.asInstanceOf[Boolean]
-      case IntValueType =>
-        primitive.asInstanceOf[Int] match {
-          case 0 => false
-          case 1 => true
-          case _ => throw new ClassCastException(
-            primitive.toString + " cannot be converted to a Bool"
-          )
-        }
       case StringValueType =>
         val string = primitive.toString
         if (string equalsIgnoreCase "true") {
@@ -36,14 +34,44 @@ class Value(val primitive: Any)
           false
         } else {
           throw new ClassCastException(
-            primitive.toString + " cannot be converted to a Bool"
+            toString + " cannot be converted to a Bool"
           )
         }
+      case BooleanValueType =>
+        primitive.asInstanceOf[Boolean]
+      case IntValueType =>
+        primitive.asInstanceOf[Int] match {
+          case 0 => false
+          case 1 => true
+          case _ => throw new ClassCastException(
+            toString + " cannot be converted to a Bool"
+          )
+        }
+      case DoubleValueType =>
+        // TODO implement Double -> Boolean
+        throw new ClassCastException(
+          toString + " cannot be converted to a Bool"
+        )
     }
   }
 
-  def asNumber: Int = {
+  def asInt: Int = {
     valueType match {
+      case StringValueType =>
+        try {
+          primitive.asInstanceOf[String].toInt
+        } catch {
+          case e: NumberFormatException =>
+            try {
+              // TODO avoid newing up a Value here
+              new Value(asBool).asInt
+            } catch {
+              case e: ClassCastException =>
+                throw new ClassCastException(
+                  primitive.toString + " cannot be converted to a Number"
+                )
+            }
+        }
       case BooleanValueType =>
         val boolean = primitive.asInstanceOf[Boolean]
         if (boolean) {
@@ -53,26 +81,41 @@ class Value(val primitive: Any)
         }
       case IntValueType =>
         primitive.asInstanceOf[Int]
+      case DoubleValueType =>
+        asDouble.toInt
+    }
+  }
+
+  def asDouble: Double = {
+    valueType match {
       case StringValueType =>
         try {
-          primitive.asInstanceOf[String].toInt
+          primitive.asInstanceOf[String].toDouble
         } catch {
           case e: NumberFormatException =>
             try {
               // TODO avoid newing up a Value here
-              new Value(asBool).asNumber
+              new Value(asBool).asDouble
             } catch {
               case e: ClassCastException =>
                 throw new ClassCastException(
-                  primitive.toString + " cannot be converted to a Number"
+                  toString + " cannot be converted to a Double"
                 )
             }
-
         }
+      case BooleanValueType =>
+        asInt
+      case IntValueType =>
+        asInt
+      case DoubleValueType =>
+        primitive.asInstanceOf[Double]
+      case NoValueType =>
+        throw new ClassCastException(
+          toString + " cannot be converted to a Double"
+        )
     }
   }
 
-  def asText: String = primitive.toString
 
   /** A value is an expression which evaluates to itself.
     *
@@ -82,17 +125,42 @@ class Value(val primitive: Any)
 
   override def equals(other: Any): Boolean = {
     other match {
-      case that: Value =>
-        (this.primitive == that.primitive) && super.equals(that)
-      case that: Int =>
-        this.asNumber == that
-      case that: Boolean =>
-        this.asBool == that
-      case that: String =>
-        this.asText == that
-      case _ =>
-        false
+      case that: Value => this.asText == that.asText
+      case that: String => this.asText == that
+      case that: Boolean => this.asBool == that
+      case that: Int => this.asInt == that
+      case that: Double => this.asDouble == that
+      case _ => false
     }
+  }
+
+  def compare(that: Value): Int = {
+    // 1) If the values are the same primitive type, compare the primitives
+    if (valueType == that.valueType) {
+      return valueType match {
+        case StringValueType => asText compareTo that.asText
+        case BooleanValueType => asBool compareTo that.asBool
+        case IntValueType => asInt compareTo that.asInt
+        case DoubleValueType => asDouble compareTo that.asDouble
+        case _ => throw new IllegalAccessException("Unrecognized value type: " + toString)
+      }
+    }
+    // 2) If the primitive types are different, see if they can be cast (eg: Int & Double, Int & Boolean?)
+    if ( // Compare int to double as int
+      (valueType == IntValueType && that.valueType == DoubleValueType)
+        || (valueType == DoubleValueType && that.valueType == IntValueType)
+        // Compare int to boolean as int
+        || (valueType == IntValueType && that.valueType == BooleanValueType)
+        || (valueType == BooleanValueType && that.valueType == IntValueType)
+        // Compare double to boolean as int
+        || (valueType == DoubleValueType && that.valueType == BooleanValueType)
+        || (valueType == BooleanValueType && that.valueType == DoubleValueType)
+    ) {
+      return asInt compareTo that.asInt
+      // TODO what other conversions are possible? boolean to 'true'/'false'?
+    }
+    // 3) If the primitive types are different and no cast makes sense, convert to text and compare
+    asText compareTo that.asText
   }
 
   override def toString: String = {
@@ -103,11 +171,13 @@ class Value(val primitive: Any)
 
 sealed trait ValueType
 
+object StringValueType extends ValueType
+
 object BooleanValueType extends ValueType
 
 object IntValueType extends ValueType
 
-object StringValueType extends ValueType
+object DoubleValueType extends ValueType
 
 object NoValueType extends ValueType
 
@@ -116,7 +186,7 @@ class Nada
 
   override def asBool: Boolean = false
 
-  override def asNumber: Int = 0
+  override def asInt: Int = 0
 
   override def asText: String = "nada"
 

@@ -1,25 +1,28 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.Value
+import com.sun.tools.corba.se.idl.constExpr.GreaterThan
 
 /** A logical evaluation of the relationship between two arguments expressions.
   *
   * @param left the left operand
   * @param operator the evaluation operator
   * @param right the right operand
-  * @tparam T the operand expression type
   */
-class Evaluation[T <: Expression[_]](left: T,
-                                     operator: EvaluationOperator,
-                                     right: T)
-  extends Expression[Value] {
+class Evaluation(left: Expression,
+                 operator: EvaluationOperator,
+                 right: Expression)
+  extends Expression {
 
   def evaluate: Value = {
-    // TODO clean this up, gross!
+    val l = left.evaluate
+    val r = right.evaluate
     new Value(
       operator match {
-        case Equals => left equals right
-        case NotEquals => !(left equals right)
+        case Equals => l equals r
+        case NotEquals => !(l equals r)
+        case LessThan => (l compare r) < 0
+        case GreaterThan => (l compare r) > 0
       }
     )
   }
@@ -31,4 +34,8 @@ object Equals extends EvaluationOperator
 
 object NotEquals extends EvaluationOperator
 
-// TODO GreaterThan, LessThan, Contains..
+object LessThan extends EvaluationOperator
+
+object GreaterThan extends EvaluationOperator
+
+// TODO Contains..

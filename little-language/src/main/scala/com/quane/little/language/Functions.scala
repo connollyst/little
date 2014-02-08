@@ -3,9 +3,8 @@ package com.quane.little.language
 import java.util.concurrent.Executors
 import java.util.concurrent.TimeUnit
 
-import com.quane.little.language.data.Value
-import com.quane.little.language.math.Addition
-import com.quane.little.language.math.RandomNumber
+import com.quane.little.language.data.{Variable, Value}
+import com.quane.little.language.math._
 import com.quane.little.language.memory.Pointer
 
 /** A set functions used during development - mostly to sanity check the
@@ -17,7 +16,7 @@ object Functions {
 
   private val worker = Executors.newSingleThreadScheduledExecutor()
 
-  def inTime(seconds: Int, fun: Expression[_]) {
+  def inTime(seconds: Int, fun: Expression) {
     val task = new Runnable() {
       def run() {
         fun.evaluate
@@ -26,7 +25,7 @@ object Functions {
     worker.schedule(task, seconds, TimeUnit.SECONDS)
   }
 
-  def move(mob: Operator, speed: Expression[Value]): Function = {
+  def move(mob: Operator, speed: Expression): Function = {
     val fun = new Function(mob)
     val pointer = new Pointer(fun, Operable.VAR_SPEED)
     fun.addStep(new SetStatement(pointer, speed))
@@ -38,7 +37,7 @@ object Functions {
     fun.addStep(new SetStatement(pointer, new Value(0)))
   }
 
-  def turn(mob: Operator, degrees: Expression[Value]): Function = {
+  def turn(mob: Operator, degrees: Expression): Function = {
     val fun = new Function(mob)
     val pointer = new Pointer(fun, Operable.VAR_DIRECTION)
     fun.addStep(new SetStatement(pointer, degrees))
@@ -86,6 +85,43 @@ object Functions {
   def printDirection(mob: Operator): Function = {
     val fun = new Function(mob)
     fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Operable.VAR_DIRECTION))))
+  }
+
+  def pointToward(mob: Operator, x: Expression, y: Expression): Function = {
+    val fun = new Function(mob)
+    // TODO get angle from (mob.x,mob.y) to (x,y)
+    // TODO set mob direction
+    fun
+  }
+
+  def getAngleTo(mob: Operator, x: Expression, y: Expression): Function = {
+    val angleFunction = new Function(mob)
+    val anglePointer = new Pointer(angleFunction, "angle")
+
+    // Build the angle calculation
+    val mobX = new GetStatement(new Pointer(mob, Operable.X))
+    val mobY = new GetStatement(new Pointer(mob, Operable.Y))
+    val deltaX = new Subtraction(x, mobX)
+    val deltaY = new Subtraction(y, mobY)
+    val radians = new ArcTan2(deltaY, deltaX)
+    val calculateAngleStep = new Division(new Multiplication(radians, new Value(180)), new Value(scala.math.Pi))
+
+    // Save the angle to memory
+    val saveAngleStep = new SetStatement(anglePointer, calculateAngleStep)
+
+    // Check if the angle is too small
+    val tooSmallChecker = new Evaluation(new GetStatement(anglePointer), LessThan, new Value(0))
+    val cleanerFunction = new Function(angleFunction).addStep(
+      new SetStatement(anglePointer, new Addition(new GetStatement(anglePointer), new Value(360)))
+    )
+    val tooSmallCleaner = new Conditional(tooSmallChecker, cleanerFunction)
+
+    // Build the function
+    angleFunction.addStep(calculateAngleStep)
+    angleFunction.addStep(saveAngleStep)
+    angleFunction.addStep(tooSmallCleaner)
+    angleFunction.lastStep = new GetStatement(anglePointer)
+    angleFunction
   }
 
 }

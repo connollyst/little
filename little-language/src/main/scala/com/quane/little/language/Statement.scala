@@ -5,9 +5,9 @@ import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.{Value, Variable}
 
 abstract class Statement
-  extends Expression[Value]
+  extends Expression
 
-class SetStatement(pointer: Pointer, value: Expression[Value])
+class SetStatement(pointer: Pointer, value: Expression)
   extends Statement
   with Logging {
 
@@ -35,7 +35,7 @@ class GetStatement(pointer: Pointer)
 
 }
 
-class PrintStatement(value: Expression[Value])
+class PrintStatement(value: Expression)
   extends Statement
   with Logging {
 

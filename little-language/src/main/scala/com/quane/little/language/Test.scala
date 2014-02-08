@@ -8,10 +8,10 @@ import com.quane.little.language.data.Value
   * @param operator the test operator
   * @param right the right operand
   */
-class Test(left: Expression[_ <: Value],
+class Test(left: Expression,
            operator: LogicalOperator,
-           right: Expression[_ <: Value])
-  extends Expression[Value] {
+           right: Expression)
+  extends Expression {
 
   def evaluate: Value = new Value(isTrue)
 

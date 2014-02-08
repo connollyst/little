@@ -22,12 +22,12 @@ class TestValue extends FunSuite {
 
   test("test true as number") {
     val t = new Value(true)
-    assert(t.asNumber == 1, "true as a number should be 1")
+    assert(t.asInt == 1, "true as a number should be 1")
   }
 
   test("test false as number") {
     val f = new Value(false)
-    assert(f.asNumber == 0, "false as a number should be 0")
+    assert(f.asInt == 0, "false as a number should be 0")
   }
 
   test("test true as text") {
@@ -61,7 +61,7 @@ class TestValue extends FunSuite {
 
   test("test number as number") {
     val num = new Value(137)
-    assert(num.asNumber == 137, "137 as a number should be 137")
+    assert(num.asInt == 137, "137 as a number should be 137")
   }
 
   test("test number as text") {
@@ -90,23 +90,23 @@ class TestValue extends FunSuite {
 
   test("test '137' as number") {
     val text = new Value("137")
-    assert(text.asNumber == 137, "'137' as a number should be 137")
+    assert(text.asInt == 137, "'137' as a number should be 137")
   }
 
   test("test 'true' as number") {
     val text = new Value("true")
-    assert(text.asNumber == 1, "'true' as a number should be 1")
+    assert(text.asInt == 1, "'true' as a number should be 1")
   }
 
   test("test 'false' as number") {
     val text = new Value("false")
-    assert(text.asNumber == 0, "'false' as a number should be 0")
+    assert(text.asInt == 0, "'false' as a number should be 0")
   }
 
   test("test 'hello world' as number") {
     val text = new Value("hello world")
     intercept[ClassCastException] {
-      text.asNumber
+      text.asInt
     }
   }
 
@@ -139,7 +139,7 @@ class TestValue extends FunSuite {
 
   test("test nada as number") {
     val nada = new Nada
-    assert(nada.asNumber == 0, "nada as a number should be 0")
+    assert(nada.asInt == 0, "nada as a number should be 0")
   }
 
   test("test nada as text") {
