@@ -89,20 +89,22 @@ object Functions {
 
   def pointToward(mob: Operator, x: Expression, y: Expression): Function = {
     val fun = new Function(mob)
-    // TODO get angle from (mob.x,mob.y) to (x,y)
-    // TODO set mob direction
-    fun
+    fun.addStep(new SetStatement(new Pointer(fun, Operable.DIRECTION), getAngleTo(mob, x, y)))
   }
 
-  def getAngleTo(mob: Operator, x: Expression, y: Expression): Function = {
-    val angleFunction = new Function(mob)
+  def getAngleTo(scope: Scope, x: Expression, y: Expression): Function = {
+    val mobX = new GetStatement(new Pointer(scope, Operable.X))
+    val mobY = new GetStatement(new Pointer(scope, Operable.Y))
+    getAngleBetween(scope, mobX, mobY, x, y)
+  }
+
+  def getAngleBetween(scope: Scope, fromX: Expression, fromY: Expression, toX: Expression, toY: Expression): Function = {
+    val angleFunction = new Function(scope)
     val anglePointer = new Pointer(angleFunction, "angle")
 
     // Build the angle calculation
-    val mobX = new GetStatement(new Pointer(mob, Operable.X))
-    val mobY = new GetStatement(new Pointer(mob, Operable.Y))
-    val deltaX = new Subtraction(x, mobX)
-    val deltaY = new Subtraction(y, mobY)
+    val deltaX = new Subtraction(toX, fromX)
+    val deltaY = new Subtraction(toY, fromY)
     val radians = new ArcTan2(deltaY, deltaX)
     val calculateAngleStep = new Division(new Multiplication(radians, new Value(180)), new Value(scala.math.Pi))
 
@@ -123,5 +125,4 @@ object Functions {
     angleFunction.lastStep = new GetStatement(anglePointer)
     angleFunction
   }
-
 }

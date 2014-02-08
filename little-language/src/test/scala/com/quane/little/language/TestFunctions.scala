@@ -71,5 +71,43 @@ class TestFunctions extends FunSuite {
     assert(angle == 225, "expected 225, actual=" + angle.primitive)
   }
 
+  test("point from (0,0) to (1,0) should set direction to 0 degrees") {
+    testPointTowardFunction(1, 0, 0)
+  }
+
+  test("point from (0,0) to (1,1) should set direction to 45 degrees") {
+    testPointTowardFunction(1, 1, 45)
+  }
+
+  test("point from (0,0) to (0,1) should set direction to 90 degrees") {
+    testPointTowardFunction(0, 1, 90)
+  }
+
+  test("point from (0,0) to (-1,1) should set direction to 135 degrees") {
+    testPointTowardFunction(-1, 1, 135)
+  }
+
+  test("point from (0,0) to (-1,0) should set direction to 180 degrees") {
+    testPointTowardFunction(-1, 0, 180)
+  }
+
+  test("point from (0,0) to (-1,-1) should set direction to 225 degrees") {
+    testPointTowardFunction(-1, -1, 225)
+  }
+
+  test("point from (0,0) to (0,-1) should set direction to 270 degrees") {
+    testPointTowardFunction(0, -1, 270)
+  }
+
+  test("point from (0,0) to (1,-1) should set direction to 315 degrees") {
+    testPointTowardFunction(1, -1, 315)
+  }
+
+  private def testPointTowardFunction(x: Int, y: Int, expectedDir: Int) {
+    val guy = new Operator(new Runtime, new StubOperable)
+    Functions.pointToward(guy, new Value(x), new Value(y)).evaluate
+    val dir = guy.direction.asInt
+    assert(dir == expectedDir, "guy should have turned to " + expectedDir + " degrees, actual=" + dir)
+  }
 
 }
