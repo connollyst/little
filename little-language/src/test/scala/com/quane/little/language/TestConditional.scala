@@ -31,7 +31,7 @@ class TestConditional extends FunSuite with BeforeAndAfter {
   }
 
   private def createTestFunction = {
-    val fun = new Function(null)
+    val fun = new Function(new Runtime)
     val pointer = new Pointer(fun, name)
     fun.addStep(new SetStatement(pointer, new Value(value)))
   }

@@ -13,11 +13,10 @@ import com.quane.little.language.data.{Value, Nada}
 class Function(var scope: Scope, steps: ListBuffer[Expression[_]])
   extends Block[Value](scope) {
 
+  val runtime: Runtime = scope.runtime
   var lastStep: Expression[_ <: Value] = new Nada
 
   def this(scope: Scope) = this(scope, ListBuffer[Expression[_]]())
-
-  def this() = this(null) // TODO we should avoid null, yeah?
 
   def addStep(step: Expression[_]): Function = {
     steps += step
@@ -45,7 +44,7 @@ class FunctionReference(val scope: Scope, val name: String)
     * @return the result of the function evaluation
     */
   def evaluate: Value = {
-    val function = scope.fetchFunction(name)
+    val function = scope.runtime.fetchFunction(name)
     if (scope != function) {
       function.scope = scope
     }

@@ -13,7 +13,7 @@ import org.scalatest.FunSuite
 class TestScope extends FunSuite {
 
   test("test scope: fetch from parent scope") {
-    val fun1 = new Function(null)
+    val fun1 = new Function(new Runtime)
     val fun2 = new Function(fun1)
     fun1.save(new Variable("Obj1", new Value("A")))
     fun2.save(new Variable("Obj2", new Value("B")))
@@ -26,14 +26,14 @@ class TestScope extends FunSuite {
   }
 
   test("test scope: is defined: positive") {
-    val fun1 = new Function(null)
+    val fun1 = new Function(new Runtime)
     fun1.save(new Variable("Obj1", new Value("A")))
     val defined = fun1.isDefined("Obj1")
     assert(defined, "expected 'Obj1' to be defined")
   }
 
   test("test scope: is defined: negative") {
-    val fun1 = new Function(null)
+    val fun1 = new Function(new Runtime)
     val defined = fun1.isDefined("Obj1")
     assert(!defined, "didn't expect 'Obj1' to be defined")
   }

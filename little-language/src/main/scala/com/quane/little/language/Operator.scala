@@ -9,12 +9,11 @@ import com.quane.little.language.data.{Value, Variable}
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.event.LittleEvent
 
-class Operator(mob: Operable)
+class Operator(override val runtime: Runtime, mob: Operable)
   extends Scope
   with Logging {
 
-  // TODO is there a 'community' scope above this?
-  var scope: Scope = null
+  var scope: Scope = runtime
 
   def x: Value = new Value(mob.x toInt)
 

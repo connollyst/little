@@ -1,7 +1,7 @@
 package com.quane.little.language
 
 import scala.collection.mutable.Map
-import com.quane.little.language.data.{NoValueType, Value, Variable, Nada}
+import com.quane.little.language.data.{NoValueType, Variable, Nada}
 import org.eintr.loglady.Logging
 
 /** A Scope defines a space in which
@@ -22,9 +22,9 @@ trait Scope
   extends Logging {
 
   var scope: Scope
+  val runtime: Runtime
 
   private val variables = Map[String, Variable]()
-  private val functions = Map[String, Function]()
 
   /** Stores the given [[com.quane.little.language.data.Variable]] in memory.
     *
@@ -57,7 +57,7 @@ trait Scope
   def fetch(name: String): Variable = {
     if (variables.contains(name)) {
       variables(name)
-    } else if (scope != null) {
+    } else if (scope != null && scope != this) {
       scope.fetch(name)
     } else {
       new Variable(name, new Nada)
@@ -73,36 +73,6 @@ trait Scope
     */
   def isDefined(name: String): Boolean = {
     fetch(name).value.valueType != NoValueType
-  }
-
-  def isFunctionDefined(name: String): Boolean = {
-    fetchFunction(name) != null
-  }
-
-  def saveFunction(name: String, function: Function) {
-    if (scope != null && scope.isDefined(name)) {
-      scope.saveFunction(name, function)
-    } else {
-      log.info("Saving function '" + name + "'")
-      functions(name) = function
-    }
-  }
-
-  /** Returns the [[com.quane.little.language.Function]] by the given name if it
-    * is defined in this, ''or any greater'' [[com.quane.little.language.Scope]].
-    *
-    * @param name the name of the function
-    * @return the function if defined
-    */
-  def fetchFunction(name: String): Function = {
-    if (functions.contains(name)) {
-      functions(name)
-    } else if (scope != null) {
-      scope.fetchFunction(name)
-    } else {
-      // TODO what to do?
-      throw new RuntimeException("No function '" + name + "' in scope.")
-    }
   }
 
 }

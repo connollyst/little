@@ -9,7 +9,7 @@ import com.quane.little.language.data.Value
 class TestPrograms extends FunSuite {
 
   test("test programs: move") {
-    val guy = new Operator(new StubOperable)
+    val guy = new Operator(new Runtime, new StubOperable)
     val program = Programs.move(guy, new Value(42))
     program.evaluate
     val speed = guy.speed
@@ -17,7 +17,7 @@ class TestPrograms extends FunSuite {
   }
 
   test("test programs: stop") {
-    val guy = new Operator(new StubOperable)
+    val guy = new Operator(new Runtime, new StubOperable)
     guy.speed(42)
     val program = Programs.stop(guy)
     program.evaluate
@@ -26,7 +26,7 @@ class TestPrograms extends FunSuite {
   }
 
   test("test programs: turn") {
-    val guy = new Operator(new StubOperable)
+    val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(new Value(137))
     val program = Programs.turn(guy, new Value(42))
     program.evaluate
@@ -35,7 +35,7 @@ class TestPrograms extends FunSuite {
   }
 
   test("test programs: turn relative") {
-    val guy = new Operator(new StubOperable)
+    val guy = new Operator(new Runtime, new StubOperable)
     val program = Programs.turnRelative(guy, 60)
     program.evaluate // 0 + 60 = 60
     program.evaluate // 60 + 60 = 120
