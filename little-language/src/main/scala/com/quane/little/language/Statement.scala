@@ -4,10 +4,10 @@ import org.eintr.loglady.Logging
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.{Value, Variable}
 
-abstract class Statement
+sealed trait Statement
   extends Expression
 
-class SetStatement(pointer: Pointer, value: Expression)
+class Set(pointer: Pointer, value: Expression)
   extends Statement
   with Logging {
 
@@ -21,7 +21,7 @@ class SetStatement(pointer: Pointer, value: Expression)
 
 }
 
-class GetStatement(pointer: Pointer)
+class Get(pointer: Pointer)
   extends Statement
   with Logging {
 
@@ -35,7 +35,7 @@ class GetStatement(pointer: Pointer)
 
 }
 
-class PrintStatement(value: Expression)
+class Print(value: Expression)
   extends Statement
   with Logging {
 

@@ -28,19 +28,19 @@ object Functions {
   def move(mob: Operator, speed: Expression): Function = {
     val fun = new Function(mob)
     val pointer = new Pointer(fun, Operable.SPEED)
-    fun.addStep(new SetStatement(pointer, speed))
+    fun.addStep(new Set(pointer, speed))
   }
 
   def stop(mob: Operator): Function = {
     val fun = new Function(mob)
     val pointer = new Pointer(fun, Operable.SPEED)
-    fun.addStep(new SetStatement(pointer, new Value(0)))
+    fun.addStep(new Set(pointer, new Value(0)))
   }
 
   def turn(mob: Operator, degrees: Expression): Function = {
     val fun = new Function(mob)
     val pointer = new Pointer(fun, Operable.DIRECTION)
-    fun.addStep(new SetStatement(pointer, degrees))
+    fun.addStep(new Set(pointer, degrees))
   }
 
   def turnRandom(mob: Operator): Function = {
@@ -48,7 +48,7 @@ object Functions {
     val max = new Value(360)
     val randomFun = new Function(mob)
     randomFun.addStep(
-      new SetStatement(
+      new Set(
         new Pointer(randomFun, Operable.DIRECTION), new RandomNumber(min, max)
       )
     )
@@ -57,10 +57,10 @@ object Functions {
   def turnRelative(mob: Operator, degrees: Int): Function = {
     val relativelyFun = new Function(mob)
     val dirPointer = new Pointer(relativelyFun, Operable.DIRECTION)
-    val getCurrentDir = new GetStatement(dirPointer)
+    val getCurrentDir = new Get(dirPointer)
     val dirChange = new Value(degrees)
     val getNewDirection = new Addition(getCurrentDir, dirChange)
-    val setNewDirection = new SetStatement(dirPointer, getNewDirection)
+    val setNewDirection = new Set(dirPointer, getNewDirection)
     relativelyFun.addStep(setNewDirection)
   }
 
@@ -76,25 +76,25 @@ object Functions {
     // Step #2: Remember _Home_ is _Here_
     val homeXPointer = new Pointer(fun, "HomeX")
     val homeYPointer = new Pointer(fun, "HomeY")
-    fun.addStep(new SetStatement(homeXPointer, mob.x))
-    fun.addStep(new SetStatement(homeYPointer, mob.y))
+    fun.addStep(new Set(homeXPointer, mob.x))
+    fun.addStep(new Set(homeYPointer, mob.y))
     // Step #3: Set speed to 10
     fun.addStep(move(mob, new Value(10)))
   }
 
   def printDirection(mob: Operator): Function = {
     val fun = new Function(mob)
-    fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Operable.DIRECTION))))
+    fun.addStep(new Print(new Get(new Pointer(fun, Operable.DIRECTION))))
   }
 
   def pointToward(mob: Operator, x: Expression, y: Expression): Function = {
     val fun = new Function(mob)
-    fun.addStep(new SetStatement(new Pointer(fun, Operable.DIRECTION), getAngleTo(mob, x, y)))
+    fun.addStep(new Set(new Pointer(fun, Operable.DIRECTION), getAngleTo(mob, x, y)))
   }
 
   def getAngleTo(scope: Scope, x: Expression, y: Expression): Function = {
-    val mobX = new GetStatement(new Pointer(scope, Operable.X))
-    val mobY = new GetStatement(new Pointer(scope, Operable.Y))
+    val mobX = new Get(new Pointer(scope, Operable.X))
+    val mobY = new Get(new Pointer(scope, Operable.Y))
     getAngleBetween(scope, mobX, mobY, x, y)
   }
 
@@ -109,12 +109,12 @@ object Functions {
     val calculateAngleStep = new Division(new Multiplication(radians, new Value(180)), new Value(scala.math.Pi))
 
     // Save the angle to memory
-    val saveAngleStep = new SetStatement(anglePointer, calculateAngleStep)
+    val saveAngleStep = new Set(anglePointer, calculateAngleStep)
 
     // Check if the angle is too small
-    val tooSmallChecker = new Evaluation(new GetStatement(anglePointer), LessThan, new Value(0))
+    val tooSmallChecker = new Evaluation(new Get(anglePointer), LessThan, new Value(0))
     val cleanerFunction = new Function(angleFunction).addStep(
-      new SetStatement(anglePointer, new Addition(new GetStatement(anglePointer), new Value(360)))
+      new Set(anglePointer, new Addition(new Get(anglePointer), new Value(360)))
     )
     val tooSmallCleaner = new Conditional(tooSmallChecker, cleanerFunction)
 
@@ -122,7 +122,7 @@ object Functions {
     angleFunction.addStep(calculateAngleStep)
     angleFunction.addStep(saveAngleStep)
     angleFunction.addStep(tooSmallCleaner)
-    angleFunction.lastStep = new GetStatement(anglePointer)
+    angleFunction.lastStep = new Get(anglePointer)
     angleFunction
   }
 }
