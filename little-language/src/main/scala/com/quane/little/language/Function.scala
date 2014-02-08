@@ -46,7 +46,9 @@ class FunctionReference(val scope: Scope, val name: String)
     */
   def evaluate: Value = {
     val function = scope.fetchFunction(name)
-    function.scope = scope
+    if (scope != function) {
+      function.scope = scope
+    }
     function.evaluate
   }
 

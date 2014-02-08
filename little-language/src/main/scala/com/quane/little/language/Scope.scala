@@ -75,6 +75,19 @@ trait Scope
     fetch(name).value.valueType != NoValueType
   }
 
+  def isFunctionDefined(name: String): Boolean = {
+    fetchFunction(name) != null
+  }
+
+  def saveFunction(name: String, function: Function) {
+    if (scope != null && scope.isDefined(name)) {
+      scope.saveFunction(name, function)
+    } else {
+      log.info("Saving function '" + name + "'")
+      functions(name) = function
+    }
+  }
+
   /** Returns the [[com.quane.little.language.Function]] by the given name if it
     * is defined in this, ''or any greater'' [[com.quane.little.language.Scope]].
     *
