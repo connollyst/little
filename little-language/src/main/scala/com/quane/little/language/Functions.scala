@@ -8,12 +8,12 @@ import com.quane.little.language.math.Addition
 import com.quane.little.language.math.RandomNumber
 import com.quane.little.language.memory.Pointer
 
-/** A set programs used during development - mostly to sanity check the
+/** A set functions used during development - mostly to sanity check the
   * language and how it compiles.
   *
   * @author Sean Connolly
   */
-object Programs {
+object Functions {
 
   private val worker = Executors.newSingleThreadScheduledExecutor()
 

@@ -6,11 +6,11 @@ import org.scalatest.FunSuite
 import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
-class TestPrograms extends FunSuite {
+class TestFunctions extends FunSuite {
 
   test("test programs: move") {
     val guy = new Operator(new Runtime, new StubOperable)
-    val program = Programs.move(guy, new Value(42))
+    val program = Functions.move(guy, new Value(42))
     program.evaluate
     val speed = guy.speed
     assert(speed == 42, "guy should have speed of 42, actual=" + speed)
@@ -19,7 +19,7 @@ class TestPrograms extends FunSuite {
   test("test programs: stop") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.speed(42)
-    val program = Programs.stop(guy)
+    val program = Functions.stop(guy)
     program.evaluate
     val speed = guy.speed
     assert(speed == 0, "guy should have speed of 0, actual=" + speed)
@@ -28,7 +28,7 @@ class TestPrograms extends FunSuite {
   test("test programs: turn") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(new Value(137))
-    val program = Programs.turn(guy, new Value(42))
+    val program = Functions.turn(guy, new Value(42))
     program.evaluate
     val dir = guy.direction.asNumber
     assert(dir == 42, "guy should have turned to 42 degrees, actual=" + dir)
@@ -36,7 +36,7 @@ class TestPrograms extends FunSuite {
 
   test("test programs: turn relative") {
     val guy = new Operator(new Runtime, new StubOperable)
-    val program = Programs.turnRelative(guy, 60)
+    val program = Functions.turnRelative(guy, 60)
     program.evaluate // 0 + 60 = 60
     program.evaluate // 60 + 60 = 120
     program.evaluate // 120 + 60 = 180
