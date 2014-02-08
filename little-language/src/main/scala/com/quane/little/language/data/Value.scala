@@ -57,10 +57,17 @@ class Value(val primitive: Any)
         try {
           primitive.asInstanceOf[String].toInt
         } catch {
-          case e: ClassCastException =>
-            throw new ClassCastException(
-              primitive.toString + " cannot be converted to a Number"
-            )
+          case e: NumberFormatException =>
+            try {
+              // TODO avoid newing up a Value here
+              new Value(asBool).asNumber
+            } catch {
+              case e: ClassCastException =>
+                throw new ClassCastException(
+                  primitive.toString + " cannot be converted to a Number"
+                )
+            }
+
         }
     }
   }
@@ -72,7 +79,6 @@ class Value(val primitive: Any)
     * @return this
     */
   def evaluate: Value = this
-
 
   override def equals(other: Any): Boolean = {
     other match {
