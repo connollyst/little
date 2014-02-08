@@ -38,4 +38,13 @@ class TestScope extends FunSuite {
     assert(!defined, "didn't expect 'Obj1' to be defined")
   }
 
+  test("test scope: update value in parent scope") {
+    val fun1 = new Function(new Runtime)
+    fun1.save(new Variable("Obj1", new Value("A")))
+    val fun2 = new Function(fun1)
+    fun2.save(new Variable("Obj1", new Value("B")))
+    val obj1 = fun1.fetch("Obj1")
+    assert(obj1.value == "B", "expected 'Obj1' in upper scope to be 'B'")
+  }
+
 }
