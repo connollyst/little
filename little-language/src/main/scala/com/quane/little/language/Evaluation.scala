@@ -16,14 +16,12 @@ class Evaluation[T <: Expression[_]](left: T,
 
   def evaluate: Value = {
     // TODO clean this up, gross!
-    new Value(operator match {
-      case Equals => {
-        left equals right
+    new Value(
+      operator match {
+        case Equals => left equals right
+        case NotEquals => !(left equals right)
       }
-      case NotEquals => {
-        !(left equals right)
-      }
-    })
+    )
   }
 }
 
