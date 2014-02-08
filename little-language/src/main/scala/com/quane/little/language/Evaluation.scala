@@ -1,7 +1,6 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.Value
-import com.sun.tools.corba.se.idl.constExpr.GreaterThan
 
 /** A logical evaluation of the relationship between two arguments expressions.
   *
