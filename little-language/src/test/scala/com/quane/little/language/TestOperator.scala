@@ -24,14 +24,14 @@ class TestOperator extends FunSuite {
 
   test("test guy: 'speed' is defined") {
     val guy = new Operator(new Runtime, new StubOperable)
-    val defined = guy.isDefined(Operable.VAR_SPEED)
-    assert(defined, "expected '" + Operable.VAR_SPEED + "' to be defined")
+    val defined = guy.isDefined(Operable.SPEED)
+    assert(defined, "expected '" + Operable.SPEED + "' to be defined")
   }
 
   test("test guy: 'direction' is defined") {
     val guy = new Operator(new Runtime, new StubOperable)
-    val defined = guy.isDefined(Operable.VAR_DIRECTION)
-    assert(defined, "expected '" + Operable.VAR_DIRECTION + "' to be defined")
+    val defined = guy.isDefined(Operable.DIRECTION)
+    assert(defined, "expected '" + Operable.DIRECTION + "' to be defined")
   }
 
   test("test guy: set direction") {

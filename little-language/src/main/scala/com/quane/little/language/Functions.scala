@@ -27,19 +27,19 @@ object Functions {
 
   def move(mob: Operator, speed: Expression): Function = {
     val fun = new Function(mob)
-    val pointer = new Pointer(fun, Operable.VAR_SPEED)
+    val pointer = new Pointer(fun, Operable.SPEED)
     fun.addStep(new SetStatement(pointer, speed))
   }
 
   def stop(mob: Operator): Function = {
     val fun = new Function(mob)
-    val pointer = new Pointer(fun, Operable.VAR_SPEED)
+    val pointer = new Pointer(fun, Operable.SPEED)
     fun.addStep(new SetStatement(pointer, new Value(0)))
   }
 
   def turn(mob: Operator, degrees: Expression): Function = {
     val fun = new Function(mob)
-    val pointer = new Pointer(fun, Operable.VAR_DIRECTION)
+    val pointer = new Pointer(fun, Operable.DIRECTION)
     fun.addStep(new SetStatement(pointer, degrees))
   }
 
@@ -49,14 +49,14 @@ object Functions {
     val randomFun = new Function(mob)
     randomFun.addStep(
       new SetStatement(
-        new Pointer(randomFun, Operable.VAR_DIRECTION), new RandomNumber(min, max)
+        new Pointer(randomFun, Operable.DIRECTION), new RandomNumber(min, max)
       )
     )
   }
 
   def turnRelative(mob: Operator, degrees: Int): Function = {
     val relativelyFun = new Function(mob)
-    val dirPointer = new Pointer(relativelyFun, Operable.VAR_DIRECTION)
+    val dirPointer = new Pointer(relativelyFun, Operable.DIRECTION)
     val getCurrentDir = new GetStatement(dirPointer)
     val dirChange = new Value(degrees)
     val getNewDirection = new Addition(getCurrentDir, dirChange)
@@ -84,7 +84,7 @@ object Functions {
 
   def printDirection(mob: Operator): Function = {
     val fun = new Function(mob)
-    fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Operable.VAR_DIRECTION))))
+    fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Operable.DIRECTION))))
   }
 
   def pointToward(mob: Operator, x: Expression, y: Expression): Function = {

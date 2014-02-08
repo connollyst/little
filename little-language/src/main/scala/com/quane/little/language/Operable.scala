@@ -6,9 +6,9 @@ object Operable {
 
   val Y = "GuyY"
 
-  val VAR_SPEED = "GuySpeed"
+  val SPEED = "GuySpeed"
 
-  val VAR_DIRECTION = "GuyDirection"
+  val DIRECTION = "GuyDirection"
 
   val MAX_SPEED = 50
 

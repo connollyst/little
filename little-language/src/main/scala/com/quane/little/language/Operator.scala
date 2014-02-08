@@ -66,8 +66,8 @@ class Operator(override val runtime: Runtime, mob: Operable)
     name match {
       case Operable.X => throw new IllegalAccessException("Cannot set X")
       case Operable.Y => throw new IllegalAccessException("Cannot set Y")
-      case Operable.VAR_SPEED => speed(variable.value.asInt)
-      case Operable.VAR_DIRECTION => direction(variable.value)
+      case Operable.SPEED => speed(variable.value.asInt)
+      case Operable.DIRECTION => direction(variable.value)
       case _ =>
         // It's not a special variable, store it in normal memory
         super.save(variable)
@@ -79,8 +79,8 @@ class Operator(override val runtime: Runtime, mob: Operable)
     name match {
       case Operable.X => new Variable(name, x)
       case Operable.Y => new Variable(name, y)
-      case Operable.VAR_SPEED => new Variable(name, new Value(mob.speed))
-      case Operable.VAR_DIRECTION => new Variable(name, direction)
+      case Operable.SPEED => new Variable(name, new Value(mob.speed))
+      case Operable.DIRECTION => new Variable(name, direction)
       case _ =>
         // It's not a special variable, fetch it from normal memory
         super.fetch(name)
