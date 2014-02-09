@@ -1,7 +1,7 @@
 package com.quane.little.language
 
 import scala.collection.mutable.Map
-import com.quane.little.language.data.{NoValueType, Variable, Nada}
+import com.quane.little.language.data.{Value, NoValueType, Variable, Nada}
 import org.eintr.loglady.Logging
 
 /** A Scope defines a space in which
@@ -25,6 +25,10 @@ trait Scope
   val runtime: Runtime
 
   private val variables = Map[String, Variable]()
+
+  def save(name: String, value: Value) {
+    save(new Variable(name, value))
+  }
 
   /** Stores the given [[com.quane.little.language.data.Variable]] in memory.
     *
