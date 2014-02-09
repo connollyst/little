@@ -1,4 +1,4 @@
-package com.quane.little.web
+package com.quane.little.ide
 
 import vaadin.scala.UI
 import com.quane.little.web.view.IDE

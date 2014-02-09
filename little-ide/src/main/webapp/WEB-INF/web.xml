@@ -1,24 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app id="scala-wrappers" version="2.4"
-	xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
-	<display-name>little IDE</display-name>
-	<context-param>
-		<description>Vaadin production mode</description>
-		<param-name>productionMode</param-name>
-		<param-value>false</param-value>
-	</context-param>
-	<servlet>
-		<servlet-name>little IDE</servlet-name>
-		<servlet-class>vaadin.scala.server.ScaladinServlet</servlet-class>
-		<init-param>
-			<description>Vaadin application class to start</description>
-			<param-name>ScaladinUIProvider</param-name>
-			<param-value>com.quane.little.web.LittleUIProvider</param-value>
-		</init-param>
-	</servlet>
-	<servlet-mapping>
-		<servlet-name>little IDE</servlet-name>
-		<url-pattern>/*</url-pattern>
-	</servlet-mapping>
+    xmlns="http://java.sun.com/xml/ns/j2ee"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
+    <display-name>little IDE</display-name>
+    <context-param>
+        <description>Vaadin production mode</description>
+        <param-name>productionMode</param-name>
+        <param-value>false</param-value>
+    </context-param>
+    <servlet>
+        <servlet-name>little IDE</servlet-name>
+        <servlet-class>vaadin.scala.server.ScaladinServlet</servlet-class>
+        <init-param>
+            <description>Vaadin application class to start</description>
+            <param-name>ScaladinUIProvider</param-name>
+            <param-value>com.quane.little.ide.LittleUIProvider</param-value>
+        </init-param>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>little IDE</servlet-name>
+        <url-pattern>/*</url-pattern>
+    </servlet-mapping>
 </web-app>

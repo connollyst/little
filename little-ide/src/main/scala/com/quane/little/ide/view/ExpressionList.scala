@@ -2,7 +2,6 @@ package com.quane.little.web.view
 
 import vaadin.scala.VerticalLayout
 import vaadin.scala.CssLayout
-import com.quane.vaadin.scala.DragAndDropWrapper
 import com.vaadin.event.dd.DropHandler
 import com.vaadin.event.dd.acceptcriteria.AcceptCriterion
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
@@ -14,6 +13,7 @@ object ExpressionList {
   val Style = "l-step-list"
   val StyleSeparator = Style + "-separator";
 }
+
 class ExpressionList extends VerticalLayout {
   styleName = ExpressionList.Style
   spacing = false
@@ -48,6 +48,7 @@ class ExpressionList extends VerticalLayout {
   //  }
 
 }
+
 class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
 
   component.styleName = ExpressionList.StyleSeparator

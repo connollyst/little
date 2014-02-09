@@ -15,6 +15,7 @@ object Conditional {
   val StyleBodyLeft = Style + "-body-left";
   val StyleFoot = Style + "-foot";
 }
+
 class Conditional(label: String) extends VerticalLayout {
 
   val thenList = new ExpressionList

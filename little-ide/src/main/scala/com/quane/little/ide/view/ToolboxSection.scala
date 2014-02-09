@@ -1,7 +1,6 @@
 package com.quane.little.web.view
 
 import vaadin.scala.CssLayout
-import vaadin.scala.Label
 import vaadin.scala.Measure
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
@@ -9,7 +8,7 @@ import vaadin.scala.VerticalLayout
 object ToolboxSection {
   val Style = "l-toolbox-section"
   val StyleSeparator = Style + "-separator"
-  
+
   val Motion = new ToolboxSection() {
     add(new ToolboxItem("move forward"));
     add(new ToolboxItem("move backward"));
@@ -36,10 +35,12 @@ object ToolboxSection {
     add(new ToolboxItem("<local variable>"));
   }
 }
+
 class ToolboxSection extends VerticalLayout {
   styleName = ToolboxSection.Style
   spacing = true
 }
+
 /**
  * Visually separates groups of related toolbox items.
  */
