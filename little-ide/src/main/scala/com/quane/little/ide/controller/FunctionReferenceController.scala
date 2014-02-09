@@ -1,4 +1,4 @@
-package com.quane.little.web.controller
+package com.quane.little.ide.controller
 
 import com.quane.little.language.FunctionReference
 import com.quane.little.language.Scope
