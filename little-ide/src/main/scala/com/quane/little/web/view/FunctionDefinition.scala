@@ -9,8 +9,6 @@ import vaadin.scala.Measure
 import vaadin.scala.TextField
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
-import vaadin.scala.Button.ClickEvent
-import com.quane.little.view.LittleArgumentNumber
 
 object FunctionDefinition {
   val Style = "l-function";
