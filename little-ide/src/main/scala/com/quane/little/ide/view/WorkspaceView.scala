@@ -15,7 +15,7 @@ class WorkspaceView extends HorizontalLayout {
   spacing = true
   styleName = WorkspaceView.Style
 
-  val fun = new FunctionDefinitionView(new FunctionDefinitionController, "move toward")
+  val fun = FunctionDefinitionView(new FunctionDefinitionController, "move toward")
   add(fun)
   fun.controller.compile(new Runtime)
 

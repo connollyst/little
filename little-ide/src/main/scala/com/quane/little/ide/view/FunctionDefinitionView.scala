@@ -18,55 +18,16 @@ object FunctionDefinitionView {
   val StyleFoot = Style + "-foot"
   val StyleHead = Style + "-head"
   val StyleHeadNameField = StyleHead + "-name"
-}
 
-class FunctionDefinitionView(val controller: FunctionDefinitionController, name: String)
-  extends VerticalLayout {
-
-  val stepList = new ExpressionListView
-
-  spacing = false
-  add(header())
-  add(body())
-  add(footer())
-
-  def header(): Component = {
-    new FunctionDefinitionViewHeader(name)
-  }
-
-  def body(): Component = {
-    val body = new HorizontalLayout
-    val bodyLeft = new Label
-    bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = FunctionDefinitionView.StyleHeadLeft
-    body.addComponent(bodyLeft)
-    body.addComponent(stepList)
-    body.styleName = FunctionDefinitionView.StyleBody
-    body.spacing = false
-    initMockData()
-    body
-  }
-
-  def footer(): Component = {
-    val footer = new CssLayout()
-    footer.styleName = FunctionDefinitionView.StyleFoot
-    footer
-  }
-
-  def addStep(view: ExpressionView[ExpressionController]) = {
-    stepList.add(view)
-    val nc = view.controller
-    controller.addStep(nc)
-  }
-
-  def initMockData() = {
-    addStep(
+  def apply(controller: FunctionDefinitionController, name: String): FunctionDefinitionView = {
+    val fun = new FunctionDefinitionView(controller, name)
+    fun.addStep(
       new FunctionReferenceView(
         new FunctionReferenceController,
         "point toward",
         new FunctionArgumentView("x"),
         new FunctionArgumentView("y")))
-    addStep(
+    fun.addStep(
       new FunctionReferenceView(
         new FunctionReferenceController,
         "move",
@@ -79,9 +40,50 @@ class FunctionDefinitionView(val controller: FunctionDefinitionController, name:
         "move toward",
         new FunctionArgumentView("x"),
         new FunctionArgumentView("y")))
-    stepList.add(ifElse)
-    stepList.add(new PrintView("done"))
+    fun.stepList.add(ifElse)
+    fun.stepList.add(new PrintView("done"))
+    fun
   }
+}
+
+class FunctionDefinitionView(val controller: FunctionDefinitionController, name: String)
+  extends VerticalLayout {
+
+  spacing = false
+  add(header())
+  add(body())
+  add(footer())
+
+  private val stepList = new ExpressionListView
+
+  private def header(): Component = {
+    new FunctionDefinitionViewHeader(name)
+  }
+
+  private def body(): Component = {
+    val body = new HorizontalLayout
+    val bodyLeft = new Label
+    bodyLeft.height = new Measure(100, Units.pct)
+    bodyLeft.styleName = FunctionDefinitionView.StyleHeadLeft
+    body.addComponent(bodyLeft)
+    body.addComponent(stepList)
+    body.styleName = FunctionDefinitionView.StyleBody
+    body.spacing = false
+    body
+  }
+
+  private def footer(): Component = {
+    val footer = new CssLayout()
+    footer.styleName = FunctionDefinitionView.StyleFoot
+    footer
+  }
+
+  def addStep(view: ExpressionView[ExpressionController]) = {
+    stepList.add(view)
+    val nc = view.controller
+    controller.addStep(nc)
+  }
+
 }
 
 class FunctionDefinitionViewHeader(name: String) extends HorizontalLayout {
