@@ -21,7 +21,7 @@ object FunctionDefinition {
   val StyleHeadNameField = StyleHead + "-name";
 }
 
-class FunctionDefinition(controller: FunctionDefinitionController, name: String)
+class FunctionDefinition(val controller: FunctionDefinitionController, name: String)
   extends VerticalLayout {
 
   spacing = false;
