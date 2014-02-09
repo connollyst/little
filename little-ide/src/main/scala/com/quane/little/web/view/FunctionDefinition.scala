@@ -54,7 +54,7 @@ class FunctionDefinition(val controller: FunctionDefinitionController, name: Str
   }
 
   def addStep(view: ExpressionView[ExpressionController]) = {
-    //    stepList.add(view)
+    stepList.add(view)
     val nc = view.controller
     controller.addStep(nc)
   }
@@ -66,11 +66,11 @@ class FunctionDefinition(val controller: FunctionDefinitionController, name: Str
         "point toward",
         new FunctionArgument("x"),
         new FunctionArgument("y")))
-    //    addStep(
-    //      new FunctionReference(
-    //        new FunctionReferenceController,
-    //        "move",
-    //        new FunctionArgument("speed")))
+    addStep(
+      new FunctionReference(
+        new FunctionReferenceController,
+        "move",
+        new FunctionArgument("speed")))
     val ifElse = new Conditional("touching [location]")
     ifElse.addThen(new Expression("done"))
     ifElse.addElse(
