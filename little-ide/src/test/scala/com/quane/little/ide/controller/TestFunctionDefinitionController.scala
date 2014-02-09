@@ -12,21 +12,21 @@ class TestFunctionDefinitionController extends FunSuite {
   test("test compiled scope") {
     val scope = new Runtime
     val controller = new FunctionDefinitionController
-    val definition = controller.compile(scope)
-    assert(definition.scope == scope)
+    val function = controller.compile(scope)
+    assert(function.scope == scope)
   }
 
   test("test compiled name (default)") {
     val controller = new FunctionDefinitionController
-    val definition = controller.compile(new Runtime)
-    assert(definition.name == "name")
+    val function = controller.compile(new Runtime)
+    assert(function.name == "name")
   }
 
   test("test compiled name") {
     val controller = new FunctionDefinitionController
     controller.name = "newName"
-    val definition = controller.compile(new Runtime)
-    assert(definition.name == "newName")
+    val function = controller.compile(new Runtime)
+    assert(function.name == "newName")
   }
 
 }

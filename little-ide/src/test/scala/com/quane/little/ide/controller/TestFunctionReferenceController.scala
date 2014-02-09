@@ -12,21 +12,21 @@ class TestFunctionReferenceController extends FunSuite {
   test("test compiled scope") {
     val scope = new Runtime
     val controller = new FunctionReferenceController
-    val ref = controller.compile(scope)
-    assert(ref.scope == scope)
+    val function = controller.compile(scope)
+    assert(function.scope == scope)
   }
 
   test("test compiled name (default)") {
     val controller = new FunctionReferenceController
-    val ref = controller.compile(new Runtime)
-    assert(ref.name == "name")
+    val function = controller.compile(new Runtime)
+    assert(function.name == "name")
   }
 
   test("test compiled name") {
     val controller = new FunctionReferenceController
     controller.name = "newName"
-    val ref = controller.compile(new Runtime)
-    assert(ref.name == "newName")
+    val function = controller.compile(new Runtime)
+    assert(function.name == "newName")
   }
 
 
