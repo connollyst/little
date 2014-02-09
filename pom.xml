@@ -32,6 +32,23 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.scala-tools</groupId>
+                    <artifactId>maven-scala-plugin</artifactId>
+                    <version>${scala.plugin.version}</version>
+                    <executions>
+                        <execution>
+                            <goals>
+                                <goal>compile</goal>
+                                <goal>testCompile</goal>
+                            </goals>
+                        </execution>
+                    </executions>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
 
     <modules>
@@ -44,6 +61,7 @@
     <properties>
         <scala.level>2.10</scala.level>
         <scala.version>2.10.3</scala.version>
+        <scala.plugin.version>2.15.2</scala.plugin.version>
         <guava.version>14.0.1</guava.version>
         <junit.version>4.11</junit.version>
         <mockito.version>1.9.5</mockito.version>

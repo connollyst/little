@@ -18,6 +18,14 @@
 
     <build>
         <plugins>
+            <!-- Commented out so as not to compile Scala =P -->
+            <!--
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>${scala.plugin.version}</version>
+            </plugin>
+            -->
             <plugin>
                 <groupId>com.zenjava</groupId>
                 <artifactId>javafx-maven-plugin</artifactId>
@@ -62,13 +70,6 @@
             <groupId>org.scalatest</groupId>
             <artifactId>scalatest_${scala.level}</artifactId>
             <version>${scalatest.version}</version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.scala-tools.testing</groupId>
-            <artifactId>specs</artifactId>
-            <version>${scalatest.specs.version}</version>
             <scope>test</scope>
         </dependency>
 
