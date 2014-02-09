@@ -9,6 +9,7 @@ import vaadin.scala.Measure
 import vaadin.scala.TextField
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
+import com.quane.little.web.controller.FunctionReferenceController
 
 object FunctionDefinition {
   val Style = "l-function-def";
@@ -52,16 +53,22 @@ class FunctionDefinition(name: String) extends VerticalLayout {
 
   def initMockData(stepList: ExpressionList) = {
     stepList.add(
-      new FunctionReference("point toward",
+      new FunctionReference(
+        new FunctionReferenceController,
+        "point toward",
         new FunctionArgument("x"),
         new FunctionArgument("y")));
     stepList.add(
-      new FunctionReference("move forward",
+      new FunctionReference(
+        new FunctionReferenceController,
+        "move",
         new FunctionArgument("speed")));
     val ifElse = new Conditional("touching [location]");
     ifElse.addThen(new Expression("done"));
     ifElse.addElse(
-      new FunctionReference("move toward",
+      new FunctionReference(
+        new FunctionReferenceController,
+        "move toward",
         new FunctionArgument("x"),
         new FunctionArgument("y")));
     stepList.add(ifElse);
