@@ -31,8 +31,8 @@ object Functions {
     fun.addStep(new Set(pointer, speed))
   }
 
-  def stop(mob: Operator): Block = {
-    val fun = new Block(mob)
+  def stop: FunctionDefinition = {
+    val fun = new FunctionDefinition("stop")
     val pointer = new Pointer(fun, Operable.SPEED)
     fun.addStep(new Set(pointer, new Value(0)))
   }

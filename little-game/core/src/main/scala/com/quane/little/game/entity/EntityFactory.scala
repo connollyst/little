@@ -6,7 +6,7 @@ import scala.util.Random
 
 import com.quane.little.game.{Little, InteractionManagerImpl}
 import com.quane.little.language.event.{EventListener, LittleEvent}
-import com.quane.little.language.Functions
+import com.quane.little.language.{FunctionReference, Functions}
 import com.quane.little.language.data.Value
 
 class EntityFactory(game: Little) {
@@ -25,6 +25,7 @@ class EntityFactory(game: Little) {
     val mob = new Mob(game.builder.buildBody(), manager)
     game.eventBus.report(mob, LittleEvent.OnSpawn)
     val speed = new Value(100)
+    mob.operator.runtime.saveFunction(Functions.stop)
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnSpawn,
@@ -40,13 +41,13 @@ class EntityFactory(game: Little) {
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnFoodNearby,
-        Functions.stop(mob.operator)
+        new FunctionReference(mob.operator, "stop")
       )
     )
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnFoodConsumed,
-        Functions.stop(mob.operator)
+        new FunctionReference(mob.operator, "stop")
       )
     )
     mob

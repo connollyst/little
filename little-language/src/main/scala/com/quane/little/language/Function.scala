@@ -44,10 +44,10 @@ class FunctionParameter(val name: String, val paramType: ValueType)
   * @param scope the scope in which the function is evaluated
   * @param name the name of the function
   */
-class FunctionReference(val scope: Scope, val name: String)
-  extends Expression {
+class FunctionReference(scope: Scope, val name: String)
+  extends Block(scope) {
 
-  def evaluate: Value = {
+  override def evaluate: Value = {
     val function = scope.runtime.fetchFunction(name)
     if (scope != function) {
       // TODO is this correct? where to args go?

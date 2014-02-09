@@ -8,22 +8,28 @@ import com.quane.little.language.data.Value
 @RunWith(classOf[JUnitRunner])
 class TestFunctions extends FunSuite {
 
-  test("test programs: move") {
+  test("test function move") {
     val guy = new Operator(new Runtime, new StubOperable)
     Functions.move(guy, new Value(42)).evaluate
     val speed = guy.speed
     assert(speed == 42, "guy should have speed of 42, actual=" + speed)
   }
 
-  test("test programs: stop") {
-    val guy = new Operator(new Runtime, new StubOperable)
+  test("test function stop") {
+    val runtime = new Runtime
+    runtime.saveFunction(Functions.stop)
+
+    val guy = new Operator(runtime, new StubOperable)
     guy.speed(42)
-    Functions.stop(guy).evaluate
+
+    val fun = new FunctionReference(guy, "stop")
+    fun.evaluate
+
     val speed = guy.speed
     assert(speed == 0, "guy should have speed of 0, actual=" + speed)
   }
 
-  test("test programs: turn") {
+  test("test function turn") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(new Value(137))
     Functions.turn(guy, new Value(42)).evaluate
@@ -31,7 +37,7 @@ class TestFunctions extends FunSuite {
     assert(dir == 42, "guy should have turned to 42 degrees, actual=" + dir)
   }
 
-  test("test programs: turn relative") {
+  test("test function turn relative") {
     val guy = new Operator(new Runtime, new StubOperable)
     val fun = Functions.turnRelative(guy, 60)
     fun.evaluate // 0 + 60 = 60
