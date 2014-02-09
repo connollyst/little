@@ -2,6 +2,7 @@ package com.quane.little.language
 
 import scala.collection.mutable.Map
 import com.quane.little.language.data.{ValueType, Value}
+import org.eintr.loglady.Logging
 
 /** Defines a function.
   *
@@ -43,7 +44,8 @@ class FunctionParameter(val name: String, val paramType: ValueType)
   * @param name the name of the function
   */
 class FunctionReference(scope: Scope, val name: String)
-  extends Block(scope) {
+  extends Block(scope)
+  with Logging {
 
   private val args = Map[String, Expression]()
 
@@ -58,6 +60,7 @@ class FunctionReference(scope: Scope, val name: String)
     * @return the function's return value
     */
   override def evaluate: Value = {
+    log.info("Evaluating function '" + name + "'")
     val definition = fetchDefinition()
     setScope(definition)
     setArguments(definition)
