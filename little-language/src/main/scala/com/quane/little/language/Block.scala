@@ -12,8 +12,6 @@ class Block(var scope: Scope, steps: ListBuffer[Expression])
   extends Expression
   with Scope {
 
-  val runtime: Runtime = scope.runtime
-
   def this(scope: Scope) = this(scope, ListBuffer[Expression]())
 
   def addStep(step: Expression): Block = {

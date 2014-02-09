@@ -22,7 +22,8 @@ trait Scope
   extends Logging {
 
   var scope: Scope
-  val runtime: Runtime
+
+  def runtime: Runtime = scope.runtime
 
   private val variables = Map[String, Variable]()
 

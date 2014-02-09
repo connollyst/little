@@ -3,6 +3,42 @@ package com.quane.little.language
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.data.{ValueType, Value}
 
+/** Defines a function.
+  *
+  * @param name
+  */
+class FunctionDefinition(val name: String)
+  extends Scope {
+
+  var scope: Scope = new Scope {
+    var scope: Scope = _
+  }
+  val params: ListBuffer[FunctionParameter] = new ListBuffer[FunctionParameter]
+  val block: Block = new Block(this)
+
+  def addParam(name: String, paramType: ValueType): FunctionDefinition = {
+    addParam(new FunctionParameter(name, paramType))
+  }
+
+  def addParam(param: FunctionParameter): FunctionDefinition = {
+    params += param
+    this
+  }
+
+  def addStep(step: Expression): FunctionDefinition = {
+    block.addStep(step)
+    this
+  }
+
+}
+
+/** Defines a function parameter to be specified at evaluation time.
+  *
+  * @param name the name of the parameter
+  * @param paramType the type of the parameter
+  */
+class FunctionParameter(val name: String, val paramType: ValueType)
+
 /** Reference to a [[com.quane.little.language.Block]].
   *
   * @param scope the scope in which the function is evaluated
@@ -26,27 +62,3 @@ class FunctionReference(val scope: Scope, val name: String)
 
 }
 
-class FunctionDefinition(var scope: Scope, val name: String)
-  extends Scope {
-
-  val runtime: Runtime = scope.runtime
-  val params: ListBuffer[FunctionParameter] = new ListBuffer[FunctionParameter]
-  val block: Block = new Block(scope)
-
-  def addParam(name: String, paramType: ValueType): FunctionDefinition = {
-    addParam(new FunctionParameter(name, paramType))
-  }
-
-  def addParam(param: FunctionParameter): FunctionDefinition = {
-    params += param
-    this
-  }
-
-  def addStep(step: Expression): FunctionDefinition = {
-    block.addStep(step)
-    this
-  }
-
-}
-
-class FunctionParameter(val name: String, val paramType: ValueType)

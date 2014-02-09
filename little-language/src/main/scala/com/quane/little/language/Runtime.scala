@@ -5,8 +5,9 @@ import scala.collection.mutable.Map
 class Runtime
   extends Scope {
 
-  val runtime: Runtime = this
-  var scope: Scope = this
+  override var scope: Scope = this
+
+  override def runtime = this
 
   private val functions = Map[String, FunctionDefinition]()
 

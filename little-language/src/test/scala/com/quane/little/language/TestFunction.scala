@@ -10,31 +10,34 @@ import org.junit.runner.RunWith
 class TestFunction extends FunSuite {
 
   test("test function reference with return from print statement") {
-    val fun = new FunctionDefinition(new Runtime, "myFun")
+    val fun = new FunctionDefinition("myFun")
     fun.addStep(new Print(new Value("A")))
-    fun.runtime.saveFunction(fun)
-    val ref = new FunctionReference(fun, "myFun")
+    val runtime = new Runtime
+    runtime.saveFunction(fun)
+    val ref = new FunctionReference(runtime, "myFun")
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test function reference with return from set statement") {
-    val fun = new FunctionDefinition(new Runtime, "myFun")
+    val fun = new FunctionDefinition("myFun")
     val pointer = new Pointer(fun, "Obj")
     fun.addStep(new Set(pointer, new Value("A")))
-    fun.runtime.saveFunction(fun)
-    val ref = new FunctionReference(fun, "myFun")
+    val runtime = new Runtime
+    runtime.saveFunction(fun)
+    val ref = new FunctionReference(runtime, "myFun")
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test function reference with return from get statement") {
-    val fun = new FunctionDefinition(new Runtime, "myFun")
+    val fun = new FunctionDefinition("myFun")
     val pointer = new Pointer(fun, "Obj")
     fun.addStep(new Set(pointer, new Value("A")))
     fun.addStep(new Get(pointer))
-    fun.runtime.saveFunction(fun)
-    val ref = new FunctionReference(fun, "myFun")
+    val runtime = new Runtime
+    runtime.saveFunction(fun)
+    val ref = new FunctionReference(runtime, "myFun")
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
