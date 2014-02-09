@@ -10,6 +10,7 @@ import vaadin.scala.TextField
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
 import com.quane.little.web.controller.FunctionReferenceController
+import com.quane.little.web.controller.FunctionDefinitionController
 
 object FunctionDefinition {
   val Style = "l-function-def";
@@ -20,7 +21,8 @@ object FunctionDefinition {
   val StyleHeadNameField = StyleHead + "-name";
 }
 
-class FunctionDefinition(name: String) extends VerticalLayout {
+class FunctionDefinition(controller: FunctionDefinitionController, name: String)
+  extends VerticalLayout {
 
   spacing = false;
   add(header());
