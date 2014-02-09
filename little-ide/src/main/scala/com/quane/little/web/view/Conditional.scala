@@ -69,12 +69,12 @@ class Conditional(label: String) extends VerticalLayout {
     footer;
   }
 
-  def addThen(expression: Expression) = {
-    thenList.add(expression)
+  def addThen(c: Component) = {
+    thenList.add(c)
   }
 
-  def addElse(expression: Expression) = {
-    elseList.add(expression)
+  def addElse(c: Component) = {
+    elseList.add(c)
   }
 
 }

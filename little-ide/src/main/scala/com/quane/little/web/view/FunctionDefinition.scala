@@ -53,15 +53,19 @@ class FunctionDefinition(name: String) extends VerticalLayout {
   }
 
   def initMockData(stepList: ExpressionList) = {
-    stepList.add(new Expression("point toward [location]"));
-//    stepList.add(new Expression("move forward",
-//      new LittleArgumentNumber(
-//        new FunctionArgument(new FunctionArgumentDefinition(
-//          "steps", "how far to move",
-//          FunctionArgumentType.NUMBER), "1")), "steps"));
+    stepList.add(
+      new FunctionReference("point toward",
+        new FunctionArgument("x"),
+        new FunctionArgument("y")));
+    stepList.add(
+      new FunctionReference("move forward",
+        new FunctionArgument("speed")));
     val ifElse = new Conditional("touching [location]");
     ifElse.addThen(new Expression("done"));
-    ifElse.addElse(new Expression("<move toward [location]>"));
+    ifElse.addElse(
+      new FunctionReference("move toward",
+        new FunctionArgument("x"),
+        new FunctionArgument("y")));
     stepList.add(ifElse);
     stepList.add(new Expression("done"));
   }
