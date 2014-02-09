@@ -1,4 +1,4 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
 import vaadin.scala.CssLayout
 import vaadin.scala.Measure
@@ -10,16 +10,16 @@ object ToolboxSection {
   val StyleSeparator = Style + "-separator"
 
   val Motion = new ToolboxSection() {
-    add(new ToolboxItem("move forward"));
-    add(new ToolboxItem("move backward"));
-    add(new ToolboxSectionSeparator());
-    add(new ToolboxItem("turn clockwise"));
-    add(new ToolboxItem("turn counter clockwise"));
-    add(new ToolboxItem("turn toward"));
-    add(new ToolboxItem("turn away from"));
-    add(new ToolboxSectionSeparator());
-    add(new ToolboxItem("change x by"));
-    add(new ToolboxItem("change y by"));
+    add(new ToolboxItem("move forward"))
+    add(new ToolboxItem("move backward"))
+    add(new ToolboxSectionSeparator())
+    add(new ToolboxItem("turn clockwise"))
+    add(new ToolboxItem("turn counter clockwise"))
+    add(new ToolboxItem("turn toward"))
+    add(new ToolboxItem("turn away from"))
+    add(new ToolboxSectionSeparator())
+    add(new ToolboxItem("change x by"))
+    add(new ToolboxItem("change y by"))
   }
   val Sensing = new ToolboxSection() {
     // TODO add items
@@ -28,11 +28,11 @@ object ToolboxSection {
     // TODO add items
   }
   val Variables = new ToolboxSection() {
-    add(new ToolboxItem("my x"));
-    add(new ToolboxItem("my y"));
-    add(new ToolboxItem("my speed"));
-    add(new ToolboxSectionSeparator());
-    add(new ToolboxItem("<local variable>"));
+    add(new ToolboxItem("my x"))
+    add(new ToolboxItem("my y"))
+    add(new ToolboxItem("my speed"))
+    add(new ToolboxSectionSeparator())
+    add(new ToolboxItem("<local variable>"))
   }
 }
 

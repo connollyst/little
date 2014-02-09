@@ -1,4 +1,4 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
 import vaadin.scala.Component
 import vaadin.scala.HorizontalLayout
@@ -8,12 +8,12 @@ import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
 
 object Conditional {
-  val Style = "l-if";
-  val StyleIfHead = Style + "-head";
-  val StyleElseHead = Style + "-else-head";
-  val StyleBody = Style + "-body";
-  val StyleBodyLeft = Style + "-body-left";
-  val StyleFoot = Style + "-foot";
+  val Style = "l-if"
+  val StyleIfHead = Style + "-head"
+  val StyleElseHead = Style + "-else-head"
+  val StyleBody = Style + "-body"
+  val StyleBodyLeft = Style + "-body-left"
+  val StyleFoot = Style + "-foot"
 }
 
 class Conditional(label: String) extends VerticalLayout {
@@ -23,14 +23,14 @@ class Conditional(label: String) extends VerticalLayout {
 
   spacing = false
   styleName = Conditional.Style
-  addComponent(thenHeader());
-  addComponent(thenBody());
-  addComponent(elseHeader());
-  addComponent(elseBody());
-  addComponent(footer());
+  addComponent(thenHeader())
+  addComponent(thenBody())
+  addComponent(elseHeader())
+  addComponent(elseBody())
+  addComponent(footer())
 
   def thenHeader(): Component = {
-    new LittleIfHeader("if <" + label + ">");
+    new ConditionalHeader("if <" + label + ">")
   }
 
   def thenBody(): Component = {
@@ -38,18 +38,18 @@ class Conditional(label: String) extends VerticalLayout {
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
     bodyLeft.styleName = Conditional.StyleBodyLeft
-    body.addComponent(bodyLeft);
-    body.addComponent(thenList);
+    body.addComponent(bodyLeft)
+    body.addComponent(thenList)
     body.styleName = Conditional.StyleBody
     body.spacing = false
-    body;
+    body
   }
 
   def elseHeader(): Component = {
     val elseHeader = new Label
     elseHeader.value = "else"
     elseHeader.styleName = Conditional.StyleElseHead
-    elseHeader;
+    elseHeader
   }
 
   def elseBody(): Component = {
@@ -57,17 +57,17 @@ class Conditional(label: String) extends VerticalLayout {
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
     bodyLeft.styleName = Conditional.StyleBodyLeft
-    body.addComponent(bodyLeft);
-    body.addComponent(elseList);
+    body.addComponent(bodyLeft)
+    body.addComponent(elseList)
     body.styleName = Conditional.StyleBody
     body.spacing = false
-    body;
+    body
   }
 
   def footer(): Component = {
-    val footer = new Label();
+    val footer = new Label()
     footer.styleName = Conditional.StyleFoot
-    footer;
+    footer
   }
 
   def addThen(c: Component) = {
@@ -80,10 +80,10 @@ class Conditional(label: String) extends VerticalLayout {
 
 }
 
-class LittleIfHeader(condition: String) extends HorizontalLayout {
+class ConditionalHeader(condition: String) extends HorizontalLayout {
 
   def this() {
-    this("<condition>");
+    this("<condition>")
   }
 
   styleName = Conditional.StyleIfHead

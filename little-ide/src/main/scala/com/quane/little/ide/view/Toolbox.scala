@@ -1,4 +1,4 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
 import vaadin.scala.Accordion
 
@@ -7,7 +7,7 @@ object Toolbox {
 }
 
 class Toolbox extends Accordion {
-  sizeFull
+  sizeFull()
   styleName = Toolbox.Style
   addTab(ToolboxSection.Sensing, "Sensing")
   addTab(ToolboxSection.Motion, "Motion")

@@ -1,4 +1,4 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
 import com.quane.little.language.Runtime
 import com.quane.little.web.controller.FunctionDefinitionController
@@ -11,7 +11,7 @@ object Workspace {
 
 class Workspace extends HorizontalLayout {
 
-  sizeFull
+  sizeFull()
   spacing = true
   styleName = Workspace.Style
 

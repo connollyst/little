@@ -1,5 +1,6 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
+import com.quane.little.web.view.ExpressionView
 import vaadin.scala.Label
 import vaadin.scala.HorizontalLayout
 import com.quane.little.web.controller.FunctionReferenceController

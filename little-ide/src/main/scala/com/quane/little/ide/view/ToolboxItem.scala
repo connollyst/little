@@ -1,4 +1,4 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
 import com.quane.vaadin.scala.DraggableComponent
 

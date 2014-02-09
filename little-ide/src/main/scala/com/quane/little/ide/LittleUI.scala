@@ -1,7 +1,7 @@
 package com.quane.little.ide
 
+import com.quane.little.ide.view.IDE
 import vaadin.scala.UI
-import com.quane.little.web.view.IDE
 import vaadin.scala.server.ScaladinRequest
 import com.vaadin.server.UIProviderEvent
 import vaadin.scala.server.ScaladinUIProvider

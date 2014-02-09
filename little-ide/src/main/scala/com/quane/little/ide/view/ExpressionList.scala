@@ -1,4 +1,4 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
 import vaadin.scala.VerticalLayout
 import vaadin.scala.CssLayout
@@ -11,7 +11,7 @@ import com.quane.vaadin.scala.DroppableTarget
 
 object ExpressionList {
   val Style = "l-step-list"
-  val StyleSeparator = Style + "-separator";
+  val StyleSeparator = Style + "-separator"
 }
 
 class ExpressionList extends VerticalLayout {
@@ -19,8 +19,8 @@ class ExpressionList extends VerticalLayout {
   spacing = false
 
   override def add[C <: Component](component: C): C = {
-    super.add(component);
-    super.add(new ExpressionListSeparator());
+    super.add(component)
+    super.add(new ExpressionListSeparator())
     component
   }
 
@@ -29,14 +29,14 @@ class ExpressionList extends VerticalLayout {
   }
 
   override def removeComponent(c: Component) {
-    val index = componentIndex(c);
+    val index = componentIndex(c)
     //    val separator = component(index + 1);
     //    super.removeComponent(separator);
-    super.removeComponent(c);
+    super.removeComponent(c)
   }
 
   def contains(c: Component): Boolean = {
-    componentIndex(c) != -1;
+    componentIndex(c) != -1
   }
 
   def componentIndex(c: Component): Int = {
@@ -60,14 +60,14 @@ class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
     }
 
     override def drop(event: DragAndDropEvent): Unit = {
-      val droppedStep = getDroppedStep(event);
-      val list = getStepList;
+      val droppedStep = getDroppedStep(event)
+      val list = getStepList
       if (list.contains(droppedStep)) {
-        list.removeComponent(droppedStep);
+        list.removeComponent(droppedStep)
       }
-      val separator = ExpressionListSeparator.this;
-      val separatorIndex = list.componentIndex(separator);
-      list.add(droppedStep, separatorIndex + 1);
+      val separator = ExpressionListSeparator.this
+      val separatorIndex = list.componentIndex(separator)
+      list.add(droppedStep, separatorIndex + 1)
     }
 
     def getStepList: ExpressionList = {
@@ -77,7 +77,7 @@ class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
     }
 
     def getDroppedStep(event: DragAndDropEvent): Expression = {
-      val sourceComponent = event.getTransferable().getSourceComponent().asInstanceOf[Component];
+      val sourceComponent = event.getTransferable().getSourceComponent().asInstanceOf[Component]
       if (sourceComponent.isInstanceOf[Expression]) {
         // An existing step is being moved from elsewhere
         return sourceComponent.asInstanceOf[Expression]
@@ -87,7 +87,7 @@ class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
         return sourceStep.getStep
       } else {
         throw new ClassCastException("Drop not supported for "
-          + sourceComponent.getClass().getSimpleName());
+          + sourceComponent.getClass().getSimpleName())
       }
     }
 

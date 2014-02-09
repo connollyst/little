@@ -1,5 +1,6 @@
-package com.quane.little.web.view
+package com.quane.little.ide.view
 
+import com.quane.little.web.view.ExpressionView
 import vaadin.scala.Button
 import vaadin.scala.Component
 import vaadin.scala.CssLayout
