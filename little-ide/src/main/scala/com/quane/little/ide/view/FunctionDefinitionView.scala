@@ -1,6 +1,9 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.controller.{FunctionReferenceController, ExpressionController, FunctionDefinitionController}
+import com.quane.little.ide.controller.ExpressionController
+import com.quane.little.ide.controller.FunctionDefinitionController
+import com.quane.little.ide.controller.FunctionReferenceController
+
 import vaadin.scala.Button
 import vaadin.scala.Component
 import vaadin.scala.CssLayout
@@ -25,21 +28,21 @@ object FunctionDefinitionView {
       new FunctionReferenceView(
         new FunctionReferenceController,
         "point toward",
-        new FunctionArgumentView("x"),
-        new FunctionArgumentView("y")))
+        new FunctionParameterView("x"),
+        new FunctionParameterView("y")))
     fun.addStep(
       new FunctionReferenceView(
         new FunctionReferenceController,
         "move",
-        new FunctionArgumentView("speed")))
+        new FunctionParameterView("speed")))
     val ifElse = new ConditionalView("touching [location]")
     ifElse.addThen(new PrintView("done"))
     ifElse.addElse(
       new FunctionReferenceView(
         new FunctionReferenceController,
         "move toward",
-        new FunctionArgumentView("x"),
-        new FunctionArgumentView("y")))
+        new FunctionParameterView("x"),
+        new FunctionParameterView("y")))
     fun.stepList.add(ifElse)
     fun.stepList.add(new PrintView("done"))
     fun
@@ -50,7 +53,7 @@ class FunctionDefinitionView(val controller: FunctionDefinitionController, name:
   extends VerticalLayout {
 
   private val stepList = new ExpressionListView
-  
+
   spacing = false
   add(header())
   add(body())
@@ -109,12 +112,12 @@ class FunctionDefinitionViewHeader(name: String) extends HorizontalLayout {
   def initAddArgumentButton = {
 
     val addArgumentButton = Button(
-    "+", {
-      val header = FunctionDefinitionViewHeader.this
-      val children = header.components.size
-      header.add(new FunctionParameter, children - 1)
-      () // how do I avoid this?
-    })
+      "+", {
+        val header = FunctionDefinitionViewHeader.this
+        val children = header.components.size
+        header.add(new FunctionParameterView, children - 1)
+        () // how do I avoid this?
+      })
     addComponent(addArgumentButton)
   }
 
