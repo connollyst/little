@@ -3,7 +3,7 @@ $fg-color: #262626;
 $text-color: whitesmoke;
 $border-color: crimson;
 
-.l-step {
+.l-expression {
 	position: relative;
 	margin: 2px 0;
 	padding: 5px;
@@ -14,24 +14,24 @@ $border-color: crimson;
 	-webkit-border-radius: 4px;
 }
 
-.l-step-btn-delete {
+.l-expression-btn-delete {
 	padding: 1px 5px;
 	color: $text-color;
 	background-color: $fg-color;
 	border: 1px solid $fg-color;
 }
 
-.l-step-btn-delete:hover {
+.l-expression-btn-delete:hover {
 	color: $border-color;
 	border-color: $border-color;
 	cursor: pointer;
 }
 
-.l-step-btn-delete-wrap {
+.l-expression-btn-delete-wrap {
 	font-size: 0.7em;
 	font-family: monospace;
 }
 
-.l-step-btn-delete-caption {
+.l-expression-btn-delete-caption {
 	
 }
