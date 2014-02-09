@@ -95,7 +95,7 @@ class FunctionDefinitionHeader(name: String) extends HorizontalLayout {
       "+", {
         val header = FunctionDefinitionHeader.this;
         val children = header.components.size
-        header.add(new FunctionDefinitionArgument, children - 1);
+        header.add(new FunctionParameter, children - 1);
         () // how do I avoid this?
       })
     addComponent(addArgumentButton);

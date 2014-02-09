@@ -2,11 +2,11 @@ package com.quane.little.web.view
 
 import vaadin.scala.HorizontalLayout
 
-object FunctionDefinitionArgument {
+object FunctionParameter {
   val Style = "l-function-def-param";
   val DefaultName = "myValue";
 }
-class FunctionDefinitionArgument extends HorizontalLayout {
+class FunctionParameter extends HorizontalLayout {
 
   // TODO create argument UI
 
