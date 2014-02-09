@@ -12,7 +12,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
   with Operable
   with Logging {
 
-  val operator = new Operator(this)
+  val operator = new Operator(null, this) // TODO where should the Runtime come from?
 
   // Range of 1-10
   private var _speed = 0
@@ -38,6 +38,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
   }
 
   def heal(amount: Int) {
+    // TODO
     log.error("TODO heal by " + amount)
   }
 
