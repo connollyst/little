@@ -1,7 +1,6 @@
 package com.quane.little.ide.view
 
 import com.quane.little.ide.controller.FunctionDefinitionController
-import com.quane.little.language.Runtime
 
 import vaadin.scala.HorizontalLayout
 
@@ -17,7 +16,7 @@ class WorkspaceView extends HorizontalLayout {
 
   val fun = FunctionDefinitionView(new FunctionDefinitionController, "move toward")
   add(fun)
-  fun.controller.compile(new Runtime)
+  fun.controller.compile()
 
 }
 
