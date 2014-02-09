@@ -25,10 +25,11 @@ object Functions {
     worker.schedule(task, seconds, TimeUnit.SECONDS)
   }
 
-  def move(mob: Operator, speed: Expression): Block = {
-    val fun = new Block(mob)
-    val pointer = new Pointer(fun, Operable.SPEED)
-    fun.addStep(new Set(pointer, speed))
+  def move: FunctionDefinition = {
+    val fun = new FunctionDefinition("move")
+    val speedArg = new Pointer(fun, "speed")
+    val guySpeed = new Pointer(fun, Operable.SPEED)
+    fun.addStep(new Set(guySpeed, new Get(speedArg)))
   }
 
   def stop: FunctionDefinition = {
@@ -79,7 +80,7 @@ object Functions {
     fun.addStep(new Set(homeXPointer, mob.x))
     fun.addStep(new Set(homeYPointer, mob.y))
     // Step #3: Set speed to 10
-    fun.addStep(move(mob, new Value(10)))
+    fun.addStep(new FunctionReference(mob, "move").addArg("speed", new Value(10)))
   }
 
   def printDirection(mob: Operator): Block = {

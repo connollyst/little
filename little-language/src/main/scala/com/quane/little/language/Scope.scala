@@ -45,7 +45,7 @@ trait Scope
     if (scope != null && scope.isDefined(name)) {
       scope.save(variable)
     } else {
-      log.info("Saving '" + name + "' as '" + value.primitive + "'")
+      log.info("Saving " + name + "=" + value.primitive)
       variables(name) = variable
     }
   }

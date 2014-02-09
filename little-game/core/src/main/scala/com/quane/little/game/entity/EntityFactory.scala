@@ -24,12 +24,13 @@ class EntityFactory(game: Little) {
   def createMob: Mob = {
     val mob = new Mob(game.builder.buildBody(), manager)
     game.eventBus.report(mob, LittleEvent.OnSpawn)
-    val speed = new Value(100)
+    mob.operator.runtime.saveFunction(Functions.move)
     mob.operator.runtime.saveFunction(Functions.stop)
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnSpawn,
-        Functions.move(mob.operator, speed)
+        new FunctionReference(mob.operator, "move")
+          .addArg("speed", new Value(100))
       )
     )
     mob.operator.addEventListener(

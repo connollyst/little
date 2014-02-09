@@ -1,18 +1,17 @@
 package com.quane.little.language
 
+import scala.collection.mutable.Map
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.data.{ValueType, Value}
 
 /** Defines a function.
   *
-  * @param name
+  * @param name the function name
   */
 class FunctionDefinition(val name: String)
   extends Scope {
 
-  var scope: Scope = new Scope {
-    var scope: Scope = _
-  }
+  var scope: Scope = _
   val params: ListBuffer[FunctionParameter] = new ListBuffer[FunctionParameter]
   val block: Block = new Block(this)
 
@@ -47,17 +46,52 @@ class FunctionParameter(val name: String, val paramType: ValueType)
 class FunctionReference(scope: Scope, val name: String)
   extends Block(scope) {
 
+  private val args = Map[String, Expression]()
+
+  def addArg(name: String, value: Expression): FunctionReference = {
+    // TODO assert arg is not already set
+    args(name) = value
+    this
+  }
+
+  /** Evaluate the referenced function.
+    *
+    * @return the function's return value
+    */
   override def evaluate: Value = {
-    val function = scope.runtime.fetchFunction(name)
-    if (scope != function) {
+    val definition = fetchDefinition()
+    setScope(definition)
+    setArguments(definition)
+    validateArguments(definition)
+    evaluateDefinition(definition)
+  }
+
+  private def fetchDefinition(): FunctionDefinition = {
+    scope.runtime.fetchFunction(name)
+  }
+
+  private def setScope(definition: FunctionDefinition) = {
+    if (scope != definition) {
       // TODO is this correct? where to args go?
-      function.scope = scope
+      definition.scope = scope
     }
+  }
+
+  private def validateArguments(definition: FunctionDefinition) = {
     // TODO Validate we have all arguments
-    // TODO Evaluate all arguments to Values
+  }
+
+  private def setArguments(definition: FunctionDefinition) = {
     // TODO Set arguments in Scope (NON RECURSIVELY)
-    // TODO Evaluate Block
-    function.block.evaluate
+    args.foreach {
+      case (argName, argValue) =>
+        // TODO should we store args in the block's scope?
+        definition.save(argName, argValue.evaluate)
+    }
+  }
+
+  private def evaluateDefinition(definition: FunctionDefinition): Value = {
+    definition.block.evaluate
   }
 
 }

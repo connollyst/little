@@ -75,8 +75,7 @@ class Operator(override val runtime: Runtime, mob: Operable)
   }
 
   override def fetch(name: String): Variable = {
-    log.debug("Guy is returning " + name)
-    name match {
+    val variable = name match {
       case Operable.X => new Variable(name, x)
       case Operable.Y => new Variable(name, y)
       case Operable.SPEED => new Variable(name, new Value(mob.speed))
@@ -85,6 +84,8 @@ class Operator(override val runtime: Runtime, mob: Operable)
         // It's not a special variable, fetch it from normal memory
         super.fetch(name)
     }
+    log.debug("Guy is returning " + name + ": " + variable.value)
+    variable
   }
 
 }

@@ -9,24 +9,23 @@ import com.quane.little.language.data.Value
 class TestFunctions extends FunSuite {
 
   test("test function move") {
-    val guy = new Operator(new Runtime, new StubOperable)
-    Functions.move(guy, new Value(42)).evaluate
-    val speed = guy.speed
-    assert(speed == 42, "guy should have speed of 42, actual=" + speed)
+    val runtime = new Runtime
+    runtime.saveFunction(Functions.move)
+    val guy = new Operator(runtime, new StubOperable)
+    new FunctionReference(guy, "move")
+      .addArg("speed", new Value(42))
+      .evaluate
+    assertSpeed(42, guy)
   }
 
   test("test function stop") {
     val runtime = new Runtime
     runtime.saveFunction(Functions.stop)
-
     val guy = new Operator(runtime, new StubOperable)
     guy.speed(42)
-
-    val fun = new FunctionReference(guy, "stop")
-    fun.evaluate
-
-    val speed = guy.speed
-    assert(speed == 0, "guy should have speed of 0, actual=" + speed)
+    new FunctionReference(guy, "stop")
+      .evaluate
+    assertSpeed(0, guy)
   }
 
   test("test function turn") {
@@ -116,4 +115,8 @@ class TestFunctions extends FunSuite {
     assert(dir == expectedDir, "guy should have turned to " + expectedDir + " degrees, actual=" + dir)
   }
 
+  private def assertSpeed(expected: Int, guy: Operator) = {
+    val speed = guy.speed
+    assert(speed == expected, "guy should have speed of " + expected + ", actual=" + speed)
+  }
 }
