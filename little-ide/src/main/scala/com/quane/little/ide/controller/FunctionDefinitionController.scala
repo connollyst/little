@@ -2,18 +2,25 @@ package com.quane.little.ide.controller
 
 import com.quane.little.language.FunctionDefinition
 import com.quane.little.language.Scope
+import scala.collection.mutable.ListBuffer
 
-class FunctionDefinitionController {
+class FunctionDefinitionController(steps: ListBuffer[ExpressionController] = new ListBuffer[ExpressionController]) {
 
   var name: String = "name"
 
-  def addStep(step: ExpressionController) = {
-    println("Adding step to definition: " + step)
+
+  def addStep(step: ExpressionController): FunctionDefinitionController = {
+    steps += step
+    this
   }
 
   def compile(scope: Scope): FunctionDefinition = {
-    println("Compiling FunctionDefinition '" + name + "'")
-    new FunctionDefinition(name)
+    val fun = new FunctionDefinition(name)
+    steps.foreach {
+      step: ExpressionController =>
+        fun.addStep(step.compile(fun))
+    }
+    fun
   }
 
 }

@@ -14,6 +14,8 @@ class Block(var scope: Scope, steps: ListBuffer[Expression])
 
   def this(scope: Scope) = this(scope, ListBuffer[Expression]())
 
+  def length: Int = steps.length
+
   def addStep(step: Expression): Block = {
     steps += step
     this
