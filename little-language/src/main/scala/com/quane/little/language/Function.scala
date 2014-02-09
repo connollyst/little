@@ -1,7 +1,6 @@
 package com.quane.little.language
 
 import scala.collection.mutable.Map
-import scala.collection.mutable.ListBuffer
 import com.quane.little.language.data.{ValueType, Value}
 
 /** Defines a function.
@@ -12,15 +11,15 @@ class FunctionDefinition(val name: String)
   extends Scope {
 
   var scope: Scope = _
-  val params: ListBuffer[FunctionParameter] = new ListBuffer[FunctionParameter]
-  val block: Block = new Block(this)
+  val params = Map[String, ValueType]()
+  val block = new Block(this)
 
   def addParam(name: String, paramType: ValueType): FunctionDefinition = {
     addParam(new FunctionParameter(name, paramType))
   }
 
   def addParam(param: FunctionParameter): FunctionDefinition = {
-    params += param
+    params(param.name) = param.paramType
     this
   }
 
