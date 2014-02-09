@@ -38,6 +38,15 @@ class FunctionDefinition(var scope: Scope, val name: String)
   val params: ListBuffer[FunctionParameter] = new ListBuffer[FunctionParameter]
   val block: Block = new Block(scope)
 
+  def addParam(name: String, paramType: ValueType): FunctionDefinition = {
+    addParam(new FunctionParameter(name, paramType))
+  }
+
+  def addParam(param: FunctionParameter): FunctionDefinition = {
+    params += param
+    this
+  }
+
   def addStep(step: Expression): FunctionDefinition = {
     block.addStep(step)
     this
