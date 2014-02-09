@@ -1,5 +1,6 @@
 package com.quane.little.ide.view
 
+import com.quane.little.ide.controller.ExpressionController
 import vaadin.scala.VerticalLayout
 import vaadin.scala.CssLayout
 import com.vaadin.event.dd.DropHandler
@@ -9,18 +10,18 @@ import com.vaadin.event.dd.DragAndDropEvent
 import vaadin.scala.Component
 import com.quane.vaadin.scala.DroppableTarget
 
-object ExpressionList {
+object ExpressionListView {
   val Style = "l-step-list"
   val StyleSeparator = Style + "-separator"
 }
 
-class ExpressionList extends VerticalLayout {
-  styleName = ExpressionList.Style
+class ExpressionListView extends VerticalLayout {
+  styleName = ExpressionListView.Style
   spacing = false
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
-    super.add(new ExpressionListSeparator())
+    super.add(new ExpressionListViewSeparator())
     component
   }
 
@@ -49,14 +50,14 @@ class ExpressionList extends VerticalLayout {
 
 }
 
-class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
+class ExpressionListViewSeparator extends DroppableTarget(new CssLayout) {
 
-  component.styleName = ExpressionList.StyleSeparator
+  component.styleName = ExpressionListView.StyleSeparator
   dropHandler = new DropHandler() {
 
-    override def getAcceptCriterion(): AcceptCriterion = {
+    override def getAcceptCriterion: AcceptCriterion = {
       // TODO only accept appropriate Little components
-      return AcceptAll.get();
+      AcceptAll.get()
     }
 
     override def drop(event: DragAndDropEvent): Unit = {
@@ -65,29 +66,28 @@ class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
       if (list.contains(droppedStep)) {
         list.removeComponent(droppedStep)
       }
-      val separator = ExpressionListSeparator.this
+      val separator = ExpressionListViewSeparator.this
       val separatorIndex = list.componentIndex(separator)
       list.add(droppedStep, separatorIndex + 1)
     }
 
-    def getStepList: ExpressionList = {
-      val t = ExpressionListSeparator.this
+    def getStepList: ExpressionListView = {
+      val t = ExpressionListViewSeparator.this
       val p = t.parent
-      p.asInstanceOf[ExpressionList]
+      p.asInstanceOf[ExpressionListView]
     }
 
-    def getDroppedStep(event: DragAndDropEvent): Expression = {
-      val sourceComponent = event.getTransferable().getSourceComponent().asInstanceOf[Component]
-      if (sourceComponent.isInstanceOf[Expression]) {
+    def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionController] = {
+      val sourceComponent = event.getTransferable.getSourceComponent.asInstanceOf[Component]
+      if (sourceComponent.isInstanceOf[ExpressionView[ExpressionController]]) {
         // An existing step is being moved from elsewhere
-        return sourceComponent.asInstanceOf[Expression]
-      } else if (sourceComponent.isInstanceOf[ToolboxItem]) {
+        sourceComponent.asInstanceOf[ExpressionView[ExpressionController]]
+      } else if (sourceComponent.isInstanceOf[ToolboxItemView]) {
         // A new step is being dropped from the toolbox
-        val sourceStep = sourceComponent.asInstanceOf[ToolboxItem]
-        return sourceStep.getStep
+        sourceComponent.asInstanceOf[ToolboxItemView].getStep
       } else {
         throw new ClassCastException("Drop not supported for "
-          + sourceComponent.getClass().getSimpleName())
+          + sourceComponent.getClass.getSimpleName)
       }
     }
 

@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.web.view.ExpressionView
+import com.quane.little.ide.controller.{FunctionReferenceController, ExpressionController, FunctionDefinitionController}
 import vaadin.scala.Button
 import vaadin.scala.Component
 import vaadin.scala.CssLayout
@@ -10,9 +10,8 @@ import vaadin.scala.Measure
 import vaadin.scala.TextField
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
-import com.quane.little.web.controller.{ExpressionController, FunctionReferenceController, FunctionDefinitionController}
 
-object FunctionDefinition {
+object FunctionDefinitionView {
   val Style = "l-function-def"
   val StyleBody = Style + "-body"
   val StyleHeadLeft = StyleBody + "-left"
@@ -21,10 +20,10 @@ object FunctionDefinition {
   val StyleHeadNameField = StyleHead + "-name"
 }
 
-class FunctionDefinition(val controller: FunctionDefinitionController, name: String)
+class FunctionDefinitionView(val controller: FunctionDefinitionController, name: String)
   extends VerticalLayout {
 
-  val stepList = new ExpressionList
+  val stepList = new ExpressionListView
 
   spacing = false
   add(header())
@@ -32,17 +31,17 @@ class FunctionDefinition(val controller: FunctionDefinitionController, name: Str
   add(footer())
 
   def header(): Component = {
-    new FunctionDefinitionHeader(name)
+    new FunctionDefinitionViewHeader(name)
   }
 
   def body(): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = FunctionDefinition.StyleHeadLeft
+    bodyLeft.styleName = FunctionDefinitionView.StyleHeadLeft
     body.addComponent(bodyLeft)
     body.addComponent(stepList)
-    body.styleName = FunctionDefinition.StyleBody
+    body.styleName = FunctionDefinitionView.StyleBody
     body.spacing = false
     initMockData()
     body
@@ -50,7 +49,7 @@ class FunctionDefinition(val controller: FunctionDefinitionController, name: Str
 
   def footer(): Component = {
     val footer = new CssLayout()
-    footer.styleName = FunctionDefinition.StyleFoot
+    footer.styleName = FunctionDefinitionView.StyleFoot
     footer
   }
 
@@ -62,30 +61,30 @@ class FunctionDefinition(val controller: FunctionDefinitionController, name: Str
 
   def initMockData() = {
     addStep(
-      new FunctionReference(
+      new FunctionReferenceView(
         new FunctionReferenceController,
         "point toward",
-        new FunctionArgument("x"),
-        new FunctionArgument("y")))
+        new FunctionArgumentView("x"),
+        new FunctionArgumentView("y")))
     addStep(
-      new FunctionReference(
+      new FunctionReferenceView(
         new FunctionReferenceController,
         "move",
-        new FunctionArgument("speed")))
-    val ifElse = new Conditional("touching [location]")
-    ifElse.addThen(new Expression("done"))
+        new FunctionArgumentView("speed")))
+    val ifElse = new ConditionalView("touching [location]")
+    ifElse.addThen(new PrintView("done"))
     ifElse.addElse(
-      new FunctionReference(
+      new FunctionReferenceView(
         new FunctionReferenceController,
         "move toward",
-        new FunctionArgument("x"),
-        new FunctionArgument("y")))
+        new FunctionArgumentView("x"),
+        new FunctionArgumentView("y")))
     stepList.add(ifElse)
-    stepList.add(new Expression("done"))
+    stepList.add(new PrintView("done"))
   }
 }
 
-class FunctionDefinitionHeader(name: String) extends HorizontalLayout {
+class FunctionDefinitionViewHeader(name: String) extends HorizontalLayout {
 
   // TODO should be a label that, when clicked, becomes a text field
 
@@ -93,7 +92,7 @@ class FunctionDefinitionHeader(name: String) extends HorizontalLayout {
     this("")
   }
 
-  styleName = FunctionDefinition.StyleHead
+  styleName = FunctionDefinitionView.StyleHead
   spacing = true
   initNameField
   initAddArgumentButton
@@ -101,7 +100,7 @@ class FunctionDefinitionHeader(name: String) extends HorizontalLayout {
   def initNameField = {
     val nameField = new TextField
     nameField.value = name
-    nameField.styleName = FunctionDefinition.StyleHeadNameField
+    nameField.styleName = FunctionDefinitionView.StyleHeadNameField
     addComponent(nameField)
   }
 
@@ -109,7 +108,7 @@ class FunctionDefinitionHeader(name: String) extends HorizontalLayout {
 
     val addArgumentButton = Button(
     "+", {
-      val header = FunctionDefinitionHeader.this
+      val header = FunctionDefinitionViewHeader.this
       val children = header.components.size
       header.add(new FunctionParameter, children - 1)
       () // how do I avoid this?

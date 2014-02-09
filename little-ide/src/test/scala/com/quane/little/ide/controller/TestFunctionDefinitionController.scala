@@ -1,7 +1,6 @@
 package com.quane.little.ide.controller
 
 import com.quane.little.language.Runtime
-import com.quane.little.web.controller.FunctionDefinitionController
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
