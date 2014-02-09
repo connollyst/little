@@ -1,26 +1,28 @@
 package com.quane.little.language
 
+import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Map
-import com.quane.little.language.data.{ValueType, Value}
+import com.quane.little.language.data.{ ValueType, Value }
 import org.eintr.loglady.Logging
 
-/** Defines a function.
-  *
-  * @param name the function name
-  */
+/**
+ * Defines a function.
+ *
+ * @param name the function name
+ */
 class FunctionDefinition(val name: String)
   extends Scope {
 
   var scope: Scope = _
-  val params = Map[String, ValueType]()
+  val params = new ListBuffer[String]
   val block = new Block(this)
 
-  def addParam(name: String, paramType: ValueType): FunctionDefinition = {
-    addParam(new FunctionParameter(name, paramType))
+  def addParam(name: String): FunctionDefinition = {
+    addParam(new FunctionParameter(name))
   }
 
   def addParam(param: FunctionParameter): FunctionDefinition = {
-    params(param.name) = param.paramType
+    params += param.name
     this
   }
 
@@ -31,18 +33,20 @@ class FunctionDefinition(val name: String)
 
 }
 
-/** Defines a function parameter to be specified at evaluation time.
-  *
-  * @param name the name of the parameter
-  * @param paramType the type of the parameter
-  */
-class FunctionParameter(val name: String, val paramType: ValueType)
+/**
+ * Defines a function parameter to be specified at evaluation time.
+ *
+ * @param name the name of the parameter
+ * @param paramType the type of the parameter
+ */
+class FunctionParameter(val name: String)
 
-/** Reference to a [[com.quane.little.language.Block]].
-  *
-  * @param scope the scope in which the function is evaluated
-  * @param name the name of the function
-  */
+/**
+ * Reference to a [[com.quane.little.language.Block]].
+ *
+ * @param scope the scope in which the function is evaluated
+ * @param name the name of the function
+ */
 class FunctionReference(scope: Scope, val name: String)
   extends Block(scope)
   with Logging {
@@ -55,10 +59,11 @@ class FunctionReference(scope: Scope, val name: String)
     this
   }
 
-  /** Evaluate the referenced function.
-    *
-    * @return the function's return value
-    */
+  /**
+   * Evaluate the referenced function.
+   *
+   * @return the function's return value
+   */
   override def evaluate: Value = {
     log.info("Evaluating function '" + name + "'")
     val definition = fetchDefinition()
