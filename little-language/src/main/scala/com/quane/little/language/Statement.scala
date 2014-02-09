@@ -4,7 +4,7 @@ import org.eintr.loglady.Logging
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.{Value, Variable}
 
-sealed trait Statement
+abstract class Statement
   extends Expression
 
 class Set(pointer: Pointer, value: Expression)
