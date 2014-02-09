@@ -49,12 +49,12 @@ object FunctionDefinitionView {
 class FunctionDefinitionView(val controller: FunctionDefinitionController, name: String)
   extends VerticalLayout {
 
+  private val stepList = new ExpressionListView
+  
   spacing = false
   add(header())
   add(body())
   add(footer())
-
-  private val stepList = new ExpressionListView
 
   private def header(): Component = {
     new FunctionDefinitionViewHeader(name)
