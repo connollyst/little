@@ -16,7 +16,7 @@ class TestOperator extends FunSuite {
 
   test("test guy: functions can access my memory") {
     val guy = new Operator(new Runtime, new StubOperable)
-    val fun1 = new Function(guy)
+    val fun1 = new Block(guy)
     guy.save(new Variable("MyA", new Value("A")))
     val obj1 = fun1.fetch("MyA")
     assert(obj1.value.primitive == "A", "expected 'MyA' to be 'A' but is: " + obj1.value)

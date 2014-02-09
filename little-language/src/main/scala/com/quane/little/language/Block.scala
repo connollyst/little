@@ -1,10 +1,28 @@
 package com.quane.little.language
 
+import com.quane.little.language.data.Value
+import scala.collection.mutable.ListBuffer
 
-/** A block is a piece of code with it's own scope.
+
+/** A block is a scope consisting of one or more expressions.
   *
   * @author Sean Connolly
   */
-abstract class Block(scope: Scope)
+class Block(var scope: Scope, steps: ListBuffer[Expression])
   extends Expression
-  with Scope
+  with Scope {
+
+  val runtime: Runtime = scope.runtime
+
+  def this(scope: Scope) = this(scope, ListBuffer[Expression]())
+
+  def addStep(step: Expression): Block = {
+    steps += step
+    this
+  }
+
+  def evaluate: Value = {
+    steps.map(step => step.evaluate).last
+  }
+
+}

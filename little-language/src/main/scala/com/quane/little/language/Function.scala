@@ -1,36 +1,9 @@
 package com.quane.little.language
 
 import scala.collection.mutable.ListBuffer
-import com.quane.little.language.data.{Value, Nada}
+import com.quane.little.language.data.{ValueType, Value}
 
-/** A function is a collection of steps which are evaluated in sequence when
-  * the function itself is evaluated.
-  *
-  * A function is a type of [[com.quane.little.language.Block]] and, as such,
-  * has a [[com.quane.little.language.Scope]]. Thus, any variables defined
-  * within are limited to this scope.
-  */
-class Function(var scope: Scope, steps: ListBuffer[Expression])
-  extends Block(scope) {
-
-  val runtime: Runtime = scope.runtime
-  var lastStep: Expression = new Nada
-
-  def this(scope: Scope) = this(scope, ListBuffer[Expression]())
-
-  def addStep(step: Expression): Function = {
-    steps += step
-    this
-  }
-
-  def evaluate: Value = {
-    steps.foreach(step => step.evaluate)
-    lastStep.evaluate
-  }
-
-}
-
-/** Reference to a [[com.quane.little.language.Function]].
+/** Reference to a [[com.quane.little.language.Block]].
   *
   * @param scope the scope from which the function can be retrieved
   * @param name the name of the function
@@ -46,9 +19,30 @@ class FunctionReference(val scope: Scope, val name: String)
   def evaluate: Value = {
     val function = scope.runtime.fetchFunction(name)
     if (scope != function) {
+      // TODO is this correct? where to args go?
       function.scope = scope
     }
-    function.evaluate
+    // TODO Validate we have all arguments
+    // TODO Evaluate all arguments to Values
+    // TODO Set arguments in Scope (NON RECURSIVELY)
+    // TODO Evaluate Block
+    function.block.evaluate
   }
 
 }
+
+class FunctionDefinition(var scope: Scope, val name: String)
+  extends Scope {
+
+  val runtime: Runtime = scope.runtime
+  val params: ListBuffer[FunctionParameter] = new ListBuffer[FunctionParameter]
+  val block: Block = new Block(scope)
+
+  def addStep(step: Expression): FunctionDefinition = {
+    block.addStep(step)
+    this
+  }
+
+}
+
+class FunctionParameter(val name: String, val paramType: ValueType)

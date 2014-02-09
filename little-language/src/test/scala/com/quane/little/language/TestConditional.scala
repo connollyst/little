@@ -17,7 +17,7 @@ class TestConditional extends FunSuite with BeforeAndAfter {
   /** The conditional test evaluates to true; the expression should be evaluated.
     */
   test("test condition evaluation: positive") {
-    val fun = createTestFunction
+    val fun = createTestBlock
     new Conditional(positive, fun).evaluate
     assert(fun.fetch(name).value.asText == value)
   }
@@ -25,13 +25,13 @@ class TestConditional extends FunSuite with BeforeAndAfter {
   /** The conditional test evaluates to false; the expression should not be evaluated.
     */
   test("test condition evaluation: negative") {
-    val fun = createTestFunction
+    val fun = createTestBlock
     new Conditional(negative, fun).evaluate
     assert(fun.fetch(name).value.asText != value)
   }
 
-  private def createTestFunction = {
-    val fun = new Function(new Runtime)
+  private def createTestBlock: Block = {
+    val fun = new Block(new Runtime)
     val pointer = new Pointer(fun, name)
     fun.addStep(new Set(pointer, new Value(value)))
   }

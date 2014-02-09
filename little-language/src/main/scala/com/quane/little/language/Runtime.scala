@@ -8,24 +8,23 @@ class Runtime
   val runtime: Runtime = this
   var scope: Scope = this
 
-  private val functions = Map[String, Function]()
+  private val functions = Map[String, FunctionDefinition]()
 
   def isFunctionDefined(name: String): Boolean = {
     functions.contains(name)
   }
 
-  def saveFunction(name: String, function: Function) {
-    log.info("Saving function '" + name + "'")
-    functions(name) = function
+  def saveFunction(function: FunctionDefinition) {
+    log.info("Saving function '" + function.name + "'")
+    functions(function.name) = function
   }
 
-  /** Returns the [[com.quane.little.language.Function]] by the given name if it
-    * is defined.
+  /** Returns the named [[com.quane.little.language.FunctionDefinition]].
     *
     * @param name the name of the function
     * @return the function if defined
     */
-  def fetchFunction(name: String): Function = {
+  def fetchFunction(name: String): FunctionDefinition = {
     if (functions.contains(name)) {
       functions(name)
     } else {

@@ -10,7 +10,7 @@ import org.junit.runner.RunWith
 class TestFunction extends FunSuite {
 
   test("test new function") {
-    new Function(new Runtime)
+    new Block(new Runtime)
   }
 
   /** Test evaluating a function where two objects are created.
@@ -18,7 +18,7 @@ class TestFunction extends FunSuite {
     * Assert their stored values are accurate.
     */
   test("test function with new values") {
-    val fun = new Function(new Runtime)
+    val fun = new Block(new Runtime)
     val pointer1 = new Pointer(fun, "Obj1")
     val pointer2 = new Pointer(fun, "Obj2")
     fun.addStep(new Set(pointer1, new Value("A")))
@@ -38,7 +38,7 @@ class TestFunction extends FunSuite {
     * Assert their stored values are accurate.
     */
   test("test function with value assignment") {
-    val fun = new Function(new Runtime)
+    val fun = new Block(new Runtime)
     val pointer1 = new Pointer(fun, "Obj1")
     val pointer2 = new Pointer(fun, "Obj2")
     fun.addStep(new Set(pointer1, new Value("A")))
@@ -54,54 +54,54 @@ class TestFunction extends FunSuite {
   }
 
   test("test function with return from print statement") {
-    val fun = new Function(new Runtime)
-    fun.lastStep = new Print(new Value("A"))
+    val fun = new Block(new Runtime)
+    fun.addStep(new Print(new Value("A")))
     val obj = fun.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test function with return from set statement") {
-    val fun = new Function(new Runtime)
+    val fun = new Block(new Runtime)
     val pointer = new Pointer(fun, "Obj")
-    fun.lastStep = new Set(pointer, new Value("A"))
+    fun.addStep(new Set(pointer, new Value("A")))
     val obj = fun.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test function with return from get statement") {
-    val fun = new Function(new Runtime)
+    val fun = new Block(new Runtime)
     val pointer = new Pointer(fun, "Obj")
     fun.addStep(new Set(pointer, new Value("A")))
-    fun.lastStep = new Get(pointer)
+    fun.addStep(new Get(pointer))
     val obj = fun.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test function reference with return from print statement") {
-    val fun = new Function(new Runtime)
-    fun.lastStep = new Print(new Value("A"))
-    fun.runtime.saveFunction("myFun", fun)
+    val fun = new FunctionDefinition(new Runtime, "myFun")
+    fun.addStep(new Print(new Value("A")))
+    fun.runtime.saveFunction(fun)
     val ref = new FunctionReference(fun, "myFun")
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test function reference with return from set statement") {
-    val fun = new Function(new Runtime)
+    val fun = new FunctionDefinition(new Runtime, "myFun")
     val pointer = new Pointer(fun, "Obj")
-    fun.lastStep = new Set(pointer, new Value("A"))
-    fun.runtime.saveFunction("myFun", fun)
+    fun.addStep(new Set(pointer, new Value("A")))
+    fun.runtime.saveFunction(fun)
     val ref = new FunctionReference(fun, "myFun")
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test function reference with return from get statement") {
-    val fun = new Function(new Runtime)
+    val fun = new FunctionDefinition(new Runtime, "myFun")
     val pointer = new Pointer(fun, "Obj")
     fun.addStep(new Set(pointer, new Value("A")))
-    fun.lastStep = new Get(pointer)
-    fun.runtime.saveFunction("myFun", fun)
+    fun.addStep(new Get(pointer))
+    fun.runtime.saveFunction(fun)
     val ref = new FunctionReference(fun, "myFun")
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
