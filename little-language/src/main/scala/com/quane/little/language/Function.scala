@@ -5,17 +5,12 @@ import com.quane.little.language.data.{ValueType, Value}
 
 /** Reference to a [[com.quane.little.language.Block]].
   *
-  * @param scope the scope from which the function can be retrieved
+  * @param scope the scope in which the function is evaluated
   * @param name the name of the function
   */
 class FunctionReference(val scope: Scope, val name: String)
   extends Expression {
 
-  /** Evaluate the referenced function within the current
-    * [[com.quane.little.language.Scope]].
-    *
-    * @return the result of the function evaluation
-    */
   def evaluate: Value = {
     val function = scope.runtime.fetchFunction(name)
     if (scope != function) {
