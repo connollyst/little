@@ -4,11 +4,12 @@ import com.quane.little.language.FunctionReference
 import com.quane.little.language.Scope
 
 class FunctionReferenceController
-  extends Controller[FunctionReference] {
+  extends ExpressionController {
 
   var name: String = "name"
 
   override def compile(scope: Scope): FunctionReference = {
+    println("Compiling FunctionReference '" + name + "'")
     new FunctionReference(scope, name)
   }
 

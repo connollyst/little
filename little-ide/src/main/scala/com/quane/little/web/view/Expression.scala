@@ -6,6 +6,7 @@ object Expression {
   val Style = "l-expression"
   val StyleButtonDelete = Style + "-btn-delete"
 }
+
 class Expression(label: String) extends Label {
 
   def this() {
