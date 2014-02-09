@@ -2,7 +2,6 @@ package com.quane.little.language.data
 
 import com.quane.little.language.Expression
 import scala.None
-import com.google.common.base.Objects
 import org.eintr.loglady.Logging
 
 class Value(val primitive: Any)
@@ -16,6 +15,7 @@ class Value(val primitive: Any)
       case i: Int => IntValueType
       case d: Double => DoubleValueType
       case s: String => StringValueType
+      case None => NoValueType
       case _ =>
         log.warn("Cannot resolve value type for " + primitive)
         NoValueType
@@ -169,6 +169,17 @@ class Value(val primitive: Any)
 
 }
 
+class Nada
+  extends Value(None) {
+
+  override def asBool: Boolean = false
+
+  override def asInt: Int = 0
+
+  override def asText: String = "nada"
+
+}
+
 sealed trait ValueType
 
 object StringValueType extends ValueType
@@ -180,14 +191,3 @@ object IntValueType extends ValueType
 object DoubleValueType extends ValueType
 
 object NoValueType extends ValueType
-
-class Nada
-  extends Value(None) {
-
-  override def asBool: Boolean = false
-
-  override def asInt: Int = 0
-
-  override def asText: String = "nada"
-
-}
