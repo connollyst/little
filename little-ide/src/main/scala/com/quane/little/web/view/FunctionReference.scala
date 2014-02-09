@@ -5,7 +5,7 @@ import scala.collection.mutable.ListBuffer
 import vaadin.scala.HorizontalLayout
 
 object FunctionReference {
-  val Style = "l-function"
+  val Style = "l-function-ref"
 }
 class FunctionReference(name: String, params: FunctionArgument*) extends HorizontalLayout {
   

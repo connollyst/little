@@ -6,7 +6,7 @@ $border-color: grey;
 $border-radius-big: 5px;
 $border-radius-small: 2px;
 
-.l-function-head {
+.l-function-def-head {
 	padding: 10px;
 	min-height: 20px;
 	min-width: 100px;
@@ -17,29 +17,29 @@ $border-radius-small: 2px;
 	border-bottom-right-radius: $border-radius-small;
 }
 
-.l-function-head-name {
+.l-function-def-head-name {
 	
 }
 
-.l-function-argument {
+.l-function-def-param {
 	color: $text-color;
 }
 
-.l-function-body {
+.l-function-def-body {
 	background-color: $bg-color;
 }
 
-.l-function-body-left {
+.l-function-def-body-left {
 	width: 10px;
 	background-color: $fg-color;
 	border-left: 1px solid $border-color;
 }
 
-.l-function-body-inner {
+.l-function-def-body-inner {
 	background-color: wheat;
 }
 
-.l-function-foot {
+.l-function-def-foot {
 	height: 10px;
 	width: 100px;
 	background-color: $fg-color;
@@ -47,4 +47,14 @@ $border-radius-small: 2px;
 	border-top-right-radius: $border-radius-small;
 	border-bottom-left-radius: $border-radius-big;
 	border-bottom-right-radius: $border-radius-big;
+}
+
+/* Function Reference */
+
+.l-function-ref {
+	
+}
+
+.l-function-ref-arg {
+	
 }

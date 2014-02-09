@@ -11,7 +11,7 @@ import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
 
 object FunctionDefinition {
-  val Style = "l-function";
+  val Style = "l-function-def";
   val StyleBody = Style + "-body";
   val StyleHeadLeft = StyleBody + "-left";
   val StyleFoot = Style + "-foot";

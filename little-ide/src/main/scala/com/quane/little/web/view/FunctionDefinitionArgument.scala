@@ -3,7 +3,7 @@ package com.quane.little.web.view
 import vaadin.scala.HorizontalLayout
 
 object FunctionDefinitionArgument {
-  val Style = "l-function-argument";
+  val Style = "l-function-def-param";
   val DefaultName = "myValue";
 }
 class FunctionDefinitionArgument extends HorizontalLayout {
