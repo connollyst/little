@@ -1,0 +1,18 @@
+/* Import the reindeer theme. */
+/* This only allows us to use the mixins defined in it and does not add any styles by itself. */
+@import "../reindeer/reindeer.scss";
+/* Import the Little styles. */
+@import "styles/littletoolbox";
+@import "styles/littleworkspace";
+@import "styles/littlefunction";
+@import "styles/littleifelse";
+@import "styles/littlesteplist";
+@import "styles/littlestep";
+@import "styles/littlestepempty";
+
+/* This contains all of your theme. */
+/* If somebody wants to extend the theme she will include this mixin. */
+@mixin littletheme {
+  /* Include all the styles from the reindeer theme */
+  @include reindeer;
+}

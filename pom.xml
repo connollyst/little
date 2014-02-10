@@ -53,10 +53,8 @@
 
     <modules>
         <module>little-language</module>
-        <module>little-ide-jfx</module>
         <module>little-ide</module>
         <module>little-game</module>
-        <module>little-ide-core</module>
     </modules>
 
     <properties>
