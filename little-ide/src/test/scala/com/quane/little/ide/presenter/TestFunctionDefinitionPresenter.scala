@@ -20,6 +20,27 @@ class TestFunctionDefinitionPresenter extends FunSuite {
     assert(function.name == "newName")
   }
 
+  test("test compiled with 0 parameters") {
+    val presenter = new FunctionDefinitionPresenter()
+    val function = presenter.compile()
+    assert(function.params.length == 0)
+  }
+
+  test("test compiled with 1 parameters") {
+    val presenter = new FunctionDefinitionPresenter()
+      .addParam(new FunctionParameterPresenter)
+    val function = presenter.compile()
+    assert(function.params.length == 1)
+  }
+
+  test("test compiled with 2 parameters") {
+    val presenter = new FunctionDefinitionPresenter()
+      .addParam(new FunctionParameterPresenter)
+      .addParam(new FunctionParameterPresenter)
+    val function = presenter.compile()
+    assert(function.params.length == 2)
+  }
+
   test("test compiled with 0 steps") {
     val presenter = new FunctionDefinitionPresenter()
     val function = presenter.compile()

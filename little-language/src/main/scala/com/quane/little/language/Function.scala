@@ -2,7 +2,7 @@ package com.quane.little.language
 
 import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Map
-import com.quane.little.language.data.{ ValueType, Value }
+import com.quane.little.language.data.Value
 import org.eintr.loglady.Logging
 
 /**
@@ -37,7 +37,6 @@ class FunctionDefinition(val name: String)
  * Defines a function parameter to be specified at evaluation time.
  *
  * @param name the name of the parameter
- * @param paramType the type of the parameter
  */
 class FunctionParameter(val name: String)
 
