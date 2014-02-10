@@ -15,7 +15,7 @@ class FunctionReferenceView(val presenter: FunctionReferencePresenter, name: Str
   extends HorizontalLayout with ExpressionView[FunctionReferencePresenter] {
 
   presenter.name = name
-  presenter.args = args.map {
+  presenter.args ++= args.map {
     f: FunctionArgumentView => f.presenter
   }.to[ListBuffer]
 

@@ -1,12 +1,13 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.language.data.Value
-import com.quane.little.language.{Print, Expression, Scope}
+import com.quane.little.language.{Expression, Scope}
 
-class FunctionArgumentPresenter {
+class FunctionArgumentPresenter(var name: String = "name",
+                                var value: String = "") {
 
   def compile(scope: Scope): Expression = {
-    new Print(new Value("TODO"))
+    new Value(value)
   }
 
 }

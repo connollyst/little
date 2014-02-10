@@ -28,5 +28,26 @@ class TestFunctionReferencePresenter extends FunSuite {
     assert(function.name == "newName")
   }
 
+  test("test compiled with 0 parameters") {
+    val presenter = new FunctionReferencePresenter
+    val function = presenter.compile(new Runtime)
+    assert(function.args.size == 0)
+  }
+
+  test("test compiled with 1 parameters") {
+    val presenter = new FunctionReferencePresenter()
+      .addArg(new FunctionArgumentPresenter("x"))
+    val function = presenter.compile(new Runtime)
+    assert(function.args.size == 1)
+  }
+
+  test("test compiled with 2 parameters") {
+    val presenter = new FunctionReferencePresenter()
+      .addArg(new FunctionArgumentPresenter("x"))
+      .addArg(new FunctionArgumentPresenter("y"))
+    val function = presenter.compile(new Runtime)
+    assert(function.args.size == 2)
+  }
+
 
 }

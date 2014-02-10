@@ -2,7 +2,7 @@ package com.quane.little.language
 
 import org.eintr.loglady.Logging
 import com.quane.little.language.memory.Pointer
-import com.quane.little.language.data.{Value, Variable}
+import com.quane.little.language.data.Value
 
 abstract class Statement
   extends Expression
@@ -75,6 +75,10 @@ class Get(pointer: Pointer)
 class Print(value: Expression)
   extends Statement
   with Logging {
+
+  def this(value: String) = {
+    this(new Value(value))
+  }
 
   def evaluate: Value = {
     val text = value.evaluate

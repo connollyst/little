@@ -50,7 +50,7 @@ class FunctionReference(scope: Scope, val name: String)
   extends Block(scope)
   with Logging {
 
-  private val args = Map[String, Expression]()
+  val args = Map[String, Expression]()
 
   def addArg(name: String, value: Expression): FunctionReference = {
     // TODO assert arg is not already set
