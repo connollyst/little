@@ -1,4 +1,0 @@
-<?import com.quane.little.ide.controls.PointerField?>
-<fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml">
-    <PointerField fx:id="pointer"/>
-</fx:root>

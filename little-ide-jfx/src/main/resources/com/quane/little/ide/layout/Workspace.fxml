@@ -1,6 +1,0 @@
-<?import java.net.URL?>
-<fx:root type="javafx.scene.layout.FlowPane" xmlns:fx="http://javafx.com/fxml">
-    <stylesheets>
-        <URL value="@Workspace.css"/>
-    </stylesheets>
-</fx:root>

@@ -1,9 +1,0 @@
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.control.TextField?>
-<?import com.quane.little.ide.controls.PointerField?>
-<?import com.quane.little.ide.controls.ValueField?>
-<fx:root type="javafx.scene.layout.HBox" xmlns:fx="http://javafx.com/fxml">
-    <PointerField fx:id="a"/>
-    <Label text="="/>
-    <ValueField fx:id="b"/>
-</fx:root>
