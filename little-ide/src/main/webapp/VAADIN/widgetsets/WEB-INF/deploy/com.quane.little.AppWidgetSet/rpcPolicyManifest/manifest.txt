@@ -1,2 +1,0 @@
-# Module com.quane.little.AppWidgetSet
-# RPC service class, partial path of RPC policy file
