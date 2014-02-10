@@ -1,12 +1,12 @@
-package com.quane.little.ide.controller
+package com.quane.little.ide.presenter
 
 import com.quane.little.language.data.Value
 import com.quane.little.language.{Print, Statement, Scope}
 
-sealed trait StatementController extends ExpressionController {
+sealed trait StatementPresenter extends ExpressionPresenter {
   override def compile(scope: Scope): Statement
 }
 
-class PrintController extends StatementController {
+class PrintPresenter extends StatementPresenter {
   override def compile(scope: Scope): Statement = new Print(new Value("TODO"))
 }

@@ -1,9 +1,9 @@
-package com.quane.little.ide.controller
+package com.quane.little.ide.presenter
 
 import com.quane.little.language.FunctionParameter
 import com.quane.little.language.Scope
 
-class FunctionParameterController {
+class FunctionParameterPresenter {
 
   def compile(scope: Scope): FunctionParameter = {
     new FunctionParameter("TODO")

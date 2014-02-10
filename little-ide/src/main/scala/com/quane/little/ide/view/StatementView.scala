@@ -1,14 +1,14 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.controller.{PrintController, StatementController}
+import com.quane.little.ide.presenter.{PrintPresenter, StatementPresenter}
 import vaadin.scala.Label
 
-sealed trait StatementView[+C <: StatementController] extends ExpressionView[C]
+sealed trait StatementView[+C <: StatementPresenter] extends ExpressionView[C]
 
-class PrintView(override var value: Option[Any]) extends Label with StatementView[PrintController] {
+class PrintView(override var value: Option[Any]) extends Label with StatementView[PrintPresenter] {
   def this(value: String) = {
     this(Some(value))
   }
 
-  def controller: PrintController = new PrintController
+  def presenter: PrintPresenter = new PrintPresenter
 }

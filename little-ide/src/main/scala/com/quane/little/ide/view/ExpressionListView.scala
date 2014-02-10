@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.controller.ExpressionController
+import com.quane.little.ide.presenter.ExpressionPresenter
 import vaadin.scala.VerticalLayout
 import vaadin.scala.CssLayout
 import com.vaadin.event.dd.DropHandler
@@ -77,11 +77,11 @@ class ExpressionListViewSeparator extends DroppableTarget(new CssLayout) {
       p.asInstanceOf[ExpressionListView]
     }
 
-    def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionController] = {
+    def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionPresenter] = {
       val sourceComponent = event.getTransferable.getSourceComponent.asInstanceOf[Component]
-      if (sourceComponent.isInstanceOf[ExpressionView[ExpressionController]]) {
+      if (sourceComponent.isInstanceOf[ExpressionView[ExpressionPresenter]]) {
         // An existing step is being moved from elsewhere
-        sourceComponent.asInstanceOf[ExpressionView[ExpressionController]]
+        sourceComponent.asInstanceOf[ExpressionView[ExpressionPresenter]]
       } else if (sourceComponent.isInstanceOf[ToolboxItemView]) {
         // A new step is being dropped from the toolbox
         sourceComponent.asInstanceOf[ToolboxItemView].getStep

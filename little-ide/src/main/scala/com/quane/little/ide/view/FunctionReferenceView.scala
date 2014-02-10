@@ -2,7 +2,7 @@ package com.quane.little.ide.view
 
 import scala.collection.mutable.ListBuffer
 
-import com.quane.little.ide.controller.FunctionReferenceController
+import com.quane.little.ide.presenter.FunctionReferencePresenter
 
 import vaadin.scala.HorizontalLayout
 import vaadin.scala.Label
@@ -11,12 +11,12 @@ object FunctionReferenceView {
   val Style = "l-function-ref"
 }
 
-class FunctionReferenceView(val controller: FunctionReferenceController, name: String, args: FunctionArgumentView*)
-  extends HorizontalLayout with ExpressionView[FunctionReferenceController] {
+class FunctionReferenceView(val presenter: FunctionReferencePresenter, name: String, args: FunctionArgumentView*)
+  extends HorizontalLayout with ExpressionView[FunctionReferencePresenter] {
 
-  controller.name = name
-  controller.args = args.map {
-    f: FunctionArgumentView => f.controller
+  presenter.name = name
+  presenter.args = args.map {
+    f: FunctionArgumentView => f.presenter
   }.to[ListBuffer]
 
   styleName = FunctionReferenceView.Style

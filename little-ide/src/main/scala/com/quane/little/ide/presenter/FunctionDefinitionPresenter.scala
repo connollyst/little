@@ -1,14 +1,14 @@
-package com.quane.little.ide.controller
+package com.quane.little.ide.presenter
 
 import com.quane.little.language.FunctionDefinition
 import scala.collection.mutable.ListBuffer
 
-class FunctionDefinitionController(steps: ListBuffer[ExpressionController] = new ListBuffer[ExpressionController]) {
+class FunctionDefinitionPresenter(steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter]) {
 
   var name: String = "name"
-  var params = new ListBuffer[FunctionParameterController]
+  var params = new ListBuffer[FunctionParameterPresenter]
 
-  def addStep(step: ExpressionController): FunctionDefinitionController = {
+  def addStep(step: ExpressionPresenter): FunctionDefinitionPresenter = {
     steps += step
     this
   }
@@ -17,7 +17,7 @@ class FunctionDefinitionController(steps: ListBuffer[ExpressionController] = new
     val fun = new FunctionDefinition(name)
     // TODO add parameters
     steps.foreach {
-      step: ExpressionController =>
+      step: ExpressionPresenter =>
         fun.addStep(step.compile(fun))
     }
     fun

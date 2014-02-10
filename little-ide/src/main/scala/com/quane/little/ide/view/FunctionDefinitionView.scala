@@ -1,8 +1,8 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.controller.ExpressionController
-import com.quane.little.ide.controller.FunctionDefinitionController
-import com.quane.little.ide.controller.FunctionReferenceController
+import com.quane.little.ide.presenter.ExpressionPresenter
+import com.quane.little.ide.presenter.FunctionDefinitionPresenter
+import com.quane.little.ide.presenter.FunctionReferencePresenter
 
 import vaadin.scala.Button
 import vaadin.scala.Component
@@ -22,24 +22,24 @@ object FunctionDefinitionView {
   val StyleHead = Style + "-head"
   val StyleHeadNameField = StyleHead + "-name"
 
-  def apply(controller: FunctionDefinitionController, name: String): FunctionDefinitionView = {
-    val fun = new FunctionDefinitionView(controller, name)
+  def apply(presenter: FunctionDefinitionPresenter, name: String): FunctionDefinitionView = {
+    val fun = new FunctionDefinitionView(presenter, name)
     fun.addStep(
       new FunctionReferenceView(
-        new FunctionReferenceController,
+        new FunctionReferencePresenter,
         "point toward",
         new FunctionArgumentView("x"),
         new FunctionArgumentView("y")))
     fun.addStep(
       new FunctionReferenceView(
-        new FunctionReferenceController,
+        new FunctionReferencePresenter,
         "move",
         new FunctionArgumentView("speed")))
     val ifElse = new ConditionalView("touching [location]")
     ifElse.addThen(new PrintView("done"))
     ifElse.addElse(
       new FunctionReferenceView(
-        new FunctionReferenceController,
+        new FunctionReferencePresenter,
         "move toward",
         new FunctionArgumentView("x"),
         new FunctionArgumentView("y")))
@@ -49,7 +49,7 @@ object FunctionDefinitionView {
   }
 }
 
-class FunctionDefinitionView(val controller: FunctionDefinitionController, name: String)
+class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter, name: String)
   extends VerticalLayout {
 
   private val stepList = new ExpressionListView
@@ -81,10 +81,10 @@ class FunctionDefinitionView(val controller: FunctionDefinitionController, name:
     footer
   }
 
-  def addStep(view: ExpressionView[ExpressionController]) = {
+  def addStep(view: ExpressionView[ExpressionPresenter]) = {
     stepList.add(view)
-    val nc = view.controller
-    controller.addStep(nc)
+    val nc = view.presenter
+    presenter.addStep(nc)
   }
 
 }

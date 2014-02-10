@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.controller.FunctionArgumentController
+import com.quane.little.ide.presenter.FunctionArgumentPresenter
 import vaadin.scala.Label
 
 object FunctionArgumentView {
@@ -8,11 +8,11 @@ object FunctionArgumentView {
   private val DefaultName = "newArg"
 }
 
-class FunctionArgumentView(val controller: FunctionArgumentController, name: String)
+class FunctionArgumentView(val presenter: FunctionArgumentPresenter, name: String)
   extends Label {
 
   def this(name: String) = {
-    this(new FunctionArgumentController, name)
+    this(new FunctionArgumentPresenter, name)
   }
 
   def this() = {

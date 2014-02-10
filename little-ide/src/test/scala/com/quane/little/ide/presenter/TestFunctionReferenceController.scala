@@ -1,4 +1,4 @@
-package com.quane.little.ide.controller
+package com.quane.little.ide.presenter
 
 import com.quane.little.language.Runtime
 import org.junit.runner.RunWith
@@ -10,21 +10,21 @@ class TestFunctionReferenceController extends FunSuite {
 
   test("test compiled scope") {
     val scope = new Runtime
-    val controller = new FunctionReferenceController
-    val function = controller.compile(scope)
+    val presenter = new FunctionReferencePresenter
+    val function = presenter.compile(scope)
     assert(function.scope == scope)
   }
 
   test("test compiled name (default)") {
-    val controller = new FunctionReferenceController
-    val function = controller.compile(new Runtime)
+    val presenter = new FunctionReferencePresenter
+    val function = presenter.compile(new Runtime)
     assert(function.name == "name")
   }
 
   test("test compiled name") {
-    val controller = new FunctionReferenceController
-    controller.name = "newName"
-    val function = controller.compile(new Runtime)
+    val presenter = new FunctionReferencePresenter
+    presenter.name = "newName"
+    val function = presenter.compile(new Runtime)
     assert(function.name == "newName")
   }
 

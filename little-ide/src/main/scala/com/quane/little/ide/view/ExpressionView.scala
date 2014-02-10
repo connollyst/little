@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.controller.ExpressionController
+import com.quane.little.ide.presenter.ExpressionPresenter
 import vaadin.scala.Component
 
 
@@ -9,8 +9,8 @@ object ExpressionView {
   val StyleButtonDelete = Style + "-btn-delete"
 }
 
-trait ExpressionView[+C <: ExpressionController] extends Component {
+trait ExpressionView[+C <: ExpressionPresenter] extends Component {
 
-  def controller: C
+  def presenter: C
 
 }
