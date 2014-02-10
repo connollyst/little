@@ -12,7 +12,7 @@ class FunctionArgumentView(val presenter: FunctionArgumentPresenter, name: Strin
   extends Label {
 
   def this(name: String) = {
-    this(new FunctionArgumentPresenter, name)
+    this(new FunctionArgumentPresenter(name), name)
   }
 
   def this() = {
