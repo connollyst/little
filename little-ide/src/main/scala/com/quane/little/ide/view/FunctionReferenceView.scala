@@ -8,17 +8,20 @@ import vaadin.scala.HorizontalLayout
 import vaadin.scala.Label
 
 object FunctionReferenceView {
-  val Style = "l-function-ref"
+  val Style = "l-expression l-function-ref"
 }
 
 class FunctionReferenceView(val presenter: FunctionReferencePresenter, name: String, args: FunctionArgumentView*)
   extends HorizontalLayout with ExpressionView[FunctionReferencePresenter] {
 
+  // Initialize presenter
   presenter.name = name
   presenter.args ++= args.map {
     f: FunctionArgumentView => f.presenter
   }.to[ListBuffer]
 
+  // Initialize UI
+  spacing = true
   styleName = FunctionReferenceView.Style
   add(Label(name))
   args.foreach {

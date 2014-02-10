@@ -7,54 +7,54 @@ $border-radius-big: 5px;
 $border-radius-small: 2px;
 
 .l-function-def-head {
-	padding: 10px;
-	min-height: 20px;
-	min-width: 100px;
-	background-color: $fg-color;
-	border-left: 1px solid $border-color;
-	border-top-left-radius: $border-radius-big;
-	border-top-right-radius: $border-radius-big;
-	border-bottom-right-radius: $border-radius-small;
+  padding: 10px;
+  min-height: 20px;
+  min-width: 100px;
+  background-color: $fg-color;
+  border-left: 1px solid $border-color;
+  border-top-left-radius: $border-radius-big;
+  border-top-right-radius: $border-radius-big;
+  border-bottom-right-radius: $border-radius-small;
 }
 
 .l-function-def-head-name {
-	
+
 }
 
 .l-function-def-param {
-	color: $text-color;
+  color: $text-color;
 }
 
 .l-function-def-body {
-	background-color: $bg-color;
+  background-color: $bg-color;
 }
 
 .l-function-def-body-left {
-	width: 10px;
-	background-color: $fg-color;
-	border-left: 1px solid $border-color;
+  width: 10px;
+  background-color: $fg-color;
+  border-left: 1px solid $border-color;
 }
 
 .l-function-def-body-inner {
-	background-color: wheat;
+  background-color: wheat;
 }
 
 .l-function-def-foot {
-	height: 10px;
-	width: 100px;
-	background-color: $fg-color;
-	border-left: 1px solid $border-color;
-	border-top-right-radius: $border-radius-small;
-	border-bottom-left-radius: $border-radius-big;
-	border-bottom-right-radius: $border-radius-big;
+  height: 10px;
+  width: 100px;
+  background-color: $fg-color;
+  border-left: 1px solid $border-color;
+  border-top-right-radius: $border-radius-small;
+  border-bottom-left-radius: $border-radius-big;
+  border-bottom-right-radius: $border-radius-big;
 }
 
 /* Function Reference */
 
 .l-function-ref {
-	
+
 }
 
 .l-function-ref-arg {
-	
+  border: 1px dotted $border-color
 }
