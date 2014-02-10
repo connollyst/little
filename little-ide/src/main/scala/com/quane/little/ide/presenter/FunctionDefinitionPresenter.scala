@@ -7,6 +7,11 @@ class FunctionDefinitionPresenter(var name: String = "name",
                                   params: ListBuffer[FunctionParameterPresenter] = new ListBuffer[FunctionParameterPresenter],
                                   steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter]) {
 
+  def params_=(params: List[FunctionParameterPresenter]) = {
+    this.params.clear()
+    this.params ++= params
+  }
+
   def addStep(step: ExpressionPresenter): FunctionDefinitionPresenter = {
     steps += step
     this
@@ -27,7 +32,7 @@ class FunctionDefinitionPresenter(var name: String = "name",
   private def compileParams(fun: FunctionDefinition) = {
     params.foreach {
       param: FunctionParameterPresenter =>
-        fun.addParam(param.compile(fun))
+        fun.addParam(param.compile())
     }
   }
 

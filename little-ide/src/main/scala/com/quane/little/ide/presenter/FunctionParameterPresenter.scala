@@ -1,12 +1,11 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.language.FunctionParameter
-import com.quane.little.language.Scope
 
-class FunctionParameterPresenter {
+class FunctionParameterPresenter(var name: String) {
 
-  def compile(scope: Scope): FunctionParameter = {
-    new FunctionParameter("TODO")
+  def compile(): FunctionParameter = {
+    new FunctionParameter(name)
   }
 
 }

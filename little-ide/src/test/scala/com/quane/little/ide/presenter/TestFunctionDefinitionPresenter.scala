@@ -28,15 +28,15 @@ class TestFunctionDefinitionPresenter extends FunSuite {
 
   test("test compiled with 1 parameters") {
     val presenter = new FunctionDefinitionPresenter()
-      .addParam(new FunctionParameterPresenter)
+      .addParam(new FunctionParameterPresenter("x"))
     val function = presenter.compile()
     assert(function.params.length == 1)
   }
 
   test("test compiled with 2 parameters") {
     val presenter = new FunctionDefinitionPresenter()
-      .addParam(new FunctionParameterPresenter)
-      .addParam(new FunctionParameterPresenter)
+      .addParam(new FunctionParameterPresenter("x"))
+      .addParam(new FunctionParameterPresenter("y"))
     val function = presenter.compile()
     assert(function.params.length == 2)
   }

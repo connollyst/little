@@ -23,7 +23,9 @@ object FunctionDefinitionView {
   val StyleHeadNameField = StyleHead + "-name"
 
   def apply(presenter: FunctionDefinitionPresenter, name: String): FunctionDefinitionView = {
-    val fun = new FunctionDefinitionView(presenter, name)
+    val fun = new FunctionDefinitionView(presenter, name,
+      new FunctionParameterView("x"),
+      new FunctionParameterView("y"))
     fun.addStep(
       new FunctionReferenceView(
         new FunctionReferencePresenter,
@@ -49,21 +51,29 @@ object FunctionDefinitionView {
   }
 }
 
-class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter, name: String)
-  extends VerticalLayout {
+class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter,
+                             var name: String,
+                             _params: FunctionParameterView*)
+extends VerticalLayout {
 
   private val stepList = new ExpressionListView
 
-  spacing = false
-  add(header())
-  add(body())
-  add(footer())
+  // Initialize Presenter
+  presenter.params_=(params.map {
+    param: FunctionParameterView => param.presenter
+  })
 
-  private def header(): Component = {
+  // Initialize UI
+  spacing = false
+  add(header)
+  add(body)
+  add(footer)
+
+  private def header: Component = {
     new FunctionDefinitionViewHeader(name, this)
   }
 
-  private def body(): Component = {
+  private def body: Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
@@ -75,53 +85,74 @@ class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter, name: S
     body
   }
 
-  private def footer(): Component = {
+  private def footer: Component = {
     val footer = new CssLayout()
     footer.styleName = FunctionDefinitionView.StyleFoot
     footer
   }
 
-  def addStep(view: ExpressionView[ExpressionPresenter]) = {
+  def params = _params.toList
+
+  def addParam(view: FunctionParameterView): FunctionDefinitionView = {
+    // TODO add parameter to view
+    //    _params += view
+    presenter.addParam(view.presenter)
+    this
+  }
+
+  def addStep(view: ExpressionView[ExpressionPresenter]): FunctionDefinitionView = {
     stepList.add(view)
     presenter.addStep(view.presenter)
+    this
   }
 
 }
 
-private class FunctionDefinitionViewHeader(name: String, definition: FunctionDefinitionView) extends HorizontalLayout {
+private class FunctionDefinitionViewHeader(name: String,
+                                           definition: FunctionDefinitionView)
+  extends HorizontalLayout {
 
   // TODO should be a label that, when clicked, becomes a text field
 
   styleName = FunctionDefinitionView.StyleHead
   spacing = true
-  initNameField
-  initAddArgumentButton
-  initCompileButton
+  add(nameField)
+  add(parameterLayout)
+  add(addParameterButton)
+  add(doCompileButton)
 
-  private def initNameField = {
+  private def nameField: Component = {
     val nameField = new TextField
     nameField.value = name
     nameField.styleName = FunctionDefinitionView.StyleHeadNameField
-    addComponent(nameField)
+    nameField
   }
 
-  private def initAddArgumentButton = {
-    addComponent(Button(
-    "+", {
-      val header = FunctionDefinitionViewHeader.this
-      val children = header.components.size
-      header.add(new FunctionParameterView, children - 1)
-      () // how do I avoid this?
-    }))
+  private def parameterLayout: Component = {
+    println("adding parameters: " + definition.params.toList)
+    val paramLayout = new HorizontalLayout
+    paramLayout.spacing = true
+    definition.params.foreach {
+      param: FunctionParameterView =>
+        println("adding parameter: " + param)
+        paramLayout.add(param)
+    }
+    paramLayout
   }
 
-  private def initCompileButton = {
-    addComponent(Button(
-    "Compile", {
-      val compiled = definition.presenter.compile()
-      println("Compiled: " + compiled)
-      () // how do I avoid this?
-    }))
-  }
+  private def addParameterButton: Component = Button(
+  "+", {
+    val header = FunctionDefinitionViewHeader.this
+    val children = header.components.size
+    header.add(new FunctionParameterView, children - 1)
+    () // how do I avoid this?
+  })
+
+  private def doCompileButton: Component = Button(
+  "Compile", {
+    val compiled = definition.presenter.compile()
+    println("Compiled: " + compiled)
+    () // how do I avoid this?
+  })
 
 }

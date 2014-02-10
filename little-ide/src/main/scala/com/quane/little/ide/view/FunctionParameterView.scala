@@ -1,7 +1,7 @@
 package com.quane.little.ide.view
 
+import com.quane.little.ide.view.FunctionParameterView._
 import com.quane.little.ide.presenter.FunctionParameterPresenter
-
 import vaadin.scala.Label
 
 object FunctionParameterView {
@@ -13,14 +13,18 @@ class FunctionParameterView(val presenter: FunctionParameterPresenter, name: Str
   extends Label {
 
   def this(name: String) = {
-    this(new FunctionParameterPresenter, name)
+    this(new FunctionParameterPresenter(name), name)
   }
 
   def this() = {
-    this(FunctionParameterView.DefaultName)
+    this(DefaultName)
   }
 
+  // Initialize Presenter
+  presenter.name = name
+
+  // Initialize UI
   value = name
-  styleName = FunctionParameterView.Style
+  styleName = Style
 
 }
