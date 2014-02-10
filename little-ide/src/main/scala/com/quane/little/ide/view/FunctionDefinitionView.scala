@@ -60,7 +60,7 @@ class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter, name: S
   add(footer())
 
   private def header(): Component = {
-    new FunctionDefinitionViewHeader(name)
+    new FunctionDefinitionViewHeader(name, this)
   }
 
   private def body(): Component = {
@@ -83,42 +83,45 @@ class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter, name: S
 
   def addStep(view: ExpressionView[ExpressionPresenter]) = {
     stepList.add(view)
-    val nc = view.presenter
-    presenter.addStep(nc)
+    presenter.addStep(view.presenter)
   }
 
 }
 
-class FunctionDefinitionViewHeader(name: String) extends HorizontalLayout {
+private class FunctionDefinitionViewHeader(name: String, definition: FunctionDefinitionView) extends HorizontalLayout {
 
   // TODO should be a label that, when clicked, becomes a text field
-
-  def this() {
-    this("")
-  }
 
   styleName = FunctionDefinitionView.StyleHead
   spacing = true
   initNameField
   initAddArgumentButton
+  initCompileButton
 
-  def initNameField = {
+  private def initNameField = {
     val nameField = new TextField
     nameField.value = name
     nameField.styleName = FunctionDefinitionView.StyleHeadNameField
     addComponent(nameField)
   }
 
-  def initAddArgumentButton = {
-
-    val addArgumentButton = Button(
+  private def initAddArgumentButton = {
+    addComponent(Button(
     "+", {
       val header = FunctionDefinitionViewHeader.this
       val children = header.components.size
       header.add(new FunctionParameterView, children - 1)
       () // how do I avoid this?
-    })
-    addComponent(addArgumentButton)
+    }))
+  }
+
+  private def initCompileButton = {
+    addComponent(Button(
+    "Compile", {
+      val compiled = definition.presenter.compile()
+      println("Compiled: " + compiled)
+      () // how do I avoid this?
+    }))
   }
 
 }
