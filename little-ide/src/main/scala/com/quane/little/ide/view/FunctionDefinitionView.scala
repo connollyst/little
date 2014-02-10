@@ -28,21 +28,21 @@ object FunctionDefinitionView {
       new FunctionReferenceView(
         new FunctionReferenceController,
         "point toward",
-        new FunctionParameterView("x"),
-        new FunctionParameterView("y")))
+        new FunctionArgumentView("x"),
+        new FunctionArgumentView("y")))
     fun.addStep(
       new FunctionReferenceView(
         new FunctionReferenceController,
         "move",
-        new FunctionParameterView("speed")))
+        new FunctionArgumentView("speed")))
     val ifElse = new ConditionalView("touching [location]")
     ifElse.addThen(new PrintView("done"))
     ifElse.addElse(
       new FunctionReferenceView(
         new FunctionReferenceController,
         "move toward",
-        new FunctionParameterView("x"),
-        new FunctionParameterView("y")))
+        new FunctionArgumentView("x"),
+        new FunctionArgumentView("y")))
     fun.stepList.add(ifElse)
     fun.stepList.add(new PrintView("done"))
     fun
@@ -112,12 +112,12 @@ class FunctionDefinitionViewHeader(name: String) extends HorizontalLayout {
   def initAddArgumentButton = {
 
     val addArgumentButton = Button(
-      "+", {
-        val header = FunctionDefinitionViewHeader.this
-        val children = header.components.size
-        header.add(new FunctionParameterView, children - 1)
-        () // how do I avoid this?
-      })
+    "+", {
+      val header = FunctionDefinitionViewHeader.this
+      val children = header.components.size
+      header.add(new FunctionParameterView, children - 1)
+      () // how do I avoid this?
+    })
     addComponent(addArgumentButton)
   }
 

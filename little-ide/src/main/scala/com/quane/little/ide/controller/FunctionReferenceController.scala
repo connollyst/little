@@ -9,7 +9,7 @@ class FunctionReferenceController
   extends ExpressionController {
 
   var name: String = "name"
-  var params = new ListBuffer[FunctionParameterController]
+  var args = new ListBuffer[FunctionArgumentController]
 
   override def compile(scope: Scope): FunctionReference = {
     new FunctionReference(scope, name)

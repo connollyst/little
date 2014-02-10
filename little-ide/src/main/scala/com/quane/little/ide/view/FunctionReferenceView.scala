@@ -11,16 +11,18 @@ object FunctionReferenceView {
   val Style = "l-function-ref"
 }
 
-class FunctionReferenceView(val controller: FunctionReferenceController, name: String, params: FunctionParameterView*)
+class FunctionReferenceView(val controller: FunctionReferenceController, name: String, args: FunctionArgumentView*)
   extends HorizontalLayout with ExpressionView[FunctionReferenceController] {
 
   controller.name = name
-  controller.params = params.map { f: FunctionParameterView => f.controller }.to[ListBuffer]
+  controller.args = args.map {
+    f: FunctionArgumentView => f.controller
+  }.to[ListBuffer]
 
   styleName = FunctionReferenceView.Style
   add(Label(name))
-  params.foreach {
-    param: FunctionParameterView => add(param)
+  args.foreach {
+    arg: FunctionArgumentView => add(arg)
   }
 
 }

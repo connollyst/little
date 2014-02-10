@@ -5,8 +5,8 @@ import com.quane.little.ide.controller.FunctionParameterController
 import vaadin.scala.Label
 
 object FunctionParameterView {
-  val Style = "l-function-def-param"
-  val DefaultName = "newParam"
+  private val Style = "l-function-def-param"
+  private val DefaultName = "newParam"
 }
 
 class FunctionParameterView(val controller: FunctionParameterController, name: String)
