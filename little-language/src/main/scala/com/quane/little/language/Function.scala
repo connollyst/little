@@ -4,17 +4,17 @@ import scala.collection.mutable.ListBuffer
 import scala.collection.mutable.Map
 import com.quane.little.language.data.Value
 import org.eintr.loglady.Logging
+import com.google.common.base.Objects
 
-/**
- * Defines a function.
- *
- * @param name the function name
- */
+/** Defines a function.
+  *
+  * @param name the function name
+  */
 class FunctionDefinition(val name: String)
   extends Scope {
 
   var scope: Scope = _
-  val params = new ListBuffer[String]
+  val params = new ListBuffer[FunctionParameter]
   val block = new Block(this)
 
   def addParam(name: String): FunctionDefinition = {
@@ -22,7 +22,7 @@ class FunctionDefinition(val name: String)
   }
 
   def addParam(param: FunctionParameter): FunctionDefinition = {
-    params += param.name
+    params += param
     this
   }
 
@@ -31,21 +31,30 @@ class FunctionDefinition(val name: String)
     this
   }
 
+  override def toString: String = {
+    Objects.toStringHelper(getClass)
+      .add("params", params mkString("[", ",", "]"))
+      .add("block", block)
+      .toString
+  }
+
 }
 
-/**
- * Defines a function parameter to be specified at evaluation time.
- *
- * @param name the name of the parameter
- */
-class FunctionParameter(val name: String)
+/** Defines a function parameter to be specified at evaluation time.
+  *
+  * @param name the name of the parameter
+  */
+class FunctionParameter(val name: String) {
 
-/**
- * Reference to a [[com.quane.little.language.Block]].
- *
- * @param scope the scope in which the function is evaluated
- * @param name the name of the function
- */
+  override def toString: String = name
+
+}
+
+/** Reference to a [[com.quane.little.language.Block]].
+  *
+  * @param scope the scope in which the function is evaluated
+  * @param name the name of the function
+  */
 class FunctionReference(scope: Scope, val name: String)
   extends Block(scope)
   with Logging {
@@ -98,6 +107,13 @@ class FunctionReference(scope: Scope, val name: String)
 
   private def evaluateDefinition(definition: FunctionDefinition): Value = {
     definition.block.evaluate
+  }
+
+  override def toString: String = {
+    Objects.toStringHelper(getClass)
+      .add("name", name)
+      .add("args", args mkString("[", ",", "]"))
+      .toString
   }
 
 }

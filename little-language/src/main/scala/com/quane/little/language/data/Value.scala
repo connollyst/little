@@ -3,6 +3,7 @@ package com.quane.little.language.data
 import com.quane.little.language.Expression
 import scala.None
 import org.eintr.loglady.Logging
+import com.google.common.base.Objects
 
 class Value(val primitive: Any)
   extends Expression
@@ -164,7 +165,10 @@ class Value(val primitive: Any)
   }
 
   override def toString: String = {
-    getClass.getSimpleName + "{" + asText + ", type=" + valueType + "}"
+    Objects.toStringHelper(getClass)
+      .add("value", asText)
+      .add("type", valueType)
+      .toString
   }
 
 }
@@ -180,7 +184,9 @@ class Nada
 
 }
 
-sealed trait ValueType
+sealed trait ValueType {
+  override def toString: String = getClass.getSimpleName
+}
 
 object StringValueType extends ValueType
 

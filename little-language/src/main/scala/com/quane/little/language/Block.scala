@@ -25,4 +25,8 @@ class Block(var scope: Scope, steps: ListBuffer[Expression])
     steps.map(step => step.evaluate).last
   }
 
+  override def toString: String = {
+    getClass.getSimpleName + "{" + steps.toList + "}"
+  }
+
 }
