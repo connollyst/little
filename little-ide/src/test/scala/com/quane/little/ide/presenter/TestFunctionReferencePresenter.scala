@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionReferenceController extends FunSuite {
+class TestFunctionReferencePresenter extends FunSuite {
 
   test("test compiled scope") {
     val scope = new Runtime

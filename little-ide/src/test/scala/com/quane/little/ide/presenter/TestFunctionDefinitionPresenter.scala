@@ -5,7 +5,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionDefinitionController extends FunSuite {
+class TestFunctionDefinitionPresenter extends FunSuite {
 
   test("test compiled name (default)") {
     val presenter = new FunctionDefinitionPresenter
