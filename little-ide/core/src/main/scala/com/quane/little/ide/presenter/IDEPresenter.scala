@@ -11,6 +11,7 @@ class IDEPresenter[V <: IDEView](val view: V)
 
   view.addViewListener(this)
 
-  val workspace: WorkspacePresenter[_] = view.createWorkspace()
+  val toolbox = view.createToolbox()
+  val workspace = view.createWorkspace()
 
 }

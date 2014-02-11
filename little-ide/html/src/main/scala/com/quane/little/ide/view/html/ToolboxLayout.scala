@@ -1,13 +1,15 @@
 package com.quane.little.ide.view.html
 
 import vaadin.scala.Accordion
+import com.quane.little.ide.view.ToolboxView
 
 
 object ToolboxLayout {
   val Style = "l-toolbox"
 }
 
-class ToolboxLayout extends Accordion {
+class ToolboxLayout
+  extends Accordion with ToolboxView {
   sizeFull()
   styleName = ToolboxLayout.Style
   addTab(ToolboxSectionComponent.Sensing, "Sensing")
