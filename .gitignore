@@ -24,3 +24,5 @@ gwt-unitCache
 compilation-mappings.txt
 
 little-ide/src/main/webapp/VAADIN/themes/*/styles.css
+
+little-ide/html/src/main/webapp/VAADIN/themes/littletheme/styles.css
