@@ -5,25 +5,25 @@ import vaadin.scala.{Label, HorizontalLayout}
 import scala.collection.mutable.ListBuffer
 
 
-object FunctionReferenceView {
+object FunctionReferenceComponent {
   val Style = "l-expression l-function-ref"
 }
 
-class FunctionReferenceView(val presenter: FunctionReferencePresenter, name: String, args: FunctionArgumentView*)
+class FunctionReferenceComponent(val presenter: FunctionReferencePresenter, name: String, args: FunctionArgumentComponent*)
   extends HorizontalLayout with ExpressionView[FunctionReferencePresenter] {
 
   // Initialize presenter
   presenter.name = name
   presenter.args ++= args.map {
-    f: FunctionArgumentView => f.presenter
+    f: FunctionArgumentComponent => f.presenter
   }.to[ListBuffer]
 
   // Initialize UI
   spacing = true
-  styleName = FunctionReferenceView.Style
+  styleName = FunctionReferenceComponent.Style
   add(Label(name))
   args.foreach {
-    arg: FunctionArgumentView => add(arg)
+    arg: FunctionArgumentComponent => add(arg)
   }
 
 }

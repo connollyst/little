@@ -3,12 +3,12 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.presenter.FunctionParameterPresenter
 import vaadin.scala.Label
 
-object FunctionParameterView {
+object FunctionParameterComponent {
   private val Style = "l-function-def-param"
   private val DefaultName = "newParam"
 }
 
-class FunctionParameterView(val presenter: FunctionParameterPresenter, name: String)
+class FunctionParameterComponent(val presenter: FunctionParameterPresenter, name: String)
   extends Label {
 
   def this(name: String) = {

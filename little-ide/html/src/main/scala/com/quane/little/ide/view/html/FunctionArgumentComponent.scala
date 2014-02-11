@@ -4,12 +4,12 @@ import com.quane.little.ide.presenter.FunctionArgumentPresenter
 import vaadin.scala.Label
 
 
-object FunctionArgumentView {
+object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
   private val DefaultName = "newArg"
 }
 
-class FunctionArgumentView(val presenter: FunctionArgumentPresenter, name: String)
+class FunctionArgumentComponent(val presenter: FunctionArgumentPresenter, name: String)
   extends Label {
 
   def this(name: String) = {
@@ -17,10 +17,10 @@ class FunctionArgumentView(val presenter: FunctionArgumentPresenter, name: Strin
   }
 
   def this() = {
-    this(FunctionArgumentView.DefaultName)
+    this(FunctionArgumentComponent.DefaultName)
   }
 
   value = name
-  styleName = FunctionArgumentView.Style
+  styleName = FunctionArgumentComponent.Style
 
 }

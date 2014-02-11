@@ -6,7 +6,7 @@ import com.quane.little.ide.presenter.FunctionReferencePresenter
 import vaadin.scala._
 
 
-object FunctionDefinitionView {
+object FunctionDefinitionComponent {
   val Style = "l-function-def"
   val StyleBody = Style + "-body"
   val StyleHeadLeft = StyleBody + "-left"
@@ -14,45 +14,45 @@ object FunctionDefinitionView {
   val StyleHead = Style + "-head"
   val StyleHeadNameField = StyleHead + "-name"
 
-  def apply(presenter: FunctionDefinitionPresenter, name: String): FunctionDefinitionView = {
-    val fun = new FunctionDefinitionView(presenter, name,
-      new FunctionParameterView("x"),
-      new FunctionParameterView("y"))
+  def apply(presenter: FunctionDefinitionPresenter, name: String): FunctionDefinitionComponent = {
+    val fun = new FunctionDefinitionComponent(presenter, name,
+      new FunctionParameterComponent("x"),
+      new FunctionParameterComponent("y"))
     fun.addStep(
-      new FunctionReferenceView(
+      new FunctionReferenceComponent(
         new FunctionReferencePresenter,
         "point toward",
-        new FunctionArgumentView("x"),
-        new FunctionArgumentView("y")))
+        new FunctionArgumentComponent("x"),
+        new FunctionArgumentComponent("y")))
     fun.addStep(
-      new FunctionReferenceView(
+      new FunctionReferenceComponent(
         new FunctionReferencePresenter,
         "move",
-        new FunctionArgumentView("speed")))
-    val ifElse = new ConditionalView("touching [location]")
-    ifElse.addThen(new PrintView("done"))
+        new FunctionArgumentComponent("speed")))
+    val ifElse = new ConditionalComponent("touching [location]")
+    ifElse.addThen(new PrintComponent("done"))
     ifElse.addElse(
-      new FunctionReferenceView(
+      new FunctionReferenceComponent(
         new FunctionReferencePresenter,
         "move toward",
-        new FunctionArgumentView("x"),
-        new FunctionArgumentView("y")))
+        new FunctionArgumentComponent("x"),
+        new FunctionArgumentComponent("y")))
     fun.stepList.add(ifElse)
-    fun.stepList.add(new PrintView("done"))
+    fun.stepList.add(new PrintComponent("done"))
     fun
   }
 }
 
-class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter,
-                             var name: String,
-                             _params: FunctionParameterView*)
+class FunctionDefinitionComponent(val presenter: FunctionDefinitionPresenter,
+                                  var name: String,
+                                  _params: FunctionParameterComponent*)
   extends VerticalLayout {
 
-  private val stepList = new ExpressionListView
+  private val stepList = new ExpressionListComponent
 
   // Initialize Presenter
   presenter.params_=(params.map {
-    param: FunctionParameterView => param.presenter
+    param: FunctionParameterComponent => param.presenter
   })
 
   // Initialize UI
@@ -62,37 +62,37 @@ class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter,
   add(footer)
 
   private def header: Component = {
-    new FunctionDefinitionViewHeader(name, this)
+    new FunctionDefinitionHeader(name, this)
   }
 
   private def body: Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = FunctionDefinitionView.StyleHeadLeft
+    bodyLeft.styleName = FunctionDefinitionComponent.StyleHeadLeft
     body.addComponent(bodyLeft)
     body.addComponent(stepList)
-    body.styleName = FunctionDefinitionView.StyleBody
+    body.styleName = FunctionDefinitionComponent.StyleBody
     body.spacing = false
     body
   }
 
   private def footer: Component = {
     val footer = new CssLayout()
-    footer.styleName = FunctionDefinitionView.StyleFoot
+    footer.styleName = FunctionDefinitionComponent.StyleFoot
     footer
   }
 
   def params = _params.toList
 
-  def addParam(view: FunctionParameterView): FunctionDefinitionView = {
+  def addParam(view: FunctionParameterComponent): FunctionDefinitionComponent = {
     // TODO add parameter to view
     //    _params += view
     presenter.addParam(view.presenter)
     this
   }
 
-  def addStep(view: ExpressionView[ExpressionPresenter]): FunctionDefinitionView = {
+  def addStep(view: ExpressionView[ExpressionPresenter]): FunctionDefinitionComponent = {
     stepList.add(view)
     presenter.addStep(view.presenter)
     this
@@ -100,13 +100,13 @@ class FunctionDefinitionView(val presenter: FunctionDefinitionPresenter,
 
 }
 
-private class FunctionDefinitionViewHeader(name: String,
-                                           definition: FunctionDefinitionView)
+private class FunctionDefinitionHeader(name: String,
+                                       definition: FunctionDefinitionComponent)
   extends HorizontalLayout {
 
   // TODO should be a label that, when clicked, becomes a text field
 
-  styleName = FunctionDefinitionView.StyleHead
+  styleName = FunctionDefinitionComponent.StyleHead
   spacing = true
   add(nameField)
   add(parameterLayout)
@@ -116,7 +116,7 @@ private class FunctionDefinitionViewHeader(name: String,
   private def nameField: Component = {
     val nameField = new TextField
     nameField.value = name
-    nameField.styleName = FunctionDefinitionView.StyleHeadNameField
+    nameField.styleName = FunctionDefinitionComponent.StyleHeadNameField
     nameField
   }
 
@@ -125,7 +125,7 @@ private class FunctionDefinitionViewHeader(name: String,
     val paramLayout = new HorizontalLayout
     paramLayout.spacing = true
     definition.params.foreach {
-      param: FunctionParameterView =>
+      param: FunctionParameterComponent =>
         println("adding parameter: " + param)
         paramLayout.add(param)
     }
@@ -134,9 +134,9 @@ private class FunctionDefinitionViewHeader(name: String,
 
   private def addParameterButton: Component = Button(
   "+", {
-    val header = FunctionDefinitionViewHeader.this
+    val header = FunctionDefinitionHeader.this
     val children = header.components.size
-    header.add(new FunctionParameterView, children - 1)
+    header.add(new FunctionParameterComponent, children - 1)
     () // how do I avoid this?
   })
 

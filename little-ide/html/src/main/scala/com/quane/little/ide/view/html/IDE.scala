@@ -7,7 +7,7 @@ class IDE extends HorizontalSplitPanel {
   sizeFull()
   splitPosition = new Measure(25, Units.pct)
 
-  addComponent(new ToolboxView())
-  addComponent(new WorkspaceView())
+  addComponent(new ToolboxLayout())
+  addComponent(new WorkspaceLayout())
 
 }

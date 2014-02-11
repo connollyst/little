@@ -4,17 +4,17 @@ import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 import vaadin.scala.HorizontalLayout
 
 
-object WorkspaceView {
+object WorkspaceLayout {
   val Style = "l-workspace"
 }
 
-class WorkspaceView extends HorizontalLayout {
+class WorkspaceLayout extends HorizontalLayout {
 
   sizeFull()
   spacing = true
-  styleName = WorkspaceView.Style
+  styleName = WorkspaceLayout.Style
 
-  val fun = FunctionDefinitionView(new FunctionDefinitionPresenter, "move toward")
+  val fun = FunctionDefinitionComponent(new FunctionDefinitionPresenter, "move toward")
   add(fun)
   fun.presenter.compile()
 

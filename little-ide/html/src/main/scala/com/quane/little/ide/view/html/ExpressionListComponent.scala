@@ -7,18 +7,18 @@ import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
 
 
-object ExpressionListView {
+object ExpressionListComponent {
   val Style = "l-step-list"
   val StyleSeparator = Style + "-separator"
 }
 
-class ExpressionListView extends VerticalLayout {
-  styleName = ExpressionListView.Style
+class ExpressionListComponent extends VerticalLayout {
+  styleName = ExpressionListComponent.Style
   spacing = false
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
-    super.add(new ExpressionListViewSeparator())
+    super.add(new ExpressionListSeparator())
     component
   }
 
@@ -47,9 +47,9 @@ class ExpressionListView extends VerticalLayout {
 
 }
 
-class ExpressionListViewSeparator extends DroppableTarget(new CssLayout) {
+class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
 
-  component.styleName = ExpressionListView.StyleSeparator
+  component.styleName = ExpressionListComponent.StyleSeparator
   dropHandler = new DropHandler() {
 
     override def getAcceptCriterion: AcceptCriterion = {
@@ -63,15 +63,15 @@ class ExpressionListViewSeparator extends DroppableTarget(new CssLayout) {
       if (list.contains(droppedStep)) {
         list.removeComponent(droppedStep)
       }
-      val separator = ExpressionListViewSeparator.this
+      val separator = ExpressionListSeparator.this
       val separatorIndex = list.componentIndex(separator)
       list.add(droppedStep, separatorIndex + 1)
     }
 
-    def getStepList: ExpressionListView = {
-      val t = ExpressionListViewSeparator.this
+    def getStepList: ExpressionListComponent = {
+      val t = ExpressionListSeparator.this
       val p = t.parent
-      p.asInstanceOf[ExpressionListView]
+      p.asInstanceOf[ExpressionListComponent]
     }
 
     def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionPresenter] = {
@@ -79,9 +79,9 @@ class ExpressionListViewSeparator extends DroppableTarget(new CssLayout) {
       if (sourceComponent.isInstanceOf[ExpressionView[ExpressionPresenter]]) {
         // An existing step is being moved from elsewhere
         sourceComponent.asInstanceOf[ExpressionView[ExpressionPresenter]]
-      } else if (sourceComponent.isInstanceOf[ToolboxItemView]) {
+      } else if (sourceComponent.isInstanceOf[ToolboxItemComponent]) {
         // A new step is being dropped from the toolbox
-        sourceComponent.asInstanceOf[ToolboxItemView].getStep
+        sourceComponent.asInstanceOf[ToolboxItemComponent].getStep
       } else {
         throw new ClassCastException("Drop not supported for "
           + sourceComponent.getClass.getSimpleName)

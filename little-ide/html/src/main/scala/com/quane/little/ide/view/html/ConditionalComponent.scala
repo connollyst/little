@@ -3,7 +3,7 @@ package com.quane.little.ide.view.html
 import vaadin.scala._
 
 
-object ConditionalView {
+object ConditionalComponent {
   val Style = "l-if"
   val StyleIfHead = Style + "-head"
   val StyleElseHead = Style + "-else-head"
@@ -12,13 +12,13 @@ object ConditionalView {
   val StyleFoot = Style + "-foot"
 }
 
-class ConditionalView(label: String) extends VerticalLayout {
+class ConditionalComponent(label: String) extends VerticalLayout {
 
-  val thenList = new ExpressionListView
-  val elseList = new ExpressionListView
+  val thenList = new ExpressionListComponent
+  val elseList = new ExpressionListComponent
 
   spacing = false
-  styleName = ConditionalView.Style
+  styleName = ConditionalComponent.Style
   addComponent(thenHeader())
   addComponent(thenBody())
   addComponent(elseHeader())
@@ -26,17 +26,17 @@ class ConditionalView(label: String) extends VerticalLayout {
   addComponent(footer())
 
   def thenHeader(): Component = {
-    new ConditionalViewHeader("if <" + label + ">")
+    new ConditionalHeader("if <" + label + ">")
   }
 
   def thenBody(): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = ConditionalView.StyleBodyLeft
+    bodyLeft.styleName = ConditionalComponent.StyleBodyLeft
     body.addComponent(bodyLeft)
     body.addComponent(thenList)
-    body.styleName = ConditionalView.StyleBody
+    body.styleName = ConditionalComponent.StyleBody
     body.spacing = false
     body
   }
@@ -44,7 +44,7 @@ class ConditionalView(label: String) extends VerticalLayout {
   def elseHeader(): Component = {
     val elseHeader = new Label
     elseHeader.value = "else"
-    elseHeader.styleName = ConditionalView.StyleElseHead
+    elseHeader.styleName = ConditionalComponent.StyleElseHead
     elseHeader
   }
 
@@ -52,17 +52,17 @@ class ConditionalView(label: String) extends VerticalLayout {
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = ConditionalView.StyleBodyLeft
+    bodyLeft.styleName = ConditionalComponent.StyleBodyLeft
     body.addComponent(bodyLeft)
     body.addComponent(elseList)
-    body.styleName = ConditionalView.StyleBody
+    body.styleName = ConditionalComponent.StyleBody
     body.spacing = false
     body
   }
 
   def footer(): Component = {
     val footer = new Label()
-    footer.styleName = ConditionalView.StyleFoot
+    footer.styleName = ConditionalComponent.StyleFoot
     footer
   }
 
@@ -76,13 +76,13 @@ class ConditionalView(label: String) extends VerticalLayout {
 
 }
 
-class ConditionalViewHeader(condition: String) extends HorizontalLayout {
+class ConditionalHeader(condition: String) extends HorizontalLayout {
 
   def this() {
     this("<condition>")
   }
 
-  styleName = ConditionalView.StyleIfHead
+  styleName = ConditionalComponent.StyleIfHead
   add(Label(condition))
 
 }
