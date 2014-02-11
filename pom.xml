@@ -7,7 +7,7 @@
     <artifactId>little-parent</artifactId>
     <version>0.0.4-SNAPSHOT</version>
     <packaging>pom</packaging>
-    <name>Little Parent</name>
+    <name>Little</name>
 
     <organization>
         <name>Sean Is Cool, Inc.</name>
