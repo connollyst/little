@@ -1,4 +1,4 @@
-package com.quane.little.ide.view
+package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter.{PrintPresenter, StatementPresenter}
 import vaadin.scala.Label

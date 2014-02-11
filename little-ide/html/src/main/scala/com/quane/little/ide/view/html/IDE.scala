@@ -1,4 +1,4 @@
-package com.quane.little.ide.view
+package com.quane.little.ide.view.html
 
 import vaadin.scala.{Units, Measure, HorizontalSplitPanel}
 

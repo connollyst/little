@@ -1,6 +1,5 @@
-package com.quane.little.ide.view
+package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.FunctionParameterView._
 import com.quane.little.ide.presenter.FunctionParameterPresenter
 import vaadin.scala.Label
 

@@ -1,5 +1,4 @@
-package com.quane.little.ide.view
-
+package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter.FunctionReferencePresenter
 import vaadin.scala.{Label, HorizontalLayout}
