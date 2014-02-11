@@ -4,6 +4,7 @@ import com.quane.little.ide.presenter.ExpressionPresenter
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 import com.quane.little.ide.presenter.FunctionReferencePresenter
 import vaadin.scala._
+import com.quane.little.ide.view.FunctionDefinitionView
 
 
 object FunctionDefinitionComponent {
@@ -46,7 +47,7 @@ object FunctionDefinitionComponent {
 class FunctionDefinitionComponent(val presenter: FunctionDefinitionPresenter,
                                   var name: String,
                                   _params: FunctionParameterComponent*)
-  extends VerticalLayout {
+  extends VerticalLayout with FunctionDefinitionView {
 
   private val stepList = new ExpressionListComponent
 

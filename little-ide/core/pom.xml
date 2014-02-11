@@ -30,6 +30,13 @@
             <version>${project.version}</version>
         </dependency>
 
+        <!-- Guice injects Providers into the View -->
+        <dependency>
+            <groupId>net.codingwell</groupId>
+            <artifactId>scala-guice_2.10</artifactId>
+            <version>4.0.0-beta</version>
+        </dependency>
+
         <!-- Logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>
