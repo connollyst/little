@@ -1,5 +1,6 @@
 package com.quane.little.ide.view
 
+import vaadin.scala.{Units, Measure, HorizontalSplitPanel}
 
 class IDE extends HorizontalSplitPanel {
 

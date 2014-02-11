@@ -1,5 +1,7 @@
 package com.quane.little.ide.view
 
+import vaadin.scala.{Units, Measure, CssLayout, VerticalLayout}
+
 
 object ToolboxSectionView {
   val Style = "l-toolbox-section"
@@ -32,10 +34,12 @@ object ToolboxSectionView {
   }
 }
 
+
 class ToolboxSectionView extends VerticalLayout {
   styleName = ToolboxSectionView.Style
   spacing = true
 }
+
 
 /**
  * Visually separates groups of related toolbox items.

@@ -1,5 +1,7 @@
 package com.quane.little.ide.view
 
+import vaadin.scala.Accordion
+
 
 object ToolboxView {
   val Style = "l-toolbox"

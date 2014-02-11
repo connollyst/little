@@ -1,6 +1,7 @@
 package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
+import vaadin.scala.HorizontalLayout
 
 
 object WorkspaceView {

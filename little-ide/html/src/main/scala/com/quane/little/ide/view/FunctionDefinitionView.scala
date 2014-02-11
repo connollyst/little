@@ -3,6 +3,7 @@ package com.quane.little.ide.view
 import com.quane.little.ide.presenter.ExpressionPresenter
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 import com.quane.little.ide.presenter.FunctionReferencePresenter
+import vaadin.scala._
 
 
 object FunctionDefinitionView {

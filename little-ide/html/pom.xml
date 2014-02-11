@@ -14,7 +14,6 @@
     <name>Little IDE HTML</name>
 
     <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <vaadin.version>7.1.9</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
     </properties>
@@ -181,7 +180,8 @@
                     <webappDirectory>
                         ${basedir}/src/main/webapp/VAADIN/widgetsets
                     </webappDirectory>
-                    <hostedWebapp>${basedir}/src/main/webapp/VAADIN/widgetsets
+                    <hostedWebapp>
+                        ${basedir}/src/main/webapp/VAADIN/widgetsets
                     </hostedWebapp>
                     <noServer>true</noServer>
                     <!-- Remove draftCompile when project is ready -->

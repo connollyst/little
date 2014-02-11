@@ -1,5 +1,7 @@
 package com.quane.little.ide.view
 
+import vaadin.scala._
+
 
 object ConditionalView {
   val Style = "l-if"

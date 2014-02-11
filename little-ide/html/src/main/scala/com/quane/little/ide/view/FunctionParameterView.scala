@@ -2,6 +2,7 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.view.FunctionParameterView._
 import com.quane.little.ide.presenter.FunctionParameterPresenter
+import vaadin.scala.Label
 
 object FunctionParameterView {
   private val Style = "l-function-def-param"

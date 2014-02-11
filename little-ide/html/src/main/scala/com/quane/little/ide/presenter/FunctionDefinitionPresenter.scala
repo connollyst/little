@@ -1,5 +1,8 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.language.FunctionDefinition
+import scala.collection.mutable.ListBuffer
+
 
 class FunctionDefinitionPresenter(var name: String = "name",
                                   params: ListBuffer[FunctionParameterPresenter] = new ListBuffer[FunctionParameterPresenter],

@@ -2,6 +2,8 @@ package com.quane.little.ide.view
 
 
 import com.quane.little.ide.presenter.FunctionReferencePresenter
+import vaadin.scala.{Label, HorizontalLayout}
+import scala.collection.mutable.ListBuffer
 
 
 object FunctionReferenceView {

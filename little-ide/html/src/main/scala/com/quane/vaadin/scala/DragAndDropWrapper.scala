@@ -1,8 +1,11 @@
 package com.quane.vaadin.scala
 
 import com.quane.vaadin.scala.mixins.DragAndDropWrapperMixin
+import vaadin.scala.{AbstractComponent, Component}
 
 package mixins {
+
+import vaadin.scala.mixins.AbstractComponentMixin
 
 trait DragAndDropWrapperMixin extends AbstractComponentMixin {
   self: com.vaadin.ui.DragAndDropWrapper =>

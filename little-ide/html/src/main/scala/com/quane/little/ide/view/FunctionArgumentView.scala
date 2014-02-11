@@ -1,6 +1,8 @@
 package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter.FunctionArgumentPresenter
+import vaadin.scala.Label
+
 
 object FunctionArgumentView {
   private val Style = "l-function-ref-arg"

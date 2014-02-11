@@ -1,6 +1,9 @@
 package com.quane.little.ide
 
 import com.quane.little.ide.view.IDE
+import vaadin.scala.UI
+import vaadin.scala.server.{ScaladinUIProvider, ScaladinRequest}
+import com.vaadin.server.UIProviderEvent
 
 /**
  * The base user interface for the little IDE.

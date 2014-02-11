@@ -2,6 +2,10 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter.ExpressionPresenter
 import com.quane.vaadin.scala.DroppableTarget
+import vaadin.scala.{CssLayout, VerticalLayout, Component}
+import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
+import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
+
 
 object ExpressionListView {
   val Style = "l-step-list"
