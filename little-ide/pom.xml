@@ -14,7 +14,7 @@
     <name>Little IDE</name>
 
     <modules>
-        <module>core</module>
+        <module>html</module>
     </modules>
 
 </project>
