@@ -1,5 +1,6 @@
 package com.quane.little.ide.presenter
 
+import scala._
 import com.quane.little.language.FunctionDefinition
 import scala.collection.mutable.ListBuffer
 

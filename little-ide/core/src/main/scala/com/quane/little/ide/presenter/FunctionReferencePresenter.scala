@@ -3,6 +3,7 @@ package com.quane.little.ide.presenter
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.{FunctionReference, Scope}
 
+
 class FunctionReferencePresenter(var name: String = "name",
                                  val args: ListBuffer[FunctionArgumentPresenter] = new ListBuffer[FunctionArgumentPresenter])
   extends ExpressionPresenter {

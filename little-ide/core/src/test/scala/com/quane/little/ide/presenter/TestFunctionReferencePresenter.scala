@@ -1,9 +1,9 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.language.Runtime
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import com.quane.little.language.Runtime
 
 
 @RunWith(classOf[JUnitRunner])

@@ -17,6 +17,7 @@
         <vaadin.version>7.1.9</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
     </properties>
+
     <repositories>
         <repository>
             <id>vaadin-addons</id>
@@ -35,6 +36,7 @@
             </snapshots>
         </repository>
     </repositories>
+
     <pluginRepositories>
         <pluginRepository>
             <id>vaadin-snapshots</id>
@@ -49,13 +51,14 @@
             </snapshots>
         </pluginRepository>
     </pluginRepositories>
+
     <dependencies>
-        <!-- The IDE speaks Little -->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>little-language</artifactId>
+            <artifactId>little-ide-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+
         <!-- The IDE is built on Vaadin -->
         <dependency>
             <groupId>com.vaadin</groupId>
