@@ -9,7 +9,11 @@ class WorkspacePresenter[V <: WorkspaceView](val view: V)
   view.addViewListener(this)
 
   override def openFunctionDefinition(name: String) = {
-    println("TODO open function definition '" + name + "'")
+    println("TODO open function definition '" + name + "'!!!")
+    // TODO find function definition
+    // Create function definition view
+    val presenter = view.createFunctionDefinition()
+    // TODO pass in function definition
   }
 
 }

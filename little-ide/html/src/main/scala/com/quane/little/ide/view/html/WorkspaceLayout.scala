@@ -2,6 +2,7 @@ package com.quane.little.ide.view.html
 
 import vaadin.scala.{Button, HorizontalLayout}
 import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
+import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 
 
 object WorkspaceLayout {
@@ -9,8 +10,7 @@ object WorkspaceLayout {
 }
 
 class WorkspaceLayout
-  extends HorizontalLayout
-  with WorkspaceView {
+  extends HorizontalLayout with WorkspaceView {
 
   sizeFull()
   spacing = true
@@ -24,9 +24,13 @@ class WorkspaceLayout
     }
   }))
 
-  //  val fun = FunctionDefinitionComponent(new FunctionDefinitionPresenter, "move toward")
-  //  add(fun)
-  //  fun.presenter.compile()
+
+  def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
+    println("Creating a new function definition..")
+    val view = FunctionDefinitionComponent("move toward")
+    add(view)
+    new FunctionDefinitionPresenter(view)
+  }
 
 }
 

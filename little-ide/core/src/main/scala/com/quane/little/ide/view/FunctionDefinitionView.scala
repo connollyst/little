@@ -1,13 +1,6 @@
 package com.quane.little.ide.view
 
-import scala.collection.mutable.ListBuffer
 
-trait FunctionDefinitionView {
+trait FunctionDefinitionView extends View[FunctionDefinitionViewListener]
 
-  protected val listeners = new ListBuffer[FunctionDefinitionViewListener]
-
-  def addViewListener(l: FunctionDefinitionViewListener) = listeners += l
-
-}
-
-trait FunctionDefinitionViewListener
+trait FunctionDefinitionViewListener extends ViewListener

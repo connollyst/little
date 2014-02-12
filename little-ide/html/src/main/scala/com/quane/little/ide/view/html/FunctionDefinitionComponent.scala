@@ -1,7 +1,6 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter.ExpressionPresenter
-import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 import com.quane.little.ide.presenter.FunctionReferencePresenter
 import vaadin.scala._
 import com.quane.little.ide.view.FunctionDefinitionView
@@ -15,8 +14,9 @@ object FunctionDefinitionComponent {
   val StyleHead = Style + "-head"
   val StyleHeadNameField = StyleHead + "-name"
 
-  def apply(presenter: FunctionDefinitionPresenter, name: String): FunctionDefinitionComponent = {
-    val fun = new FunctionDefinitionComponent(presenter, name,
+  def apply(name: String): FunctionDefinitionComponent = {
+    // TODO this isn't backed my a presenter
+    val fun = new FunctionDefinitionComponent(name,
       new FunctionParameterComponent("x"),
       new FunctionParameterComponent("y"))
     fun.addStep(
@@ -44,17 +44,11 @@ object FunctionDefinitionComponent {
   }
 }
 
-class FunctionDefinitionComponent(val presenter: FunctionDefinitionPresenter,
-                                  var name: String,
+class FunctionDefinitionComponent(var name: String,
                                   _params: FunctionParameterComponent*)
   extends VerticalLayout with FunctionDefinitionView {
 
   private val stepList = new ExpressionListComponent
-
-  // Initialize Presenter
-  presenter.params_=(params.map {
-    param: FunctionParameterComponent => param.presenter
-  })
 
   // Initialize UI
   spacing = false
@@ -89,13 +83,11 @@ class FunctionDefinitionComponent(val presenter: FunctionDefinitionPresenter,
   def addParam(view: FunctionParameterComponent): FunctionDefinitionComponent = {
     // TODO add parameter to view
     //    _params += view
-    presenter.addParam(view.presenter)
     this
   }
 
   def addStep(view: ExpressionView[ExpressionPresenter]): FunctionDefinitionComponent = {
     stepList.add(view)
-    presenter.addStep(view.presenter)
     this
   }
 
@@ -111,8 +103,8 @@ private class FunctionDefinitionHeader(name: String,
   spacing = true
   add(nameField)
   add(parameterLayout)
-  add(addParameterButton)
-  add(doCompileButton)
+  add(newParameterButton)
+  add(saveButton)
 
   private def nameField: Component = {
     val nameField = new TextField
@@ -133,7 +125,7 @@ private class FunctionDefinitionHeader(name: String,
     paramLayout
   }
 
-  private def addParameterButton: Component = Button(
+  private def newParameterButton: Component = Button(
   "+", {
     val header = FunctionDefinitionHeader.this
     val children = header.components.size
@@ -141,10 +133,9 @@ private class FunctionDefinitionHeader(name: String,
     () // how do I avoid this?
   })
 
-  private def doCompileButton: Component = Button(
-  "Compile", {
-    val compiled = definition.presenter.compile()
-    println("Compiled: " + compiled)
+  private def saveButton: Component = Button(
+  "Save", {
+    println("TODO send event to presenter")
     () // how do I avoid this?
   })
 
