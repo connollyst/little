@@ -15,7 +15,7 @@ object FunctionDefinitionComponent {
   val StyleHeadNameField = StyleHead + "-name"
 
   def apply(name: String): FunctionDefinitionComponent = {
-    // TODO this isn't backed my a presenter
+    // TODO this isn't backed by a presenter
     val fun = new FunctionDefinitionComponent(name,
       new FunctionParameterComponent("x"),
       new FunctionParameterComponent("y"))
