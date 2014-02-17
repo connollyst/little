@@ -94,8 +94,8 @@ class FunctionDefinitionComponent(var name: String,
 }
 
 private class FunctionDefinitionHeader(name: String,
-                                       definition: FunctionDefinitionComponent)
-  extends HorizontalLayout {
+                                       val definition: FunctionDefinitionComponent)
+extends HorizontalLayout {
 
   // TODO should be a label that, when clicked, becomes a text field
 
@@ -114,12 +114,11 @@ private class FunctionDefinitionHeader(name: String,
   }
 
   private def parameterLayout: Component = {
-    println("adding parameters: " + definition.params.toList)
     val paramLayout = new HorizontalLayout
     paramLayout.spacing = true
     definition.params.foreach {
       param: FunctionParameterComponent =>
-        println("adding parameter: " + param)
+        println("adding parameter: " + param.value)
         paramLayout.add(param)
     }
     paramLayout
@@ -135,7 +134,9 @@ private class FunctionDefinitionHeader(name: String,
 
   private def saveButton: Component = Button(
   "Save", {
-    println("TODO send event to presenter")
+    val header = FunctionDefinitionHeader.this
+    val compiled = header.definition.compile()
+    println("Compiled: " + compiled)
     () // how do I avoid this?
   })
 

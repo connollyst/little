@@ -29,7 +29,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V,
     this
   }
 
-  def compile(): FunctionDefinition = {
+  override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(name)
     compileParams(fun)
     compileSteps(fun)
