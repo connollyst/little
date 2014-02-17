@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.{FunctionParameterPresenter, ExpressionPresenter}
+import com.quane.little.ide.presenter.{FunctionReferencePresenter, FunctionParameterPresenter, ExpressionPresenter}
 import vaadin.scala._
 import com.quane.little.ide.view.FunctionDefinitionView
 
@@ -15,7 +15,7 @@ object FunctionDefinitionComponent {
 }
 
 class FunctionDefinitionComponent
-extends VerticalLayout with FunctionDefinitionView {
+  extends VerticalLayout with FunctionDefinitionView {
 
   val stepList = new ExpressionListComponent
 
@@ -50,15 +50,21 @@ extends VerticalLayout with FunctionDefinitionView {
     footer
   }
 
-
   override def setName(name: String): Unit = {
     header.name_=(name)
   }
 
   override def createFunctionParameter(): FunctionParameterPresenter[_] = {
     val view = new FunctionParameterComponent()
-    // TODO add parameter to view
+    header.parameters_+=(view)
     new FunctionParameterPresenter(view)
+  }
+
+  override def createFunctionReference(): FunctionReferencePresenter[_] = {
+    val view = new FunctionReferenceComponent()
+    // TODO replace stepList with body
+    stepList.add(view)
+    new FunctionReferencePresenter(view)
   }
 
   def addStep(view: ExpressionView[ExpressionPresenter]): FunctionDefinitionComponent = {
@@ -118,7 +124,6 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionCompone
   }
 
   def parameters_+=(p: FunctionParameterComponent) = {
-    println("Adding function parameter UI: " + p.value)
     parameterLayout.add(p)
   }
 

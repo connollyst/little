@@ -25,12 +25,16 @@ object FunctionDefinitionPresenter {
     param2.name = "y"
     fun.add(param1)
     fun.add(param2)
-    //    fun.addStep(
-    //      new FunctionReferenceComponent(
-    //        new FunctionReferencePresenter,
-    //        "point toward",
-    //        new FunctionArgumentComponent("x"),
-    //        new FunctionArgumentComponent("y")))
+    val step1 = view.createFunctionReference()
+    step1.name = "point toward"
+    // TODO add arguments
+    fun.add(step1)
+    //        fun.add(
+    //          new FunctionReferenceComponent(
+    //            new FunctionReferencePresenter,
+    //            "point toward",
+    //            new FunctionArgumentComponent("x"),
+    //            new FunctionArgumentComponent("y")))
     //    fun.addStep(
     //      new FunctionReferenceComponent(
     //        new FunctionReferencePresenter,

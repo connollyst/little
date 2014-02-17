@@ -1,29 +1,28 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.FunctionReferencePresenter
 import vaadin.scala.{Label, HorizontalLayout}
-import scala.collection.mutable.ListBuffer
+import com.quane.little.ide.view.FunctionReferenceView
+import com.quane.little.ide.presenter.FunctionArgumentPresenter
 
 
 object FunctionReferenceComponent {
   val Style = "l-expression l-function-ref"
 }
 
-class FunctionReferenceComponent(val presenter: FunctionReferencePresenter, name: String, args: FunctionArgumentComponent*)
-  extends HorizontalLayout with ExpressionView[FunctionReferencePresenter] {
+class FunctionReferenceComponent
+  extends HorizontalLayout with FunctionReferenceView {
 
-  // Initialize presenter
-  presenter.name = name
-  presenter.args ++= args.map {
-    f: FunctionArgumentComponent => f.presenter
-  }.to[ListBuffer]
+  private val nameLabel = new Label
 
-  // Initialize UI
   spacing = true
   styleName = FunctionReferenceComponent.Style
-  add(Label(name))
-  args.foreach {
-    arg: FunctionArgumentComponent => add(arg)
+
+  override def setName(name: String): Unit = nameLabel.value = name
+
+  override def createArgument: FunctionArgumentPresenter[_] = {
+    val arg = new FunctionArgumentComponent
+    add(arg)
+    new FunctionArgumentPresenter(arg)
   }
 
 }

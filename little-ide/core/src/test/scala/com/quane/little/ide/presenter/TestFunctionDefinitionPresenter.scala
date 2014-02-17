@@ -3,7 +3,7 @@ package com.quane.little.ide.presenter
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import com.quane.little.ide.view.{FunctionParameterView, FunctionDefinitionView}
+import com.quane.little.ide.view.{FunctionReferenceView, FunctionParameterView, FunctionDefinitionView}
 import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
@@ -51,14 +51,14 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
 
   test("test compiled with 1 step") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
-      .add(new FunctionReferencePresenter)
+      .add(new FunctionReferencePresenter(mock[FunctionReferenceView]))
     val function = presenter.compile()
     assert(function.block.length == 1)
   }
 
   test("test compiled with 2 steps") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
-      .add(new FunctionReferencePresenter)
+      .add(new FunctionReferencePresenter(mock[FunctionReferenceView]))
       .add(new PrintPresenter)
     val function = presenter.compile()
     assert(function.block.length == 2)

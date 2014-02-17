@@ -1,26 +1,26 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.FunctionArgumentPresenter
-import vaadin.scala.Label
+import vaadin.scala.{HorizontalLayout, Label}
+import com.quane.little.ide.view.FunctionArgumentView
 
 
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
-  private val DefaultName = "newArg"
 }
 
-class FunctionArgumentComponent(val presenter: FunctionArgumentPresenter, name: String)
-  extends Label {
+class FunctionArgumentComponent
+  extends HorizontalLayout with FunctionArgumentView {
 
-  def this(name: String) = {
-    this(new FunctionArgumentPresenter(name), name)
-  }
+  private val nameLabel = new Label()
+  private val valueLabel = new Label()
 
-  def this() = {
-    this(FunctionArgumentComponent.DefaultName)
-  }
-
-  value = name
   styleName = FunctionArgumentComponent.Style
+  add(nameLabel)
+  add(Label("="))
+  add(valueLabel)
+
+  override def setName(name: String): Unit = nameLabel.value = name
+
+  override def setValue(value: String): Unit = valueLabel.value = value
 
 }
