@@ -21,10 +21,10 @@ object FunctionDefinitionPresenter {
     fun.name = name
     val param1 = view.createFunctionParameter()
     val param2 = view.createFunctionParameter()
-    param1.setParameterName("x")
-    param1.setParameterName("y")
-    fun.addParam(param1)
-    fun.addParam(param2)
+    param1.name = "x"
+    param2.name = "y"
+    fun.add(param1)
+    fun.add(param2)
     //    fun.addStep(
     //      new FunctionReferenceComponent(
     //        new FunctionReferencePresenter,
@@ -60,18 +60,13 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V,
 
   view.addViewListener(this)
 
-  def params_=(params: List[FunctionParameterPresenter[_]]) = {
-    this.params.clear()
-    this.params ++= params
-  }
-
-  def addStep(step: ExpressionPresenter): FunctionDefinitionPresenter[V] = {
-    steps += step
+  def add(parameter: FunctionParameterPresenter[_]): FunctionDefinitionPresenter[V] = {
+    params += parameter
     this
   }
 
-  def addParam(param: FunctionParameterPresenter[_]): FunctionDefinitionPresenter[V] = {
-    params += param
+  def add(step: ExpressionPresenter): FunctionDefinitionPresenter[V] = {
+    steps += step
     this
   }
 
@@ -85,7 +80,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V,
   private def compileParams(fun: FunctionDefinition) = {
     params.foreach {
       param =>
-      fun.addParam(param.compile())
+        fun.addParam(param.compile())
     }
   }
 

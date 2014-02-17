@@ -8,6 +8,6 @@ trait FunctionParameterView extends View[FunctionParameterViewListener] {
 
 trait FunctionParameterViewListener extends ViewListener {
 
-  def setParameterName(name: String): Unit
+  def onNameChanged(name: String): Unit
 
 }

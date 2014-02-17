@@ -30,15 +30,15 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
 
   test("test compiled with 1 parameters") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
-      .addParam(new FunctionParameterPresenter(mock[FunctionParameterView]))
+      .add(new FunctionParameterPresenter(mock[FunctionParameterView]))
     val function = presenter.compile()
     assert(function.params.length == 1)
   }
 
   test("test compiled with 2 parameters") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
-      .addParam(new FunctionParameterPresenter(mock[FunctionParameterView]))
-      .addParam(new FunctionParameterPresenter(mock[FunctionParameterView]))
+      .add(new FunctionParameterPresenter(mock[FunctionParameterView]))
+      .add(new FunctionParameterPresenter(mock[FunctionParameterView]))
     val function = presenter.compile()
     assert(function.params.length == 2)
   }
@@ -51,15 +51,15 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
 
   test("test compiled with 1 step") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
-      .addStep(new FunctionReferencePresenter)
+      .add(new FunctionReferencePresenter)
     val function = presenter.compile()
     assert(function.block.length == 1)
   }
 
   test("test compiled with 2 steps") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
-      .addStep(new FunctionReferencePresenter)
-      .addStep(new PrintPresenter)
+      .add(new FunctionReferencePresenter)
+      .add(new PrintPresenter)
     val function = presenter.compile()
     assert(function.block.length == 2)
   }
