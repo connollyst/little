@@ -5,16 +5,62 @@ import com.quane.little.language.FunctionDefinition
 import scala.collection.mutable.ListBuffer
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewListener}
 
+object FunctionDefinitionPresenter {
+
+  def apply[V <: FunctionDefinitionView](name: String, view: V): FunctionDefinitionPresenter[_] = {
+    println("Creating FunctionDefinitionPresenter for '" + name + "'")
+    name match {
+      case "move forward" => moveForward(name, view)
+      case _ => throw new IllegalArgumentException("No FunctionDefinition '" + name + "'")
+    }
+  }
+
+  private def moveForward[V <: FunctionDefinitionView](name: String, view: V): FunctionDefinitionPresenter[_] = {
+    // TODO this isn't backed by a presenter
+    val fun = new FunctionDefinitionPresenter(view)
+    fun.name = name
+    val param1 = view.createFunctionParameter()
+    val param2 = view.createFunctionParameter()
+    param1.setParameterName("x")
+    param1.setParameterName("y")
+    fun.addParam(param1)
+    fun.addParam(param2)
+    //    fun.addStep(
+    //      new FunctionReferenceComponent(
+    //        new FunctionReferencePresenter,
+    //        "point toward",
+    //        new FunctionArgumentComponent("x"),
+    //        new FunctionArgumentComponent("y")))
+    //    fun.addStep(
+    //      new FunctionReferenceComponent(
+    //        new FunctionReferencePresenter,
+    //        "move",
+    //        new FunctionArgumentComponent("speed")))
+    //    val ifElse = new ConditionalComponent("touching [location]")
+    //    ifElse.addThen(new PrintComponent("done"))
+    //    ifElse.addElse(
+    //      new FunctionReferenceComponent(
+    //        new FunctionReferencePresenter,
+    //        "move toward",
+    //        new FunctionArgumentComponent("x"),
+    //        new FunctionArgumentComponent("y")))
+    //    fun.stepList.add(ifElse)
+    //    fun.stepList.add(new PrintComponent("done"))
+    fun
+  }
+
+}
 
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V,
-                                                               var name: String = "name",
-                                                               params: ListBuffer[FunctionParameterPresenter] = new ListBuffer[FunctionParameterPresenter],
+                                                               params: ListBuffer[FunctionParameterPresenter[_]] = new ListBuffer[FunctionParameterPresenter[_]],
                                                                steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter])
   extends FunctionDefinitionViewListener {
 
+  private var _name = ""
+
   view.addViewListener(this)
 
-  def params_=(params: List[FunctionParameterPresenter]) = {
+  def params_=(params: List[FunctionParameterPresenter[_]]) = {
     this.params.clear()
     this.params ++= params
   }
@@ -24,13 +70,13 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V,
     this
   }
 
-  def addParam(param: FunctionParameterPresenter): FunctionDefinitionPresenter[V] = {
+  def addParam(param: FunctionParameterPresenter[_]): FunctionDefinitionPresenter[V] = {
     params += param
     this
   }
 
   override def compile(): FunctionDefinition = {
-    val fun = new FunctionDefinition(name)
+    val fun = new FunctionDefinition(_name)
     compileParams(fun)
     compileSteps(fun)
     fun
@@ -38,8 +84,8 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V,
 
   private def compileParams(fun: FunctionDefinition) = {
     params.foreach {
-      param: FunctionParameterPresenter =>
-        fun.addParam(param.compile())
+      param =>
+      fun.addParam(param.compile())
     }
   }
 
@@ -49,5 +95,12 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V,
         fun.addStep(step.compile(fun))
     }
   }
+
+  private[presenter] def name_=(n: String): Unit = {
+    _name = n
+    view.setName(_name)
+  }
+
+  private[presenter] def name: String = _name
 
 }

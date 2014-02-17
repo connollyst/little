@@ -1,7 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.ExpressionPresenter
-import com.quane.little.ide.presenter.FunctionReferencePresenter
+import com.quane.little.ide.presenter.{FunctionParameterPresenter, ExpressionPresenter}
 import vaadin.scala._
 import com.quane.little.ide.view.FunctionDefinitionView
 
@@ -13,54 +12,27 @@ object FunctionDefinitionComponent {
   val StyleFoot = Style + "-foot"
   val StyleHead = Style + "-head"
   val StyleHeadNameField = StyleHead + "-name"
-
-  def apply(name: String): FunctionDefinitionComponent = {
-    // TODO this isn't backed by a presenter
-    val fun = new FunctionDefinitionComponent(name,
-      new FunctionParameterComponent("x"),
-      new FunctionParameterComponent("y"))
-    fun.addStep(
-      new FunctionReferenceComponent(
-        new FunctionReferencePresenter,
-        "point toward",
-        new FunctionArgumentComponent("x"),
-        new FunctionArgumentComponent("y")))
-    fun.addStep(
-      new FunctionReferenceComponent(
-        new FunctionReferencePresenter,
-        "move",
-        new FunctionArgumentComponent("speed")))
-    val ifElse = new ConditionalComponent("touching [location]")
-    ifElse.addThen(new PrintComponent("done"))
-    ifElse.addElse(
-      new FunctionReferenceComponent(
-        new FunctionReferencePresenter,
-        "move toward",
-        new FunctionArgumentComponent("x"),
-        new FunctionArgumentComponent("y")))
-    fun.stepList.add(ifElse)
-    fun.stepList.add(new PrintComponent("done"))
-    fun
-  }
 }
 
-class FunctionDefinitionComponent(var name: String,
-                                  _params: FunctionParameterComponent*)
-  extends VerticalLayout with FunctionDefinitionView {
+class FunctionDefinitionComponent
+extends VerticalLayout with FunctionDefinitionView {
 
-  private val stepList = new ExpressionListComponent
+  val stepList = new ExpressionListComponent
 
-  // Initialize UI
+  private val header = createHeader()
+  private val body = createBody()
+  private val footer = createFooter()
+
   spacing = false
   add(header)
   add(body)
   add(footer)
 
-  private def header: Component = {
-    new FunctionDefinitionHeader(name, this)
+  private def createHeader(): FunctionDefinitionHeader = {
+    new FunctionDefinitionHeader(this)
   }
 
-  private def body: Component = {
+  private def createBody(): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
@@ -72,18 +44,21 @@ class FunctionDefinitionComponent(var name: String,
     body
   }
 
-  private def footer: Component = {
+  private def createFooter(): Component = {
     val footer = new CssLayout()
     footer.styleName = FunctionDefinitionComponent.StyleFoot
     footer
   }
 
-  def params = _params.toList
 
-  def addParam(view: FunctionParameterComponent): FunctionDefinitionComponent = {
+  override def setName(name: String): Unit = {
+    header.name_=(name)
+  }
+
+  override def createFunctionParameter(): FunctionParameterPresenter[_] = {
+    val view = new FunctionParameterComponent()
     // TODO add parameter to view
-    //    _params += view
-    this
+    new FunctionParameterPresenter(view)
   }
 
   def addStep(view: ExpressionView[ExpressionPresenter]): FunctionDefinitionComponent = {
@@ -93,11 +68,15 @@ class FunctionDefinitionComponent(var name: String,
 
 }
 
-private class FunctionDefinitionHeader(name: String,
-                                       val definition: FunctionDefinitionComponent)
-extends HorizontalLayout {
+private class FunctionDefinitionHeader(val definition: FunctionDefinitionComponent)
+  extends HorizontalLayout {
 
   // TODO should be a label that, when clicked, becomes a text field
+
+  private val nameField = createNameField()
+  private val parameterLayout = createParameterLayout()
+  private val newParameterButton = createNewParameterButton()
+  private val saveButton = createSaveButton()
 
   styleName = FunctionDefinitionComponent.StyleHead
   spacing = true
@@ -106,25 +85,19 @@ extends HorizontalLayout {
   add(newParameterButton)
   add(saveButton)
 
-  private def nameField: Component = {
+  private def createNameField(): TextField = {
     val nameField = new TextField
-    nameField.value = name
     nameField.styleName = FunctionDefinitionComponent.StyleHeadNameField
     nameField
   }
 
-  private def parameterLayout: Component = {
+  private def createParameterLayout(): Layout = {
     val paramLayout = new HorizontalLayout
     paramLayout.spacing = true
-    definition.params.foreach {
-      param: FunctionParameterComponent =>
-        println("adding parameter: " + param.value)
-        paramLayout.add(param)
-    }
     paramLayout
   }
 
-  private def newParameterButton: Component = Button(
+  private def createNewParameterButton(): Component = Button(
   "+", {
     val header = FunctionDefinitionHeader.this
     val children = header.components.size
@@ -132,12 +105,21 @@ extends HorizontalLayout {
     () // how do I avoid this?
   })
 
-  private def saveButton: Component = Button(
+  private def createSaveButton(): Component = Button(
   "Save", {
     val header = FunctionDefinitionHeader.this
     val compiled = header.definition.compile()
     println("Compiled: " + compiled)
     () // how do I avoid this?
   })
+
+  def name_=(n: String) = {
+    nameField.value = n
+  }
+
+  def parameters_+=(p: FunctionParameterComponent) = {
+    println("Adding function parameter UI: " + p.value)
+    parameterLayout.add(p)
+  }
 
 }

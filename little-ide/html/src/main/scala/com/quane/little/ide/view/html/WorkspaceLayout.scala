@@ -26,10 +26,9 @@ class WorkspaceLayout
 
 
   def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
-    println("Creating a new function definition..")
-    val view = FunctionDefinitionComponent("move toward")
+    val view = new FunctionDefinitionComponent()
     add(view)
-    new FunctionDefinitionPresenter(view)
+    FunctionDefinitionPresenter("move forward", view)
   }
 
 }
