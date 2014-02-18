@@ -35,6 +35,10 @@ class BlockPresenter[V <: BlockView](view: V,
               val get = view.addGetStatement()
               get.name_=(g.name)
               get
+            case p: PrintStatement =>
+              val print = view.addPrintStatement()
+              print.value_=(p.valueString)
+              print
             case c: Conditional =>
               val con = view.addConditionalStatement()
               con.test_=(c.test)

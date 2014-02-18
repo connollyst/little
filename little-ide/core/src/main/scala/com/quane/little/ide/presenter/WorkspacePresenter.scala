@@ -17,6 +17,7 @@ class WorkspacePresenter[V <: WorkspaceView](val view: V)
         case "stop" => Functions.stop
         case "turn" => Functions.turn
         case "voyage" => Functions.voyage
+        case "print dir" => Functions.printDirection
         case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
       }
     val presenter = view.createFunctionDefinition()

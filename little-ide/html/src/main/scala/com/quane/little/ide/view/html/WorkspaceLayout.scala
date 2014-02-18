@@ -7,6 +7,7 @@ import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 
 object WorkspaceLayout {
   val Style = "l-workspace"
+  val Functions = List("move", "stop", "turn", "voyage", "print dir")
 }
 
 class WorkspaceLayout
@@ -17,34 +18,16 @@ class WorkspaceLayout
   styleName = WorkspaceLayout.Style
 
   add(new VerticalLayout {
-    add(Button(
-    "'move'", {
-      viewListeners.foreach {
-        listener: WorkspaceViewListener =>
-          listener.openFunctionDefinition("move")
-      }
-    }))
-    add(Button(
-    "'stop'", {
-      viewListeners.foreach {
-        listener: WorkspaceViewListener =>
-          listener.openFunctionDefinition("stop")
-      }
-    }))
-    add(Button(
-    "'turn'", {
-      viewListeners.foreach {
-        listener: WorkspaceViewListener =>
-          listener.openFunctionDefinition("turn")
-      }
-    }))
-    add(Button(
-    "'voyage'", {
-      viewListeners.foreach {
-        listener: WorkspaceViewListener =>
-          listener.openFunctionDefinition("voyage")
-      }
-    }))
+    WorkspaceLayout.Functions.foreach {
+      function =>
+        add(Button(
+        "'" + function + "'", {
+          viewListeners.foreach {
+            listener: WorkspaceViewListener =>
+              listener.openFunctionDefinition(function)
+          }
+        }))
+    }
   })
 
   override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {

@@ -7,10 +7,10 @@ class PrintStatementLayout
   extends HorizontalLayout
   with PrintStatementView {
 
-  private val valueLabel = Label("???")
+  private val valueLabel = Label("PRINT: ???")
 
   add(valueLabel)
 
-  def setValue(value: String): Unit = valueLabel.value = value
+  def setValue(value: String): Unit = valueLabel.value = "PRINT: " + value
 
 }
