@@ -5,16 +5,19 @@ import com.quane.vaadin.scala.DroppableTarget
 import vaadin.scala.{CssLayout, VerticalLayout, Component}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
+import com.quane.little.ide.view.BlockView
 
 
-object ExpressionListComponent {
+object BlockLayout {
   val Style = "l-step-list"
   val StyleSeparator = Style + "-separator"
 }
 
-class ExpressionListComponent extends VerticalLayout {
-  styleName = ExpressionListComponent.Style
+class BlockLayout
+  extends VerticalLayout with BlockView {
+
   spacing = false
+  styleName = BlockLayout.Style
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
@@ -49,7 +52,7 @@ class ExpressionListComponent extends VerticalLayout {
 
 class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
 
-  component.styleName = ExpressionListComponent.StyleSeparator
+  component.styleName = BlockLayout.StyleSeparator
   dropHandler = new DropHandler() {
 
     override def getAcceptCriterion: AcceptCriterion = {
@@ -68,10 +71,10 @@ class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
       list.add(droppedStep, separatorIndex + 1)
     }
 
-    def getStepList: ExpressionListComponent = {
+    def getStepList: BlockLayout = {
       val t = ExpressionListSeparator.this
       val p = t.parent
-      p.asInstanceOf[ExpressionListComponent]
+      p.asInstanceOf[BlockLayout]
     }
 
     def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionPresenter] = {

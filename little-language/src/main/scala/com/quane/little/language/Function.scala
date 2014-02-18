@@ -14,8 +14,13 @@ class FunctionDefinition(val name: String)
   extends Scope {
 
   var scope: Scope = _
+  var block = new Block(this)
   val params = new ListBuffer[FunctionParameter]
-  val block = new Block(this)
+
+  def addStep(step: Expression): FunctionDefinition = {
+    block.addStep(step)
+    this
+  }
 
   def addParam(name: String): FunctionDefinition = {
     addParam(new FunctionParameter(name))
@@ -23,11 +28,6 @@ class FunctionDefinition(val name: String)
 
   def addParam(param: FunctionParameter): FunctionDefinition = {
     params += param
-    this
-  }
-
-  def addStep(step: Expression): FunctionDefinition = {
-    block.addStep(step)
     this
   }
 

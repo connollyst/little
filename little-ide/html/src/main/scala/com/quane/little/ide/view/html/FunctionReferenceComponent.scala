@@ -14,6 +14,7 @@ class FunctionReferenceComponent
 
   private val nameLabel = new Label
 
+  add(nameLabel)
   spacing = true
   styleName = FunctionReferenceComponent.Style
 

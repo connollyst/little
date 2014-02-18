@@ -14,8 +14,8 @@ object ConditionalComponent {
 
 class ConditionalComponent(label: String) extends VerticalLayout {
 
-  val thenList = new ExpressionListComponent
-  val elseList = new ExpressionListComponent
+  val thenList = new BlockLayout
+  val elseList = new BlockLayout
 
   spacing = false
   styleName = ConditionalComponent.Style

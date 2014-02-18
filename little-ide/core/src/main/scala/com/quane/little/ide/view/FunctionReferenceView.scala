@@ -7,7 +7,7 @@ trait FunctionReferenceView extends View[FunctionReferenceViewListener] {
 
   def setName(name: String): Unit
 
-  def createArgument: FunctionArgumentPresenter[_]
+  def createArgument(): FunctionArgumentPresenter[_]
 
 }
 

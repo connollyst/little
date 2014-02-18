@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.{FunctionReferencePresenter, FunctionParameterPresenter, ExpressionPresenter}
+import com.quane.little.ide.presenter.{BlockPresenter, FunctionReferencePresenter, FunctionParameterPresenter, ExpressionPresenter}
 import vaadin.scala._
 import com.quane.little.ide.view.FunctionDefinitionView
 
@@ -17,7 +17,7 @@ object FunctionDefinitionComponent {
 class FunctionDefinitionComponent
   extends VerticalLayout with FunctionDefinitionView {
 
-  val stepList = new ExpressionListComponent
+  val stepList = new BlockLayout
 
   private val header = createHeader()
   private val body = createBody()
@@ -37,8 +37,8 @@ class FunctionDefinitionComponent
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
     bodyLeft.styleName = FunctionDefinitionComponent.StyleHeadLeft
-    body.addComponent(bodyLeft)
-    body.addComponent(stepList)
+    body.add(bodyLeft)
+    body.add(stepList)
     body.styleName = FunctionDefinitionComponent.StyleBody
     body.spacing = false
     body
@@ -58,6 +58,11 @@ class FunctionDefinitionComponent
     val view = new FunctionParameterComponent()
     header.parameters_+=(view)
     new FunctionParameterPresenter(view)
+  }
+
+  override def createBlock(): BlockPresenter[_] = {
+    // TODO this goes against the pattern, we should create the block view here
+    new BlockPresenter(stepList)
   }
 
   override def createFunctionReference(): FunctionReferencePresenter[_] = {
