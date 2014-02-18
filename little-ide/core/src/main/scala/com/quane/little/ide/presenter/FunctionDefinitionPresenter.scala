@@ -5,40 +5,6 @@ import com.quane.little.language.{Expression, FunctionDefinition}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewListener}
 
-object FunctionDefinitionPresenter {
-
-  def apply[V <: FunctionDefinitionView](name: String, view: V): FunctionDefinitionPresenter[_] = {
-    println("Creating FunctionDefinitionPresenter for '" + name + "'")
-    name match {
-      case "move forward" => moveForward(view)
-      case _ => throw new IllegalArgumentException("No FunctionDefinition '" + name + "'")
-    }
-  }
-
-  private def moveForward[V <: FunctionDefinitionView](view: V): FunctionDefinitionPresenter[_] = {
-    // TODO this isn't backed by a presenter
-    val fun = new FunctionDefinitionPresenter(view)
-    fun.name = "move forward"
-    val param1 = view.createFunctionParameter()
-    val param2 = view.createFunctionParameter()
-    param1.name = "x"
-    param2.name = "y"
-    fun.add(param1)
-    fun.add(param2)
-    //    fun.add(FunctionReferencePresenter("point toward"))
-    //    fun.add(FunctionReferencePresenter("move"))
-    //    val ifElse = new ConditionalComponent("touching [location]")
-    //    ifElse.addThen(new PrintComponent("done"))
-    //    ifElse.addElse(
-    //      fun.add(FunctionReferencePresenter("move toward"))
-    //    )
-    //    fun.add(ifElse)
-    //    fun.add(new PrintComponent("done"))
-    fun
-  }
-
-}
-
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   extends FunctionDefinitionViewListener {
 
