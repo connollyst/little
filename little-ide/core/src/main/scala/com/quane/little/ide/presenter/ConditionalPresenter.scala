@@ -7,7 +7,8 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
   extends ExpressionPresenter with ConditionalViewListener {
 
   private val _test: ExpressionPresenter = view.setConditionStatement()
-  private val _block: BlockPresenter[_] = view.setThenBlock()
+  private val _thenBlock: BlockPresenter[_] = view.setThenBlock()
+  private val _elseBlock: BlockPresenter[_] = view.setElseBlock()
 
   view.addViewListener(this)
 
@@ -18,11 +19,12 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
 
   def setSteps[E <: Expression](steps: List[E]): Unit = {
     println("Setting conditional steps: " + steps)
-    _block.setSteps(steps)
+    _thenBlock.setSteps(steps)
   }
 
   override def compile(scope: Scope): Expression = {
-    new Conditional(_test.compile(scope), _block.compile(scope))
+    // TODO the else block is not supported yet!!!
+    new Conditional(_test.compile(scope), _thenBlock.compile(scope))
   }
 
 }
