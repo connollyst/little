@@ -101,6 +101,9 @@ class PrintStatement(value: Expression)
     this(new Value(value))
   }
 
+  // TODO we shouldn't need this
+  def valueString: String = value.toString
+
   def evaluate: Value = {
     val text = value.evaluate
     // TODO this should display a speech bubble over the guy

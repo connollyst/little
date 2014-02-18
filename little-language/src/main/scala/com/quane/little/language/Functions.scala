@@ -87,8 +87,8 @@ object Functions {
     fun.addStep(new FunctionReference(fun, "move").addArg("speed", new Value(10)))
   }
 
-  def printDirection(mob: Operator): Block = {
-    val fun = new Block(mob)
+  def printDirection: FunctionDefinition = {
+    val fun = new FunctionDefinition("print dir")
     fun.addStep(new PrintStatement(new GetStatement(new Pointer(fun, Operable.DIRECTION))))
   }
 
