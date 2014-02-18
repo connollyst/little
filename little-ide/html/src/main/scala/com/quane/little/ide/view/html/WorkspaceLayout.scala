@@ -31,6 +31,20 @@ class WorkspaceLayout
           listener.openFunctionDefinition("stop")
       }
     }))
+    add(Button(
+    "'turn'", {
+      viewListeners.foreach {
+        listener: WorkspaceViewListener =>
+          listener.openFunctionDefinition("turn")
+      }
+    }))
+    add(Button(
+    "'voyage'", {
+      viewListeners.foreach {
+        listener: WorkspaceViewListener =>
+          listener.openFunctionDefinition("voyage")
+      }
+    }))
   })
 
   override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {

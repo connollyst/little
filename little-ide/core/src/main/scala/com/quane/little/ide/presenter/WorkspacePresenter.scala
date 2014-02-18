@@ -15,6 +15,8 @@ class WorkspacePresenter[V <: WorkspaceView](val view: V)
       name match {
         case "move" => Functions.move
         case "stop" => Functions.stop
+        case "turn" => Functions.turn
+        case "voyage" => Functions.voyage
         case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
       }
     val presenter = view.createFunctionDefinition()
