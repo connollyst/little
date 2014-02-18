@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{Button, HorizontalLayout}
+import vaadin.scala.{VerticalLayout, Button, HorizontalLayout}
 import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 
@@ -16,19 +16,27 @@ class WorkspaceLayout
   spacing = true
   styleName = WorkspaceLayout.Style
 
-  add(Button(
-  "Open 'move toward'", {
-    viewListeners.foreach {
-      listener: WorkspaceViewListener =>
-        listener.openFunctionDefinition("move toward")
-    }
-  }))
-
+  add(new VerticalLayout {
+    add(Button(
+    "'move'", {
+      viewListeners.foreach {
+        listener: WorkspaceViewListener =>
+          listener.openFunctionDefinition("move")
+      }
+    }))
+    add(Button(
+    "'stop'", {
+      viewListeners.foreach {
+        listener: WorkspaceViewListener =>
+          listener.openFunctionDefinition("stop")
+      }
+    }))
+  })
 
   override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
     val view = new FunctionDefinitionComponent()
     add(view)
-    FunctionDefinitionPresenter("move forward", view)
+    new FunctionDefinitionPresenter(view)
   }
 
 }

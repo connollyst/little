@@ -8,25 +8,29 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class Block(var scope: Scope, steps: ListBuffer[Expression])
+class Block(var scope: Scope, _steps: ListBuffer[Expression])
   extends Expression
   with Scope {
 
   def this(scope: Scope) = this(scope, ListBuffer[Expression]())
 
-  def length: Int = steps.length
+  def length: Int = _steps.length
+
+  def steps: List[Expression] = _steps.toList
+
+  def clear(): Unit = _steps.clear()
 
   def addStep(step: Expression): Block = {
-    steps += step
+    _steps += step
     this
   }
 
   def evaluate: Value = {
-    steps.map(step => step.evaluate).last
+    _steps.map(step => step.evaluate).last
   }
 
   override def toString: String = {
-    getClass.getSimpleName + "{" + steps.toList + "}"
+    getClass.getSimpleName + "{" + steps + "}"
   }
 
 }

@@ -3,7 +3,7 @@ package com.quane.little.ide.presenter
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import com.quane.little.ide.view.{FunctionReferenceView, FunctionParameterView, FunctionDefinitionView}
+import com.quane.little.ide.view.{PrintStatementView, FunctionReferenceView, FunctionParameterView, FunctionDefinitionView}
 import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
@@ -25,14 +25,14 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
   test("test compiled with 0 parameters") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
     val function = presenter.compile()
-    assert(function.params.length == 0)
+    assert(function.paramCount == 0)
   }
 
   test("test compiled with 1 parameters") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
       .add(new FunctionParameterPresenter(mock[FunctionParameterView]))
     val function = presenter.compile()
-    assert(function.params.length == 1)
+    assert(function.paramCount == 1)
   }
 
   test("test compiled with 2 parameters") {
@@ -40,28 +40,28 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
       .add(new FunctionParameterPresenter(mock[FunctionParameterView]))
       .add(new FunctionParameterPresenter(mock[FunctionParameterView]))
     val function = presenter.compile()
-    assert(function.params.length == 2)
+    assert(function.paramCount == 2)
   }
 
   test("test compiled with 0 steps") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
     val function = presenter.compile()
-    assert(function.block.length == 0)
+    assert(function.stepCount == 0)
   }
 
   test("test compiled with 1 step") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
       .add(new FunctionReferencePresenter(mock[FunctionReferenceView]))
     val function = presenter.compile()
-    assert(function.block.length == 1)
+    assert(function.stepCount == 1)
   }
 
   test("test compiled with 2 steps") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
       .add(new FunctionReferencePresenter(mock[FunctionReferenceView]))
-      .add(new PrintPresenter)
+      .add(new PrintPresenter(mock[PrintStatementView]))
     val function = presenter.compile()
-    assert(function.block.length == 2)
+    assert(function.stepCount == 2)
   }
 
 

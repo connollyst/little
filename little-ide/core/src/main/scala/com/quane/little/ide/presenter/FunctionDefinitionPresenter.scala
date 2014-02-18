@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import scala._
-import com.quane.little.language.FunctionDefinition
+import com.quane.little.language.{Expression, FunctionDefinition}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewListener}
 
@@ -40,7 +40,7 @@ object FunctionDefinitionPresenter {
 }
 
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
-extends FunctionDefinitionViewListener {
+  extends FunctionDefinitionViewListener {
 
   private var _name = ""
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
@@ -58,13 +58,22 @@ extends FunctionDefinitionViewListener {
     this
   }
 
+  def setStepPresenters[E <: ExpressionPresenter](steps: List[E]) = {
+    _block.setStepPresenters(steps)
+  }
+
+  def setSteps[E <: Expression](steps: List[E]) = {
+    _block.setSteps(steps)
+  }
+
   override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(_name)
     _params.foreach {
       param =>
         fun.addParam(param.compile())
     }
-    fun.block = _block.compile(fun)
+    // TODO this seems sloppy..?
+    fun.steps = _block.compile(fun).steps
     fun
   }
 

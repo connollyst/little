@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.ExpressionPresenter
+import com.quane.little.ide.presenter.{SetPresenter, GetPresenter, PrintPresenter}
 import com.quane.vaadin.scala.DroppableTarget
 import vaadin.scala.{CssLayout, VerticalLayout, Component}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
@@ -18,6 +18,25 @@ class BlockLayout
 
   spacing = false
   styleName = BlockLayout.Style
+
+
+  override def createSetExpression(): SetPresenter[SetStatementLayout] = {
+    val view = new SetStatementLayout()
+    add(view)
+    new SetPresenter(view)
+  }
+
+  override def createGetExpression(): GetPresenter[GetStatementLayout] = {
+    val view = new GetStatementLayout()
+    add(view)
+    new GetPresenter(view)
+  }
+
+  override def createPrintStatement(): PrintPresenter[PrintStatementLayout] = {
+    val view = new PrintStatementLayout()
+    add(view)
+    new PrintPresenter(view)
+  }
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
@@ -61,35 +80,35 @@ class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
     }
 
     override def drop(event: DragAndDropEvent): Unit = {
-      val droppedStep = getDroppedStep(event)
-      val list = getStepList
-      if (list.contains(droppedStep)) {
-        list.removeComponent(droppedStep)
-      }
-      val separator = ExpressionListSeparator.this
-      val separatorIndex = list.componentIndex(separator)
-      list.add(droppedStep, separatorIndex + 1)
+      //      val droppedStep = getDroppedStep(event)
+      //      val list = getStepList
+      //      if (list.contains(droppedStep)) {
+      //        list.removeComponent(droppedStep)
+      //      }
+      //      val separator = ExpressionListSeparator.this
+      //      val separatorIndex = list.componentIndex(separator)
+      //      list.add(droppedStep, separatorIndex + 1)
     }
 
-    def getStepList: BlockLayout = {
-      val t = ExpressionListSeparator.this
-      val p = t.parent
-      p.asInstanceOf[BlockLayout]
-    }
-
-    def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionPresenter] = {
-      val sourceComponent = event.getTransferable.getSourceComponent.asInstanceOf[Component]
-      if (sourceComponent.isInstanceOf[ExpressionView[ExpressionPresenter]]) {
-        // An existing step is being moved from elsewhere
-        sourceComponent.asInstanceOf[ExpressionView[ExpressionPresenter]]
-      } else if (sourceComponent.isInstanceOf[ToolboxItemComponent]) {
-        // A new step is being dropped from the toolbox
-        sourceComponent.asInstanceOf[ToolboxItemComponent].getStep
-      } else {
-        throw new ClassCastException("Drop not supported for "
-          + sourceComponent.getClass.getSimpleName)
-      }
-    }
+    //    def getStepList: BlockLayout = {
+    //      val t = ExpressionListSeparator.this
+    //      val p = t.parent
+    //      p.asInstanceOf[BlockLayout]
+    //    }
+    //
+    //    def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionPresenter] = {
+    //      val sourceComponent = event.getTransferable.getSourceComponent.asInstanceOf[Component]
+    //      if (sourceComponent.isInstanceOf[ExpressionView[ExpressionPresenter]]) {
+    //        // An existing step is being moved from elsewhere
+    //        sourceComponent.asInstanceOf[ExpressionView[ExpressionPresenter]]
+    //      } else if (sourceComponent.isInstanceOf[ToolboxItemComponent]) {
+    //        // A new step is being dropped from the toolbox
+    //        sourceComponent.asInstanceOf[ToolboxItemComponent].getStep
+    //      } else {
+    //        throw new ClassCastException("Drop not supported for "
+    //          + sourceComponent.getClass.getSimpleName)
+    //      }
+    //    }
 
   }
 }

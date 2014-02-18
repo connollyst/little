@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.{BlockPresenter, FunctionReferencePresenter, FunctionParameterPresenter, ExpressionPresenter}
+import com.quane.little.ide.presenter.{BlockPresenter, FunctionReferencePresenter, FunctionParameterPresenter}
 import vaadin.scala._
 import com.quane.little.ide.view.FunctionDefinitionView
 
@@ -70,11 +70,6 @@ class FunctionDefinitionComponent
     // TODO replace stepList with body
     stepList.add(view)
     new FunctionReferencePresenter(view)
-  }
-
-  def addStep(view: ExpressionView[ExpressionPresenter]): FunctionDefinitionComponent = {
-    stepList.add(view)
-    this
   }
 
 }
