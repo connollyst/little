@@ -3,12 +3,13 @@ package com.quane.little.language
 import org.eintr.loglady.Logging
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
+import com.google.common.base.Objects
 
 abstract class Statement
   extends Expression
 
-class Set(pointer: Pointer, value: Expression)
-  extends Statement
+class SetStatement(pointer: Pointer, value: Expression)
+extends Statement
   with Logging {
 
   def this(pointer: Pointer, value: String) = {
@@ -54,9 +55,16 @@ class Set(pointer: Pointer, value: Expression)
     actualValue
   }
 
+  override def toString: String = {
+    Objects.toStringHelper(getClass)
+      .add("name", pointer.variableName)
+      .add("value", value)
+      .toString
+  }
+
 }
 
-class Get(pointer: Pointer)
+class GetStatement(pointer: Pointer)
   extends Statement
   with Logging {
 
@@ -70,9 +78,15 @@ class Get(pointer: Pointer)
     variable.value
   }
 
+  override def toString: String = {
+    Objects.toStringHelper(getClass)
+      .add("name", pointer.variableName)
+      .toString
+  }
+
 }
 
-class Print(value: Expression)
+class PrintStatement(value: Expression)
   extends Statement
   with Logging {
 
@@ -85,6 +99,12 @@ class Print(value: Expression)
     // TODO this should display a speech bubble over the guy
     log.error(text.asText)
     text
+  }
+
+  override def toString: String = {
+    Objects.toStringHelper(getClass)
+      .add("value", value)
+      .toString
   }
 
 }

@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.language.{Get, Set, Print, Scope, Statement}
+import com.quane.little.language.{GetStatement, SetStatement, PrintStatement, Scope, Statement}
 import com.quane.little.language.data.Value
 import com.quane.little.ide.view._
 import com.quane.little.language.memory.Pointer
@@ -20,8 +20,8 @@ class SetPresenter[V <: SetStatementView](view: V)
 
   override def nameChanged(name: String): Unit = _name = name
 
-  override def compile(scope: Scope): Set = {
-    new Set(new Pointer(scope, _name), new Value("TODO"))
+  override def compile(scope: Scope): SetStatement = {
+    new SetStatement(new Pointer(scope, _name), new Value("TODO"))
   }
 
 }
@@ -36,8 +36,8 @@ class GetPresenter[V <: GetStatementView](view: V)
 
   override def nameChanged(name: String): Unit = _name = name
 
-  override def compile(scope: Scope): Get = {
-    new Get(new Pointer(scope, _name))
+  override def compile(scope: Scope): GetStatement = {
+    new GetStatement(new Pointer(scope, _name))
   }
 
 }
@@ -52,8 +52,8 @@ class PrintPresenter[V <: PrintStatementView](view: V)
 
   override def valueChanged(value: String): Unit = _value = value
 
-  override def compile(scope: Scope): Print = {
-    new Print(new Value(_value))
+  override def compile(scope: Scope): PrintStatement = {
+    new PrintStatement(new Value(_value))
   }
 
 }

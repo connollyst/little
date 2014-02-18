@@ -18,6 +18,7 @@ class WorkspacePresenter[V <: WorkspaceView](val view: V)
         case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
       }
     val presenter = view.createFunctionDefinition()
+    println("Opening '" + fun.name + "': " + fun.steps)
     presenter.name = fun.name
     presenter.setSteps(fun.steps)
     //    presenter.params_=(fun.params)

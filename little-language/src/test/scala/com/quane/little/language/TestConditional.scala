@@ -33,7 +33,7 @@ class TestConditional extends FunSuite with BeforeAndAfter {
   private def createTestBlock: Block = {
     val fun = new Block(new Runtime)
     val pointer = new Pointer(fun, name)
-    fun.addStep(new Set(pointer, new Value(value)))
+    fun.addStep(new SetStatement(pointer, new Value(value)))
   }
 
 }

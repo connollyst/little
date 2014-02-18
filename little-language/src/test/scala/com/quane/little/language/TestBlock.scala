@@ -19,8 +19,8 @@ class TestBlock extends FunSuite {
     */
   test("test block with new values") {
     val block = new Block(new Runtime)
-    block.addStep(new Set(block, "Obj1", "A"))
-    block.addStep(new Set(block, "Obj2", "B"))
+    block.addStep(new SetStatement(block, "Obj1", "A"))
+    block.addStep(new SetStatement(block, "Obj2", "B"))
     block.evaluate
     val obj1 = block.fetch("Obj1")
     val obj2 = block.fetch("Obj2")
@@ -39,9 +39,9 @@ class TestBlock extends FunSuite {
     val block = new Block(new Runtime)
     val pointer1 = new Pointer(block, "Obj1")
     val pointer2 = new Pointer(block, "Obj2")
-    block.addStep(new Set(pointer1, new Value("A")))
-    block.addStep(new Set(pointer2, new Value("B")))
-    block.addStep(new Set(pointer1, new Get(pointer2)))
+    block.addStep(new SetStatement(pointer1, new Value("A")))
+    block.addStep(new SetStatement(pointer2, new Value("B")))
+    block.addStep(new SetStatement(pointer1, new GetStatement(pointer2)))
     block.evaluate
     val obj1 = block.fetch("Obj1")
     val obj2 = block.fetch("Obj2")
@@ -53,7 +53,7 @@ class TestBlock extends FunSuite {
 
   test("test block with return from print statement") {
     val block = new Block(new Runtime)
-    block.addStep(new Print(new Value("A")))
+    block.addStep(new PrintStatement(new Value("A")))
     val obj = block.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
@@ -61,7 +61,7 @@ class TestBlock extends FunSuite {
   test("test block with return from set statement") {
     val block = new Block(new Runtime)
     val pointer = new Pointer(block, "Obj")
-    block.addStep(new Set(pointer, new Value("A")))
+    block.addStep(new SetStatement(pointer, new Value("A")))
     val obj = block.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
@@ -69,8 +69,8 @@ class TestBlock extends FunSuite {
   test("test block with return from get statement") {
     val block = new Block(new Runtime)
     val pointer = new Pointer(block, "Obj")
-    block.addStep(new Set(pointer, new Value("A")))
-    block.addStep(new Get(pointer))
+    block.addStep(new SetStatement(pointer, new Value("A")))
+    block.addStep(new GetStatement(pointer))
     val obj = block.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }

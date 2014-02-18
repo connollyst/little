@@ -11,7 +11,7 @@ class TestFunction extends FunSuite {
 
   test("test function reference with return from print statement") {
     val fun = new FunctionDefinition("myFun")
-    fun.addStep(new Print(new Value("A")))
+    fun.addStep(new PrintStatement(new Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference(runtime, "myFun")
@@ -22,7 +22,7 @@ class TestFunction extends FunSuite {
   test("test function reference with return from set statement") {
     val fun = new FunctionDefinition("myFun")
     val pointer = new Pointer(fun, "Obj")
-    fun.addStep(new Set(pointer, new Value("A")))
+    fun.addStep(new SetStatement(pointer, new Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference(runtime, "myFun")
@@ -33,8 +33,8 @@ class TestFunction extends FunSuite {
   test("test function reference with return from get statement") {
     val fun = new FunctionDefinition("myFun")
     val pointer = new Pointer(fun, "Obj")
-    fun.addStep(new Set(pointer, new Value("A")))
-    fun.addStep(new Get(pointer))
+    fun.addStep(new SetStatement(pointer, new Value("A")))
+    fun.addStep(new GetStatement(pointer))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference(runtime, "myFun")

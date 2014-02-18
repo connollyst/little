@@ -25,8 +25,8 @@ class BlockPresenter[V <: BlockView](view: V,
       step =>
         val presenter =
           step match {
-            case s: Set => view.createSetExpression()
-            case g: Get => view.createGetExpression()
+            case s: SetStatement => view.createSetExpression()
+            case g: GetStatement => view.createGetExpression()
           }
         add(presenter)
     }
