@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{SetPresenter, GetPresenter, PrintPresenter}
+import com.quane.little.ide.presenter._
 
 trait BlockView extends View[BlockViewListener] {
 
@@ -9,6 +9,10 @@ trait BlockView extends View[BlockViewListener] {
   def createGetExpression(): GetPresenter[_]
 
   def createPrintStatement(): PrintPresenter[_]
+
+  def createConditional(): ConditionalPresenter[_]
+
+  def createFunctionReference(): FunctionReferencePresenter[_]
 
 }
 

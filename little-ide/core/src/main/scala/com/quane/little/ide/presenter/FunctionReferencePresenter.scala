@@ -47,12 +47,12 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
     }
   }
 
+  private[presenter] def name: String = _name
+
   private[presenter] def name_=(n: String) = {
     _name = n
     view.setName(_name)
   }
-
-  private[presenter] def name: String = _name
 
   private[presenter] def add(arg: FunctionArgumentPresenter[_]): FunctionReferencePresenter[_] = {
     args += arg

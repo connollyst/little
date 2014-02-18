@@ -34,6 +34,16 @@ class BlockPresenter[V <: BlockView](view: V,
               val get = view.createGetExpression()
               get.name_=(g.name)
               get
+            case c: Conditional =>
+              val con = view.createConditional()
+              con.test_=(c.test)
+              con.setSteps(c.steps)
+              con
+            case f: FunctionReference =>
+              val fun = view.createFunctionReference()
+              fun.name = f.name
+              // TODO set function name & args
+              fun
             case _ => throw new IllegalAccessException("Cannot add " + step)
           }
         add(presenter)

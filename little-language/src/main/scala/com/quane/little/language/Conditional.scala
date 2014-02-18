@@ -8,15 +8,17 @@ import com.quane.little.language.data.Nada
   *
   * @author Sean Connolly
   */
-class Conditional(test: Expression, function: Block)
+class Conditional(val test: Expression, val block: Block)
   extends Expression {
+
+  def steps: List[Expression] = block.steps
 
   /** Evaluate the conditional statement; only if the <i>test</i> evaluates
     * to {@code true}, the <i>function</i> is evaluated.
     */
   def evaluate: Nada = {
     if (test.evaluate.asBool) {
-      function.evaluate
+      block.evaluate
     }
     new Nada
   }

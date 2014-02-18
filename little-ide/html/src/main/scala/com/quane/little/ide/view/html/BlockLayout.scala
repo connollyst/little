@@ -1,12 +1,11 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.{SetPresenter, GetPresenter, PrintPresenter}
+import com.quane.little.ide.presenter._
 import com.quane.vaadin.scala.DroppableTarget
 import vaadin.scala.{CssLayout, VerticalLayout, Component}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
 import com.quane.little.ide.view.BlockView
-
 
 object BlockLayout {
   val Style = "l-step-list"
@@ -18,7 +17,6 @@ class BlockLayout
 
   spacing = false
   styleName = BlockLayout.Style
-
 
   override def createSetExpression(): SetPresenter[SetStatementLayout] = {
     println("Adding a new SET expression view..")
@@ -39,6 +37,21 @@ class BlockLayout
     val view = new PrintStatementLayout()
     add(view)
     new PrintPresenter(view)
+  }
+
+
+  override def createConditional(): ConditionalPresenter[ConditionalComponent] = {
+    println("Adding a new CONDITIONAL expression view..")
+    val view = new ConditionalComponent()
+    add(view)
+    new ConditionalPresenter(view)
+  }
+
+  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
+    println("Adding a new FUNCTION REFERENCE view..")
+    val view = new FunctionReferenceComponent()
+    add(view)
+    new FunctionReferencePresenter(view)
   }
 
   override def add[C <: Component](component: C): C = {

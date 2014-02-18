@@ -12,7 +12,7 @@ object FunctionReferenceComponent {
 class FunctionReferenceComponent
   extends HorizontalLayout with FunctionReferenceView {
 
-  private val nameLabel = new Label
+  private val nameLabel = Label("???")
 
   add(nameLabel)
   spacing = true
@@ -20,7 +20,7 @@ class FunctionReferenceComponent
 
   override def setName(name: String): Unit = nameLabel.value = name
 
-  override def createArgument: FunctionArgumentPresenter[_] = {
+  override def createArgument(): FunctionArgumentPresenter[_] = {
     val arg = new FunctionArgumentComponent
     add(arg)
     new FunctionArgumentPresenter(arg)

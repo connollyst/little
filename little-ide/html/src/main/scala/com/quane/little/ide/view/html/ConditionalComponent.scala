@@ -1,6 +1,8 @@
 package com.quane.little.ide.view.html
 
 import vaadin.scala._
+import com.quane.little.ide.view.ConditionalView
+import com.quane.little.ide.presenter.{ExpressionPresenter, BlockPresenter}
 
 
 object ConditionalComponent {
@@ -12,10 +14,12 @@ object ConditionalComponent {
   val StyleFoot = Style + "-foot"
 }
 
-class ConditionalComponent(label: String) extends VerticalLayout {
+class ConditionalComponent
+  extends VerticalLayout
+  with ConditionalView {
 
-  val thenList = new BlockLayout
-  val elseList = new BlockLayout
+  private val thenList = new BlockLayout
+  private val elseList = new BlockLayout
 
   spacing = false
   styleName = ConditionalComponent.Style
@@ -25,8 +29,17 @@ class ConditionalComponent(label: String) extends VerticalLayout {
   addComponent(elseBody())
   addComponent(footer())
 
+  def createTest(): ExpressionPresenter = {
+    // TODO this test layout belongs in the header
+    new BlockPresenter(new BlockLayout)
+  }
+
+  def createBlock(): BlockPresenter[BlockLayout] = {
+    new BlockPresenter(thenList)
+  }
+
   def thenHeader(): Component = {
-    new ConditionalHeader("if <" + label + ">")
+    new ConditionalHeader("if <TODO>")
   }
 
   def thenBody(): Component = {
