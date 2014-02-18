@@ -75,7 +75,7 @@ object Functions {
     val north = new Value(270)
     val south = new Value(90)
     val isNorth = new Evaluation(myDirection, Equals, north)
-    val turnSouth = new FunctionReference(fun, "turn").addArg("speed", new Value(10))
+    val turnSouth = new FunctionReference(fun, "turn").addArg("direction", south)
     fun.addStep(new Conditional(isNorth, turnSouth))
     // Step #2: Remember _Home_ is _Here_
     val homeXPointer = new Pointer(fun, "HomeX")
