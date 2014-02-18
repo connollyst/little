@@ -68,8 +68,9 @@ class FunctionParameter(val name: String) {
   * @param scope the scope in which the function is evaluated
   * @param name the name of the function
   */
-class FunctionReference(scope: Scope, val name: String)
-  extends Block(scope)
+class FunctionReference(var scope: Scope, val name: String)
+  extends Expression
+  with Scope
   with Logging {
 
   val args = Map[String, Expression]()

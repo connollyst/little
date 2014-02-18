@@ -76,7 +76,8 @@ object Functions {
     val south = new Value(90)
     val isNorth = new Evaluation(myDirection, Equals, north)
     val turnSouth = new FunctionReference(fun, "turn").addArg("direction", south)
-    fun.addStep(new Conditional(isNorth, turnSouth))
+    val turnSouthIfNorth = new Conditional(fun, isNorth).addStep(turnSouth)
+    fun.addStep(turnSouthIfNorth)
     // Step #2: Remember _Home_ is _Here_
     val homeXPointer = new Pointer(fun, "HomeX")
     val homeYPointer = new Pointer(fun, "HomeY")
@@ -117,10 +118,8 @@ object Functions {
 
     // Check if the angle is too small
     val tooSmallChecker = new Evaluation(new GetStatement(anglePointer), LessThan, new Value(0))
-    val cleanerFunction = new Block(angleFunction).addStep(
-      new SetStatement(anglePointer, new Addition(new GetStatement(anglePointer), new Value(360)))
-    )
-    val tooSmallCleaner = new Conditional(tooSmallChecker, cleanerFunction)
+    val cleanerFunction = new SetStatement(anglePointer, new Addition(new GetStatement(anglePointer), new Value(360)))
+    val tooSmallCleaner = new Conditional(angleFunction, tooSmallChecker).addStep(cleanerFunction)
 
     // Build the function
     angleFunction.addStep(calculateAngleStep)

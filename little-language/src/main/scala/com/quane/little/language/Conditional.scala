@@ -12,7 +12,16 @@ import com.google.common.base.Objects
 class Conditional(val test: Expression, val block: Block)
   extends Expression {
 
+  def this(scope: Scope, test: Expression) = {
+    this(test, new Block(scope))
+  }
+
   def steps: List[Expression] = block.steps
+
+  def addStep(step: Expression): Conditional = {
+    block.addStep(step)
+    this
+  }
 
   /** Evaluate the conditional statement; only if the <i>test</i> evaluates
     * to {@code true}, the <i>function</i> is evaluated.

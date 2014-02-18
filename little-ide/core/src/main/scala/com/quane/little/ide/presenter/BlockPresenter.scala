@@ -23,6 +23,7 @@ class BlockPresenter[V <: BlockView](view: V,
     _steps.clear()
     steps.foreach {
       step =>
+        println("Adding step: " + step)
         val presenter =
           step match {
             case s: SetStatement =>

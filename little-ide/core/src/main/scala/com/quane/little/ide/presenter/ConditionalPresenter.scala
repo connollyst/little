@@ -17,6 +17,7 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
   }
 
   def setSteps[E <: Expression](steps: List[E]): Unit = {
+    println("Setting conditional steps: " + steps)
     _block.setSteps(steps)
   }
 
