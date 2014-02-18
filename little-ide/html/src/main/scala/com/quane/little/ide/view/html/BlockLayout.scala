@@ -18,21 +18,21 @@ class BlockLayout
   spacing = false
   styleName = BlockLayout.Style
 
-  override def createSetExpression(): SetPresenter[SetStatementLayout] = {
+  override def addSetStatement(): SetPresenter[SetStatementLayout] = {
     println("Adding a new SET expression view..")
     val view = new SetStatementLayout()
     add(view)
     new SetPresenter(view)
   }
 
-  override def createGetExpression(): GetPresenter[GetStatementLayout] = {
+  override def addGetStatement(): GetPresenter[GetStatementLayout] = {
     println("Adding a new GET expression view..")
     val view = new GetStatementLayout()
     add(view)
     new GetPresenter(view)
   }
 
-  override def createPrintStatement(): PrintPresenter[PrintStatementLayout] = {
+  override def addPrintStatement(): PrintPresenter[PrintStatementLayout] = {
     println("Adding a new PRINT expression view..")
     val view = new PrintStatementLayout()
     add(view)
@@ -40,14 +40,14 @@ class BlockLayout
   }
 
 
-  override def createConditional(): ConditionalPresenter[ConditionalComponent] = {
+  override def addConditionalStatement(): ConditionalPresenter[ConditionalComponent] = {
     println("Adding a new CONDITIONAL expression view..")
     val view = new ConditionalComponent()
     add(view)
     new ConditionalPresenter(view)
   }
 
-  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
+  override def addFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
     println("Adding a new FUNCTION REFERENCE view..")
     val view = new FunctionReferenceComponent()
     add(view)

@@ -27,21 +27,21 @@ class BlockPresenter[V <: BlockView](view: V,
         val presenter =
           step match {
             case s: SetStatement =>
-              val set = view.createSetExpression()
+              val set = view.addSetStatement()
               set.name_=(s.name)
               set.value_=(s.valueString)
               set
             case g: GetStatement =>
-              val get = view.createGetExpression()
+              val get = view.addGetStatement()
               get.name_=(g.name)
               get
             case c: Conditional =>
-              val con = view.createConditional()
+              val con = view.addConditionalStatement()
               con.test_=(c.test)
               con.setSteps(c.steps)
               con
             case f: FunctionReference =>
-              val fun = view.createFunctionReference()
+              val fun = view.addFunctionReference()
               fun.name = f.name
               // TODO set function name & args
               fun

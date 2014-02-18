@@ -4,9 +4,11 @@ import com.quane.little.ide.presenter.{BlockPresenter, ExpressionPresenter}
 
 trait ConditionalView extends View[ConditionalViewListener] {
 
-  def createTest(): ExpressionPresenter
+  def setConditionStatement(): ExpressionPresenter
 
-  def createBlock(): BlockPresenter[_]
+  def setThenBlock(): BlockPresenter[_]
+
+  def setElseBlock(): BlockPresenter[_]
 
 }
 

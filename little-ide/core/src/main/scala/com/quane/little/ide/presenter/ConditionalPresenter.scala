@@ -6,8 +6,8 @@ import com.quane.little.language.{Conditional, Expression, Scope}
 class ConditionalPresenter[V <: ConditionalView](view: V)
   extends ExpressionPresenter with ConditionalViewListener {
 
-  private val _test: ExpressionPresenter = view.createTest()
-  private val _block: BlockPresenter[_] = view.createBlock()
+  private val _test: ExpressionPresenter = view.setConditionStatement()
+  private val _block: BlockPresenter[_] = view.setThenBlock()
 
   view.addViewListener(this)
 

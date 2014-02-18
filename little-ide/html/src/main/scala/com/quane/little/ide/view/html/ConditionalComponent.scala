@@ -66,15 +66,22 @@ class ConditionalComponent
     footer
   }
 
-  override def createTest(): ExpressionPresenter = {
+  override def setConditionStatement(): ExpressionPresenter = {
     // TODO this expression layout belongs in the header
     new BlockPresenter(new BlockLayout)
   }
 
-  override def createBlock(): BlockPresenter[BlockLayout] = {
+  override def setThenBlock(): BlockPresenter[BlockLayout] = {
     val view = new BlockLayout
     // TODO remove children, if any
     thenBlockWrapper.add(view)
+    new BlockPresenter(view)
+  }
+
+  override def setElseBlock(): BlockPresenter[BlockLayout] = {
+    val view = new BlockLayout
+    // TODO remove children, if any
+    elseBlockWrapper.add(view)
     new BlockPresenter(view)
   }
 
