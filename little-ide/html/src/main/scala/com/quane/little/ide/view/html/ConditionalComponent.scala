@@ -18,73 +18,64 @@ class ConditionalComponent
   extends VerticalLayout
   with ConditionalView {
 
-  private val thenList = new BlockLayout
-  private val elseList = new BlockLayout
+  private val thenBlockWrapper = new CssLayout
+  private val elseBlockWrapper = new CssLayout
 
   spacing = false
   styleName = ConditionalComponent.Style
-  addComponent(thenHeader())
-  addComponent(thenBody())
-  addComponent(elseHeader())
-  addComponent(elseBody())
-  addComponent(footer())
+  addComponent(createThenHeader())
+  addComponent(createThenBody())
+  addComponent(createElseHeader())
+  addComponent(createElseBody())
+  addComponent(createFooter())
 
-  def createTest(): ExpressionPresenter = {
-    // TODO this test layout belongs in the header
-    new BlockPresenter(new BlockLayout)
-  }
-
-  def createBlock(): BlockPresenter[BlockLayout] = {
-    new BlockPresenter(thenList)
-  }
-
-  def thenHeader(): Component = {
+  private def createThenHeader(): Component = {
     new ConditionalHeader("if <TODO>")
   }
 
-  def thenBody(): Component = {
-    val body = new HorizontalLayout
-    val bodyLeft = new Label
-    bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = ConditionalComponent.StyleBodyLeft
-    body.addComponent(bodyLeft)
-    body.addComponent(thenList)
-    body.styleName = ConditionalComponent.StyleBody
-    body.spacing = false
-    body
+  private def createThenBody(): Component = {
+    createBody(thenBlockWrapper)
   }
 
-  def elseHeader(): Component = {
+  private def createElseHeader(): Component = {
     val elseHeader = new Label
     elseHeader.value = "else"
     elseHeader.styleName = ConditionalComponent.StyleElseHead
     elseHeader
   }
 
-  def elseBody(): Component = {
+  private def createElseBody(): Component = {
+    createBody(elseBlockWrapper)
+  }
+
+  private def createBody(blockWrapper: Component): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
     bodyLeft.styleName = ConditionalComponent.StyleBodyLeft
     body.addComponent(bodyLeft)
-    body.addComponent(elseList)
+    body.addComponent(blockWrapper)
     body.styleName = ConditionalComponent.StyleBody
     body.spacing = false
     body
   }
 
-  def footer(): Component = {
+  private def createFooter(): Component = {
     val footer = new Label()
     footer.styleName = ConditionalComponent.StyleFoot
     footer
   }
 
-  def addThen(c: Component) = {
-    thenList.add(c)
+  override def createTest(): ExpressionPresenter = {
+    // TODO this expression layout belongs in the header
+    new BlockPresenter(new BlockLayout)
   }
 
-  def addElse(c: Component) = {
-    elseList.add(c)
+  override def createBlock(): BlockPresenter[BlockLayout] = {
+    val view = new BlockLayout
+    // TODO remove children, if any
+    thenBlockWrapper.add(view)
+    new BlockPresenter(view)
   }
 
 }
