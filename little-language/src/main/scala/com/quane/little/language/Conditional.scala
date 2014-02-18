@@ -1,6 +1,7 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.Nada
+import com.google.common.base.Objects
 
 
 /** A conditional is an [[com.quane.little.language.Expression]] which evaluates
@@ -16,11 +17,18 @@ class Conditional(val test: Expression, val block: Block)
   /** Evaluate the conditional statement; only if the <i>test</i> evaluates
     * to {@code true}, the <i>function</i> is evaluated.
     */
-  def evaluate: Nada = {
+  override def evaluate: Nada = {
     if (test.evaluate.asBool) {
       block.evaluate
     }
     new Nada
+  }
+
+  override def toString: String = {
+    Objects.toStringHelper(getClass)
+      .add("test", test)
+      .add("block", block)
+      .toString
   }
 
 }
