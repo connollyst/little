@@ -21,18 +21,21 @@ class BlockLayout
 
 
   override def createSetExpression(): SetPresenter[SetStatementLayout] = {
+    println("Adding a new SET expression view..")
     val view = new SetStatementLayout()
     add(view)
     new SetPresenter(view)
   }
 
   override def createGetExpression(): GetPresenter[GetStatementLayout] = {
+    println("Adding a new GET expression view..")
     val view = new GetStatementLayout()
     add(view)
     new GetPresenter(view)
   }
 
   override def createPrintStatement(): PrintPresenter[PrintStatementLayout] = {
+    println("Adding a new PRINT expression view..")
     val view = new PrintStatementLayout()
     add(view)
     new PrintPresenter(view)

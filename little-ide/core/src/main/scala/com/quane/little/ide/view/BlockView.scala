@@ -2,7 +2,6 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter.{SetPresenter, GetPresenter, PrintPresenter}
 
-
 trait BlockView extends View[BlockViewListener] {
 
   def createSetExpression(): SetPresenter[_]

@@ -25,8 +25,16 @@ class BlockPresenter[V <: BlockView](view: V,
       step =>
         val presenter =
           step match {
-            case s: SetStatement => view.createSetExpression()
-            case g: GetStatement => view.createGetExpression()
+            case s: SetStatement =>
+              val set = view.createSetExpression()
+              set.name_=(s.name)
+              set.value_=(s.valueString)
+              set
+            case g: GetStatement =>
+              val get = view.createGetExpression()
+              get.name_=(g.name)
+              get
+            case _ => throw new IllegalAccessException("Cannot add " + step)
           }
         add(presenter)
     }

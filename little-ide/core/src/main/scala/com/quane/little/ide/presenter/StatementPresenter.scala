@@ -5,7 +5,6 @@ import com.quane.little.language.data.Value
 import com.quane.little.ide.view._
 import com.quane.little.language.memory.Pointer
 
-
 sealed trait StatementPresenter extends ExpressionPresenter {
   override def compile(scope: Scope): Statement
 }
@@ -15,8 +14,21 @@ class SetPresenter[V <: SetStatementView](view: V)
   with SetStatementViewListener {
 
   private var _name = ""
+  private var _value = ""
 
   view.addViewListener(this)
+  view.setName(_name)
+  view.setValue(_value)
+
+  private[presenter] def name_=(name: String): Unit = {
+    _name = name
+    view.setName(name)
+  }
+
+  private[presenter] def value_=(value: String): Unit = {
+    _value = value
+    view.setValue(value)
+  }
 
   override def nameChanged(name: String): Unit = _name = name
 
@@ -33,6 +45,12 @@ class GetPresenter[V <: GetStatementView](view: V)
   private var _name = ""
 
   view.addViewListener(this)
+  view.setName(_name)
+
+  private[presenter] def name_=(name: String): Unit = {
+    _name = name
+    view.setName(name)
+  }
 
   override def nameChanged(name: String): Unit = _name = name
 
@@ -49,6 +67,12 @@ class PrintPresenter[V <: PrintStatementView](view: V)
   private var _value = ""
 
   view.addViewListener(this)
+  view.setValue(_value)
+
+  private[presenter] def value_=(value: String): Unit = {
+    _value = value
+    view.setValue(value)
+  }
 
   override def valueChanged(value: String): Unit = _value = value
 

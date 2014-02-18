@@ -9,7 +9,7 @@ abstract class Statement
   extends Expression
 
 class SetStatement(pointer: Pointer, value: Expression)
-extends Statement
+  extends Statement
   with Logging {
 
   def this(pointer: Pointer, value: String) = {
@@ -48,6 +48,11 @@ extends Statement
     this(new Pointer(scope, name), value)
   }
 
+  def name: String = pointer.variableName
+
+  // TODO we shouldn't need this
+  def valueString: String = value.toString
+
   def evaluate: Value = {
     val name = pointer.variableName
     val actualValue = value.evaluate
@@ -71,6 +76,8 @@ class GetStatement(pointer: Pointer)
   def this(scope: Scope, name: String) = {
     this(new Pointer(scope, name))
   }
+
+  def name: String = pointer.variableName
 
   def evaluate: Value = {
     val name = pointer.variableName

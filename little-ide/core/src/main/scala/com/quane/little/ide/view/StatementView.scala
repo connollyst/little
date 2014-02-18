@@ -1,11 +1,25 @@
 package com.quane.little.ide.view
 
 
-trait GetStatementView extends View[GetStatementViewListener]
+trait GetStatementView extends View[GetStatementViewListener] {
 
-trait SetStatementView extends View[SetStatementViewListener]
+  def setName(name: String): Unit
 
-trait PrintStatementView extends View[PrintStatementViewListener]
+}
+
+trait SetStatementView extends View[SetStatementViewListener] {
+
+  def setName(name: String): Unit
+
+  def setValue(value: String): Unit
+
+}
+
+trait PrintStatementView extends View[PrintStatementViewListener] {
+
+  def setValue(value: String): Unit
+
+}
 
 trait GetStatementViewListener extends ViewListener {
 
@@ -21,6 +35,6 @@ trait SetStatementViewListener extends ViewListener {
 
 trait PrintStatementViewListener extends ViewListener {
 
-  def valueChanged(name: String): Unit
+  def valueChanged(value: String): Unit
 
 }
