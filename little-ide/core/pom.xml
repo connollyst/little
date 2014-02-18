@@ -10,6 +10,7 @@
     </parent>
 
     <artifactId>little-ide-core</artifactId>
+    <packaging>jar</packaging>
     <name>Little IDE Core</name>
 
     <build>
@@ -28,13 +29,6 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>little-language</artifactId>
             <version>${project.version}</version>
-        </dependency>
-
-        <!-- Guice injects Providers into the View -->
-        <dependency>
-            <groupId>net.codingwell</groupId>
-            <artifactId>scala-guice_2.10</artifactId>
-            <version>4.0.0-beta</version>
         </dependency>
 
         <!-- Logging -->
