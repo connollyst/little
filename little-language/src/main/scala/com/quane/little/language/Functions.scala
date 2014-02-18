@@ -38,10 +38,11 @@ object Functions {
     fun.addStep(new SetStatement(pointer, new Value(0)))
   }
 
-  def turn(mob: Operator, degrees: Expression): Block = {
-    val fun = new Block(mob)
-    val pointer = new Pointer(fun, Operable.DIRECTION)
-    fun.addStep(new SetStatement(pointer, degrees))
+  def turn: FunctionDefinition = {
+    val fun = new FunctionDefinition("turn")
+    val directionArg = new Pointer(fun, "direction")
+    val myDirection = new Pointer(fun, Operable.DIRECTION)
+    fun.addStep(new SetStatement(myDirection, new GetStatement(directionArg)))
   }
 
   def turnRandom(mob: Operator): Block = {
@@ -65,22 +66,24 @@ object Functions {
     relativelyFun.addStep(setNewDirection)
   }
 
-  def voyage(mob: Operator): Block = {
-    val fun = new Block(mob)
+  def voyage: FunctionDefinition = {
+    val fun = new FunctionDefinition("voyage")
+    val myDirection = new GetStatement(fun, Operable.DIRECTION)
+    val myX = new GetStatement(fun, Operable.X)
+    val myY = new GetStatement(fun, Operable.Y)
     // Step #1: Turn South if I'm facing North
-    val myDirection = mob.direction
     val north = new Value(270)
     val south = new Value(90)
     val isNorth = new Evaluation(myDirection, Equals, north)
-    val turnSouth = turn(mob, south)
+    val turnSouth = new FunctionReference(fun, "turn").addArg("speed", new Value(10))
     fun.addStep(new Conditional(isNorth, turnSouth))
     // Step #2: Remember _Home_ is _Here_
     val homeXPointer = new Pointer(fun, "HomeX")
     val homeYPointer = new Pointer(fun, "HomeY")
-    fun.addStep(new SetStatement(homeXPointer, mob.x))
-    fun.addStep(new SetStatement(homeYPointer, mob.y))
+    fun.addStep(new SetStatement(homeXPointer, myX))
+    fun.addStep(new SetStatement(homeYPointer, myY))
     // Step #3: Set speed to 10
-    fun.addStep(new FunctionReference(mob, "move").addArg("speed", new Value(10)))
+    fun.addStep(new FunctionReference(fun, "move").addArg("speed", new Value(10)))
   }
 
   def printDirection(mob: Operator): Block = {

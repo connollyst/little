@@ -29,9 +29,13 @@ class TestFunctions extends FunSuite {
   }
 
   test("test function turn") {
-    val guy = new Operator(new Runtime, new StubOperable)
+    val runtime = new Runtime
+    runtime.saveFunction(Functions.turn)
+    val guy = new Operator(runtime, new StubOperable)
     guy.direction(new Value(137))
-    Functions.turn(guy, new Value(42)).evaluate
+    new FunctionReference(guy, "turn")
+      .addArg("direction", new Value(42))
+      .evaluate
     val dir = guy.direction.asInt
     assert(dir == 42, "guy should have turned to 42 degrees, actual=" + dir)
   }
