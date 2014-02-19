@@ -41,7 +41,7 @@ class BlockPresenter[V <: BlockView](view: V,
               print
             case c: Conditional =>
               val con = view.addConditionalStatement()
-              con.test_=(c.test)
+              con.condition_=(c.test)
               con.setSteps(c.steps)
               con
             case f: FunctionReference =>
