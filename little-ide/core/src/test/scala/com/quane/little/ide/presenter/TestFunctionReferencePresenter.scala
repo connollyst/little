@@ -4,12 +4,11 @@ import com.quane.little.language.Runtime
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import com.quane.little.ide.view.{MockFunctionReferenceView, FunctionArgumentView}
-import org.scalatest.mock.MockitoSugar
+import com.quane.little.ide.view.{MockFunctionArgumentView, MockFunctionReferenceView}
 
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
+class TestFunctionReferencePresenter extends FunSuite {
 
   test("test compiled scope") {
     val scope = new Runtime
@@ -39,7 +38,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
   test("test compiled with 1 parameters") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val arg = new FunctionArgumentPresenter(mock[FunctionArgumentView])
+    val arg = new FunctionArgumentPresenter(new MockFunctionArgumentView)
     arg.name = "x"
     presenter.add(arg)
     val function = presenter.compile(new Runtime)
@@ -48,8 +47,8 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
   test("test compiled with 2 parameters") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val arg1 = new FunctionArgumentPresenter(mock[FunctionArgumentView])
-    val arg2 = new FunctionArgumentPresenter(mock[FunctionArgumentView])
+    val arg1 = new FunctionArgumentPresenter(new MockFunctionArgumentView)
+    val arg2 = new FunctionArgumentPresenter(new MockFunctionArgumentView)
     arg1.name = "x"
     arg2.name = "y"
     presenter.add(arg1)
