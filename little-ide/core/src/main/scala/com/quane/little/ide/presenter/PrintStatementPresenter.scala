@@ -17,6 +17,8 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
   view.addViewListener(this)
   view.setValue(_value)
 
+  private[presenter] def value: String = _value
+
   private[presenter] def value_=(value: String): Unit = {
     _value = value
     view.setValue(value)
