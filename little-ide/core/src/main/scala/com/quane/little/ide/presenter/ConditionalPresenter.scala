@@ -22,7 +22,7 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
     _thenBlock.setSteps(steps)
   }
 
-  override def compile(scope: Scope): Expression = {
+  override def compile(scope: Scope): Conditional = {
     // TODO the else block is not supported yet!!!
     new Conditional(_condition.compile(scope), _thenBlock.compile(scope))
   }
