@@ -17,6 +17,8 @@ class GetStatementPresenter[V <: GetStatementView](view: V)
   view.addViewListener(this)
   view.setName(_name)
 
+  private[presenter] def name: String = _name
+
   private[presenter] def name_=(name: String): Unit = {
     _name = name
     view.setName(name)
