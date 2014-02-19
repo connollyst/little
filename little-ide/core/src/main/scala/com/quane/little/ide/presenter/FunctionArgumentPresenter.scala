@@ -11,6 +11,8 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   private var _name: String = ""
   private var _value: String = ""
 
+  view.addViewListener(this)
+
   def compile(scope: Scope): Expression = {
     new Value(_value)
   }
