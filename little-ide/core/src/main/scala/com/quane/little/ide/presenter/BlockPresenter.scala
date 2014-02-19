@@ -16,16 +16,16 @@ class BlockPresenter[V <: BlockView](view: V)
 
   view.addViewListener(this)
 
-  def add(step: ExpressionPresenter): Unit = _steps += step
+  private[presenter] def add(step: ExpressionPresenter): Unit = _steps += step
 
-  def steps: List[ExpressionPresenter] = _steps.toList
+  private[presenter] def steps: List[ExpressionPresenter] = _steps.toList
 
-  def steps_=[E <: ExpressionPresenter](steps: List[E]) = {
+  private[presenter] def steps_=[E <: ExpressionPresenter](steps: List[E]) = {
     _steps.clear()
     _steps ++= steps
   }
 
-  def setSteps[E <: Expression](steps: List[E]) = {
+  private[presenter] def setSteps[E <: Expression](steps: List[E]) = {
     _steps.clear()
     steps.foreach {
       step =>
