@@ -18,25 +18,25 @@ class BlockLayout
   spacing = false
   styleName = BlockLayout.Style
 
-  override def addSetStatement(): SetPresenter[SetStatementLayout] = {
+  override def addSetStatement(): SetStatementPresenter[SetStatementLayout] = {
     println("Adding a new SET expression view..")
     val view = new SetStatementLayout()
     add(view)
-    new SetPresenter(view)
+    new SetStatementPresenter(view)
   }
 
-  override def addGetStatement(): GetPresenter[GetStatementLayout] = {
+  override def addGetStatement(): GetStatementPresenter[GetStatementLayout] = {
     println("Adding a new GET expression view..")
     val view = new GetStatementLayout()
     add(view)
-    new GetPresenter(view)
+    new GetStatementPresenter(view)
   }
 
-  override def addPrintStatement(): PrintPresenter[PrintStatementLayout] = {
+  override def addPrintStatement(): PrintStatementPresenter[PrintStatementLayout] = {
     println("Adding a new PRINT expression view..")
     val view = new PrintStatementLayout()
     add(view)
-    new PrintPresenter(view)
+    new PrintStatementPresenter(view)
   }
 
 

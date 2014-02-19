@@ -1,83 +1,18 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.language.{GetStatement, SetStatement, PrintStatement, Scope, Statement}
-import com.quane.little.language.data.Value
-import com.quane.little.ide.view._
-import com.quane.little.language.memory.Pointer
+import com.quane.little.language.{Scope, Statement}
 
-sealed trait StatementPresenter extends ExpressionPresenter {
+/** A presenter for views which compile to a [[com.quane.little.language.Statement]]
+  *
+  * @author Sean Connolly
+  */
+trait StatementPresenter extends ExpressionPresenter {
+
+  /** Compile the presented data to a [[com.quane.little.language.Statement]]
+    *
+    * @param scope the scope in which to compile
+    * @return the compiled statement
+    */
   override def compile(scope: Scope): Statement
-}
-
-class SetPresenter[V <: SetStatementView](view: V)
-  extends StatementPresenter
-  with SetStatementViewListener {
-
-  private var _name = ""
-  private var _value = ""
-
-  view.addViewListener(this)
-  view.setName(_name)
-  view.setValue(_value)
-
-  private[presenter] def name_=(name: String): Unit = {
-    _name = name
-    view.setName(name)
-  }
-
-  private[presenter] def value_=(value: String): Unit = {
-    _value = value
-    view.setValue(value)
-  }
-
-  override def nameChanged(name: String): Unit = _name = name
-
-  override def compile(scope: Scope): SetStatement = {
-    new SetStatement(new Pointer(scope, _name), new Value("TODO"))
-  }
-
-}
-
-class GetPresenter[V <: GetStatementView](view: V)
-  extends StatementPresenter
-  with GetStatementViewListener {
-
-  private var _name = ""
-
-  view.addViewListener(this)
-  view.setName(_name)
-
-  private[presenter] def name_=(name: String): Unit = {
-    _name = name
-    view.setName(name)
-  }
-
-  override def nameChanged(name: String): Unit = _name = name
-
-  override def compile(scope: Scope): GetStatement = {
-    new GetStatement(new Pointer(scope, _name))
-  }
-
-}
-
-class PrintPresenter[V <: PrintStatementView](view: V)
-  extends StatementPresenter
-  with PrintStatementViewListener {
-
-  private var _value = ""
-
-  view.addViewListener(this)
-  view.setValue(_value)
-
-  private[presenter] def value_=(value: String): Unit = {
-    _value = value
-    view.setValue(value)
-  }
-
-  override def valueChanged(value: String): Unit = _value = value
-
-  override def compile(scope: Scope): PrintStatement = {
-    new PrintStatement(new Value(_value))
-  }
 
 }
