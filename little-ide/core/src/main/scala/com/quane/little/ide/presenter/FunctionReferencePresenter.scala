@@ -10,6 +10,8 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
 
   private var _name: String = "???"
 
+  view.addViewListener(this)
+
   override def compile(scope: Scope): FunctionReference = {
     val fun = new FunctionReference(scope, _name)
     compileArgs(fun)

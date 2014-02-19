@@ -4,11 +4,19 @@ import com.quane.little.language.Runtime
 import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
-import com.quane.little.ide.view.{MockFunctionArgumentView, MockFunctionReferenceView}
+import com.quane.little.ide.view.{FunctionReferenceView, MockFunctionArgumentView, MockFunctionReferenceView}
+import org.mockito.Mockito._
+import org.scalatest.mock.MockitoSugar
 
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionReferencePresenter extends FunSuite {
+class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
+
+  test("test listener registered") {
+    val view = mock[FunctionReferenceView]
+    val presenter = new FunctionReferencePresenter(view)
+    verify(view).addViewListener(presenter)
+  }
 
   test("test compiled scope") {
     val scope = new Runtime
