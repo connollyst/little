@@ -17,11 +17,11 @@ class FunctionParameterPresenter[V <: FunctionParameterView](view: V)
     new FunctionParameter(name)
   }
 
+  private[presenter] def name: String = _name
+
   private[presenter] def name_=(n: String): Unit = {
     _name = n
     view.setName(_name)
   }
-
-  private[presenter] def name: String = _name
 
 }

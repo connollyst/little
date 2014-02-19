@@ -10,6 +10,14 @@ import org.mockito.Mockito._
 @RunWith(classOf[JUnitRunner])
 class TestFunctionParameterPresenter extends FunSuite with MockitoSugar {
 
+  test("test name is set") {
+    val presenter = new FunctionParameterPresenter(mock[FunctionParameterView])
+    presenter.name = "sean is cool"
+    assert(presenter.name == "sean is cool")
+  }
+
+  /* Test View */
+
   test("test listener registered") {
     val view = mock[FunctionParameterView]
     val presenter = new FunctionParameterPresenter(view)

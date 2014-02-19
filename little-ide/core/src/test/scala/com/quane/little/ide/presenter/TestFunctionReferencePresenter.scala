@@ -11,6 +11,14 @@ import org.scalatest.mock.MockitoSugar
 @RunWith(classOf[JUnitRunner])
 class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
+  test("test name is set") {
+    val presenter = new FunctionReferencePresenter(mock[FunctionReferenceView])
+    presenter.name = "sean is cool"
+    assert(presenter.name == "sean is cool")
+  }
+
+  /* Test View */
+
   test("test listener registered") {
     val view = mock[FunctionReferenceView]
     val presenter = new FunctionReferencePresenter(view)
