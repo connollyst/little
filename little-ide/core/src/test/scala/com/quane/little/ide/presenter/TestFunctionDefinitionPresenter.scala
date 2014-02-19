@@ -4,10 +4,9 @@ import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import com.quane.little.ide.view._
-import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
+class TestFunctionDefinitionPresenter extends FunSuite {
 
   test("test compiled name (default)") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
@@ -59,10 +58,9 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
   test("test compiled with 2 steps") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
       .add(new FunctionReferencePresenter(new MockFunctionReferenceView))
-      .add(new PrintPresenter(mock[PrintStatementView]))
+      .add(new PrintPresenter(new MockPrintStatementView))
     val function = presenter.compile()
     assert(function.stepCount == 2)
   }
-
 
 }

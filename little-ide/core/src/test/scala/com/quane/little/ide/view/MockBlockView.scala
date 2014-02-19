@@ -14,7 +14,8 @@ class MockBlockView
 
   def addGetStatement(): GetPresenter[_] = ???
 
-  def addPrintStatement(): PrintPresenter[_] = ???
+  def addPrintStatement(): PrintPresenter[MockPrintStatementView] =
+    new PrintPresenter(new MockPrintStatementView)
 
   def addConditionalStatement(): ConditionalPresenter[_] = ???
 
