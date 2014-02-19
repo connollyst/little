@@ -8,7 +8,7 @@ import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionView
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   extends FunctionDefinitionViewListener {
 
-  private var _name = ""
+  private var _name = "???"
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
   private val _block = view.createBlock()
 

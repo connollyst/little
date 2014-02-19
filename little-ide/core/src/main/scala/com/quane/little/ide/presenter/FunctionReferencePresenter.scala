@@ -8,7 +8,7 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
                                                              args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])
   extends ExpressionPresenter with FunctionReferenceViewListener {
 
-  private var _name: String = ""
+  private var _name: String = "???"
 
   override def compile(scope: Scope): FunctionReference = {
     val fun = new FunctionReference(scope, _name)
