@@ -8,8 +8,8 @@ package com.quane.little.ide.view
 class MockFunctionArgumentView
   extends FunctionArgumentView {
 
-  def setName(name: String): Unit = Unit
+  def setName(name: String) = Unit
 
-  def setValue(value: String): Unit = Unit
+  def setValue(value: String) = Unit
 
 }

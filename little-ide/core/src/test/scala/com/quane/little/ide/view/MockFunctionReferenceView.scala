@@ -10,9 +10,8 @@ import com.quane.little.ide.presenter.FunctionArgumentPresenter
 class MockFunctionReferenceView
   extends FunctionReferenceView {
 
-  def setName(name: String): Unit = Unit
+  def setName(name: String) = Unit
 
-  def createArgument(): FunctionArgumentPresenter[MockFunctionArgumentView] =
-    new FunctionArgumentPresenter(new MockFunctionArgumentView)
+  def createArgument() = new FunctionArgumentPresenter(new MockFunctionArgumentView)
 
 }

@@ -8,6 +8,6 @@ package com.quane.little.ide.view
 class MockGetStatementView
   extends GetStatementView {
 
-  def setName(name: String): Unit = Unit
+  def setName(name: String) = Unit
 
 }

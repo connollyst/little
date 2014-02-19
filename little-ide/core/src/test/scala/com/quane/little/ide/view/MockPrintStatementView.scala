@@ -8,6 +8,6 @@ package com.quane.little.ide.view
 class MockPrintStatementView
   extends PrintStatementView {
 
-  def setValue(value: String): Unit = Unit
+  def setValue(value: String) = Unit
 
 }

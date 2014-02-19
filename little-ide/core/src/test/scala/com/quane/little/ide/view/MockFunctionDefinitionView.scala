@@ -10,15 +10,12 @@ import com.quane.little.ide.presenter.{FunctionParameterPresenter, BlockPresente
 class MockFunctionDefinitionView
   extends FunctionDefinitionView {
 
-  def setName(name: String): Unit = Unit
+  def setName(name: String) = Unit
 
-  def createFunctionParameter(): FunctionParameterPresenter[MockFunctionParameterView] =
-    new FunctionParameterPresenter(new MockFunctionParameterView)
+  def createFunctionParameter() = new FunctionParameterPresenter(new MockFunctionParameterView)
 
-  def createBlock(): BlockPresenter[MockBlockView] =
-    new BlockPresenter(new MockBlockView)
+  def createBlock() = new BlockPresenter(new MockBlockView)
 
-  def createFunctionReference(): FunctionReferencePresenter[MockFunctionReferenceView] =
-    new FunctionReferencePresenter(new MockFunctionReferenceView)
+  def createFunctionReference() = new FunctionReferencePresenter(new MockFunctionReferenceView)
 
 }
