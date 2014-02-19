@@ -6,8 +6,8 @@ import com.quane.little.ide.view.{IDEViewListener, IDEView}
   *
   * @author Sean Connolly
   */
-class IDEPresenter[V <: IDEView](val view: V)
-  extends IDEViewListener {
+class IDEPresenter[V <: IDEView](view: V)
+extends IDEViewListener {
 
   view.addViewListener(this)
 

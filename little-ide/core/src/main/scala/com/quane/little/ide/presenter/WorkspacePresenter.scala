@@ -4,13 +4,12 @@ import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
 import com.quane.little.language.{Functions, FunctionDefinition}
 
 
-class WorkspacePresenter[V <: WorkspaceView](val view: V)
+class WorkspacePresenter[V <: WorkspaceView](view: V)
   extends WorkspaceViewListener {
 
   view.addViewListener(this)
 
   override def openFunctionDefinition(name: String) = {
-    // TODO find function definition and create view & presenter
     val fun: FunctionDefinition =
       name match {
         case "move" => Functions.move
