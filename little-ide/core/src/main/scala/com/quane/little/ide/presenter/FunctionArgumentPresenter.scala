@@ -4,7 +4,10 @@ import com.quane.little.language.{Expression, Scope}
 import com.quane.little.language.data.Value
 import com.quane.little.ide.view.{FunctionArgumentViewListener, FunctionArgumentView}
 
-
+/** A presenter for views representing a function reference argument.
+  *
+  * @author Sean Connolly
+  */
 class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   extends FunctionArgumentViewListener {
 

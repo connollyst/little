@@ -4,7 +4,7 @@ import com.quane.little.ide.view.{GetStatementViewListener, GetStatementView}
 import com.quane.little.language.{GetStatement, Scope}
 import com.quane.little.language.memory.Pointer
 
-/** Presenter for views representing a [[com.quane.little.language.GetStatement]]
+/** Presenter for views representing a [[com.quane.little.language.GetStatement]].
   *
   * @author Sean Connolly
   */

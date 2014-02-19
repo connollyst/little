@@ -4,9 +4,14 @@ import scala.collection.mutable.ListBuffer
 import com.quane.little.language.{FunctionReference, Scope}
 import com.quane.little.ide.view.{FunctionReferenceViewListener, FunctionReferenceView}
 
+/** Presenter for views representing a [[com.quane.little.language.FunctionReference]].
+  *
+  * @author Sean Connolly
+  */
 class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
                                                              args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])
-  extends ExpressionPresenter with FunctionReferenceViewListener {
+  extends ExpressionPresenter
+  with FunctionReferenceViewListener {
 
   private var _name: String = "???"
 

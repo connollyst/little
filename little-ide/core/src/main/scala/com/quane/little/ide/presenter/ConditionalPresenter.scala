@@ -3,6 +3,10 @@ package com.quane.little.ide.presenter
 import com.quane.little.ide.view.{ConditionalView, ConditionalViewListener}
 import com.quane.little.language.{Conditional, Expression, Scope}
 
+/** A presenter for views representing an [[com.quane.little.language.Conditional]].
+  *
+  * @author Sean Connolly
+  */
 class ConditionalPresenter[V <: ConditionalView](view: V)
   extends ExpressionPresenter with ConditionalViewListener {
 

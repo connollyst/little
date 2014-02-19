@@ -5,7 +5,7 @@ import com.quane.little.language.{SetStatement, Scope}
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
 
-/** Presenter for views representing a [[com.quane.little.language.SetStatement]]
+/** Presenter for views representing a [[com.quane.little.language.SetStatement]].
   *
   * @author Sean Connolly
   */

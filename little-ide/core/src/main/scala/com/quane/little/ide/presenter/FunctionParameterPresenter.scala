@@ -3,7 +3,10 @@ package com.quane.little.ide.presenter
 import com.quane.little.language.FunctionParameter
 import com.quane.little.ide.view.{FunctionParameterViewListener, FunctionParameterView}
 
-
+/** A presenter for views representing a function definition parameter.
+  *
+  * @author Sean Connolly
+  */
 class FunctionParameterPresenter[V <: FunctionParameterView](view: V)
   extends FunctionParameterViewListener {
 

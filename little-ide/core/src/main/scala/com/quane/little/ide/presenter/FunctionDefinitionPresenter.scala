@@ -5,6 +5,10 @@ import com.quane.little.language.{Expression, FunctionDefinition}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewListener}
 
+/** Presenter for views representing a [[com.quane.little.language.FunctionDefinition]].
+  *
+  * @author Sean Connolly
+  */
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   extends FunctionDefinitionViewListener {
 

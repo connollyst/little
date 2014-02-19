@@ -3,7 +3,10 @@ package com.quane.little.ide.presenter
 import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
 import com.quane.little.language.{Functions, FunctionDefinition}
 
-
+/** Presenter for the workspace in which the user can build code.
+  *
+  * @author Sean Connolly
+  */
 class WorkspacePresenter[V <: WorkspaceView](view: V)
   extends WorkspaceViewListener {
 

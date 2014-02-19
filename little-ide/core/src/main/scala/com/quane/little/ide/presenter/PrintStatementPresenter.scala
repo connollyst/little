@@ -4,7 +4,7 @@ import com.quane.little.ide.view.{PrintStatementViewListener, PrintStatementView
 import com.quane.little.language.{PrintStatement, Scope}
 import com.quane.little.language.data.Value
 
-/** Presenter for views representing a [[com.quane.little.language.PrintStatement]]
+/** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *
   * @author Sean Connolly
   */

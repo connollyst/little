@@ -4,6 +4,10 @@ import com.quane.little.language._
 import com.quane.little.ide.view.{BlockViewListener, BlockView}
 import scala.collection.mutable.ListBuffer
 
+/** A presenter for views representing an [[com.quane.little.language.Block]].
+  *
+  * @author Sean Connolly
+  */
 class BlockPresenter[V <: BlockView](view: V,
                                      _steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter])
   extends ExpressionPresenter with BlockViewListener {
