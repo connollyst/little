@@ -12,6 +12,8 @@ class BlockPresenter[V <: BlockView](view: V,
                                      _steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter])
   extends ExpressionPresenter with BlockViewListener {
 
+  view.addViewListener(this)
+
   def add(step: ExpressionPresenter): Unit = {
     _steps += step
   }
