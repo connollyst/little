@@ -29,7 +29,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   }
 
   def setStepPresenters[E <: ExpressionPresenter](steps: List[E]) = {
-    _block.setStepPresenters(steps)
+    _block.steps = steps
   }
 
   def setSteps[E <: Expression](steps: List[E]) = {

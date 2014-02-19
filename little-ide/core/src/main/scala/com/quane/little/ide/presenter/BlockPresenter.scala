@@ -8,19 +8,19 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class BlockPresenter[V <: BlockView](view: V,
-                                     _steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter])
-  extends ExpressionPresenter with BlockViewListener {
+class BlockPresenter[V <: BlockView](view: V)
+  extends ExpressionPresenter
+  with BlockViewListener {
+
+  private val _steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter]
 
   view.addViewListener(this)
 
-  def add(step: ExpressionPresenter): Unit = {
-    _steps += step
-  }
+  def add(step: ExpressionPresenter): Unit = _steps += step
 
   def steps: List[ExpressionPresenter] = _steps.toList
 
-  def setStepPresenters[E <: ExpressionPresenter](steps: List[E]) = {
+  def steps_=[E <: ExpressionPresenter](steps: List[E]) = {
     _steps.clear()
     _steps ++= steps
   }
