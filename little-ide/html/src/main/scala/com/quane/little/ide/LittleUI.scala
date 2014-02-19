@@ -18,7 +18,10 @@ class LittleUIProvider extends ScaladinUIProvider {
   */
 class LittleUI extends UI(title = "little", theme = "littletheme") {
 
-  override def init(request: ScaladinRequest) =
-    content = new IDEPresenter(new IDELayout).view
+  override def init(request: ScaladinRequest) = {
+    val view = new IDELayout
+    new IDEPresenter(view)
+    content = view
+  }
 
 }
