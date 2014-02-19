@@ -33,6 +33,8 @@ class Value(val primitive: Any)
           true
         } else if (string equalsIgnoreCase "false") {
           false
+        } else if (string.isEmpty) {
+          false
         } else {
           throw new ClassCastException(
             toString + " cannot be converted to a Bool"

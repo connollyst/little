@@ -1,9 +1,10 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.language.Runtime
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import com.quane.little.ide.view.FunctionArgumentView
+import com.quane.little.ide.view.{MockFunctionArgumentView, FunctionArgumentView}
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 
@@ -42,6 +43,44 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionArgumentPresenter(view)
     presenter.value = "sean is cool"
     verify(view).setValue("sean is cool")
+  }
+
+  /* Test Compilation */
+
+  test("test compiled string value (default)") {
+    val view = new MockFunctionArgumentView
+    val presenter = new FunctionArgumentPresenter(view)
+    val scope = new Runtime
+    val argument = presenter.compile(scope)
+    val value = argument.evaluate
+    assert(value == "", "expected '' but got '" + argument + "'")
+  }
+
+  test("test compiled boolean value (default)") {
+    val view = new MockFunctionArgumentView
+    val presenter = new FunctionArgumentPresenter(view)
+    val scope = new Runtime
+    val argument = presenter.compile(scope)
+    val value = argument.evaluate
+    assert(value == false, "expected '' but got '" + argument + "'")
+  }
+
+  test("test compiled int value (default)") {
+    val view = new MockFunctionArgumentView
+    val presenter = new FunctionArgumentPresenter(view)
+    val scope = new Runtime
+    val argument = presenter.compile(scope)
+    val value = argument.evaluate
+    assert(value == 0, "expected '' but got '" + argument + "'")
+  }
+
+  test("test compiled double value (default)") {
+    val view = new MockFunctionArgumentView
+    val presenter = new FunctionArgumentPresenter(view)
+    val scope = new Runtime
+    val argument = presenter.compile(scope)
+    val value = argument.evaluate
+    assert(value == 0.0, "expected '' but got '" + argument + "'")
   }
 
 }
