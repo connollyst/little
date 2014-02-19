@@ -10,11 +10,28 @@ import org.mockito.Mockito._
 @RunWith(classOf[JUnitRunner])
 class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
 
+  test("test name is set") {
+    val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
+    presenter.name = "sean is cool"
+    assert(presenter.name == "sean is cool")
+  }
+
+  /* Test View */
+
   test("test listener registered") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
     verify(view).addViewListener(presenter)
   }
+
+  test("test name propagates to view") {
+    val view = mock[FunctionDefinitionView]
+    val presenter = new FunctionDefinitionPresenter(view)
+    presenter.name = "sean is cool"
+    verify(view).setName("sean is cool")
+  }
+
+  /* Test Compilation */
 
   test("test compiled name (default)") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
