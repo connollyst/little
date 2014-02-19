@@ -4,9 +4,17 @@ import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import com.quane.little.ide.view._
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito._
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionDefinitionPresenter extends FunSuite {
+class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
+
+  test("test listener registered") {
+    val view = mock[FunctionDefinitionView]
+    val presenter = new FunctionDefinitionPresenter(view)
+    verify(view).addViewListener(presenter)
+  }
 
   test("test compiled name (default)") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
