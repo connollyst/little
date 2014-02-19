@@ -31,6 +31,8 @@ trait SetStatementViewListener extends ViewListener {
 
   def nameChanged(name: String): Unit
 
+  def valueChanged(value: String): Unit
+
 }
 
 trait PrintStatementViewListener extends ViewListener {

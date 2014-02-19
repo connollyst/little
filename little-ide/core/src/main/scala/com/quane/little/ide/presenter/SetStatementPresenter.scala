@@ -20,10 +20,14 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
   view.setName(_name)
   view.setValue(_value)
 
+  private[presenter] def name: String = _name
+
   private[presenter] def name_=(name: String): Unit = {
     _name = name
     view.setName(name)
   }
+
+  private[presenter] def value: String = _value
 
   private[presenter] def value_=(value: String): Unit = {
     _value = value
@@ -31,6 +35,8 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
   }
 
   override def nameChanged(name: String): Unit = _name = name
+
+  override def valueChanged(value: String): Unit = _value = value
 
   override def compile(scope: Scope): SetStatement = {
     new SetStatement(new Pointer(scope, _name), new Value("TODO"))
