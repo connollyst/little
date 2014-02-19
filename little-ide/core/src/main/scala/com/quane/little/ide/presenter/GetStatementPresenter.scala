@@ -4,11 +4,10 @@ import com.quane.little.ide.view.{GetStatementViewListener, GetStatementView}
 import com.quane.little.language.{GetStatement, Scope}
 import com.quane.little.language.memory.Pointer
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** Presenter for views representing a [[com.quane.little.language.GetStatement]]
+  *
+  * @author Sean Connolly
+  */
 class GetStatementPresenter[V <: GetStatementView](view: V)
   extends StatementPresenter
   with GetStatementViewListener {

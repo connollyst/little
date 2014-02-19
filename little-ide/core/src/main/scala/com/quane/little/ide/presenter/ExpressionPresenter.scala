@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.language.{Expression, Scope}
 
-/** A presenter for views which compile to an [[com.quane.little.language.Expression]]
+/** A presenter for views representing an [[com.quane.little.language.Expression]]
   *
   * @author Sean Connolly
   */

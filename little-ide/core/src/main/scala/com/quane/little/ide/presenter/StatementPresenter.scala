@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.language.{Scope, Statement}
 
-/** A presenter for views which compile to a [[com.quane.little.language.Statement]]
+/** A presenter for views representing a [[com.quane.little.language.Statement]]
   *
   * @author Sean Connolly
   */
