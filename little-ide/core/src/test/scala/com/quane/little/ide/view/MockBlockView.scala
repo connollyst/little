@@ -10,9 +10,11 @@ import com.quane.little.ide.presenter._
 class MockBlockView
   extends BlockView {
 
-  def addSetStatement(): SetPresenter[_] = ???
+  def addSetStatement(): SetPresenter[MockSetStatementView] =
+    new SetPresenter(new MockSetStatementView)
 
-  def addGetStatement(): GetPresenter[_] = ???
+  def addGetStatement(): GetPresenter[MockGetStatementView] =
+    new GetPresenter(new MockGetStatementView)
 
   def addPrintStatement(): PrintPresenter[MockPrintStatementView] =
     new PrintPresenter(new MockPrintStatementView)
