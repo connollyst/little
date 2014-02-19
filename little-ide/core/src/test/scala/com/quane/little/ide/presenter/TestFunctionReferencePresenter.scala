@@ -8,7 +8,6 @@ import com.quane.little.ide.view.{FunctionReferenceView, MockFunctionArgumentVie
 import org.mockito.Mockito._
 import org.scalatest.mock.MockitoSugar
 
-
 @RunWith(classOf[JUnitRunner])
 class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
