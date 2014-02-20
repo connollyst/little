@@ -4,10 +4,11 @@ import com.quane.little.language._
 import com.quane.little.ide.view.{BlockViewListener, BlockView}
 import scala.collection.mutable.ListBuffer
 
-/** A presenter for views representing an [[com.quane.little.language.Block]].
-  *
-  * @author Sean Connolly
-  */
+/**
+ * A presenter for views representing an [[com.quane.little.language.Block]].
+ *
+ * @author Sean Connolly
+ */
 class BlockPresenter[V <: BlockView](view: V)
   extends ExpressionPresenter
   with BlockViewListener {
@@ -62,6 +63,14 @@ class BlockPresenter[V <: BlockView](view: V)
         case _ => throw new IllegalAccessException("Cannot add " + step)
       }
     add(presenter)
+  }
+
+  def requestAddSetStatement(): Unit = {
+    add(view.addSetStatement())
+  }
+
+  def requestAddPrintStatement(): Unit = {
+    add(view.addPrintStatement())
   }
 
   override def compile(scope: Scope): Block = {

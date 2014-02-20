@@ -2,10 +2,12 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter._
 import com.quane.vaadin.scala.DroppableTarget
-import vaadin.scala.{CssLayout, VerticalLayout, Component}
+import vaadin.scala.{VerticalLayout, Component}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
 import com.quane.little.ide.view.BlockView
+import vaadin.scala.HorizontalLayout
+import vaadin.scala.MenuBar
 
 object BlockLayout {
   val Style = "l-step-list"
@@ -39,7 +41,6 @@ class BlockLayout
     new PrintStatementPresenter(view)
   }
 
-
   override def addConditionalStatement(): ConditionalPresenter[ConditionalComponent] = {
     println("Adding a new CONDITIONAL expression view..")
     val view = new ConditionalComponent()
@@ -56,7 +57,7 @@ class BlockLayout
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
-    super.add(new ExpressionListSeparator())
+    super.add(new ExpressionListSeparator(this))
     component
   }
 
@@ -83,11 +84,35 @@ class BlockLayout
   //    super.components[index]
   //  }
 
+  def requestAddSetStatement() = {
+    viewListeners.foreach {
+      listener => listener.requestAddSetStatement()
+    }
+  }
+
+  def requestAddPrintStatement() = {
+    viewListeners.foreach {
+      listener => listener.requestAddPrintStatement()
+    }
+  }
+
 }
 
-class ExpressionListSeparator extends DroppableTarget(new CssLayout) {
+class ExpressionListSeparator(block: BlockLayout)
+  extends DroppableTarget(new HorizontalLayout) {
 
   component.styleName = BlockLayout.StyleSeparator
+
+  val menu = new MenuBar
+  val item = menu.addItem("+")
+  item.addItem("Set", {
+    item => block.requestAddSetStatement()
+  })
+  item.addItem("Print", {
+    item => block.requestAddPrintStatement()
+  })
+  component.add(menu)
+
   dropHandler = new DropHandler() {
 
     override def getAcceptCriterion: AcceptCriterion = {

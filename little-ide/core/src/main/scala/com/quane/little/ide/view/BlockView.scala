@@ -16,4 +16,10 @@ trait BlockView extends View[BlockViewListener] {
 
 }
 
-trait BlockViewListener extends ViewListener
+trait BlockViewListener extends ViewListener {
+
+  def requestAddSetStatement(): Unit
+
+  def requestAddPrintStatement(): Unit
+
+}
