@@ -111,38 +111,12 @@ class BlockLayout
   }
 }
 
-class ExpressionListSeparator(block: BlockLayout)
+private class ExpressionListSeparator(block: BlockLayout)
   extends DroppableTarget(new HorizontalLayout) {
 
   component.styleName = BlockLayout.StyleSeparator
 
-  val menu = new MenuBar
-  val item = menu.addItem("+")
-  item.addItem("get", {
-    item => block.requestAddGetStatement()
-  })
-  item.addItem("set", {
-    item => block.requestAddSetStatement()
-  })
-  item.addItem("print", {
-    item => block.requestAddPrintStatement()
-  })
-  item.addSeparator()
-  item.addItem("if/else", {
-    item => block.requestAddConditional()
-  })
-  item.addSeparator()
-  val funs = item.addItem("functions")
-  funs.addItem("move", {
-    item => block.requestAddFunctionReference(item.text)
-  })
-  funs.addItem("stop", {
-    item => block.requestAddFunctionReference(item.text)
-  })
-  funs.addItem("turn", {
-    item => block.requestAddFunctionReference(item.text)
-  })
-  component.add(menu)
+  component.add(new BlockMenuBar(block))
 
   dropHandler = new DropHandler() {
 
@@ -183,4 +157,35 @@ class ExpressionListSeparator(block: BlockLayout)
     //    }
 
   }
+}
+
+private class BlockMenuBar(block: BlockLayout)
+  extends MenuBar {
+
+  val item = addItem("+")
+  item.addItem("get", {
+    item => block.requestAddGetStatement()
+  })
+  item.addItem("set", {
+    item => block.requestAddSetStatement()
+  })
+  item.addItem("print", {
+    item => block.requestAddPrintStatement()
+  })
+  item.addSeparator()
+  item.addItem("if/else", {
+    item => block.requestAddConditional()
+  })
+  item.addSeparator()
+  val funs = item.addItem("functions")
+  funs.addItem("move", {
+    item => block.requestAddFunctionReference(item.text)
+  })
+  funs.addItem("stop", {
+    item => block.requestAddFunctionReference(item.text)
+  })
+  funs.addItem("turn", {
+    item => block.requestAddFunctionReference(item.text)
+  })
+
 }
