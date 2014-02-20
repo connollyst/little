@@ -51,7 +51,7 @@ class BlockPresenter[V <: BlockView](view: V)
           print.value = p.valueString
           print
         case c: Conditional =>
-          val con = view.addConditionalStatement()
+          val con = view.addConditional()
           con.condition_=(c.test)
           con.setSteps(c.steps)
           con
@@ -65,12 +65,19 @@ class BlockPresenter[V <: BlockView](view: V)
     add(presenter)
   }
 
-  def requestAddSetStatement(): Unit = {
-    add(view.addSetStatement())
-  }
+  override def requestAddConditional() = add(view.addConditional())
 
-  def requestAddPrintStatement(): Unit = {
-    add(view.addPrintStatement())
+  override def requestAddGetStatement() = add(view.addGetStatement())
+
+  override def requestAddSetStatement() = add(view.addSetStatement())
+
+  override def requestAddPrintStatement() = add(view.addPrintStatement())
+
+  override def requestAddFunctionReference(name: String) = {
+    // TODO lookup function reference
+    val fun = view.addFunctionReference()
+    fun.name = name
+    add(fun)
   }
 
   override def compile(scope: Scope): Block = {

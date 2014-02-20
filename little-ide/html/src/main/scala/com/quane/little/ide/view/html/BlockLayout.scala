@@ -20,36 +20,32 @@ class BlockLayout
   spacing = false
   styleName = BlockLayout.Style
 
-  override def addSetStatement(): SetStatementPresenter[SetStatementLayout] = {
-    println("Adding a new SET expression view..")
-    val view = new SetStatementLayout()
-    add(view)
-    new SetStatementPresenter(view)
-  }
-
-  override def addGetStatement(): GetStatementPresenter[GetStatementLayout] = {
-    println("Adding a new GET expression view..")
-    val view = new GetStatementLayout()
-    add(view)
-    new GetStatementPresenter(view)
-  }
-
-  override def addPrintStatement(): PrintStatementPresenter[PrintStatementLayout] = {
-    println("Adding a new PRINT expression view..")
-    val view = new PrintStatementLayout()
-    add(view)
-    new PrintStatementPresenter(view)
-  }
-
-  override def addConditionalStatement(): ConditionalPresenter[ConditionalComponent] = {
-    println("Adding a new CONDITIONAL expression view..")
+  override def addConditional(): ConditionalPresenter[ConditionalComponent] = {
+    println("Adding a new CONDITIONAL view..")
     val view = new ConditionalComponent()
     add(view)
     new ConditionalPresenter(view)
   }
 
+  override def addGetStatement(): GetStatementPresenter[GetStatementLayout] = {
+    val view = new GetStatementLayout()
+    add(view)
+    new GetStatementPresenter(view)
+  }
+
+  override def addSetStatement(): SetStatementPresenter[SetStatementLayout] = {
+    val view = new SetStatementLayout()
+    add(view)
+    new SetStatementPresenter(view)
+  }
+
+  override def addPrintStatement(): PrintStatementPresenter[PrintStatementLayout] = {
+    val view = new PrintStatementLayout()
+    add(view)
+    new PrintStatementPresenter(view)
+  }
+
   override def addFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
-    println("Adding a new FUNCTION REFERENCE view..")
     val view = new FunctionReferenceComponent()
     add(view)
     new FunctionReferencePresenter(view)
@@ -84,6 +80,18 @@ class BlockLayout
   //    super.components[index]
   //  }
 
+  def requestAddConditional() = {
+    viewListeners.foreach {
+      listener => listener.requestAddConditional()
+    }
+  }
+
+  def requestAddGetStatement() = {
+    viewListeners.foreach {
+      listener => listener.requestAddGetStatement()
+    }
+  }
+
   def requestAddSetStatement() = {
     viewListeners.foreach {
       listener => listener.requestAddSetStatement()
@@ -96,6 +104,11 @@ class BlockLayout
     }
   }
 
+  def requestAddFunctionReference(name: String) = {
+    viewListeners.foreach {
+      listener => listener.requestAddFunctionReference(name)
+    }
+  }
 }
 
 class ExpressionListSeparator(block: BlockLayout)
@@ -105,11 +118,29 @@ class ExpressionListSeparator(block: BlockLayout)
 
   val menu = new MenuBar
   val item = menu.addItem("+")
-  item.addItem("Set", {
+  item.addItem("get", {
+    item => block.requestAddGetStatement()
+  })
+  item.addItem("set", {
     item => block.requestAddSetStatement()
   })
-  item.addItem("Print", {
+  item.addItem("print", {
     item => block.requestAddPrintStatement()
+  })
+  item.addSeparator()
+  item.addItem("if/else", {
+    item => block.requestAddConditional()
+  })
+  item.addSeparator()
+  val funs = item.addItem("functions")
+  funs.addItem("move", {
+    item => block.requestAddFunctionReference(item.text)
+  })
+  funs.addItem("stop", {
+    item => block.requestAddFunctionReference(item.text)
+  })
+  funs.addItem("turn", {
+    item => block.requestAddFunctionReference(item.text)
   })
   component.add(menu)
 

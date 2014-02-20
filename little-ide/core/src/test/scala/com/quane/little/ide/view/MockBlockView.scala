@@ -16,7 +16,7 @@ class MockBlockView
 
   def addPrintStatement() = new PrintStatementPresenter(new MockPrintStatementView)
 
-  def addConditionalStatement() = new ConditionalPresenter(new MockConditionalView)
+  def addConditional() = new ConditionalPresenter(new MockConditionalView)
 
   def addFunctionReference() = new FunctionReferencePresenter(new MockFunctionReferenceView)
 
