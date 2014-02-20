@@ -28,37 +28,40 @@ class BlockPresenter[V <: BlockView](view: V)
   private[presenter] def setSteps[E <: Expression](steps: List[E]) = {
     _steps.clear()
     steps.foreach {
-      step =>
-        println("Adding step: " + step)
-        val presenter =
-          step match {
-            case s: SetStatement =>
-              val set = view.addSetStatement()
-              set.name_=(s.name)
-              set.value_=(s.valueString)
-              set
-            case g: GetStatement =>
-              val get = view.addGetStatement()
-              get.name_=(g.name)
-              get
-            case p: PrintStatement =>
-              val print = view.addPrintStatement()
-              print.value_=(p.valueString)
-              print
-            case c: Conditional =>
-              val con = view.addConditionalStatement()
-              con.condition_=(c.test)
-              con.setSteps(c.steps)
-              con
-            case f: FunctionReference =>
-              val fun = view.addFunctionReference()
-              fun.name = f.name
-              // TODO set function name & args
-              fun
-            case _ => throw new IllegalAccessException("Cannot add " + step)
-          }
-        add(presenter)
+      step => add(step)
     }
+  }
+
+  private[presenter] def add[E <: Expression](step: E): Unit = {
+    println("Adding step: " + step)
+    val presenter =
+      step match {
+        case s: SetStatement =>
+          val set = view.addSetStatement()
+          set.name = s.name
+          set.value = s.valueString
+          set
+        case g: GetStatement =>
+          val get = view.addGetStatement()
+          get.name = g.name
+          get
+        case p: PrintStatement =>
+          val print = view.addPrintStatement()
+          print.value = p.valueString
+          print
+        case c: Conditional =>
+          val con = view.addConditionalStatement()
+          con.condition_=(c.test)
+          con.setSteps(c.steps)
+          con
+        case f: FunctionReference =>
+          val fun = view.addFunctionReference()
+          fun.name = f.name
+          // TODO set function name & args
+          fun
+        case _ => throw new IllegalAccessException("Cannot add " + step)
+      }
+    add(presenter)
   }
 
   override def compile(scope: Scope): Block = {
