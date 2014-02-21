@@ -8,8 +8,10 @@ import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
 import com.quane.little.ide.view.BlockView
 import vaadin.scala.HorizontalLayout
 import vaadin.scala.MenuBar
+import com.quane.little.ide.view.html.BlockLayout._
 
 object BlockLayout {
+  val DefaultIndex = -1
   val Style = "l-step-list"
   val StyleSeparator = Style + "-separator"
 }
@@ -18,38 +20,34 @@ class BlockLayout
   extends VerticalLayout with BlockView {
 
   spacing = false
-  styleName = BlockLayout.Style
+  styleName = Style
 
-  override def addConditional(): ConditionalPresenter[ConditionalComponent] = {
-    println("Adding a new CONDITIONAL view..")
-    val view = new ConditionalComponent()
-    add(view)
-    new ConditionalPresenter(view)
-  }
+  super.add(new ExpressionListSeparator(this))
 
-  override def addGetStatement(): GetStatementPresenter[GetStatementLayout] = {
-    val view = new GetStatementLayout()
-    add(view)
-    new GetStatementPresenter(view)
-  }
+  override def addConditional() = addConditional(DefaultIndex)
 
-  override def addSetStatement(): SetStatementPresenter[SetStatementLayout] = {
-    val view = new SetStatementLayout()
-    add(view)
-    new SetStatementPresenter(view)
-  }
+  override def addConditional(index: Int) =
+    new ConditionalPresenter(add(new ConditionalComponent(), componentIndex(index)))
 
-  override def addPrintStatement(): PrintStatementPresenter[PrintStatementLayout] = {
-    val view = new PrintStatementLayout()
-    add(view)
-    new PrintStatementPresenter(view)
-  }
+  override def addGetStatement() = addGetStatement(DefaultIndex)
 
-  override def addFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
-    val view = new FunctionReferenceComponent()
-    add(view)
-    new FunctionReferencePresenter(view)
-  }
+  override def addGetStatement(index: Int) =
+    new GetStatementPresenter(add(new GetStatementLayout(), componentIndex(index)))
+
+  override def addSetStatement() = addSetStatement(DefaultIndex)
+
+  override def addSetStatement(index: Int) =
+    new SetStatementPresenter(add(new SetStatementLayout(), componentIndex(index)))
+
+  override def addPrintStatement() = addPrintStatement(DefaultIndex)
+
+  override def addPrintStatement(index: Int) =
+    new PrintStatementPresenter(add(new PrintStatementLayout(), componentIndex(index)))
+
+  override def addFunctionReference() = addFunctionReference(DefaultIndex)
+
+  override def addFunctionReference(index: Int) =
+    new FunctionReferencePresenter(add(new FunctionReferenceComponent(), componentIndex(index)))
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
@@ -57,8 +55,16 @@ class BlockLayout
     component
   }
 
-  override def addComponent[C <: Component](component: C): C = {
-    add(component)
+  def add[C <: Component](component: C, index: Int): C = {
+    if (index < 0) {
+      add(component)
+    } else {
+      println("Adding component at index " + index)
+      super.add(component, index = index)
+      println("Adding component separator at index " + (index + 1))
+      super.add(new ExpressionListSeparator(this), index = index + 1)
+    }
+    component
   }
 
   override def removeComponent(c: Component) {
@@ -68,45 +74,91 @@ class BlockLayout
     super.removeComponent(c)
   }
 
-  def contains(c: Component): Boolean = {
-    componentIndex(c) != -1
+  /** Returns `true` if this layout contains the given Component.
+    *
+    * @param c the component to check
+    * @return `true` if the component is a child
+    */
+  def contains(c: Component): Boolean = componentIndex(c) != -1
+
+  /** Return the index of the Component in the layout.
+    *
+    * @param c the component to check
+    * @return the index of the component
+    */
+  def componentIndex(c: Component): Int = p.getComponentIndex(c.p)
+
+  /** Return the index of the expression step in the block, given it's Component.
+    *
+    * @param c the step component
+    * @return the index of the step in the block
+    */
+  def stepIndex(c: Component): Int = stepIndex(p.getComponentIndex(c.p))
+
+  /** Return the index of the expression step in the block, given it's Component's index.
+    *
+    * @param i the index of the component
+    * @return the index of the step in the block
+    */
+  def stepIndex(i: Int): Int = Math.round(i / 2)
+
+  /** Return the index of the Component, given the index of the step in the block.
+    *
+    * @param i the index of the step in the block
+    * @return the index of the component
+    */
+  def componentIndex(i: Int): Int = {
+    if (i < 0) {
+      i
+    } else {
+      val index = (i * 2) + 1
+      println("Translating " + i + " => " + index)
+      index
+    }
   }
 
-  def componentIndex(c: Component): Int = {
-    p.getComponentIndex(c.p)
-  }
+  /** Return the number of Components in the layout.
+    *
+    * @return the component count
+    */
+  def componentCount: Int = p.getComponentCount
 
   //  def component(index: Int): Component = {
   //    super.components[index]
   //  }
 
-  def requestAddConditional() = {
+  def requestAddConditional(index: Int) = {
+    println("Requesting add conditional @ " + index)
     viewListeners.foreach {
-      listener => listener.requestAddConditional()
+      listener => listener.requestAddConditional(index)
     }
   }
 
-  def requestAddGetStatement() = {
+  def requestAddGetStatement(index: Int) = {
+    println("Requesting add get @ " + index)
     viewListeners.foreach {
-      listener => listener.requestAddGetStatement()
+      listener => listener.requestAddGetStatement(index)
     }
   }
 
-  def requestAddSetStatement() = {
+  def requestAddSetStatement(index: Int) = {
+    println("Requesting add set @ " + index)
     viewListeners.foreach {
-      listener => listener.requestAddSetStatement()
+      listener => listener.requestAddSetStatement(index)
     }
   }
 
-  def requestAddPrintStatement() = {
+  def requestAddPrintStatement(index: Int) = {
+    println("Requesting add print @ " + index)
     viewListeners.foreach {
-      listener => listener.requestAddPrintStatement()
+      listener => listener.requestAddPrintStatement(index)
     }
   }
 
-  def requestAddFunctionReference(name: String) = {
+  def requestAddFunctionReference(name: String, index: Int) = {
+    println("Requesting add " + name + " @ " + index)
     viewListeners.foreach {
-      listener => listener.requestAddFunctionReference(name)
+      listener => listener.requestAddFunctionReference(name, index)
     }
   }
 }
@@ -116,7 +168,7 @@ private class ExpressionListSeparator(block: BlockLayout)
 
   component.styleName = BlockLayout.StyleSeparator
 
-  component.add(new BlockMenuBar(block))
+  component.add(new BlockMenuBar(block, this))
 
   dropHandler = new DropHandler() {
 
@@ -159,33 +211,35 @@ private class ExpressionListSeparator(block: BlockLayout)
   }
 }
 
-private class BlockMenuBar(block: BlockLayout)
-  extends MenuBar {
+private class BlockMenuBar(block: BlockLayout, separator: ExpressionListSeparator)
+extends MenuBar {
 
   val item = addItem("+")
   item.addItem("get", {
-    item => block.requestAddGetStatement()
+    item => block.requestAddGetStatement(index)
   })
   item.addItem("set", {
-    item => block.requestAddSetStatement()
+    item => block.requestAddSetStatement(index)
   })
   item.addItem("print", {
-    item => block.requestAddPrintStatement()
+    item => block.requestAddPrintStatement(index)
   })
   item.addSeparator()
   item.addItem("if/else", {
-    item => block.requestAddConditional()
+    item => block.requestAddConditional(index)
   })
   item.addSeparator()
   val funs = item.addItem("functions")
   funs.addItem("move", {
-    item => block.requestAddFunctionReference(item.text)
+    item => block.requestAddFunctionReference(item.text, index)
   })
   funs.addItem("stop", {
-    item => block.requestAddFunctionReference(item.text)
+    item => block.requestAddFunctionReference(item.text, index)
   })
   funs.addItem("turn", {
-    item => block.requestAddFunctionReference(item.text)
+    item => block.requestAddFunctionReference(item.text, index)
   })
+
+  private def index: Int = block.stepIndex(separator)
 
 }

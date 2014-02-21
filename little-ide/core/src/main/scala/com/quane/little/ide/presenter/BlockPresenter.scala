@@ -17,24 +17,26 @@ class BlockPresenter[V <: BlockView](view: V)
 
   view.addViewListener(this)
 
-  private[presenter] def add(step: ExpressionPresenter): Unit = _steps += step
+  private[presenter] def length = _steps.length
 
   private[presenter] def steps: List[ExpressionPresenter] = _steps.toList
 
-  private[presenter] def steps_=[E <: ExpressionPresenter](steps: List[E]) = {
+  private[presenter] def steps_=(steps: List[ExpressionPresenter]) = {
     _steps.clear()
     _steps ++= steps
   }
 
-  private[presenter] def setSteps[E <: Expression](steps: List[E]) = {
+  private[presenter] def setSteps(steps: List[Expression]) = {
     _steps.clear()
     steps.foreach {
       step => add(step)
     }
   }
 
-  private[presenter] def add[E <: Expression](step: E): Unit = {
-    println("Adding step: " + step)
+  private[presenter] def add(step: Expression): Unit = add(step, length)
+
+  private[presenter] def add(step: Expression, index: Int): Unit = {
+    println("Adding step @ " + index + ": " + step)
     val presenter =
       step match {
         case s: SetStatement =>
@@ -65,17 +67,19 @@ class BlockPresenter[V <: BlockView](view: V)
     add(presenter)
   }
 
-  override def requestAddConditional() = add(view.addConditional())
+  private[presenter] def add(step: ExpressionPresenter, index: Int = length): Unit = _steps += step
 
-  override def requestAddGetStatement() = add(view.addGetStatement())
+  override def requestAddConditional(index: Int) = add(view.addConditional(index), index)
 
-  override def requestAddSetStatement() = add(view.addSetStatement())
+  override def requestAddGetStatement(index: Int) = add(view.addGetStatement(index), index)
 
-  override def requestAddPrintStatement() = add(view.addPrintStatement())
+  override def requestAddSetStatement(index: Int) = add(view.addSetStatement(index), index)
 
-  override def requestAddFunctionReference(name: String) = {
+  override def requestAddPrintStatement(index: Int) = add(view.addPrintStatement(index), index)
+
+  override def requestAddFunctionReference(name: String, index: Int) = {
     // TODO lookup function reference
-    val fun = view.addFunctionReference()
+    val fun = view.addFunctionReference(index)
     fun.name = name
     add(fun)
   }
