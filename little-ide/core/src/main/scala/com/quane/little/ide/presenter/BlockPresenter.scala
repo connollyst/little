@@ -4,11 +4,10 @@ import com.quane.little.language._
 import com.quane.little.ide.view.{BlockViewListener, BlockView}
 import scala.collection.mutable.ListBuffer
 
-/**
- * A presenter for views representing an [[com.quane.little.language.Block]].
- *
- * @author Sean Connolly
- */
+/** A presenter for views representing an [[com.quane.little.language.Block]].
+  *
+  * @author Sean Connolly
+  */
 class BlockPresenter[V <: BlockView](view: V)
   extends ExpressionPresenter
   with BlockViewListener {
@@ -64,10 +63,10 @@ class BlockPresenter[V <: BlockView](view: V)
           fun
         case _ => throw new IllegalAccessException("Cannot add " + step)
       }
-    add(presenter)
+    add(presenter, index)
   }
 
-  private[presenter] def add(step: ExpressionPresenter, index: Int = length): Unit = _steps += step
+  private[presenter] def add(step: ExpressionPresenter, index: Int = length): Unit = _steps.insert(index, step)
 
   override def requestAddConditional(index: Int) = add(view.addConditional(index), index)
 
@@ -81,7 +80,7 @@ class BlockPresenter[V <: BlockView](view: V)
     // TODO lookup function reference
     val fun = view.addFunctionReference(index)
     fun.name = name
-    add(fun)
+    add(fun, index)
   }
 
   override def compile(scope: Scope): Block = {
