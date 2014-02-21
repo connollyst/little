@@ -1,9 +1,20 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.{BlockPresenter, FunctionReferencePresenter, FunctionParameterPresenter}
-import vaadin.scala._
+import com.quane.little.ide.presenter.BlockPresenter
+import com.quane.little.ide.presenter.FunctionParameterPresenter
+import com.quane.little.ide.presenter.FunctionReferencePresenter
 import com.quane.little.ide.view.FunctionDefinitionView
 
+import vaadin.scala.Button
+import vaadin.scala.Component
+import vaadin.scala.CssLayout
+import vaadin.scala.HorizontalLayout
+import vaadin.scala.Label
+import vaadin.scala.Layout
+import vaadin.scala.Measure
+import vaadin.scala.TextField
+import vaadin.scala.Units
+import vaadin.scala.VerticalLayout
 
 object FunctionDefinitionComponent {
   val Style = "l-function-def"
