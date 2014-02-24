@@ -25,23 +25,29 @@ class PrintStatementLayout
 
   private[html] def requestAddTextLiteral() = {
     println("Requesting add text")
+    // TODO skip if already a value statement
+    val view = createValueStatement()
     viewListeners.foreach {
-      listener => listener.setExpression(createValueStatement())
+      listener => listener.setExpression(view)
     }
   }
 
   private[html] def requestAddGetStatement() = {
     println("Requesting add get")
+    // TODO skip if already a get statement
+    val view = createGetStatement()
     viewListeners.foreach {
-      listener => listener.setExpression(createGetStatement())
+      listener => listener.setExpression(view)
     }
   }
 
   private[html] def requestAddFunctionReference(name: String) = {
     println("Requesting add '" + name + "'")
+    // TODO skip if already this function reference
+    val view = createFunctionReference()
     viewListeners.foreach {
       // TODO we need to look up the function definition
-      listener => listener.setExpression(createFunctionReference())
+      listener => listener.setExpression(view)
     }
   }
 
