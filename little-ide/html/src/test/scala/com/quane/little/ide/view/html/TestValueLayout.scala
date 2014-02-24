@@ -6,7 +6,7 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import com.quane.little.ide.presenter.ValuePresenter
-import vaadin.scala.AbstractTextField.TextChangeEvent
+import com.quane.little.ide.view.html.InteractionSimulator._
 
 @RunWith(classOf[JUnitRunner])
 class TestValueLayout extends FunSuite with MockitoSugar {
@@ -15,7 +15,7 @@ class TestValueLayout extends FunSuite with MockitoSugar {
     val view = new ValueLayout
     val presenter = mock[ValuePresenter[ValueLayout]]
     view.addViewListener(presenter)
-    setText(view, "hello world")
+    setText(view.valueField, "hello world")
     verify(presenter).onValueChange("hello world")
   }
 
@@ -25,11 +25,5 @@ class TestValueLayout extends FunSuite with MockitoSugar {
     assert(view.valueField.value.get == "hello world")
   }
 
-  private def setText(view: ValueLayout, text: String): Unit = {
-    val field = view.valueField
-    field.textChangeListeners.foreach {
-      listener => listener.apply(new TextChangeEvent(field, text, 0))
-    }
-  }
 
 }
