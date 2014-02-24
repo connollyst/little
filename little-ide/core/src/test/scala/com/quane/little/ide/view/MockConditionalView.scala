@@ -8,7 +8,8 @@ import com.quane.little.ide.presenter.BlockPresenter
   * @author Sean Connolly
   */
 class MockConditionalView
-  extends ConditionalView {
+  extends ConditionalView
+  with MockView {
 
   // TODO is there a better mock condition here?
   def setConditionStatement() = new BlockPresenter(new MockBlockView)

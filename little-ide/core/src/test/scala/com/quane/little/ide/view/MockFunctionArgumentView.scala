@@ -6,7 +6,8 @@ package com.quane.little.ide.view
   * @author Sean Connolly
   */
 class MockFunctionArgumentView
-  extends FunctionArgumentView {
+  extends FunctionArgumentView
+  with MockView {
 
   def setName(name: String) = Unit
 

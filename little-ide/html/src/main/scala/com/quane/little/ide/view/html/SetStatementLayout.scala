@@ -5,7 +5,8 @@ import com.quane.little.ide.view.SetStatementView
 
 class SetStatementLayout
   extends HorizontalLayout
-  with SetStatementView {
+  with SetStatementView
+  with HtmlComponent {
 
   private val nameLabel = new Label
   private val valueLabel = new Label

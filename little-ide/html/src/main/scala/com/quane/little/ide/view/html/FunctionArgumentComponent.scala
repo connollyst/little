@@ -9,7 +9,9 @@ object FunctionArgumentComponent {
 }
 
 class FunctionArgumentComponent
-  extends HorizontalLayout with FunctionArgumentView {
+  extends HorizontalLayout
+  with FunctionArgumentView
+  with HtmlComponent {
 
   private val nameLabel = new Label()
   private val valueLabel = new Label()

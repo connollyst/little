@@ -9,7 +9,9 @@ object ToolboxLayout {
 }
 
 class ToolboxLayout
-  extends Accordion with ToolboxView {
+  extends Accordion
+  with ToolboxView
+  with HtmlComponent {
   sizeFull()
   styleName = ToolboxLayout.Style
   addTab(ToolboxSectionComponent.Sensing, "Sensing")

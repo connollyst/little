@@ -17,7 +17,9 @@ object BlockLayout {
 }
 
 class BlockLayout
-  extends VerticalLayout with BlockView {
+  extends VerticalLayout
+  with BlockView
+  with HtmlComponent {
 
   spacing = false
   styleName = Style
@@ -212,7 +214,7 @@ private class ExpressionListSeparator(block: BlockLayout)
 }
 
 private class BlockMenuBar(block: BlockLayout, separator: ExpressionListSeparator)
-extends MenuBar {
+  extends MenuBar {
 
   val item = addItem("+")
   item.addItem("get", {

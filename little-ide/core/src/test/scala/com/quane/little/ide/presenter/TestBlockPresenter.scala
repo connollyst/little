@@ -7,6 +7,7 @@ import org.mockito.Mockito._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.{PrintStatement, GetStatement, Scope, SetStatement}
+import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends FunSuite with MockitoSugar {
@@ -107,8 +108,8 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val printPresenter = mock[PrintStatementPresenter[PrintStatementView]]
     when[PrintStatementPresenter[_]](view.addPrintStatement()).thenReturn(printPresenter)
     presenter.add(new PrintStatement("x"))
-    // TODO when we figure out what should really be passed, update this test
-    verify(printPresenter).value = "Value{value=x, type=StringValueType$}"
+    val expectedValue = new Value("x")
+    verify(printPresenter).expression = expectedValue
   }
 
 }

@@ -16,7 +16,8 @@ object GetStatementLayout {
   */
 class GetStatementLayout
   extends HorizontalLayout
-  with GetStatementView {
+  with GetStatementView
+  with HtmlComponent {
 
   private val nameField = new TextField {
     textChangeListeners += {

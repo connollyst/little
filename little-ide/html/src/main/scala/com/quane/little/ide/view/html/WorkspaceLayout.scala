@@ -11,7 +11,9 @@ object WorkspaceLayout {
 }
 
 class WorkspaceLayout
-  extends HorizontalLayout with WorkspaceView {
+  extends HorizontalLayout
+  with WorkspaceView
+  with HtmlComponent {
 
   sizeFull()
   spacing = true

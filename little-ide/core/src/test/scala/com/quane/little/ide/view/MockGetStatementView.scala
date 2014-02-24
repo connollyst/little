@@ -6,7 +6,8 @@ package com.quane.little.ide.view
   * @author Sean Connolly
   */
 class MockGetStatementView
-  extends GetStatementView {
+  extends GetStatementView
+  with MockView {
 
   def setName(name: String) = Unit
 

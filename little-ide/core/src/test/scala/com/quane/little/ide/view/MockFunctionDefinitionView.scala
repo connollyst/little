@@ -8,7 +8,8 @@ import com.quane.little.ide.presenter.{FunctionParameterPresenter, BlockPresente
   * @author Sean Connolly
   */
 class MockFunctionDefinitionView
-  extends FunctionDefinitionView {
+  extends FunctionDefinitionView
+  with MockView {
 
   def setName(name: String) = Unit
 

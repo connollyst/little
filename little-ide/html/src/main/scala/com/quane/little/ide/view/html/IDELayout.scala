@@ -5,7 +5,9 @@ import com.quane.little.ide.view.IDEView
 import com.quane.little.ide.presenter.{ToolboxPresenter, WorkspacePresenter}
 
 class IDELayout
-  extends HorizontalSplitPanel with IDEView {
+  extends HorizontalSplitPanel
+  with IDEView
+  with HtmlComponent {
 
   sizeFull()
   splitPosition = new Measure(25, Units.pct)

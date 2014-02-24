@@ -93,8 +93,8 @@ class GetStatement(pointer: Pointer)
 
 }
 
-class PrintStatement(value: Expression)
-  extends Statement
+class PrintStatement(val value: Expression)
+extends Statement
   with Logging {
 
   def this(value: String) = {

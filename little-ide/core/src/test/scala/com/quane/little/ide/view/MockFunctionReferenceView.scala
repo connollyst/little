@@ -8,7 +8,8 @@ import com.quane.little.ide.presenter.FunctionArgumentPresenter
   * @author Sean Connolly
   */
 class MockFunctionReferenceView
-  extends FunctionReferenceView {
+  extends FunctionReferenceView
+  with MockView {
 
   def setName(name: String) = Unit
 

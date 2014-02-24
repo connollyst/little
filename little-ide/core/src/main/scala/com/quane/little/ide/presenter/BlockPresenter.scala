@@ -4,7 +4,7 @@ import com.quane.little.language._
 import com.quane.little.ide.view.{BlockViewListener, BlockView}
 import scala.collection.mutable.ListBuffer
 
-/** A presenter for views representing an [[com.quane.little.language.Block]].
+/** A presenter for views representing a [[com.quane.little.language.Block]].
   *
   * @author Sean Connolly
   */
@@ -49,7 +49,7 @@ class BlockPresenter[V <: BlockView](view: V)
           get
         case p: PrintStatement =>
           val print = view.addPrintStatement()
-          print.value = p.valueString
+          print.expression = p.value
           print
         case c: Conditional =>
           val con = view.addConditional()
@@ -66,7 +66,19 @@ class BlockPresenter[V <: BlockView](view: V)
     add(presenter, index)
   }
 
+  /** Add a step at the specified index.
+    *
+    * @param step the step presenter
+    * @param index the step index
+    */
   private[presenter] def add(step: ExpressionPresenter, index: Int = length): Unit = _steps.insert(index, step)
+
+  /** Return the step at the specified index.
+    *
+    * @param index the step index
+    * @return the step presenter
+    */
+  private[presenter] def get(index: Int): ExpressionPresenter = _steps(index)
 
   override def requestAddConditional(index: Int) = add(view.addConditional(index), index)
 

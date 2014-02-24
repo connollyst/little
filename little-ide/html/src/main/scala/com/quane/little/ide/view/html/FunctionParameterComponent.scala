@@ -9,7 +9,9 @@ object FunctionParameterComponent {
 }
 
 class FunctionParameterComponent
-  extends Label with FunctionParameterView {
+  extends Label
+  with FunctionParameterView
+  with HtmlComponent {
 
   styleName = Style
 

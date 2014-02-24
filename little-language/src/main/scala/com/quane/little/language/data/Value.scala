@@ -17,9 +17,9 @@ class Value(val primitive: Any)
       case d: Double => DoubleValueType
       case s: String => StringValueType
       case None => NoValueType
-      case _ =>
-        log.warn("Cannot resolve value type for " + primitive)
-        NoValueType
+      case _ => throw new IllegalArgumentException(
+        "Cannot resolve value type for " + primitive
+      )
     }
   }
 

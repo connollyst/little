@@ -6,7 +6,8 @@ package com.quane.little.ide.view
   * @author Sean Connolly
   */
 class MockFunctionParameterView
-  extends FunctionParameterView {
+  extends FunctionParameterView
+  with MockView {
 
   def setName(name: String) = Unit
 

@@ -8,7 +8,8 @@ import com.quane.little.ide.presenter._
   * @author Sean Connolly
   */
 class MockBlockView
-  extends BlockView {
+  extends BlockView
+  with MockView {
 
   def addConditional() = new ConditionalPresenter(new MockConditionalView)
 
