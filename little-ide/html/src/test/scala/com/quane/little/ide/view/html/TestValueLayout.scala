@@ -11,12 +11,18 @@ import vaadin.scala.AbstractTextField.TextChangeEvent
 @RunWith(classOf[JUnitRunner])
 class TestValueLayout extends FunSuite with MockitoSugar {
 
-  test("test changing value propagated to presenter") {
+  test("should propagate changing value to presenter") {
     val view = new ValueLayout
     val presenter = mock[ValuePresenter[ValueLayout]]
     view.addViewListener(presenter)
     setText(view, "hello world")
     verify(presenter).onValueChange("hello world")
+  }
+
+  test("should change textbox text on setValue") {
+    val view = new ValueLayout
+    view.setValue("hello world")
+    assert(view.valueField.value.get == "hello world")
   }
 
   private def setText(view: ValueLayout, text: String): Unit = {
