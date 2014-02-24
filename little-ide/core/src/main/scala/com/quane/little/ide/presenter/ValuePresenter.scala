@@ -24,7 +24,7 @@ class ValuePresenter[V <: ValueView](view: V)
     view.setValue(value)
   }
 
-  override def valueChanged(value: String) = _value = value
+  override def onValueChange(value: String) = _value = value
 
   /** Compile the presented data to a [[com.quane.little.language.data.Value]].
     *

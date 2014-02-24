@@ -16,6 +16,6 @@ trait ValueView extends ExpressionView[ExpressionViewListener] {
   */
 trait ValueViewListener extends ExpressionViewListener {
 
-  def valueChanged(value: String): Unit
+  def onValueChange(value: String): Unit
 
 }
