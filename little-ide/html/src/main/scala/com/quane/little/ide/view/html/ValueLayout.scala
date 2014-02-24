@@ -1,23 +1,24 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{AbstractTextField, CssLayout, TextField}
+import vaadin.scala.{CssLayout, TextField}
 import com.quane.little.ide.view.ValueView
+import vaadin.scala.AbstractTextField.TextChangeEvent
 
 class ValueLayout
   extends CssLayout
   with ValueView
   with HtmlComponent {
 
-  private val _valueField = new TextField {
+  val valueField = new TextField {
     textChangeListeners += {
-      e: AbstractTextField.TextChangeEvent =>
-        viewListeners.foreach {
+      e: TextChangeEvent =>
+      viewListeners.foreach {
           listener => listener.onValueChange(e.text)
         }
     }
   }
-  add(_valueField)
+  add(valueField)
 
-  override def setValue(value: String): Unit = _valueField.value = value
+  override def setValue(value: String): Unit = valueField.value = value
 
 }
