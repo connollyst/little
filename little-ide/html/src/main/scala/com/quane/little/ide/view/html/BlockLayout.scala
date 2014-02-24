@@ -231,14 +231,14 @@ private class BlockMenuBar(block: BlockLayout, separator: ExpressionListSeparato
     item => block.requestAddConditional(index)
   })
   item.addSeparator()
-  val funs = item.addItem("functions")
-  funs.addItem("move", {
+  val functions = item.addItem("functions")
+  functions.addItem("move", {
     item => block.requestAddFunctionReference(item.text, index)
   })
-  funs.addItem("stop", {
+  functions.addItem("stop", {
     item => block.requestAddFunctionReference(item.text, index)
   })
-  funs.addItem("turn", {
+  functions.addItem("turn", {
     item => block.requestAddFunctionReference(item.text, index)
   })
 
