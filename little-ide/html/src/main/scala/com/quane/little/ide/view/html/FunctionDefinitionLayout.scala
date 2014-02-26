@@ -16,7 +16,7 @@ import vaadin.scala.TextField
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
 
-object FunctionDefinitionComponent {
+object FunctionDefinitionLayout {
   val Style = "l-function-def"
   val StyleBody = Style + "-body"
   val StyleHeadLeft = StyleBody + "-left"
@@ -25,8 +25,8 @@ object FunctionDefinitionComponent {
   val StyleHeadNameField = StyleHead + "-name"
 }
 
-class FunctionDefinitionComponent
-  extends VerticalLayout
+class FunctionDefinitionLayout
+extends VerticalLayout
   with FunctionDefinitionView
   with HtmlComponent {
 
@@ -49,17 +49,17 @@ class FunctionDefinitionComponent
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = FunctionDefinitionComponent.StyleHeadLeft
+    bodyLeft.styleName = FunctionDefinitionLayout.StyleHeadLeft
     body.add(bodyLeft)
     body.add(stepList)
-    body.styleName = FunctionDefinitionComponent.StyleBody
+    body.styleName = FunctionDefinitionLayout.StyleBody
     body.spacing = false
     body
   }
 
   private def createFooter(): Component = {
     val footer = new CssLayout()
-    footer.styleName = FunctionDefinitionComponent.StyleFoot
+    footer.styleName = FunctionDefinitionLayout.StyleFoot
     footer
   }
 
@@ -87,7 +87,7 @@ class FunctionDefinitionComponent
 
 }
 
-private class FunctionDefinitionHeader(val definition: FunctionDefinitionComponent)
+private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   extends HorizontalLayout {
 
   // TODO should be a label that, when clicked, becomes a text field
@@ -97,7 +97,7 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionCompone
   private val newParameterButton = createNewParameterButton()
   private val saveButton = createSaveButton()
 
-  styleName = FunctionDefinitionComponent.StyleHead
+  styleName = FunctionDefinitionLayout.StyleHead
   spacing = true
   add(nameField)
   add(parameterLayout)
@@ -106,7 +106,7 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionCompone
 
   private def createNameField(): TextField = {
     val nameField = new TextField
-    nameField.styleName = FunctionDefinitionComponent.StyleHeadNameField
+    nameField.styleName = FunctionDefinitionLayout.StyleHeadNameField
     nameField
   }
 
