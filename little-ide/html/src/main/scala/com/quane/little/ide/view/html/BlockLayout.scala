@@ -24,7 +24,7 @@ class BlockLayout
   spacing = false
   styleName = Style
 
-  super.add(new ExpressionListSeparator(this))
+  super.add(new BlockStepSeparator(this))
 
   override def addConditional() = addConditional(DefaultIndex)
 
@@ -53,7 +53,7 @@ class BlockLayout
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
-    super.add(new ExpressionListSeparator(this))
+    super.add(new BlockStepSeparator(this))
     component
   }
 
@@ -62,7 +62,7 @@ class BlockLayout
       add(component)
     } else {
       super.add(component, index = index)
-      super.add(new ExpressionListSeparator(this), index = index + 1)
+      super.add(new BlockStepSeparator(this), index = index + 1)
     }
     component
   }
@@ -156,8 +156,8 @@ class BlockLayout
   }
 }
 
-private class ExpressionListSeparator(block: BlockLayout)
-  extends DroppableTarget(new HorizontalLayout) {
+private class BlockStepSeparator(block: BlockLayout)
+extends DroppableTarget(new HorizontalLayout) {
 
   component.styleName = BlockLayout.StyleSeparator
 
@@ -204,7 +204,7 @@ private class ExpressionListSeparator(block: BlockLayout)
   }
 }
 
-private class BlockMenuBar(block: BlockLayout, separator: ExpressionListSeparator)
+private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
   extends MenuBar {
 
   val item = addItem("+")
