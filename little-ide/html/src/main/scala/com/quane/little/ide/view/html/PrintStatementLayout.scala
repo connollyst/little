@@ -24,7 +24,6 @@ class PrintStatementLayout
   add(new PrintMenuBar(this))
 
   private[html] def requestAddTextLiteral() = {
-    println("Requesting add text")
     // TODO skip if already a value statement
     val view = createValueStatement()
     viewListeners.foreach {
@@ -33,7 +32,6 @@ class PrintStatementLayout
   }
 
   private[html] def requestAddGetStatement() = {
-    println("Requesting add get")
     // TODO skip if already a get statement
     val view = createGetStatement()
     viewListeners.foreach {
@@ -42,7 +40,6 @@ class PrintStatementLayout
   }
 
   private[html] def requestAddFunctionReference(name: String) = {
-    println("Requesting add '" + name + "'")
     // TODO skip if already this function reference
     val view = createFunctionReference()
     viewListeners.foreach {
@@ -52,7 +49,6 @@ class PrintStatementLayout
   }
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
-    println("Creating value statement")
     removePrintValue()
     val view = new ValueLayout
     printValue = Some(view)
@@ -61,7 +57,6 @@ class PrintStatementLayout
   }
 
   override def createGetStatement(): GetStatementPresenter[GetStatementLayout] = {
-    println("Creating get statement")
     removePrintValue()
     val view = new GetStatementLayout
     printValue = Some(view)
@@ -70,7 +65,6 @@ class PrintStatementLayout
   }
 
   override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
-    println("Creating function reference")
     removePrintValue()
     val view = new FunctionReferenceComponent
     printValue = Some(view)
@@ -80,9 +74,7 @@ class PrintStatementLayout
 
   private def removePrintValue(): Unit = {
     printValue match {
-      case e: Some[ExpressionView[_]] =>
-        println("Remove old print value")
-        e.get.removeFromParent()
+      case e: Some[ExpressionView[_]] => e.get.removeFromParent()
       case None => // do nothing
     }
     printValue = None
