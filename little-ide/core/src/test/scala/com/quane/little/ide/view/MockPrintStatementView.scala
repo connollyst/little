@@ -11,10 +11,10 @@ class MockPrintStatementView
   extends PrintStatementView
   with MockView {
 
-  def createValueStatement(): ValuePresenter[_] = new ValuePresenter(new MockValueView)
+  override def createValueStatement() = new ValuePresenter(new MockValueView)
 
-  def createGetStatement(): GetStatementPresenter[_] = new GetStatementPresenter(new MockGetStatementView)
+  override def createGetStatement() = new GetStatementPresenter(new MockGetStatementView)
 
-  def createFunctionReference(): FunctionReferencePresenter[_] = new FunctionReferencePresenter(new MockFunctionReferenceView)
+  override def createFunctionReference() = new FunctionReferencePresenter(new MockFunctionReferenceView)
 
 }

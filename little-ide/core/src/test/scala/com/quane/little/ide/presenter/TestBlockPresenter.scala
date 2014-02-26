@@ -53,8 +53,8 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val setPresenter = mock[SetStatementPresenter[SetStatementView]]
     when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
     presenter.add(new SetStatement(mock[Scope], "x", "y"))
-    // TODO when we figure out what should really be passed, update this test
-    verify(setPresenter).value = "Value{value=y, type=StringValueType$}"
+    val expected = new Value("y")
+    verify(setPresenter).value = expected
   }
 
   test("test get statement added to view") {

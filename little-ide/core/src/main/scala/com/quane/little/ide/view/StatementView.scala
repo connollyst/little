@@ -13,7 +13,11 @@ trait SetStatementView extends ExpressionView[SetStatementViewListener] {
 
   def setName(name: String): Unit
 
-  def setValue(value: String): Unit
+  def createValueStatement(): ValuePresenter[_]
+
+  def createGetStatement(): GetStatementPresenter[_]
+
+  def createFunctionReference(): FunctionReferencePresenter[_]
 
 }
 
@@ -37,7 +41,7 @@ trait SetStatementViewListener extends ExpressionViewListener {
 
   def nameChanged(name: String): Unit
 
-  def valueChanged(value: String): Unit
+  def setValueExpression(p: ExpressionPresenter): Unit
 
 }
 

@@ -8,7 +8,7 @@ import com.google.common.base.Objects
 abstract class Statement
   extends Expression
 
-class SetStatement(pointer: Pointer, value: Expression)
+class SetStatement(pointer: Pointer, val value: Expression)
   extends Statement
   with Logging {
 
@@ -49,9 +49,6 @@ class SetStatement(pointer: Pointer, value: Expression)
   }
 
   def name: String = pointer.variableName
-
-  // TODO we shouldn't need this
-  def valueString: String = value.toString
 
   def evaluate: Value = {
     val name = pointer.variableName
@@ -94,7 +91,7 @@ class GetStatement(pointer: Pointer)
 }
 
 class PrintStatement(val value: Expression)
-extends Statement
+  extends Statement
   with Logging {
 
   def this(value: String) = {

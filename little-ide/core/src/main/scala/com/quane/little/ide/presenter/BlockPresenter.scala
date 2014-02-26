@@ -41,7 +41,7 @@ class BlockPresenter[V <: BlockView](view: V)
         case s: SetStatement =>
           val set = view.addSetStatement()
           set.name = s.name
-          set.value = s.valueString
+          set.value = s.value
           set
         case g: GetStatement =>
           val get = view.addGetStatement()
