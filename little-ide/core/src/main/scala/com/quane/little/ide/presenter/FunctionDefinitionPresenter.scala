@@ -36,6 +36,15 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     _block.setSteps(steps)
   }
 
+  private[presenter] def name: String = _name
+
+  private[presenter] def name_=(n: String): Unit = {
+    _name = n
+    view.setName(_name)
+  }
+
+  override def onNameChange(name: String): Unit = _name = name
+
   override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(_name)
     _params.foreach {
@@ -46,13 +55,5 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     fun.steps = _block.compile(fun).steps
     fun
   }
-
-  private[presenter] def name: String = _name
-
-  private[presenter] def name_=(n: String): Unit = {
-    _name = n
-    view.setName(_name)
-  }
-
 
 }

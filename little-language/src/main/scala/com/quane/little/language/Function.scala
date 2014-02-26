@@ -46,6 +46,7 @@ class FunctionDefinition(val name: String)
 
   override def toString: String = {
     Objects.toStringHelper(getClass)
+      .add("name", name)
       .add("params", params mkString("[", ",", "]"))
       .add("block", block)
       .toString

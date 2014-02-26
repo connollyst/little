@@ -24,6 +24,8 @@ trait FunctionDefinitionView extends View[FunctionDefinitionViewListener] {
 
 trait FunctionDefinitionViewListener extends ViewListener {
 
+  def onNameChange(name: String): Unit
+
   def compile(): FunctionDefinition
 
 }

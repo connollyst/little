@@ -15,6 +15,7 @@ import vaadin.scala.Measure
 import vaadin.scala.TextField
 import vaadin.scala.Units
 import vaadin.scala.VerticalLayout
+import vaadin.scala.AbstractTextField.TextChangeEvent
 
 object FunctionDefinitionLayout {
   val Style = "l-function-def"
@@ -63,9 +64,13 @@ extends VerticalLayout
     footer
   }
 
-  override def setName(name: String): Unit = {
-    header.name_=(name)
+  def onNameChange(name: String): Unit = {
+    viewListeners.foreach {
+      listener => listener.onNameChange(name)
+    }
   }
+
+  override def setName(name: String): Unit = header.name_=(name)
 
   override def createFunctionParameter(): FunctionParameterPresenter[_] = {
     val view = new FunctionParameterComponent()
@@ -105,7 +110,12 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   add(saveButton)
 
   private def createNameField(): TextField = {
-    val nameField = new TextField
+    val nameField = new TextField {
+      textChangeListeners += {
+        e: TextChangeEvent =>
+          definition.onNameChange(e.text)
+      }
+    }
     nameField.styleName = FunctionDefinitionLayout.StyleHeadNameField
     nameField
   }
