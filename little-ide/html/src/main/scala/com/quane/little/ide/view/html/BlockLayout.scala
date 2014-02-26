@@ -61,9 +61,7 @@ class BlockLayout
     if (index < 0) {
       add(component)
     } else {
-      println("Adding component at index " + index)
       super.add(component, index = index)
-      println("Adding component separator at index " + (index + 1))
       super.add(new ExpressionListSeparator(this), index = index + 1)
     }
     component
@@ -113,9 +111,7 @@ class BlockLayout
     if (i < 0) {
       i
     } else {
-      val index = (i * 2) + 1
-      println("Translating " + i + " => " + index)
-      index
+      (i * 2) + 1
     }
   }
 
@@ -130,35 +126,30 @@ class BlockLayout
   //  }
 
   def requestAddConditional(index: Int) = {
-    println("Requesting add conditional @ " + index)
     viewListeners.foreach {
       listener => listener.requestAddConditional(index)
     }
   }
 
   def requestAddGetStatement(index: Int) = {
-    println("Requesting add get @ " + index)
     viewListeners.foreach {
       listener => listener.requestAddGetStatement(index)
     }
   }
 
   def requestAddSetStatement(index: Int) = {
-    println("Requesting add set @ " + index)
     viewListeners.foreach {
       listener => listener.requestAddSetStatement(index)
     }
   }
 
   def requestAddPrintStatement(index: Int) = {
-    println("Requesting add print @ " + index)
     viewListeners.foreach {
       listener => listener.requestAddPrintStatement(index)
     }
   }
 
   def requestAddFunctionReference(name: String, index: Int) = {
-    println("Requesting add " + name + " @ " + index)
     viewListeners.foreach {
       listener => listener.requestAddFunctionReference(name, index)
     }
