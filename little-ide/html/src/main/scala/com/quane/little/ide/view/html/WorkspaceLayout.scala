@@ -7,7 +7,7 @@ import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 
 object WorkspaceLayout {
   val Style = "l-workspace"
-  val Functions = List("move", "stop", "turn", "voyage", "print dir")
+  val Functions = List("blank", "move", "stop", "turn", "voyage", "print dir")
 }
 
 class WorkspaceLayout
@@ -20,6 +20,7 @@ class WorkspaceLayout
   styleName = WorkspaceLayout.Style
 
   add(new VerticalLayout {
+    // TODO this isn't a long term solution
     WorkspaceLayout.Functions.foreach {
       function =>
         add(Button(

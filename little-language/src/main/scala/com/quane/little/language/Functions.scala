@@ -25,6 +25,8 @@ object Functions {
     worker.schedule(task, seconds, TimeUnit.SECONDS)
   }
 
+  def blank: FunctionDefinition = new FunctionDefinition("")
+
   def move: FunctionDefinition = {
     val fun = new FunctionDefinition("move")
     val speedArg = new Pointer(fun, "speed")

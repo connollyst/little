@@ -15,6 +15,7 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
   override def openFunctionDefinition(name: String) = {
     val fun: FunctionDefinition =
       name match {
+        case "blank" => Functions.blank
         case "move" => Functions.move
         case "stop" => Functions.stop
         case "turn" => Functions.turn
