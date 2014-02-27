@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import scala._
-import com.quane.little.language.{Expression, FunctionDefinition}
+import com.quane.little.language.{FunctionParameter, Expression, FunctionDefinition}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewListener}
 
@@ -28,12 +28,28 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     this
   }
 
-  def setStepPresenters[E <: ExpressionPresenter](steps: List[E]) = {
+  def setStepPresenters[E <: ExpressionPresenter](steps: List[E]): Unit = {
     _block.steps = steps
   }
 
-  def setSteps[E <: Expression](steps: List[E]) = {
+  def setSteps[E <: Expression](steps: List[E]): Unit = {
     _block.setSteps(steps)
+  }
+
+  def setParameters(params: List[FunctionParameter]) = {
+    _params.clear()
+    params.foreach {
+      param => {
+        val presenter = view.createFunctionParameter()
+        presenter.name = param.name
+        _params += presenter
+      }
+    }
+  }
+
+  def parameters_=(params: List[FunctionParameterPresenter[_]]) = {
+    _params.clear()
+    _params ++= params
   }
 
   private[presenter] def name: String = _name

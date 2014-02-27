@@ -26,8 +26,8 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
     val presenter = view.createFunctionDefinition()
     presenter.name = fun.name
     presenter.setSteps(fun.steps)
-    //    presenter.params_=(fun.params)
-
+    println("Setting parameters: " + fun.params)
+    presenter.setParameters(fun.params)
   }
 
 }
