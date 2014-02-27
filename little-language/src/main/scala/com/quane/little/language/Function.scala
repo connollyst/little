@@ -14,10 +14,10 @@ class FunctionDefinition(val name: String)
   extends Scope {
 
   var scope: Scope = _
-  private val params = new ListBuffer[FunctionParameter]
+  private val _params = new ListBuffer[FunctionParameter]
   private[language] val block = new Block(this)
 
-  def paramCount: Int = params.length
+  def paramCount: Int = _params.length
 
   def stepCount: Int = block.length
 
@@ -31,9 +31,11 @@ class FunctionDefinition(val name: String)
   }
 
   def addParam(param: FunctionParameter): FunctionDefinition = {
-    params += param
+    _params += param
     this
   }
+
+  def params: List[FunctionParameter] = _params.toList
 
   def steps: List[Expression] = block.steps
 
@@ -47,7 +49,7 @@ class FunctionDefinition(val name: String)
   override def toString: String = {
     Objects.toStringHelper(getClass)
       .add("name", name)
-      .add("params", params mkString("[", ",", "]"))
+      .add("params", _params mkString("[", ",", "]"))
       .add("block", block)
       .toString
   }
