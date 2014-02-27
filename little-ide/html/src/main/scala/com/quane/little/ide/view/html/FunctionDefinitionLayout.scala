@@ -64,7 +64,6 @@ class FunctionDefinitionLayout
     footer
   }
 
-
   override def setName(name: String): Unit = header.name_=(name)
 
   override def createFunctionParameter(): FunctionParameterPresenter[_] = {
@@ -91,6 +90,12 @@ class FunctionDefinitionLayout
     }
   }
 
+  private[html] def requestNewParameter(): Unit = {
+    viewListeners.foreach {
+      listener => listener.addParameter(createFunctionParameter())
+    }
+  }
+
 }
 
 private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
@@ -110,26 +115,21 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   add(newParameterButton)
   add(saveButton)
 
-  private def createNameField(): TextField = {
-    val nameField = new TextField {
-      textChangeListeners += {
-        e: TextChangeEvent =>
-          definition.onNameChange(e.text)
-      }
+  private def createNameField(): TextField = new TextField {
+    textChangeListeners += {
+      e: TextChangeEvent =>
+        definition.onNameChange(e.text)
     }
-    nameField.styleName = FunctionDefinitionLayout.StyleHeadNameField
-    nameField
+    styleName = FunctionDefinitionLayout.StyleHeadNameField
   }
 
-  private def createParameterLayout(): Layout = {
-    val paramLayout = new HorizontalLayout
-    paramLayout.spacing = true
-    paramLayout
+  private def createParameterLayout(): Layout = new HorizontalLayout {
+    spacing = true
   }
 
   private def createNewParameterButton(): Component = Button(
   "+", {
-    parameterLayout.add(new FunctionParameterComponent)
+    definition.requestNewParameter()
     () // how do I avoid this?
   })
 

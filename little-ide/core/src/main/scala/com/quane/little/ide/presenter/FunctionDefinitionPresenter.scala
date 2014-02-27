@@ -52,6 +52,10 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     _params ++= params
   }
 
+  def addParameter(param: FunctionParameterPresenter[_]): Unit = {
+    _params += param
+  }
+
   private[presenter] def name: String = _name
 
   private[presenter] def name_=(n: String): Unit = {
