@@ -28,7 +28,7 @@ object Functions {
   def blank: FunctionDefinition = new FunctionDefinition("")
 
   def move: FunctionDefinition = {
-    val fun = new FunctionDefinition("move")
+    val fun = new FunctionDefinition("move").addParam("speed")
     val speedArg = new Pointer(fun, "speed")
     val guySpeed = new Pointer(fun, Operable.SPEED)
     fun.addStep(new SetStatement(guySpeed, new GetStatement(speedArg)))
@@ -41,7 +41,7 @@ object Functions {
   }
 
   def turn: FunctionDefinition = {
-    val fun = new FunctionDefinition("turn")
+    val fun = new FunctionDefinition("turn").addParam("direction")
     val directionArg = new Pointer(fun, "direction")
     val myDirection = new Pointer(fun, Operable.DIRECTION)
     fun.addStep(new SetStatement(myDirection, new GetStatement(directionArg)))
