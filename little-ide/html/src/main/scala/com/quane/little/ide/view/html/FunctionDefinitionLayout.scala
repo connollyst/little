@@ -27,7 +27,7 @@ object FunctionDefinitionLayout {
 }
 
 class FunctionDefinitionLayout
-extends VerticalLayout
+  extends VerticalLayout
   with FunctionDefinitionView
   with HtmlComponent {
 
@@ -64,11 +64,6 @@ extends VerticalLayout
     footer
   }
 
-  def onNameChange(name: String): Unit = {
-    viewListeners.foreach {
-      listener => listener.onNameChange(name)
-    }
-  }
 
   override def setName(name: String): Unit = header.name_=(name)
 
@@ -88,6 +83,12 @@ extends VerticalLayout
     // TODO replace stepList with body
     stepList.add(view)
     new FunctionReferencePresenter(view)
+  }
+
+  def onNameChange(name: String): Unit = {
+    viewListeners.foreach {
+      listener => listener.onNameChange(name)
+    }
   }
 
 }
@@ -128,9 +129,7 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
 
   private def createNewParameterButton(): Component = Button(
   "+", {
-    val header = FunctionDefinitionHeader.this
-    val children = header.components.size
-    header.add(new FunctionParameterComponent, children - 1)
+    parameterLayout.add(new FunctionParameterComponent)
     () // how do I avoid this?
   })
 

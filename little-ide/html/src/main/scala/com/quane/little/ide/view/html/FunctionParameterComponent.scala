@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.html.FunctionParameterComponent._
-import vaadin.scala.Label
+import vaadin.scala.TextField
 import com.quane.little.ide.view.FunctionParameterView
 
 object FunctionParameterComponent {
@@ -9,7 +9,7 @@ object FunctionParameterComponent {
 }
 
 class FunctionParameterComponent
-  extends Label
+  extends TextField
   with FunctionParameterView
   with HtmlComponent {
 
