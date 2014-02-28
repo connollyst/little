@@ -12,41 +12,32 @@ class SetStatement(pointer: Pointer, val value: Expression)
   extends Statement
   with Logging {
 
-  def this(pointer: Pointer, value: String) = {
+  def this(pointer: Pointer, value: String) =
     this(pointer, new Value(value))
-  }
 
-  def this(pointer: Pointer, value: Boolean) = {
+  def this(pointer: Pointer, value: Boolean) =
     this(pointer, new Value(value))
-  }
 
-  def this(pointer: Pointer, value: Int) = {
+  def this(pointer: Pointer, value: Int) =
     this(pointer, new Value(value))
-  }
 
-  def this(pointer: Pointer, value: Double) = {
+  def this(pointer: Pointer, value: Double) =
     this(pointer, new Value(value))
-  }
 
-  def this(scope: Scope, name: String, value: Expression) = {
+  def this(scope: Scope, name: String, value: Expression) =
     this(new Pointer(scope, name), value)
-  }
 
-  def this(scope: Scope, name: String, value: String) = {
+  def this(scope: Scope, name: String, value: String) =
     this(new Pointer(scope, name), value)
-  }
 
-  def this(scope: Scope, name: String, value: Boolean) = {
+  def this(scope: Scope, name: String, value: Boolean) =
     this(new Pointer(scope, name), value)
-  }
 
-  def this(scope: Scope, name: String, value: Int) = {
+  def this(scope: Scope, name: String, value: Int) =
     this(new Pointer(scope, name), value)
-  }
 
-  def this(scope: Scope, name: String, value: Double) = {
+  def this(scope: Scope, name: String, value: Double) =
     this(new Pointer(scope, name), value)
-  }
 
   def name: String = pointer.variableName
 
@@ -57,12 +48,11 @@ class SetStatement(pointer: Pointer, val value: Expression)
     actualValue
   }
 
-  override def toString: String = {
+  override def toString: String =
     Objects.toStringHelper(getClass)
       .add("name", pointer.variableName)
       .add("value", value)
       .toString
-  }
 
 }
 
@@ -70,9 +60,7 @@ class GetStatement(pointer: Pointer)
   extends Statement
   with Logging {
 
-  def this(scope: Scope, name: String) = {
-    this(new Pointer(scope, name))
-  }
+  def this(scope: Scope, name: String) = this(new Pointer(scope, name))
 
   def name: String = pointer.variableName
 
@@ -82,11 +70,10 @@ class GetStatement(pointer: Pointer)
     variable.value
   }
 
-  override def toString: String = {
+  override def toString: String =
     Objects.toStringHelper(getClass)
       .add("name", pointer.variableName)
       .toString
-  }
 
 }
 
@@ -94,24 +81,18 @@ class PrintStatement(val value: Expression)
   extends Statement
   with Logging {
 
-  def this(value: String) = {
-    this(new Value(value))
-  }
-
-  // TODO we shouldn't need this
-  def valueString: String = value.toString
+  def this(value: String) = this(new Value(value))
 
   def evaluate: Value = {
     val text = value.evaluate
     // TODO this should display a speech bubble over the guy
-    log.error(text.asText)
+    log.info(text.asText)
     text
   }
 
-  override def toString: String = {
+  override def toString: String =
     Objects.toStringHelper(getClass)
       .add("value", value)
       .toString
-  }
 
 }
