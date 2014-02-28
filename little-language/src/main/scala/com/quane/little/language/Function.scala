@@ -126,6 +126,11 @@ class FunctionReference(var scope: Scope, val name: String)
     definition.block.evaluate
   }
 
+  override def equals(that: Any) = that match {
+    case f: FunctionReference => name.equals(f.name) && args.equals(f.args)
+    case _ => false
+  }
+
   override def toString: String = {
     Objects.toStringHelper(getClass)
       .add("name", name)
