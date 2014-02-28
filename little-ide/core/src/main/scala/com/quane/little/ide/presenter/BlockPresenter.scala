@@ -25,7 +25,7 @@ class BlockPresenter[V <: BlockView](view: V)
     _steps ++= steps
   }
 
-  private[presenter] def setSteps(steps: List[Expression]) = {
+  private[presenter] def steps_=[E <: Expression](steps: List[E]) = {
     _steps.clear()
     steps.foreach {
       step => add(step)
@@ -53,8 +53,8 @@ class BlockPresenter[V <: BlockView](view: V)
           print
         case c: Conditional =>
           val con = view.addConditional()
-          con.condition_=(c.test)
-          con.setSteps(c.steps)
+          con.condition = c.test
+          con.steps = c.steps
           con
         case f: FunctionReference =>
           val fun = view.addFunctionReference()
