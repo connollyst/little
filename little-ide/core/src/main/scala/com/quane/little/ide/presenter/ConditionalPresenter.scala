@@ -16,8 +16,14 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
 
   view.addViewListener(this)
 
-  private[presenter] def condition: ExpressionPresenter = _condition
+  private[presenter] def initialize(c: Conditional): ConditionalPresenter[V] = {
+    condition = c.test
+    steps = c.steps
+    // TODO initialize else steps
+    this
+  }
 
+  private[presenter] def condition: ExpressionPresenter = _condition
 
   private[presenter] def condition_=(condition: Expression): Unit =
   // TODO we need to create a view depending on the expression type

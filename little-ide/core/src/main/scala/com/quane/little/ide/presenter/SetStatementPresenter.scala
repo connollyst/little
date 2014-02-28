@@ -20,6 +20,17 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
   view.addViewListener(this)
   view.setName(_name)
 
+  /** Initialize the set statement presenter.
+    *
+    * @param s the set statement
+    * @return the initialized presenter
+    */
+  private[presenter] def initialize(s: SetStatement): SetStatementPresenter[V] = {
+    name = s.name
+    value = s.value
+    this
+  }
+
   private[presenter] def name: String = _name
 
   private[presenter] def name_=(name: String): Unit = {

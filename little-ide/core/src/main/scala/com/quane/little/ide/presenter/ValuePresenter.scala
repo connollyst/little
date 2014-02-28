@@ -17,6 +17,16 @@ class ValuePresenter[V <: ValueView](view: V)
   view.addViewListener(this)
   view.setValue(_value)
 
+  /** Initialize the value presenter.
+    *
+    * @param v the value
+    * @return the initialized presenter
+    */
+  private[presenter] def initialize(v: Value): ValuePresenter[V] = {
+    value = v.asText
+    this
+  }
+
   private[presenter] def value: String = _value
 
   private[presenter] def value_=(value: String): Unit = {

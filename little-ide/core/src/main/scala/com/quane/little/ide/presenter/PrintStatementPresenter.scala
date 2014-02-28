@@ -17,6 +17,16 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
 
   view.addViewListener(this)
 
+  /** Initialize the print presenter.
+    *
+    * @param p the print expression
+    * @return the initialized presenter
+    */
+  private[presenter] def initialize(p: PrintStatement): PrintStatementPresenter[V] = {
+    expression = p.value
+    this
+  }
+
   /** Get the print value expression.
     *
     * @return the value expression
@@ -36,13 +46,9 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     val presenter =
       e match {
         case v: Value =>
-          val value = view.createValueStatement()
-          value.value = v.asText
-          value
+          view.createValueStatement().initialize(v)
         case g: GetStatement =>
-          val get = view.createGetStatement()
-          get.name = g.name
-          get
+          view.createGetStatement().initialize(g)
         case f: FunctionReference =>
           view.createFunctionReference().initialize(f)
         case _ => throw new IllegalAccessException("Cannot add " + e)

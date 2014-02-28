@@ -39,23 +39,13 @@ class BlockPresenter[V <: BlockView](view: V)
     val presenter =
       step match {
         case s: SetStatement =>
-          val set = view.addSetStatement()
-          set.name = s.name
-          set.value = s.value
-          set
+          view.addSetStatement().initialize(s)
         case g: GetStatement =>
-          val get = view.addGetStatement()
-          get.name = g.name
-          get
+          view.addGetStatement().initialize(g)
         case p: PrintStatement =>
-          val print = view.addPrintStatement()
-          print.expression = p.value
-          print
+          view.addPrintStatement().initialize(p)
         case c: Conditional =>
-          val con = view.addConditional()
-          con.condition = c.test
-          con.steps = c.steps
-          con
+          view.addConditional().initialize(c)
         case f: FunctionReference =>
           view.addFunctionReference().initialize(f)
         case _ => throw new IllegalAccessException("Cannot add " + step)
