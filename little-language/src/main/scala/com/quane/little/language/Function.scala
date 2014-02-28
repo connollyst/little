@@ -1,10 +1,10 @@
 package com.quane.little.language
 
 import scala.collection.mutable.ListBuffer
-import scala.collection.mutable.Map
 import com.quane.little.language.data.Value
 import org.eintr.loglady.Logging
 import com.google.common.base.Objects
+import collection.mutable
 
 /** Defines a function.
   *
@@ -62,7 +62,7 @@ class FunctionDefinition(val name: String)
   */
 class FunctionParameter(val name: String) {
 
-  override def toString: String = name
+  override def toString = name
 
 }
 
@@ -76,7 +76,7 @@ class FunctionReference(var scope: Scope, val name: String)
   with Scope
   with Logging {
 
-  val args = Map[String, Expression]()
+  val args = mutable.Map[String, Expression]()
 
   def addArg(name: String, value: Expression): FunctionReference = {
     // TODO assert arg is not already set

@@ -21,12 +21,11 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     *
     * @return the value expression
     */
-  private[presenter] def expression: ExpressionPresenter = {
+  private[presenter] def expression: ExpressionPresenter =
     _expression match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No print expression specified.")
     }
-  }
 
   /** Set the print value expression.
     *
@@ -45,10 +44,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
           get.name = g.name
           get
         case f: FunctionReference =>
-          val fun = view.createFunctionReference()
-          fun.name = f.name
-          // TODO set function name & args
-          fun
+          view.createFunctionReference().initialize(f)
         case _ => throw new IllegalAccessException("Cannot add " + e)
       }
     _expression = Some(presenter)

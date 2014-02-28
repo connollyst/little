@@ -9,6 +9,7 @@ import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, Scope, GetStatement}
 import scala.Predef._
+import org.mockito.Matchers.{eq => the}
 
 @RunWith(classOf[JUnitRunner])
 class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
@@ -54,9 +55,10 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new PrintStatementPresenter(view)
     val valuePresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(valuePresenter)
-    presenter.expression = new FunctionReference(mock[Scope], "funName")
+    val function = mock[FunctionReference]
+    presenter.expression = function
     verify(view).createFunctionReference()
-    verify(valuePresenter).name = "funName"
+    verify(valuePresenter).initialize(function)
   }
 
   test("test value is set on view event") {

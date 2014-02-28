@@ -57,10 +57,7 @@ class BlockPresenter[V <: BlockView](view: V)
           con.steps = c.steps
           con
         case f: FunctionReference =>
-          val fun = view.addFunctionReference()
-          fun.name = f.name
-          // TODO set function name & args
-          fun
+          view.addFunctionReference().initialize(f)
         case _ => throw new IllegalAccessException("Cannot add " + step)
       }
     add(presenter, index)
