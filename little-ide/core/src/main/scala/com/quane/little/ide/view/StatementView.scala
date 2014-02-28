@@ -33,20 +33,20 @@ trait PrintStatementView extends ExpressionView[PrintStatementViewListener] {
 
 trait GetStatementViewListener extends ExpressionViewListener {
 
-  def nameChanged(name: String): Unit
+  def onNameChange(name: String): Unit
 
 }
 
 trait SetStatementViewListener extends ExpressionViewListener {
 
-  def nameChanged(name: String): Unit
+  def onNameChange(name: String): Unit
 
-  def setValueExpression(p: ExpressionPresenter): Unit
+  def onValueChange(p: ExpressionPresenter): Unit
 
 }
 
 trait PrintStatementViewListener extends ExpressionViewListener {
 
-  def setExpression(p: ExpressionPresenter): Unit
+  def onValueChange(p: ExpressionPresenter): Unit
 
 }

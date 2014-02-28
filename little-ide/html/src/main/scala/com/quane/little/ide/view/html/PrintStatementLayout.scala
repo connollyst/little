@@ -27,7 +27,7 @@ class PrintStatementLayout
     // TODO skip if already a value statement
     val view = createValueStatement()
     viewListeners.foreach {
-      listener => listener.setExpression(view)
+      listener => listener.onValueChange(view)
     }
   }
 
@@ -35,7 +35,7 @@ class PrintStatementLayout
     // TODO skip if already a get statement
     val view = createGetStatement()
     viewListeners.foreach {
-      listener => listener.setExpression(view)
+      listener => listener.onValueChange(view)
     }
   }
 
@@ -44,7 +44,7 @@ class PrintStatementLayout
     val view = createFunctionReference()
     viewListeners.foreach {
       // TODO we need to look up the function definition
-      listener => listener.setExpression(view)
+      listener => listener.onValueChange(view)
     }
   }
 

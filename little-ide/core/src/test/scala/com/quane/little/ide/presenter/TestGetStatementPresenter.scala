@@ -42,14 +42,14 @@ class TestGetStatementPresenter extends FunSuite with MockitoSugar {
   test("test name is set on listen event") {
     val view = mock[GetStatementView]
     val presenter = new GetStatementPresenter(view)
-    presenter.nameChanged("sean is cool")
+    presenter.onNameChange("sean is cool")
     assert(presenter.name == "sean is cool")
   }
 
   test("test name is not propagated to view on listen event") {
     val view = mock[GetStatementView]
     val presenter = new GetStatementPresenter(view)
-    presenter.nameChanged("sean is cool")
+    presenter.onNameChange("sean is cool")
     verify(view, never()).setName("sean is cool")
   }
 

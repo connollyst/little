@@ -19,7 +19,7 @@ class SetStatementLayout
     textChangeListeners += {
       e: TextChangeEvent =>
         viewListeners.foreach {
-          listener => listener.nameChanged(e.text)
+          listener => listener.onNameChange(e.text)
         }
     }
   }
@@ -74,7 +74,7 @@ class SetStatementLayout
     // TODO skip if already a value statement
     val view = createValueStatement()
     viewListeners.foreach {
-      listener => listener.setValueExpression(view)
+      listener => listener.onValueChange(view)
     }
   }
 
@@ -82,7 +82,7 @@ class SetStatementLayout
     // TODO skip if already a get statement
     val view = createGetStatement()
     viewListeners.foreach {
-      listener => listener.setValueExpression(view)
+      listener => listener.onValueChange(view)
     }
   }
 
@@ -91,7 +91,7 @@ class SetStatementLayout
     val view = createFunctionReference()
     viewListeners.foreach {
       // TODO we need to look up the function definition
-      listener => listener.setValueExpression(view)
+      listener => listener.onValueChange(view)
     }
   }
 

@@ -18,17 +18,14 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
 
   private[presenter] def condition: ExpressionPresenter = _condition
 
-  private[presenter] def condition_=(condition: Expression): Unit = {
-    // TODO i think we need to create a view depending on the expression type?
-    _condition
-  }
+
+  private[presenter] def condition_=(condition: Expression): Unit =
+  // TODO we need to create a view depending on the expression type
+    throw new NotImplementedError("condition not supported yet")
 
   private[presenter] def steps: List[ExpressionPresenter] = _thenBlock.steps
 
-  private[presenter] def steps_=(steps: List[Expression]): Unit = {
-    println("Setting conditional THEN steps: " + steps)
-    _thenBlock.steps = steps
-  }
+  private[presenter] def steps_=(steps: List[Expression]): Unit = _thenBlock.steps = steps
 
   override def compile(scope: Scope): Conditional = {
     // TODO the else block is not supported yet!!!

@@ -24,7 +24,7 @@ class GetStatementPresenter[V <: GetStatementView](view: V)
     view.setName(name)
   }
 
-  override def nameChanged(name: String): Unit = _name = name
+  override def onNameChange(name: String): Unit = _name = name
 
   override def compile(scope: Scope): GetStatement = {
     new GetStatement(new Pointer(scope, _name))

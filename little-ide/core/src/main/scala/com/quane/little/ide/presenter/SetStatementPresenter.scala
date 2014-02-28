@@ -69,9 +69,9 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
     // TODO notify view?
   }
 
-  override def nameChanged(name: String): Unit = _name = name
+  override def onNameChange(name: String): Unit = _name = name
 
-  override def setValueExpression(p: ExpressionPresenter) = _value = Some(p)
+  override def onValueChange(p: ExpressionPresenter) = _value = Some(p)
 
 
   override def compile(scope: Scope): SetStatement =

@@ -54,7 +54,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     _expression = Some(presenter)
   }
 
-  override def setExpression(p: ExpressionPresenter) = _expression = Some(p)
+  override def onValueChange(p: ExpressionPresenter) = _expression = Some(p)
 
   /** Compile to a [[com.quane.little.language.PrintStatement]].
     *

@@ -23,7 +23,7 @@ class GetStatementLayout
     textChangeListeners += {
       e: AbstractTextField.TextChangeEvent =>
         viewListeners.foreach {
-          listener => listener.nameChanged(e.text)
+          listener => listener.onNameChange(e.text)
         }
     }
   }
