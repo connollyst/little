@@ -83,7 +83,7 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
   test("test compiled with 2 steps") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
       .add(new FunctionReferencePresenter(new MockFunctionReferenceView))
-      .add(new PrintStatementPresenter(new MockPrintStatementView))
+      .add(new FunctionReferencePresenter(new MockFunctionReferenceView))
     val function = presenter.compile()
     assert(function.stepCount == 2)
   }

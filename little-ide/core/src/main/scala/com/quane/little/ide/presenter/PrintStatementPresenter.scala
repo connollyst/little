@@ -17,14 +17,18 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
 
   view.addViewListener(this)
 
+  /** Get the print value expression.
+    *
+    * @return the value expression
+    */
   private[presenter] def expression: ExpressionPresenter = {
     _expression match {
-      case e: Some[ExpressionPresenter] => e.get
-      case _ => throw new IllegalAccessException("No print expression set.")
+      case Some(e) => e
+      case None => throw new IllegalAccessException("No print expression specified.")
     }
   }
 
-  /** Set the value expression.
+  /** Set the print value expression.
     *
     * @param e the value expression
     */
@@ -47,16 +51,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
           fun
         case _ => throw new IllegalAccessException("Cannot add " + e)
       }
-    expression_=(presenter)
-  }
-
-  /** Set the value presenter.
-    *
-    * @param expression the value presenter
-    */
-  private[presenter] def expression_=(expression: ExpressionPresenter): Unit = {
-    _expression = Some(expression)
-    // TODO notify view?
+    _expression = Some(presenter)
   }
 
   override def setExpression(p: ExpressionPresenter) = _expression = Some(p)
@@ -67,6 +62,6 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     * @return the compiled print statement
     */
   override def compile(scope: Scope): PrintStatement =
-    new PrintStatement(_expression.get.compile(scope))
+    new PrintStatement(expression.compile(scope))
 
 }
