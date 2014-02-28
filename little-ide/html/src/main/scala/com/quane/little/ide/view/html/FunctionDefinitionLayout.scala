@@ -92,7 +92,7 @@ class FunctionDefinitionLayout
 
   private[html] def requestNewParameter(): Unit = {
     viewListeners.foreach {
-      listener => listener.addParameter(createFunctionParameter())
+      listener => listener.onParamAdded(createFunctionParameter())
     }
   }
 

@@ -6,6 +6,7 @@ import org.scalatest.FunSuite
 import com.quane.little.ide.view._
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
+import com.quane.little.language.FunctionParameter
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
@@ -29,6 +30,47 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionDefinitionPresenter(view)
     presenter.name = "sean is cool"
     verify(view).setName("sean is cool")
+  }
+
+  test("test param name propagates to view") {
+    val view = mock[FunctionDefinitionView]
+    val presenter = new FunctionDefinitionPresenter(view)
+    val paramPresenter = mock[FunctionParameterPresenter[FunctionParameterView]]
+    when[FunctionParameterPresenter[_]](view.createFunctionParameter())
+      .thenReturn(paramPresenter)
+    presenter.addParameter(new FunctionParameter("sean is cool"))
+    verify(view).createFunctionParameter()
+    verify(paramPresenter).name = "sean is cool"
+  }
+
+  test("test param is added on listen event") {
+    val view = mock[FunctionDefinitionView]
+    val presenter = new FunctionDefinitionPresenter(view)
+    presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
+    assert(presenter.parameters.length == 1)
+    presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
+    assert(presenter.parameters.length == 2)
+  }
+
+  test("test param is not propagated to view on listen event") {
+    val view = mock[FunctionDefinitionView]
+    val presenter = new FunctionDefinitionPresenter(view)
+    presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
+    verify(view, never()).createFunctionParameter()
+  }
+
+  test("test name is set on listen event") {
+    val view = mock[FunctionDefinitionView]
+    val presenter = new FunctionDefinitionPresenter(view)
+    presenter.onNameChange("sean is cool")
+    assert(presenter.name == "sean is cool")
+  }
+
+  test("test name is not propagated to view on listen event") {
+    val view = mock[FunctionDefinitionView]
+    val presenter = new FunctionDefinitionPresenter(view)
+    presenter.onNameChange("sean is cool")
+    verify(view, never()).setName("sean is cool")
   }
 
   /* Test Compilation */

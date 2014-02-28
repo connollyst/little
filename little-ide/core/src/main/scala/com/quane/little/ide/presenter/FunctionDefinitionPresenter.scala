@@ -18,43 +18,44 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
 
   view.addViewListener(this)
 
-  def add(parameter: FunctionParameterPresenter[_]): FunctionDefinitionPresenter[V] = {
+  private[presenter] def add(parameter: FunctionParameterPresenter[_]): FunctionDefinitionPresenter[V] = {
     _params += parameter
     this
   }
 
-  def add(step: ExpressionPresenter): FunctionDefinitionPresenter[V] = {
+  private[presenter] def add(step: ExpressionPresenter): FunctionDefinitionPresenter[V] = {
     _block.add(step)
     this
   }
 
-  def setStepPresenters[E <: ExpressionPresenter](steps: List[E]): Unit = {
+  private[presenter] def setStepPresenters[E <: ExpressionPresenter](steps: List[E]): Unit = {
     _block.steps = steps
   }
 
-  def setSteps[E <: Expression](steps: List[E]): Unit = {
+  private[presenter] def setSteps[E <: Expression](steps: List[E]): Unit = {
     _block.setSteps(steps)
   }
 
-  def setParameters(params: List[FunctionParameter]) = {
+  private[presenter] def setParameters(params: List[FunctionParameter]) = {
     _params.clear()
     params.foreach {
-      param => {
-        val presenter = view.createFunctionParameter()
-        presenter.name = param.name
-        _params += presenter
-      }
+      param => addParameter(param)
     }
   }
 
-  def parameters_=(params: List[FunctionParameterPresenter[_]]) = {
+  private[presenter] def addParameter(param: FunctionParameter): Unit = {
+    val presenter = view.createFunctionParameter()
+    presenter.name = param.name
+    _params += presenter
+  }
+
+  private[presenter] def parameters: List[FunctionParameterPresenter[_]] = _params.toList
+
+  private[presenter] def parameters_=(params: List[FunctionParameterPresenter[_]]) = {
     _params.clear()
     _params ++= params
   }
 
-  def addParameter(param: FunctionParameterPresenter[_]): Unit = {
-    _params += param
-  }
 
   private[presenter] def name: String = _name
 
@@ -64,6 +65,8 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   }
 
   override def onNameChange(name: String): Unit = _name = name
+
+  override def onParamAdded(param: FunctionParameterPresenter[_]): Unit = _params += param
 
   override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(_name)

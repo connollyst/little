@@ -26,7 +26,7 @@ trait FunctionDefinitionViewListener extends ViewListener {
 
   def onNameChange(name: String): Unit
 
-  def addParameter(param: FunctionParameterPresenter[_]): Unit
+  def onParamAdded(param: FunctionParameterPresenter[_]): Unit
 
   def compile(): FunctionDefinition
 
