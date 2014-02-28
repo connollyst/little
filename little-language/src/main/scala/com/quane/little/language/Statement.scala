@@ -48,6 +48,11 @@ class SetStatement(pointer: Pointer, val value: Expression)
     actualValue
   }
 
+  override def equals(that: Any) = that match {
+    case s: SetStatement => name.equals(s.name) && value.equals(s.value)
+    case _ => false
+  }
+
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("name", pointer.variableName)
@@ -70,6 +75,11 @@ class GetStatement(pointer: Pointer)
     variable.value
   }
 
+  override def equals(that: Any) = that match {
+    case g: GetStatement => name.equals(g.name)
+    case _ => false
+  }
+
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("name", pointer.variableName)
@@ -88,6 +98,11 @@ class PrintStatement(val value: Expression)
     // TODO this should display a speech bubble over the guy
     log.info(text.asText)
     text
+  }
+
+  override def equals(that: Any) = that match {
+    case p: PrintStatement => value.equals(p.value)
+    case _ => false
   }
 
   override def toString: String =
