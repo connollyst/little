@@ -17,7 +17,7 @@ class TestValuePresenter extends FunSuite with MockitoSugar {
     verify(view).setValue(anyString())
   }
 
-  test("test value is set on listen event") {
+  test("test value is set on view event") {
     val view = mock[ValueView]
     val presenter = new ValuePresenter(view)
     presenter.onValueChange("sean is cool")
@@ -31,7 +31,7 @@ class TestValuePresenter extends FunSuite with MockitoSugar {
     verify(view).setValue("sean is cool")
   }
 
-  test("test value is not propagated to view on listen event") {
+  test("test value is not propagated to view on view event") {
     val view = mock[ValueView]
     val presenter = new ValuePresenter(view)
     presenter.onValueChange("sean is cool")

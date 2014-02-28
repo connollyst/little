@@ -43,7 +43,7 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
     verify(paramPresenter).name = "sean is cool"
   }
 
-  test("test param is added on listen event") {
+  test("test param is added on view event") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
     presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
@@ -52,21 +52,21 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
     assert(presenter.parameters.length == 2)
   }
 
-  test("test param is not propagated to view on listen event") {
+  test("test param is not propagated to view on view event") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
     presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
     verify(view, never()).createFunctionParameter()
   }
 
-  test("test name is set on listen event") {
+  test("test name is set on view event") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
     presenter.onNameChange("sean is cool")
     assert(presenter.name == "sean is cool")
   }
 
-  test("test name is not propagated to view on listen event") {
+  test("test name is not propagated to view on view event") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
     presenter.onNameChange("sean is cool")

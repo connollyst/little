@@ -31,14 +31,14 @@ class TestFunctionParameterPresenter extends FunSuite with MockitoSugar {
     verify(view).setName("sean is cool")
   }
 
-  test("test name is set on listen event") {
+  test("test name is set on view event") {
     val view = mock[FunctionParameterView]
     val presenter = new FunctionParameterPresenter(view)
     presenter.onNameChanged("sean is cool")
     assert(presenter.name == "sean is cool")
   }
 
-  test("test name is not propagated to view on listen event") {
+  test("test name is not propagated to view on view event") {
     val view = mock[FunctionParameterView]
     val presenter = new FunctionParameterPresenter(view)
     presenter.onNameChanged("sean is cool")
