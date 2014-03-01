@@ -23,10 +23,7 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
         case "print dir" => Functions.printDirection
         case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
       }
-    val presenter = view.createFunctionDefinition()
-    presenter.name = fun.name
-    presenter.steps = fun.steps
-    presenter.parameters = fun.params
+    view.createFunctionDefinition().initialize(fun)
   }
 
 }

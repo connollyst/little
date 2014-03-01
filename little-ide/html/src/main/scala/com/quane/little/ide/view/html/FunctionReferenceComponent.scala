@@ -21,10 +21,7 @@ class FunctionReferenceComponent
 
   override def setName(name: String): Unit = nameLabel.value = name
 
-  override def createArgument(): FunctionArgumentPresenter[_] = {
-    val arg = new FunctionArgumentComponent
-    add(arg)
-    new FunctionArgumentPresenter(arg)
-  }
+  override def createArgument(): FunctionArgumentPresenter[_] =
+    new FunctionArgumentPresenter(add(new FunctionArgumentComponent))
 
 }

@@ -18,6 +18,13 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
 
   view.addViewListener(this)
 
+  private[presenter] def initialize(fun: FunctionDefinition): FunctionDefinitionPresenter[V] = {
+    name = fun.name
+    steps = fun.steps
+    parameters = fun.params
+    this
+  }
+
   private[presenter] def +=(param: FunctionParameter): Unit = {
     val presenter = view.createFunctionParameter()
     presenter.name = param.name

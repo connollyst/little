@@ -31,11 +31,8 @@ class WorkspaceLayout
     }
   })
 
-  override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
-    val view = new FunctionDefinitionLayout()
-    add(view)
-    new FunctionDefinitionPresenter(view)
-  }
+  override def createFunctionDefinition(): FunctionDefinitionPresenter[_] =
+    new FunctionDefinitionPresenter(add(new FunctionDefinitionLayout()))
 
 }
 
