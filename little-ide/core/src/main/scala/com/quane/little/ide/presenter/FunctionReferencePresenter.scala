@@ -33,12 +33,8 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
     view.setName(_name)
   }
 
-  private[presenter] def add(name: String, value: Expression) = {
-    println("Adding " + name + " argument.")
-    val argView = view.createArgument()
-    argView.name = name
-    argView.value = value
-  }
+  private[presenter] def add(name: String, value: Expression) =
+    view.createArgument().initialize(name, value)
 
   private[presenter] def add(arg: FunctionArgumentPresenter[_]) = args += arg
 

@@ -76,8 +76,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
   test("test compiled with 1 parameters") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val arg = new FunctionArgumentPresenter(new MockFunctionArgumentView)
-    arg.name = "x"
+    val arg = new FunctionArgumentPresenter(new MockFunctionArgumentView).initialize("x", new Value("y"))
     presenter.add(arg)
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 1)
@@ -85,10 +84,8 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
   test("test compiled with 2 parameters") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val arg1 = new FunctionArgumentPresenter(new MockFunctionArgumentView)
-    val arg2 = new FunctionArgumentPresenter(new MockFunctionArgumentView)
-    arg1.name = "x"
-    arg2.name = "y"
+    val arg1 = new FunctionArgumentPresenter(new MockFunctionArgumentView).initialize("a", new Value("x"))
+    val arg2 = new FunctionArgumentPresenter(new MockFunctionArgumentView).initialize("b", new Value("y"))
     presenter.add(arg1)
     presenter.add(arg2)
     val function = presenter.compile(new Runtime)

@@ -4,7 +4,6 @@ import vaadin.scala.{MenuBar, HorizontalLayout, Label}
 import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
 
-
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
 }

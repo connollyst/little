@@ -16,7 +16,11 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
 
   view.addViewListener(this)
 
-  def compile(scope: Scope): Expression = new Value(_value)
+  private[presenter] def initialize(name: String, value: Expression): FunctionArgumentPresenter[V] = {
+    this.name = name
+    this.value = value
+    this
+  }
 
   private[presenter] def name: String = _name
 
@@ -32,7 +36,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   private[presenter] def value: ExpressionPresenter =
     _value match {
       case Some(e) => e
-      case None => throw new IllegalAccessException("No print expression specified.")
+      case None => throw new IllegalAccessException("No argument value expression specified.")
     }
 
   /** Set the argument value expression.
@@ -55,5 +59,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   }
 
   override def onValueChange(p: ExpressionPresenter) = _value = Some(p)
+
+  def compile(scope: Scope): Expression = value.compile(scope)
 
 }
