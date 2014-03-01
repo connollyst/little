@@ -42,55 +42,91 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
   /* Test View */
 
-  test("test listener registered") {
+  test("should register self as view listener") {
     val view = mock[FunctionReferenceView]
     val presenter = new FunctionReferencePresenter(view)
     verify(view).addViewListener(presenter)
   }
 
-  test("test compiled scope") {
+  test("should compile with scope") {
     val scope = new Runtime
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     val function = presenter.compile(scope)
     assert(function.scope == scope)
   }
 
-  test("test compiled name (default)") {
+  test("should compile with name (default)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     val function = presenter.compile(new Runtime)
     assert(function.name == "???", "expected '???' but got '" + function.name + "'")
   }
 
-  test("test compiled name") {
+  test("should compile with name") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     presenter.name = "newName"
     val function = presenter.compile(new Runtime)
     assert(function.name == "newName")
   }
 
-  test("test compiled with 0 parameters") {
+
+  test("should compile with 0 parameters (initialized)") {
+    val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
+      .initialize(
+        new FunctionReference(mock[Scope], "my name")
+      )
+    val function = presenter.compile(new Runtime)
+    assert(function.args.size == 0)
+  }
+
+  test("should compile with 1 parameters (initialized)") {
+    val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
+      .initialize(
+        new FunctionReference(mock[Scope], "my name")
+          .addArg("x", new Value("y"))
+      )
+    val function = presenter.compile(new Runtime)
+    assert(function.args.size == 1)
+  }
+
+  test("should compile with 2 parameters (initialized)") {
+    val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
+      .initialize(
+        new FunctionReference(mock[Scope], "my name")
+          .addArg("a", new Value("x"))
+          .addArg("b", new Value("y"))
+      )
+    val function = presenter.compile(new Runtime)
+    assert(function.args.size == 2)
+  }
+
+  test("should compile with 0 parameters (added)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 0)
   }
 
-  test("test compiled with 1 parameters") {
+  test("should compile with 1 parameters (added)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val arg = new FunctionArgumentPresenter(new MockFunctionArgumentView).initialize("x", new Value("y"))
-    presenter.add(arg)
+    presenter.add(
+      new FunctionArgumentPresenter(new MockFunctionArgumentView)
+        .initialize("x", new Value("y"))
+    )
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 1)
   }
 
-  test("test compiled with 2 parameters") {
+  test("should compile with 2 parameters (added)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val arg1 = new FunctionArgumentPresenter(new MockFunctionArgumentView).initialize("a", new Value("x"))
-    val arg2 = new FunctionArgumentPresenter(new MockFunctionArgumentView).initialize("b", new Value("y"))
-    presenter.add(arg1)
-    presenter.add(arg2)
+    presenter.add(
+      new FunctionArgumentPresenter(new MockFunctionArgumentView)
+        .initialize("a", new Value("x"))
+    )
+    presenter.add(
+      new FunctionArgumentPresenter(new MockFunctionArgumentView)
+        .initialize("b", new Value("y"))
+    )
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 2)
   }
-
 
 }
