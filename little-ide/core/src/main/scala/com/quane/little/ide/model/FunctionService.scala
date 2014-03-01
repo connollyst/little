@@ -9,6 +9,8 @@ import com.quane.little.language.data.Value
   */
 object FunctionService {
 
+  val FunctionNames = List("blank", "move", "stop", "turn", "voyage", "print dir")
+
   def fetchReference(name: String): FunctionReference = {
     val definition = fetchDefinition(name)
     val reference = new FunctionReference(new Runtime, definition.name)
