@@ -35,7 +35,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new PrintStatementPresenter(view)
     val valuePresenter = mock[ValuePresenter[ValueView]]
     when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
-    val value = new Value("text")
+    val value = mock[Value]
     presenter.expression = value
     verify(view).createValueStatement()
     verify(valuePresenter).initialize(value)
@@ -46,7 +46,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new PrintStatementPresenter(view)
     val valuePresenter = mock[GetStatementPresenter[GetStatementView]]
     when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(valuePresenter)
-    val getter = new GetStatement(mock[Scope], "varName")
+    val getter = mock[GetStatement]
     presenter.expression = getter
     verify(view).createGetStatement()
     verify(valuePresenter).initialize(getter)
