@@ -4,6 +4,7 @@ import com.quane.little.language._
 import com.quane.little.ide.view.{BlockViewListener, BlockView}
 import scala.collection.mutable.ListBuffer
 import scala._
+import com.quane.little.ide.model.FunctionService
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -77,10 +78,9 @@ class BlockPresenter[V <: BlockView](view: V)
   override def requestAddPrintStatement(index: Int) = add(view.addPrintStatement(index), index)
 
   override def requestAddFunctionReference(name: String, index: Int) = {
-    // TODO lookup function reference
-    val fun = view.addFunctionReference(index)
-    fun.name = name
-    add(fun, index)
+    val fun = FunctionService.fetchReference(name)
+    val presenter = view.addFunctionReference(index).initialize(fun)
+    add(presenter, index)
   }
 
   override def compile(scope: Scope): Block = {
