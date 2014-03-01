@@ -17,6 +17,8 @@ class FunctionArgumentComponent
   private var valueComponent: Option[ExpressionView[_]] = None
 
   styleName = FunctionArgumentComponent.Style
+  spacing = true
+
   add(nameLabel)
   add(Label("="))
   add(new FunctionArgumentMenuBar(this))
