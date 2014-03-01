@@ -16,6 +16,8 @@ class FunctionParameterComponent
 
   styleName = Style
 
+  prompt = "parameter name"
+
   textChangeListeners += {
     e: TextChangeEvent =>
       viewListeners.foreach {
