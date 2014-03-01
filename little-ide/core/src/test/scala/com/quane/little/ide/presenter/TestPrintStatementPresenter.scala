@@ -7,7 +7,7 @@ import org.mockito.Mockito._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.data.Value
-import com.quane.little.language.{FunctionReference, Scope, GetStatement}
+import com.quane.little.language.{Expression, FunctionReference, Scope, GetStatement}
 import scala.Predef._
 import org.mockito.Matchers.{eq => the}
 
@@ -79,6 +79,16 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     verify(view, never()).createGetStatement()
     verify(view, never()).createValueStatement()
     verify(view, never()).createFunctionReference()
+  }
+
+  /* Test setting expressions for the value */
+
+  test("should error when adding unknown expression") {
+    val view = mock[PrintStatementView]
+    val presenter = new PrintStatementPresenter(view)
+    intercept[IllegalArgumentException] {
+      presenter.expression = mock[Expression]
+    }
   }
 
   /* Test Compilation */

@@ -3,6 +3,7 @@ package com.quane.little.ide.presenter
 import com.quane.little.language._
 import com.quane.little.ide.view.{BlockViewListener, BlockView}
 import scala.collection.mutable.ListBuffer
+import scala._
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -48,7 +49,7 @@ class BlockPresenter[V <: BlockView](view: V)
           view.addConditional().initialize(c)
         case f: FunctionReference =>
           view.addFunctionReference().initialize(f)
-        case _ => throw new IllegalAccessException("Cannot add " + step)
+        case _ => throw new IllegalArgumentException("Expression not supported: " + step)
       }
     add(presenter, index)
   }

@@ -60,7 +60,7 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
           view.createGetStatement().initialize(g)
         case f: FunctionReference =>
           view.createFunctionReference().initialize(f)
-        case _ => throw new IllegalArgumentException("Value expression now supported: " + e)
+        case _ => throw new IllegalArgumentException("Expression not supported: " + e)
       }
     _value = Some(presenter)
   }

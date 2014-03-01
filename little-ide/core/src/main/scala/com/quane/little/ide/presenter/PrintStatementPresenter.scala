@@ -3,6 +3,7 @@ package com.quane.little.ide.presenter
 import com.quane.little.ide.view.{PrintStatementViewListener, PrintStatementView}
 import com.quane.little.language._
 import com.quane.little.language.data.Value
+import scala._
 import scala.Some
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
@@ -51,7 +52,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
           view.createGetStatement().initialize(g)
         case f: FunctionReference =>
           view.createFunctionReference().initialize(f)
-        case _ => throw new IllegalAccessException("Cannot add " + e)
+        case _ => throw new IllegalArgumentException("Expression not supported: " + e)
       }
     _expression = Some(presenter)
   }

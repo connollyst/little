@@ -6,7 +6,7 @@ import com.quane.little.ide.view._
 import org.mockito.Mockito._
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import com.quane.little.language.{PrintStatement, GetStatement, Scope, SetStatement}
+import com.quane.little.language._
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends FunSuite with MockitoSugar {
@@ -18,6 +18,14 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   }
 
   /* Test adding steps to the block */
+
+  test("should error when adding unknown expression") {
+    val view = mock[BlockView]
+    val presenter = new BlockPresenter(view)
+    intercept[IllegalArgumentException] {
+      presenter.add(mock[Expression])
+    }
+  }
 
   test("test set statement added to view") {
     val view = mock[BlockView]
@@ -101,6 +109,34 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val statement = new PrintStatement("x")
     presenter.add(statement)
     verify(printPresenter).initialize(statement)
+  }
+
+  test("test function reference added to view") {
+    val view = mock[BlockView]
+    val presenter = new BlockPresenter(view)
+    val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
+    when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
+    presenter.add(new FunctionReference(mock[Scope], "funName"))
+    verify(view).addFunctionReference()
+  }
+
+  test("test function reference added to presenter") {
+    val view = mock[BlockView]
+    val presenter = new BlockPresenter(view)
+    val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
+    when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
+    presenter.add(new FunctionReference(mock[Scope], "funName"))
+    assert(presenter.steps.contains(functionPresenter))
+  }
+
+  test("test function reference initialized with value") {
+    val view = mock[BlockView]
+    val presenter = new BlockPresenter(view)
+    val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
+    when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
+    val statement = new FunctionReference(mock[Scope], "funName")
+    presenter.add(statement)
+    verify(functionPresenter).initialize(statement)
   }
 
 }
