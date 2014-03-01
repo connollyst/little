@@ -54,18 +54,11 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
     val presenter =
       e match {
         case v: Value =>
-          val value = view.createValueStatement()
-          value.value = v.asText
-          value
+          view.createValueStatement().initialize(v)
         case g: GetStatement =>
-          val get = view.createGetStatement()
-          get.name = g.name
-          get
+          view.createGetStatement().initialize(g)
         case f: FunctionReference =>
-          val fun = view.createFunctionReference()
-          fun.name = f.name
-          // TODO set function name & args
-          fun
+          view.createFunctionReference().initialize(f)
         case _ => throw new IllegalAccessException("Cannot add " + e)
       }
     value_=(presenter)
