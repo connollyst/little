@@ -3,11 +3,11 @@ package com.quane.little.ide.view.html
 import vaadin.scala._
 import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
+import com.quane.little.ide.model.FunctionService
 
 
 object WorkspaceLayout {
   val Style = "l-workspace"
-  val Functions = List("blank", "move", "stop", "turn", "voyage", "print dir")
 }
 
 class WorkspaceLayout
@@ -20,7 +20,7 @@ class WorkspaceLayout
 
   add(new VerticalLayout {
     // TODO this isn't a long term solution
-    WorkspaceLayout.Functions.foreach {
+    FunctionService.FunctionNames.foreach {
       function =>
         add(Button(function, {
           viewListeners.foreach {
