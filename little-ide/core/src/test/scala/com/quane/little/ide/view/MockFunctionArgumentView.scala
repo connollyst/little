@@ -1,5 +1,7 @@
 package com.quane.little.ide.view
 
+import com.quane.little.ide.presenter.{ValuePresenter, GetStatementPresenter, FunctionReferencePresenter}
+
 /** An implementation of [[com.quane.little.ide.view.FunctionArgumentView]] for
   * testing purposes.
   *
@@ -9,8 +11,12 @@ class MockFunctionArgumentView
   extends FunctionArgumentView
   with MockView {
 
-  def setName(name: String) = Unit
+  override def setName(name: String) = Unit
 
-  def setValue(value: String) = Unit
+  override def createValueStatement() = new ValuePresenter(new MockValueView)
+
+  override def createGetStatement() = new GetStatementPresenter(new MockGetStatementView)
+
+  override def createFunctionReference() = new FunctionReferencePresenter(new MockFunctionReferenceView)
 
 }

@@ -1,7 +1,8 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{HorizontalLayout, Label}
-import com.quane.little.ide.view.FunctionArgumentView
+import vaadin.scala.{MenuBar, HorizontalLayout, Label}
+import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
+import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
 
 
 object FunctionArgumentComponent {
@@ -14,15 +15,93 @@ class FunctionArgumentComponent
   with HtmlComponent {
 
   private val nameLabel = new Label()
-  private val valueLabel = new Label()
+  private var valueComponent: Option[ExpressionView[_]] = None
 
   styleName = FunctionArgumentComponent.Style
   add(nameLabel)
   add(Label("="))
-  add(valueLabel)
+  add(new FunctionArgumentMenuBar(this))
+
+  private[html] def requestAddTextLiteral() = {
+    // TODO skip if already a value statement
+    val view = createValueStatement()
+    viewListeners.foreach {
+      listener => listener.onValueChange(view)
+    }
+  }
+
+  private[html] def requestAddGetStatement() = {
+    // TODO skip if already a get statement
+    val view = createGetStatement()
+    viewListeners.foreach {
+      listener => listener.onValueChange(view)
+    }
+  }
+
+  private[html] def requestAddFunctionReference(name: String) = {
+    // TODO skip if already this function reference
+    val view = createFunctionReference()
+    viewListeners.foreach {
+      // TODO we need to look up the function definition
+      listener => listener.onValueChange(view)
+    }
+  }
+
+  override def createValueStatement(): ValuePresenter[ValueLayout] = {
+    removeValueComponent()
+    val view = new ValueLayout
+    valueComponent = Some(view)
+    add(view)
+    new ValuePresenter(view)
+  }
+
+  override def createGetStatement(): GetStatementPresenter[GetStatementLayout] = {
+    removeValueComponent()
+    val view = new GetStatementLayout
+    valueComponent = Some(view)
+    add(view)
+    new GetStatementPresenter(view)
+  }
+
+  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
+    removeValueComponent()
+    val view = new FunctionReferenceComponent
+    valueComponent = Some(view)
+    add(view)
+    new FunctionReferencePresenter(view)
+  }
+
+  private def removeValueComponent(): Unit = {
+    valueComponent match {
+      case e: Some[ExpressionView[_]] => e.get.removeFromParent()
+      case None => // do nothing
+    }
+    valueComponent = None
+  }
 
   override def setName(name: String): Unit = nameLabel.value = name
 
-  override def setValue(value: String): Unit = valueLabel.value = value
+}
+
+private class FunctionArgumentMenuBar(view: FunctionArgumentComponent)
+  extends MenuBar {
+
+  val item = addItem("∆")
+  item.addItem("text", {
+    item => view.requestAddTextLiteral()
+  })
+  item.addItem("get", {
+    item => view.requestAddGetStatement()
+  })
+  val functions = item.addItem("functions")
+  functions.addItem("move", {
+    item => view.requestAddFunctionReference(item.text)
+  })
+  functions.addItem("stop", {
+    item => view.requestAddFunctionReference(item.text)
+  })
+  functions.addItem("turn", {
+    item => view.requestAddFunctionReference(item.text)
+  })
 
 }

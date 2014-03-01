@@ -37,8 +37,7 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
     println("Adding " + name + " argument.")
     val argView = view.createArgument()
     argView.name = name
-    // TODO the ArgumentPresenter should support ExpressionPresenters
-    argView.value = value.toString
+    argView.value = value
   }
 
   private[presenter] def add(arg: FunctionArgumentPresenter[_]) = args += arg
