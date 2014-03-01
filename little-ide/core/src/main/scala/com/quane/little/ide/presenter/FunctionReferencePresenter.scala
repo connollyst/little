@@ -18,7 +18,6 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
   view.addViewListener(this)
 
   private[presenter] def initialize(fun: FunctionReference): FunctionReferencePresenter[V] = {
-    println("Initializing function reference: " + fun.name)
     name = fun.name
     fun.args foreach {
       case (name, value) => add(name, value)
@@ -33,10 +32,11 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
     view.setName(_name)
   }
 
-  private[presenter] def add(name: String, value: Expression) =
-    view.createArgument().initialize(name, value)
+  private[presenter] def add(name: String, value: Expression): Unit =
+    add(view.createArgument().initialize(name, value))
 
-  private[presenter] def add(arg: FunctionArgumentPresenter[_]) = args += arg
+  private[presenter] def add(arg: FunctionArgumentPresenter[_]): Unit =
+    args += arg
 
   override def compile(scope: Scope): FunctionReference = {
     val fun = new FunctionReference(scope, _name)
@@ -44,10 +44,8 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
     fun
   }
 
-  private def compileArgs(fun: FunctionReference) = {
-    args.foreach {
-      arg => fun.addArg(arg.name, arg.compile(fun))
-    }
+  private def compileArgs(fun: FunctionReference) = args.foreach {
+    arg => fun.addArg(arg.name, arg.compile(fun))
   }
 
 }
