@@ -4,6 +4,7 @@ import com.quane.little.ide.view.{SetStatementViewListener, SetStatementView}
 import com.quane.little.language._
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
+import scala._
 import scala.Some
 
 /** Presenter for views representing a [[com.quane.little.language.SetStatement]].
@@ -59,18 +60,9 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
           view.createGetStatement().initialize(g)
         case f: FunctionReference =>
           view.createFunctionReference().initialize(f)
-        case _ => throw new IllegalAccessException("Cannot add " + e)
+        case _ => throw new IllegalArgumentException("Value expression now supported: " + e)
       }
-    value_=(presenter)
-  }
-
-  /** Set the value presenter.
-    *
-    * @param value the value presenter
-    */
-  private[presenter] def value_=(value: ExpressionPresenter): Unit = {
-    _value = Some(value)
-    // TODO notify view?
+    _value = Some(presenter)
   }
 
   override def onNameChange(name: String): Unit = _name = name
@@ -79,7 +71,6 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
 
 
   override def compile(scope: Scope): SetStatement =
-  // TODO what if _value isn't set?
-    new SetStatement(new Pointer(scope, _name), _value.get.compile(scope))
+    new SetStatement(new Pointer(scope, _name), value.compile(scope))
 
 }
