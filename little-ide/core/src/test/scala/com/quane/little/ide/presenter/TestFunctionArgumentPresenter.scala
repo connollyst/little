@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.language.{FunctionReference, Scope, GetStatement, Runtime}
+import com.quane.little.language._
 import org.scalatest.FunSuite
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -38,7 +38,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionArgumentPresenter(view)
     val valuePresenter = mock[ValuePresenter[ValueView]]
     when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
-    val value = new Value("text")
+    val value = mock[Value]
     presenter.value = value
     verify(view).createValueStatement()
     verify(valuePresenter).initialize(value)
@@ -49,7 +49,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionArgumentPresenter(view)
     val valuePresenter = mock[GetStatementPresenter[GetStatementView]]
     when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(valuePresenter)
-    val getter = new GetStatement(mock[Scope], "varName")
+    val getter = mock[GetStatement]
     presenter.value = getter
     verify(view).createGetStatement()
     verify(valuePresenter).initialize(getter)
@@ -86,40 +86,38 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
 
   /* Test Compilation */
 
-  test("test compiled string value (default)") {
-    val view = new MockFunctionArgumentView
-    val presenter = new FunctionArgumentPresenter(view)
-    val scope = new Runtime
-    val argument = presenter.compile(scope)
-    val value = argument.evaluate
-    assert(value == "", "expected '' but got '" + argument + "'")
+  test("should compile print(value expression)") {
+    assertCompiledValue(new Value("text"))
   }
 
-  test("test compiled boolean value (default)") {
-    val view = new MockFunctionArgumentView
-    val presenter = new FunctionArgumentPresenter(view)
-    val scope = new Runtime
-    val argument = presenter.compile(scope)
-    val value = argument.evaluate
-    assert(value == false, "expected '' but got '" + argument + "'")
+  test("should compile print(get expression)") {
+    assertCompiledValue(new GetStatement(mock[Scope], "varName"))
   }
 
-  test("test compiled int value (default)") {
-    val view = new MockFunctionArgumentView
-    val presenter = new FunctionArgumentPresenter(view)
-    val scope = new Runtime
-    val argument = presenter.compile(scope)
-    val value = argument.evaluate
-    assert(value == 0, "expected '' but got '" + argument + "'")
+  test("should compile print(function reference)") {
+    assertCompiledValue(new FunctionReference(mock[Scope], "funName"))
   }
 
-  test("test compiled double value (default)") {
-    val view = new MockFunctionArgumentView
+  private def assertCompiledValue(value: Expression) = {
+    val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
-    val scope = new Runtime
-    val argument = presenter.compile(scope)
-    val value = argument.evaluate
-    assert(value == 0.0, "expected '' but got '" + argument + "'")
+    when[GetStatementPresenter[_]](view.createGetStatement())
+      .thenReturn(new GetStatementPresenter(new MockGetStatementView))
+    when[ValuePresenter[_]](view.createValueStatement())
+      .thenReturn(new ValuePresenter(new MockValueView))
+    when[FunctionReferencePresenter[_]](view.createFunctionReference())
+      .thenReturn(new FunctionReferencePresenter(new MockFunctionReferenceView))
+    presenter.value = value
+    val compiled = presenter.compile(mock[Scope])
+    assert(compiled == value)
+  }
+
+  test("should error if compiled without expression") {
+    val view = mock[FunctionArgumentView]
+    val presenter = new FunctionArgumentPresenter(view)
+    intercept[IllegalAccessException] {
+      presenter.compile(mock[Scope])
+    }
   }
 
 }
