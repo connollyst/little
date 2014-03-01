@@ -10,6 +10,7 @@ class ValueLayout
   with HtmlComponent {
 
   val valueField = new TextField {
+    prompt = "value"
     textChangeListeners += {
       e: TextChangeEvent =>
       viewListeners.foreach {

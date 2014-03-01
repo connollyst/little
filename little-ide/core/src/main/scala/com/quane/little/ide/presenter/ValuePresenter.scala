@@ -12,7 +12,7 @@ class ValuePresenter[V <: ValueView](view: V)
   extends ExpressionPresenter
   with ValueViewListener {
 
-  private var _value: String = "???"
+  private var _value: String = ""
 
   view.addViewListener(this)
   view.setValue(_value)

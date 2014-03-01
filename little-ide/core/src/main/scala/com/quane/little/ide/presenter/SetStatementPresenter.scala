@@ -15,7 +15,7 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
   extends StatementPresenter
   with SetStatementViewListener {
 
-  private var _name = "???"
+  private var _name = ""
   private var _value: Option[ExpressionPresenter] = None
 
   view.addViewListener(this)

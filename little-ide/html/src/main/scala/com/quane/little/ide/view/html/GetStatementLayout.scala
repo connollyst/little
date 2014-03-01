@@ -20,6 +20,7 @@ class GetStatementLayout
   with HtmlComponent {
 
   private val nameField = new TextField {
+    prompt = "variable name"
     textChangeListeners += {
       e: AbstractTextField.TextChangeEvent =>
         viewListeners.foreach {

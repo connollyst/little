@@ -16,6 +16,7 @@ class SetStatementLayout
   with HtmlComponent {
 
   private val nameField = new TextField {
+    prompt = "variable name"
     textChangeListeners += {
       e: TextChangeEvent =>
         viewListeners.foreach {
@@ -34,7 +35,6 @@ class SetStatementLayout
   override def setName(name: String): Unit = nameField.value = name
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
-    println("Creating value statement")
     removeValueComponent()
     val view = new ValueLayout
     valueComponent = Some(view)
@@ -43,7 +43,6 @@ class SetStatementLayout
   }
 
   override def createGetStatement(): GetStatementPresenter[GetStatementLayout] = {
-    println("Creating get statement")
     removeValueComponent()
     val view = new GetStatementLayout
     valueComponent = Some(view)
@@ -52,7 +51,6 @@ class SetStatementLayout
   }
 
   override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
-    println("Creating function reference")
     removeValueComponent()
     val view = new FunctionReferenceComponent
     valueComponent = Some(view)
@@ -63,7 +61,6 @@ class SetStatementLayout
   private def removeValueComponent(): Unit = {
     valueComponent match {
       case e: Some[ExpressionView[_]] =>
-        println("Remove old value component")
         e.get.removeFromParent()
       case None => // do nothing
     }
