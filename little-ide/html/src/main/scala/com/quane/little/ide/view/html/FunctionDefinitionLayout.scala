@@ -5,16 +5,8 @@ import com.quane.little.ide.presenter.FunctionParameterPresenter
 import com.quane.little.ide.presenter.FunctionReferencePresenter
 import com.quane.little.ide.view.FunctionDefinitionView
 
-import vaadin.scala.Button
-import vaadin.scala.Component
-import vaadin.scala.CssLayout
-import vaadin.scala.HorizontalLayout
-import vaadin.scala.Label
-import vaadin.scala.Layout
+import vaadin.scala._
 import vaadin.scala.Measure
-import vaadin.scala.TextField
-import vaadin.scala.Units
-import vaadin.scala.VerticalLayout
 import vaadin.scala.AbstractTextField.TextChangeEvent
 
 object FunctionDefinitionLayout {
@@ -84,7 +76,7 @@ class FunctionDefinitionLayout
     new FunctionReferencePresenter(view)
   }
 
-  def onNameChange(name: String): Unit = {
+  private[html] def onNameChange(name: String): Unit = {
     viewListeners.foreach {
       listener => listener.onNameChange(name)
     }
@@ -96,17 +88,26 @@ class FunctionDefinitionLayout
     }
   }
 
+  private[html] def close(): Unit = {
+    parent match {
+      case Some(c) => c match {
+        case container: ComponentContainer => container.removeComponent(this)
+        case _ => throw new IllegalAccessException("Cannot remove " + this + " from " + parent)
+      }
+      case None => // strange
+    }
+  }
+
 }
 
 private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   extends HorizontalLayout {
 
-  // TODO should be a label that, when clicked, becomes a text field
-
   private val nameField = createNameField()
   private val parameterLayout = createParameterLayout()
   private val newParameterButton = createNewParameterButton()
   private val saveButton = createSaveButton()
+  private val closeButton = createCloseButton()
 
   styleName = FunctionDefinitionLayout.StyleHead
   spacing = true
@@ -114,13 +115,16 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   add(parameterLayout)
   add(newParameterButton)
   add(saveButton)
+  add(closeButton)
 
   private def createNameField(): TextField = new TextField {
+    prompt = "function name"
     textChangeListeners += {
       e: TextChangeEvent =>
         definition.onNameChange(e.text)
     }
     styleName = FunctionDefinitionLayout.StyleHeadNameField
+    // TODO should be a label that, when clicked, becomes a text field
   }
 
   private def createParameterLayout(): Layout = new HorizontalLayout {
@@ -134,10 +138,17 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   })
 
   private def createSaveButton(): Component = Button(
-  "Save", {
+  "Compile", {
     val header = FunctionDefinitionHeader.this
     val compiled = header.definition.compile()
     println("Compiled: " + compiled)
+    () // how do I avoid this?
+  })
+
+  private def createCloseButton(): Component = Button(
+  "Close", {
+    val header = FunctionDefinitionHeader.this
+    header.definition.close()
     () // how do I avoid this?
   })
 
