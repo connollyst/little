@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
-import com.quane.little.language.{Functions, FunctionDefinition}
+import com.quane.little.ide.model.FunctionService
 
 /** Presenter for the workspace in which the user can build code.
   *
@@ -13,16 +13,7 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
   view.addViewListener(this)
 
   override def openFunctionDefinition(name: String) = {
-    val fun: FunctionDefinition =
-      name match {
-        case "blank" => Functions.blank
-        case "move" => Functions.move
-        case "stop" => Functions.stop
-        case "turn" => Functions.turn
-        case "voyage" => Functions.voyage
-        case "print dir" => Functions.printDirection
-        case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
-      }
+    val fun = FunctionService.fetchDefinition(name)
     view.createFunctionDefinition().initialize(fun)
   }
 
