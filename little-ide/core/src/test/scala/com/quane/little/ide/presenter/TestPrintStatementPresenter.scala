@@ -94,36 +94,26 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   /* Test Compilation */
 
   test("should compile print(value expression)") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
-    val valuePresenter = new ValuePresenter(new MockValueView)
-    when[ValuePresenter[_]](view.createValueStatement())
-      .thenReturn(valuePresenter)
-    val value = new Value("text")
-    presenter.expression = value
-    val compiled = presenter.compile(mock[Scope])
-    assert(compiled.value == value)
+    assertCompiledValue(new Value("text"))
   }
 
   test("should compile print(get expression)") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
-    val valuePresenter = new GetStatementPresenter(new MockGetStatementView)
-    when[GetStatementPresenter[_]](view.createGetStatement())
-      .thenReturn(valuePresenter)
-    val value = new GetStatement(mock[Scope], "varName")
-    presenter.expression = value
-    val compiled = presenter.compile(mock[Scope])
-    assert(compiled.value == value)
+    assertCompiledValue(new GetStatement(mock[Scope], "varName"))
   }
 
   test("should compile print(function reference)") {
+    assertCompiledValue(new FunctionReference(mock[Scope], "funName"))
+  }
+
+  private def assertCompiledValue(value: Expression) = {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
-    val valuePresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
+    when[GetStatementPresenter[_]](view.createGetStatement())
+      .thenReturn(new GetStatementPresenter(new MockGetStatementView))
+    when[ValuePresenter[_]](view.createValueStatement())
+      .thenReturn(new ValuePresenter(new MockValueView))
     when[FunctionReferencePresenter[_]](view.createFunctionReference())
-      .thenReturn(valuePresenter)
-    val value = new FunctionReference(mock[Scope], "funName")
+      .thenReturn(new FunctionReferencePresenter(new MockFunctionReferenceView))
     presenter.expression = value
     val compiled = presenter.compile(mock[Scope])
     assert(compiled.value == value)
