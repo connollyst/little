@@ -167,4 +167,50 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     verify(functionPresenter).initialize(statement)
   }
 
+  /* Test Compilation */
+
+  test("should compile print(value expression)") {
+    val view = mock[SetStatementView]
+    val presenter = new SetStatementPresenter(view)
+    val valuePresenter = new ValuePresenter(new MockValueView)
+    when[ValuePresenter[_]](view.createValueStatement())
+      .thenReturn(valuePresenter)
+    val value = new Value("text")
+    presenter.value = value
+    val compiled = presenter.compile(mock[Scope])
+    assert(compiled.value == value)
+  }
+
+  test("should compile print(get expression)") {
+    val view = mock[SetStatementView]
+    val presenter = new SetStatementPresenter(view)
+    val valuePresenter = new GetStatementPresenter(new MockGetStatementView)
+    when[GetStatementPresenter[_]](view.createGetStatement())
+      .thenReturn(valuePresenter)
+    val value = new GetStatement(mock[Scope], "varName")
+    presenter.value = value
+    val compiled = presenter.compile(mock[Scope])
+    assert(compiled.value == value)
+  }
+
+  test("should compile print(function reference)") {
+    val view = mock[SetStatementView]
+    val presenter = new SetStatementPresenter(view)
+    val valuePresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
+    when[FunctionReferencePresenter[_]](view.createFunctionReference())
+      .thenReturn(valuePresenter)
+    val value = new FunctionReference(mock[Scope], "funName")
+    presenter.value = value
+    val compiled = presenter.compile(mock[Scope])
+    assert(compiled.value == value)
+  }
+
+  test("should error if compiled without expression") {
+    val view = mock[SetStatementView]
+    val presenter = new SetStatementPresenter(view)
+    intercept[IllegalAccessException] {
+      presenter.compile(mock[Scope])
+    }
+  }
+
 }

@@ -69,7 +69,6 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
 
   override def onValueChange(p: ExpressionPresenter) = _value = Some(p)
 
-
   override def compile(scope: Scope): SetStatement =
     new SetStatement(new Pointer(scope, _name), value.compile(scope))
 
