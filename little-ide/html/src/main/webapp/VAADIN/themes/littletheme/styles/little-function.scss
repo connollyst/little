@@ -23,6 +23,14 @@ $border-radius-small: 2px;
 
 }
 
+.l-function-def-head .l-close-btn {
+  visibility: hidden;
+}
+
+.l-function-def-head:hover .l-close-btn {
+  visibility: visible;
+}
+
 .l-function-def-param {
   color: $text-color;
 }

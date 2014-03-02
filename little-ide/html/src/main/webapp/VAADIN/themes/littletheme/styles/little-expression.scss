@@ -14,3 +14,11 @@ $border-radius: 4px;
   -moz-border-radius: $border-radius;
   -webkit-border-radius: $border-radius;
 }
+
+.l-expression > .v-slot > .l-close-btn {
+  visibility: hidden;
+}
+
+.l-expression:hover > .v-slot > .l-close-btn {
+  visibility: visible;
+}
