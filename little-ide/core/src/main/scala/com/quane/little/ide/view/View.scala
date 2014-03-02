@@ -11,7 +11,11 @@ trait View[L <: ViewPresenter] {
 
   protected val viewPresenters = new ListBuffer[L]
 
-  def addViewPresenter(l: L) = viewPresenters += l
+  protected val viewChildren = new ListBuffer[View[_]]
+
+  def addViewPresenter(presenter: L) = viewPresenters += presenter
+
+  def addViewChild(child: View[_]) = viewChildren += child
 
   /** Remove this view from it's parent view.
     */
@@ -19,7 +23,7 @@ trait View[L <: ViewPresenter] {
 
 }
 
-/** A view listener in the little IDE.
+/** A view presenter in the little IDE.
   *
   * @author Sean Connolly
   */
