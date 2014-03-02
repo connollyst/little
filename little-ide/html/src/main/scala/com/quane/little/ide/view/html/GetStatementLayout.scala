@@ -17,9 +17,20 @@ object GetStatementLayout {
 class GetStatementLayout
   extends HorizontalLayout
   with GetStatementView
-  with HtmlComponent {
+  with HtmlComponent
+  with CloseableComponent {
 
-  private val nameField = new TextField {
+  private val nameField = createNameField()
+
+  styleName = ExpressionLayout.Style + " " + GetStatementLayout.Style
+  nameField.styleName = GetStatementLayout.StyleValue
+
+  add(nameField)
+  add(CloseButton(this))
+
+  override def setName(name: String): Unit = nameField.value = name
+
+  private def createNameField() = new TextField {
     prompt = "variable name"
     textChangeListeners += {
       e: AbstractTextField.TextChangeEvent =>
@@ -28,11 +39,5 @@ class GetStatementLayout
         }
     }
   }
-
-  add(nameField)
-  styleName = ExpressionLayout.Style + " " + GetStatementLayout.Style
-  nameField.styleName = GetStatementLayout.StyleValue
-
-  def setName(name: String): Unit = nameField.value = name
 
 }

@@ -9,9 +9,10 @@ import com.quane.little.ide.presenter.FunctionArgumentPresenter
   * @author Sean Connolly
   */
 class FunctionReferenceLayout
-extends HorizontalLayout
+  extends HorizontalLayout
   with FunctionReferenceView
-  with HtmlComponent {
+  with HtmlComponent
+  with CloseableComponent {
 
   private val nameLabel = Label("???")
 
@@ -19,23 +20,12 @@ extends HorizontalLayout
   spacing = true
 
   add(nameLabel)
-  add(createCloseButton())
+  add(CloseButton(this))
 
   override def setName(name: String): Unit = nameLabel.value = Some(name)
 
   override def createArgument(): FunctionArgumentPresenter[_] =
     new FunctionArgumentPresenter(add(new FunctionArgumentComponent))
-
-  private def createCloseButton(): CloseButton = {
-    new CloseButton {
-      clickListeners += {
-        ClickEvent => println(
-          "Closing " + getClass.getSimpleName + ": '"
-            + nameLabel.value.getOrElse("") + "'"
-        )
-      }
-    }
-  }
 
 }
 

@@ -7,19 +7,24 @@ import vaadin.scala.AbstractTextField.TextChangeEvent
 class ValueLayout
   extends CssLayout
   with ValueView
-  with HtmlComponent {
+  with HtmlComponent
+  with CloseableComponent {
 
-  val valueField = new TextField {
+  val valueField = createValueField()
+
+  add(valueField)
+  add(CloseButton(this))
+
+  override def setValue(value: String): Unit = valueField.value = value
+
+  private def createValueField() = new TextField {
     prompt = "value"
     textChangeListeners += {
       e: TextChangeEvent =>
-      viewListeners.foreach {
+        viewListeners.foreach {
           listener => listener.onValueChange(e.text)
         }
     }
   }
-  add(valueField)
-
-  override def setValue(value: String): Unit = valueField.value = value
-
+  
 }

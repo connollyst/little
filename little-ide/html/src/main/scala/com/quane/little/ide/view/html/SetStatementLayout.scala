@@ -13,9 +13,23 @@ object SetStatementLayout {
 class SetStatementLayout
   extends HorizontalLayout
   with SetStatementView
-  with HtmlComponent {
+  with HtmlComponent
+  with CloseableComponent {
 
-  private val nameField = new TextField {
+  private val nameField = createNameTextField()
+  private var valueComponent: Option[ExpressionView[_]] = None
+
+  styleName = ExpressionLayout.Style + " " + SetStatementLayout.Style
+  spacing = true
+
+  add(nameField)
+  add(Label("="))
+  add(new ValueMenuBar(this))
+  add(CloseButton(this))
+
+  override def setName(name: String): Unit = nameField.value = name
+
+  private def createNameTextField() = new TextField {
     prompt = "variable name"
     textChangeListeners += {
       e: TextChangeEvent =>
@@ -24,15 +38,6 @@ class SetStatementLayout
         }
     }
   }
-  private var valueComponent: Option[ExpressionView[_]] = None
-
-  styleName = ExpressionLayout.Style + " " + SetStatementLayout.Style
-  spacing = true
-  add(nameField)
-  add(Label("="))
-  add(new ValueMenuBar(this))
-
-  override def setName(name: String): Unit = nameField.value = name
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
     removeValueComponent()

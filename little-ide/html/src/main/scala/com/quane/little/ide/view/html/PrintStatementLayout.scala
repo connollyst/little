@@ -13,7 +13,8 @@ object PrintStatementLayout {
 class PrintStatementLayout
   extends HorizontalLayout
   with PrintStatementView
-  with HtmlComponent {
+  with HtmlComponent
+  with CloseableComponent {
 
   private val printLabel = Label("print")
   private var printValue: Option[ExpressionView[_]] = None
@@ -22,6 +23,7 @@ class PrintStatementLayout
   spacing = true
   add(printLabel)
   add(new PrintMenuBar(this))
+  add(CloseButton(this))
 
   private[html] def requestAddTextLiteral() = {
     // TODO skip if already a value statement

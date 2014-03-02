@@ -21,7 +21,8 @@ object FunctionDefinitionLayout {
 class FunctionDefinitionLayout
   extends VerticalLayout
   with FunctionDefinitionView
-  with HtmlComponent {
+  with HtmlComponent
+  with CloseableComponent {
 
   val stepList = new BlockLayout
 
@@ -33,6 +34,8 @@ class FunctionDefinitionLayout
   add(header)
   add(body)
   add(footer)
+
+  override def setName(name: String): Unit = header.name_=(name)
 
   private def createHeader(): FunctionDefinitionHeader = {
     new FunctionDefinitionHeader(this)
@@ -55,8 +58,6 @@ class FunctionDefinitionLayout
     footer.styleName = FunctionDefinitionLayout.StyleFoot
     footer
   }
-
-  override def setName(name: String): Unit = header.name_=(name)
 
   override def createFunctionParameter(): FunctionParameterPresenter[_] = {
     val view = new FunctionParameterComponent()
@@ -85,16 +86,6 @@ class FunctionDefinitionLayout
   private[html] def requestNewParameter(): Unit = {
     viewListeners.foreach {
       listener => listener.onParamAdded(createFunctionParameter())
-    }
-  }
-
-  private[html] def close(): Unit = {
-    parent match {
-      case Some(c) => c match {
-        case container: ComponentContainer => container.removeComponent(this)
-        case _ => throw new IllegalAccessException("Cannot remove " + this + " from " + parent)
-      }
-      case None => // strange
     }
   }
 
@@ -131,13 +122,13 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
     spacing = true
   }
 
-  private def createNewParameterButton(): Component = Button(
+  private def createNewParameterButton() = Button(
   "+", {
     definition.requestNewParameter()
     () // how do I avoid this?
   })
 
-  private def createSaveButton(): Component = Button(
+  private def createSaveButton() = Button(
   "Compile", {
     val header = FunctionDefinitionHeader.this
     val compiled = header.definition.compile()
@@ -145,12 +136,7 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
     () // how do I avoid this?
   })
 
-  private def createCloseButton(): Component = Button(
-  "Close", {
-    val header = FunctionDefinitionHeader.this
-    header.definition.close()
-    () // how do I avoid this?
-  })
+  private def createCloseButton() = CloseButton(definition)
 
   def name_=(n: String) = {
     nameField.value = n

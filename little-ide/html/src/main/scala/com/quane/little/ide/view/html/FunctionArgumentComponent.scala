@@ -11,7 +11,8 @@ object FunctionArgumentComponent {
 class FunctionArgumentComponent
   extends HorizontalLayout
   with FunctionArgumentView
-  with HtmlComponent {
+  with HtmlComponent
+  with CloseableComponent {
 
   private val nameLabel = new Label()
   private var valueComponent: Option[ExpressionView[_]] = None
@@ -22,6 +23,7 @@ class FunctionArgumentComponent
   add(nameLabel)
   add(Label("="))
   add(new FunctionArgumentMenuBar(this))
+  add(CloseButton(this))
 
   private[html] def requestAddTextLiteral() = {
     // TODO skip if already a value statement
