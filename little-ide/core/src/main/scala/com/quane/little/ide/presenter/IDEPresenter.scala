@@ -9,7 +9,7 @@ import com.quane.little.ide.view.{IDEViewPresenter, IDEView}
 class IDEPresenter[V <: IDEView](view: V)
   extends IDEViewPresenter {
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
 
   val toolbox = view.createToolbox()
   val workspace = view.createWorkspace()

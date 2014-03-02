@@ -130,31 +130,31 @@ class BlockLayout
   //  }
 
   def requestAddConditional(index: Int) = {
-    viewListeners.foreach {
+    viewPresenters.foreach {
       listener => listener.requestAddConditional(index)
     }
   }
 
   def requestAddGetStatement(index: Int) = {
-    viewListeners.foreach {
+    viewPresenters.foreach {
       listener => listener.requestAddGetStatement(index)
     }
   }
 
   def requestAddSetStatement(index: Int) = {
-    viewListeners.foreach {
+    viewPresenters.foreach {
       listener => listener.requestAddSetStatement(index)
     }
   }
 
   def requestAddPrintStatement(index: Int) = {
-    viewListeners.foreach {
+    viewPresenters.foreach {
       listener => listener.requestAddPrintStatement(index)
     }
   }
 
   def requestAddFunctionReference(name: String, index: Int) = {
-    viewListeners.foreach {
+    viewPresenters.foreach {
       listener => listener.requestAddFunctionReference(name, index)
     }
   }

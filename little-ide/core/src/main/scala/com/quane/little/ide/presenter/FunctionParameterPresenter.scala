@@ -12,7 +12,7 @@ class FunctionParameterPresenter[V <: FunctionParameterView](view: V)
 
   private var _name = ""
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
 
   override def onNameChanged(n: String) = _name = n
 

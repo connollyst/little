@@ -31,7 +31,7 @@ class FunctionArgumentComponent
   private[html] def requestAddTextLiteral() = {
     // TODO skip if already a value statement
     val view = createValueStatement()
-    viewListeners.foreach {
+    viewPresenters.foreach {
       listener => listener.onValueChange(view)
     }
   }
@@ -39,7 +39,7 @@ class FunctionArgumentComponent
   private[html] def requestAddGetStatement() = {
     // TODO skip if already a get statement
     val view = createGetStatement()
-    viewListeners.foreach {
+    viewPresenters.foreach {
       listener => listener.onValueChange(view)
     }
   }
@@ -47,7 +47,7 @@ class FunctionArgumentComponent
   private[html] def requestAddFunctionReference(name: String) = {
     // TODO skip if already this function reference
     val view = createFunctionReference()
-    viewListeners.foreach {
+    viewPresenters.foreach {
       // TODO we need to look up the function definition
       listener => listener.onValueChange(view)
     }

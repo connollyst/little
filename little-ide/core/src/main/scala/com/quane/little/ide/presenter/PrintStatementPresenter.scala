@@ -16,7 +16,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
 
   private var _expression: Option[ExpressionPresenter] = None
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
 
   /** Initialize the print presenter.
     *

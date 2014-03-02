@@ -14,7 +14,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    verify(view).addViewListener(presenter)
+    verify(view).addViewPresenter(presenter)
   }
 
   /* Test adding steps to the block */

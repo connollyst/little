@@ -14,7 +14,7 @@ class TestValueLayout extends FunSuite with MockitoSugar {
   test("should propagate changing value to presenter") {
     val view = new ValueLayout
     val presenter = mock[ValueViewPresenter]
-    view.addViewListener(presenter)
+    view.addViewPresenter(presenter)
     setText(view.valueField, "hello world")
     verify(presenter).onValueChange("hello world")
   }

@@ -23,7 +23,7 @@ class WorkspaceLayout
     FunctionService.FunctionNames.foreach {
       function =>
         add(Button(function, {
-          viewListeners.foreach {
+          viewPresenters.foreach {
             listener: WorkspaceViewPresenter =>
               listener.openFunctionDefinition(function)
           }

@@ -10,7 +10,7 @@ import com.quane.little.ide.model.FunctionService
 class WorkspacePresenter[V <: WorkspaceView](view: V)
   extends WorkspaceViewPresenter {
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
 
   override def openFunctionDefinition(name: String) = {
     val fun = FunctionService.fetchDefinition(name)

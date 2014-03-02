@@ -23,7 +23,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
-    verify(view).addViewListener(presenter)
+    verify(view).addViewPresenter(presenter)
   }
 
   test("test name propagates to view") {

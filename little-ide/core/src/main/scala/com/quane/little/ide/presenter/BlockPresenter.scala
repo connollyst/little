@@ -16,7 +16,7 @@ class BlockPresenter[V <: BlockView](view: V)
 
   private val _steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter]
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
 
   private[presenter] def length = _steps.length
 

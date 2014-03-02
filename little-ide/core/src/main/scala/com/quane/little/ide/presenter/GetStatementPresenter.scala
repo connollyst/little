@@ -14,7 +14,7 @@ class GetStatementPresenter[V <: GetStatementView](view: V)
 
   private var _name = ""
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
   view.setName(_name)
 
 

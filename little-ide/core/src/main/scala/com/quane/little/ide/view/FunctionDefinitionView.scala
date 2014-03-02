@@ -15,7 +15,7 @@ trait FunctionDefinitionView extends View[FunctionDefinitionViewPresenter] {
   def createFunctionReference(): FunctionReferencePresenter[_]
 
   def compile(): List[FunctionDefinition] = {
-    viewListeners.map {
+    viewPresenters.map {
       listener => listener.compile()
     }.toList
   }

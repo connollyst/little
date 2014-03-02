@@ -27,7 +27,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
-    verify(view).addViewListener(presenter)
+    verify(view).addViewPresenter(presenter)
   }
 
   test("test value expression propagates to view") {

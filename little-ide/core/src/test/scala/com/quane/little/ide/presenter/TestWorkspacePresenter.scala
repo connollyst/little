@@ -13,7 +13,7 @@ class TestWorkspacePresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[WorkspaceView]
     val presenter = new WorkspacePresenter(view)
-    verify(view).addViewListener(presenter)
+    verify(view).addViewPresenter(presenter)
   }
 
 }

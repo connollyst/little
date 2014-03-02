@@ -15,7 +15,7 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
 
   private var _name: String = "???"
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
 
   private[presenter] def initialize(fun: FunctionReference): FunctionReferencePresenter[V] = {
     name = fun.name

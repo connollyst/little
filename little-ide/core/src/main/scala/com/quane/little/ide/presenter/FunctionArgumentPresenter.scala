@@ -14,7 +14,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   private var _name: String = ""
   private var _value: Option[ExpressionPresenter] = None
 
-  view.addViewListener(this)
+  view.addViewPresenter(this)
 
   private[presenter] def initialize(name: String, value: Expression): FunctionArgumentPresenter[V] = {
     this.name = name

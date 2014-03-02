@@ -9,9 +9,9 @@ import scala.collection.mutable.ListBuffer
   */
 trait View[L <: ViewPresenter] {
 
-  protected val viewListeners = new ListBuffer[L]
+  protected val viewPresenters = new ListBuffer[L]
 
-  def addViewListener(l: L) = viewListeners += l
+  def addViewPresenter(l: L) = viewPresenters += l
 
   /** Remove this view from it's parent view.
     */
