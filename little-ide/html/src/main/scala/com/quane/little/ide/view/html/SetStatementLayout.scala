@@ -5,11 +5,14 @@ import com.quane.little.ide.view.{ExpressionView, SetStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
 import vaadin.scala.AbstractTextField.TextChangeEvent
 
-
 object SetStatementLayout {
   val Style = "l-set"
 }
 
+/** An HTML layout view representing a variable assignment expression, a 'setter'.
+  *
+  * @author Sean Connolly
+  */
 class SetStatementLayout
   extends HorizontalLayout
   with SetStatementView

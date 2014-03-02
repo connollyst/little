@@ -8,6 +8,10 @@ object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
 }
 
+/** An HTML layout view representing a function definition.
+  *
+  * @author Sean Connolly
+  */
 class FunctionArgumentComponent
   extends HorizontalLayout
   with FunctionArgumentView

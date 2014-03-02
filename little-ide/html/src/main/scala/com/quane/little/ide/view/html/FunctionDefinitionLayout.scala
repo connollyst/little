@@ -18,13 +18,17 @@ object FunctionDefinitionLayout {
   val StyleHeadNameField = StyleHead + "-name"
 }
 
+/** An HTML layout view representing a function definition.
+  *
+  * @author Sean Connolly
+  */
 class FunctionDefinitionLayout
   extends VerticalLayout
   with FunctionDefinitionView
   with HtmlComponent
   with CloseableComponent {
 
-  val stepList = new BlockLayout
+  private val stepList = new BlockLayout
 
   private val header = createHeader()
   private val body = createBody()

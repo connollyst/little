@@ -9,6 +9,10 @@ object FunctionParameterComponent {
   private val Style = "l-function-def-param"
 }
 
+/** An HTML layout view representing a function reference.
+  *
+  * @author Sean Connolly
+  */
 class FunctionParameterComponent
   extends TextField
   with FunctionParameterView

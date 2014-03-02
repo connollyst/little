@@ -4,6 +4,10 @@ import vaadin.scala.{CssLayout, TextField}
 import com.quane.little.ide.view.ValueView
 import vaadin.scala.AbstractTextField.TextChangeEvent
 
+/** An HTML layout view representing an explicit value, a constant.
+  *
+  * @author Sean Connolly
+  */
 class ValueLayout
   extends CssLayout
   with ValueView
@@ -26,5 +30,5 @@ class ValueLayout
         }
     }
   }
-  
+
 }

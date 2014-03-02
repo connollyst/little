@@ -10,7 +10,7 @@ object GetStatementLayout {
   val StyleValue = Style + "-value"
 }
 
-/** HTML view for get statements.
+/** An HTML layout view representing a variable reference expression, a 'getter'.
   *
   * @author Sean Connolly
   */

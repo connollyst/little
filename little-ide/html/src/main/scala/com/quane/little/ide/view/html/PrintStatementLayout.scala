@@ -10,6 +10,10 @@ object PrintStatementLayout {
   val Style = "l-print"
 }
 
+/** An HTML layout view representing a print statement.
+  *
+  * @author Sean Connolly
+  */
 class PrintStatementLayout
   extends HorizontalLayout
   with PrintStatementView

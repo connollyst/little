@@ -4,7 +4,11 @@ import vaadin.scala.{Label, HorizontalLayout}
 import com.quane.little.ide.view.FunctionReferenceView
 import com.quane.little.ide.presenter.FunctionArgumentPresenter
 
-/** A HTML layout view representing a [[com.quane.little.language.FunctionReference]].
+object FunctionReferenceLayout {
+  val Style = ExpressionLayout.Style + " l-function-ref"
+}
+
+/** An HTML layout view representing a function reference.
   *
   * @author Sean Connolly
   */
@@ -27,8 +31,4 @@ class FunctionReferenceLayout
   override def createArgument(): FunctionArgumentPresenter[_] =
     new FunctionArgumentPresenter(add(new FunctionArgumentComponent))
 
-}
-
-object FunctionReferenceLayout {
-  val Style = ExpressionLayout.Style + " l-function-ref"
 }

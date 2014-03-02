@@ -5,7 +5,7 @@ import com.quane.little.ide.view.ConditionalView
 import com.quane.little.ide.presenter.{ExpressionPresenter, BlockPresenter}
 
 
-object ConditionalComponent {
+object ConditionalLayout {
   val Style = "l-if"
   val StyleIfHead = Style + "-head"
   val StyleElseHead = Style + "-else-head"
@@ -14,7 +14,11 @@ object ConditionalComponent {
   val StyleFoot = Style + "-foot"
 }
 
-class ConditionalComponent
+/** An HTML layout view representing a conditional expression.
+  *
+  * @author Sean Connolly
+  */
+class ConditionalLayout
   extends VerticalLayout
   with ConditionalView
   with HtmlComponent {
@@ -23,7 +27,7 @@ class ConditionalComponent
   private val elseBlockWrapper = new CssLayout
 
   spacing = false
-  styleName = ConditionalComponent.Style
+  styleName = ConditionalLayout.Style
   addComponent(createThenHeader())
   addComponent(createThenBody())
   addComponent(createElseHeader())
@@ -41,7 +45,7 @@ class ConditionalComponent
   private def createElseHeader(): Component = {
     val elseHeader = new Label
     elseHeader.value = "else"
-    elseHeader.styleName = ConditionalComponent.StyleElseHead
+    elseHeader.styleName = ConditionalLayout.StyleElseHead
     elseHeader
   }
 
@@ -53,17 +57,17 @@ class ConditionalComponent
     val body = new HorizontalLayout
     val bodyLeft = new Label
     bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = ConditionalComponent.StyleBodyLeft
+    bodyLeft.styleName = ConditionalLayout.StyleBodyLeft
     body.addComponent(bodyLeft)
     body.addComponent(blockWrapper)
-    body.styleName = ConditionalComponent.StyleBody
+    body.styleName = ConditionalLayout.StyleBody
     body.spacing = false
     body
   }
 
   private def createFooter(): Component = {
     val footer = new Label()
-    footer.styleName = ConditionalComponent.StyleFoot
+    footer.styleName = ConditionalLayout.StyleFoot
     footer
   }
 
@@ -94,7 +98,7 @@ class ConditionalHeader(condition: String) extends HorizontalLayout {
     this("<condition>")
   }
 
-  styleName = ConditionalComponent.StyleIfHead
+  styleName = ConditionalLayout.StyleIfHead
   add(Label(condition))
 
 }

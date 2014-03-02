@@ -3,7 +3,7 @@ package com.quane.little.ide.view.html
 import vaadin.scala.{ComponentContainer, Component}
 
 
-/** An HTML component trait.
+/** A base HTML component trait.
   *
   * @author Sean Connolly
   */
@@ -12,16 +12,14 @@ trait HtmlComponent
 
   /** Remove this component from it's parent.
     */
-  def removeFromParent(): Unit = {
+  private[html] def removeFromParent(): Unit = {
     // TODO notify parent view that the child is being removed
     parent match {
-      case None =>
-      // not attached to any parent
-      case _ =>
-        parent.get match {
-          case container: ComponentContainer => container.removeComponent(this)
-          case _ => throw new IllegalAccessException("Expected ")
-        }
+      case Some(c) => c match {
+        case container: ComponentContainer => container.removeComponent(this)
+        case _ => throw new IllegalAccessException("Cannot remove " + this + " from " + parent)
+      }
+      case None => // strange
     }
   }
 

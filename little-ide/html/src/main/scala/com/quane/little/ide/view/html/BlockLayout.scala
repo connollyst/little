@@ -16,6 +16,10 @@ object BlockLayout {
   val StyleSeparator = Style + "-separator"
 }
 
+/** An HTML layout view representing an expression block.
+  *
+  * @author Sean Connolly
+  */
 class BlockLayout
   extends VerticalLayout
   with BlockView
@@ -29,7 +33,7 @@ class BlockLayout
   override def addConditional() = addConditional(DefaultIndex)
 
   override def addConditional(index: Int) =
-    new ConditionalPresenter(add(new ConditionalComponent(), componentIndex(index)))
+    new ConditionalPresenter(add(new ConditionalLayout(), componentIndex(index)))
 
   override def addGetStatement() = addGetStatement(DefaultIndex)
 
