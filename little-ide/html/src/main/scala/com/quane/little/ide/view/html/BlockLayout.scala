@@ -12,7 +12,7 @@ import com.quane.little.ide.view.html.BlockLayout._
 
 object BlockLayout {
   val DefaultIndex = -1
-  val Style = "l-step-list"
+  val Style = "l-block"
   val StyleSeparator = Style + "-separator"
 }
 
