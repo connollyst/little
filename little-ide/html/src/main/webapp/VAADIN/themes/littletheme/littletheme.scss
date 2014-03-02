@@ -2,15 +2,14 @@
 /* This only allows us to use the mixins defined in it and does not add any styles by itself. */
 @import "../reindeer/reindeer.scss";
 /* Import the Little styles. */
-@import "styles/little-general";
-@import "styles/littletoolbox";
-@import "styles/littleworkspace";
-@import "styles/littlefunction";
-@import "styles/littleifelse";
-@import "styles/littleget";
-@import "styles/littlesteplist";
-@import "styles/littlestep";
-@import "styles/littlestepempty";
+@import "styles/little-common";
+@import "styles/little-block";
+@import "styles/little-conditional";
+@import "styles/little-expression";
+@import "styles/little-function";
+@import "styles/little-get";
+@import "styles/little-toolbox";
+@import "styles/little-workspace";
 
 /* This contains all of your theme. */
 /* If somebody wants to extend the theme she will include this mixin. */
