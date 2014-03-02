@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{SetStatementViewListener, SetStatementView}
+import com.quane.little.ide.view.{SetStatementViewPresenter, SetStatementView}
 import com.quane.little.language._
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
@@ -13,7 +13,7 @@ import scala.Some
   */
 class SetStatementPresenter[V <: SetStatementView](view: V)
   extends StatementPresenter
-  with SetStatementViewListener {
+  with SetStatementViewPresenter {
 
   private var _name = ""
   private var _value: Option[ExpressionPresenter] = None

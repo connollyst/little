@@ -1,12 +1,12 @@
 package com.quane.little.ide.view
 
-trait FunctionParameterView extends View[FunctionParameterViewListener] {
+trait FunctionParameterView extends View[FunctionParameterViewPresenter] {
 
   def setName(name: String): Unit
 
 }
 
-trait FunctionParameterViewListener extends ViewListener {
+trait FunctionParameterViewPresenter extends ViewPresenter {
 
   def onNameChanged(name: String): Unit
 

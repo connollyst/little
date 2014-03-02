@@ -3,13 +3,13 @@ package com.quane.little.ide.view
 import com.quane.little.ide.presenter.{ExpressionPresenter, FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 
 
-trait GetStatementView extends ExpressionView[GetStatementViewListener] {
+trait GetStatementView extends ExpressionView[GetStatementViewPresenter] {
 
   def setName(name: String): Unit
 
 }
 
-trait SetStatementView extends ExpressionView[SetStatementViewListener] {
+trait SetStatementView extends ExpressionView[SetStatementViewPresenter] {
 
   def setName(name: String): Unit
 
@@ -21,7 +21,7 @@ trait SetStatementView extends ExpressionView[SetStatementViewListener] {
 
 }
 
-trait PrintStatementView extends ExpressionView[PrintStatementViewListener] {
+trait PrintStatementView extends ExpressionView[PrintStatementViewPresenter] {
 
   def createValueStatement(): ValuePresenter[_]
 
@@ -31,13 +31,13 @@ trait PrintStatementView extends ExpressionView[PrintStatementViewListener] {
 
 }
 
-trait GetStatementViewListener extends ExpressionViewListener {
+trait GetStatementViewPresenter extends ExpressionViewPresenter {
 
   def onNameChange(name: String): Unit
 
 }
 
-trait SetStatementViewListener extends ExpressionViewListener {
+trait SetStatementViewPresenter extends ExpressionViewPresenter {
 
   def onNameChange(name: String): Unit
 
@@ -45,7 +45,7 @@ trait SetStatementViewListener extends ExpressionViewListener {
 
 }
 
-trait PrintStatementViewListener extends ExpressionViewListener {
+trait PrintStatementViewPresenter extends ExpressionViewPresenter {
 
   def onValueChange(p: ExpressionPresenter): Unit
 

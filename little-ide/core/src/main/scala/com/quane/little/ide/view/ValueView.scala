@@ -4,7 +4,7 @@ package com.quane.little.ide.view
   *
   * @author Sean Connolly
   */
-trait ValueView extends ExpressionView[ValueViewListener] {
+trait ValueView extends ExpressionView[ValueViewPresenter] {
 
   def setValue(value: String): Unit
 
@@ -14,7 +14,7 @@ trait ValueView extends ExpressionView[ValueViewListener] {
   *
   * @author Sean Connolly
   */
-trait ValueViewListener extends ExpressionViewListener {
+trait ValueViewPresenter extends ExpressionViewPresenter {
 
   def onValueChange(value: String): Unit
 

@@ -7,7 +7,7 @@ import scala.collection.mutable.ListBuffer
   * @tparam L the view listener type
   * @author Sean Connolly
   */
-trait View[L <: ViewListener] {
+trait View[L <: ViewPresenter] {
 
   protected val viewListeners = new ListBuffer[L]
 
@@ -23,4 +23,4 @@ trait View[L <: ViewListener] {
   *
   * @author Sean Connolly
   */
-trait ViewListener
+trait ViewPresenter

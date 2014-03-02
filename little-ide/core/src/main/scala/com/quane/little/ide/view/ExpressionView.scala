@@ -4,10 +4,10 @@ package com.quane.little.ide.view
   *
   * @author Sean Connolly
   */
-trait ExpressionView[L <: ExpressionViewListener] extends View[L]
+trait ExpressionView[L <: ExpressionViewPresenter] extends View[L]
 
 /** A listener for [[com.quane.little.ide.view.ExpressionView]].
   *
   * @author Sean Connolly
   */
-trait ExpressionViewListener extends ViewListener
+trait ExpressionViewPresenter extends ViewPresenter

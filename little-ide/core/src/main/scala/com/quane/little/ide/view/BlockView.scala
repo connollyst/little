@@ -2,7 +2,7 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-trait BlockView extends View[BlockViewListener] {
+trait BlockView extends View[BlockViewPresenter] {
 
   def addConditional(): ConditionalPresenter[_]
 
@@ -26,7 +26,7 @@ trait BlockView extends View[BlockViewListener] {
 
 }
 
-trait BlockViewListener extends ViewListener {
+trait BlockViewPresenter extends ViewPresenter {
 
   def requestAddConditional(index: Int): Unit
 

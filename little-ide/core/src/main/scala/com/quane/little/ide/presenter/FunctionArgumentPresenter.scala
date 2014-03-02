@@ -2,14 +2,14 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.language.{FunctionReference, GetStatement, Expression, Scope}
 import com.quane.little.language.data.Value
-import com.quane.little.ide.view.{FunctionArgumentViewListener, FunctionArgumentView}
+import com.quane.little.ide.view.{FunctionArgumentViewPresenter, FunctionArgumentView}
 
 /** A presenter for views representing a function reference argument.
   *
   * @author Sean Connolly
   */
 class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
-  extends FunctionArgumentViewListener {
+  extends FunctionArgumentViewPresenter {
 
   private var _name: String = ""
   private var _value: Option[ExpressionPresenter] = None

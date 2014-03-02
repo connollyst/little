@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
+import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
 import com.quane.little.ide.model.FunctionService
 
 /** Presenter for the workspace in which the user can build code.
@@ -8,7 +8,7 @@ import com.quane.little.ide.model.FunctionService
   * @author Sean Connolly
   */
 class WorkspacePresenter[V <: WorkspaceView](view: V)
-  extends WorkspaceViewListener {
+  extends WorkspaceViewPresenter {
 
   view.addViewListener(this)
 

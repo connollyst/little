@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{PrintStatementViewListener, PrintStatementView}
+import com.quane.little.ide.view.{PrintStatementViewPresenter, PrintStatementView}
 import com.quane.little.language._
 import com.quane.little.language.data.Value
 import scala._
@@ -12,7 +12,7 @@ import scala.Some
   */
 class PrintStatementPresenter[V <: PrintStatementView](view: V)
   extends StatementPresenter
-  with PrintStatementViewListener {
+  with PrintStatementViewPresenter {
 
   private var _expression: Option[ExpressionPresenter] = None
 

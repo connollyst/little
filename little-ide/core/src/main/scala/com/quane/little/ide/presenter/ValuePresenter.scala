@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ValueView, ValueViewListener}
+import com.quane.little.ide.view.{ValueView, ValueViewPresenter}
 import com.quane.little.language.Scope
 import com.quane.little.language.data.Value
 
@@ -10,7 +10,7 @@ import com.quane.little.language.data.Value
   */
 class ValuePresenter[V <: ValueView](view: V)
   extends ExpressionPresenter
-  with ValueViewListener {
+  with ValueViewPresenter {
 
   private var _value: String = ""
 

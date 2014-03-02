@@ -2,7 +2,7 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter.{BlockPresenter, ExpressionPresenter}
 
-trait ConditionalView extends ExpressionView[ConditionalViewListener] {
+trait ConditionalView extends ExpressionView[ConditionalViewPresenter] {
 
   def setConditionStatement(): ExpressionPresenter
 
@@ -12,4 +12,4 @@ trait ConditionalView extends ExpressionView[ConditionalViewListener] {
 
 }
 
-trait ConditionalViewListener extends ExpressionViewListener
+trait ConditionalViewPresenter extends ExpressionViewPresenter

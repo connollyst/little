@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.language._
-import com.quane.little.ide.view.{BlockViewListener, BlockView}
+import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import scala.collection.mutable.ListBuffer
 import scala._
 import com.quane.little.ide.model.FunctionService
@@ -12,7 +12,7 @@ import com.quane.little.ide.model.FunctionService
   */
 class BlockPresenter[V <: BlockView](view: V)
   extends ExpressionPresenter
-  with BlockViewListener {
+  with BlockViewPresenter {
 
   private val _steps: ListBuffer[ExpressionPresenter] = new ListBuffer[ExpressionPresenter]
 

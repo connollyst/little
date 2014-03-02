@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{GetStatementViewListener, GetStatementView}
+import com.quane.little.ide.view.{GetStatementViewPresenter, GetStatementView}
 import com.quane.little.language.{GetStatement, Scope}
 import com.quane.little.language.memory.Pointer
 
@@ -10,7 +10,7 @@ import com.quane.little.language.memory.Pointer
   */
 class GetStatementPresenter[V <: GetStatementView](view: V)
   extends StatementPresenter
-  with GetStatementViewListener {
+  with GetStatementViewPresenter {
 
   private var _name = ""
 

@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.{Expression, FunctionReference, Scope}
-import com.quane.little.ide.view.{FunctionReferenceViewListener, FunctionReferenceView}
+import com.quane.little.ide.view.{FunctionReferenceViewPresenter, FunctionReferenceView}
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionReference]].
   *
@@ -11,7 +11,7 @@ import com.quane.little.ide.view.{FunctionReferenceViewListener, FunctionReferen
 class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
                                                              args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])
   extends ExpressionPresenter
-  with FunctionReferenceViewListener {
+  with FunctionReferenceViewPresenter {
 
   private var _name: String = "???"
 

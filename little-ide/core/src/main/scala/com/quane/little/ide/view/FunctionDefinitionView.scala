@@ -4,7 +4,7 @@ import com.quane.little.language.FunctionDefinition
 import com.quane.little.ide.presenter.{BlockPresenter, FunctionReferencePresenter, FunctionParameterPresenter}
 
 
-trait FunctionDefinitionView extends View[FunctionDefinitionViewListener] {
+trait FunctionDefinitionView extends View[FunctionDefinitionViewPresenter] {
 
   def setName(name: String): Unit
 
@@ -22,7 +22,7 @@ trait FunctionDefinitionView extends View[FunctionDefinitionViewListener] {
 
 }
 
-trait FunctionDefinitionViewListener extends ViewListener {
+trait FunctionDefinitionViewPresenter extends ViewPresenter {
 
   def onNameChange(name: String): Unit
 

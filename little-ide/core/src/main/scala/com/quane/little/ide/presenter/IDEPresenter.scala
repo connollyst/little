@@ -1,13 +1,13 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{IDEViewListener, IDEView}
+import com.quane.little.ide.view.{IDEViewPresenter, IDEView}
 
 /** Presenter for the base view of the IDE.
   *
   * @author Sean Connolly
   */
 class IDEPresenter[V <: IDEView](view: V)
-extends IDEViewListener {
+  extends IDEViewPresenter {
 
   view.addViewListener(this)
 

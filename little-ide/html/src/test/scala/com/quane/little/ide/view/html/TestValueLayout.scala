@@ -6,14 +6,14 @@ import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import org.mockito.Mockito._
 import com.quane.little.ide.view.html.InteractionSimulator._
-import com.quane.little.ide.view.ValueViewListener
+import com.quane.little.ide.view.ValueViewPresenter
 
 @RunWith(classOf[JUnitRunner])
 class TestValueLayout extends FunSuite with MockitoSugar {
 
   test("should propagate changing value to presenter") {
     val view = new ValueLayout
-    val presenter = mock[ValueViewListener]
+    val presenter = mock[ValueViewPresenter]
     view.addViewListener(presenter)
     setText(view.valueField, "hello world")
     verify(presenter).onValueChange("hello world")

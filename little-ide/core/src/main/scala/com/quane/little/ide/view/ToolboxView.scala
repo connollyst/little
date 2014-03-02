@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
 
-trait ToolboxView extends View[ToolboxViewListener]
+trait ToolboxView extends View[ToolboxViewPresenter]
 
-trait ToolboxViewListener extends ViewListener
+trait ToolboxViewPresenter extends ViewPresenter

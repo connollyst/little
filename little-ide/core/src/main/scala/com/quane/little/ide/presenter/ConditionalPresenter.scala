@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ConditionalView, ConditionalViewListener}
+import com.quane.little.ide.view.{ConditionalView, ConditionalViewPresenter}
 import com.quane.little.language.{Conditional, Expression, Scope}
 
 /** A presenter for views representing an [[com.quane.little.language.Conditional]].
@@ -8,7 +8,7 @@ import com.quane.little.language.{Conditional, Expression, Scope}
   * @author Sean Connolly
   */
 class ConditionalPresenter[V <: ConditionalView](view: V)
-  extends ExpressionPresenter with ConditionalViewListener {
+  extends ExpressionPresenter with ConditionalViewPresenter {
 
   private val _condition: ExpressionPresenter = view.setConditionStatement()
   private val _thenBlock: BlockPresenter[_] = view.setThenBlock()

@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import vaadin.scala._
-import com.quane.little.ide.view.{WorkspaceViewListener, WorkspaceView}
+import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 import com.quane.little.ide.model.FunctionService
 
@@ -24,7 +24,7 @@ class WorkspaceLayout
       function =>
         add(Button(function, {
           viewListeners.foreach {
-            listener: WorkspaceViewListener =>
+            listener: WorkspaceViewPresenter =>
               listener.openFunctionDefinition(function)
           }
         }))
