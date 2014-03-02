@@ -15,8 +15,7 @@ object FunctionArgumentComponent {
 class FunctionArgumentComponent
   extends HorizontalLayout
   with FunctionArgumentView
-  with HtmlComponent
-  with CloseableComponent {
+  with RemovableComponent {
 
   private val nameLabel = new Label()
   private var valueComponent: Option[ExpressionView[_]] = None
@@ -80,7 +79,7 @@ class FunctionArgumentComponent
 
   private def removeValueComponent(): Unit = {
     valueComponent match {
-      case e: Some[ExpressionView[_]] => e.get.removeFromParent()
+      case e: Some[ExpressionView[_]] => e.get.remove()
       case None => // do nothing
     }
     valueComponent = None

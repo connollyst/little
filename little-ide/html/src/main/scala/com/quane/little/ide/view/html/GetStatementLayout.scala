@@ -17,8 +17,7 @@ object GetStatementLayout {
 class GetStatementLayout
   extends HorizontalLayout
   with GetStatementView
-  with HtmlComponent
-  with CloseableComponent {
+  with RemovableComponent {
 
   private val nameField = createNameField()
 

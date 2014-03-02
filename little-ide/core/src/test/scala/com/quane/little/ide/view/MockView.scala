@@ -7,6 +7,6 @@ package com.quane.little.ide.view
 trait MockView {
 
   // mock views are never added to anything so don't need to be removed
-  def removeFromParent(): Unit = Unit
+  def remove(): Unit = Unit
 
 }

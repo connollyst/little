@@ -25,8 +25,7 @@ object FunctionDefinitionLayout {
 class FunctionDefinitionLayout
   extends VerticalLayout
   with FunctionDefinitionView
-  with HtmlComponent
-  with CloseableComponent {
+  with RemovableComponent {
 
   private val stepList = new BlockLayout
 

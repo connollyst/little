@@ -7,12 +7,12 @@ import vaadin.scala.{ComponentContainer, Component}
   *
   * @author Sean Connolly
   */
-trait HtmlComponent
-  extends Component {
+trait RemovableComponent
+extends Component {
 
   /** Remove this component from it's parent.
     */
-  private[html] def removeFromParent(): Unit = {
+  def remove(): Unit = {
     // TODO notify parent view that the child is being removed
     parent match {
       case Some(c) => c match {

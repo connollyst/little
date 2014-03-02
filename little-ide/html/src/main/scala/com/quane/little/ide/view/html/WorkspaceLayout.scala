@@ -13,7 +13,7 @@ object WorkspaceLayout {
 class WorkspaceLayout
   extends HorizontalLayout
   with WorkspaceView
-  with HtmlComponent {
+  with RemovableComponent {
 
   spacing = true
   styleName = WorkspaceLayout.Style

@@ -16,7 +16,7 @@ object FunctionParameterComponent {
 class FunctionParameterComponent
   extends TextField
   with FunctionParameterView
-  with HtmlComponent {
+  with RemovableComponent {
 
   styleName = Style
 

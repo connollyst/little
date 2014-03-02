@@ -21,7 +21,7 @@ object ConditionalLayout {
 class ConditionalLayout
   extends VerticalLayout
   with ConditionalView
-  with HtmlComponent {
+  with RemovableComponent {
 
   private val thenBlockWrapper = new CssLayout
   private val elseBlockWrapper = new CssLayout

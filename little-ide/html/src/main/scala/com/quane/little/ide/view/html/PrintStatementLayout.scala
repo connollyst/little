@@ -17,8 +17,7 @@ object PrintStatementLayout {
 class PrintStatementLayout
   extends HorizontalLayout
   with PrintStatementView
-  with HtmlComponent
-  with CloseableComponent {
+  with RemovableComponent {
 
   private val printLabel = Label("print")
   private var printValue: Option[ExpressionView[_]] = None
@@ -80,7 +79,7 @@ class PrintStatementLayout
 
   private def removePrintValue(): Unit = {
     printValue match {
-      case e: Some[ExpressionView[_]] => e.get.removeFromParent()
+      case e: Some[ExpressionView[_]] => e.get.remove()
       case None => // do nothing
     }
     printValue = None

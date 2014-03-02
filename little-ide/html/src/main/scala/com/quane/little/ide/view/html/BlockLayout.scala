@@ -23,7 +23,7 @@ object BlockLayout {
 class BlockLayout
   extends VerticalLayout
   with BlockView
-  with HtmlComponent {
+  with RemovableComponent {
 
   spacing = false
   styleName = Style

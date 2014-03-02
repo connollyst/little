@@ -16,8 +16,7 @@ object SetStatementLayout {
 class SetStatementLayout
   extends HorizontalLayout
   with SetStatementView
-  with HtmlComponent
-  with CloseableComponent {
+  with RemovableComponent {
 
   private val nameField = createNameTextField()
   private var valueComponent: Option[ExpressionView[_]] = None
@@ -69,7 +68,7 @@ class SetStatementLayout
   private def removeValueComponent(): Unit = {
     valueComponent match {
       case e: Some[ExpressionView[_]] =>
-        e.get.removeFromParent()
+        e.get.remove()
       case None => // do nothing
     }
     valueComponent = None

@@ -15,7 +15,7 @@ trait View[L <: ViewListener] {
 
   /** Remove this view from it's parent view.
     */
-  def removeFromParent(): Unit
+  def remove(): Unit
 
 }
 

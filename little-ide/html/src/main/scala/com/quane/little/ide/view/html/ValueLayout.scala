@@ -11,8 +11,7 @@ import vaadin.scala.AbstractTextField.TextChangeEvent
 class ValueLayout
   extends CssLayout
   with ValueView
-  with HtmlComponent
-  with CloseableComponent {
+  with RemovableComponent {
 
   val valueField = createValueField()
 

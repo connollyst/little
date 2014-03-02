@@ -4,8 +4,8 @@ import vaadin.scala.Button
 
 object CloseButton {
 
-  def apply(c: CloseableComponent) = new CloseButton {
-    clickListeners += c.close()
+  def apply(c: RemovableComponent) = new CloseButton {
+    clickListeners += c.remove()
   }
 
 }

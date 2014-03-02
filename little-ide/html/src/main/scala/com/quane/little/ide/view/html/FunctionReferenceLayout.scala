@@ -15,8 +15,7 @@ object FunctionReferenceLayout {
 class FunctionReferenceLayout
   extends HorizontalLayout
   with FunctionReferenceView
-  with HtmlComponent
-  with CloseableComponent {
+  with RemovableComponent {
 
   private val nameLabel = Label("???")
 
