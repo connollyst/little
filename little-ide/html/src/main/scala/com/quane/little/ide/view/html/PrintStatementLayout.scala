@@ -64,9 +64,9 @@ class PrintStatementLayout
     new GetStatementPresenter(view)
   }
 
-  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
+  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceLayout] = {
     removePrintValue()
-    val view = new FunctionReferenceComponent
+    val view = new FunctionReferenceLayout
     printValue = Some(view)
     add(view)
     new FunctionReferencePresenter(view)

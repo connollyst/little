@@ -49,7 +49,7 @@ class BlockLayout
   override def addFunctionReference() = addFunctionReference(DefaultIndex)
 
   override def addFunctionReference(index: Int) =
-    new FunctionReferencePresenter(add(new FunctionReferenceComponent(), componentIndex(index)))
+    new FunctionReferencePresenter(add(new FunctionReferenceLayout(), componentIndex(index)))
 
   override def add[C <: Component](component: C): C = {
     super.add(component)
@@ -157,7 +157,7 @@ class BlockLayout
 }
 
 private class BlockStepSeparator(block: BlockLayout)
-extends DroppableTarget(new HorizontalLayout) {
+  extends DroppableTarget(new HorizontalLayout) {
 
   component.styleName = BlockLayout.StyleSeparator
 

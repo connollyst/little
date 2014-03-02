@@ -64,9 +64,9 @@ class FunctionArgumentComponent
     new GetStatementPresenter(view)
   }
 
-  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceComponent] = {
+  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceLayout] = {
     removeValueComponent()
-    val view = new FunctionReferenceComponent
+    val view = new FunctionReferenceLayout
     valueComponent = Some(view)
     add(view)
     new FunctionReferencePresenter(view)

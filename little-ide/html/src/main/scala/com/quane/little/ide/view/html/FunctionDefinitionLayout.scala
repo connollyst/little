@@ -70,7 +70,7 @@ class FunctionDefinitionLayout
   }
 
   override def createFunctionReference(): FunctionReferencePresenter[_] = {
-    val view = new FunctionReferenceComponent()
+    val view = new FunctionReferenceLayout()
     // TODO replace stepList with body
     stepList.add(view)
     new FunctionReferencePresenter(view)
