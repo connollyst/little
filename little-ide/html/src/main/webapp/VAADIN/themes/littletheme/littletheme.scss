@@ -2,6 +2,7 @@
 /* This only allows us to use the mixins defined in it and does not add any styles by itself. */
 @import "../reindeer/reindeer.scss";
 /* Import the Little styles. */
+@import "styles/little-general";
 @import "styles/littletoolbox";
 @import "styles/littleworkspace";
 @import "styles/littlefunction";

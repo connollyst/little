@@ -16,6 +16,7 @@ class FunctionReferenceComponent
   private val nameLabel = Label("???")
 
   add(nameLabel)
+  add(new CloseButton)
   spacing = true
   styleName = FunctionReferenceComponent.Style
 
