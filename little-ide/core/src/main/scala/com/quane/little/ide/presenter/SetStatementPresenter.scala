@@ -18,7 +18,7 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
   private var _name = ""
   private var _value: Option[ExpressionPresenter] = None
 
-  view.addViewPresenter(this)
+  view.registerViewPresenter(this)
   view.setName(_name)
 
   /** Initialize the set statement presenter.

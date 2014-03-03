@@ -13,7 +13,7 @@ class TestConditionalPresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[ConditionalView]
     val presenter = new ConditionalPresenter(view)
-    verify(view).addViewPresenter(presenter)
+    verify(view).registerViewPresenter(presenter)
   }
 
 }

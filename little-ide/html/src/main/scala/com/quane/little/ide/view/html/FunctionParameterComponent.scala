@@ -24,7 +24,7 @@ class FunctionParameterComponent
 
   textChangeListeners += {
     e: TextChangeEvent =>
-      viewPresenters.foreach {
+      _viewPresenter.foreach {
         listener => listener.onNameChanged(e.text)
       }
   }

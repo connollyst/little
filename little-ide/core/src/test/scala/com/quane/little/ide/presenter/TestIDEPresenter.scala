@@ -13,7 +13,7 @@ class TestIDEPresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[IDEView]
     val presenter = new IDEPresenter(view)
-    verify(view).addViewPresenter(presenter)
+    verify(view).registerViewPresenter(presenter)
   }
 
   test("test toolbox created") {

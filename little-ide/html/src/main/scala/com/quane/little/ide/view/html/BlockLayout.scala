@@ -5,7 +5,7 @@ import com.quane.vaadin.scala.DroppableTarget
 import vaadin.scala.{VerticalLayout, Component}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
-import com.quane.little.ide.view.BlockView
+import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import vaadin.scala.HorizontalLayout
 import vaadin.scala.MenuBar
 import com.quane.little.ide.view.html.BlockLayout._
@@ -130,31 +130,34 @@ class BlockLayout
   //  }
 
   def requestAddConditional(index: Int) = {
-    viewPresenters.foreach {
+    // TODO: DEBUGGING: I think the way we are using generics doesn't extend to
+    val pres: BlockViewPresenter = presenter
+    pres.requestAddConditional(index)
+    _viewPresenter.foreach {
       listener => listener.requestAddConditional(index)
     }
   }
 
   def requestAddGetStatement(index: Int) = {
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.requestAddGetStatement(index)
     }
   }
 
   def requestAddSetStatement(index: Int) = {
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.requestAddSetStatement(index)
     }
   }
 
   def requestAddPrintStatement(index: Int) = {
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.requestAddPrintStatement(index)
     }
   }
 
   def requestAddFunctionReference(name: String, index: Int) = {
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.requestAddFunctionReference(name, index)
     }
   }

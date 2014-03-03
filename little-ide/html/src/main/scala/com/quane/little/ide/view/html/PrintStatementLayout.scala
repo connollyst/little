@@ -31,7 +31,7 @@ class PrintStatementLayout
   private[html] def requestAddTextLiteral() = {
     // TODO skip if already a value statement
     val view = createValueStatement()
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.onValueChange(view)
     }
   }
@@ -39,7 +39,7 @@ class PrintStatementLayout
   private[html] def requestAddGetStatement() = {
     // TODO skip if already a get statement
     val view = createGetStatement()
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.onValueChange(view)
     }
   }
@@ -47,7 +47,7 @@ class PrintStatementLayout
   private[html] def requestAddFunctionReference(name: String) = {
     // TODO skip if already this function reference
     val view = createFunctionReference()
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       // TODO we need to look up the function definition
       listener => listener.onValueChange(view)
     }
@@ -79,7 +79,7 @@ class PrintStatementLayout
 
   private def removePrintValue(): Unit = {
     printValue match {
-      case e: Some[ExpressionView[_]] => e.get.remove()
+      case e: Some[ExpressionView[_]] => throw new NotImplementedError("boooooozzzzeee") //e.get.removeFromParent()
       case None => // do nothing
     }
     printValue = None

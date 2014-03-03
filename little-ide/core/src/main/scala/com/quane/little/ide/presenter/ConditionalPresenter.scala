@@ -14,7 +14,7 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
   private val _thenBlock: BlockPresenter[_] = view.setThenBlock()
   private val _elseBlock: BlockPresenter[_] = view.setElseBlock()
 
-  view.addViewPresenter(this)
+  view.registerViewPresenter(this)
 
   private[presenter] def initialize(c: Conditional): ConditionalPresenter[V] = {
     condition = c.test

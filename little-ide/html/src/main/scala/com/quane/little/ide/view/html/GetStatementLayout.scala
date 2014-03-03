@@ -33,7 +33,7 @@ class GetStatementLayout
     prompt = "variable name"
     textChangeListeners += {
       e: AbstractTextField.TextChangeEvent =>
-        viewPresenters.foreach {
+        _viewPresenter.foreach {
           listener => listener.onNameChange(e.text)
         }
     }

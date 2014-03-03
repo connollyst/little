@@ -9,6 +9,6 @@ import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
 class ToolboxPresenter[V <: ToolboxView](val view: V)
   extends ToolboxViewPresenter {
 
-  view.addViewPresenter(this)
+  view.registerViewPresenter(this)
 
 }

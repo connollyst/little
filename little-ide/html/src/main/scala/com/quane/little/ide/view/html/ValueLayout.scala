@@ -24,7 +24,7 @@ class ValueLayout
     prompt = "value"
     textChangeListeners += {
       e: TextChangeEvent =>
-        viewPresenters.foreach {
+        _viewPresenter.foreach {
           listener => listener.onValueChange(e.text)
         }
     }

@@ -23,7 +23,7 @@ class TestGetStatementPresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[GetStatementView]
     val presenter = new GetStatementPresenter(view)
-    verify(view).addViewPresenter(presenter)
+    verify(view).registerViewPresenter(presenter)
   }
 
   test("test name initialized in view") {

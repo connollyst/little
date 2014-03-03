@@ -81,13 +81,13 @@ class FunctionDefinitionLayout
   }
 
   private[html] def onNameChange(name: String): Unit = {
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.onNameChange(name)
     }
   }
 
   private[html] def requestNewParameter(): Unit = {
-    viewPresenters.foreach {
+    _viewPresenter.foreach {
       listener => listener.onParamAdded(createFunctionParameter())
     }
   }

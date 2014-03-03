@@ -14,7 +14,7 @@ class ValuePresenter[V <: ValueView](view: V)
 
   private var _value: String = ""
 
-  view.addViewPresenter(this)
+  view.registerViewPresenter(this)
   view.setValue(_value)
 
   /** Initialize the value presenter.

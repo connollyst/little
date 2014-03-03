@@ -16,7 +16,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
   private val _block = view.createBlock()
 
-  view.addViewPresenter(this)
+  view.registerViewPresenter(this)
 
   private[presenter] def initialize(fun: FunctionDefinition): FunctionDefinitionPresenter[V] = {
     name = fun.name

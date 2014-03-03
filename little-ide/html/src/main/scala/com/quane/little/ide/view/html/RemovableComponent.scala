@@ -1,6 +1,7 @@
 package com.quane.little.ide.view.html
 
 import vaadin.scala.{ComponentContainer, Component}
+import com.quane.little.ide.view.ViewPresenter
 
 
 /** A base HTML component trait.
@@ -8,12 +9,10 @@ import vaadin.scala.{ComponentContainer, Component}
   * @author Sean Connolly
   */
 trait RemovableComponent
-extends Component {
+  extends Component {
+  //  with ViewWithChildren[_] {
 
-  /** Remove this component from it's parent.
-    */
-  def remove(): Unit = {
-    // TODO notify parent view that the child is being removed
+  def removeFromParent(): Option[ViewPresenter] = {
     parent match {
       case Some(c) => c match {
         case container: ComponentContainer => container.removeComponent(this)
@@ -21,6 +20,8 @@ extends Component {
       }
       case None => // strange
     }
+    //    super.removeFromParent()
+    None
   }
 
 }

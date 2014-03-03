@@ -45,7 +45,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
   test("should register self as view listener") {
     val view = mock[FunctionReferenceView]
     val presenter = new FunctionReferencePresenter(view)
-    verify(view).addViewPresenter(presenter)
+    verify(view).registerViewPresenter(presenter)
   }
 
   test("should compile with scope") {

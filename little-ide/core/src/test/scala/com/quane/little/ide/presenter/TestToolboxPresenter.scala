@@ -13,7 +13,7 @@ class TestToolboxPresenter extends FunSuite with MockitoSugar {
   test("test listener registered") {
     val view = mock[ToolboxView]
     val presenter = new ToolboxPresenter(view)
-    verify(view).addViewPresenter(presenter)
+    verify(view).registerViewPresenter(presenter)
   }
 
 }

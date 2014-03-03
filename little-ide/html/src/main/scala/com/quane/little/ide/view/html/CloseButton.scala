@@ -5,7 +5,8 @@ import vaadin.scala.Button
 object CloseButton {
 
   def apply(c: RemovableComponent) = new CloseButton {
-    clickListeners += c.remove()
+    //    clickListeners += c.removeFromParent()
+    throw new NotImplementedError("Sean, you've been drinking.")
   }
 
 }
