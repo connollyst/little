@@ -1,4 +1,4 @@
-package com.quane.little.game
+package com.quane.little.game.engine
 
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.MultiMap

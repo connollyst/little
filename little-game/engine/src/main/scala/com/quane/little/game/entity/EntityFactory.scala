@@ -4,10 +4,11 @@ import scala.Option.option2Iterable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-import com.quane.little.game.{LittleGameEngine, InteractionManagerImpl}
+import com.quane.little.game.LittleGameEngine
 import com.quane.little.language.event.{EventListener, LittleEvent}
 import com.quane.little.language.{FunctionReference, Functions}
 import com.quane.little.language.data.Value
+import com.quane.little.game.engine.InteractionManagerImpl
 
 class EntityFactory(game: LittleGameEngine) {
 

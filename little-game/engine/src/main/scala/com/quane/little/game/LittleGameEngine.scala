@@ -1,10 +1,11 @@
 package com.quane.little.game
 
-import com.quane.little.game.physics.PhysicsEngine
+import com.quane.little.game.physics.{LittleCleaner, PhysicsEngine}
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.entity.{Mob, Entity, EntityFactory}
 import scala.collection.mutable.ListBuffer
 import com.quane.little.game.view.{LineDrawer, ShapeDrawer, MeshDrawer, SpriteDrawer}
+import com.quane.little.game.engine.EventBus
 
 /** The little game engine maintains the state of the world and allows us to
   * step through it, advancing the physics simulation and evaluating little code

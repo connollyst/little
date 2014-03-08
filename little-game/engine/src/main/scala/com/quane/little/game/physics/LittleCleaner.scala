@@ -1,8 +1,8 @@
-package com.quane.little.game
+package com.quane.little.game.physics
 
 import scala.collection.mutable.ListBuffer
 import com.quane.little.game.entity.Entity
-import com.quane.little.game.physics.PhysicsEngine
+import com.quane.little.game.LittleGameEngine
 
 /** The cleaner is responsible for removing entities from the game and the
   * [[com.quane.little.game.physics.PhysicsEngine]]
