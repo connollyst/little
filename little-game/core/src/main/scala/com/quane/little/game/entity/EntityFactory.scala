@@ -36,7 +36,8 @@ class EntityFactory(game: Little) {
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnContact,
-        Functions.turnRelative(mob.operator, 260)
+        new FunctionReference(mob.operator, "move")
+          .addArg("degrees", new Value(260))
       )
     )
     mob.operator.addEventListener(

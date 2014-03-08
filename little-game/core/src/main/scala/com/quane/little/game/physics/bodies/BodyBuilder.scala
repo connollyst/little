@@ -1,20 +1,15 @@
 package com.quane.little.game.physics.bodies
 
 import java.util.UUID
-
 import scala.util.Random
-
-
 import com.quane.little.game.Little
-import com.badlogic.gdx.physics.box2d._
-import com.badlogic.gdx.physics.box2d.BodyDef.BodyType
 import org.eintr.loglady.Logging
+import org.jbox2d.dynamics.{FixtureDef, BodyType, BodyDef, World}
+import org.jbox2d.collision.shapes.{PolygonShape, CircleShape}
 
 object BodyBuilder {
-
   val MobBodySize = 10
   val MobSensorSize = 100
-
 }
 
 class BodyBuilder(game: Little, world: World)
@@ -27,7 +22,7 @@ class BodyBuilder(game: Little, world: World)
     sensorShape.setRadius(BodyBuilder.MobSensorSize)
     val sensorFixture = buildBodySensor(sensorShape)
     val bodyDef = new BodyDef
-    bodyDef.`type` = BodyType.DynamicBody
+    bodyDef.`type` = BodyType.DYNAMIC
     bodyDef.angle = randomAngle
     bodyDef.position.set(randomX, randomY)
     bodyDef.allowSleep = false
@@ -48,7 +43,7 @@ class BodyBuilder(game: Little, world: World)
   def buildFood(): EntityBody = {
     val uuid = UUID.randomUUID.toString
     val foodBodyDef = new BodyDef
-    foodBodyDef.`type` = BodyType.StaticBody
+    foodBodyDef.`type` = BodyType.STATIC
     foodBodyDef.allowSleep = true
     foodBodyDef.position.set(randomX, randomY)
     val foodShape = new PolygonShape
@@ -75,7 +70,7 @@ class BodyBuilder(game: Little, world: World)
 
   def buildWall(x: Float, y: Float, halfWidth: Float, halfHeight: Float): StaticBody = {
     val wallBodyDef = new BodyDef
-    wallBodyDef.`type` = BodyType.StaticBody
+    wallBodyDef.`type` = BodyType.STATIC
     wallBodyDef.allowSleep = true
     wallBodyDef.position.set(x, y)
     val wallShape = new PolygonShape

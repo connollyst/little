@@ -1,7 +1,7 @@
 package com.quane.little.game.physics.bodies
 
 import com.quane.little.game.entity.Entity
-import com.badlogic.gdx.physics.box2d.Body
+import org.jbox2d.dynamics.Body
 
 class EntityBody(val physicalBody: Body) {
 

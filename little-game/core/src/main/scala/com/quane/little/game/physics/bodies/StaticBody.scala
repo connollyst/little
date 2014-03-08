@@ -1,6 +1,6 @@
 package com.quane.little.game.physics.bodies
 
-import com.badlogic.gdx.physics.box2d.Body
+import org.jbox2d.dynamics.Body
 
 /** An [[com.quane.little.game.physics.bodies.EntityBody]] which never moves.
   *

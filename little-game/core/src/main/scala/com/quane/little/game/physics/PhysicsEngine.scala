@@ -2,8 +2,8 @@ package com.quane.little.game.physics
 
 import com.quane.little.game.entity.Mob
 import com.quane.little.game.physics.bodies.EntityBody
-import com.badlogic.gdx.math.Vector2
-import com.badlogic.gdx.physics.box2d.World
+import org.jbox2d.dynamics.World
+import org.jbox2d.common.Vec2
 
 /** The physics simulation engine takes care of moving entities about and
   * detecting collisions.
@@ -19,11 +19,12 @@ class PhysicsEngine {
   // how strongly to correct position
   private val positionIterations = 3
   // zero gravity for a top-down game
-  private val gravity = new Vector2(0, 0)
+  private val gravity = new Vec2(0, 0)
   // let sleeping dogs lie
   private val doSleep = true
 
-  val world = new World(gravity, doSleep)
+  val world = new World(gravity)
+  world.setAllowSleep(doSleep)
   world.setContactListener(new GlassContactListener)
 
   /** Move the physics simulation forward one time step.
@@ -68,9 +69,9 @@ class PhysicsEngine {
     val impulseAngle = mob.body.physicalBody.getAngle
     val impulseX = targetVelocity * math.cos(impulseAngle).toFloat
     val impulseY = targetVelocity * math.sin(impulseAngle).toFloat
-    val impulse = new Vector2(impulseX, impulseY)
+    val impulse = new Vec2(impulseX, impulseY)
     mob.body.physicalBody.applyLinearImpulse(impulse,
-      mob.body.physicalBody.getWorldCenter, true)
+      mob.body.physicalBody.getWorldCenter)
   }
 
   private def rotateGuyToDirection(mob: Mob) {
@@ -87,7 +88,7 @@ class PhysicsEngine {
     val change = math.toRadians(1).toFloat //allow 1 degree rotation per time step
     desiredAngularVelocity = math.min(change, math.max(-change, desiredAngularVelocity))
     val impulse = mob.body.physicalBody.getInertia * desiredAngularVelocity
-    mob.body.physicalBody.applyAngularImpulse(impulse, true)
+    mob.body.physicalBody.applyAngularImpulse(impulse)
   }
 
 }
