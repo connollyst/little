@@ -2,7 +2,7 @@ package com.quane.little.game.physics.bodies
 
 import java.util.UUID
 import scala.util.Random
-import com.quane.little.game.Little
+import com.quane.little.game.LittleGameEngine
 import org.eintr.loglady.Logging
 import org.jbox2d.dynamics.{FixtureDef, BodyType, BodyDef, World}
 import org.jbox2d.collision.shapes.{PolygonShape, CircleShape}
@@ -12,7 +12,7 @@ object BodyBuilder {
   val MobSensorSize = 100
 }
 
-class BodyBuilder(game: Little, world: World)
+class BodyBuilder(game: LittleGameEngine, world: World)
   extends Logging {
 
   def buildBody(): EntityBody = {

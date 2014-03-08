@@ -10,7 +10,7 @@ import com.quane.little.game.physics.PhysicsEngine
   * @param game the game
   * @param engine the physics engine
   */
-class LittleCleaner(game: Little, engine: PhysicsEngine) {
+class LittleCleaner(game: LittleGameEngine, engine: PhysicsEngine) {
 
   val queue = new ListBuffer[Entity]
 

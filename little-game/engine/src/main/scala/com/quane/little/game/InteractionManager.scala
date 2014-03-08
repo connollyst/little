@@ -19,7 +19,7 @@ trait InteractionManager {
 
 }
 
-class InteractionManagerImpl(game: Little)
+class InteractionManagerImpl(game: LittleGameEngine)
   extends InteractionManager {
 
   def mobConsumesFood(mob: Mob, food: Food) {

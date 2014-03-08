@@ -4,12 +4,12 @@ import scala.Option.option2Iterable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-import com.quane.little.game.{Little, InteractionManagerImpl}
+import com.quane.little.game.{LittleGameEngine, InteractionManagerImpl}
 import com.quane.little.language.event.{EventListener, LittleEvent}
 import com.quane.little.language.{FunctionReference, Functions}
 import com.quane.little.language.data.Value
 
-class EntityFactory(game: Little) {
+class EntityFactory(game: LittleGameEngine) {
 
   val manager = new InteractionManagerImpl(game)
 
