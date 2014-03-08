@@ -18,4 +18,55 @@
         <module>extension</module>
     </modules>
 
+    <properties>
+        <main.rootdir>${project.basedir}</main.rootdir>
+
+        <sfs2x.version>2.0.1</sfs2x.version>
+        <sfs2x.server.jarpath>
+            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/sfs2x.jar
+        </sfs2x.server.jarpath>
+        <sfs2x.core.jarpath>
+            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/sfs2x-core.jar
+        </sfs2x.core.jarpath>
+        <sfs2x.boot.jarpath>
+            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/boot.jar
+        </sfs2x.boot.jarpath>
+        <sfs2x.js.jarpath>
+            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/js.jar
+        </sfs2x.js.jarpath>
+    </properties>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.smartfoxserver.v2</groupId>
+                <artifactId>sfs2x</artifactId>
+                <version>${sfs2x.version}</version>
+                <scope>system</scope>
+                <systemPath>${sfs2x.server.jarpath}</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>com.smartfoxserver.v2</groupId>
+                <artifactId>sfs2x-core</artifactId>
+                <version>${sfs2x.version}</version>
+                <scope>system</scope>
+                <systemPath>${sfs2x.core.jarpath}</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>com.smartfoxserver.v2</groupId>
+                <artifactId>sfs2x-js</artifactId>
+                <version>${sfs2x.version}</version>
+                <scope>system</scope>
+                <systemPath>${sfs2x.js.jarpath}</systemPath>
+            </dependency>
+            <dependency>
+                <groupId>com.smartfoxserver.v2</groupId>
+                <artifactId>sfs2x-boot</artifactId>
+                <version>${sfs2x.version}</version>
+                <scope>system</scope>
+                <systemPath>${sfs2x.boot.jarpath}</systemPath>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
 </project>

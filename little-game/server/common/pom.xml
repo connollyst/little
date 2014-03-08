@@ -13,4 +13,8 @@
     <packaging>jar</packaging>
     <name>Little Game Server - Common</name>
 
+    <properties>
+        <main.rootdir>${project.basedir}/..</main.rootdir>
+    </properties>
+
 </project>
