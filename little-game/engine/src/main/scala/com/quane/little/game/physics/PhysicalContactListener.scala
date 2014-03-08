@@ -10,7 +10,7 @@ import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
 
 class PhysicalContactListener
-extends ContactListener
+  extends ContactListener
   with Logging {
 
   @Override
