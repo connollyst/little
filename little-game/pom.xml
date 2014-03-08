@@ -14,7 +14,7 @@
     <name>Little Game</name>
 
     <modules>
-        <module>core</module>
+        <module>engine</module>
     </modules>
 
 </project>
