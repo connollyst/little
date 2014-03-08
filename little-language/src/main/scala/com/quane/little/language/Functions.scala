@@ -58,11 +58,12 @@ object Functions {
     )
   }
 
-  def turnRelative(mob: Operator, degrees: Int): Block = {
-    val relativelyFun = new Block(mob)
+  def turnRelative: FunctionDefinition = {
+    val relativelyFun = new FunctionDefinition("turnRelative").addParam("degrees")
     val dirPointer = new Pointer(relativelyFun, Operable.DIRECTION)
     val getCurrentDir = new GetStatement(dirPointer)
-    val dirChange = new Value(degrees)
+    val dirChangeArg = new Pointer(relativelyFun, "direction")
+    val dirChange = new GetStatement(dirChangeArg)
     val getNewDirection = new Addition(getCurrentDir, dirChange)
     val setNewDirection = new SetStatement(dirPointer, getNewDirection)
     relativelyFun.addStep(setNewDirection)

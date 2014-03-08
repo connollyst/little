@@ -41,8 +41,12 @@ class TestFunctions extends FunSuite {
   }
 
   test("test function turn relative") {
-    val guy = new Operator(new Runtime, new StubOperable)
-    val fun = Functions.turnRelative(guy, 60)
+    val runtime = new Runtime
+    runtime.saveFunction(Functions.turnRelative)
+    val guy = new Operator(runtime, new StubOperable)
+    guy.direction(new Value(0))
+    val fun = new FunctionReference(guy, "turnRelative")
+      .addArg("degrees", new Value(60))
     fun.evaluate // 0 + 60 = 60
     fun.evaluate // 60 + 60 = 120
     fun.evaluate // 120 + 60 = 180
