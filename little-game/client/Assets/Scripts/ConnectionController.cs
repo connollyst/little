@@ -10,13 +10,17 @@ public class ConnectionController : MonoBehaviour
 
 		public string serverName = "127.0.0.1";
 		public int serverPort = 9933;
+		private string username = "";
+		private string password = "";
+		private string zone = "little";
+		private string room = "LittleTest";
+		private string gameScene = "Game";
 		private SmartFox smartFox;
 
 		void Start ()
 		{
 				SetMessage ("Loading..");
 				smartFox = new SmartFox (true);
-				Debug.Log ("API Version: " + smartFox.Version);
 				smartFox.AddEventListener (SFSEvent.CONNECTION, OnConnection);
 				smartFox.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
 				smartFox.AddEventListener (SFSEvent.LOGIN, OnLogin);
@@ -45,7 +49,7 @@ public class ConnectionController : MonoBehaviour
 		{
 				SmartFoxConnection.Connection = smartFox;
 				SetMessage ("Connected to server, logging in..");
-				smartFox.Send (new LoginRequest ("", "", "little"));
+				smartFox.Send (new LoginRequest (username, password, zone));
 		}
 
 		private void OnConnectionFailure (BaseEvent evt)
@@ -63,7 +67,7 @@ public class ConnectionController : MonoBehaviour
 		public void OnLogin (BaseEvent evt)
 		{
 				SetMessage ("Logged in to server, joining room..");
-				smartFox.Send (new JoinRoomRequest ("LittleTest"));
+				smartFox.Send (new JoinRoomRequest (room));
 		}
 	
 		public void OnLoginError (BaseEvent evt)
@@ -76,7 +80,7 @@ public class ConnectionController : MonoBehaviour
 		{
 				SetMessage ("Joined room successfully");
 				smartFox.RemoveAllEventListeners ();
-				Application.LoadLevel ("scene1");
+				Application.LoadLevel (gameScene);
 		}
 
 		private void SetMessage (string text)
