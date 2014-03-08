@@ -10,13 +10,8 @@
     </parent>
 
     <artifactId>little-game-server</artifactId>
-    <packaging>pom</packaging>
+    <packaging>jar</packaging>
     <name>Little Game Server</name>
-
-    <modules>
-        <module>common</module>
-        <module>extension</module>
-    </modules>
 
     <properties>
         <main.rootdir>${project.basedir}</main.rootdir>
@@ -36,37 +31,39 @@
         </sfs2x.js.jarpath>
     </properties>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>com.smartfoxserver.v2</groupId>
-                <artifactId>sfs2x</artifactId>
-                <version>${sfs2x.version}</version>
-                <scope>system</scope>
-                <systemPath>${sfs2x.server.jarpath}</systemPath>
-            </dependency>
-            <dependency>
-                <groupId>com.smartfoxserver.v2</groupId>
-                <artifactId>sfs2x-core</artifactId>
-                <version>${sfs2x.version}</version>
-                <scope>system</scope>
-                <systemPath>${sfs2x.core.jarpath}</systemPath>
-            </dependency>
-            <dependency>
-                <groupId>com.smartfoxserver.v2</groupId>
-                <artifactId>sfs2x-js</artifactId>
-                <version>${sfs2x.version}</version>
-                <scope>system</scope>
-                <systemPath>${sfs2x.js.jarpath}</systemPath>
-            </dependency>
-            <dependency>
-                <groupId>com.smartfoxserver.v2</groupId>
-                <artifactId>sfs2x-boot</artifactId>
-                <version>${sfs2x.version}</version>
-                <scope>system</scope>
-                <systemPath>${sfs2x.boot.jarpath}</systemPath>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x</artifactId>
+            <version>${sfs2x.version}</version>
+            <scope>system</scope>
+            <systemPath>${sfs2x.server.jarpath}</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x-core</artifactId>
+            <version>${sfs2x.version}</version>
+            <scope>system</scope>
+            <systemPath>${sfs2x.core.jarpath}</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x-js</artifactId>
+            <version>${sfs2x.version}</version>
+            <scope>system</scope>
+            <systemPath>${sfs2x.js.jarpath}</systemPath>
+        </dependency>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x-boot</artifactId>
+            <version>${sfs2x.version}</version>
+            <scope>system</scope>
+            <systemPath>${sfs2x.boot.jarpath}</systemPath>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>littleExtension</finalName>
+    </build>
 
 </project>

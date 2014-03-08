@@ -1,3 +1,5 @@
+package com.quane.little.game.server;
+
 import com.smartfoxserver.v2.extensions.SFSExtension;
 
 /**
