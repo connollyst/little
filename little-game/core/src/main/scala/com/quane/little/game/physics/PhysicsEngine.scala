@@ -25,7 +25,7 @@ class PhysicsEngine {
 
   val world = new World(gravity)
   world.setAllowSleep(doSleep)
-  world.setContactListener(new GlassContactListener)
+  world.setContactListener(new PhysicalContactListener)
 
   /** Move the physics simulation forward one time step.
     *

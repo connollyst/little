@@ -9,8 +9,8 @@ import org.jbox2d.dynamics.contacts.Contact
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
 
-class GlassContactListener
-  extends ContactListener
+class PhysicalContactListener
+extends ContactListener
   with Logging {
 
   @Override
