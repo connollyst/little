@@ -17,4 +17,46 @@
         <main.rootdir>${project.basedir}/..</main.rootdir>
     </properties>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x-js</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.smartfoxserver.v2</groupId>
+            <artifactId>sfs2x-boot</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <!-- PREPARE THE COMMON ASSEMBLY FOR SMARTFOX -->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <configuration>
+                    <finalname>
+                        Common-${project.parent.version}-jar-with-dependencies
+                    </finalname>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
 </project>
