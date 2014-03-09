@@ -12,26 +12,12 @@ import com.quane.little.game.engine.EventBus
   */
 class LittleGameEngine {
 
-  var eventBus: EventBus = _
-  var cleaner: EntityCleaner = _
-  var entityFactory: EntityFactory = _
-  var entities: ListBuffer[Entity] = _
-  var players: List[Mob] = _
+  val eventBus: EventBus = new EventBus
+  val cleaner: EntityCleaner = new EntityCleaner(this)
+  val entityFactory: EntityFactory = new EntityFactory(this)
+  val entities = new ListBuffer[Entity]
+  val players = new ListBuffer[Mob]
 
-  private def initEntities(): ListBuffer[Entity] = {
-    val all = new ListBuffer[Entity]
-    all ++= entityFactory.foodList(20)
-    all
-  }
-
-  /** Create a new game engine.
-    */
-  def create() {
-    eventBus = new EventBus
-    cleaner = new EntityCleaner(this)
-    entityFactory = new EntityFactory(this)
-    entities = initEntities()
-  }
 
   /** Update the game engine's state.
     */

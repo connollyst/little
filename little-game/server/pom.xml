@@ -13,21 +13,30 @@
     <packaging>jar</packaging>
     <name>Little Game Server</name>
 
-    <properties>
-        <main.rootdir>${project.basedir}</main.rootdir>
+    <build>
+        <finalName>littleExtension</finalName>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>${scala.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 
+    <properties>
         <sfs2x.version>2.0.1</sfs2x.version>
         <sfs2x.server.jarpath>
-            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/sfs2x.jar
+            ${project.basedir}/lib/sfs2x/${sfs2x.version}/sfs2x.jar
         </sfs2x.server.jarpath>
         <sfs2x.core.jarpath>
-            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/sfs2x-core.jar
+            ${project.basedir}/lib/sfs2x/${sfs2x.version}/sfs2x-core.jar
         </sfs2x.core.jarpath>
         <sfs2x.boot.jarpath>
-            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/boot.jar
+            ${project.basedir}/lib/sfs2x/${sfs2x.version}/boot.jar
         </sfs2x.boot.jarpath>
         <sfs2x.js.jarpath>
-            ${main.rootdir}/lib/sfs2x/${sfs2x.version}/js.jar
+            ${project.basedir}/lib/sfs2x/${sfs2x.version}/js.jar
         </sfs2x.js.jarpath>
     </properties>
 
@@ -66,9 +75,5 @@
             <systemPath>${sfs2x.boot.jarpath}</systemPath>
         </dependency>
     </dependencies>
-
-    <build>
-        <finalName>littleExtension</finalName>
-    </build>
 
 </project>
