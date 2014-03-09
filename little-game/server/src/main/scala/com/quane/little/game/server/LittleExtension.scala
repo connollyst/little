@@ -16,6 +16,7 @@ class LittleExtension
   override def init(): Unit = {
     trace("Hello Little World!")
     gameEngine = new LittleGameEngine
+    addRequestHandler("ready", classOf[ReadyHandler])
     addRequestHandler("move", classOf[MoveHandler])
     addRequestHandler("spawn", classOf[SpawnHandler])
   }
