@@ -209,7 +209,7 @@ public class GameController : MonoBehaviour {
 		// Since this is the local player, lets add a controller and fix the camera
 		localPlayer.AddComponent<MobController>();
 		localPlayerController = localPlayer.GetComponent<MobController>();
-		localPlayer.GetComponentInChildren<TextMesh>().text = smartFox.MySelf.Name;
+//		localPlayer.GetComponentInChildren<TextMesh>().text = smartFox.MySelf.Name;
 		Camera.main.transform.parent = localPlayer.transform;
 		
 		// Lets set the model and material choice and tell the others about it
