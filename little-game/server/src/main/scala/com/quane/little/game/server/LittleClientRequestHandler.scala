@@ -6,7 +6,7 @@ import com.quane.little.game.LittleGameEngine
 trait LittleClientRequestHandler
   extends BaseClientRequestHandler {
 
-  def getGameEngine: LittleGameEngine = getLittleExtension.getGameEngine
+  def getGameEngine: LittleGameEngine = getLittleExtension.gameEngine
 
   def getLittleExtension: LittleExtension =
     getParentExtension match {

@@ -18,7 +18,9 @@ class MoveHandler
     val id = params.getUtfString("id")
     val x = params.getFloat("x")
     val y = params.getFloat("y")
-    getParentExtension.trace(String.format("Handling move from player %s to (%s, %s)..", user.getPlayerId, x, y))
+    getParentExtension.trace(
+      "Handling move from player " + user.getPlayerId + " to (" + x + ", " + y + ").."
+    )
     moveMob(id, x, y)
   }
 

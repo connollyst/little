@@ -20,7 +20,9 @@ class SpawnHandler extends LittleClientRequestHandler {
     checkParams(params)
     val x = params.getFloat("x")
     val y = params.getFloat("y")
-    getParentExtension.trace(String.format("Handling spawn for player %s at (%s, %s)..", user.getPlayerId, x, y))
+    getParentExtension.trace(
+      "Handling spawn for player " + user.getPlayerId + " at (" + x + ", " + y + ").."
+    )
     spawnMob(x, y)
   }
 
