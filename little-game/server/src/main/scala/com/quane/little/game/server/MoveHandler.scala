@@ -5,34 +5,30 @@ import com.smartfoxserver.v2.entities.data.{SFSObject, ISFSObject}
 import com.smartfoxserver.v2.exceptions.SFSRuntimeException
 import com.quane.little.game.entity.Mob
 
-/** Handler for client requests to spawn a mob.
-  *
-  * @author Sean Connolly
-  */
-class SpawnHandler extends LittleClientRequestHandler {
+/**
+ *
+ *
+ * @author Sean Connolly
+ */
+class MoveHandler
+  extends LittleClientRequestHandler {
 
-  /** Handle the client's request to spawn a new mob.
-    *
-    * @param user the user client
-    * @param params the request parameters
-    */
   override def handleClientRequest(user: User, params: ISFSObject): Unit = {
     checkParams(params)
+    val id = params.getUtfString("id")
     val x = params.getFloat("x")
     val y = params.getFloat("y")
-    spawnMob(x, y)
+    moveMob(id, x, y)
   }
 
   private def checkParams(params: ISFSObject) = {
-    if (!params.containsKey("x") || !params.containsKey("y")) {
-      throw new SFSRuntimeException("Invalid request, expected 'x' & 'y'")
+    if (!params.containsKey("id") || !params.containsKey("x") || !params.containsKey("y")) {
+      throw new SFSRuntimeException("Invalid request, expected 'id', 'x', & 'y'")
     }
   }
 
-  private def spawnMob(x: Float, y: Float) = {
-    val mob = getGameEngine.entityFactory.createMob
-    mob.x = x
-    mob.y = y
+  private def moveMob(id: String, x: Float, y: Float) = {
+    val mob = getGameEngine.setEntityPosition(id, x, y)
     notifyAll(mob)
   }
 
@@ -41,7 +37,7 @@ class SpawnHandler extends LittleClientRequestHandler {
     response.putFloat("x", mob.x)
     response.putFloat("y", mob.y)
     response.putUtfString("id", mob.uuid.toString)
-    send("spawn", response, getLittleExtension.getParentRoom.getUserList)
+    send("move", response, getLittleExtension.getParentRoom.getUserList)
   }
 
 }

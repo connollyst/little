@@ -19,6 +19,19 @@ class LittleGameEngine {
   val players = new ListBuffer[Mob]
 
 
+  def setEntityPosition(id: String, x: Float, y: Float): Mob = {
+    // TODO store map instead of list
+    players foreach {
+      player =>
+        if (player.uuid.toString == id) {
+          player.x = x
+          player.y = y
+        }
+        return player
+    }
+    throw new IllegalAccessException("No mob with id " + id)
+  }
+
   /** Update the game engine's state.
     */
   def update() {
