@@ -10,6 +10,8 @@ public class MobController : MonoBehaviour
 		private Animator anim;
 		private SmartFox smartFox;
 
+		public bool MovementDirty { get; set; }
+
 		void Start ()
 		{
 				anim = GetComponent<Animator> ();
@@ -24,9 +26,14 @@ public class MobController : MonoBehaviour
 				if (smartFox != null) {
 						smartFox.ProcessEvents ();
 				}
-				float move = Input.GetAxis ("Horizontal");
-				anim.SetFloat ("Speed", Mathf.Abs (move));
-				rigidbody2D.velocity = new Vector2 (move * maxSpeed, rigidbody2D.velocity.y);
+				float y = Input.GetAxis ("Vertical");
+				float x = Input.GetAxis ("Horizontal");
+				if (y != 0 || x != 0) {
+						MovementDirty = true;
+				}
+				anim.SetFloat ("Speed", Mathf.Abs (x + y));
+				//rigidbody2D.velocity.y
+				rigidbody2D.velocity = new Vector2 (x * maxSpeed, y * maxSpeed);
 		}
 
 
