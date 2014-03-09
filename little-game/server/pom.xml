@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.quane.little</groupId>
         <artifactId>little-game</artifactId>
-        <version>0.0.4-SNAPSHOT</version>
+        <version>0.0.5-SNAPSHOT</version>
     </parent>
 
     <artifactId>little-game-server</artifactId>
@@ -32,6 +32,11 @@
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>little-game-core</artifactId>
+            <version>${project.version}</version>
+        </dependency>
         <dependency>
             <groupId>com.smartfoxserver.v2</groupId>
             <artifactId>sfs2x</artifactId>
