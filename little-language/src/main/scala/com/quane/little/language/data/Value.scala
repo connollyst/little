@@ -53,6 +53,11 @@ class Value(val primitive: Any)
         throw new ClassCastException(
           toString + " cannot be converted to a Bool"
         )
+      case NoValueType =>
+        // TODO implement Nada -> Boolean
+        throw new ClassCastException(
+          toString + " cannot be converted to a Bool"
+        )
     }
   }
 
@@ -84,6 +89,8 @@ class Value(val primitive: Any)
         primitive.asInstanceOf[Int]
       case DoubleValueType =>
         asDouble.toInt
+      case NoValueType =>
+        0
     }
   }
 
