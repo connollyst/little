@@ -47,9 +47,10 @@ public class GameController : MonoBehaviour {
 		smartFox.AddLogListener(logLevel, OnDebugMessage);
 		
 		// Start this clients avatar and get cracking!
-		int numModel = UnityEngine.Random.Range(0, 10);
-		int numMaterial = UnityEngine.Random.Range(0, 10);
-		SpawnLocalPlayer(numModel, numMaterial);
+//		int numModel = UnityEngine.Random.Range(0, 10);
+//		int numMaterial = UnityEngine.Random.Range(0, 10);
+//		SpawnLocalPlayer(numModel, numMaterial);
+		smartFox.Send(new ExtensionRequest("ready", new SFSObject(), smartFox.LastJoinedRoom));
 	}
 	
 	void FixedUpdate() {

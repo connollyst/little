@@ -1,6 +1,7 @@
 package com.quane.little.ide.view.html
 
 import vaadin.scala.Button
+import com.quane.little.language.exceptions.NotImplementedError
 
 object CloseButton {
 

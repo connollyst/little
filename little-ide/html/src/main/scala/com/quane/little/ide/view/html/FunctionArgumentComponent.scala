@@ -3,6 +3,7 @@ package com.quane.little.ide.view.html
 import vaadin.scala.{MenuBar, HorizontalLayout, Label}
 import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
+import com.quane.little.language.exceptions.NotImplementedError
 
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"

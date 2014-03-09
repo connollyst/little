@@ -5,6 +5,7 @@ import vaadin.scala.HorizontalLayout
 import vaadin.scala.Label
 import vaadin.scala.MenuBar
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
+import com.quane.little.language.exceptions.NotImplementedError
 
 object PrintStatementLayout {
   val Style = "l-print"

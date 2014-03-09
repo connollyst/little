@@ -4,6 +4,7 @@ import vaadin.scala.{MenuBar, TextField, Label, HorizontalLayout}
 import com.quane.little.ide.view.{ExpressionView, SetStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
 import vaadin.scala.AbstractTextField.TextChangeEvent
+import com.quane.little.language.exceptions.NotImplementedError
 
 object SetStatementLayout {
   val Style = "l-set"

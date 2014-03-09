@@ -2,6 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ConditionalView, ConditionalViewPresenter}
 import com.quane.little.language.{Conditional, Expression, Scope}
+import com.quane.little.language.exceptions.NotImplementedError
 
 /** A presenter for views representing an [[com.quane.little.language.Conditional]].
   *

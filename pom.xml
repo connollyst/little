@@ -67,13 +67,13 @@
     </modules>
 
     <properties>
-        <scala.level>2.10</scala.level>
-        <scala.version>2.10.3</scala.version>
+        <scala.level>2.9.0</scala.level>
+        <scala.version>2.9.1</scala.version>
         <scala.plugin.version>2.15.2</scala.plugin.version>
         <guava.version>14.0.1</guava.version>
         <junit.version>4.11</junit.version>
         <mockito.version>1.9.5</mockito.version>
-        <scalatest.version>2.1.0</scalatest.version>
+        <scalatest.version>1.8</scalatest.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8
         </project.reporting.outputEncoding>

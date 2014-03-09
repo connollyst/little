@@ -5,6 +5,7 @@ import vaadin.scala.server.{ScaladinUIProvider, ScaladinRequest}
 import com.vaadin.server.UIProviderEvent
 import com.quane.little.ide.presenter.IDEPresenter
 import com.quane.little.ide.view.html.IDELayout
+import com.vaadin.ui.UI
 
 /** Provides the base user interface to Scaladin.
   */
