@@ -1,6 +1,5 @@
 package com.quane.little.language
 
-import org.eintr.loglady.Logging
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
@@ -9,8 +8,7 @@ abstract class Statement
   extends Expression
 
 class SetStatement(pointer: Pointer, val value: Expression)
-  extends Statement
-  with Logging {
+  extends Statement {
 
   def this(pointer: Pointer, value: String) =
     this(pointer, new Value(value))
@@ -62,8 +60,7 @@ class SetStatement(pointer: Pointer, val value: Expression)
 }
 
 class GetStatement(pointer: Pointer)
-  extends Statement
-  with Logging {
+  extends Statement {
 
   def this(scope: Scope, name: String) = this(new Pointer(scope, name))
 
@@ -88,15 +85,14 @@ class GetStatement(pointer: Pointer)
 }
 
 class PrintStatement(val value: Expression)
-  extends Statement
-  with Logging {
+  extends Statement {
 
   def this(value: String) = this(new Value(value))
 
   def evaluate: Value = {
     val text = value.evaluate
     // TODO this should display a speech bubble over the guy
-    log.info(text.asText)
+    println(text.asText)
     text
   }
 

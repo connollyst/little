@@ -4,11 +4,9 @@ import scala.collection.mutable.HashMap
 import scala.collection.mutable.MultiMap
 import scala.collection.mutable.Set
 import com.quane.little.language.event.LittleEvent
-import org.eintr.loglady.Logging
 import com.quane.little.game.entity.Mob
 
-class EventBus
-  extends Logging {
+class EventBus {
 
   // Events that have occurred and are waiting to be handled
   val queue = new HashMap[Mob, Set[LittleEvent]]() with MultiMap[Mob, LittleEvent]

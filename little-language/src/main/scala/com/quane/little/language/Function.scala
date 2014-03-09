@@ -2,7 +2,6 @@ package com.quane.little.language
 
 import scala.collection.mutable.ListBuffer
 import com.quane.little.language.data.Value
-import org.eintr.loglady.Logging
 import com.google.common.base.Objects
 import collection.mutable
 
@@ -73,8 +72,7 @@ class FunctionParameter(val name: String) {
   */
 class FunctionReference(var scope: Scope, val name: String)
   extends Expression
-  with Scope
-  with Logging {
+  with Scope {
 
   val args = mutable.Map[String, Expression]()
 
@@ -90,7 +88,7 @@ class FunctionReference(var scope: Scope, val name: String)
    * @return the function's return value
    */
   override def evaluate: Value = {
-    log.info("Evaluating function '" + name + "'")
+    println("Evaluating function '" + name + "'")
     val definition = fetchDefinition()
     setScope(definition)
     setArguments(definition)

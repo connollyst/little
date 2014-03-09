@@ -1,17 +1,12 @@
 package com.quane.little.language
 
 import scala.collection.mutable.ListBuffer
-
-import org.eintr.loglady.Logging
-
-
 import com.quane.little.language.data.{Value, Variable}
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.event.LittleEvent
 
 class Operator(override val runtime: Runtime, mob: Operable)
-  extends Scope
-  with Logging {
+  extends Scope {
 
   var scope: Scope = runtime
 
@@ -39,7 +34,7 @@ class Operator(override val runtime: Runtime, mob: Operable)
   val eventListeners = new ListBuffer[EventListener]
 
   def addEventListener(eventListener: EventListener) {
-    log.debug(
+    println(
       "Guy will listen for " + eventListener.event.getClass.getSimpleName + " events."
     )
     // TODO set the function's scope to this guy
@@ -62,7 +57,6 @@ class Operator(override val runtime: Runtime, mob: Operable)
 
   override def save(variable: Variable) {
     val name = variable.name
-    log.debug("Guy is saving " + name)
     name match {
       case Operable.X => throw new IllegalAccessException("Cannot set X")
       case Operable.Y => throw new IllegalAccessException("Cannot set Y")
@@ -84,7 +78,6 @@ class Operator(override val runtime: Runtime, mob: Operable)
         // It's not a special variable, fetch it from normal memory
         super.fetch(name)
     }
-    log.debug("Guy is returning " + name + ": " + variable.value)
     variable
   }
 

@@ -31,19 +31,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- Logging -->
-        <dependency>
-            <groupId>ch.qos.logback</groupId>
-            <artifactId>logback-classic</artifactId>
-            <version>${logback.version}</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.eintr.loglady</groupId>
-            <artifactId>loglady_${scala.level}</artifactId>
-            <version>${loglady.version}</version>
-        </dependency>
-
         <!-- Unit Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>

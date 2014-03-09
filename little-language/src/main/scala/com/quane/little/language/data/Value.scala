@@ -2,13 +2,11 @@ package com.quane.little.language.data
 
 import com.quane.little.language.Expression
 import scala.None
-import org.eintr.loglady.Logging
 import com.google.common.base.Objects
 
 class Value(val primitive: Any)
   extends Expression
-  with Ordered[Value]
-  with Logging {
+  with Ordered[Value] {
 
   val valueType: ValueType = {
     primitive match {

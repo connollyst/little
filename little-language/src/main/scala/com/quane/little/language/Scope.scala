@@ -2,7 +2,6 @@ package com.quane.little.language
 
 import scala.collection.mutable.Map
 import com.quane.little.language.data.{Value, NoValueType, Variable, Nada}
-import org.eintr.loglady.Logging
 
 /** A Scope defines a space in which
   * [[com.quane.little.language.data.Variable]] objects can be stored and
@@ -18,8 +17,7 @@ import org.eintr.loglady.Logging
   *
   * @author Sean Connolly
   */
-trait Scope
-  extends Logging {
+trait Scope {
 
   var scope: Scope
 
@@ -41,11 +39,9 @@ trait Scope
     */
   def save(variable: Variable) {
     val name = variable.name
-    val value = variable.value
     if (scope != null && scope.isDefined(name)) {
       scope.save(variable)
     } else {
-      log.info("Saving " + name + "=" + value.primitive)
       variables(name) = variable
     }
   }

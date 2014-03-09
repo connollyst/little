@@ -16,7 +16,6 @@ class Runtime
   }
 
   def saveFunction(function: FunctionDefinition) {
-    log.info("Saving function '" + function.name + "'")
     functions(function.name) = function
   }
 

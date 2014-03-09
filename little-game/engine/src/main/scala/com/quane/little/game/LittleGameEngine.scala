@@ -18,6 +18,10 @@ class LittleGameEngine {
   val entities = new ListBuffer[Entity]
   val players = new ListBuffer[Mob]
 
+  def initialize() = {
+    players ++= entityFactory.createMobs(5)
+    entities ++= entityFactory.foodList()
+  }
 
   def setEntityPosition(id: String, x: Float, y: Float): Mob = {
     // TODO store map instead of list

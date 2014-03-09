@@ -1,16 +1,14 @@
 package com.quane.little.game.entity
 
-import org.eintr.loglady.Logging
-import com.quane.little.language.{Operable, Operator}
+import com.quane.little.language.{Operable, Operator, Runtime}
 import scala.util.Random
 import com.quane.little.game.engine.InteractionManager
 
 class Mob(manager: InteractionManager)
   extends Entity(manager)
-  with Operable
-  with Logging {
+  with Operable {
 
-  val operator = new Operator(null, this) // TODO where should the Runtime come from?
+  val operator = new Operator(new Runtime, this) // TODO where should the Runtime come from?
 
   // Range of 1-10
   private var _speed = 0
@@ -37,7 +35,7 @@ class Mob(manager: InteractionManager)
 
   def heal(amount: Int) {
     // TODO
-    log.error("TODO heal by " + amount)
+    println("TODO heal by " + amount)
   }
 
   override def touchedBy(other: Entity) {
