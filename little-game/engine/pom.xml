@@ -31,13 +31,6 @@
             <version>${project.version}</version>
         </dependency>
 
-        <!-- Box2D manages physics -->
-        <dependency>
-            <groupId>org.jbox2d</groupId>
-            <artifactId>jbox2d-library</artifactId>
-            <version>2.2.1.1</version>
-        </dependency>
-
         <!-- Logging -->
         <dependency>
             <groupId>ch.qos.logback</groupId>

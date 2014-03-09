@@ -1,16 +1,14 @@
 package com.quane.little.game.entity
 
-import com.quane.little.game.view.ShapeDrawer
-import com.quane.little.game.physics.bodies.StaticBody
 import com.quane.little.game.engine.InteractionManager
 
-class WorldEdge(override val body: StaticBody, manager: InteractionManager)
-  extends Entity(body, manager)
+class WorldEdge(manager: InteractionManager)
+  extends Entity(manager)
   with ImmovableEntity {
 
-  def w: Float = body.w
+  def w: Float = 0.0f
 
-  def h: Float = body.h
+  def h: Float = 0.0f
 
   override def touchedBy(other: Entity) {
     if (other.isGuy) {
@@ -21,10 +19,6 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
 
   override def approachedBy(other: Entity) {
     // TODO
-  }
-
-  override def render(shapeDrawer: ShapeDrawer) {
-    shapeDrawer.drawWall(this)
   }
 
 }

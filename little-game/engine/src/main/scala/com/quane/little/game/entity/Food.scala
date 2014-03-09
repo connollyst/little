@@ -1,11 +1,9 @@
 package com.quane.little.game.entity
 
-import com.quane.little.game.physics.bodies.EntityBody
-import com.quane.little.game.view.SpriteDrawer
 import com.quane.little.game.engine.InteractionManager
 
-class Food(body: EntityBody, manager: InteractionManager, val health: Int)
-  extends Entity(body, manager) {
+class Food(manager: InteractionManager, val health: Int)
+  extends Entity(manager) {
 
   var isConsumed = false
 
@@ -31,10 +29,6 @@ class Food(body: EntityBody, manager: InteractionManager, val health: Int)
     if (!isConsumed) {
       manager.mobConsumesFood(mob, this)
     }
-  }
-
-  override def render(spriteDrawer: SpriteDrawer) {
-    spriteDrawer.drawFood(this)
   }
 
 }

@@ -29,7 +29,7 @@ class EventBus
               )
           })
       })
-    queue.clear
+    queue.clear()
   }
 
   def report(mob: Mob, event: LittleEvent) {

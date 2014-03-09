@@ -1,16 +1,13 @@
-package com.quane.little.game.physics
+package com.quane.little.game.entity
 
 import scala.collection.mutable.ListBuffer
-import com.quane.little.game.entity.Entity
 import com.quane.little.game.LittleGameEngine
 
-/** The cleaner is responsible for removing entities from the game and the
-  * [[com.quane.little.game.physics.PhysicsEngine]]
+/** The cleaner is responsible for removing entities from the game.
   *
   * @param game the game
-  * @param engine the physics engine
   */
-class LittleCleaner(game: LittleGameEngine, engine: PhysicsEngine) {
+class EntityCleaner(game: LittleGameEngine) {
 
   val queue = new ListBuffer[Entity]
 
@@ -23,7 +20,6 @@ class LittleCleaner(game: LittleGameEngine, engine: PhysicsEngine) {
       entity => {
         game.entities -= entity
         entity.isRemoved = true
-        engine.removeEntity(entity.body)
       })
     queue.clear()
   }

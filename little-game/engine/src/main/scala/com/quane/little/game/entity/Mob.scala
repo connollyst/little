@@ -1,14 +1,12 @@
 package com.quane.little.game.entity
 
-import com.quane.little.game.view.{LineDrawer, ShapeDrawer}
-import com.quane.little.game.physics.bodies.EntityBody
 import org.eintr.loglady.Logging
 import com.quane.little.language.{Operable, Operator}
 import scala.util.Random
 import com.quane.little.game.engine.InteractionManager
 
-class Mob(body: EntityBody, manager: InteractionManager)
-  extends Entity(body, manager)
+class Mob(manager: InteractionManager)
+  extends Entity(manager)
   with Operable
   with Logging {
 
@@ -48,14 +46,6 @@ class Mob(body: EntityBody, manager: InteractionManager)
 
   override def approachedBy(other: Entity) {
     // TODO
-  }
-
-  override def render(shapeDrawer: ShapeDrawer) {
-    shapeDrawer.drawMob(this)
-  }
-
-  override def render(lineDrawer: LineDrawer) {
-    lineDrawer.drawMob(this)
   }
 
 }

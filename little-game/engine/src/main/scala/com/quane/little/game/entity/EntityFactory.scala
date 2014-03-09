@@ -23,7 +23,7 @@ class EntityFactory(game: LittleGameEngine) {
   }
 
   def createMob: Mob = {
-    val mob = new Mob(game.builder.buildBody(), manager)
+    val mob = new Mob(manager)
     game.eventBus.report(mob, LittleEvent.OnSpawn)
     mob.operator.runtime.saveFunction(Functions.move)
     mob.operator.runtime.saveFunction(Functions.stop)
@@ -63,21 +63,10 @@ class EntityFactory(game: LittleGameEngine) {
   def foodList(number: Int): List[Food] = {
     val foods = new ListBuffer[Food]
     for (i <- 0 until number) {
-      val body = game.builder.buildFood()
-      val food = new Food(body, manager, Random.nextInt(20))
+      val food = new Food(manager, Random.nextInt(20))
       foods ++= Option(food)
     }
     foods.toList
-  }
-
-  def worldEdges: List[WorldEdge] = {
-    val edges = new ListBuffer[WorldEdge]
-    game.builder.buildWalls foreach (
-      wall => {
-        edges += new WorldEdge(wall, manager)
-      }
-      )
-    edges.toList
   }
 
 }
