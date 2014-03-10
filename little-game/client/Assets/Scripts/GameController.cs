@@ -23,13 +23,14 @@ public class GameController : MonoBehaviour
 
 		// Internal / private variables
 		private SmartFox server;
-		private GameObject localPlayer;
-		private MobController localPlayerController;
+		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
+		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
 		private Dictionary<SFSUser, GameObject> remotePlayers = new Dictionary<SFSUser, GameObject> ();
 	
 		//----------------------------------------------------------
 		// Unity callbacks
 		//----------------------------------------------------------
+
 		void Start ()
 		{
 				if (!SmartFoxConnection.IsInitialized) {
@@ -50,17 +51,6 @@ public class GameController : MonoBehaviour
 		{
 				if (server != null) {
 						server.ProcessEvents ();
-			
-						// If we spawned a local player, send position if movement is dirty
-						if (localPlayer != null && localPlayerController != null && localPlayerController.MovementDirty) {
-								List<UserVariable> userVariables = new List<UserVariable> ();
-								userVariables.Add (new SFSUserVariable ("x", (double)localPlayer.transform.position.x));
-								userVariables.Add (new SFSUserVariable ("y", (double)localPlayer.transform.position.y));
-								userVariables.Add (new SFSUserVariable ("z", (double)localPlayer.transform.position.z));
-								userVariables.Add (new SFSUserVariable ("rot", (double)localPlayer.transform.rotation.eulerAngles.y));
-								server.Send (new SetUserVariablesRequest (userVariables));
-								localPlayerController.MovementDirty = false;
-						}
 				}
 		}
 	
@@ -83,15 +73,15 @@ public class GameController : MonoBehaviour
 	
 		public void OnUserEnterRoom (BaseEvent evt)
 		{
-				// User joined - and we might be standing still (not sending position info). So lets send him our position info
-				if (localPlayer != null) {
+				// Another user joined, lets send him our position info
+				foreach (KeyValuePair<string, GameObject> entry in myMobs) {
+						string id = entry.Key;
+						GameObject myMob = entry.Value;
 						List<UserVariable> userVariables = new List<UserVariable> ();
-						userVariables.Add (new SFSUserVariable ("x", (double)localPlayer.transform.position.x));
-						userVariables.Add (new SFSUserVariable ("y", (double)localPlayer.transform.position.y));
-						userVariables.Add (new SFSUserVariable ("z", (double)localPlayer.transform.position.z));
-						userVariables.Add (new SFSUserVariable ("rot", (double)localPlayer.transform.rotation.eulerAngles.y));
-						userVariables.Add (new SFSUserVariable ("model", server.MySelf.GetVariable ("model").GetIntValue ()));
-						userVariables.Add (new SFSUserVariable ("mat", server.MySelf.GetVariable ("mat").GetIntValue ()));
+						userVariables.Add (new SFSUserVariable ("id", id));
+						userVariables.Add (new SFSUserVariable ("x", (double)myMob.transform.position.x));
+						userVariables.Add (new SFSUserVariable ("y", (double)myMob.transform.position.y));
+						userVariables.Add (new SFSUserVariable ("rot", (double)myMob.transform.rotation.eulerAngles.y));
 						server.Send (new SetUserVariablesRequest (userVariables));
 				}
 		}
@@ -100,6 +90,7 @@ public class GameController : MonoBehaviour
 		{
 				// Reset all internal states so we kick back to login screen
 				server.RemoveAllEventListeners ();
+				// TODO can this be handled by the TimedUpdate?
 				Application.LoadLevel ("Connection");
 		}
 
@@ -118,16 +109,22 @@ public class GameController : MonoBehaviour
 
 		private void SpawnPlayer (ISFSObject data)
 		{
+				string id = data.GetUtfString ("id");
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
 				Debug.Log ("Player @ " + x + " & " + y);
 				Vector2 position = new Vector2 (x, y);
 				Quaternion rotation = Quaternion.Euler (0, 0, 0);
-				SpawnLocalPlayer (position, rotation);
+				
+				GameObject mob = GameObject.Instantiate (playerModel) as GameObject;
+				mob.transform.position = position;
+				mob.transform.rotation = rotation;
+				myMobs.Add (id, mob);
 		}
 
 		private void SpawnItem (ISFSObject data)
 		{
+				string id = data.GetUtfString ("id");
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
 				Debug.Log ("Item @ " + x + " & " + y);
@@ -137,6 +134,7 @@ public class GameController : MonoBehaviour
 				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
 				item.transform.position = position;
 				item.transform.rotation = rotation;
+				items.Add (id, item);
 		}
 		
 		public void OnUserVariableUpdate (BaseEvent evt)
@@ -196,14 +194,7 @@ public class GameController : MonoBehaviour
 		//----------------------------------------------------------
 		// Private player helper methods
 		//----------------------------------------------------------
-	
-		private void SpawnLocalPlayer (Vector2 position, Quaternion rotation)
-		{
-				localPlayer = GameObject.Instantiate (playerModel) as GameObject;
-				localPlayer.transform.position = position;
-				localPlayer.transform.rotation = rotation;
-		}
-	
+
 		private void SpawnRemotePlayer (SFSUser user, Vector3 position, Quaternion rotation)
 		{
 				// See if there already exists a model so we can destroy it first
