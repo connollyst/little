@@ -18,14 +18,4 @@
         <module>server</module>
     </modules>
 
-    <build>
-        <plugins>
-            <plugin>
-                <groupId>org.scala-tools</groupId>
-                <artifactId>maven-scala-plugin</artifactId>
-                <version>${scala.plugin.version}</version>
-            </plugin>
-        </plugins>
-    </build>
-
 </project>
