@@ -1,6 +1,5 @@
 package com.quane.little.game.entity
 
-import scala.Option.option2Iterable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
@@ -71,10 +70,22 @@ class EntityFactory(game: LittleGameEngine) {
   def foodList(number: Int): List[Food] = {
     val foods = new ListBuffer[Food]
     for (i <- 0 until number) {
-      val food = new Food(manager, Random.nextInt(20))
-      foods ++= Option(food)
+      foods += createFood()
     }
     foods.toList
+  }
+
+  def createFood(): Food = {
+    val x = Random.nextInt(20)
+    val y = Random.nextInt(20)
+    createFood(x, y)
+  }
+
+  def createFood(x: Float, y: Float): Food = {
+    val food = new Food(manager, Random.nextInt(20))
+    food.x = x
+    food.y = y
+    food
   }
 
 }

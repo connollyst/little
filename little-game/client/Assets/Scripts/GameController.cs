@@ -18,7 +18,8 @@ public class GameController : MonoBehaviour
 		// Setup variables
 		//----------------------------------------------------------
 		public GameObject playerModel;
-		public LogLevel logLevel = LogLevel.INFO;
+		public GameObject foodModel;
+		public LogLevel logLevel = LogLevel.ERROR;
 
 		// Internal / private variables
 		private SmartFox smartFox;
@@ -136,6 +137,15 @@ public class GameController : MonoBehaviour
 
 		private void SpawnItem (ISFSObject data)
 		{
+				float x = data.GetFloat ("x");
+				float y = data.GetFloat ("y");
+				Debug.Log ("Item @ " + x + " & " + y);
+				Vector2 position = new Vector2 (x, y);
+				Quaternion rotation = Quaternion.Euler (0, 0, 0);
+
+				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
+				item.transform.position = position;
+				item.transform.rotation = rotation;
 		}
 		
 		public void OnUserVariableUpdate (BaseEvent evt)
@@ -198,13 +208,9 @@ public class GameController : MonoBehaviour
 	
 		private void SpawnLocalPlayer (Vector2 position, Quaternion rotation)
 		{
-				// Lets spawn our local player model
 				localPlayer = GameObject.Instantiate (playerModel) as GameObject;
 				localPlayer.transform.position = position;
 				localPlayer.transform.rotation = rotation;
-
-				localPlayer.AddComponent<MobController> ();
-				localPlayerController = localPlayer.GetComponent<MobController> ();
 		}
 	
 		private void SpawnRemotePlayer (SFSUser user, Vector3 position, Quaternion rotation)
