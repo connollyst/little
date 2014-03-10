@@ -22,7 +22,7 @@ public class GameController : MonoBehaviour
 		public LogLevel logLevel = LogLevel.ERROR;
 
 		// Internal / private variables
-		private SmartFox smartFox;
+		private SmartFox server;
 		private GameObject localPlayer;
 		private MobController localPlayerController;
 		private Dictionary<SFSUser, GameObject> remotePlayers = new Dictionary<SFSUser, GameObject> ();
@@ -32,33 +32,24 @@ public class GameController : MonoBehaviour
 		//----------------------------------------------------------
 		void Start ()
 		{
-		
 				if (!SmartFoxConnection.IsInitialized) {
 						Application.LoadLevel ("Connector");
 						return;
 				}
-				smartFox = SmartFoxConnection.Connection;
-		
-				// Register callback delegates
-				smartFox.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
-				smartFox.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
-				smartFox.AddEventListener (SFSEvent.USER_VARIABLES_UPDATE, OnUserVariableUpdate);
-				smartFox.AddEventListener (SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
-				smartFox.AddEventListener (SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
-		
-//				smartFox.AddLogListener (logLevel, OnDebugMessage);
-		
-				// Start this clients avatar and get cracking!
-//		int numModel = UnityEngine.Random.Range(0, 10);
-//		int numMaterial = UnityEngine.Random.Range(0, 10);
-//		SpawnLocalPlayer(numModel, numMaterial);
-				smartFox.Send (new ExtensionRequest ("ready", new SFSObject (), smartFox.LastJoinedRoom));
+				server = SmartFoxConnection.Connection;
+				server.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
+				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
+				server.AddEventListener (SFSEvent.USER_VARIABLES_UPDATE, OnUserVariableUpdate);
+				server.AddEventListener (SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
+				server.AddEventListener (SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
+				server.AddLogListener (logLevel, OnDebugMessage);
+				server.Send (new ExtensionRequest ("ready", new SFSObject (), server.LastJoinedRoom));
 		}
 	
 		void FixedUpdate ()
 		{
-				if (smartFox != null) {
-						smartFox.ProcessEvents ();
+				if (server != null) {
+						server.ProcessEvents ();
 			
 						// If we spawned a local player, send position if movement is dirty
 						if (localPlayer != null && localPlayerController != null && localPlayerController.MovementDirty) {
@@ -67,7 +58,7 @@ public class GameController : MonoBehaviour
 								userVariables.Add (new SFSUserVariable ("y", (double)localPlayer.transform.position.y));
 								userVariables.Add (new SFSUserVariable ("z", (double)localPlayer.transform.position.z));
 								userVariables.Add (new SFSUserVariable ("rot", (double)localPlayer.transform.rotation.eulerAngles.y));
-								smartFox.Send (new SetUserVariablesRequest (userVariables));
+								server.Send (new SetUserVariablesRequest (userVariables));
 								localPlayerController.MovementDirty = false;
 						}
 				}
@@ -99,16 +90,16 @@ public class GameController : MonoBehaviour
 						userVariables.Add (new SFSUserVariable ("y", (double)localPlayer.transform.position.y));
 						userVariables.Add (new SFSUserVariable ("z", (double)localPlayer.transform.position.z));
 						userVariables.Add (new SFSUserVariable ("rot", (double)localPlayer.transform.rotation.eulerAngles.y));
-						userVariables.Add (new SFSUserVariable ("model", smartFox.MySelf.GetVariable ("model").GetIntValue ()));
-						userVariables.Add (new SFSUserVariable ("mat", smartFox.MySelf.GetVariable ("mat").GetIntValue ()));
-						smartFox.Send (new SetUserVariablesRequest (userVariables));
+						userVariables.Add (new SFSUserVariable ("model", server.MySelf.GetVariable ("model").GetIntValue ()));
+						userVariables.Add (new SFSUserVariable ("mat", server.MySelf.GetVariable ("mat").GetIntValue ()));
+						server.Send (new SetUserVariablesRequest (userVariables));
 				}
 		}
 	
 		public void OnConnectionLost (BaseEvent evt)
 		{
 				// Reset all internal states so we kick back to login screen
-				smartFox.RemoveAllEventListeners ();
+				server.RemoveAllEventListeners ();
 				Application.LoadLevel ("Connection");
 		}
 
@@ -156,7 +147,7 @@ public class GameController : MonoBehaviour
 				ArrayList changedVars = (ArrayList)evt.Params ["changedVars"];
 				SFSUser user = (SFSUser)evt.Params ["user"];
 		
-				if (user == smartFox.MySelf)
+				if (user == server.MySelf)
 						return;
 		
 				if (!remotePlayers.ContainsKey (user)) {
@@ -230,12 +221,12 @@ public class GameController : MonoBehaviour
 				// Someone dropped off the grid. Lets remove him
 				SFSObject obj = new SFSObject ();
 				obj.PutUtfString ("cmd", "rm");
-				smartFox.Send (new ObjectMessageRequest (obj, smartFox.LastJoinedRoom));
+				server.Send (new ObjectMessageRequest (obj, server.LastJoinedRoom));
 		}
 	
 		private void RemoveRemotePlayer (SFSUser user)
 		{
-				if (user == smartFox.MySelf)
+				if (user == server.MySelf)
 						return;
 		
 				if (remotePlayers.ContainsKey (user)) {
