@@ -1,9 +1,8 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.GetStatementView
-import vaadin.scala.HorizontalLayout
-import vaadin.scala.TextField
-import vaadin.scala.AbstractTextField
+import com.vaadin.ui.{TextField, HorizontalLayout}
+import com.vaadin.event.FieldEvents.{TextChangeEvent, TextChangeListener}
 
 object GetStatementLayout {
   val Style = "l-get"
@@ -21,22 +20,23 @@ class GetStatementLayout
 
   private val nameField = createNameField()
 
-  styleName = ExpressionLayout.Style + " " + GetStatementLayout.Style
-  nameField.styleName = GetStatementLayout.StyleValue
+  setStyleName(ExpressionLayout.Style + " " + GetStatementLayout.Style)
+  nameField.setStyleName(GetStatementLayout.StyleValue)
 
-  add(nameField)
-  add(CloseButton(this))
+  addComponent(nameField)
+  addComponent(CloseButton(this))
 
-  override def setName(name: String): Unit = nameField.value = name
+  override def setName(name: String): Unit = nameField.setValue(name)
 
   private def createNameField() = new TextField {
-    prompt = "variable name"
-    textChangeListeners += {
-      e: AbstractTextField.TextChangeEvent =>
+    setInputPrompt("variable name")
+    addTextChangeListener(new TextChangeListener {
+      def textChange(event: TextChangeEvent) = {
         _viewPresenter.foreach {
-          listener => listener.onNameChange(e.text)
+          listener => listener.onNameChange(event.getText)
         }
-    }
+      }
+    })
   }
 
 }

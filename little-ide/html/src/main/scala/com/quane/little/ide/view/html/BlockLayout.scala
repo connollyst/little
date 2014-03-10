@@ -2,13 +2,12 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter._
 import com.quane.vaadin.scala.DroppableTarget
-import vaadin.scala.{VerticalLayout, Component}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
 import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
-import vaadin.scala.HorizontalLayout
-import vaadin.scala.MenuBar
 import com.quane.little.ide.view.html.BlockLayout._
+import com.vaadin.ui.{Component, MenuBar, HorizontalLayout, VerticalLayout}
+import com.vaadin.ui.MenuBar.Command
 
 object BlockLayout {
   val DefaultIndex = -1
@@ -25,10 +24,10 @@ class BlockLayout
   with BlockView
   with RemovableComponent {
 
-  spacing = false
-  styleName = Style
+  setSpacing(false)
+  setStyleName(Style)
 
-  super.add(new BlockStepSeparator(this))
+  super.addComponent(new BlockStepSeparator(this))
 
   override def addConditional() = addConditional(DefaultIndex)
 
@@ -55,26 +54,26 @@ class BlockLayout
   override def addFunctionReference(index: Int) =
     new FunctionReferencePresenter(add(new FunctionReferenceLayout(), componentIndex(index)))
 
-  override def add[C <: Component](component: C): C = {
-    super.add(component)
-    super.add(new BlockStepSeparator(this))
+  override def addComponent(component: Component) = {
+    super.addComponent(component)
+    super.addComponent(new BlockStepSeparator(this))
     component
   }
 
   def add[C <: Component](component: C, index: Int): C = {
     if (index < 0) {
-      add(component)
+      addComponent(component)
     } else {
-      super.add(component, index = index)
-      super.add(new BlockStepSeparator(this), index = index + 1)
+      super.addComponent(component, index)
+      super.addComponent(new BlockStepSeparator(this), index + 1)
     }
     component
   }
 
   override def removeComponent(c: Component) {
-    val index = componentIndex(c)
-    //    val separator = component(index + 1);
-    //    super.removeComponent(separator);
+    val index = getComponentIndex(c)
+    val separator = getComponent(index + 1)
+    super.removeComponent(separator)
     super.removeComponent(c)
   }
 
@@ -83,28 +82,21 @@ class BlockLayout
     * @param c the component to check
     * @return `true` if the component is a child
     */
-  def contains(c: Component): Boolean = componentIndex(c) != -1
-
-  /** Return the index of the Component in the layout.
-    *
-    * @param c the component to check
-    * @return the index of the component
-    */
-  def componentIndex(c: Component): Int = p.getComponentIndex(c.p)
+  def contains(c: Component): Boolean = getComponentIndex(c) != -1
 
   /** Return the index of the expression step in the block, given it's Component.
     *
     * @param c the step component
     * @return the index of the step in the block
     */
-  def stepIndex(c: Component): Int = stepIndex(p.getComponentIndex(c.p))
+  def stepIndex(c: Component): Int = stepIndex(getComponentIndex(c))
 
   /** Return the index of the expression step in the block, given it's Component's index.
     *
     * @param i the index of the component
     * @return the index of the step in the block
     */
-  def stepIndex(i: Int): Int = Math.round(i / 2)
+  def stepIndex(i: Int): Int = scala.math.round(i / 2)
 
   /** Return the index of the Component, given the index of the step in the block.
     *
@@ -123,7 +115,7 @@ class BlockLayout
     *
     * @return the component count
     */
-  def componentCount: Int = p.getComponentCount
+  def componentCount: Int = getComponentCount
 
   //  def component(index: Int): Component = {
   //    super.components[index]
@@ -166,11 +158,11 @@ class BlockLayout
 private class BlockStepSeparator(block: BlockLayout)
   extends DroppableTarget(new HorizontalLayout) {
 
-  component.styleName = BlockLayout.StyleSeparator
+  component.setStyleName(BlockLayout.StyleSeparator)
 
-  component.add(new BlockMenuBar(block, this))
+  component.addComponent(new BlockMenuBar(block, this))
 
-  dropHandler = new DropHandler() {
+  setDropHandler(new DropHandler() {
 
     override def getAcceptCriterion: AcceptCriterion = {
       // TODO only accept appropriate Little components
@@ -185,7 +177,7 @@ private class BlockStepSeparator(block: BlockLayout)
       //      }
       //      val separator = ExpressionListSeparator.this
       //      val separatorIndex = list.componentIndex(separator)
-      //      list.add(droppedStep, separatorIndex + 1)
+      //      list.addComponent(droppedStep, separatorIndex + 1)
     }
 
     //    def getStepList: BlockLayout = {
@@ -208,36 +200,43 @@ private class BlockStepSeparator(block: BlockLayout)
     //      }
     //    }
 
-  }
+  })
 }
 
 private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
   extends MenuBar {
 
-  val item = addItem("+")
-  item.addItem("get", {
-    item => block.requestAddGetStatement(index)
+  val item = addItem("+", null, null)
+  item.addItem("get", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      block.requestAddGetStatement(index)
   })
-  item.addItem("set", {
-    item => block.requestAddSetStatement(index)
+  item.addItem("set", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      block.requestAddSetStatement(index)
   })
-  item.addItem("print", {
-    item => block.requestAddPrintStatement(index)
+  item.addItem("print", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      block.requestAddPrintStatement(index)
   })
   item.addSeparator()
-  item.addItem("if/else", {
-    item => block.requestAddConditional(index)
+  item.addItem("if/else", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      block.requestAddConditional(index)
   })
   item.addSeparator()
-  val functions = item.addItem("functions")
-  functions.addItem("move", {
-    item => block.requestAddFunctionReference(item.text, index)
+  val functions = item.addItem("functions", null, null)
+  functions.addItem("move", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      block.requestAddFunctionReference(item.getText, index)
   })
-  functions.addItem("stop", {
-    item => block.requestAddFunctionReference(item.text, index)
+  functions.addItem("stop", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      block.requestAddFunctionReference(item.getText, index)
   })
-  functions.addItem("turn", {
-    item => block.requestAddFunctionReference(item.text, index)
+  functions.addItem("turn", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      block.requestAddFunctionReference(item.getText, index)
   })
 
   private def index: Int = block.stepIndex(separator)

@@ -1,8 +1,8 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{Label, HorizontalLayout}
 import com.quane.little.ide.view.FunctionReferenceView
 import com.quane.little.ide.presenter.FunctionArgumentPresenter
+import com.vaadin.ui.{Label, HorizontalLayout}
 
 object FunctionReferenceLayout {
   val Style = ExpressionLayout.Style + " l-function-ref"
@@ -17,17 +17,20 @@ class FunctionReferenceLayout
   with FunctionReferenceView
   with RemovableComponent {
 
-  private val nameLabel = Label("???")
+  private val nameLabel = new Label("???")
 
-  styleName = FunctionReferenceLayout.Style
-  spacing = true
+  setStyleName(FunctionReferenceLayout.Style)
+  setSpacing(true)
 
-  add(nameLabel)
-  add(CloseButton(this))
+  addComponent(nameLabel)
+  addComponent(CloseButton(this))
 
-  override def setName(name: String): Unit = nameLabel.value = Some(name)
+  override def setName(name: String): Unit = nameLabel.setValue(name)
 
-  override def createArgument(): FunctionArgumentPresenter[_] =
-    new FunctionArgumentPresenter(add(new FunctionArgumentComponent))
+  override def createArgument(): FunctionArgumentPresenter[_] = {
+    val view = new FunctionArgumentComponent
+    addComponent(view)
+    new FunctionArgumentPresenter(view)
+  }
 
 }

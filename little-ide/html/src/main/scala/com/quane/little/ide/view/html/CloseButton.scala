@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.Button
 import com.quane.little.language.exceptions.NotImplementedError
+import com.vaadin.ui.Button
 
 object CloseButton {
 
@@ -19,7 +19,7 @@ object CloseButton {
 class CloseButton
   extends Button {
 
-  caption = "X"
-  p.setPrimaryStyleName("l-close-btn")
+  setCaption("X")
+  setPrimaryStyleName("l-close-btn")
 
 }

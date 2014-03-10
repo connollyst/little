@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{ComponentContainer, Component}
 import com.quane.little.ide.view.ViewPresenter
+import com.vaadin.ui.{ComponentContainer, Component}
 
 
 /** A base HTML component trait.
@@ -13,12 +13,10 @@ trait RemovableComponent
   //  with ViewWithChildren[_] {
 
   def removeFromParent(): Option[ViewPresenter] = {
-    parent match {
-      case Some(c) => c match {
-        case container: ComponentContainer => container.removeComponent(this)
-        case _ => throw new IllegalAccessException("Cannot remove " + this + " from " + parent)
-      }
-      case None => // strange
+    // TODO null check?
+    getParent match {
+      case container: ComponentContainer => container.removeComponent(this)
+      case _ => throw new IllegalAccessException("Cannot remove " + this + " from " + getParent)
     }
     //    super.removeFromParent()
     None

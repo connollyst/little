@@ -1,11 +1,10 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
-import vaadin.scala.HorizontalLayout
-import vaadin.scala.Label
-import vaadin.scala.MenuBar
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 import com.quane.little.language.exceptions.NotImplementedError
+import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
+import com.vaadin.ui.MenuBar.Command
 
 object PrintStatementLayout {
   val Style = "l-print"
@@ -20,14 +19,14 @@ class PrintStatementLayout
   with PrintStatementView
   with RemovableComponent {
 
-  private val printLabel = Label("print")
+  private val printLabel = new Label("print")
   private var printValue: Option[ExpressionView[_]] = None
 
-  styleName = ExpressionLayout.Style + " " + PrintStatementLayout.Style
-  spacing = true
-  add(printLabel)
-  add(new PrintMenuBar(this))
-  add(CloseButton(this))
+  setStyleName(ExpressionLayout.Style + " " + PrintStatementLayout.Style)
+  setSpacing(true)
+  addComponent(printLabel)
+  addComponent(new PrintMenuBar(this))
+  addComponent(CloseButton(this))
 
   private[html] def requestAddTextLiteral() = {
     // TODO skip if already a value statement
@@ -58,7 +57,7 @@ class PrintStatementLayout
     removePrintValue()
     val view = new ValueLayout
     printValue = Some(view)
-    add(view)
+    addComponent(view)
     new ValuePresenter(view)
   }
 
@@ -66,7 +65,7 @@ class PrintStatementLayout
     removePrintValue()
     val view = new GetStatementLayout
     printValue = Some(view)
-    add(view)
+    addComponent(view)
     new GetStatementPresenter(view)
   }
 
@@ -74,7 +73,7 @@ class PrintStatementLayout
     removePrintValue()
     val view = new FunctionReferenceLayout
     printValue = Some(view)
-    add(view)
+    addComponent(view)
     new FunctionReferencePresenter(view)
   }
 
@@ -91,22 +90,27 @@ class PrintStatementLayout
 private class PrintMenuBar(view: PrintStatementLayout)
   extends MenuBar {
 
-  val item = addItem("∆")
-  item.addItem("text", {
-    item => view.requestAddTextLiteral()
+  val item = addItem("∆", null, null)
+  item.addItem("text", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddTextLiteral()
   })
-  item.addItem("get", {
-    item => view.requestAddGetStatement()
+  item.addItem("get", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddGetStatement()
   })
-  val functions = item.addItem("functions")
-  functions.addItem("move", {
-    item => view.requestAddFunctionReference(item.text)
+  val functions = item.addItem("functions", null, null)
+  functions.addItem("move", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("stop", {
-    item => view.requestAddFunctionReference(item.text)
+  functions.addItem("stop", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("turn", {
-    item => view.requestAddFunctionReference(item.text)
+  functions.addItem("turn", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
 
 }

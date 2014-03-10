@@ -22,7 +22,7 @@ class TestValueLayout extends FunSuite with MockitoSugar {
   test("should change textbox text on setValue") {
     val view = new ValueLayout
     view.setValue("hello world")
-    assert(view.valueField.value.get == "hello world")
+    assert(view.valueField.getValue == "hello world")
   }
 
 

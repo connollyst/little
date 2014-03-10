@@ -1,9 +1,10 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{MenuBar, HorizontalLayout, Label}
 import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
 import com.quane.little.language.exceptions.NotImplementedError
+import com.vaadin.ui.{MenuBar, Label, HorizontalLayout}
+import com.vaadin.ui.MenuBar.Command
 
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
@@ -21,13 +22,13 @@ class FunctionArgumentComponent
   private val nameLabel = new Label()
   private var valueComponent: Option[ExpressionView[_]] = None
 
-  styleName = FunctionArgumentComponent.Style
-  spacing = true
+  setStyleName(FunctionArgumentComponent.Style)
+  setSpacing(true)
 
-  add(nameLabel)
-  add(Label("="))
-  add(new FunctionArgumentMenuBar(this))
-  add(CloseButton(this))
+  addComponent(nameLabel)
+  addComponent(new Label("="))
+  addComponent(new FunctionArgumentMenuBar(this))
+  addComponent(CloseButton(this))
 
   private[html] def requestAddTextLiteral() = {
     // TODO skip if already a value statement
@@ -58,7 +59,7 @@ class FunctionArgumentComponent
     removeValueComponent()
     val view = new ValueLayout
     valueComponent = Some(view)
-    add(view)
+    addComponent(view)
     new ValuePresenter(view)
   }
 
@@ -66,7 +67,7 @@ class FunctionArgumentComponent
     removeValueComponent()
     val view = new GetStatementLayout
     valueComponent = Some(view)
-    add(view)
+    addComponent(view)
     new GetStatementPresenter(view)
   }
 
@@ -74,7 +75,7 @@ class FunctionArgumentComponent
     removeValueComponent()
     val view = new FunctionReferenceLayout
     valueComponent = Some(view)
-    add(view)
+    addComponent(view)
     new FunctionReferencePresenter(view)
   }
 
@@ -86,29 +87,34 @@ class FunctionArgumentComponent
     valueComponent = None
   }
 
-  override def setName(name: String): Unit = nameLabel.value = name
+  override def setName(name: String): Unit = nameLabel.setValue(name)
 
 }
 
 private class FunctionArgumentMenuBar(view: FunctionArgumentComponent)
   extends MenuBar {
 
-  val item = addItem("∆")
-  item.addItem("text", {
-    item => view.requestAddTextLiteral()
+  val item = addItem("∆", null, null)
+  item.addItem("text", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddTextLiteral()
   })
-  item.addItem("get", {
-    item => view.requestAddGetStatement()
+  item.addItem("get", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddGetStatement()
   })
-  val functions = item.addItem("functions")
-  functions.addItem("move", {
-    item => view.requestAddFunctionReference(item.text)
+  val functions = item.addItem("functions", null, null)
+  functions.addItem("move", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("stop", {
-    item => view.requestAddFunctionReference(item.text)
+  functions.addItem("stop", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("turn", {
-    item => view.requestAddFunctionReference(item.text)
+  functions.addItem("turn", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
 
 }

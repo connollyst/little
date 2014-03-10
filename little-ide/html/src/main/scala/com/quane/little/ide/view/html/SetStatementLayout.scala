@@ -1,10 +1,11 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{MenuBar, TextField, Label, HorizontalLayout}
 import com.quane.little.ide.view.{ExpressionView, SetStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
-import vaadin.scala.AbstractTextField.TextChangeEvent
 import com.quane.little.language.exceptions.NotImplementedError
+import com.vaadin.ui.{MenuBar, TextField, HorizontalLayout, Label}
+import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
+import com.vaadin.ui.MenuBar.Command
 
 object SetStatementLayout {
   val Style = "l-set"
@@ -22,31 +23,32 @@ class SetStatementLayout
   private val nameField = createNameTextField()
   private var valueComponent: Option[ExpressionView[_]] = None
 
-  styleName = ExpressionLayout.Style + " " + SetStatementLayout.Style
-  spacing = true
+  setStyleName(ExpressionLayout.Style + " " + SetStatementLayout.Style)
+  setSpacing(true)
 
-  add(nameField)
-  add(Label("="))
-  add(new ValueMenuBar(this))
-  add(CloseButton(this))
+  addComponent(nameField)
+  addComponent(new Label("="))
+  addComponent(new ValueMenuBar(this))
+  addComponent(CloseButton(this))
 
-  override def setName(name: String): Unit = nameField.value = name
+  override def setName(name: String): Unit = nameField.setValue(name)
 
   private def createNameTextField() = new TextField {
-    prompt = "variable name"
-    textChangeListeners += {
-      e: TextChangeEvent =>
+    setInputPrompt("variable name")
+    addTextChangeListener(new TextChangeListener {
+      def textChange(event: TextChangeEvent) = {
         _viewPresenter.foreach {
-          listener => listener.onNameChange(e.text)
+          listener => listener.onNameChange(event.getText)
         }
-    }
+      }
+    })
   }
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
     removeValueComponent()
     val view = new ValueLayout
     valueComponent = Some(view)
-    add(view)
+    addComponent(view)
     new ValuePresenter(view)
   }
 
@@ -54,7 +56,7 @@ class SetStatementLayout
     removeValueComponent()
     val view = new GetStatementLayout
     valueComponent = Some(view)
-    add(view)
+    addComponent(view)
     new GetStatementPresenter(view)
   }
 
@@ -62,7 +64,7 @@ class SetStatementLayout
     removeValueComponent()
     val view = new FunctionReferenceLayout
     valueComponent = Some(view)
-    add(view)
+    addComponent(view)
     new FunctionReferencePresenter(view)
   }
 
@@ -104,22 +106,27 @@ class SetStatementLayout
 private class ValueMenuBar(view: SetStatementLayout)
   extends MenuBar {
 
-  val item = addItem("∆")
-  item.addItem("text", {
-    item => view.requestAddTextLiteral()
+  val item = addItem("∆", null, null)
+  item.addItem("text", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddTextLiteral()
   })
-  item.addItem("get", {
-    item => view.requestAddGetStatement()
+  item.addItem("get", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddGetStatement()
   })
-  val functions = item.addItem("functions")
-  functions.addItem("move", {
-    item => view.requestAddFunctionReference(item.text)
+  val functions = item.addItem("functions", null, null)
+  functions.addItem("move", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("stop", {
-    item => view.requestAddFunctionReference(item.text)
+  functions.addItem("stop", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("turn", {
-    item => view.requestAddFunctionReference(item.text)
+  functions.addItem("turn", null, new Command {
+    def menuSelected(item: MenuBar#MenuItem) =
+      view.requestAddFunctionReference(item.getText)
   })
 
 }

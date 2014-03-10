@@ -1,8 +1,8 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{CssLayout, TextField}
 import com.quane.little.ide.view.ValueView
-import vaadin.scala.AbstractTextField.TextChangeEvent
+import com.vaadin.ui.{TextField, CssLayout}
+import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 
 /** An HTML layout view representing an explicit value, a constant.
   *
@@ -15,19 +15,19 @@ class ValueLayout
 
   val valueField = createValueField()
 
-  add(valueField)
-  add(CloseButton(this))
+  addComponent(valueField)
+  addComponent(CloseButton(this))
 
-  override def setValue(value: String): Unit = valueField.value = value
+  override def setValue(value: String): Unit = valueField.setValue(value)
 
   private def createValueField() = new TextField {
-    prompt = "value"
-    textChangeListeners += {
-      e: TextChangeEvent =>
+    setInputPrompt("value")
+    addTextChangeListener(new TextChangeListener {
+      def textChange(event: TextChangeEvent) =
         _viewPresenter.foreach {
-          listener => listener.onValueChange(e.text)
+          listener => listener.onValueChange(event.getText)
         }
-    }
+    })
   }
 
 }

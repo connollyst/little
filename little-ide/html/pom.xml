@@ -101,12 +101,6 @@
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin.version}</version>
         </dependency>
-        <!-- Vaadin + Scala = Scaladin -->
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>scaladin</artifactId>
-            <version>3.0.0</version>
-        </dependency>
         <!-- Should be run within a Servlet 3 container -->
         <dependency>
             <groupId>javax.servlet</groupId>

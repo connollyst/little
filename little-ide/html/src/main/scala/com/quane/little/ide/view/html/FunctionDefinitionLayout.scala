@@ -5,9 +5,9 @@ import com.quane.little.ide.presenter.FunctionParameterPresenter
 import com.quane.little.ide.presenter.FunctionReferencePresenter
 import com.quane.little.ide.view.FunctionDefinitionView
 
-import vaadin.scala._
-import vaadin.scala.Measure
-import vaadin.scala.AbstractTextField.TextChangeEvent
+import com.vaadin.ui._
+import com.vaadin.server.Sizeable
+import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 
 object FunctionDefinitionLayout {
   val Style = "l-function-def"
@@ -33,10 +33,10 @@ class FunctionDefinitionLayout
   private val body = createBody()
   private val footer = createFooter()
 
-  spacing = false
-  add(header)
-  add(body)
-  add(footer)
+  setSpacing(false)
+  addComponent(header)
+  addComponent(body)
+  addComponent(footer)
 
   override def setName(name: String): Unit = header.name_=(name)
 
@@ -47,18 +47,18 @@ class FunctionDefinitionLayout
   private def createBody(): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
-    bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = FunctionDefinitionLayout.StyleHeadLeft
-    body.add(bodyLeft)
-    body.add(stepList)
-    body.styleName = FunctionDefinitionLayout.StyleBody
-    body.spacing = false
+    bodyLeft.setHeight(100, Sizeable.Unit.PERCENTAGE)
+    bodyLeft.setStyleName(FunctionDefinitionLayout.StyleHeadLeft)
+    body.addComponent(bodyLeft)
+    body.addComponent(stepList)
+    body.setStyleName(FunctionDefinitionLayout.StyleBody)
+    body.setSpacing(false)
     body
   }
 
   private def createFooter(): Component = {
     val footer = new CssLayout()
-    footer.styleName = FunctionDefinitionLayout.StyleFoot
+    footer.setStyleName(FunctionDefinitionLayout.StyleFoot)
     footer
   }
 
@@ -76,7 +76,7 @@ class FunctionDefinitionLayout
   override def createFunctionReference(): FunctionReferencePresenter[_] = {
     val view = new FunctionReferenceLayout()
     // TODO replace stepList with body
-    stepList.add(view)
+    stepList.addComponent(view)
     new FunctionReferencePresenter(view)
   }
 
@@ -103,50 +103,51 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   private val saveButton = createSaveButton()
   private val closeButton = createCloseButton()
 
-  styleName = FunctionDefinitionLayout.StyleHead
-  spacing = true
-  add(nameField)
-  add(parameterLayout)
-  add(newParameterButton)
-  add(saveButton)
-  add(closeButton)
+  setStyleName(FunctionDefinitionLayout.StyleHead)
+  setSpacing(true)
+  addComponent(nameField)
+  addComponent(parameterLayout)
+  addComponent(newParameterButton)
+  addComponent(saveButton)
+  addComponent(closeButton)
 
   private def createNameField(): TextField = new TextField {
-    prompt = "function name"
-    textChangeListeners += {
-      e: TextChangeEvent =>
-        definition.onNameChange(e.text)
-    }
-    styleName = FunctionDefinitionLayout.StyleHeadNameField
+    setInputPrompt("function name")
+    addTextChangeListener(new TextChangeListener {
+      def textChange(event: TextChangeEvent) =
+        definition.onNameChange(event.getText)
+    })
+    setStyleName(FunctionDefinitionLayout.StyleHeadNameField)
     // TODO should be a label that, when clicked, becomes a text field
   }
 
   private def createParameterLayout(): Layout = new HorizontalLayout {
-    spacing = true
+    setSpacing(true)
   }
 
-  private def createNewParameterButton() = Button(
-  "+", {
-    definition.requestNewParameter()
-    () // how do I avoid this?
-  })
+  private def createNewParameterButton() = new Button("+",
+    new Button.ClickListener {
+      def buttonClick(event: Button.ClickEvent) =
+        definition.requestNewParameter()
+    })
 
-  private def createSaveButton() = Button(
-  "Compile", {
-    val header = FunctionDefinitionHeader.this
-    val compiled = header.definition.compile()
-    println("Compiled: " + compiled)
-    () // how do I avoid this?
-  })
+  private def createSaveButton() = new Button("Compile",
+    new Button.ClickListener {
+      def buttonClick(event: Button.ClickEvent) = {
+        val header = FunctionDefinitionHeader.this
+        val compiled = header.definition.compile()
+        println("Compiled: " + compiled)
+      }
+    })
 
   private def createCloseButton() = CloseButton(definition)
 
   def name_=(n: String) = {
-    nameField.value = n
+    nameField.setValue(n)
   }
 
   def parameters_+=(p: FunctionParameterComponent) = {
-    parameterLayout.add(p)
+    parameterLayout.addComponent(p)
   }
 
 }

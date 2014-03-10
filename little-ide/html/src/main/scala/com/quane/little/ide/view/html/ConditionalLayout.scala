@@ -1,9 +1,9 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala._
 import com.quane.little.ide.view.ConditionalView
 import com.quane.little.ide.presenter.{ExpressionPresenter, BlockPresenter}
-
+import com.vaadin.ui._
+import com.vaadin.server.Sizeable
 
 object ConditionalLayout {
   val Style = "l-if"
@@ -26,8 +26,8 @@ class ConditionalLayout
   private val thenBlockWrapper = new CssLayout
   private val elseBlockWrapper = new CssLayout
 
-  spacing = false
-  styleName = ConditionalLayout.Style
+  setSpacing(false)
+  setStyleName(ConditionalLayout.Style)
   addComponent(createThenHeader())
   addComponent(createThenBody())
   addComponent(createElseHeader())
@@ -44,8 +44,8 @@ class ConditionalLayout
 
   private def createElseHeader(): Component = {
     val elseHeader = new Label
-    elseHeader.value = "else"
-    elseHeader.styleName = ConditionalLayout.StyleElseHead
+    elseHeader.setValue("else")
+    elseHeader.setStyleName(ConditionalLayout.StyleElseHead)
     elseHeader
   }
 
@@ -56,18 +56,18 @@ class ConditionalLayout
   private def createBody(blockWrapper: Component): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
-    bodyLeft.height = new Measure(100, Units.pct)
-    bodyLeft.styleName = ConditionalLayout.StyleBodyLeft
+    bodyLeft.setHeight(100, Sizeable.Unit.PERCENTAGE)
+    bodyLeft.setStyleName(ConditionalLayout.StyleBodyLeft)
     body.addComponent(bodyLeft)
     body.addComponent(blockWrapper)
-    body.styleName = ConditionalLayout.StyleBody
-    body.spacing = false
+    body.setStyleName(ConditionalLayout.StyleBody)
+    body.setSpacing(false)
     body
   }
 
   private def createFooter(): Component = {
     val footer = new Label()
-    footer.styleName = ConditionalLayout.StyleFoot
+    footer.setStyleName(ConditionalLayout.StyleFoot)
     footer
   }
 
@@ -79,14 +79,14 @@ class ConditionalLayout
   override def setThenBlock(): BlockPresenter[BlockLayout] = {
     val view = new BlockLayout
     // TODO remove children, if any
-    thenBlockWrapper.add(view)
+    thenBlockWrapper.addComponent(view)
     new BlockPresenter(view)
   }
 
   override def setElseBlock(): BlockPresenter[BlockLayout] = {
     val view = new BlockLayout
     // TODO remove children, if any
-    elseBlockWrapper.add(view)
+    elseBlockWrapper.addComponent(view)
     new BlockPresenter(view)
   }
 
@@ -98,7 +98,7 @@ class ConditionalHeader(condition: String) extends HorizontalLayout {
     this("<condition>")
   }
 
-  styleName = ConditionalLayout.StyleIfHead
-  add(Label(condition))
+  setStyleName(ConditionalLayout.StyleIfHead)
+  addComponent(new Label(condition))
 
 }

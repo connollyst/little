@@ -1,10 +1,11 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala._
 import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 import com.quane.little.ide.model.FunctionService
-
+import com.vaadin.ui.{Button, VerticalLayout, HorizontalLayout}
+import com.vaadin.ui.Button.{ClickEvent, ClickListener}
+import com.quane.vaadin.scala.VaadinMixin
 
 object WorkspaceLayout {
   val Style = "l-workspace"
@@ -13,23 +14,28 @@ object WorkspaceLayout {
 class WorkspaceLayout
   extends HorizontalLayout
   with WorkspaceView
-  with RemovableComponent {
+  with RemovableComponent
+  with VaadinMixin {
 
-  spacing = true
-  styleName = WorkspaceLayout.Style
+  setSpacing(true)
+  setStyleName(WorkspaceLayout.Style)
 
-  add(new VerticalLayout {
-    // TODO this isn't a long term solution
-    FunctionService.FunctionNames.foreach {
-      function =>
-        add(Button(function, {
-          _viewPresenter.foreach {
-            listener: WorkspaceViewPresenter =>
-              listener.openFunctionDefinition(function)
-          }
-        }))
+  addComponent(
+    new VerticalLayout {
+      // TODO this isn't a long term solution
+      FunctionService.FunctionNames.foreach {
+        function =>
+          addComponent(new Button(function, new ClickListener {
+            def buttonClick(event: ClickEvent) = {
+              _viewPresenter.foreach {
+                listener: WorkspaceViewPresenter =>
+                  listener.openFunctionDefinition(function)
+              }
+            }
+          }))
+      }
     }
-  })
+  )
 
   override def createFunctionDefinition(): FunctionDefinitionPresenter[_] =
     new FunctionDefinitionPresenter(add(new FunctionDefinitionLayout()))

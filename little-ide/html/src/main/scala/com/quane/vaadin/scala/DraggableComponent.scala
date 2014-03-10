@@ -1,7 +1,7 @@
 package com.quane.vaadin.scala
 
-import vaadin.scala.Component
 import com.vaadin.ui.DragAndDropWrapper.DragStartMode
+import com.vaadin.ui.{DragAndDropWrapper, Component}
 
 
 /** A draggable UI component.
@@ -11,7 +11,7 @@ import com.vaadin.ui.DragAndDropWrapper.DragStartMode
   */
 class DraggableComponent[C <: Component](c: C) extends DragAndDropWrapper(c) {
 
-  p.setDragStartMode(DragStartMode.WRAPPER)
-  p.setSizeUndefined()
+  setDragStartMode(DragStartMode.WRAPPER)
+  setSizeUndefined()
 
 }

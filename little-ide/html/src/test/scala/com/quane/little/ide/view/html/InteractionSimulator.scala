@@ -1,7 +1,8 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.AbstractTextField.TextChangeEvent
-import vaadin.scala.TextField
+import com.vaadin.ui.TextField
+import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
+import collection.JavaConversions._
 
 /** Utilities for simulating user interaction with the UI components.
   *
@@ -15,9 +16,19 @@ object InteractionSimulator {
     * @param text the new text value
     */
   private[html] def setText(field: TextField, text: String): Unit = {
-    field.textChangeListeners.foreach {
-      listener => listener.apply(new TextChangeEvent(field, text, 0))
+    field.getListeners(classOf[TextChangeEvent]) foreach {
+      case listener: TextChangeListener =>
+        listener.textChange(new MockTextChangeEvent(field, text))
     }
+  }
+
+  private class MockTextChangeEvent(field: TextField, text: String)
+    extends TextChangeEvent(field) {
+
+    def getText: String = text
+
+    def getCursorPosition: Int = 0
+
   }
 
 }

@@ -1,8 +1,7 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.Accordion
 import com.quane.little.ide.view.ToolboxView
-
+import com.vaadin.ui.Accordion
 
 object ToolboxLayout {
   val Style = "l-toolbox"
@@ -12,11 +11,11 @@ class ToolboxLayout
   extends Accordion
   with ToolboxView
   with RemovableComponent {
-  sizeFull()
-  styleName = ToolboxLayout.Style
+  setSizeFull()
+  setStyleName(ToolboxLayout.Style)
   addTab(ToolboxSectionComponent.Sensing, "Sensing")
   addTab(ToolboxSectionComponent.Motion, "Motion")
   addTab(ToolboxSectionComponent.Operators, "Operators")
   addTab(ToolboxSectionComponent.Variables, "Variables")
-  selectedTab = getTab(1).get
+  setSelectedTab(1)
 }

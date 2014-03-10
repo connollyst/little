@@ -1,23 +1,23 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{Units, Measure, CssLayout, VerticalLayout}
-
+import com.vaadin.ui.{CssLayout, VerticalLayout}
+import com.vaadin.server.Sizeable
 
 object ToolboxSectionComponent {
   val Style = "l-toolbox-section"
   val StyleSeparator = Style + "-separator"
 
   val Motion = new ToolboxSectionComponent() {
-    add(new ToolboxItemComponent("move forward"))
-    add(new ToolboxItemComponent("move backward"))
-    add(new ToolboxSectionSeparator())
-    add(new ToolboxItemComponent("turn clockwise"))
-    add(new ToolboxItemComponent("turn counter clockwise"))
-    add(new ToolboxItemComponent("turn toward"))
-    add(new ToolboxItemComponent("turn away from"))
-    add(new ToolboxSectionSeparator())
-    add(new ToolboxItemComponent("change x by"))
-    add(new ToolboxItemComponent("change y by"))
+    addComponent(new ToolboxItemComponent("move forward"))
+    addComponent(new ToolboxItemComponent("move backward"))
+    addComponent(new ToolboxSectionSeparator())
+    addComponent(new ToolboxItemComponent("turn clockwise"))
+    addComponent(new ToolboxItemComponent("turn counter clockwise"))
+    addComponent(new ToolboxItemComponent("turn toward"))
+    addComponent(new ToolboxItemComponent("turn away from"))
+    addComponent(new ToolboxSectionSeparator())
+    addComponent(new ToolboxItemComponent("change x by"))
+    addComponent(new ToolboxItemComponent("change y by"))
   }
   val Sensing = new ToolboxSectionComponent() {
     // TODO add items
@@ -26,25 +26,29 @@ object ToolboxSectionComponent {
     // TODO add items
   }
   val Variables = new ToolboxSectionComponent() {
-    add(new ToolboxItemComponent("my x"))
-    add(new ToolboxItemComponent("my y"))
-    add(new ToolboxItemComponent("my speed"))
-    add(new ToolboxSectionSeparator())
-    add(new ToolboxItemComponent("<local variable>"))
+    addComponent(new ToolboxItemComponent("my x"))
+    addComponent(new ToolboxItemComponent("my y"))
+    addComponent(new ToolboxItemComponent("my speed"))
+    addComponent(new ToolboxSectionSeparator())
+    addComponent(new ToolboxItemComponent("<local variable>"))
   }
 }
 
+class ToolboxSectionComponent
+  extends VerticalLayout {
 
-class ToolboxSectionComponent extends VerticalLayout {
-  styleName = ToolboxSectionComponent.Style
-  spacing = true
+  setStyleName(ToolboxSectionComponent.Style)
+  setSpacing(true)
+
 }
-
 
 /**
  * Visually separates groups of related toolbox items.
  */
-class ToolboxSectionSeparator extends CssLayout {
-  styleName = ToolboxSectionComponent.StyleSeparator
-  height = new Measure(20, Units.px)
+class ToolboxSectionSeparator
+  extends CssLayout {
+
+  setStyleName(ToolboxSectionComponent.StyleSeparator)
+  setHeight(20, Sizeable.Unit.PIXELS)
+
 }

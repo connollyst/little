@@ -1,9 +1,9 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.html.FunctionParameterComponent._
-import vaadin.scala.TextField
 import com.quane.little.ide.view.FunctionParameterView
-import vaadin.scala.AbstractTextField.TextChangeEvent
+import com.vaadin.ui.TextField
+import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 
 object FunctionParameterComponent {
   private val Style = "l-function-def-param"
@@ -18,19 +18,17 @@ class FunctionParameterComponent
   with FunctionParameterView
   with RemovableComponent {
 
-  styleName = Style
+  setStyleName(Style)
+  setInputPrompt("parameter name")
 
-  prompt = "parameter name"
-
-  textChangeListeners += {
-    e: TextChangeEvent =>
+  addTextChangeListener(new TextChangeListener {
+    def textChange(event: TextChangeEvent): Unit = {
       _viewPresenter.foreach {
-        listener => listener.onNameChanged(e.text)
+        listener => listener.onNameChanged(event.getText)
       }
-  }
+    }
+  })
 
-  override def setName(name: String): Unit = {
-    value = name
-  }
+  override def setName(name: String): Unit = setValue(name)
 
 }

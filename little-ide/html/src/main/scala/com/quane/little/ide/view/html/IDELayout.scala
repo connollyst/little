@@ -1,26 +1,27 @@
 package com.quane.little.ide.view.html
 
-import vaadin.scala.{HorizontalSplitPanel, Units, Measure}
 import com.quane.little.ide.view.IDEView
 import com.quane.little.ide.presenter.{ToolboxPresenter, WorkspacePresenter}
+import com.vaadin.ui.HorizontalSplitPanel
+import com.vaadin.server.Sizeable
 
 class IDELayout
   extends HorizontalSplitPanel
   with IDEView
   with RemovableComponent {
 
-  sizeFull()
-  splitPosition = new Measure(25, Units.pct)
+  setSizeFull()
+  setSplitPosition(25, Sizeable.Unit.PERCENTAGE)
 
   override def createToolbox() = {
     toolbox = new ToolboxLayout
-    firstComponent = toolbox
+    setFirstComponent(toolbox)
     new ToolboxPresenter(toolbox)
   }
 
   override def createWorkspace() = {
     workspace = new WorkspaceLayout
-    secondComponent = workspace
+    setSecondComponent(workspace)
     new WorkspacePresenter(workspace)
   }
 
