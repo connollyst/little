@@ -18,13 +18,11 @@ public class GameController : MonoBehaviour
 		// Setup variables
 		//----------------------------------------------------------
 		public GameObject playerModel;
-		public GameObject foodModel;
 		public LogLevel logLevel = LogLevel.ERROR;
 
 		// Internal / private variables
 		private SmartFox server;
 		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
-		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
 		private Dictionary<SFSUser, GameObject> remotePlayers = new Dictionary<SFSUser, GameObject> ();
 	
 		//----------------------------------------------------------
@@ -100,10 +98,6 @@ public class GameController : MonoBehaviour
 				ISFSObject dt = (SFSObject)evt.Params ["params"];
 				if (cmd == "spawnPlayer") {
 						SpawnPlayer (dt);
-				} else if (cmd == "spawnItem") {
-						SpawnItem (dt);
-				} else {
-						Debug.LogError ("Unrecognized command: " + cmd);
 				}
 		}
 
@@ -122,21 +116,6 @@ public class GameController : MonoBehaviour
 				myMobs.Add (id, mob);
 		}
 
-		private void SpawnItem (ISFSObject data)
-		{
-				string id = data.GetUtfString ("id");
-				float x = data.GetFloat ("x");
-				float y = data.GetFloat ("y");
-				Debug.Log ("Item @ " + x + " & " + y);
-				Vector2 position = new Vector2 (x, y);
-				Quaternion rotation = Quaternion.Euler (0, 0, 0);
-
-				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
-				item.transform.position = position;
-				item.transform.rotation = rotation;
-				items.Add (id, item);
-		}
-		
 		public void OnUserVariableUpdate (BaseEvent evt)
 		{
 				// When user variable is updated on any client, then this callback is being received
