@@ -11,23 +11,13 @@ using Sfs2X.Entities.Variables;
 using Sfs2X.Requests;
 using Sfs2X.Logging;
 
-public class GameController : MonoBehaviour
+public class PlayerController : MonoBehaviour
 {
 
-		//----------------------------------------------------------
-		// Setup variables
-		//----------------------------------------------------------
 		public GameObject playerModel;
-		public LogLevel logLevel = LogLevel.ERROR;
-
-		// Internal / private variables
 		private SmartFox server;
 		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
 		private Dictionary<SFSUser, GameObject> remotePlayers = new Dictionary<SFSUser, GameObject> ();
-	
-		//----------------------------------------------------------
-		// Unity callbacks
-		//----------------------------------------------------------
 
 		void Start ()
 		{
@@ -36,12 +26,10 @@ public class GameController : MonoBehaviour
 						return;
 				}
 				server = SmartFoxConnection.Connection;
-				server.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
 				server.AddEventListener (SFSEvent.USER_VARIABLES_UPDATE, OnUserVariableUpdate);
-				server.AddEventListener (SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
 				server.AddEventListener (SFSEvent.USER_ENTER_ROOM, OnUserEnterRoom);
-				server.AddLogListener (logLevel, OnDebugMessage);
+				server.AddEventListener (SFSEvent.USER_EXIT_ROOM, OnUserExitRoom);
 				server.Send (new ExtensionRequest ("ready", new SFSObject (), server.LastJoinedRoom));
 		}
 	
@@ -58,20 +46,15 @@ public class GameController : MonoBehaviour
 				RemoveLocalPlayer ();
 		}
 	
-		//----------------------------------------------------------
-		// SmartFox callbacks
-		//----------------------------------------------------------
-	
 		public void OnUserExitRoom (BaseEvent evt)
 		{
-				// Someone left - lets make certain they are removed if they didnt nicely send a remove command
 				SFSUser user = (SFSUser)evt.Params ["user"];		
 				RemoveRemotePlayer (user);
 		}
 	
 		public void OnUserEnterRoom (BaseEvent evt)
 		{
-				// Another user joined, lets send him our position info
+				// Another user joined, lets send them our position info
 				foreach (KeyValuePair<string, GameObject> entry in myMobs) {
 						string id = entry.Key;
 						GameObject myMob = entry.Value;
