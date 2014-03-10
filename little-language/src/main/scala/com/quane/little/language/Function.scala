@@ -88,7 +88,6 @@ class FunctionReference(var scope: Scope, val name: String)
    * @return the function's return value
    */
   override def evaluate: Value = {
-    println("Evaluating function '" + name + "'")
     val definition = fetchDefinition()
     setScope(definition)
     setArguments(definition)
@@ -108,7 +107,8 @@ class FunctionReference(var scope: Scope, val name: String)
   }
 
   private def validateArguments(definition: FunctionDefinition) = {
-    // TODO Validate we have all arguments
+    // TODO validate we have all arguments
+    // TODO validate all arguments are appropriate for this definition
   }
 
   private def setArguments(definition: FunctionDefinition) = {

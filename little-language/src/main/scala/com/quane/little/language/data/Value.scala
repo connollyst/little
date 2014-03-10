@@ -118,9 +118,7 @@ class Value(val primitive: Any)
       case DoubleValueType =>
         primitive.asInstanceOf[Double]
       case NoValueType =>
-        throw new ClassCastException(
-          toString + " cannot be converted to a Double"
-        )
+        0
     }
   }
 

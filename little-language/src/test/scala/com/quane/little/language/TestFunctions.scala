@@ -44,14 +44,14 @@ class TestFunctions extends FunSuite {
     val runtime = new Runtime
     runtime.saveFunction(Functions.turnRelative)
     val guy = new Operator(runtime, new StubOperable)
-    guy.direction(new Value(0))
+    guy.direction(new Value(137))
     val fun = new FunctionReference(guy, "turnRelative")
       .addArg("degrees", new Value(60))
-    fun.evaluate // 0 + 60 = 60
-    fun.evaluate // 60 + 60 = 120
-    fun.evaluate // 120 + 60 = 180
+    fun.evaluate // 137 + 60 = 197
+    fun.evaluate // 197 + 60 = 257
+    fun.evaluate // 257 + 60 = 317
     val dir = guy.direction.asInt
-    assert(dir == 180, "guy should have turned to 180 degrees, actual=" + dir)
+    assert(dir == 317, "guy should have turned to 317 degrees, actual=" + dir)
   }
 
   test("get angle to from (1,1) to (2,1) should be 0 degrees") {

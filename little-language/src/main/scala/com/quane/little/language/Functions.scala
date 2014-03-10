@@ -62,7 +62,7 @@ object Functions {
     val relativelyFun = new FunctionDefinition("turnRelative").addParam("degrees")
     val dirPointer = new Pointer(relativelyFun, Operable.DIRECTION)
     val getCurrentDir = new GetStatement(dirPointer)
-    val dirChangeArg = new Pointer(relativelyFun, "direction")
+    val dirChangeArg = new Pointer(relativelyFun, "degrees")
     val dirChange = new GetStatement(dirChangeArg)
     val getNewDirection = new Addition(getCurrentDir, dirChange)
     val setNewDirection = new SetStatement(dirPointer, getNewDirection)
