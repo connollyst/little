@@ -3,6 +3,7 @@ package com.quane.little.game.entity
 import com.quane.little.language.{Operable, Operator, Runtime}
 import scala.util.Random
 import com.quane.little.game.engine.InteractionManager
+import com.google.common.base.Objects
 
 class Mob(manager: InteractionManager)
   extends Entity(manager)
@@ -45,5 +46,14 @@ class Mob(manager: InteractionManager)
   override def approachedBy(other: Entity) {
     // TODO
   }
+
+  override def toString: String =
+    Objects.toStringHelper(getClass)
+      .add("id", uuid)
+      .add("x", x)
+      .add("y", y)
+      .add("speed", speed)
+      .add("direction", direction)
+      .toString
 
 }

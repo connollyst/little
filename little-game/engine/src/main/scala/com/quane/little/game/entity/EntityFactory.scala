@@ -17,13 +17,21 @@ class EntityFactory(game: LittleGameEngine) {
   def createMobs(number: Int): List[Mob] = {
     val mobs = new ListBuffer[Mob]
     for (i <- 0 until number) {
-      mobs += createMob
+      mobs += createMob()
     }
     mobs.toList
   }
 
-  def createMob: Mob = {
+  def createMob(): Mob = {
+    val x = Random.nextInt(20)
+    val y = Random.nextInt(20)
+    createMob(x, y)
+  }
+
+  def createMob(x: Float, y: Float): Mob = {
     val mob = new Mob(manager)
+    mob.x = x
+    mob.y = y
     mob.operator.runtime.saveFunction(Functions.move)
     mob.operator.runtime.saveFunction(Functions.stop)
     mob.operator.addEventListener(
