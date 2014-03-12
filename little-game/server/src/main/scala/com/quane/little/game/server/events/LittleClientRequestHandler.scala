@@ -1,7 +1,8 @@
-package com.quane.little.game.server
+package com.quane.little.game.server.events
 
 import com.smartfoxserver.v2.extensions.BaseClientRequestHandler
 import com.quane.little.game.LittleGameEngine
+import com.quane.little.game.server.LittleExtension
 
 trait LittleClientRequestHandler
   extends BaseClientRequestHandler {

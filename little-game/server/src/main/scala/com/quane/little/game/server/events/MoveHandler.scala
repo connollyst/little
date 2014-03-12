@@ -1,4 +1,4 @@
-package com.quane.little.game.server
+package com.quane.little.game.server.events
 
 import com.smartfoxserver.v2.entities.User
 import com.smartfoxserver.v2.entities.data.{SFSObject, ISFSObject}

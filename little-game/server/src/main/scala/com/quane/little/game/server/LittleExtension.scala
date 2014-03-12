@@ -2,6 +2,7 @@ package com.quane.little.game.server
 
 import com.smartfoxserver.v2.extensions.SFSExtension
 import com.quane.little.game.LittleGameEngine
+import com.quane.little.game.server.events.{MoveHandler, ReadyHandler, SpawnHandler}
 
 /**
  * The SmartFox server 'extension' for the little game.
