@@ -79,7 +79,7 @@ public class GameManager : MonoBehaviour
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
 				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
-				FoodController controller = item.GetComponent<FoodController> ();
+				Controller controller = item.GetComponent<Controller> ();
 				controller.UUID = id;
 				controller.Position (x, y);
 				items.Add (id, item);
