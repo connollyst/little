@@ -16,7 +16,6 @@ public class GameManager : MonoBehaviour
 
 		public GameObject playerModel;
 		public GameObject foodModel;
-		public GameObject npcModel;
 		private SmartFox server;
 		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
 		private Dictionary<string, Vector2> myMobVelocities = new Dictionary<string, Vector2> ();
@@ -76,7 +75,7 @@ public class GameManager : MonoBehaviour
 				float y = data.GetFloat ("y");
 				int speed = data.GetInt ("s") / 10;
 				int direction = data.GetInt ("d");
-				Debug.Log ("Player @ " + x + " & " + y + " w/ speed=" + speed + " and direction=" + direction);
+				// Debug.Log ("Player @ " + x + " & " + y + " w/ speed=" + speed + " and direction=" + direction);
 				Vector2 position = new Vector2 (x, y);
 				Vector2 velocity = new Vector2 (speed * Mathf.Cos (direction), speed * Mathf.Sin (direction));
 				Quaternion rotation = Quaternion.Euler (0, 0, 0);
@@ -93,13 +92,10 @@ public class GameManager : MonoBehaviour
 				string id = data.GetUtfString ("id");
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
-				Debug.Log ("Item @ " + x + " & " + y);
+				// Debug.Log ("Item @ " + x + " & " + y);
 				Vector2 position = new Vector2 (x, y);
-				Quaternion rotation = Quaternion.Euler (0, 0, 0);
-		
 				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
 				item.transform.position = position;
-				item.transform.rotation = rotation;
 				items.Add (id, item);
 		}
 
