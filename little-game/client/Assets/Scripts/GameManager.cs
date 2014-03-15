@@ -20,9 +20,7 @@ public class GameManager : MonoBehaviour
 		private SmartFox server;
 		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
 		private Dictionary<string, Vector2> myMobVelocities = new Dictionary<string, Vector2> ();
-		private Dictionary<string, GameObject> npcs = new Dictionary<string, GameObject> ();
 		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
-		private Dictionary<SFSUser, GameObject> players = new Dictionary<SFSUser, GameObject> ();
 
 		void Start ()
 		{
@@ -45,7 +43,6 @@ public class GameManager : MonoBehaviour
 						string id = entry.Key;
 						GameObject mob = entry.Value;
 						Vector2 velocity = myMobVelocities [id];
-						Debug.Log ("Applying velocity: " + velocity);
 						mob.rigidbody2D.velocity = velocity;
 				}
 		}
@@ -65,9 +62,7 @@ public class GameManager : MonoBehaviour
 				if (cmd == "spawnPlayer") {
 						SpawnPlayer (dt);
 				} else if (cmd == "spawnItem") {
-						//SpawnItem (dt);
-				} else if (cmd == "spawnNPC") {
-						//SpawnNPC (dt);
+						SpawnItem (dt);
 				}
 		}
 	
@@ -80,13 +75,12 @@ public class GameManager : MonoBehaviour
 				string id = data.GetUtfString ("id");
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
-				int speed = data.GetInt ("s");
+				int speed = data.GetInt ("s") / 10;
 				int direction = data.GetInt ("d");
 				Debug.Log ("Player @ " + x + " & " + y + " w/ speed=" + speed + " and direction=" + direction);
 				Vector2 position = new Vector2 (x, y);
 				Vector2 velocity = new Vector2 (speed * Mathf.Cos (direction), speed * Mathf.Sin (direction));
 				Quaternion rotation = Quaternion.Euler (0, 0, 0);
-				Debug.Log ("Player velocity: " + velocity);
 				GameObject mob = GameObject.Instantiate (playerModel) as GameObject;
 				mob.transform.position = position;
 				mob.transform.rotation = rotation;
@@ -108,21 +102,6 @@ public class GameManager : MonoBehaviour
 				item.transform.position = position;
 				item.transform.rotation = rotation;
 				items.Add (id, item);
-		}
-	
-		private void SpawnNPC (ISFSObject data)
-		{
-				string id = data.GetUtfString ("id");
-				float x = data.GetFloat ("x");
-				float y = data.GetFloat ("y");
-				Debug.Log ("NPC @ " + x + " & " + y);
-				Vector2 position = new Vector2 (x, y);
-				Quaternion rotation = Quaternion.Euler (0, 0, 0);
-		
-				GameObject npc = GameObject.Instantiate (npcModel) as GameObject;
-				npc.transform.position = position;
-				npc.transform.rotation = rotation;
-				npcs.Add (id, npc);
 		}
 
 }
