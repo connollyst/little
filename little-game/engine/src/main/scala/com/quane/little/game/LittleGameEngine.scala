@@ -46,6 +46,7 @@ class LittleGameEngine {
     println("Handling interaction between " + a + " and " + b)
     a.touchedBy(b)
     b.touchedBy(a)
+    update()
   }
 
   def entity(id: String): Entity = {

@@ -12,6 +12,7 @@ class CollisionHandler extends LittleClientRequestHandler {
       "Player " + user.getPlayerId + " reported collision between " + idA + " & " + idB
     )
     getGameEngine.handleInteraction(idA, idB)
+    updateState(user)
   }
 
 }

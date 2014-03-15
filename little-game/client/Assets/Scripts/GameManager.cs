@@ -50,39 +50,56 @@ public class GameManager : MonoBehaviour
 		{
 				string cmd = (string)evt.Params ["cmd"];
 				ISFSObject data = (SFSObject)evt.Params ["params"];
-				if (cmd == "addPlayer") {
-						SpawnPlayer (data);
-				} else if (cmd == "addItem") {
-						SpawnItem (data);
+				if (cmd == "SetItem") {
+						SetItem (data);
+				} else if (cmd == "SetPlayer") {
+						SetPlayer (data);
+				} else  if (cmd == "UpdatePlayer") {
+						UpdatePlayer (data);
 				}
 		}
 
-		private void SpawnPlayer (ISFSObject data)
+		private void SetItem (ISFSObject data)
+		{
+				string id = data.GetUtfString ("id");
+				float x = data.GetFloat ("x");
+				float y = data.GetFloat ("y");
+				if (!items.ContainsKey (id)) {
+						items.Add (id, GameObject.Instantiate (foodModel) as GameObject);
+				}
+				GameObject item = items [id];
+				Controller controller = item.GetComponent<Controller> ();
+				controller.UUID = id;
+				controller.Position (x, y);
+		}
+
+		private void SetPlayer (ISFSObject data)
 		{
 				string id = data.GetUtfString ("id");
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
 				int speed = data.GetInt ("s") / 10;
 				int direction = data.GetInt ("d");
-				GameObject mob = GameObject.Instantiate (playerModel) as GameObject;
+				if (!myMobs.ContainsKey (id)) {
+						myMobs.Add (id, GameObject.Instantiate (playerModel) as GameObject);
+				}
+				GameObject mob = myMobs [id];
 				PlayerController controller = mob.GetComponent<PlayerController> ();
 				controller.UUID = id;
 				controller.Speed = speed;
 				controller.Direction = direction;
 				controller.Position (x, y);
-				myMobs.Add (id, mob);
 		}
 	
-		private void SpawnItem (ISFSObject data)
+		private void UpdatePlayer (ISFSObject data)
 		{
 				string id = data.GetUtfString ("id");
-				float x = data.GetFloat ("x");
-				float y = data.GetFloat ("y");
-				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
-				Controller controller = item.GetComponent<Controller> ();
-				controller.UUID = id;
-				controller.Position (x, y);
-				items.Add (id, item);
+				int speed = data.GetInt ("s") / 10;
+				int direction = data.GetInt ("d");
+				GameObject mob = myMobs [id];
+				PlayerController controller = mob.GetComponent<PlayerController> ();
+				controller.Speed = speed;
+				controller.Direction = direction;
 		}
-
+	
 }
