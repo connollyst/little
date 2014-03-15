@@ -2,7 +2,7 @@ package com.quane.little.game.server
 
 import com.smartfoxserver.v2.extensions.SFSExtension
 import com.quane.little.game.LittleGameEngine
-import com.quane.little.game.server.events.{MoveHandler, ReadyHandler, SpawnHandler}
+import com.quane.little.game.server.events.{CollisionHandler, MoveHandler, ReadyHandler, SpawnHandler}
 import com.smartfoxserver.v2.entities.variables.{SFSRoomVariable, RoomVariable}
 import com.smartfoxserver.v2.entities.User
 import com.quane.little.game.entity.{Entity, Mob}
@@ -33,6 +33,7 @@ class LittleExtension
     addRequestHandler("ready", classOf[ReadyHandler])
     addRequestHandler("move", classOf[MoveHandler])
     addRequestHandler("spawn", classOf[SpawnHandler])
+    addRequestHandler("collision", classOf[CollisionHandler])
 
 
     val user: User = null

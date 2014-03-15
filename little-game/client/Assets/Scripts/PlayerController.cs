@@ -11,7 +11,6 @@ public class PlayerController : Controller
 	
 		private SmartFox server;
 		private Vector2 velocity;
-
 		private int speed = 0;
 		private int direction = 0;
 
@@ -43,27 +42,44 @@ public class PlayerController : Controller
 				rigidbody2D.velocity = velocity;
 		}
 
-		void OnCollisionEnter2D (Collision2D other)
+		void OnCollisionEnter2D (Collision2D collision)
 		{
-				Debug.Log ("Player collision detected: " + other);
-				SendCollisionEvent ();
+				HandleCollision (collision.gameObject);
 		}
 
 		void OnTriggerEnter2D (Collider2D other)
 		{
-				Debug.Log ("Player trigger detected: " + other);
-				SendCollisionEvent ();
+				HandleCollision (other.gameObject);
 		}
 
+		private void HandleCollision (GameObject other)
+		{
+				Debug.Log ("Player collided with " + other);
+				Controller controller = other.GetComponent<Controller> ();
+				if (controller == null) {
+						Debug.LogError ("Player collided with GameObject without a controller: " + other);
+						return;
+				}
+				string otherUUID = controller.UUID;
+				if (otherUUID == null) {
+						Debug.LogError ("Player collided with GameObject without a UUID: " + other);
+						return;
+				}
+				SendCollisionEvent (otherUUID);
+		}
+	
 		private void UpdateVelocity ()
 		{
 				velocity = new Vector2 (speed * Mathf.Cos (direction), speed * Mathf.Sin (direction));
-				rigidbody2D.velocity = velocity;
 		}
 
-		private void SendCollisionEvent ()
+		private void SendCollisionEvent (string otherUUID)
 		{
-				server.Send (new ExtensionRequest ("collision", new SFSObject (), server.LastJoinedRoom));
+				SFSObject data = new SFSObject ();
+				data.PutUtfString ("a", UUID);
+				data.PutUtfString ("b", otherUUID);
+				Debug.Log ("Reporting collision between " + UUID + " & " + otherUUID);
+				server.Send (new ExtensionRequest ("collision", data, server.LastJoinedRoom));
 		}
 
 }
