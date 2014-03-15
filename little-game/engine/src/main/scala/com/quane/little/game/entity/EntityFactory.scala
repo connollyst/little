@@ -7,11 +7,11 @@ import com.quane.little.game.LittleGameEngine
 import com.quane.little.language.event.{EventListener, LittleEvent}
 import com.quane.little.language.{FunctionReference, Functions}
 import com.quane.little.language.data.Value
-import com.quane.little.game.engine.InteractionManagerImpl
+import com.quane.little.game.engine.InteractionManager
 
 class EntityFactory(game: LittleGameEngine) {
 
-  val manager = new InteractionManagerImpl(game)
+  val manager = new InteractionManager(game)
 
   def createMobs(number: Int): List[Mob] = {
     val mobs = new ListBuffer[Mob]

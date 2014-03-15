@@ -5,31 +5,28 @@ import com.quane.little.game.engine.InteractionManager
 class Food(manager: InteractionManager, val health: Int)
   extends Entity(manager) {
 
-  var isConsumed = false
-
   override def touchedBy(other: Entity) {
+    println("food touched by " + other)
     if (other.isGuy) {
       consumedBy(other.asInstanceOf[Mob])
     }
   }
 
   def consumedBy(mob: Mob) {
-    if (!isConsumed) {
-      manager.mobConsumesFood(mob, this)
-    }
+    println("food consumed by " + mob)
+    manager.mobConsumesFood(mob, this)
   }
 
   override def approachedBy(other: Entity) {
+    println("food approached by " + other)
     if (other.isGuy) {
       consumedBy(other.asInstanceOf[Mob])
     }
   }
 
   def approachedByMob(mob: Mob) {
-    if (!isConsumed) {
-      manager.mobConsumesFood(mob, this)
-    }
+    println("food approached by " + mob)
+    manager.mobConsumesFood(mob, this)
   }
 
 }
-

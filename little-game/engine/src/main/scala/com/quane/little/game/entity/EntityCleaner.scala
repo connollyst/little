@@ -18,7 +18,7 @@ class EntityCleaner(game: LittleGameEngine) {
   def cleanAll() {
     queue foreach (
       entity => {
-        game.entities -= entity
+        game.entities -= entity.uuid.toString
         entity.isRemoved = true
       })
     queue.clear()

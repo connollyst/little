@@ -40,10 +40,12 @@ class Mob(manager: InteractionManager)
   }
 
   override def touchedBy(other: Entity) {
+    println("mob touched by " + other)
     // TODO
   }
 
   override def approachedBy(other: Entity) {
+    println("mob approached by " + other)
     // TODO
   }
 
