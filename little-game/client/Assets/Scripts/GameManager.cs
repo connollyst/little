@@ -18,7 +18,6 @@ public class GameManager : MonoBehaviour
 		public GameObject foodModel;
 		private SmartFox server;
 		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
-		private Dictionary<string, Vector2> myMobVelocities = new Dictionary<string, Vector2> ();
 		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
 
 		void Start ()
@@ -37,12 +36,6 @@ public class GameManager : MonoBehaviour
 		{
 				if (server != null) {
 						server.ProcessEvents ();
-				}
-				foreach (KeyValuePair<string, GameObject> entry in myMobs) {
-						string id = entry.Key;
-						GameObject mob = entry.Value;
-						Vector2 velocity = myMobVelocities [id];
-						mob.rigidbody2D.velocity = velocity;
 				}
 		}
 
@@ -63,10 +56,6 @@ public class GameManager : MonoBehaviour
 						SpawnItem (data);
 				}
 		}
-	
-		//----------------------------------------------------------
-		// Private player helper methods
-		//----------------------------------------------------------
 
 		private void SpawnPlayer (ISFSObject data)
 		{
@@ -76,15 +65,12 @@ public class GameManager : MonoBehaviour
 				int speed = data.GetInt ("s") / 10;
 				int direction = data.GetInt ("d");
 				// Debug.Log ("Player @ " + x + " & " + y + " w/ speed=" + speed + " and direction=" + direction);
-				Vector2 position = new Vector2 (x, y);
-				Vector2 velocity = new Vector2 (speed * Mathf.Cos (direction), speed * Mathf.Sin (direction));
-				Quaternion rotation = Quaternion.Euler (0, 0, 0);
 				GameObject mob = GameObject.Instantiate (playerModel) as GameObject;
-				mob.transform.position = position;
-				mob.transform.rotation = rotation;
-				mob.rigidbody2D.velocity = velocity;
+				PlayerController controller = mob.GetComponent<PlayerController> ();
+				controller.SetPosition (x, y);		
+				controller.SetSpeed (speed);
+				controller.SetDirection (direction);
 				myMobs.Add (id, mob);
-				myMobVelocities.Add (id, velocity);
 		}
 	
 		private void SpawnItem (ISFSObject data)

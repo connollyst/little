@@ -10,10 +10,19 @@ public class PlayerController : MonoBehaviour
 {
 	
 		private SmartFox server;
+		private Vector2 velocity;
+		private int speed = 0;
+		private int direction = 0;
 
 		void Start ()
 		{
 				server = SmartFoxConnection.Connection;
+				UpdateVelocity ();
+		}
+
+		void FixedUpdate ()
+		{
+				rigidbody2D.velocity = velocity;
 		}
 
 		void OnCollisionEnter2D (Collision2D other)
@@ -27,7 +36,29 @@ public class PlayerController : MonoBehaviour
 				Debug.Log ("Player trigger detected: " + other);
 				SendCollisionEvent ();
 		}
-	
+
+		public void SetPosition (float x, float y)
+		{
+				transform.position = new Vector2 (x, y);
+		}
+
+		public void SetSpeed (int speed)
+		{
+				this.speed = speed;
+		}
+
+		public void SetDirection (int direction)
+		{
+				this.direction = direction;
+				// TODO update transform.rotation
+		}
+
+		private void UpdateVelocity ()
+		{
+				velocity = new Vector2 (speed * Mathf.Cos (direction), speed * Mathf.Sin (direction));
+				rigidbody2D.velocity = velocity;
+		}
+
 		private void SendCollisionEvent ()
 		{
 				server.Send (new ExtensionRequest ("collision", new SFSObject (), server.LastJoinedRoom));
