@@ -64,9 +64,9 @@ public class GameManager : MonoBehaviour
 				float y = data.GetFloat ("y");
 				int speed = data.GetInt ("s") / 10;
 				int direction = data.GetInt ("d");
-				// Debug.Log ("Player @ " + x + " & " + y + " w/ speed=" + speed + " and direction=" + direction);
 				GameObject mob = GameObject.Instantiate (playerModel) as GameObject;
 				PlayerController controller = mob.GetComponent<PlayerController> ();
+				controller.SetId (id);
 				controller.SetPosition (x, y);		
 				controller.SetSpeed (speed);
 				controller.SetDirection (direction);
@@ -78,7 +78,6 @@ public class GameManager : MonoBehaviour
 				string id = data.GetUtfString ("id");
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
-				// Debug.Log ("Item @ " + x + " & " + y);
 				Vector2 position = new Vector2 (x, y);
 				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
 				item.transform.position = position;

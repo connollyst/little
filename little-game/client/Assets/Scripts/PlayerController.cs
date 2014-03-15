@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 	
 		private SmartFox server;
 		private Vector2 velocity;
+		private string id;
 		private int speed = 0;
 		private int direction = 0;
 
@@ -35,6 +36,11 @@ public class PlayerController : MonoBehaviour
 		{
 				Debug.Log ("Player trigger detected: " + other);
 				SendCollisionEvent ();
+		}
+
+		public void SetId (string id)
+		{
+				this.id = id;
 		}
 
 		public void SetPosition (float x, float y)
