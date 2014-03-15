@@ -66,10 +66,10 @@ public class GameManager : MonoBehaviour
 				int direction = data.GetInt ("d");
 				GameObject mob = GameObject.Instantiate (playerModel) as GameObject;
 				PlayerController controller = mob.GetComponent<PlayerController> ();
-				controller.SetId (id);
-				controller.SetPosition (x, y);		
-				controller.SetSpeed (speed);
-				controller.SetDirection (direction);
+				controller.UUID = id;
+				controller.Speed = speed;
+				controller.Direction = direction;
+				controller.Position (x, y);
 				myMobs.Add (id, mob);
 		}
 	
@@ -78,9 +78,10 @@ public class GameManager : MonoBehaviour
 				string id = data.GetUtfString ("id");
 				float x = data.GetFloat ("x");
 				float y = data.GetFloat ("y");
-				Vector2 position = new Vector2 (x, y);
 				GameObject item = GameObject.Instantiate (foodModel) as GameObject;
-				item.transform.position = position;
+				FoodController controller = item.GetComponent<FoodController> ();
+				controller.UUID = id;
+				controller.Position (x, y);
 				items.Add (id, item);
 		}
 

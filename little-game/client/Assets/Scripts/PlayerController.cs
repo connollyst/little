@@ -11,9 +11,33 @@ public class PlayerController : MonoBehaviour
 	
 		private SmartFox server;
 		private Vector2 velocity;
-		private string id;
+
+		public string UUID{ get; set; }
+
 		private int speed = 0;
 		private int direction = 0;
+
+		public int Speed {
+				get { return speed; }
+				set {
+						speed = value;
+						UpdateVelocity ();
+				}
+		}
+
+		public int Direction {
+				get { return direction; }
+				set {
+						direction = value;
+						// TODO update transform.rotation
+						UpdateVelocity ();
+				}
+		}
+
+		public void Position (float x, float y)
+		{
+				transform.position = new Vector2 (x, y);
+		}
 
 		void Start ()
 		{
@@ -36,27 +60,6 @@ public class PlayerController : MonoBehaviour
 		{
 				Debug.Log ("Player trigger detected: " + other);
 				SendCollisionEvent ();
-		}
-
-		public void SetId (string id)
-		{
-				this.id = id;
-		}
-
-		public void SetPosition (float x, float y)
-		{
-				transform.position = new Vector2 (x, y);
-		}
-
-		public void SetSpeed (int speed)
-		{
-				this.speed = speed;
-		}
-
-		public void SetDirection (int direction)
-		{
-				this.direction = direction;
-				// TODO update transform.rotation
 		}
 
 		private void UpdateVelocity ()
