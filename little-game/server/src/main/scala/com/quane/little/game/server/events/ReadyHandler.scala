@@ -25,15 +25,15 @@ class ReadyHandler extends LittleClientRequestHandler {
   private def spawnEverything(user: User) = {
     getGameEngine.players foreach {
       mob =>
-        getParentExtension.trace("Spawning " + mob + " for " + user.getPlayerId)
+        getParentExtension.trace("Sending " + mob + " to " + user.getPlayerId)
         val data = toSFSObject(mob)
-        send("spawnPlayer", data, user)
+        send("addPlayer", data, user)
     }
     getGameEngine.entities foreach {
       entity =>
-        getParentExtension.trace("Spawning " + entity + " for " + user.getPlayerId)
+        getParentExtension.trace("Sending " + entity + " to " + user.getPlayerId)
         val data = toSFSObject(entity)
-        send("spawnItem", data, user)
+        send("addItem", data, user)
     }
   }
 

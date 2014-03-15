@@ -50,9 +50,9 @@ public class GameManager : MonoBehaviour
 		{
 				string cmd = (string)evt.Params ["cmd"];
 				ISFSObject data = (SFSObject)evt.Params ["params"];
-				if (cmd == "spawnPlayer") {
+				if (cmd == "addPlayer") {
 						SpawnPlayer (data);
-				} else if (cmd == "spawnItem") {
+				} else if (cmd == "addItem") {
 						SpawnItem (data);
 				}
 		}
