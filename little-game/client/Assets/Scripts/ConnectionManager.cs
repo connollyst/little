@@ -5,7 +5,7 @@ using Sfs2X;
 using Sfs2X.Core;
 using Sfs2X.Requests;
 
-public class ConnectionController : MonoBehaviour
+public class ConnectionManager : MonoBehaviour
 {
 
 		public  static string serverName = "127.0.0.1";
@@ -15,24 +15,24 @@ public class ConnectionController : MonoBehaviour
 		private  static string zone = "little";
 		private  static string room = "LittleTest";
 		private  static string gameScene = "Game";
-		private SmartFox smartFox;
+		private SmartFox server;
 
 		void Start ()
 		{
 				SetMessage ("Loading..");
-				smartFox = new SmartFox (true);
-				smartFox.AddEventListener (SFSEvent.CONNECTION, OnConnection);
-				smartFox.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
-				smartFox.AddEventListener (SFSEvent.LOGIN, OnLogin);
-				smartFox.AddEventListener (SFSEvent.LOGIN_ERROR, OnLoginError);
-				smartFox.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
+				server = new SmartFox (true);
+				server.AddEventListener (SFSEvent.CONNECTION, OnConnection);
+				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
+				server.AddEventListener (SFSEvent.LOGIN, OnLogin);
+				server.AddEventListener (SFSEvent.LOGIN_ERROR, OnLoginError);
+				server.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
 				SetMessage ("Connecting..");
-				smartFox.Connect (serverName, serverPort);
+				server.Connect (serverName, serverPort);
 		}
 
 		void FixedUpdate ()
 		{
-				smartFox.ProcessEvents ();
+				server.ProcessEvents ();
 		}
 
 		public void OnConnection (BaseEvent evt)
@@ -47,9 +47,9 @@ public class ConnectionController : MonoBehaviour
 
 		private void OnConnectionSuccess (BaseEvent evt)
 		{
-				SmartFoxConnection.Connection = smartFox;
+				SmartFoxConnection.Connection = server;
 				SetMessage ("Connected to server, logging in..");
-				smartFox.Send (new LoginRequest (username, password, zone));
+				server.Send (new LoginRequest (username, password, zone));
 		}
 
 		private void OnConnectionFailure (BaseEvent evt)
@@ -66,8 +66,8 @@ public class ConnectionController : MonoBehaviour
 	
 		public void OnLogin (BaseEvent evt)
 		{
-				SetMessage ("Logged in to server, joining room..");
-				smartFox.Send (new JoinRoomRequest (room));
+				SetMessage ("Logged in, joining room..");
+				server.Send (new JoinRoomRequest (room));
 		}
 	
 		public void OnLoginError (BaseEvent evt)
@@ -75,11 +75,11 @@ public class ConnectionController : MonoBehaviour
 				string error = (string)evt.Params ["errorMessage"];
 				SetError ("Login to server failed: " + error);
 		}
-	
+
 		public void OnRoomJoin (BaseEvent evt)
 		{
-				SetMessage ("Joined room successfully");
-				smartFox.RemoveAllEventListeners ();
+				SetMessage ("Joined room, starting game..");
+				server.RemoveAllEventListeners ();
 				Application.LoadLevel (gameScene);
 		}
 
