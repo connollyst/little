@@ -27,6 +27,8 @@ public class GameManager : MonoBehaviour
 						return;
 				}
 				server = SmartFoxConnection.Connection;
+				server.AddEventListener (SFSEvent.ROOM_VARIABLES_UPDATE, OnRoomVariablesUpdate);
+				server.AddEventListener (SFSEvent.USER_VARIABLES_UPDATE, OnUserVariablesUpdate);
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
 				server.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 				server.Send (new ExtensionRequest ("ready", new SFSObject (), server.LastJoinedRoom));
@@ -44,6 +46,28 @@ public class GameManager : MonoBehaviour
 				// Reset all internal states so we kick back to login screen
 				server.RemoveAllEventListeners ();
 				Application.LoadLevel ("Connector");
+		}
+
+		public void OnUserVariablesUpdate (BaseEvent evt)
+		{
+				SFSUser user = (SFSUser)evt.Params ["user"];
+				ArrayList changedVars = (ArrayList)evt.Params ["changedVars"];
+				if (user == server.MySelf) {
+						foreach (string changedVar in changedVars) {
+								ISFSObject value = user.GetVariable (changedVar).GetSFSObjectValue ();
+								Debug.Log ("MY user variable updated: " + changedVar + " => " + value);
+								SetPlayer (value);
+						}
+				} else {
+						foreach (string changedVar in changedVars) {
+								Debug.Log ("OTHER user variable updated: " + changedVar);
+						}
+				}
+		}
+
+		public void OnRoomVariablesUpdate (BaseEvent evt)
+		{
+				Debug.Log ("Room variable updated");
 		}
 
 		public void OnExtensionResponse (BaseEvent evt)

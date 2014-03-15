@@ -44,7 +44,7 @@ abstract class LittleClientRequestHandler
     }
   }
 
-  private def toSFSObject(mob: Mob): ISFSObject = {
+  private[events] def toSFSObject(mob: Mob): ISFSObject = {
     val data = new SFSObject()
     data.putUtfString("id", mob.uuid.toString)
     data.putFloat("x", mob.x)
@@ -54,7 +54,7 @@ abstract class LittleClientRequestHandler
     data
   }
 
-  private def toSFSObject(mob: Entity): ISFSObject = {
+  private[events] def toSFSObject(mob: Entity): ISFSObject = {
     val data = new SFSObject()
     data.putUtfString("id", mob.uuid.toString)
     data.putFloat("x", mob.x)
