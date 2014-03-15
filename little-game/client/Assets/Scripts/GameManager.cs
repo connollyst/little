@@ -51,18 +51,17 @@ public class GameManager : MonoBehaviour
 		{
 				// Reset all internal states so we kick back to login screen
 				server.RemoveAllEventListeners ();
-				// TODO can this be handled by the TimedUpdate?
 				Application.LoadLevel ("Connector");
 		}
 
 		public void OnExtensionResponse (BaseEvent evt)
 		{
 				string cmd = (string)evt.Params ["cmd"];
-				ISFSObject dt = (SFSObject)evt.Params ["params"];
+				ISFSObject data = (SFSObject)evt.Params ["params"];
 				if (cmd == "spawnPlayer") {
-						SpawnPlayer (dt);
+						SpawnPlayer (data);
 				} else if (cmd == "spawnItem") {
-						SpawnItem (dt);
+						SpawnItem (data);
 				}
 		}
 	
