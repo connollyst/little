@@ -4,6 +4,7 @@ import java.util.UUID
 
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.engine.InteractionManager
+import com.google.common.base.Objects
 
 /** An entity, any object that exists in the game.
   *
@@ -36,5 +37,11 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager) {
   def touchedBy(other: Entity)
 
   def approachedBy(other: Entity)
+
+  override def toString: String =
+    Objects.toStringHelper(getClass)
+      .add("x", x)
+      .add("y", y)
+      .toString
 
 }
