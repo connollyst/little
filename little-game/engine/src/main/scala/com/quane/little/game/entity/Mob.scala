@@ -1,15 +1,18 @@
 package com.quane.little.game.entity
 
-import com.quane.little.language.{Operable, Operator, Runtime}
+import com.quane.little.game.InteractionManager
+import com.quane.little.game.view.{LineDrawer, ShapeDrawer}
+import com.quane.little.game.physics.bodies.EntityBody
+import org.eintr.loglady.Logging
+import com.quane.little.language.{Operable, Operator}
 import scala.util.Random
-import com.quane.little.game.engine.InteractionManager
-import com.google.common.base.Objects
 
-class Mob(manager: InteractionManager)
-  extends Entity(manager)
-  with Operable {
+class Mob(body: EntityBody, manager: InteractionManager)
+  extends Entity(body, manager)
+  with Operable
+  with Logging {
 
-  val operator = new Operator(new Runtime, this) // TODO where should the Runtime come from?
+  val operator = new Operator(null, this) // TODO where should the Runtime come from?
 
   // Range of 1-10
   private var _speed = 0
@@ -36,26 +39,23 @@ class Mob(manager: InteractionManager)
 
   def heal(amount: Int) {
     // TODO
-    println("TODO heal by " + amount)
+    log.error("TODO heal by " + amount)
   }
 
   override def touchedBy(other: Entity) {
-    println("mob touched by " + other)
     // TODO
   }
 
   override def approachedBy(other: Entity) {
-    println("mob approached by " + other)
     // TODO
   }
 
-  override def toString: String =
-    Objects.toStringHelper(getClass)
-      .add("id", uuid)
-      .add("x", x)
-      .add("y", y)
-      .add("speed", speed)
-      .add("direction", direction)
-      .toString
+  override def render(shapeDrawer: ShapeDrawer) {
+    shapeDrawer.drawMob(this)
+  }
+
+  override def render(lineDrawer: LineDrawer) {
+    lineDrawer.drawMob(this)
+  }
 
 }

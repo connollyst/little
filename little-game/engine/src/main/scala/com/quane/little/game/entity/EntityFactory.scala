@@ -1,36 +1,29 @@
 package com.quane.little.game.entity
 
+import scala.Option.option2Iterable
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-import com.quane.little.game.LittleGameEngine
+import com.quane.little.game.{Little, InteractionManagerImpl}
 import com.quane.little.language.event.{EventListener, LittleEvent}
 import com.quane.little.language.{FunctionReference, Functions}
 import com.quane.little.language.data.Value
-import com.quane.little.game.engine.InteractionManager
 
-class EntityFactory(game: LittleGameEngine) {
+class EntityFactory(game: Little) {
 
-  val manager = new InteractionManager(game)
+  val manager = new InteractionManagerImpl(game)
 
   def createMobs(number: Int): List[Mob] = {
     val mobs = new ListBuffer[Mob]
     for (i <- 0 until number) {
-      mobs += createMob()
+      mobs += createMob
     }
     mobs.toList
   }
 
-  def createMob(): Mob = {
-    val x = Random.nextInt(20)
-    val y = Random.nextInt(20)
-    createMob(x, y)
-  }
-
-  def createMob(x: Float, y: Float): Mob = {
-    val mob = new Mob(manager)
-    mob.x = x
-    mob.y = y
+  def createMob: Mob = {
+    val mob = new Mob(game.builder.buildBody(), manager)
+    game.eventBus.report(mob, LittleEvent.OnSpawn)
     mob.operator.runtime.saveFunction(Functions.move)
     mob.operator.runtime.saveFunction(Functions.stop)
     mob.operator.addEventListener(
@@ -59,7 +52,6 @@ class EntityFactory(game: LittleGameEngine) {
         new FunctionReference(mob.operator, "stop")
       )
     )
-    game.eventBus.report(mob, LittleEvent.OnSpawn)
     mob
   }
 
@@ -70,22 +62,21 @@ class EntityFactory(game: LittleGameEngine) {
   def foodList(number: Int): List[Food] = {
     val foods = new ListBuffer[Food]
     for (i <- 0 until number) {
-      foods += createFood()
+      val body = game.builder.buildFood()
+      val food = new Food(body, manager, Random.nextInt(20))
+      foods ++= Option(food)
     }
     foods.toList
   }
 
-  def createFood(): Food = {
-    val x = Random.nextInt(20)
-    val y = Random.nextInt(20)
-    createFood(x, y)
-  }
-
-  def createFood(x: Float, y: Float): Food = {
-    val food = new Food(manager, Random.nextInt(20))
-    food.x = x
-    food.y = y
-    food
+  def worldEdges: List[WorldEdge] = {
+    val edges = new ListBuffer[WorldEdge]
+    game.builder.buildWalls foreach (
+      wall => {
+        edges += new WorldEdge(wall, manager)
+      }
+      )
+    edges.toList
   }
 
 }
