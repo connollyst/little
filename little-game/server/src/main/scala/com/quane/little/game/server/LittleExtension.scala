@@ -31,9 +31,6 @@ class LittleExtension
     )
     gameEngine.update()
     addRequestHandler("ready", classOf[ReadyHandler])
-    addRequestHandler("move", classOf[MoveHandler])
-    addRequestHandler("spawn", classOf[SpawnHandler])
-    addRequestHandler("collision", classOf[CollisionHandler])
     addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
   }
 
