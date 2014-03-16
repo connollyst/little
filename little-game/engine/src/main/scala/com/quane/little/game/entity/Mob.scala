@@ -1,6 +1,5 @@
 package com.quane.little.game.entity
 
-import com.quane.little.game.view.{LineDrawer, ShapeDrawer}
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.engine.InteractionManager
 import com.quane.little.language.{Operable, Operator, Runtime}
@@ -46,14 +45,6 @@ class Mob(body: EntityBody, manager: InteractionManager)
 
   override def approachedBy(other: Entity) {
     // TODO
-  }
-
-  override def render(shapeDrawer: ShapeDrawer) {
-    shapeDrawer.drawMob(this)
-  }
-
-  override def render(lineDrawer: LineDrawer) {
-    lineDrawer.drawMob(this)
   }
 
 }

@@ -1,6 +1,5 @@
 package com.quane.little.game.entity
 
-import com.quane.little.game.view.ShapeDrawer
 import com.quane.little.game.physics.bodies.StaticBody
 import com.quane.little.game.engine.InteractionManager
 
@@ -21,10 +20,6 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
 
   override def approachedBy(other: Entity) {
     // TODO
-  }
-
-  override def render(shapeDrawer: ShapeDrawer) {
-    shapeDrawer.drawWall(this)
   }
 
 }

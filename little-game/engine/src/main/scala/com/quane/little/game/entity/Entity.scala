@@ -3,7 +3,6 @@ package com.quane.little.game.entity
 import java.util.UUID
 
 import com.quane.little.game.physics.bodies.EntityBody
-import com.quane.little.game.view.{LineDrawer, ShapeDrawer, MeshDrawer, SpriteDrawer}
 import com.quane.little.game.engine.InteractionManager
 
 /** An entity, any object that exists in the game.
@@ -37,13 +36,5 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager) {
   def touchedBy(other: Entity)
 
   def approachedBy(other: Entity)
-
-  def render(spriteDrawer: SpriteDrawer) {}
-
-  def render(meshDrawer: MeshDrawer) {}
-
-  def render(shapeDrawer: ShapeDrawer) {}
-
-  def render(lineDrawer: LineDrawer) {}
 
 }

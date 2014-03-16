@@ -2,9 +2,8 @@ package com.quane.little.game
 
 import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
-import com.quane.little.game.entity.{Mob, Entity, EntityFactory}
+import com.quane.little.game.entity.{EntityCleaner, Mob, Entity, EntityFactory}
 import scala.collection.mutable.ListBuffer
-import com.quane.little.game.view.{LineDrawer, ShapeDrawer, MeshDrawer, SpriteDrawer}
 
 /**
  *
@@ -16,11 +15,7 @@ class Little {
   var eventBus: EventBus = _
   var engine: PhysicsEngine = _
   var builder: BodyBuilder = _
-  var meshDrawer: MeshDrawer = _
-  var lineDrawer: LineDrawer = _
-  var shapeDrawer: ShapeDrawer = _
-  var spriteDrawer: SpriteDrawer = _
-  //var cleaner: LittleCleaner = _
+  var cleaner: EntityCleaner = _
   var entityFactory: EntityFactory = _
   var entities: ListBuffer[Entity] = _
   var players: List[Mob] = _
