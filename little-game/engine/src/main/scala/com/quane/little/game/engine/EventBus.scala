@@ -11,6 +11,8 @@ class EventBus {
   // Events that have occurred and are waiting to be handled
   val queue = new HashMap[Mob, Set[LittleEvent]]() with MultiMap[Mob, LittleEvent]
 
+  def report(mob: Mob, event: LittleEvent): Unit = queue.addBinding(mob, event)
+
   /** Evaluate all queued events.
     */
   def evaluateAll() {
@@ -22,16 +24,11 @@ class EventBus {
         events foreach (
           event => {
             mob.operator.getEventListeners(event) foreach (
-              listener =>
-                listener.evaluate
+              listener => listener.evaluate
               )
           })
       })
     queue.clear()
-  }
-
-  def report(mob: Mob, event: LittleEvent) {
-    queue.addBinding(mob, event)
   }
 
 }
