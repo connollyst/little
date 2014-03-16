@@ -44,5 +44,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
       .add("y", y)
       .add("speed", speed)
       .add("direction", direction)
+      .add("uuid", uuid)
+      .add("isGuy", isGuy)
       .toString
 }
