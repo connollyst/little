@@ -2,7 +2,8 @@ package com.quane.little.game
 
 import com.quane.little.game.entity.{EntityCleaner, Mob, Entity, EntityFactory}
 import scala.collection.mutable.Map
-import com.quane.little.game.engine.EventBus
+import com.quane.little.game.physics.PhysicsEngine
+import com.quane.little.game.physics.bodies.BodyBuilder
 
 /** The little game engine maintains the state of the world and allows us to
   * step through it, advancing the physics simulation and evaluating little code
@@ -13,7 +14,9 @@ import com.quane.little.game.engine.EventBus
 class LittleGameEngine {
 
   val eventBus: EventBus = new EventBus
-  val cleaner: EntityCleaner = new EntityCleaner(this)
+  val engine: PhysicsEngine = new PhysicsEngine
+  val builder = new BodyBuilder(this, engine.world)
+  val cleaner: EntityCleaner = new EntityCleaner(this, engine)
   val entityFactory: EntityFactory = new EntityFactory(this)
   val entities: Map[String, Entity] = Map()
   val players: Map[String, Mob] = Map()
@@ -33,9 +36,9 @@ class LittleGameEngine {
   def setEntityPosition(id: String, x: Float, y: Float): Mob = {
     players.get(id) match {
       case Some(player) =>
-        player.x = x
-        player.y = y
-        player
+        //player.x = x
+        //player.y = y
+        throw new IllegalAccessException("We don't support setting entity position from client!")
       case None => throw new IllegalAccessException("No mob with id " + id)
     }
   }

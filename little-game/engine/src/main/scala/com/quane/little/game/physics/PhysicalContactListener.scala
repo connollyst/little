@@ -1,6 +1,5 @@
 package com.quane.little.game.physics
 
-import org.eintr.loglady.Logging
 import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.entity.Entity
 import java.lang.Override
@@ -10,8 +9,7 @@ import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
 
 class PhysicalContactListener
-  extends ContactListener
-  with Logging {
+  extends ContactListener {
 
   @Override
   override def preSolve(contact: Contact, manifold: Manifold) {

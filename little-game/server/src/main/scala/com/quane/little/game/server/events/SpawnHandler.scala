@@ -34,9 +34,10 @@ class SpawnHandler extends LittleClientRequestHandler {
 
   private def spawnMob(x: Float, y: Float) = {
     val mob = getGameEngine.entityFactory.createMob
-    mob.x = x
-    mob.y = y
+    //mob.x = x
+    //mob.y = y
     notifyAll(mob)
+    throw new IllegalAccessException("We don't support specifying mob x & y!")
   }
 
   private def notifyAll(mob: Mob) = {

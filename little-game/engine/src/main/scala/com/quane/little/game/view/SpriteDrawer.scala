@@ -1,6 +1,7 @@
 package com.quane.little.game.view
 
 import com.quane.little.game.entity.{Food, Mob}
+import com.quane.little.language.exceptions.NotImplementedError
 
 class SpriteDrawer {
 

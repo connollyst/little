@@ -1,6 +1,7 @@
 package com.quane.little.game.view
 
 import com.quane.little.game.entity.{Mob, WorldEdge}
+import com.quane.little.language.exceptions.NotImplementedError
 
 /**
  *

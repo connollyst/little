@@ -1,16 +1,16 @@
 package com.quane.little.game.entity
 
-import com.quane.little.game.InteractionManager
 import com.quane.little.game.view.{LineDrawer, ShapeDrawer}
 import com.quane.little.game.physics.bodies.EntityBody
-import com.quane.little.language.{Operable, Operator}
+import com.quane.little.game.engine.InteractionManager
+import com.quane.little.language.{Operable, Operator, Runtime}
 import scala.util.Random
 
 class Mob(body: EntityBody, manager: InteractionManager)
   extends Entity(body, manager)
   with Operable {
 
-  val operator = new Operator(null, this) // TODO where should the Runtime come from?
+  val operator = new Operator(new Runtime, this) // TODO where should the Runtime come from?
 
   // Range of 1-10
   private var _speed = 0

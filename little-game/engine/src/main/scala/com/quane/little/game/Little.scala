@@ -20,7 +20,7 @@ class Little {
   var lineDrawer: LineDrawer = _
   var shapeDrawer: ShapeDrawer = _
   var spriteDrawer: SpriteDrawer = _
-  var cleaner: LittleCleaner = _
+  //var cleaner: LittleCleaner = _
   var entityFactory: EntityFactory = _
   var entities: ListBuffer[Entity] = _
   var players: List[Mob] = _
