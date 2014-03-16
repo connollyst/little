@@ -20,7 +20,8 @@ public class GameManager : MonoBehaviour
 		private SmartFox server;
 		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
 		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
-
+		private Dictionary<string, GameObject> walls = new Dictionary<string, GameObject> ();
+	
 		void Start ()
 		{
 				if (!SmartFoxConnection.IsInitialized) {
@@ -60,16 +61,16 @@ public class GameManager : MonoBehaviour
 						Debug.Log ("Proximity user removed: " + user);
 				}
 				foreach (IMMOItem item in addedItems) {	
-						Debug.Log ("Proximity item added: " + item);
 						string type = item.GetVariable ("type").GetStringValue ();
-						if (type == "player") {
+						if (type == "wall") {
+								AddWall (item);
+						} else if (type == "player") {
 								AddPlayer (item);
 						} else if (type == "entity") {
 								AddItem (item);
 						}
 				}
 				foreach (IMMOItem item in removedItems) {
-						Debug.Log ("Proximity item removed: " + item);
 						string type = item.GetVariable ("type").GetStringValue ();
 						if (type == "player") {
 								RemovePlayer (item);
@@ -79,6 +80,22 @@ public class GameManager : MonoBehaviour
 				}
 		}
 		
+		private void AddWall (IMMOItem item)
+		{
+				int x = item.AOIEntryPoint.IntX;
+				int y = item.AOIEntryPoint.IntY;
+				int w = item.GetVariable ("w").GetIntValue ();
+				int h = item.GetVariable ("h").GetIntValue ();
+				string id = item.GetVariable ("uuid").GetStringValue ();
+				if (!walls.ContainsKey (id)) {
+						Debug.Log ("Creating a wall @ (" + x + "," + y + ") of " + w + "x" + h);
+						walls.Add (id, GameObject.CreatePrimitive (PrimitiveType.Cube));
+				}
+				GameObject wall = walls [id];
+				wall.transform.position = new Vector3 (x, y, 0);
+				wall.transform.localScale = new Vector3 (w, h, 1);
+		}
+	
 		private void AddItem (IMMOItem item)
 		{
 				float x = item.AOIEntryPoint.IntX;
@@ -87,7 +104,6 @@ public class GameManager : MonoBehaviour
 				if (!items.ContainsKey (id)) {
 						items.Add (id, GameObject.Instantiate (foodModel) as GameObject);
 				}
-				Debug.Log ("Adding item at (" + x + "," + y + ")");
 				GameObject gameItem = items [id];
 				Controller controller = gameItem.GetComponent<Controller> ();
 				controller.UUID = id;
@@ -97,6 +113,7 @@ public class GameManager : MonoBehaviour
 		private void RemoveItem (IMMOItem item)
 		{
 				string id = item.GetVariable ("uuid").GetStringValue ();
+				Debug.Log ("Removing item " + id);
 				items.Remove (id);
 		}
 		
@@ -113,14 +130,15 @@ public class GameManager : MonoBehaviour
 				GameObject mob = myMobs [id];
 				PlayerController controller = mob.GetComponent<PlayerController> ();
 				controller.UUID = id;
-				controller.Speed = speed;
-				controller.Direction = direction;
+				//controller.Speed = speed;
+				//controller.Direction = direction;
 				controller.Position (x, y);
 		}
 	
 		private void RemovePlayer (IMMOItem item)
 		{
 				string id = item.GetVariable ("uuid").GetStringValue ();
+				Debug.Log ("Removing item " + id);
 				myMobs.Remove (id);
 		}
 	
