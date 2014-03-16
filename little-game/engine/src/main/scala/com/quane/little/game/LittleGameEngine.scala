@@ -34,7 +34,7 @@ class LittleGameEngine {
       player =>
         players += (player.uuid.toString -> player)
     }
-    entityFactory.foodList() foreach {
+    entityFactory.createFoods() foreach {
       entity =>
         entities += (entity.uuid.toString -> entity)
     }
@@ -42,7 +42,6 @@ class LittleGameEngine {
       edge =>
         entities += (edge.uuid.toString -> edge)
     }
-    update()
   }
 
   def start() = {
@@ -81,7 +80,6 @@ class LittleGameEngine {
         lastUpdateTime += TIME_BETWEEN_UPDATES
         updateCount += 1
       }
-      println("Updated simulation " + updateCount + " times.")
       // If for some reason an update takes forever, we don't want to do an insane number of catchups.
       // If you were doing some sort of game that needed to keep EXACT time, you would get rid of this.
       if (now - lastUpdateTime > TIME_BETWEEN_UPDATES) {
