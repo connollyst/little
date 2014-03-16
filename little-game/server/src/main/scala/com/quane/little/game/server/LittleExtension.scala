@@ -1,7 +1,7 @@
 package com.quane.little.game.server
 
 import com.smartfoxserver.v2.extensions.{ExtensionLogLevel, SFSExtension}
-import com.quane.little.game.LittleGameEngine
+import com.quane.little.game.{TimedUpdater, LittleGameEngine}
 import com.smartfoxserver.v2.mmo._
 import com.smartfoxserver.v2.core.SFSEventType
 import com.quane.little.game.server.events.JoinEventHandler
@@ -18,6 +18,9 @@ class LittleExtension
   extends SFSExtension {
 
   var gameEngine: LittleGameEngine = null
+  val updater = new TimedUpdater(2) {
+    def update() = sendItems()
+  }
 
   override def init(): Unit = {
     trace("Initializing Little room..")
@@ -27,17 +30,19 @@ class LittleExtension
     gameEngine = new LittleGameEngine
     gameEngine.initialize()
     gameEngine.start()
+    new Thread(updater).start()
     addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
-    initMMOItems()
   }
 
   private def initMMOItems() = {
-    trace("Initialized with "
-      + gameEngine.entities.size + " items and "
-      + gameEngine.players.size + " mobs."
+    trace("Sending "
+      + gameEngine.players.size + " mobs, "
+      + gameEngine.entities.size + " items, & "
+      + gameEngine.walls.size + " walls.."
     )
     initPlayerMMOItems()
     initEntityMMOItems()
+    initWallMMOItems()
   }
 
   private def initPlayerMMOItems() = {
@@ -50,7 +55,7 @@ class LittleExtension
         variables += new MMOItemVariable("s", player.speed)
         variables += new MMOItemVariable("d", player.direction)
         val item = new MMOItem(variables.toList)
-        trace("Creating player MMO item: " + player)
+        //trace("Creating player MMO item: " + player)
         val position = new Vec3D(player.x.toInt, player.y.toInt, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
@@ -64,11 +69,31 @@ class LittleExtension
         variables += new MMOItemVariable("uuid", uuid.toString)
         variables += new MMOItemVariable("type", "entity")
         val item = new MMOItem(variables.toList)
-        trace("Creating entity MMO item: " + entity)
+        //trace("Creating entity MMO item: " + entity)
         val position = new Vec3D(entity.x.toInt, entity.y.toInt, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
   }
+
+  private def initWallMMOItems() = {
+    gameEngine.walls.keys foreach {
+      uuid =>
+        val wall = gameEngine.walls(uuid)
+        val variables = new ListBuffer[IMMOItemVariable]
+        variables += new MMOItemVariable("uuid", uuid.toString)
+        variables += new MMOItemVariable("type", "wall")
+        variables += new MMOItemVariable("w", wall.w.toInt)
+        variables += new MMOItemVariable("h", wall.h.toInt)
+        val item = new MMOItem(variables.toList)
+        //trace("Creating wall MMO item: " + wall)
+        val position = new Vec3D(wall.x.toInt, wall.y.toInt, 0)
+        getMMOApi.setMMOItemPosition(item, position, getParentRoom)
+    }
+  }
+
+  // TODO we can avoid newing up MMOItems
+  // TODO maybe the game can give us notifications?
+  private def sendItems() = initMMOItems()
 
   def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
 
