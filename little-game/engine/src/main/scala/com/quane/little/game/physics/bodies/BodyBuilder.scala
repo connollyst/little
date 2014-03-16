@@ -1,6 +1,5 @@
 package com.quane.little.game.physics.bodies
 
-import java.util.UUID
 import scala.util.Random
 import com.quane.little.game.LittleGameEngine
 import org.jbox2d.dynamics.{FixtureDef, BodyType, BodyDef, World}
@@ -13,7 +12,7 @@ object BodyBuilder {
 
 class BodyBuilder(game: LittleGameEngine, world: World) {
 
-  def buildBody(): EntityBody = {
+  def buildBody(x: Float, y: Float): EntityBody = {
     val bodyShape = new CircleShape
     bodyShape.setRadius(BodyBuilder.MobBodySize)
     val sensorShape = new CircleShape
@@ -22,7 +21,7 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
     val bodyDef = new BodyDef
     bodyDef.`type` = BodyType.DYNAMIC
     bodyDef.angle = randomAngle
-    bodyDef.position.set(randomX, randomY)
+    bodyDef.position.set(x, y)
     bodyDef.allowSleep = false
     bodyDef.linearDamping = 0.2.toFloat
     val body = world.createBody(bodyDef)
@@ -38,12 +37,12 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
     sensorFixture
   }
 
-  def buildFood(): EntityBody = {
-    val uuid = UUID.randomUUID.toString
+  def buildFood(x: Float, y: Float): EntityBody = {
     val foodBodyDef = new BodyDef
     foodBodyDef.`type` = BodyType.STATIC
+    foodBodyDef.angle = randomAngle
+    foodBodyDef.position.set(x, y)
     foodBodyDef.allowSleep = true
-    foodBodyDef.position.set(randomX, randomY)
     val foodShape = new PolygonShape
     val foodFixture = new FixtureDef
     foodFixture.shape = foodShape
@@ -88,7 +87,4 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
 
   private def randomAngle: Float = (Random.nextInt(360) * (math.Pi / 180)).toFloat
 
-  private def randomX: Int = Random.nextInt(900) + 50
-
-  private def randomY: Int = Random.nextInt(700) + 50
 }
