@@ -49,7 +49,6 @@ public class GameManager : MonoBehaviour
 
 		public void OnProximityListUpdate (BaseEvent evt)
 		{
-				Debug.Log ("Proximity list updated");
 				var addedUsers = (List<User>)evt.Params ["addedUsers"];
 				var addedItems = (List<IMMOItem>)evt.Params ["addedItems"];
 				var removedUsers = (List<User>)evt.Params ["removedUsers"];
@@ -87,6 +86,7 @@ public class GameManager : MonoBehaviour
 				int w = item.GetVariable ("w").GetIntValue ();
 				int h = item.GetVariable ("h").GetIntValue ();
 				string id = item.GetVariable ("uuid").GetStringValue ();
+				Debug.Log("WALL: "+id);
 				if (!walls.ContainsKey (id)) {
 						Debug.Log ("Creating a wall @ (" + x + "," + y + ") of " + w + "x" + h);
 						walls.Add (id, GameObject.CreatePrimitive (PrimitiveType.Cube));

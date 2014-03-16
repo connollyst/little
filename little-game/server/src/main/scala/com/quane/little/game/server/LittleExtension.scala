@@ -29,17 +29,17 @@ class LittleExtension
     }
     gameEngine = new LittleGameEngine
     gameEngine.initialize()
+    trace("Initialized with "
+      + gameEngine.players.size + " mobs, "
+      + gameEngine.entities.size + " items, & "
+      + gameEngine.walls.size + " walls.."
+    )
     gameEngine.start()
     new Thread(updater).start()
     addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
   }
 
   private def initMMOItems() = {
-    trace("Sending "
-      + gameEngine.players.size + " mobs, "
-      + gameEngine.entities.size + " items, & "
-      + gameEngine.walls.size + " walls.."
-    )
     initPlayerMMOItems()
     initEntityMMOItems()
     initWallMMOItems()
@@ -55,7 +55,7 @@ class LittleExtension
         variables += new MMOItemVariable("s", player.speed)
         variables += new MMOItemVariable("d", player.direction)
         val item = new MMOItem(variables.toList)
-        //trace("Creating player MMO item: " + player)
+        // trace("Creating player MMO item: " + player)
         val position = new Vec3D(player.x.toInt, player.y.toInt, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
@@ -69,7 +69,7 @@ class LittleExtension
         variables += new MMOItemVariable("uuid", uuid.toString)
         variables += new MMOItemVariable("type", "entity")
         val item = new MMOItem(variables.toList)
-        //trace("Creating entity MMO item: " + entity)
+        // trace("Creating entity MMO item: " + entity)
         val position = new Vec3D(entity.x.toInt, entity.y.toInt, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
@@ -85,7 +85,7 @@ class LittleExtension
         variables += new MMOItemVariable("w", wall.w.toInt)
         variables += new MMOItemVariable("h", wall.h.toInt)
         val item = new MMOItem(variables.toList)
-        //trace("Creating wall MMO item: " + wall)
+        // trace("Creating wall MMO item: " + wall)
         val position = new Vec3D(wall.x.toInt, wall.y.toInt, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
