@@ -31,20 +31,19 @@ class LittleExtension
       + gameEngine.players.size + " mobs."
     )
     addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
-    // Create the MMOItem
-    val variables = new ListBuffer[IMMOItemVariable]
-    variables += new MMOItemVariable("type", "bonus")
-    variables += new MMOItemVariable("points", 250)
-    variables += new MMOItemVariable("active", true)
-    val mmoItem = new MMOItem(variables.toList)
-
-    // Deploy the MMOItem in the MMORoom's map
-    getMMOApi.setMMOItemPosition(mmoItem, new Vec3D(50, 40, 0), getParentRoom)
+    gameEngine.entities.keys foreach {
+      uuid =>
+        val entity = gameEngine.entities(uuid)
+        val variables = new ListBuffer[IMMOItemVariable]
+        variables += new MMOItemVariable("uuid", uuid.toString)
+        val item = new MMOItem(variables.toList)
+        trace("Creating MMO item: " + entity)
+        val position = new Vec3D(entity.x.toInt, entity.y.toInt, 0)
+        getMMOApi.setMMOItemPosition(item, position, getParentRoom)
+    }
   }
 
-  private def isMMORoom: Boolean = {
-    getParentRoom.isInstanceOf[MMORoom]
-  }
+  private def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
 
   def getMMOApi = getServer.getAPIManager.getMMOApi
 

@@ -75,38 +75,46 @@ public class GameManager : MonoBehaviour
 		{
 				Debug.Log ("Proximity list updated");
 				var addedUsers = (List<User>)evt.Params ["addedUsers"];
+				var addedItems = (List<IMMOItem>)evt.Params ["addedItems"];
 				var removedUsers = (List<User>)evt.Params ["removedUsers"];
-				Debug.Log ("Proximity users added: " + addedUsers);
-				Debug.Log ("Proximity users removed: " + removedUsers);
-		}
-
-		public void OnExtensionResponse (BaseEvent evt)
-		{
-				string cmd = (string)evt.Params ["cmd"];
-				ISFSObject data = (SFSObject)evt.Params ["params"];
-				if (cmd == "SetItem") {
-						SetItem (data);
-				} else if (cmd == "SetPlayer") {
-						SetPlayer (data);
-				} else  if (cmd == "UpdatePlayer") {
-						UpdatePlayer (data);
+				var removedItems = (List<IMMOItem>)evt.Params ["removedItems"];
+				foreach (User user in addedUsers) {	
+						Debug.Log ("Proximity user added: " + user);
+				}
+				foreach (User user in removedUsers) {
+						Debug.Log ("Proximity user removed: " + user);
+				}
+				foreach (IMMOItem item in addedItems) {	
+						Debug.Log ("Proximity item added: " + item);
+						AddItem (item);
+				}
+				foreach (IMMOItem item in removedItems) {
+						Debug.Log ("Proximity item removed: " + item);
+						RemoveItem (item);
 				}
 		}
-
-		private void SetItem (ISFSObject data)
+		
+		private void AddItem (IMMOItem item)
 		{
-				string id = data.GetUtfString ("id");
-				float x = data.GetFloat ("x");
-				float y = data.GetFloat ("y");
+				string id = item.GetVariable ("uuid").GetStringValue ();
+				float x = item.AOIEntryPoint.IntX;
+				float y = item.AOIEntryPoint.IntY;
 				if (!items.ContainsKey (id)) {
 						items.Add (id, GameObject.Instantiate (foodModel) as GameObject);
 				}
-				GameObject item = items [id];
-				Controller controller = item.GetComponent<Controller> ();
+				Debug.Log ("Adding item at (" + x + "," + y + ")");
+				GameObject gameItem = items [id];
+				Controller controller = gameItem.GetComponent<Controller> ();
 				controller.UUID = id;
 				controller.Position (x, y);
 		}
 
+		private void RemoveItem (IMMOItem item)
+		{
+				string id = item.GetVariable ("uuid").GetStringValue ();
+				items.Remove (id);
+		}
+		
 		private void SetPlayer (ISFSObject data)
 		{
 				string id = data.GetUtfString ("id");
