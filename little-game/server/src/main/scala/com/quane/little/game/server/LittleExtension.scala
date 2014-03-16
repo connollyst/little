@@ -26,24 +26,50 @@ class LittleExtension
     }
     gameEngine = new LittleGameEngine
     gameEngine.initialize()
+    addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
+    initMMOItems()
+  }
+
+  private def initMMOItems() = {
     trace("Initialized with "
       + gameEngine.entities.size + " items and "
       + gameEngine.players.size + " mobs."
     )
-    addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
+    initPlayerMMOItems()
+    initEntityMMOItems()
+  }
+
+  private def initPlayerMMOItems() = {
+    gameEngine.players.keys foreach {
+      uuid =>
+        val player = gameEngine.players(uuid)
+        val variables = new ListBuffer[IMMOItemVariable]
+        variables += new MMOItemVariable("uuid", uuid.toString)
+        variables += new MMOItemVariable("type", "player")
+        variables += new MMOItemVariable("s", player.speed)
+        variables += new MMOItemVariable("d", player.direction)
+        val item = new MMOItem(variables.toList)
+        trace("Creating player MMO item: " + player)
+        val position = new Vec3D(player.x.toInt, player.y.toInt, 0)
+        getMMOApi.setMMOItemPosition(item, position, getParentRoom)
+    }
+  }
+
+  private def initEntityMMOItems() = {
     gameEngine.entities.keys foreach {
       uuid =>
         val entity = gameEngine.entities(uuid)
         val variables = new ListBuffer[IMMOItemVariable]
         variables += new MMOItemVariable("uuid", uuid.toString)
+        variables += new MMOItemVariable("type", "entity")
         val item = new MMOItem(variables.toList)
-        trace("Creating MMO item: " + entity)
+        trace("Creating entity MMO item: " + entity)
         val position = new Vec3D(entity.x.toInt, entity.y.toInt, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
   }
 
-  private def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
+  def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
 
   def getMMOApi = getServer.getAPIManager.getMMOApi
 

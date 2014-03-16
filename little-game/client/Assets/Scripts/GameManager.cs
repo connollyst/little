@@ -28,10 +28,7 @@ public class GameManager : MonoBehaviour
 						return;
 				}
 				server = SmartFoxConnection.Connection;
-				server.AddEventListener (SFSEvent.ROOM_VARIABLES_UPDATE, OnRoomVariablesUpdate);
-				server.AddEventListener (SFSEvent.USER_VARIABLES_UPDATE, OnUserVariablesUpdate);
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
-				server.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 				server.AddEventListener (SFSEvent.PROXIMITY_LIST_UPDATE, OnProximityListUpdate);
 		}
 	
@@ -49,28 +46,6 @@ public class GameManager : MonoBehaviour
 				Application.LoadLevel ("Connector");
 		}
 
-		public void OnUserVariablesUpdate (BaseEvent evt)
-		{
-				SFSUser user = (SFSUser)evt.Params ["user"];
-				ArrayList changedVars = (ArrayList)evt.Params ["changedVars"];
-				if (user == server.MySelf) {
-						foreach (string changedVar in changedVars) {
-								ISFSObject value = user.GetVariable (changedVar).GetSFSObjectValue ();
-								Debug.Log ("MY user variable updated: " + changedVar + " => " + value);
-								SetPlayer (value);
-						}
-				} else {
-						foreach (string changedVar in changedVars) {
-								Debug.Log ("OTHER user variable updated: " + changedVar);
-						}
-				}
-		}
-
-		public void OnRoomVariablesUpdate (BaseEvent evt)
-		{
-				Debug.Log ("Room variable updated");
-		}
-
 		public void OnProximityListUpdate (BaseEvent evt)
 		{
 				Debug.Log ("Proximity list updated");
@@ -86,19 +61,29 @@ public class GameManager : MonoBehaviour
 				}
 				foreach (IMMOItem item in addedItems) {	
 						Debug.Log ("Proximity item added: " + item);
-						AddItem (item);
+						string type = item.GetVariable ("type").GetStringValue ();
+						if (type == "player") {
+								AddPlayer (item);
+						} else if (type == "entity") {
+								AddItem (item);
+						}
 				}
 				foreach (IMMOItem item in removedItems) {
 						Debug.Log ("Proximity item removed: " + item);
-						RemoveItem (item);
+						string type = item.GetVariable ("type").GetStringValue ();
+						if (type == "player") {
+								RemovePlayer (item);
+						} else if (type == "entity") {
+								RemoveItem (item);
+						}
 				}
 		}
 		
 		private void AddItem (IMMOItem item)
 		{
-				string id = item.GetVariable ("uuid").GetStringValue ();
 				float x = item.AOIEntryPoint.IntX;
 				float y = item.AOIEntryPoint.IntY;
+				string id = item.GetVariable ("uuid").GetStringValue ();
 				if (!items.ContainsKey (id)) {
 						items.Add (id, GameObject.Instantiate (foodModel) as GameObject);
 				}
@@ -115,13 +100,13 @@ public class GameManager : MonoBehaviour
 				items.Remove (id);
 		}
 		
-		private void SetPlayer (ISFSObject data)
+		private void AddPlayer (IMMOItem item)
 		{
-				string id = data.GetUtfString ("id");
-				float x = data.GetFloat ("x");
-				float y = data.GetFloat ("y");
-				int speed = data.GetInt ("s") / 10;
-				int direction = data.GetInt ("d");
+				float x = item.AOIEntryPoint.IntX;
+				float y = item.AOIEntryPoint.IntY;
+				string id = item.GetVariable ("uuid").GetStringValue ();
+				int speed = item.GetVariable ("s").GetIntValue ();
+				int direction = item.GetVariable ("d").GetIntValue ();
 				if (!myMobs.ContainsKey (id)) {
 						myMobs.Add (id, GameObject.Instantiate (playerModel) as GameObject);
 				}
@@ -131,6 +116,12 @@ public class GameManager : MonoBehaviour
 				controller.Speed = speed;
 				controller.Direction = direction;
 				controller.Position (x, y);
+		}
+	
+		private void RemovePlayer (IMMOItem item)
+		{
+				string id = item.GetVariable ("uuid").GetStringValue ();
+				myMobs.Remove (id);
 		}
 	
 		private void UpdatePlayer (ISFSObject data)
