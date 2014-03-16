@@ -22,8 +22,8 @@ class EntityFactory(game: LittleGameEngine) {
   }
 
   def createMob(): Mob = {
-    val x = Random.nextInt(20)
-    val y = Random.nextInt(20)
+    val x = Random.nextInt(900) + 50
+    val y = Random.nextInt(700) + 50
     createMob(x, y)
   }
 
@@ -62,11 +62,11 @@ class EntityFactory(game: LittleGameEngine) {
     mob
   }
 
-  def foodList(): List[Food] = {
-    foodList(Random.nextInt(10) + 10)
+  def createFoods(): List[Food] = {
+    createFoods(Random.nextInt(10) + 10)
   }
 
-  def foodList(number: Int): List[Food] = {
+  def createFoods(number: Int): List[Food] = {
     val foods = new ListBuffer[Food]
     for (i <- 0 until number) {
       foods += createFood()
@@ -75,8 +75,8 @@ class EntityFactory(game: LittleGameEngine) {
   }
 
   def createFood(): Food = {
-    val x = Random.nextInt(20)
-    val y = Random.nextInt(20)
+    val x = Random.nextInt(900) + 50
+    val y = Random.nextInt(700) + 50
     createFood(x, y)
   }
 
