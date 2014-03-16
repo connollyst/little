@@ -30,9 +30,9 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager)
 
   def isGuy = false
 
-  def touchedBy(other: Entity)
+  def touchedBy(other: Entity): Unit = debug("Touched " + other)
 
-  def approachedBy(other: Entity)
+  def approachedBy(other: Entity): Unit = debug("Approaching " + other)
 
   override def toString: String =
     Objects.toStringHelper(getClass)

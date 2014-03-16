@@ -42,10 +42,7 @@ class PhysicalContactListener
     val entityB = getContactEntity(bodyB)
     if (fixtureA.isSensor && fixtureB.isSensor) {
       // Two sensors do not substantiate an interaction
-    } else if (fixtureA.isSensor) {
-      // One sensor and one entity
-      reportProximity(entityB, entityA)
-    } else if (fixtureB.isSensor) {
+    } else if (fixtureA.isSensor || fixtureB.isSensor) {
       // One sensor and one entity
       reportProximity(entityA, entityB)
     } else {
@@ -57,6 +54,7 @@ class PhysicalContactListener
   private def reportProximity(entity: Entity, sensor: Entity) {
     debug("Proximity: " + entity.uuid + " & " + sensor.uuid)
     sensor.approachedBy(entity)
+    entity.approachedBy(sensor)
   }
 
   private def reportContact(entityA: Entity, entityB: Entity) {

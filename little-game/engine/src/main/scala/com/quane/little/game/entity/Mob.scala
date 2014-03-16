@@ -30,24 +30,33 @@ class Mob(body: EntityBody, manager: InteractionManager)
   override def isGuy: Boolean = true
 
   // TODO
-  def heal(amount: Int): Unit =
-    warn("TODO heal by " + amount)
+  def heal(amount: Int): Unit = warn("TODO heal by " + amount)
 
-  // TODO
-  override def touchedBy(other: Entity): Unit =
-    info("Touched by " + other)
+  override def touchedBy(other: Entity): Unit = {
+    super.touchedBy(other)
+    other match {
+      case food: Food => manager.mobConsumesFood(this, food)
+      case wall: ImmovableEntity => manager.mobContactsImmovableObject(this)
+      case _ => error("Touched unexpected Entity: " + other)
+    }
+  }
 
-  // TODO
-  override def approachedBy(other: Entity): Unit =
-    info("Approached by " + other)
+  override def approachedBy(other: Entity): Unit = {
+    super.approachedBy(other)
+    other match {
+      case food: Food => manager.mobApproachesFood(this, food)
+      case wall: ImmovableEntity => manager.mobApproachesImmovableObject(this)
+      case _ => error("Touched unexpected Entity: " + other)
+    }
+  }
 
   override def toString: String =
     Objects.toStringHelper(getClass)
+      .add("uuid", uuid)
       .add("x", x)
       .add("y", y)
       .add("speed", speed)
       .add("direction", direction)
-      .add("uuid", uuid)
-      .add("isGuy", isGuy)
       .toString
+
 }

@@ -7,6 +7,10 @@ import com.quane.little.game.LittleGameEngine
 
 class InteractionManager(game: LittleGameEngine) {
 
+  def mobApproachesFood(mob: Mob, food: Food): Unit = {
+    game.eventBus.report(mob, LittleEvent.OnFoodNearby)
+  }
+
   /** Interaction between a mob and food.
     *
     * Paper beats rock son.
@@ -14,18 +18,19 @@ class InteractionManager(game: LittleGameEngine) {
     * @param mob the mob consuming the food
     * @param food the food being consumed
     */
-  def mobConsumesFood(mob: Mob, food: Food) {
+  def mobConsumesFood(mob: Mob, food: Food): Unit = {
     game.eventBus.report(mob, LittleEvent.OnFoodConsumed)
     game.cleaner.remove(food)
     mob.heal(food.health)
   }
 
-  def mobApproachesFood(mob: Mob, food: Food) {
-    game.eventBus.report(mob, LittleEvent.OnFoodNearby)
+  def mobApproachesImmovableObject(mob: Mob): Unit = {
+    // TODO
   }
 
-  def mobContactsImmovableObject(mob: Mob) {
+  def mobContactsImmovableObject(mob: Mob): Unit = {
     game.eventBus.report(mob, LittleEvent.OnContact)
   }
+
 
 }
