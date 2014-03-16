@@ -13,11 +13,6 @@ object BodyBuilder {
 class BodyBuilder(game: LittleGameEngine, world: World) {
 
   def buildBody(x: Float, y: Float): EntityBody = {
-    val bodyShape = new CircleShape
-    bodyShape.setRadius(BodyBuilder.MobBodySize)
-    val sensorShape = new CircleShape
-    sensorShape.setRadius(BodyBuilder.MobSensorSize)
-    val sensorFixture = buildBodySensor(sensorShape)
     val bodyDef = new BodyDef
     bodyDef.`type` = BodyType.DYNAMIC
     bodyDef.angle = randomAngle
@@ -25,6 +20,11 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
     bodyDef.allowSleep = false
     bodyDef.linearDamping = 0.2.toFloat
     val body = world.createBody(bodyDef)
+    val bodyShape = new CircleShape
+    val sensorShape = new CircleShape
+    val sensorFixture = buildBodySensor(sensorShape)
+    bodyShape.setRadius(BodyBuilder.MobBodySize)
+    sensorShape.setRadius(BodyBuilder.MobSensorSize)
     body.createFixture(bodyShape, 1.0f)
     body.createFixture(sensorFixture)
     new EntityBody(body)
@@ -43,11 +43,11 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
     foodBodyDef.angle = randomAngle
     foodBodyDef.position.set(x, y)
     foodBodyDef.allowSleep = true
+    val foodBody = world.createBody(foodBodyDef)
     val foodShape = new PolygonShape
     val foodFixture = new FixtureDef
     foodFixture.shape = foodShape
     foodFixture.filter.groupIndex
-    val foodBody = world.createBody(foodBodyDef)
     foodShape.setAsBox(0.5f, 0.5f)
     foodBody.createFixture(foodFixture)
     new EntityBody(foodBody)
@@ -70,10 +70,10 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
     wallBodyDef.`type` = BodyType.STATIC
     wallBodyDef.allowSleep = true
     wallBodyDef.position.set(x, y)
+    val wallBody = world.createBody(wallBodyDef)
     val wallShape = new PolygonShape
     val wallFixture = new FixtureDef
     wallFixture.shape = wallShape
-    val wallBody = world.createBody(wallBodyDef)
     wallShape.setAsBox(w, h)
     wallBody.createFixture(wallFixture)
     new StaticBody(wallBody, x, y, w, h)
