@@ -4,6 +4,7 @@ import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.engine.InteractionManager
 import com.quane.little.language.{Operable, Operator, Runtime}
 import scala.util.Random
+import com.google.common.base.Objects
 
 class Mob(body: EntityBody, manager: InteractionManager)
   extends Entity(body, manager)
@@ -47,4 +48,11 @@ class Mob(body: EntityBody, manager: InteractionManager)
     // TODO
   }
 
+  override def toString: String =
+    Objects.toStringHelper(getClass)
+      .add("x", x)
+      .add("y", y)
+      .add("speed", speed)
+      .add("direction", direction)
+      .toString
 }
