@@ -20,33 +20,23 @@ class Mob(body: EntityBody, manager: InteractionManager)
 
   override def speed: Int = _speed
 
-  override def speed_=(mph: Int) {
-    _speed = mph
-  }
+  override def speed_=(mph: Int): Unit = _speed = mph
 
   override def direction: Int = _direction
 
-  override def direction_=(degrees: Int) {
-    _direction = degrees
-  }
+  override def direction_=(degrees: Int): Unit = _direction = degrees
 
-  override def isGuy: Boolean = {
-    // TODO I hate this
-    true
-  }
+  // TODO I hate this
+  override def isGuy: Boolean = true
 
-  def heal(amount: Int) {
-    // TODO
-    println("TODO heal by " + amount)
-  }
+  // TODO
+  def heal(amount: Int): Unit = println("TODO heal by " + amount)
 
-  override def touchedBy(other: Entity) {
-    // TODO
-  }
+  // TODO
+  override def touchedBy(other: Entity): Unit = Unit
 
-  override def approachedBy(other: Entity) {
-    // TODO
-  }
+  // TODO
+  override def approachedBy(other: Entity): Unit = Unit
 
   override def toString: String =
     Objects.toStringHelper(getClass)
