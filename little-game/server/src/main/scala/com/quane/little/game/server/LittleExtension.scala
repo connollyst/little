@@ -56,7 +56,7 @@ class LittleExtension
         variables += new MMOItemVariable("d", player.direction)
         val item = new MMOItem(variables.toList)
         // trace("Creating player MMO item: " + player)
-        val position = new Vec3D(player.x.toInt, player.y.toInt, 0)
+        val position = new Vec3D(player.x, player.y, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
   }
@@ -70,7 +70,7 @@ class LittleExtension
         variables += new MMOItemVariable("type", "entity")
         val item = new MMOItem(variables.toList)
         // trace("Creating entity MMO item: " + entity)
-        val position = new Vec3D(entity.x.toInt, entity.y.toInt, 0)
+        val position = new Vec3D(entity.x, entity.y, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
   }
@@ -86,7 +86,7 @@ class LittleExtension
         variables += new MMOItemVariable("h", wall.h.toInt)
         val item = new MMOItem(variables.toList)
         // trace("Creating wall MMO item: " + wall)
-        val position = new Vec3D(wall.x.toInt, wall.y.toInt, 0)
+        val position = new Vec3D(wall.x, wall.y, 0)
         getMMOApi.setMMOItemPosition(item, position, getParentRoom)
     }
   }

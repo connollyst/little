@@ -81,14 +81,12 @@ public class GameManager : MonoBehaviour
 		
 		private void AddWall (IMMOItem item)
 		{
-				int x = item.AOIEntryPoint.IntX;
-				int y = item.AOIEntryPoint.IntY;
+				float x = item.AOIEntryPoint.FloatX;
+				float y = item.AOIEntryPoint.FloatY;
 				int w = item.GetVariable ("w").GetIntValue ();
 				int h = item.GetVariable ("h").GetIntValue ();
 				string id = item.GetVariable ("uuid").GetStringValue ();
-				Debug.Log("WALL: "+id);
 				if (!walls.ContainsKey (id)) {
-						Debug.Log ("Creating a wall @ (" + x + "," + y + ") of " + w + "x" + h);
 						walls.Add (id, GameObject.CreatePrimitive (PrimitiveType.Cube));
 				}
 				GameObject wall = walls [id];
@@ -98,8 +96,8 @@ public class GameManager : MonoBehaviour
 	
 		private void AddItem (IMMOItem item)
 		{
-				float x = item.AOIEntryPoint.IntX;
-				float y = item.AOIEntryPoint.IntY;
+				float x = item.AOIEntryPoint.FloatX;
+				float y = item.AOIEntryPoint.FloatY;
 				string id = item.GetVariable ("uuid").GetStringValue ();
 				if (!items.ContainsKey (id)) {
 						items.Add (id, GameObject.Instantiate (foodModel) as GameObject);
@@ -119,8 +117,8 @@ public class GameManager : MonoBehaviour
 		
 		private void AddPlayer (IMMOItem item)
 		{
-				float x = item.AOIEntryPoint.IntX;
-				float y = item.AOIEntryPoint.IntY;
+				float x = item.AOIEntryPoint.FloatX;
+				float y = item.AOIEntryPoint.FloatY;
 				string id = item.GetVariable ("uuid").GetStringValue ();
 				int speed = item.GetVariable ("s").GetIntValue ();
 				int direction = item.GetVariable ("d").GetIntValue ();
@@ -130,27 +128,16 @@ public class GameManager : MonoBehaviour
 				GameObject mob = myMobs [id];
 				PlayerController controller = mob.GetComponent<PlayerController> ();
 				controller.UUID = id;
-				//controller.Speed = speed;
-				//controller.Direction = direction;
+				controller.Speed = speed;
+				controller.Direction = direction;
 				controller.Position (x, y);
 		}
 	
 		private void RemovePlayer (IMMOItem item)
 		{
 				string id = item.GetVariable ("uuid").GetStringValue ();
-				Debug.Log ("Removing item " + id);
+				Debug.Log ("Removing player " + id);
 				myMobs.Remove (id);
-		}
-	
-		private void UpdatePlayer (ISFSObject data)
-		{
-				string id = data.GetUtfString ("id");
-				int speed = data.GetInt ("s") / 10;
-				int direction = data.GetInt ("d");
-				GameObject mob = myMobs [id];
-				PlayerController controller = mob.GetComponent<PlayerController> ();
-				controller.Speed = speed;
-				controller.Direction = direction;
 		}
 	
 }

@@ -44,7 +44,7 @@ class JoinEventHandler
 
   private def initializeUser(user: User, room: Room) {
     trace("User joined: " + user)
-    getMMOApi.setUserPosition(user, new Vec3D(0, 0, 0), room)
+    getMMOApi.setUserPosition(user, new Vec3D(50.0f, 50.0f, 0), room)
   }
 
 }
