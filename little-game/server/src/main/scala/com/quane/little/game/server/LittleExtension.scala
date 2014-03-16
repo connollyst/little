@@ -29,7 +29,6 @@ class LittleExtension
       + gameEngine.entities.size + " items and "
       + gameEngine.players.size + " mobs."
     )
-    gameEngine.update()
     addRequestHandler("ready", classOf[ReadyHandler])
     addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
   }

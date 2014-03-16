@@ -35,28 +35,10 @@ class LittleGameEngine {
       edge =>
         entities += (edge.uuid.toString -> edge)
     }
-  }
-
-  def setEntityPosition(id: String, x: Float, y: Float): Mob = {
-    players.get(id) match {
-      case Some(player) =>
-        //player.x = x
-        //player.y = y
-        throw new IllegalAccessException("We don't support setting entity position from client!")
-      case None => throw new IllegalAccessException("No mob with id " + id)
-    }
-  }
-
-  def handleInteraction(idA: String, idB: String): Unit = {
-    def a = entity(idA)
-    def b = entity(idB)
-    println("Handling interaction between " + a + " and " + b)
-    a.touchedBy(b)
-    b.touchedBy(a)
     update()
   }
 
-  def entity(id: String): Entity = {
+  private def entity(id: String): Entity = {
     if (players.contains(id)) {
       players(id)
     } else if (entities.contains(id)) {
@@ -68,7 +50,7 @@ class LittleGameEngine {
 
   /** Update the game engine's state.
     */
-  def update(): Unit = {
+  private def update(): Unit = {
     cleaner.cleanAll()
     engine.updateAll(players.values)
     eventBus.evaluateAll()
