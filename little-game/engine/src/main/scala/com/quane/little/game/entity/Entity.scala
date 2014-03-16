@@ -5,7 +5,7 @@ import java.util.UUID
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.engine.InteractionManager
 import com.google.common.base.Objects
-import com.quane.little.game.Logging
+import com.quane.little.Logging
 
 /** An entity, any object that exists in the game.
   *

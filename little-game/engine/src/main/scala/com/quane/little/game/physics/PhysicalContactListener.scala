@@ -7,7 +7,7 @@ import org.jbox2d.callbacks.{ContactImpulse, ContactListener}
 import org.jbox2d.dynamics.contacts.Contact
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
-import com.quane.little.game.Logging
+import com.quane.little.Logging
 
 class PhysicalContactListener
   extends ContactListener

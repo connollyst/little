@@ -3,6 +3,7 @@ package com.quane.little.language
 import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
+import com.quane.little.Logging
 
 abstract class Statement
   extends Expression
@@ -85,14 +86,15 @@ class GetStatement(pointer: Pointer)
 }
 
 class PrintStatement(val value: Expression)
-  extends Statement {
+  extends Statement
+  with Logging {
 
   def this(value: String) = this(new Value(value))
 
   def evaluate: Value = {
     val text = value.evaluate
     // TODO this should display a speech bubble over the guy
-    println(text.asText)
+    error(text.asText)
     text
   }
 

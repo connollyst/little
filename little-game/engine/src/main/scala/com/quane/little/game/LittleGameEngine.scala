@@ -5,6 +5,7 @@ import scala.collection.mutable.Map
 import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.engine.EventBus
+import com.quane.little.Logging
 
 /** The little game engine maintains the state of the world and allows us to
   * step through it, advancing the physics simulation and evaluating little code
@@ -12,7 +13,8 @@ import com.quane.little.game.engine.EventBus
   *
   * @author Sean Connolly
   */
-class LittleGameEngine {
+class LittleGameEngine
+  extends Logging {
 
   val hertz = 30.0
   val eventBus: EventBus = new EventBus
@@ -46,13 +48,13 @@ class LittleGameEngine {
     if (!updater.isRunning) {
       new Thread(updater).start()
     } else {
-      println("Skipping start game, already running.")
+      warn("Skipping start game, already running.")
     }
   }
 
   def stop() = {
     updater.stop()
-    println("Game stopped..")
+    info("Game stopped..")
   }
 
   /** Update the game engine's state.

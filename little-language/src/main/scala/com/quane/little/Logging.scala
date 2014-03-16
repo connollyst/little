@@ -1,6 +1,5 @@
-package com.quane.little.game
+package com.quane.little
 
-import org.slf4j.LoggerFactory
 
 trait Logging {
 

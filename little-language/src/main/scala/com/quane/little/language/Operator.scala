@@ -4,9 +4,11 @@ import scala.collection.mutable.ListBuffer
 import com.quane.little.language.data.{Value, Variable}
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.event.LittleEvent
+import com.quane.little.Logging
 
 class Operator(override val runtime: Runtime, mob: Operable)
-  extends Scope {
+  extends Scope
+  with Logging {
 
   var scope: Scope = runtime
 
@@ -34,9 +36,7 @@ class Operator(override val runtime: Runtime, mob: Operable)
   val eventListeners = new ListBuffer[EventListener]
 
   def addEventListener(eventListener: EventListener) {
-    println(
-      "Guy will listen for " + eventListener.event.getClass.getSimpleName + " events."
-    )
+    debug("Listening for " + eventListener.event.getClass.getSimpleName + " events.")
     // TODO set the function's scope to this guy
     eventListener.function.scope = this
     eventListeners += eventListener

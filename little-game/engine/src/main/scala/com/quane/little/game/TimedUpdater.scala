@@ -1,12 +1,15 @@
 package com.quane.little.game
 
+import com.quane.little.Logging
+
 /** Run the game simulation.
   * TODO: follow thread at http://www.java-gaming.org/index.php?topic=24220.0
   *
   * @author Sean Connolly
   */
 abstract class TimedUpdater(perSecond: Double)
-  extends Runnable {
+  extends Runnable
+  with Logging {
 
   private val TIME_BETWEEN_UPDATES = 1000000000 / perSecond
   private val MAX_UPDATES_BEFORE_RENDER = 5
@@ -19,7 +22,7 @@ abstract class TimedUpdater(perSecond: Double)
   def stop(): Unit = _isRunning = false
 
   def run(): Unit = {
-    println("Starting TimedUpdated @ " + perSecond + " updates/second..")
+    info("Starting @ " + perSecond + " updates/second..")
     _isRunning = true
     while (_isRunning) {
       var now = System.nanoTime()
