@@ -11,8 +11,8 @@ class InteractionManager(game: LittleGameEngine) {
     *
     * Paper beats rock son.
     *
-    * @param mob
-    * @param food
+    * @param mob the mob consuming the food
+    * @param food the food being consumed
     */
   def mobConsumesFood(mob: Mob, food: Food) {
     game.eventBus.report(mob, LittleEvent.OnFoodConsumed)
