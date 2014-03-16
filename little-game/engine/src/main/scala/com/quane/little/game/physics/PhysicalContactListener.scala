@@ -7,9 +7,12 @@ import org.jbox2d.callbacks.{ContactImpulse, ContactListener}
 import org.jbox2d.dynamics.contacts.Contact
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
+import org.slf4j.LoggerFactory
 
 class PhysicalContactListener
   extends ContactListener {
+
+  val logger = LoggerFactory.getLogger(getClass)
 
   @Override
   override def preSolve(contact: Contact, manifold: Manifold) {
@@ -40,23 +43,26 @@ class PhysicalContactListener
     val entityB = getContactEntity(bodyB)
     if (fixtureA.isSensor && fixtureB.isSensor) {
       // Two sensors do not substantiate an interaction
+      logger.debug("(interaction between two sensors, ignoring: " + entityA + " & " + entityB + ")")
     } else if (fixtureA.isSensor) {
       // One sensor and one entity
-      reportProximity(event, entityB, entityA)
+      reportProximity(entityB, entityA)
     } else if (fixtureB.isSensor) {
       // One sensor and one entity
-      reportProximity(event, entityA, entityB)
+      reportProximity(entityA, entityB)
     } else {
       // Two entities
-      reportContact(event, entityA, entityB)
+      reportContact(entityA, entityB)
     }
   }
 
-  private def reportProximity(event: LittleEvent, entity: Entity, sensor: Entity) {
+  private def reportProximity(entity: Entity, sensor: Entity) {
+    logger.error("Proximity: " + entity + " & " + sensor)
     sensor.approachedBy(entity)
   }
 
-  private def reportContact(event: LittleEvent, entityA: Entity, entityB: Entity) {
+  private def reportContact(entityA: Entity, entityB: Entity) {
+    logger.error("Contact: " + entityA + " & " + entityB)
     entityA.touchedBy(entityB)
     entityB.touchedBy(entityA)
   }

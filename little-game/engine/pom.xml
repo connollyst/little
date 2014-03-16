@@ -56,6 +56,13 @@
             <version>2.2.1.1</version>
         </dependency>
 
+        <!-- Log through SLF4J -->
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+
         <!-- Unit Test Dependencies -->
         <dependency>
             <groupId>junit</groupId>
