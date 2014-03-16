@@ -2,6 +2,7 @@ package com.quane.little.game.entity
 
 import com.quane.little.game.physics.bodies.StaticBody
 import com.quane.little.game.engine.InteractionManager
+import com.google.common.base.Objects
 
 class WorldEdge(override val body: StaticBody, manager: InteractionManager)
   extends Entity(body, manager)
@@ -21,5 +22,13 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
   override def approachedBy(other: Entity) {
     // TODO
   }
+
+  override def toString: String =
+    Objects.toStringHelper(getClass)
+      .add("x", x)
+      .add("y", y)
+      .add("w", w)
+      .add("h", h)
+      .toString
 
 }
