@@ -32,6 +32,10 @@ class EntityFactory(game: LittleGameEngine) {
     game.eventBus.report(mob, LittleEvent.OnSpawn)
     mob.operator.runtime.saveFunction(Functions.move)
     mob.operator.runtime.saveFunction(Functions.stop)
+    mob.operator.runtime.saveFunction(Functions.turn)
+    mob.operator.runtime.saveFunction(Functions.turnRelative)
+    mob.operator.runtime.saveFunction(Functions.printDirection)
+    mob.operator.runtime.saveFunction(Functions.voyage)
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnSpawn,
@@ -42,7 +46,7 @@ class EntityFactory(game: LittleGameEngine) {
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnContact,
-        new FunctionReference(mob.operator, "move")
+        new FunctionReference(mob.operator, "turnRelative")
           .addArg("degrees", new Value(260))
       )
     )
