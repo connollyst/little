@@ -41,24 +41,32 @@
     </properties>
 
     <dependencies>
+        <!-- Scala library, provided at runtime -->
         <dependency>
             <groupId>org.scala-lang</groupId>
             <artifactId>scala-library</artifactId>
             <version>${scala.version}</version>
             <scope>provided</scope>
         </dependency>
+
+        <!-- Little game engine, provided at runtime -->
         <dependency>
             <groupId>${project.groupId}</groupId>
             <artifactId>little-game-core</artifactId>
             <version>${project.version}</version>
+            <scope>provided</scope>
         </dependency>
+
+        <!-- Logging -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-log4j12</artifactId>
             <version>1.7.6</version>
         </dependency>
+
+        <!-- SmartFox Server 2X jars -->
         <dependency>
-        <groupId>com.smartfoxserver.v2</groupId>
+            <groupId>com.smartfoxserver.v2</groupId>
             <artifactId>sfs2x</artifactId>
             <version>${sfs2x.version}</version>
             <scope>system</scope>
