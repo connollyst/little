@@ -9,6 +9,7 @@ using Sfs2X.Entities;
 using Sfs2X.Entities.Data;
 using Sfs2X.Entities.Variables;
 using Sfs2X.Requests;
+using Sfs2X.Requests.MMO;
 using Sfs2X.Logging;
 
 public class GameManager : MonoBehaviour
@@ -31,7 +32,7 @@ public class GameManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.USER_VARIABLES_UPDATE, OnUserVariablesUpdate);
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
 				server.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
-				server.Send (new ExtensionRequest ("ready", new SFSObject (), server.LastJoinedRoom));
+				server.AddEventListener (SFSEvent.PROXIMITY_LIST_UPDATE, OnProximityListUpdate);
 		}
 	
 		void FixedUpdate ()
@@ -68,6 +69,15 @@ public class GameManager : MonoBehaviour
 		public void OnRoomVariablesUpdate (BaseEvent evt)
 		{
 				Debug.Log ("Room variable updated");
+		}
+
+		public void OnProximityListUpdate (BaseEvent evt)
+		{
+				Debug.Log ("Proximity list updated");
+				var addedUsers = (List<User>)evt.Params ["addedUsers"];
+				var removedUsers = (List<User>)evt.Params ["removedUsers"];
+				Debug.Log ("Proximity users added: " + addedUsers);
+				Debug.Log ("Proximity users removed: " + removedUsers);
 		}
 
 		public void OnExtensionResponse (BaseEvent evt)
