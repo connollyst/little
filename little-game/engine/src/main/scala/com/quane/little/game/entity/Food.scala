@@ -10,25 +10,27 @@ class Food(body: EntityBody, manager: InteractionManager, val health: Int)
 
   override def touchedBy(other: Entity) {
     if (other.isGuy) {
-      consumedBy(other.asInstanceOf[Mob])
-    }
-  }
-
-  def consumedBy(mob: Mob) {
-    if (!isConsumed) {
-      manager.mobConsumesFood(mob, this)
+      consumedByMob(other.asInstanceOf[Mob])
     }
   }
 
   override def approachedBy(other: Entity) {
     if (other.isGuy) {
-      consumedBy(other.asInstanceOf[Mob])
+      approachedByMob(other.asInstanceOf[Mob])
+    }
+  }
+
+  def consumedByMob(mob: Mob) {
+    println(this + " consumed by " + mob)
+    if (!isConsumed) {
+      manager.mobConsumesFood(mob, this)
     }
   }
 
   def approachedByMob(mob: Mob) {
+    println(this + " approached by " + mob)
     if (!isConsumed) {
-      manager.mobConsumesFood(mob, this)
+      manager.mobApproachesFood(mob, this)
     }
   }
 
