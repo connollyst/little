@@ -26,6 +26,7 @@ class LittleExtension
     }
     gameEngine = new LittleGameEngine
     gameEngine.initialize()
+    gameEngine.start()
     addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
     initMMOItems()
   }
