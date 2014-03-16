@@ -22,17 +22,11 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager) {
 
   var isRemoved = false
 
-  def x: Float = {
-    body.coords.x
-  }
+  def x: Float = body.coords.x
 
-  def y: Float = {
-    body.coords.y
-  }
+  def y: Float = body.coords.y
 
-  def isGuy: Boolean = {
-    false
-  }
+  def isGuy = false
 
   def touchedBy(other: Entity)
 
@@ -42,6 +36,8 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager) {
     Objects.toStringHelper(getClass)
       .add("x", x)
       .add("y", y)
+      .add("uuid", uuid)
+      .add("isGuy", isGuy)
       .toString
 
 }
