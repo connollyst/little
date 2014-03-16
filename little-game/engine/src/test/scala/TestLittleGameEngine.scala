@@ -3,17 +3,15 @@ import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** Test cases for the [[com.quane.little.game.LittleGameEngine]].
+  *
+  * @author Sean Connolly
+  */
 @RunWith(classOf[JUnitRunner])
 class TestLittleGameEngine extends FunSuite {
 
-  test("test function reference with return from print statement") {
-    val game = new LittleGameEngine
-    game.initialize()
+  test("test engine initialization") {
+    new LittleGameEngine().initialize()
   }
 
 }
