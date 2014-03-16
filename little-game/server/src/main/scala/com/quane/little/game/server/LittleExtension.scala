@@ -18,7 +18,7 @@ class LittleExtension
   extends SFSExtension {
 
   var gameEngine: LittleGameEngine = null
-  val updater = new TimedUpdater(2) {
+  val updater = new TimedUpdater(15) {
     def update() = sendItems()
   }
 
