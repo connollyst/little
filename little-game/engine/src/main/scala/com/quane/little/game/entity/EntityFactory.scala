@@ -22,8 +22,8 @@ class EntityFactory(game: LittleGameEngine) {
   }
 
   def createMob(): Mob = {
-    val x = Random.nextInt(90) + 50
-    val y = Random.nextInt(70) + 50
+    val x = randomCoord
+    val y = randomCoord
     createMob(x, y)
   }
 
@@ -75,8 +75,8 @@ class EntityFactory(game: LittleGameEngine) {
   }
 
   def createFood(): Food = {
-    val x = Random.nextInt(90) + 50
-    val y = Random.nextInt(70) + 50
+    val x = randomCoord
+    val y = randomCoord
     createFood(x, y)
   }
 
@@ -95,5 +95,7 @@ class EntityFactory(game: LittleGameEngine) {
       )
     edges.toList
   }
+
+  private def randomCoord = Random.nextInt(100 - 4) + 2
 
 }

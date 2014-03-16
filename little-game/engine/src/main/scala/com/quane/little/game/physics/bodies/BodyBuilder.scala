@@ -57,13 +57,13 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
     List(buildCeiling(), buildGround(), buildLeftWall(), buildRightWall())
   }
 
-  def buildCeiling(): StaticBody = buildWall(50, 100, 100, 2)
+  def buildCeiling(): StaticBody = buildWall(50, 100, 100, 1)
 
-  def buildGround(): StaticBody = buildWall(50, 0, 100, 2)
+  def buildGround(): StaticBody = buildWall(50, 0, 100, 1)
 
-  def buildLeftWall(): StaticBody = buildWall(0, 50, 2, 100)
+  def buildLeftWall(): StaticBody = buildWall(0, 50, 1, 100)
 
-  def buildRightWall(): StaticBody = buildWall(100, 50, 2, 100)
+  def buildRightWall(): StaticBody = buildWall(100, 50, 1, 100)
 
   def buildWall(x: Float, y: Float, w: Float, h: Float): StaticBody = {
     val wallBodyDef = new BodyDef
