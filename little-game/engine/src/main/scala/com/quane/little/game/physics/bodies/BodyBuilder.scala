@@ -6,8 +6,8 @@ import org.jbox2d.dynamics.{FixtureDef, BodyType, BodyDef, World}
 import org.jbox2d.collision.shapes.{PolygonShape, CircleShape}
 
 object BodyBuilder {
-  val MobBodySize = 10
-  val MobSensorSize = 100
+  val MobBodySize = 1
+  val MobSensorSize = 10
 }
 
 class BodyBuilder(game: LittleGameEngine, world: World) {
@@ -48,7 +48,7 @@ class BodyBuilder(game: LittleGameEngine, world: World) {
     foodFixture.shape = foodShape
     foodFixture.filter.groupIndex
     val foodBody = world.createBody(foodBodyDef)
-    foodShape.setAsBox(5, 5)
+    foodShape.setAsBox(0.5f, 0.5f)
     foodBody.createFixture(foodFixture)
     new EntityBody(foodBody)
   }
