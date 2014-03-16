@@ -3,14 +3,12 @@ package com.quane.little.game.entity
 import com.quane.little.game.InteractionManager
 import com.quane.little.game.view.{LineDrawer, ShapeDrawer}
 import com.quane.little.game.physics.bodies.EntityBody
-import org.eintr.loglady.Logging
 import com.quane.little.language.{Operable, Operator}
 import scala.util.Random
 
 class Mob(body: EntityBody, manager: InteractionManager)
   extends Entity(body, manager)
-  with Operable
-  with Logging {
+  with Operable {
 
   val operator = new Operator(null, this) // TODO where should the Runtime come from?
 
@@ -39,7 +37,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
 
   def heal(amount: Int) {
     // TODO
-    log.error("TODO heal by " + amount)
+    println("TODO heal by " + amount)
   }
 
   override def touchedBy(other: Entity) {
