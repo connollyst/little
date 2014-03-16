@@ -31,7 +31,7 @@ class PhysicalContactListener
     report(LittleEvent.OnContactEnded, contact)
   }
 
-  def report(event: LittleEvent, contact: Contact) {
+  private def report(event: LittleEvent, contact: Contact) {
     val fixtureA = contact.getFixtureA
     val fixtureB = contact.getFixtureB
     val bodyA = fixtureA.getBody
@@ -52,16 +52,16 @@ class PhysicalContactListener
     }
   }
 
-  def reportProximity(event: LittleEvent, entity: Entity, sensor: Entity) {
+  private def reportProximity(event: LittleEvent, entity: Entity, sensor: Entity) {
     sensor.approachedBy(entity)
   }
 
-  def reportContact(event: LittleEvent, entityA: Entity, entityB: Entity) {
+  private def reportContact(event: LittleEvent, entityA: Entity, entityB: Entity) {
     entityA.touchedBy(entityB)
     entityB.touchedBy(entityA)
   }
 
-  def getContactEntity(body: Body): Entity = {
+  private def getContactEntity(body: Body): Entity = {
     body.getUserData.asInstanceOf[Entity]
   }
 
