@@ -44,12 +44,12 @@ public class PlayerController : Controller
 
 		void OnCollisionEnter2D (Collision2D collision)
 		{
-				HandleCollision (collision.gameObject);
+				// HandleCollision (collision.gameObject);
 		}
 
 		void OnTriggerEnter2D (Collider2D other)
 		{
-				HandleCollision (other.gameObject);
+				// HandleCollision (other.gameObject);
 		}
 
 		private void HandleCollision (GameObject other)
