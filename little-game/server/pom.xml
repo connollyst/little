@@ -53,7 +53,12 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.smartfoxserver.v2</groupId>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>1.7.6</version>
+        </dependency>
+        <dependency>
+        <groupId>com.smartfoxserver.v2</groupId>
             <artifactId>sfs2x</artifactId>
             <version>${sfs2x.version}</version>
             <scope>system</scope>
