@@ -4,6 +4,7 @@ import com.quane.little.game.entity.{EntityCleaner, Mob, Entity, EntityFactory}
 import scala.collection.mutable.Map
 import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
+import com.quane.little.game.engine.EventBus
 
 /** The little game engine maintains the state of the world and allows us to
   * step through it, advancing the physics simulation and evaluating little code

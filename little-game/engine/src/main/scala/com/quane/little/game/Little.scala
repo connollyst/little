@@ -4,6 +4,7 @@ import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.entity.{EntityCleaner, Mob, Entity, EntityFactory}
 import scala.collection.mutable.ListBuffer
+import com.quane.little.game.engine.EventBus
 
 /**
  *
