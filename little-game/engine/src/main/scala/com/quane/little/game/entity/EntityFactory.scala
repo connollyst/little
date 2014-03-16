@@ -36,7 +36,7 @@ class EntityFactory(game: LittleGameEngine) {
       new EventListener(
         LittleEvent.OnSpawn,
         new FunctionReference(mob.operator, "move")
-          .addArg("speed", new Value(100))
+          .addArg("speed", new Value(10))
       )
     )
     mob.operator.addEventListener(
