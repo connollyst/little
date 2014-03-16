@@ -128,8 +128,8 @@ public class GameManager : MonoBehaviour
 				GameObject mob = myMobs [id];
 				PlayerController controller = mob.GetComponent<PlayerController> ();
 				controller.UUID = id;
-				controller.Speed = speed;
-				controller.Direction = direction;
+				// controller.Speed = speed;
+				// controller.Direction = direction;
 				controller.Position (x, y);
 		}
 	

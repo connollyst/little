@@ -13,7 +13,7 @@ import org.jbox2d.common.Vec2
 class PhysicsEngine {
 
   // the length of time passed to simulate (seconds)
-  private val timeStep = 1 / 60f
+  private val timeStep = 1 / 30f
   // how strongly to correct velocity
   private val velocityIterations = 8
   // how strongly to correct position
@@ -34,8 +34,9 @@ class PhysicsEngine {
   def updateAll(mobs: Iterable[Mob]) {
     mobs foreach (
       mob => {
-        accelerateGuyToSpeed(mob)
-        rotateGuyToDirection(mob)
+        setMobVelocity(mob)
+        //accelerateGuyToSpeed(mob)
+        // rotateGuyToDirection(mob)
       }
       )
     world.step(timeStep, velocityIterations, positionIterations)
@@ -47,6 +48,15 @@ class PhysicsEngine {
     */
   def removeEntity(entity: EntityBody) {
     world.destroyBody(entity.physicalBody)
+  }
+
+  private def setMobVelocity(mob: Mob): Unit = {
+    val mag = mob.speed
+    val dir = mob.direction
+    val x = mag * math.cos(dir)
+    val y = mag * math.sin(dir)
+    val velocity = new Vec2(x.toFloat, y.toFloat)
+    mob.body.physicalBody.setLinearVelocity(velocity)
   }
 
   /** Apply forces to the mob's physical body in order to maintain correct
