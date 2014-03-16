@@ -7,12 +7,11 @@ import org.jbox2d.callbacks.{ContactImpulse, ContactListener}
 import org.jbox2d.dynamics.contacts.Contact
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
-import org.slf4j.LoggerFactory
+import com.quane.little.game.Logging
 
 class PhysicalContactListener
-  extends ContactListener {
-
-  val logger = LoggerFactory.getLogger(getClass)
+  extends ContactListener
+  with Logging {
 
   @Override
   override def preSolve(contact: Contact, manifold: Manifold) {
@@ -43,7 +42,6 @@ class PhysicalContactListener
     val entityB = getContactEntity(bodyB)
     if (fixtureA.isSensor && fixtureB.isSensor) {
       // Two sensors do not substantiate an interaction
-      logger.debug("(interaction between two sensors, ignoring: " + entityA + " & " + entityB + ")")
     } else if (fixtureA.isSensor) {
       // One sensor and one entity
       reportProximity(entityB, entityA)
@@ -57,12 +55,12 @@ class PhysicalContactListener
   }
 
   private def reportProximity(entity: Entity, sensor: Entity) {
-    logger.error("Proximity: " + entity + " & " + sensor)
+    debug("Proximity: " + entity.uuid + " & " + sensor.uuid)
     sensor.approachedBy(entity)
   }
 
   private def reportContact(entityA: Entity, entityB: Entity) {
-    logger.error("Contact: " + entityA + " & " + entityB)
+    debug("Contact: " + entityA.uuid + " & " + entityB.uuid)
     entityA.touchedBy(entityB)
     entityB.touchedBy(entityA)
   }

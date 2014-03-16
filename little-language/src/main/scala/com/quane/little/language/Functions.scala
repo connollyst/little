@@ -131,4 +131,5 @@ object Functions {
     angleFunction.addStep(new GetStatement(anglePointer))
     angleFunction
   }
+
 }

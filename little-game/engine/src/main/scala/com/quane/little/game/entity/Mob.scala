@@ -30,13 +30,16 @@ class Mob(body: EntityBody, manager: InteractionManager)
   override def isGuy: Boolean = true
 
   // TODO
-  def heal(amount: Int): Unit = println("TODO heal by " + amount)
+  def heal(amount: Int): Unit =
+    warn("TODO heal by " + amount)
 
   // TODO
-  override def touchedBy(other: Entity): Unit = Unit
+  override def touchedBy(other: Entity): Unit =
+    info("Touched by " + other)
 
   // TODO
-  override def approachedBy(other: Entity): Unit = Unit
+  override def approachedBy(other: Entity): Unit =
+    info("Approached by " + other)
 
   override def toString: String =
     Objects.toStringHelper(getClass)

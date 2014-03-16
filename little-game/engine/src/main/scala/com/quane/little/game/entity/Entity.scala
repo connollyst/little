@@ -5,6 +5,7 @@ import java.util.UUID
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.game.engine.InteractionManager
 import com.google.common.base.Objects
+import com.quane.little.game.Logging
 
 /** An entity, any object that exists in the game.
   *
@@ -14,7 +15,8 @@ import com.google.common.base.Objects
   * @param body the entity's physical body
   * @param manager the game's interaction manager
   */
-abstract class Entity(val body: EntityBody, manager: InteractionManager) {
+abstract class Entity(val body: EntityBody, manager: InteractionManager)
+  extends Logging {
 
   body.attach(this)
 

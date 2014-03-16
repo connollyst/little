@@ -21,15 +21,15 @@ class Food(body: EntityBody, manager: InteractionManager, val health: Int)
   }
 
   def consumedByMob(mob: Mob) {
-    println(this + " consumed by " + mob)
     if (!isConsumed) {
+      info("Consumed by " + mob)
       manager.mobConsumesFood(mob, this)
     }
   }
 
   def approachedByMob(mob: Mob) {
-    println(this + " approached by " + mob)
     if (!isConsumed) {
+      info("Approached by " + mob)
       manager.mobApproachesFood(mob, this)
     }
   }

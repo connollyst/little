@@ -13,6 +13,7 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
   def h: Float = body.h
 
   override def touchedBy(other: Entity) {
+    debug("Touched by " + other)
     if (other.isGuy) {
       val mob = other.asInstanceOf[Mob]
       manager.mobContactsImmovableObject(mob)
@@ -20,7 +21,7 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
   }
 
   override def approachedBy(other: Entity) {
-    // TODO
+    debug("Approached by " + other)
   }
 
   override def toString: String =
