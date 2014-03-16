@@ -31,7 +31,10 @@ class LittleGameEngine {
       entity =>
         entities += (entity.uuid.toString -> entity)
     }
-
+    entityFactory.worldEdges() foreach {
+      edge =>
+        entities += (edge.uuid.toString -> edge)
+    }
   }
 
   def setEntityPosition(id: String, x: Float, y: Float): Mob = {
@@ -67,6 +70,7 @@ class LittleGameEngine {
     */
   def update(): Unit = {
     cleaner.cleanAll()
+    engine.updateAll(players.values)
     eventBus.evaluateAll()
   }
 

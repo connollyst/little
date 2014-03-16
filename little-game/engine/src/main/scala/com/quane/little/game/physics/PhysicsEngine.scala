@@ -31,7 +31,7 @@ class PhysicsEngine {
     *
     * @param mobs the list of entities to update
     */
-  def updateAll(mobs: List[Mob]) {
+  def updateAll(mobs: Iterable[Mob]) {
     mobs foreach (
       mob => {
         accelerateGuyToSpeed(mob)

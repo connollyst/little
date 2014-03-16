@@ -70,7 +70,7 @@ class EntityFactory(game: LittleGameEngine) {
     foods.toList
   }
 
-  def worldEdges: List[WorldEdge] = {
+  def worldEdges(): List[WorldEdge] = {
     val edges = new ListBuffer[WorldEdge]
     game.builder.buildWalls foreach (
       wall => {
