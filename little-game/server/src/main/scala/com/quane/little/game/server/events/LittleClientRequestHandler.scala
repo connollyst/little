@@ -10,7 +10,7 @@ import com.smartfoxserver.v2.entities.data.{SFSObject, ISFSObject}
 abstract class LittleClientRequestHandler
   extends BaseClientRequestHandler {
 
-  def getGameEngine: LittleGameEngine = getLittleExtension.gameEngine
+  def getGameEngine: LittleGameEngine = getLittleExtension.game
 
   def getLittleExtension: LittleExtension =
     getParentExtension match {

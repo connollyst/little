@@ -1,13 +1,16 @@
 package com.quane.little.game.server
 
-import com.smartfoxserver.v2.extensions.{ExtensionLogLevel, SFSExtension}
 import com.quane.little.game.{TimedUpdater, LittleGameEngine}
+import com.quane.little.game.server.events.JoinEventHandler
+
+import com.smartfoxserver.v2.extensions.{ExtensionLogLevel, SFSExtension}
 import com.smartfoxserver.v2.mmo._
 import com.smartfoxserver.v2.core.SFSEventType
-import com.quane.little.game.server.events.JoinEventHandler
 import com.smartfoxserver.v2.SmartFoxServer
-import scala.collection.mutable.ListBuffer
-import scala.collection.JavaConversions._
+
+import collection.mutable
+import collection.mutable.ListBuffer
+import collection.JavaConversions._
 
 /**
  * The SmartFox server 'extension' for the little game.
@@ -17,8 +20,9 @@ import scala.collection.JavaConversions._
 class LittleExtension
   extends SFSExtension {
 
-  var gameEngine: LittleGameEngine = null
-  val updater = new TimedUpdater(15) {
+  val items: mutable.Map[String, MMOItem] = mutable.Map()
+  val game = new LittleGameEngine
+  val timer = new TimedUpdater(15) {
     def update() = sendItems()
   }
 
@@ -27,16 +31,16 @@ class LittleExtension
     if (!isMMORoom) {
       trace(ExtensionLogLevel.ERROR, "Not configured to be an MMO room!")
     }
-    gameEngine = new LittleGameEngine
-    gameEngine.initialize()
+    game.initialize()
+    initMMOItems()
     trace("Initialized with "
-      + gameEngine.players.size + " mobs, "
-      + gameEngine.entities.size + " items, & "
-      + gameEngine.walls.size + " walls.."
+      + game.players.size + " mobs, "
+      + game.entities.size + " items, & "
+      + game.walls.size + " walls.."
     )
-    gameEngine.start()
-    new Thread(updater).start()
     addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
+    game.start()
+    new Thread(timer).start()
   }
 
   private def initMMOItems() = {
@@ -46,9 +50,9 @@ class LittleExtension
   }
 
   private def initPlayerMMOItems() = {
-    gameEngine.players.keys foreach {
+    game.players.keys foreach {
       uuid =>
-        val player = gameEngine.players(uuid)
+        val player = game.players(uuid)
         val variables = new ListBuffer[IMMOItemVariable]
         variables += new MMOItemVariable("uuid", uuid.toString)
         variables += new MMOItemVariable("type", "player")
@@ -62,9 +66,9 @@ class LittleExtension
   }
 
   private def initEntityMMOItems() = {
-    gameEngine.entities.keys foreach {
+    game.entities.keys foreach {
       uuid =>
-        val entity = gameEngine.entities(uuid)
+        val entity = game.entities(uuid)
         val variables = new ListBuffer[IMMOItemVariable]
         variables += new MMOItemVariable("uuid", uuid.toString)
         variables += new MMOItemVariable("type", "entity")
@@ -76,9 +80,9 @@ class LittleExtension
   }
 
   private def initWallMMOItems() = {
-    gameEngine.walls.keys foreach {
+    game.walls.keys foreach {
       uuid =>
-        val wall = gameEngine.walls(uuid)
+        val wall = game.walls(uuid)
         val variables = new ListBuffer[IMMOItemVariable]
         variables += new MMOItemVariable("uuid", uuid.toString)
         variables += new MMOItemVariable("type", "wall")
@@ -93,7 +97,17 @@ class LittleExtension
 
   // TODO we can avoid newing up MMOItems
   // TODO maybe the game can give us notifications?
-  private def sendItems() = initMMOItems()
+  private def sendItems() = {
+    val api = getMMOApi
+    val room = getParentRoom
+    items.keys foreach {
+      id =>
+        val item = items(id)
+        val entity = game.entity(id)
+        val position = new Vec3D(entity.x, entity.y, 0)
+        api.setMMOItemPosition(item, position, room)
+    }
+  }
 
   def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
 

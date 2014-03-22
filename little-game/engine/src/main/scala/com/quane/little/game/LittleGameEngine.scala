@@ -57,6 +57,18 @@ class LittleGameEngine
     info("Game stopped..")
   }
 
+  def entity(id: String): Entity = {
+    if (players.contains(id)) {
+      players(id)
+    } else if (entities.contains(id)) {
+      entities(id)
+    } else if (walls.contains(id)) {
+      walls(id)
+    } else {
+      throw new IllegalAccessException("Nothing with id " + id)
+    }
+  }
+
   /** Update the game engine's state.
     */
   private def updateState(): Unit = {
