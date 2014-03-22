@@ -38,9 +38,9 @@ class JoinEventHandler
     }
   }
 
-  private def getMMOApi: ISFSMMOApi = {
-    getParentExtension.asInstanceOf[LittleExtension].getMMOApi
-  }
+  private def getMMOApi: ISFSMMOApi = getLittleExtension.getMMOApi
+
+  private def getLittleExtension: LittleExtension = getParentExtension.asInstanceOf[LittleExtension]
 
   private def initializeUser(user: User, room: Room) {
     trace("User joined: " + user)
