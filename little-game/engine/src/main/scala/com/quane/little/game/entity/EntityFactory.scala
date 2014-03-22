@@ -40,7 +40,7 @@ class EntityFactory(game: LittleGameEngine) {
       new EventListener(
         LittleEvent.OnSpawn,
         new FunctionReference(mob.operator, "move")
-          .addArg("speed", new Value(1))
+          .addArg("speed", new Value(5))
       )
     )
     mob.operator.addEventListener(
@@ -53,13 +53,13 @@ class EntityFactory(game: LittleGameEngine) {
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnFoodNearby,
-        new FunctionReference(mob.operator, "stop")
+        new FunctionReference(mob.operator, "turn")
       )
     )
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnFoodConsumed,
-        new FunctionReference(mob.operator, "stop")
+        new FunctionReference(mob.operator, "turn")
       )
     )
     game.eventBus.report(mob, LittleEvent.OnSpawn)
