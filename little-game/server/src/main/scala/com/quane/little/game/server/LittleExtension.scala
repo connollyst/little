@@ -104,15 +104,19 @@ class LittleExtension
     items.keys foreach {
       id =>
         val item = items(id)
-        val entity = game.entity(id)
-        val x = entity.x
-        val y = entity.y
-        val position = new Vec3D(x, y, 0)
-        val vars = new ListBuffer[IMMOItemVariable]
-        vars += new MMOItemVariable("x", x)
-        vars += new MMOItemVariable("y", y)
-        api.setMMOItemPosition(item, position, room)
-        api.setMMOItemVariables(item, vars.toList)
+        try {
+          val entity = game.entity(id)
+          val x = entity.x
+          val y = entity.y
+          val position = new Vec3D(x, y, 0)
+          val vars = new ListBuffer[IMMOItemVariable]
+          vars += new MMOItemVariable("x", x)
+          vars += new MMOItemVariable("y", y)
+          api.setMMOItemPosition(item, position, room)
+          api.setMMOItemVariables(item, vars.toList)
+        } catch {
+          case e: Exception => trace(ExtensionLogLevel.ERROR, e)
+        }
     }
   }
 
