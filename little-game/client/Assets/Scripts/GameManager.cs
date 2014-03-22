@@ -30,6 +30,7 @@ public class GameManager : MonoBehaviour
 				}
 				server = SmartFoxConnection.Connection;
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
+				server.AddEventListener (SFSEvent.MMOITEM_VARIABLES_UPDATE, OnItemUpdate);
 				server.AddEventListener (SFSEvent.PROXIMITY_LIST_UPDATE, OnProximityListUpdate);
 		}
 	
@@ -60,6 +61,7 @@ public class GameManager : MonoBehaviour
 						Debug.Log ("Proximity user removed: " + user);
 				}
 				foreach (IMMOItem item in addedItems) {	
+						Debug.Log ("Proximity item added: " + item);
 						string type = item.GetVariable ("type").GetStringValue ();
 						if (type == "wall") {
 								AddWall (item);
@@ -70,6 +72,7 @@ public class GameManager : MonoBehaviour
 						}
 				}
 				foreach (IMMOItem item in removedItems) {
+						Debug.Log ("Proximity item removed: " + item);
 						string type = item.GetVariable ("type").GetStringValue ();
 						if (type == "player") {
 								RemovePlayer (item);
@@ -79,6 +82,53 @@ public class GameManager : MonoBehaviour
 				}
 		}
 		
+		public void OnItemUpdate (BaseEvent evt)
+		{
+				Debug.Log ("Updating item...");
+				var changedVars = (List<string>)evt.Params ["changedVars"];
+				var item = (IMMOItem)evt.Params ["mmoItem"];
+				// Check if the MMOItem was moved
+				if (changedVars.Contains ("x") || changedVars.Contains ("y")) {
+						string type = item.GetVariable ("type").GetStringValue ();
+						string id = item.GetVariable ("uuid").GetStringValue ();
+						Debug.Log ("Updating item coords for " + type + " #" + id);
+						float x = (float)item.GetVariable ("x").GetDoubleValue ();
+						float y = (float)item.GetVariable ("y").GetDoubleValue ();
+						GetController (evt).Position (x, y);
+				}
+		}
+
+		private Controller GetController (BaseEvent evt)
+		{
+				var item = (IMMOItem)evt.Params ["mmoItem"];
+				string id = item.GetVariable ("uuid").GetStringValue ();
+				string type = item.GetVariable ("type").GetStringValue ();
+				if (type == "wall") {
+						return GetWallController (id);
+				} else if (type == "player") {
+						return GetPlayerController (id);
+				} else if (type == "entity") {
+						return GetItemController (id);
+				} else {
+						throw new System.ArgumentException ("Unrecognized type: " + type);
+				}
+		}
+
+		private Controller GetWallController (string uuid)
+		{
+				return walls [uuid].GetComponent<Controller> ();
+		}
+
+		private Controller GetItemController (string uuid)
+		{
+				return items [uuid].GetComponent<Controller> ();
+		}
+
+		private Controller GetPlayerController (string uuid)
+		{
+				return myMobs [uuid].GetComponent<Controller> ();
+		}
+
 		private void AddWall (IMMOItem item)
 		{
 				float x = item.AOIEntryPoint.FloatX;
@@ -87,7 +137,9 @@ public class GameManager : MonoBehaviour
 				int h = item.GetVariable ("h").GetIntValue ();
 				string id = item.GetVariable ("uuid").GetStringValue ();
 				if (!walls.ContainsKey (id)) {
-						walls.Add (id, GameObject.CreatePrimitive (PrimitiveType.Cube));
+						GameObject obj = GameObject.CreatePrimitive (PrimitiveType.Cube);
+						obj.AddComponent<Controller>();
+						walls.Add (id, obj);
 				}
 				GameObject wall = walls [id];
 				wall.transform.position = new Vector3 (x, y, 0);
