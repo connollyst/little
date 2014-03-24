@@ -9,7 +9,7 @@ import com.vaadin.server.ExternalResource
   */
 class GameWindow extends Window {
 
-  val game = new ExternalResource("http://localhost/~sean/little/game/little.html")
+  val game = new ExternalResource("http://127.0.0.1/little")
 
   center()
   setContent(
