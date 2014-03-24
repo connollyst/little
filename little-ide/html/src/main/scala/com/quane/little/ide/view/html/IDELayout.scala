@@ -2,8 +2,9 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.IDEView
 import com.quane.little.ide.presenter.{ToolboxPresenter, WorkspacePresenter}
-import com.vaadin.ui.HorizontalSplitPanel
+import com.vaadin.ui._
 import com.vaadin.server.Sizeable
+import scala.Some
 
 class IDELayout
   extends HorizontalSplitPanel
@@ -12,6 +13,12 @@ class IDELayout
 
   setSizeFull()
   setSplitPosition(25, Sizeable.Unit.PERCENTAGE)
+  createGameWindow()
+
+  private def createGameWindow() = {
+    val subWindow = new GameWindow()
+    UI.getCurrent.addWindow(subWindow)
+  }
 
   override def createToolbox() = {
     toolbox = new ToolboxLayout

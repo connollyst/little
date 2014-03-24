@@ -27,6 +27,7 @@ public class ConnectionManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.LOGIN_ERROR, OnLoginError);
 				server.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
 				SetMessage ("Connecting..");
+				Security.PrefetchSocketPolicy ();
 				server.Connect (serverName, serverPort);
 		}
 
