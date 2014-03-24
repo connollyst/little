@@ -27,8 +27,11 @@ public class ConnectionManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.LOGIN_ERROR, OnLoginError);
 				server.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
 				SetMessage ("Connecting..");
-				Security.PrefetchSocketPolicy ();
-				server.Connect (serverName, serverPort);
+				if (Security.PrefetchSocketPolicy (serverName, serverPort, 200)) {
+						server.Connect (serverName, serverPort);
+				} else {
+						SetError ("Failed to prefetch the webplayer socket security policy.");
+				}
 		}
 
 		void FixedUpdate ()
