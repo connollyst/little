@@ -1,6 +1,5 @@
 package com.quane.little.ide
 
-
 import com.vaadin.server.VaadinRequest
 import com.quane.little.ide.presenter.IDEPresenter
 import com.quane.little.ide.view.html.IDELayout
