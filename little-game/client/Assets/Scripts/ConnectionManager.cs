@@ -8,13 +8,14 @@ using Sfs2X.Requests;
 public class ConnectionManager : MonoBehaviour
 {
 
-		public  static string serverName = "127.0.0.1";
-		public  static int serverPort = 9933;
-		private  static string username = "";
-		private static string password = "";
-		private  static string zone = "little";
-		private  static string room = "LittleTest";
-		private  static string gameScene = "Game";
+		private static string serverName = "127.0.0.1";
+		private static int    serverPort = 9933;
+		private static string username   = "";
+		private static string password   = "";
+		private static string zone       = "little";
+		private static string room       = "LittleTest";
+		private static string gameScene  = "Game";
+		
 		private SmartFox server;
 
 		void Start ()
