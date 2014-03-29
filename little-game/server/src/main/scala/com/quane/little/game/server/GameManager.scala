@@ -16,8 +16,15 @@ class GameManager(client: ClientCommunicator,
     def update() = sendItems()
   })
 
-  def init() =
+  def init() = {
     game.initialize()
+    game.entities.values foreach {
+      entity =>
+        val id = entity.uuid
+        val item = client.createItem(entity)
+        addItem(id, item)
+    }
+  }
 
   def start() = {
     game.start()

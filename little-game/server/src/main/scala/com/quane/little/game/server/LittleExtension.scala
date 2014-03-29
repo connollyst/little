@@ -7,6 +7,7 @@ import com.smartfoxserver.v2.SmartFoxServer
 
 import collection.JavaConversions._
 import com.smartfoxserver.v2.core.SFSEventType
+import com.quane.little.game.entity.Entity
 
 /**
  * The SmartFox server 'extension' for the little game.
@@ -28,20 +29,12 @@ class LittleExtension
     }
     game.init()
     events.init()
-    initMMOItems()
   }
 
-  def start(): Unit = {
-    game.start()
-  }
+  def start(): Unit = game.start()
 
-  private def initMMOItems() =
-    game.game.entities.values foreach {
-      entity =>
-        val id = entity.uuid
-        val data = serializer.serialize(entity)
-        game.addItem(id, new MMOItem(data))
-    }
+  override def createItem(entity: Entity): MMOItem =
+    new MMOItem(serializer.serialize(entity))
 
   override def removeItem(item: MMOItem) =
     getMMOApi.removeMMOItem(item)
