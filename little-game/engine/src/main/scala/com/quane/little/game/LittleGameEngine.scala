@@ -1,7 +1,7 @@
 package com.quane.little.game
 
 import com.quane.little.game.entity._
-import scala.collection.mutable.Map
+import scala.collection.mutable
 import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.engine.EventBus
@@ -22,9 +22,9 @@ class LittleGameEngine
   val builder = new BodyBuilder(this, engine.world)
   val cleaner: EntityRemover = new EntityRemover(this, engine)
   val entityFactory: EntityFactory = new EntityFactory(this)
-  val entities: Map[String, Entity] = Map()
-  val walls: Map[String, WorldEdge] = Map()
-  val players: Map[String, Mob] = Map()
+  val entities: mutable.Map[String, Entity] = mutable.Map()
+  val walls: mutable.Map[String, WorldEdge] = mutable.Map()
+  val players: mutable.Map[String, Mob] = mutable.Map()
   val updater = new TimedUpdater(hertz) {
     def update() = updateState()
   }
