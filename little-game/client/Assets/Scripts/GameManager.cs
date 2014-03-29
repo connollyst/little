@@ -30,8 +30,8 @@ public class GameManager : MonoBehaviour
 				}
 				server = SmartFoxConnection.Connection;
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
-				server.AddEventListener (SFSEvent.MMOITEM_VARIABLES_UPDATE, OnItemUpdate);
 				server.AddEventListener (SFSEvent.PROXIMITY_LIST_UPDATE, OnProximityListUpdate);
+				server.AddEventListener (SFSEvent.MMOITEM_VARIABLES_UPDATE, OnItemUpdate);
 		}
 	
 		void FixedUpdate ()
@@ -84,17 +84,20 @@ public class GameManager : MonoBehaviour
 		
 		public void OnItemUpdate (BaseEvent evt)
 		{
-				Debug.Log ("Updating item...");
 				var changedVars = (List<string>)evt.Params ["changedVars"];
 				var item = (IMMOItem)evt.Params ["mmoItem"];
 				// Check if the MMOItem was moved
 				if (changedVars.Contains ("x") || changedVars.Contains ("y")) {
 						string type = item.GetVariable ("type").GetStringValue ();
 						string id = item.GetVariable ("uuid").GetStringValue ();
-						Debug.Log ("Updating item coords for " + type + " #" + id);
 						float x = (float)item.GetVariable ("x").GetDoubleValue ();
 						float y = (float)item.GetVariable ("y").GetDoubleValue ();
-						GetController (evt).Position (x, y);
+						Controller controller = GetController (evt);
+						if (controller != null) {
+								controller.Position (x, y);
+						} else {
+								Debug.Log ("Cannot process update for unknown item: " + item);
+						}
 				}
 		}
 
@@ -116,17 +119,29 @@ public class GameManager : MonoBehaviour
 
 		private Controller GetWallController (string uuid)
 		{
-				return walls [uuid].GetComponent<Controller> ();
+				if (walls.ContainsKey (uuid)) {
+						return walls [uuid].GetComponent<Controller> ();
+				} else {
+						return null;
+				}
 		}
 
 		private Controller GetItemController (string uuid)
 		{
-				return items [uuid].GetComponent<Controller> ();
+				if (items.ContainsKey (uuid)) {
+						return items [uuid].GetComponent<Controller> ();
+				} else {
+						return null;
+				}
 		}
 
 		private Controller GetPlayerController (string uuid)
 		{
-				return myMobs [uuid].GetComponent<Controller> ();
+				if (myMobs.ContainsKey (uuid)) {
+						return myMobs [uuid].GetComponent<Controller> ();
+				} else {
+						return null;
+				}
 		}
 
 		private void AddWall (IMMOItem item)
@@ -138,7 +153,7 @@ public class GameManager : MonoBehaviour
 				string id = item.GetVariable ("uuid").GetStringValue ();
 				if (!walls.ContainsKey (id)) {
 						GameObject obj = GameObject.CreatePrimitive (PrimitiveType.Cube);
-						obj.AddComponent<Controller>();
+						obj.AddComponent<Controller> ();
 						walls.Add (id, obj);
 				}
 				GameObject wall = walls [id];

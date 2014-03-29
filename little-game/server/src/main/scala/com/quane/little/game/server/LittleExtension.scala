@@ -1,7 +1,7 @@
 package com.quane.little.game.server
 
 import com.quane.little.game.{TimedUpdater, LittleGameEngine}
-import com.quane.little.game.server.events.{ServerReadyEventHandler, JoinEventHandler}
+import com.quane.little.game.server.events.{LittleEvents, IDEConnectionHandler, ServerReadyEventHandler, JoinEventHandler}
 
 import com.smartfoxserver.v2.extensions.{ExtensionLogLevel, SFSExtension}
 import com.smartfoxserver.v2.mmo._
@@ -38,8 +38,9 @@ class LittleExtension
       + game.entities.size + " items, & "
       + game.walls.size + " walls.."
     )
-    addEventHandler(SFSEventType.USER_JOIN_ROOM, classOf[JoinEventHandler])
-    addEventHandler(SFSEventType.SERVER_READY, classOf[ServerReadyEventHandler])
+    addEventHandler(LittleEvents.USER_JOIN_ROOM, classOf[JoinEventHandler])
+    addEventHandler(LittleEvents.SERVER_READY, new ServerReadyEventHandler())
+    addRequestHandler(LittleEvents.IDE_AUTH, new IDEConnectionHandler())
   }
 
   def start(): Unit = {

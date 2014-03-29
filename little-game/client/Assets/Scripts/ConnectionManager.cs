@@ -4,18 +4,19 @@ using System.Collections;
 using Sfs2X;
 using Sfs2X.Core;
 using Sfs2X.Requests;
+using Sfs2X.Entities;
+using Sfs2X.Entities.Data;
 
 public class ConnectionManager : MonoBehaviour
 {
 
 		private static string serverName = "127.0.0.1";
 		private static int    serverPort = 9933;
-		private static string username   = "";
-		private static string password   = "";
-		private static string zone       = "little";
-		private static string room       = "LittleTest";
-		private static string gameScene  = "Game";
-		
+		private static string username = "";
+		private static string password = "";
+		private static string zone = "little";
+		private static string room = "LittleTest";
+		private static string gameScene = "Game";
 		private SmartFox server;
 
 		void Start ()
@@ -27,6 +28,7 @@ public class ConnectionManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.LOGIN, OnLogin);
 				server.AddEventListener (SFSEvent.LOGIN_ERROR, OnLoginError);
 				server.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
+				server.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
 				SetMessage ("Connecting..");
 				if (Security.PrefetchSocketPolicy (serverName, serverPort, 200)) {
 						server.Connect (serverName, serverPort);
@@ -72,7 +74,11 @@ public class ConnectionManager : MonoBehaviour
 		public void OnLogin (BaseEvent evt)
 		{
 				SetMessage ("Logged in, joining room..");
-				server.Send (new JoinRoomRequest (room));
+				if (PreviewLabs.RequestParameters.HasKey ("ide_id")) {
+						server.Send (new JoinRoomRequest (room));
+				} else {
+						SetError ("Cannot authenticate without 'ide_id'.");
+				}
 		}
 	
 		public void OnLoginError (BaseEvent evt)
@@ -83,7 +89,35 @@ public class ConnectionManager : MonoBehaviour
 
 		public void OnRoomJoin (BaseEvent evt)
 		{
-				SetMessage ("Joined room, starting game..");
+				SetMessage ("Joined room, connecting client..");
+				SendAuthenticationRequest ();
+		}
+
+		private void SendAuthenticationRequest ()
+		{
+				Room room = server.LastJoinedRoom;
+				string id = PreviewLabs.RequestParameters.GetValue ("ide_id");
+				ISFSObject ideId = SFSObject.NewInstance ();
+				ideId.PutUtfString ("ide_id", id);
+				server.Send (new ExtensionRequest ("authIDE", ideId, room));
+		}
+
+		public void OnExtensionResponse (BaseEvent evt)
+		{
+				string cmd = (string)evt.Params ["cmd"];
+				switch (cmd) {
+				case "authIDE":
+						SetMessage ("Authenticated, loading game..");
+						OnAuthenticated ();
+						break;
+				default:
+						SetError ("Unrecognized server command '" + cmd + "'.");
+						break;
+				}
+		}
+
+		public void OnAuthenticated ()
+		{
 				server.RemoveAllEventListeners ();
 				Application.LoadLevel (gameScene);
 		}
