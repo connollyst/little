@@ -38,19 +38,22 @@ class GameManager(client: ClientCommunicator,
       case _ => error("Tried to remove unknown MMO item " + entity)
     }
 
-  def sendItems() =
+  def sendItems() = {
+    println("Sending items..")
     items.keys foreach {
       id =>
+        println("Sending item #" + id)
         val item = items(id)
+        println("Sending item: " + item)
         try {
           val entity = game.entity(id)
-          val x = entity.x
-          val y = entity.y
-          val position = new Vec3D(x, y)
+          println("Sending entity: " + entity)
+          val position = new Vec3D(entity.x, entity.y)
           client.setItemPosition(item, position)
         } catch {
-          case e: Exception => error("", e)
+          case e: Exception => error("Failed to send " + id + " to client.", e)
         }
     }
+  }
 
 }
