@@ -14,7 +14,8 @@ import com.quane.little.Logging
   * @author Sean Connolly
   */
 class LittleGameEngine
-  extends Logging {
+  extends EntityRemovalListener
+  with Logging {
 
   val hertz = 30.0
   val eventBus: EventBus = new EventBus
@@ -76,5 +77,7 @@ class LittleGameEngine
     engine.updateAll(players.values)
     eventBus.evaluateAll()
   }
+
+  override def entityRemoved(entity: Entity) = entities -= entity.uuid.toString
 
 }

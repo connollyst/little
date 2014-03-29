@@ -1,7 +1,6 @@
 package com.quane.little.game.physics
 
-import com.quane.little.game.entity.Mob
-import com.quane.little.game.physics.bodies.EntityBody
+import com.quane.little.game.entity.{Entity, EntityRemovalListener, Mob}
 import org.jbox2d.dynamics.World
 import org.jbox2d.common.Vec2
 
@@ -10,7 +9,8 @@ import org.jbox2d.common.Vec2
   *
   * @author Sean Connolly
   */
-class PhysicsEngine {
+class PhysicsEngine
+  extends EntityRemovalListener {
 
   // the length of time passed to simulate (seconds)
   private val timeStep = 1 / 30f
@@ -42,12 +42,12 @@ class PhysicsEngine {
     world.step(timeStep, velocityIterations, positionIterations)
   }
 
-  /** Remove the specified entity from the physics simulation.
+  /** Removes the specified entity from the physics simulation.
     *
     * @param entity the entity to remove
     */
-  def removeEntity(entity: EntityBody) {
-    world.destroyBody(entity.physicalBody)
+  override def entityRemoved(entity: Entity): Unit = {
+    world.destroyBody(entity.body.physicalBody)
   }
 
   private def setMobVelocity(mob: Mob): Unit = {

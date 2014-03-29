@@ -13,6 +13,7 @@ import com.quane.little.game.physics.PhysicsEngine
 class EntityRemover(game: LittleGameEngine, engine: PhysicsEngine) {
 
   val queue = new ListBuffer[Entity]
+  val listeners = new ListBuffer[EntityRemovalListener]
 
   def remove(entity: Entity) {
     queue += entity
@@ -21,11 +22,18 @@ class EntityRemover(game: LittleGameEngine, engine: PhysicsEngine) {
   def cleanAll() {
     queue foreach (
       entity => {
-        game.entities -= entity.uuid.toString
         entity.isRemoved = true
-        engine.removeEntity(entity.body)
+        listeners.foreach {
+          listener => listener.entityRemoved(entity)
+        }
       })
     queue.clear()
   }
+
+}
+
+trait EntityRemovalListener {
+
+  def entityRemoved(entity: Entity)
 
 }
