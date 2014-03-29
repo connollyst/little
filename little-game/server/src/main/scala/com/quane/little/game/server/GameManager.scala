@@ -4,10 +4,10 @@ import scala.collection.mutable
 import com.smartfoxserver.v2.mmo.{Vec3D, MMOItem}
 import com.quane.little.game.entity.{EntityRemovalListener, Entity}
 import com.quane.little.Logging
-import com.quane.little.game.{TimedUpdater, LittleGameEngine}
+import com.quane.little.game.{TimedUpdater, Game}
 
 class GameManager(client: ClientCommunicator,
-                  val game: LittleGameEngine = new LittleGameEngine)
+                  val game: Game = new Game)
   extends EntityRemovalListener
   with Logging {
 

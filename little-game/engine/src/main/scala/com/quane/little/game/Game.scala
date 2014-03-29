@@ -7,13 +7,12 @@ import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.game.engine.EventBus
 import com.quane.little.Logging
 
-/** The little game engine maintains the state of the world and allows us to
-  * step through it, advancing the physics simulation and evaluating little code
-  * as appropriate.
+/** The game maintains the state of the world and all entities, tying together
+  * the physics simulator with the Little data model and language evaluation.
   *
   * @author Sean Connolly
   */
-class LittleGameEngine
+class Game
   extends EntityRemovalListener
   with Logging {
 

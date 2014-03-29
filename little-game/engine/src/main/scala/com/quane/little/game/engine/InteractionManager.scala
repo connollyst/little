@@ -3,9 +3,9 @@ package com.quane.little.game.engine
 import com.quane.little.game.entity.Mob
 import com.quane.little.game.entity.Food
 import com.quane.little.language.event.LittleEvent
-import com.quane.little.game.LittleGameEngine
+import com.quane.little.game.Game
 
-class InteractionManager(game: LittleGameEngine) {
+class InteractionManager(game: Game) {
 
   def mobApproachesFood(mob: Mob, food: Food): Unit = {
     game.eventBus.report(mob, LittleEvent.OnFoodNearby)

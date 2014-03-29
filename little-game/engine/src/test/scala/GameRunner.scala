@@ -1,4 +1,4 @@
-import com.quane.little.game.LittleGameEngine
+import com.quane.little.game.Game
 
 /**
  *
@@ -8,7 +8,7 @@ import com.quane.little.game.LittleGameEngine
 object GameRunner {
 
   def main(args: Array[String]) {
-    val game = new LittleGameEngine()
+    val game = new Game()
     game.initialize()
     game.start()
   }

@@ -35,7 +35,7 @@ class PhysicsEngine
     mobs foreach (
       mob => {
         setMobVelocity(mob)
-        //accelerateGuyToSpeed(mob)
+        // accelerateGuyToSpeed(mob)
         // rotateGuyToDirection(mob)
       }
       )
@@ -50,6 +50,12 @@ class PhysicsEngine
     world.destroyBody(entity.body.physicalBody)
   }
 
+  /** DEPRECATED: this is simpler but by using setLinearVelocity we are
+    * essentially bypassing the physics simulation
+    *
+    * @param mob the mob to move
+    * @deprecated replace with [[accelerateGuyToSpeed]] and [[rotateGuyToDirection]]
+    */
   private def setMobVelocity(mob: Mob): Unit = {
     val mag = mob.speed
     val dir = mob.direction

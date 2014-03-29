@@ -3,13 +3,13 @@ package com.quane.little.game.entity
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
 
-import com.quane.little.game.LittleGameEngine
+import com.quane.little.game.Game
 import com.quane.little.language.event.{EventListener, LittleEvent}
 import com.quane.little.language.{FunctionReference, Functions}
 import com.quane.little.language.data.Value
 import com.quane.little.game.engine.InteractionManager
 
-class EntityFactory(game: LittleGameEngine) {
+class EntityFactory(game: Game) {
 
   val manager = new InteractionManager(game)
 
