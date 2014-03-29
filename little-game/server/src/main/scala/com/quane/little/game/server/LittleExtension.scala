@@ -5,7 +5,6 @@ import com.smartfoxserver.v2.extensions.{IClientRequestHandler, IServerEventHand
 import com.smartfoxserver.v2.mmo._
 import com.smartfoxserver.v2.SmartFoxServer
 
-import collection.mutable.ListBuffer
 import collection.JavaConversions._
 import com.smartfoxserver.v2.core.SFSEventType
 
@@ -38,9 +37,9 @@ class LittleExtension
 
   private def initMMOItems() =
     game.game.entities.values foreach {
-      mob =>
-        val id = mob.uuid
-        val data = serializer.serialize(mob)
+      entity =>
+        val id = entity.uuid
+        val data = serializer.serialize(entity)
         game.addItem(id, new MMOItem(data))
     }
 
@@ -49,12 +48,9 @@ class LittleExtension
 
   override def setItemPosition(item: MMOItem, position: Vec3D) = {
     val api = getMMOApi
-    val room = getParentRoom
-    val vars = new ListBuffer[IMMOItemVariable]
-    vars += new MMOItemVariable("x", position.floatX())
-    vars += new MMOItemVariable("y", position.floatY())
+    val data = serializer.serialize(position)
+    api.setMMOItemVariables(item, data)
     api.setMMOItemPosition(item, position, room)
-    api.setMMOItemVariables(item, vars.toList)
   }
 
   override def addListener(requestId: String, requestHandler: IClientRequestHandler) =
@@ -63,10 +59,12 @@ class LittleExtension
   override def addListener(eventType: SFSEventType, handler: IServerEventHandler) =
     addEventHandler(eventType, handler)
 
-  def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
+  def getMMOApi = server.getAPIManager.getMMOApi
 
-  def getMMOApi = getServer.getAPIManager.getMMOApi
+  def server = SmartFoxServer.getInstance()
 
-  def getServer = SmartFoxServer.getInstance()
+  def room: MMORoom = getParentRoom.asInstanceOf[MMORoom]
+
+  private def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
 
 }

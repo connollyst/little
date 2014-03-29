@@ -2,7 +2,7 @@ package com.quane.little.game.server
 
 import com.quane.little.game.entity.{WorldEdge, Entity, Mob}
 import scala.collection.mutable.ListBuffer
-import com.smartfoxserver.v2.mmo.{MMOItemVariable, IMMOItemVariable}
+import com.smartfoxserver.v2.mmo.{Vec3D, MMOItemVariable, IMMOItemVariable}
 import com.quane.little.Logging
 
 /**
@@ -19,6 +19,14 @@ class ItemSerializer
       case wall: WorldEdge => serializeWorldEdge(wall)
       case _ => serializeEntity(entity)
     }
+  }
+
+  def serialize(position: Vec3D): List[IMMOItemVariable] = {
+    debug("Serializing position: " + position)
+    val variables = new ListBuffer[IMMOItemVariable]
+    variables += new MMOItemVariable("x", position.floatX())
+    variables += new MMOItemVariable("y", position.floatY())
+    variables.toList
   }
 
   private def serializeMob(mob: Mob): List[IMMOItemVariable] = {
