@@ -6,24 +6,18 @@ import com.quane.little.game.entity.{EntityRemovalListener, Entity}
 import com.quane.little.Logging
 import com.quane.little.game.{TimedUpdater, LittleGameEngine}
 
-class GameManager(client: ClientCommunicator)
+class GameManager(client: ClientCommunicator,
+                  val game: LittleGameEngine = new LittleGameEngine)
   extends EntityRemovalListener
   with Logging {
 
   val items: mutable.Map[String, MMOItem] = mutable.Map()
-  val game = new LittleGameEngine
   val updater = new Thread(new TimedUpdater(15) {
     def update() = sendItems()
   })
 
-  def init() = {
+  def init() =
     game.initialize()
-    info("Initialized with "
-      + game.players.size + " mobs, "
-      + game.entities.size + " items, & "
-      + game.walls.size + " walls.."
-    )
-  }
 
   def start() = {
     game.start()
@@ -34,10 +28,9 @@ class GameManager(client: ClientCommunicator)
     items += (uuid -> item)
 
   override def entityRemoved(entity: Entity) = {
-    info("Removing MMO item " + entity)
     items.remove(entity.uuid) match {
       case Some(item) => client.removeItem(item)
-      case _ => println("doodoododo"); error("Tried to remove unknown MMO item " + entity)
+      case _ => error("Tried to remove unknown MMO item " + entity)
     }
   }
 
