@@ -1,9 +1,9 @@
 package com.quane.little.game.engine
 
-import com.quane.little.game.entity.Mob
-import com.quane.little.game.entity.Food
-import com.quane.little.language.event.LittleEvent
 import com.quane.little.game.Game
+import com.quane.little.game.entity.Food
+import com.quane.little.game.entity.Mob
+import com.quane.little.language.event.LittleEvent
 
 class InteractionManager(game: Game) {
 

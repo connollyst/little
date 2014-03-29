@@ -1,8 +1,8 @@
 package com.quane.little.game.physics
 
 import com.quane.little.game.entity.{Entity, EntityRemovalListener, Mob}
-import org.jbox2d.dynamics.World
 import org.jbox2d.common.Vec2
+import org.jbox2d.dynamics.World
 
 /** The physics simulation engine takes care of moving entities about and
   * detecting collisions.

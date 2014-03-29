@@ -1,10 +1,10 @@
 package com.quane.little.game.entity
 
-import com.quane.little.game.physics.bodies.EntityBody
+import com.google.common.base.Objects
 import com.quane.little.game.engine.InteractionManager
+import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.language.{Operable, Operator, Runtime}
 import scala.util.Random
-import com.google.common.base.Objects
 
 class Mob(body: EntityBody, manager: InteractionManager)
   extends Entity(body, manager)

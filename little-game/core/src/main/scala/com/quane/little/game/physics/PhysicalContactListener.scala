@@ -1,13 +1,13 @@
 package com.quane.little.game.physics
 
-import com.quane.little.language.event.LittleEvent
+import com.quane.little.Logging
 import com.quane.little.game.entity.Entity
+import com.quane.little.language.event.LittleEvent
 import java.lang.Override
 import org.jbox2d.callbacks.{ContactImpulse, ContactListener}
-import org.jbox2d.dynamics.contacts.Contact
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
-import com.quane.little.Logging
+import org.jbox2d.dynamics.contacts.Contact
 
 class PhysicalContactListener
   extends ContactListener

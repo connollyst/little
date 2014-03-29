@@ -1,10 +1,10 @@
 package com.quane.little.game.engine
 
+import com.quane.little.game.entity.Mob
+import com.quane.little.language.event.LittleEvent
 import scala.collection.mutable.HashMap
 import scala.collection.mutable.MultiMap
 import scala.collection.mutable.Set
-import com.quane.little.language.event.LittleEvent
-import com.quane.little.game.entity.Mob
 
 class EventBus {
 

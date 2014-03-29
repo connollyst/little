@@ -1,9 +1,9 @@
 package com.quane.little.game.physics.bodies
 
-import scala.util.Random
 import com.quane.little.game.Game
-import org.jbox2d.dynamics.{FixtureDef, BodyType, BodyDef, World}
 import org.jbox2d.collision.shapes.{PolygonShape, CircleShape}
+import org.jbox2d.dynamics.{FixtureDef, BodyType, BodyDef, World}
+import scala.util.Random
 
 object BodyBuilder {
   val MobBodySize = 1

@@ -1,7 +1,7 @@
 package com.quane.little.game.entity
 
-import scala.collection.mutable.ListBuffer
 import com.quane.little.Logging
+import scala.collection.mutable.ListBuffer
 
 /** The remover is responsible for removing entities from the game and the
   * physics engine.
