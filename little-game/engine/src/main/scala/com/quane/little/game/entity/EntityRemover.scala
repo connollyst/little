@@ -17,10 +17,8 @@ class EntityRemover
   def remove(entity: Entity) = queue += entity
 
   def cleanAll() {
-    error("Cleaning all..")
     queue foreach (
       entity => {
-        error("Removing " + entity)
         entity.isRemoved = true
         listeners.foreach {
           listener => listener.entityRemoved(entity)

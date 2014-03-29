@@ -14,6 +14,14 @@ class TestEntityRemover
   extends FunSuite
   with MockitoSugar {
 
+  test("entity is marked as removed") {
+    val remover = new EntityRemover()
+    val entity = mock[Entity]
+    remover.remove(entity)
+    remover.cleanAll()
+    verify(entity).isRemoved_=(true)
+  }
+
   test("listener is notified of removal") {
     val remover = new EntityRemover()
     val listener = mock[EntityRemovalListener]
