@@ -1,10 +1,10 @@
 package com.quane.little.game.server
 
-import scala.collection.mutable
-import com.smartfoxserver.v2.mmo.{Vec3D, MMOItem}
-import com.quane.little.game.entity.{EntityRemovalListener, Entity}
 import com.quane.little.Logging
+import com.quane.little.game.entity.{EntityRemovalListener, Entity}
 import com.quane.little.game.{TimedUpdater, Game}
+import com.smartfoxserver.v2.mmo.{Vec3D, MMOItem}
+import scala.collection.mutable
 
 class GameManager(client: ClientCommunicator,
                   val game: Game = new Game)
@@ -20,6 +20,7 @@ class GameManager(client: ClientCommunicator,
     game.initialize()
     game.entities.values foreach {
       entity =>
+        println("Adding game item " + entity)
         val id = entity.id
         val item = client.createItem(entity)
         items += (id -> item)

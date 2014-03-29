@@ -1,16 +1,16 @@
 package com.quane.little.game.server
 
-import org.junit.runner.RunWith
-import org.junit.Assert._
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.FunSuite
-import org.scalatest.mock.MockitoSugar
-import org.mockito.Mockito._
-import org.mockito.Matchers._
-import scala.collection.mutable
 import com.quane.little.game.Game
 import com.quane.little.game.entity.Entity
 import com.smartfoxserver.v2.mmo.MMOItem
+import org.junit.Assert._
+import org.junit.runner.RunWith
+import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.mock.MockitoSugar
+import scala.collection.mutable
 
 /** Test cases for [[LittleExtension]]
   *
@@ -30,12 +30,15 @@ class TestGameManager
   }
 
   test("test game items initialized") {
+    val entityA = mockEntity("a")
+    val entityB = mockEntity("b")
+    val entityC = mockEntity("c")
     val game = mock[Game]
     when(game.entities).thenReturn(
       mutable.HashMap[String, Entity](
-        "a" -> mock[Entity],
-        "b" -> mock[Entity],
-        "c" -> mock[Entity])
+        "a" -> entityA,
+        "b" -> entityB,
+        "c" -> entityC)
     )
     val manager = new GameManager(mock[ClientCommunicator], game)
     manager.init()
@@ -46,12 +49,15 @@ class TestGameManager
     val client = mock[ClientCommunicator]
     val manager = new GameManager(client)
     val id = "abcd"
+    manager.items += (id -> mock[MMOItem])
+    manager.entityRemoved(mockEntity(id))
+    verify(client).removeItem(any())
+  }
+
+  private def mockEntity(id: String): Entity = {
     val entity = mock[Entity]
     when(entity.id).thenReturn(id)
-    val item = mock[MMOItem]
-    manager.items += (id -> item)
-    manager.entityRemoved(entity)
-    verify(client).removeItem(any())
+    entity
   }
 
 }
