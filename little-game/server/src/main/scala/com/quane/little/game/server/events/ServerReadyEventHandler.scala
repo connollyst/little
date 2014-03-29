@@ -1,22 +1,14 @@
 package com.quane.little.game.server.events
 
-import com.smartfoxserver.v2.extensions.BaseServerEventHandler
-import com.quane.little.game.server.LittleExtension
 import com.smartfoxserver.v2.core.ISFSEvent
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** Handler for when the server initially becomes 'ready'. Starts the game.
+  *
+  * @author Sean Connolly
+  */
 class ServerReadyEventHandler
-  extends BaseServerEventHandler {
+  extends EventHandler {
 
-
-  override def handleServerEvent(p1: ISFSEvent): Unit = {
-    getLittleExtension.start()
-  }
-
-  private def getLittleExtension: LittleExtension = getParentExtension.asInstanceOf[LittleExtension]
+  override def handleServerEvent(event: ISFSEvent) = extension.game.start()
 
 }

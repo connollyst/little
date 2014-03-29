@@ -30,8 +30,6 @@ class LittleExtension
     events.init()
   }
 
-  def start(): Unit = game.start()
-
   override def createItem(entity: Entity): MMOItem =
     new MMOItem(serializer.serialize(entity))
 
