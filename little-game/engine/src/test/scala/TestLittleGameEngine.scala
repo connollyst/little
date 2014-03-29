@@ -8,7 +8,8 @@ import org.scalatest.junit.JUnitRunner
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestLittleGameEngine extends FunSuite {
+class TestLittleGameEngine
+  extends FunSuite {
 
   test("test engine initialization") {
     new LittleGameEngine().initialize()

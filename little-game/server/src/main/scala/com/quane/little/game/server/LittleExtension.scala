@@ -1,16 +1,13 @@
 package com.quane.little.game.server
 
-import com.quane.little.game.{TimedUpdater, LittleGameEngine}
 import com.quane.little.game.server.events.{LittleEvents, IDEConnectionHandler, ServerReadyEventHandler, JoinEventHandler}
 
 import com.smartfoxserver.v2.extensions.{ExtensionLogLevel, SFSExtension}
 import com.smartfoxserver.v2.mmo._
 import com.smartfoxserver.v2.SmartFoxServer
 
-import collection.mutable
 import collection.mutable.ListBuffer
 import collection.JavaConversions._
-import com.quane.little.game.entity.{Entity, EntityRemovalListener}
 
 /**
  * The SmartFox server 'extension' for the little game.
@@ -19,42 +16,24 @@ import com.quane.little.game.entity.{Entity, EntityRemovalListener}
  */
 class LittleExtension
   extends SFSExtension
-  with EntityRemovalListener {
+  with ClientCommunicator {
 
-  val items: mutable.Map[String, MMOItem] = mutable.Map()
-  val game = new LittleGameEngine
-  val updater = new Thread(new TimedUpdater(15) {
-    def update() = sendItems()
-  })
+  val manager = new GameManager(this)
 
   override def init(): Unit = {
     trace("Initializing Little room..")
     if (!isMMORoom) {
       trace(ExtensionLogLevel.ERROR, "Not configured to be an MMO room!")
     }
-    game.initialize()
+    manager.init()
     initMMOItems()
-    trace("Initialized with "
-      + game.players.size + " mobs, "
-      + game.entities.size + " items, & "
-      + game.walls.size + " walls.."
-    )
     addEventHandler(LittleEvents.USER_JOIN_ROOM, classOf[JoinEventHandler])
     addEventHandler(LittleEvents.SERVER_READY, new ServerReadyEventHandler())
     addRequestHandler(LittleEvents.IDE_AUTH, new IDEConnectionHandler())
   }
 
-  override def entityRemoved(entity: Entity) = {
-    trace("Removing MMO item " + entity)
-    items.remove(entity.uuid.toString) match {
-      case Some(item) => getMMOApi.removeMMOItem(item)
-      case _ => trace("Tried to remove unknown MMO item " + entity)
-    }
-  }
-
   def start(): Unit = {
-    game.start()
-    updater.start()
+    manager.start()
   }
 
   private def initMMOItems() = {
@@ -64,70 +43,59 @@ class LittleExtension
   }
 
   private def initPlayerMMOItems() = {
-    game.players.keys foreach {
+    manager.game.players.keys foreach {
       uuid =>
-        val player = game.players(uuid)
+        val player = manager.game.players(uuid)
         trace("Creating player MMO item: " + player)
         val variables = new ListBuffer[IMMOItemVariable]
         variables += new MMOItemVariable("uuid", uuid)
         variables += new MMOItemVariable("type", "player")
         variables += new MMOItemVariable("s", player.speed)
         variables += new MMOItemVariable("d", player.direction)
-        createMMOItem(uuid, variables.toList)
+        createItem(uuid, variables.toList)
     }
   }
 
   private def initEntityMMOItems() = {
-    game.entities.keys foreach {
+    manager.game.entities.keys foreach {
       uuid =>
-        val entity = game.entities(uuid)
+        val entity = manager.game.entities(uuid)
         trace("Creating entity MMO item: " + entity)
         val variables = new ListBuffer[IMMOItemVariable]
         variables += new MMOItemVariable("uuid", uuid)
         variables += new MMOItemVariable("type", "entity")
-        createMMOItem(uuid, variables.toList)
+        createItem(uuid, variables.toList)
     }
   }
 
   private def initWallMMOItems() = {
-    game.walls.keys foreach {
+    manager.game.walls.keys foreach {
       uuid =>
-        val wall = game.walls(uuid)
+        val wall = manager.game.walls(uuid)
         trace("Creating wall MMO item: " + wall)
         val variables = new ListBuffer[IMMOItemVariable]
         variables += new MMOItemVariable("uuid", uuid)
         variables += new MMOItemVariable("type", "wall")
         variables += new MMOItemVariable("w", wall.w.toInt)
         variables += new MMOItemVariable("h", wall.h.toInt)
-        createMMOItem(uuid, variables.toList)
+        createItem(uuid, variables.toList)
     }
   }
 
-  private def createMMOItem(uuid: String, variables: List[IMMOItemVariable]) = {
-    items += (uuid -> new MMOItem(variables))
-  }
+  def createItem(uuid: String, variables: List[IMMOItemVariable]) =
+    manager.addItem(uuid, new MMOItem(variables))
 
-  // TODO maybe the game can give us notifications?
-  private def sendItems() = {
+  override def removeItem(item: MMOItem) =
+    getMMOApi.removeMMOItem(item)
+
+  override def setItemPosition(item: MMOItem, position: Vec3D) = {
     val api = getMMOApi
     val room = getParentRoom
-    items.keys foreach {
-      id =>
-        val item = items(id)
-        try {
-          val entity = game.entity(id)
-          val x = entity.x
-          val y = entity.y
-          val position = new Vec3D(x, y, 0)
-          val vars = new ListBuffer[IMMOItemVariable]
-          vars += new MMOItemVariable("x", x)
-          vars += new MMOItemVariable("y", y)
-          api.setMMOItemPosition(item, position, room)
-          api.setMMOItemVariables(item, vars.toList)
-        } catch {
-          case e: Exception => trace(ExtensionLogLevel.ERROR, e)
-        }
-    }
+    val vars = new ListBuffer[IMMOItemVariable]
+    vars += new MMOItemVariable("x", position.floatX())
+    vars += new MMOItemVariable("y", position.floatY())
+    api.setMMOItemPosition(item, position, room)
+    api.setMMOItemVariables(item, vars.toList)
   }
 
   def isMMORoom: Boolean = getParentRoom.isInstanceOf[MMORoom]
