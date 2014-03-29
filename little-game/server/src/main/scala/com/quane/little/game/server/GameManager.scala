@@ -39,15 +39,11 @@ class GameManager(client: ClientCommunicator,
     }
 
   def sendItems() = {
-    println("Sending items..")
     items.keys foreach {
       id =>
-        println("Sending item #" + id)
         val item = items(id)
-        println("Sending item: " + item)
         try {
           val entity = game.entity(id)
-          println("Sending entity: " + entity)
           val position = new Vec3D(entity.x, entity.y)
           client.setItemPosition(item, position)
         } catch {
