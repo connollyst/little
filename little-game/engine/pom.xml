@@ -42,10 +42,10 @@
     </build>
 
     <dependencies>
-        <!-- The game speaks Little -->
+        <!-- The game uses Little data-->
         <dependency>
             <groupId>${project.groupId}</groupId>
-            <artifactId>little-language</artifactId>
+            <artifactId>little-data</artifactId>
             <version>${project.version}</version>
         </dependency>
 
