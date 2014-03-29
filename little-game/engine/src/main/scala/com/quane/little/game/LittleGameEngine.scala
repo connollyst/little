@@ -20,8 +20,8 @@ class LittleGameEngine
   val hertz = 30.0
   val eventBus: EventBus = new EventBus
   val engine: PhysicsEngine = new PhysicsEngine
+  val cleaner: EntityRemover = new EntityRemover
   val builder = new BodyBuilder(this, engine.world)
-  val cleaner: EntityRemover = new EntityRemover(this, engine)
   val entityFactory: EntityFactory = new EntityFactory(this)
   val entities: mutable.Map[String, Entity] = mutable.Map()
   val walls: mutable.Map[String, WorldEdge] = mutable.Map()
@@ -29,6 +29,8 @@ class LittleGameEngine
   val updater = new TimedUpdater(hertz) {
     def update() = updateState()
   }
+  cleaner.add(this)
+  cleaner.add(engine)
 
   def initialize() = {
     entityFactory.createMobs(5) foreach {

@@ -1,27 +1,26 @@
 package com.quane.little.game.entity
 
 import scala.collection.mutable.ListBuffer
-import com.quane.little.game.LittleGameEngine
-import com.quane.little.game.physics.PhysicsEngine
+import com.quane.little.Logging
 
 /** The remover is responsible for removing entities from the game and the
   * physics engine.
-  *
-  * @param game the game
-  * @param engine the physics engine
   */
-class EntityRemover(game: LittleGameEngine, engine: PhysicsEngine) {
+class EntityRemover
+  extends Logging {
 
-  val queue = new ListBuffer[Entity]
-  val listeners = new ListBuffer[EntityRemovalListener]
+  private val queue = new ListBuffer[Entity]
+  private val listeners = new ListBuffer[EntityRemovalListener]
 
-  def remove(entity: Entity) {
-    queue += entity
-  }
+  def add(listener: EntityRemovalListener) = listeners += listener
+
+  def remove(entity: Entity) = queue += entity
 
   def cleanAll() {
+    error("Cleaning all..")
     queue foreach (
       entity => {
+        error("Removing " + entity)
         entity.isRemoved = true
         listeners.foreach {
           listener => listener.entityRemoved(entity)
