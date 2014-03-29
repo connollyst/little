@@ -4,7 +4,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.FunSuite
 import org.scalatest.mock.MockitoSugar
 import com.smartfoxserver.v2.mmo.MMOItem
-import com.quane.little.game.entity.{WorldEdge, Mob, Entity}
+import com.quane.little.game.entity.Entity
 
 import org.junit.runner.RunWith
 
@@ -12,7 +12,6 @@ import org.mockito.Matchers.any
 import org.mockito.Mockito.verify
 import org.mockito.Mockito._
 import com.quane.little.game.Game
-import scala.collection.mutable
 
 /** Test cases for [[LittleExtension]]
   *
@@ -25,9 +24,6 @@ class TestGameManager
 
   test("test game initialized") {
     val game = mock[Game]
-    when(game.walls).thenReturn(mutable.Map[String, WorldEdge]())
-    when(game.mobs).thenReturn(mutable.Map[String, Mob]())
-    when(game.food).thenReturn(mutable.Map[String, Entity]())
     val manager = new GameManager(mock[ClientCommunicator], game)
     manager.init()
     verify(game).initialize()

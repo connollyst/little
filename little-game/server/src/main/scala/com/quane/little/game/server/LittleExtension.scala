@@ -28,38 +28,26 @@ class LittleExtension
     }
     manager.init()
     initMMOItems()
-    addEventHandler(LittleEvents.USER_JOIN_ROOM, classOf[JoinEventHandler])
-    addEventHandler(LittleEvents.SERVER_READY, new ServerReadyEventHandler())
-    addRequestHandler(LittleEvents.IDE_AUTH, new IDEConnectionHandler())
+    initHandlers()
   }
 
   def start(): Unit = {
     manager.start()
   }
 
-  private def initMMOItems() = {
-    initPlayerMMOItems()
-    initEntityMMOItems()
-    initWallMMOItems()
+  private def initMMOItems() =
+    manager.game.entities.values foreach {
+      mob =>
+        val id = mob.uuid
+        val data = serializer.serialize(mob)
+        manager.addItem(id, new MMOItem(data))
+    }
+
+  private def initHandlers() = {
+    addEventHandler(LittleEvents.USER_JOIN_ROOM, classOf[JoinEventHandler])
+    addEventHandler(LittleEvents.SERVER_READY, new ServerReadyEventHandler())
+    addRequestHandler(LittleEvents.IDE_AUTH, new IDEConnectionHandler())
   }
-
-  private def initPlayerMMOItems() =
-    manager.game.mobs.values foreach {
-      mob => createItem(mob.uuid, serializer.serialize(mob))
-    }
-
-  private def initEntityMMOItems() =
-    manager.game.food.values foreach {
-      entity => createItem(entity.uuid, serializer.serialize(entity))
-    }
-
-  private def initWallMMOItems() =
-    manager.game.walls.values foreach {
-      wall => createItem(wall.uuid, serializer.serialize(wall))
-    }
-
-  def createItem(uuid: String, variables: List[IMMOItemVariable]) =
-    manager.addItem(uuid, new MMOItem(variables))
 
   override def removeItem(item: MMOItem) =
     getMMOApi.removeMMOItem(item)

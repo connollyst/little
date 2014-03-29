@@ -23,9 +23,7 @@ class Game
   val builder = new BodyBuilder(this, engine.world)
   val entityFactory: EntityFactory = new EntityFactory(this)
 
-  val mobs: mutable.Map[String, Mob] = mutable.Map()
-  val food: mutable.Map[String, Entity] = mutable.Map()
-  val walls: mutable.Map[String, WorldEdge] = mutable.Map()
+  val entities: mutable.Map[String, Entity] = mutable.Map()
 
   val updater = new TimedUpdater(hertz) {
     def update() = updateState()
@@ -35,16 +33,13 @@ class Game
 
   def initialize() = {
     entityFactory.createMobs(5) foreach {
-      mob =>
-        mobs += (mob.uuid.toString -> mob)
+      mob => entities += (mob.uuid -> mob)
     }
     entityFactory.createFoods() foreach {
-      entity =>
-        food += (entity.uuid.toString -> entity)
+      food => entities += (food.uuid -> food)
     }
     entityFactory.worldEdges() foreach {
-      wall =>
-        walls += (wall.uuid.toString -> wall)
+      wall => entities += (wall.uuid -> wall)
     }
   }
 
@@ -62,14 +57,10 @@ class Game
   }
 
   def entity(id: String): Entity = {
-    if (mobs.contains(id)) {
-      mobs(id)
-    } else if (food.contains(id)) {
-      food(id)
-    } else if (walls.contains(id)) {
-      walls(id)
+    if (entities.contains(id)) {
+      entities(id)
     } else {
-      throw new IllegalAccessException("Nothing with id " + id)
+      throw new IllegalAccessException("No entity with id " + id)
     }
   }
 
@@ -77,11 +68,11 @@ class Game
     */
   private def updateState(): Unit = {
     cleaner.cleanAll()
-    engine.updateAll(mobs.values)
+    engine.updateAll(entities.values)
     eventBus.evaluateAll()
   }
 
   override def entityRemoved(entity: Entity) =
-    food -= entity.uuid.toString
+    entities -= entity.uuid
 
 }

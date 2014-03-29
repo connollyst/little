@@ -29,16 +29,15 @@ class PhysicsEngine
 
   /** Move the physics simulation forward one time step.
     *
-    * @param mobs the list of entities to update
+    * @param entities the list of entities to update
     */
-  def updateAll(mobs: Iterable[Mob]) {
-    mobs foreach (
-      mob => {
+  def updateAll(entities: Iterable[Entity]) {
+    entities foreach {
+      case mob: Mob =>
         setMobVelocity(mob)
-        // accelerateGuyToSpeed(mob)
-        // rotateGuyToDirection(mob)
-      }
-      )
+      // accelerateGuyToSpeed(mob)
+      // rotateGuyToDirection(mob)
+    }
     world.step(timeStep, velocityIterations, positionIterations)
   }
 
