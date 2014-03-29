@@ -18,7 +18,7 @@ class WorldEdge(override val body: StaticBody, manager: InteractionManager)
       .add("y", y)
       .add("w", w)
       .add("h", h)
-      .add("id", uuid)
+      .add("id", id)
       .toString
 
 }

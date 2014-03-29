@@ -20,7 +20,7 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager)
 
   body.attach(this)
 
-  val uuid = UUID.randomUUID.toString
+  val id = UUID.randomUUID.toString
   var isRemoved = false
 
   def x: Float = body.coords.x
@@ -37,7 +37,7 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager)
     Objects.toStringHelper(getClass)
       .add("x", x)
       .add("y", y)
-      .add("uuid", uuid)
+      .add("id", id)
       .add("isGuy", isGuy)
       .toString
 

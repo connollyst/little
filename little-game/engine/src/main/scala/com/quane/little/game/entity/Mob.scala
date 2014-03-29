@@ -54,7 +54,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
 
   override def toString: String =
     Objects.toStringHelper(getClass)
-      .add("uuid", uuid)
+      .add("id", id)
       .add("x", x)
       .add("y", y)
       .add("speed", speed)

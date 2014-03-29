@@ -33,7 +33,7 @@ class ItemSerializer
     debug("Serializing Mob MMO item: " + mob)
     val variables = new ListBuffer[IMMOItemVariable]
     variables += new MMOItemVariable("type", "player")
-    variables += new MMOItemVariable("uuid", mob.uuid)
+    variables += new MMOItemVariable("id", mob.id)
     variables += new MMOItemVariable("s", mob.speed)
     variables += new MMOItemVariable("d", mob.direction)
     variables.toList
@@ -43,7 +43,7 @@ class ItemSerializer
     debug("Serializing Entity MMO item: " + entity)
     val variables = new ListBuffer[IMMOItemVariable]
     variables += new MMOItemVariable("type", "entity")
-    variables += new MMOItemVariable("uuid", entity.uuid)
+    variables += new MMOItemVariable("id", entity.id)
     variables.toList
   }
 
@@ -51,7 +51,7 @@ class ItemSerializer
     debug("Serializing Wall MMO item: " + wall)
     val variables = new ListBuffer[IMMOItemVariable]
     variables += new MMOItemVariable("type", "wall")
-    variables += new MMOItemVariable("uuid", wall.uuid)
+    variables += new MMOItemVariable("id", wall.id)
     variables += new MMOItemVariable("w", wall.w.toInt)
     variables += new MMOItemVariable("h", wall.h.toInt)
     variables.toList

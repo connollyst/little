@@ -20,13 +20,13 @@ class TestItemSerializer
 
   val serializer = new ItemSerializer
 
-  test("test mob uuid serialized") {
+  test("test mob id serialized") {
     val id = "abcd"
     val mob = mock[Mob]
-    when(mob.uuid).thenReturn(id)
+    when(mob.id).thenReturn(id)
     val variables = serializer.serialize(mob)
-    getMMOItemVariable(variables, "uuid") match {
-      case None => fail("expected uuid")
+    getMMOItemVariable(variables, "id") match {
+      case None => fail("expected id")
       case Some(variable) => assertEquals(id, variable.getStringValue)
     }
   }

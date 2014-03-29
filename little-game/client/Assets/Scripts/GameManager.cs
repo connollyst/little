@@ -21,7 +21,7 @@ public class GameManager : MonoBehaviour
 		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
 		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
 		private Dictionary<string, GameObject> walls = new Dictionary<string, GameObject> ();
-	
+
 		void Start ()
 		{
 				if (!SmartFoxConnection.IsInitialized) {
@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.PROXIMITY_LIST_UPDATE, OnProximityListUpdate);
 				server.AddEventListener (SFSEvent.MMOITEM_VARIABLES_UPDATE, OnItemUpdate);
 		}
-	
+
 		void FixedUpdate ()
 		{
 				if (server != null) {
@@ -54,13 +54,13 @@ public class GameManager : MonoBehaviour
 				var addedItems = (List<IMMOItem>)evt.Params ["addedItems"];
 				var removedUsers = (List<User>)evt.Params ["removedUsers"];
 				var removedItems = (List<IMMOItem>)evt.Params ["removedItems"];
-				foreach (User user in addedUsers) {	
+				foreach (User user in addedUsers) {
 						Debug.Log ("Proximity user added: " + user);
 				}
 				foreach (User user in removedUsers) {
 						Debug.Log ("Proximity user removed: " + user);
 				}
-				foreach (IMMOItem item in addedItems) {	
+				foreach (IMMOItem item in addedItems) {
 						Debug.Log ("Proximity item added: " + item);
 						string type = item.GetVariable ("type").GetStringValue ();
 						if (type == "wall") {
@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
 						}
 				}
 		}
-		
+
 		public void OnItemUpdate (BaseEvent evt)
 		{
 				var changedVars = (List<string>)evt.Params ["changedVars"];
@@ -89,7 +89,7 @@ public class GameManager : MonoBehaviour
 				// Check if the MMOItem was moved
 				if (changedVars.Contains ("x") || changedVars.Contains ("y")) {
 						string type = item.GetVariable ("type").GetStringValue ();
-						string id = item.GetVariable ("uuid").GetStringValue ();
+						string id = item.GetVariable ("id").GetStringValue ();
 						float x = (float)item.GetVariable ("x").GetDoubleValue ();
 						float y = (float)item.GetVariable ("y").GetDoubleValue ();
 						Controller controller = GetController (evt);
@@ -104,7 +104,7 @@ public class GameManager : MonoBehaviour
 		private Controller GetController (BaseEvent evt)
 		{
 				var item = (IMMOItem)evt.Params ["mmoItem"];
-				string id = item.GetVariable ("uuid").GetStringValue ();
+				string id = item.GetVariable ("id").GetStringValue ();
 				string type = item.GetVariable ("type").GetStringValue ();
 				if (type == "wall") {
 						return GetWallController (id);
@@ -117,28 +117,28 @@ public class GameManager : MonoBehaviour
 				}
 		}
 
-		private Controller GetWallController (string uuid)
+		private Controller GetWallController (string id)
 		{
-				if (walls.ContainsKey (uuid)) {
-						return walls [uuid].GetComponent<Controller> ();
+				if (walls.ContainsKey (id)) {
+						return walls [id].GetComponent<Controller> ();
 				} else {
 						return null;
 				}
 		}
 
-		private Controller GetItemController (string uuid)
+		private Controller GetItemController (string id)
 		{
-				if (items.ContainsKey (uuid)) {
-						return items [uuid].GetComponent<Controller> ();
+				if (items.ContainsKey (id)) {
+						return items [id].GetComponent<Controller> ();
 				} else {
 						return null;
 				}
 		}
 
-		private Controller GetPlayerController (string uuid)
+		private Controller GetPlayerController (string id)
 		{
-				if (myMobs.ContainsKey (uuid)) {
-						return myMobs [uuid].GetComponent<Controller> ();
+				if (myMobs.ContainsKey (id)) {
+						return myMobs [id].GetComponent<Controller> ();
 				} else {
 						return null;
 				}
@@ -150,7 +150,7 @@ public class GameManager : MonoBehaviour
 				float y = item.AOIEntryPoint.FloatY;
 				int w = item.GetVariable ("w").GetIntValue ();
 				int h = item.GetVariable ("h").GetIntValue ();
-				string id = item.GetVariable ("uuid").GetStringValue ();
+				string id = item.GetVariable ("id").GetStringValue ();
 				if (!walls.ContainsKey (id)) {
 						GameObject obj = GameObject.CreatePrimitive (PrimitiveType.Cube);
 						obj.AddComponent<Controller> ();
@@ -160,12 +160,12 @@ public class GameManager : MonoBehaviour
 				wall.transform.position = new Vector3 (x, y, 0);
 				wall.transform.localScale = new Vector3 (w, h, 1);
 		}
-	
+
 		private void AddItem (IMMOItem item)
 		{
 				float x = item.AOIEntryPoint.FloatX;
 				float y = item.AOIEntryPoint.FloatY;
-				string id = item.GetVariable ("uuid").GetStringValue ();
+				string id = item.GetVariable ("id").GetStringValue ();
 				if (!items.ContainsKey (id)) {
 						items.Add (id, GameObject.Instantiate (foodModel) as GameObject);
 				}
@@ -177,16 +177,16 @@ public class GameManager : MonoBehaviour
 
 		private void RemoveItem (IMMOItem item)
 		{
-				string id = item.GetVariable ("uuid").GetStringValue ();
+				string id = item.GetVariable ("id").GetStringValue ();
 				Debug.Log ("Removing item " + id);
 				items.Remove (id);
 		}
-		
+
 		private void AddPlayer (IMMOItem item)
 		{
 				float x = item.AOIEntryPoint.FloatX;
 				float y = item.AOIEntryPoint.FloatY;
-				string id = item.GetVariable ("uuid").GetStringValue ();
+				string id = item.GetVariable ("id").GetStringValue ();
 				int speed = item.GetVariable ("s").GetIntValue ();
 				int direction = item.GetVariable ("d").GetIntValue ();
 				if (!myMobs.ContainsKey (id)) {
@@ -199,12 +199,12 @@ public class GameManager : MonoBehaviour
 				// controller.Direction = direction;
 				controller.Position (x, y);
 		}
-	
+
 		private void RemovePlayer (IMMOItem item)
 		{
-				string id = item.GetVariable ("uuid").GetStringValue ();
+				string id = item.GetVariable ("id").GetStringValue ();
 				Debug.Log ("Removing player " + id);
 				myMobs.Remove (id);
 		}
-	
+
 }

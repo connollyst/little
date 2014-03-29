@@ -20,7 +20,7 @@ class GameManager(client: ClientCommunicator,
     game.initialize()
     game.entities.values foreach {
       entity =>
-        val id = entity.uuid
+        val id = entity.id
         val item = client.createItem(entity)
         addItem(id, item)
     }
@@ -31,11 +31,11 @@ class GameManager(client: ClientCommunicator,
     updater.start()
   }
 
-  def addItem(uuid: String, item: MMOItem) =
-    items += (uuid -> item)
+  def addItem(id: String, item: MMOItem) =
+    items += (id -> item)
 
   override def entityRemoved(entity: Entity) =
-    items.remove(entity.uuid) match {
+    items.remove(entity.id) match {
       case Some(item) => client.removeItem(item)
       case _ => error("Tried to remove unknown MMO item " + entity)
     }

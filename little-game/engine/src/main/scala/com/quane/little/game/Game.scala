@@ -33,13 +33,13 @@ class Game
 
   def initialize() = {
     entityFactory.createMobs(5) foreach {
-      mob => entities += (mob.uuid -> mob)
+      mob => entities += (mob.id -> mob)
     }
     entityFactory.createFoods() foreach {
-      food => entities += (food.uuid -> food)
+      food => entities += (food.id -> food)
     }
     entityFactory.worldEdges() foreach {
-      wall => entities += (wall.uuid -> wall)
+      wall => entities += (wall.id -> wall)
     }
   }
 
@@ -73,6 +73,6 @@ class Game
   }
 
   override def entityRemoved(entity: Entity) =
-    entities -= entity.uuid
+    entities -= entity.id
 
 }

@@ -52,13 +52,13 @@ class PhysicalContactListener
   }
 
   private def reportProximity(entity: Entity, sensor: Entity) {
-    debug("Proximity: " + entity.uuid + " & " + sensor.uuid)
+    debug("Proximity: " + entity.id + " & " + sensor.id)
     sensor.approachedBy(entity)
     entity.approachedBy(sensor)
   }
 
   private def reportContact(entityA: Entity, entityB: Entity) {
-    debug("Contact: " + entityA.uuid + " & " + entityB.uuid)
+    debug("Contact: " + entityA.id + " & " + entityB.id)
     entityA.touchedBy(entityB)
     entityB.touchedBy(entityA)
   }

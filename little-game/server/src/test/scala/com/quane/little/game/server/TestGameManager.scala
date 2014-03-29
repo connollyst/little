@@ -34,7 +34,7 @@ class TestGameManager
     val manager = new GameManager(client)
     val id = "abcd"
     val entity = mock[Entity]
-    when(entity.uuid).thenReturn(id)
+    when(entity.id).thenReturn(id)
     val item = mock[MMOItem]
     manager.addItem(id, item)
     manager.entityRemoved(entity)
