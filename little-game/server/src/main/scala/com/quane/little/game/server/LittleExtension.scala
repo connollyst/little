@@ -19,6 +19,7 @@ class LittleExtension
   with ClientCommunicator {
 
   val manager = new GameManager(this)
+  val serializer = new ItemSerializer()
 
   override def init(): Unit = {
     trace("Initializing Little room..")
@@ -42,45 +43,20 @@ class LittleExtension
     initWallMMOItems()
   }
 
-  private def initPlayerMMOItems() = {
-    manager.game.players.keys foreach {
-      uuid =>
-        val player = manager.game.players(uuid)
-        trace("Creating player MMO item: " + player)
-        val variables = new ListBuffer[IMMOItemVariable]
-        variables += new MMOItemVariable("uuid", uuid)
-        variables += new MMOItemVariable("type", "player")
-        variables += new MMOItemVariable("s", player.speed)
-        variables += new MMOItemVariable("d", player.direction)
-        createItem(uuid, variables.toList)
+  private def initPlayerMMOItems() =
+    manager.game.mobs.values foreach {
+      mob => createItem(mob.uuid, serializer.serialize(mob))
     }
-  }
 
-  private def initEntityMMOItems() = {
-    manager.game.entities.keys foreach {
-      uuid =>
-        val entity = manager.game.entities(uuid)
-        trace("Creating entity MMO item: " + entity)
-        val variables = new ListBuffer[IMMOItemVariable]
-        variables += new MMOItemVariable("uuid", uuid)
-        variables += new MMOItemVariable("type", "entity")
-        createItem(uuid, variables.toList)
+  private def initEntityMMOItems() =
+    manager.game.food.values foreach {
+      entity => createItem(entity.uuid, serializer.serialize(entity))
     }
-  }
 
-  private def initWallMMOItems() = {
-    manager.game.walls.keys foreach {
-      uuid =>
-        val wall = manager.game.walls(uuid)
-        trace("Creating wall MMO item: " + wall)
-        val variables = new ListBuffer[IMMOItemVariable]
-        variables += new MMOItemVariable("uuid", uuid)
-        variables += new MMOItemVariable("type", "wall")
-        variables += new MMOItemVariable("w", wall.w.toInt)
-        variables += new MMOItemVariable("h", wall.h.toInt)
-        createItem(uuid, variables.toList)
+  private def initWallMMOItems() =
+    manager.game.walls.values foreach {
+      wall => createItem(wall.uuid, serializer.serialize(wall))
     }
-  }
 
   def createItem(uuid: String, variables: List[IMMOItemVariable]) =
     manager.addItem(uuid, new MMOItem(variables))

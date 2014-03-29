@@ -26,8 +26,8 @@ class TestGameManager
   test("test game initialized") {
     val game = mock[LittleGameEngine]
     when(game.walls).thenReturn(mutable.Map[String, WorldEdge]())
-    when(game.players).thenReturn(mutable.Map[String, Mob]())
-    when(game.entities).thenReturn(mutable.Map[String, Entity]())
+    when(game.mobs).thenReturn(mutable.Map[String, Mob]())
+    when(game.food).thenReturn(mutable.Map[String, Entity]())
     val manager = new GameManager(mock[ClientCommunicator], game)
     manager.init()
     verify(game).initialize()

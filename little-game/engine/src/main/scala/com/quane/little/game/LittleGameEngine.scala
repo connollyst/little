@@ -23,9 +23,11 @@ class LittleGameEngine
   val cleaner: EntityRemover = new EntityRemover
   val builder = new BodyBuilder(this, engine.world)
   val entityFactory: EntityFactory = new EntityFactory(this)
-  val entities: mutable.Map[String, Entity] = mutable.Map()
+
+  val mobs: mutable.Map[String, Mob] = mutable.Map()
+  val food: mutable.Map[String, Entity] = mutable.Map()
   val walls: mutable.Map[String, WorldEdge] = mutable.Map()
-  val players: mutable.Map[String, Mob] = mutable.Map()
+
   val updater = new TimedUpdater(hertz) {
     def update() = updateState()
   }
@@ -34,12 +36,12 @@ class LittleGameEngine
 
   def initialize() = {
     entityFactory.createMobs(5) foreach {
-      player =>
-        players += (player.uuid.toString -> player)
+      mob =>
+        mobs += (mob.uuid.toString -> mob)
     }
     entityFactory.createFoods() foreach {
       entity =>
-        entities += (entity.uuid.toString -> entity)
+        food += (entity.uuid.toString -> entity)
     }
     entityFactory.worldEdges() foreach {
       wall =>
@@ -61,10 +63,10 @@ class LittleGameEngine
   }
 
   def entity(id: String): Entity = {
-    if (players.contains(id)) {
-      players(id)
-    } else if (entities.contains(id)) {
-      entities(id)
+    if (mobs.contains(id)) {
+      mobs(id)
+    } else if (food.contains(id)) {
+      food(id)
     } else if (walls.contains(id)) {
       walls(id)
     } else {
@@ -76,10 +78,11 @@ class LittleGameEngine
     */
   private def updateState(): Unit = {
     cleaner.cleanAll()
-    engine.updateAll(players.values)
+    engine.updateAll(mobs.values)
     eventBus.evaluateAll()
   }
 
-  override def entityRemoved(entity: Entity) = entities -= entity.uuid.toString
+  override def entityRemoved(entity: Entity) =
+    food -= entity.uuid.toString
 
 }
