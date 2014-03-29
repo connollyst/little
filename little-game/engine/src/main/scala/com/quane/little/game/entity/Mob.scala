@@ -37,6 +37,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
     other match {
       case food: Food => manager.mobConsumesFood(this, food)
       case wall: ImmovableEntity => manager.mobContactsImmovableObject(this)
+      case mob: Mob => manager.mobContactsMob(this)
       case _ => error("Touched unexpected Entity: " + other)
     }
   }
@@ -46,6 +47,7 @@ class Mob(body: EntityBody, manager: InteractionManager)
     other match {
       case food: Food => manager.mobApproachesFood(this, food)
       case wall: ImmovableEntity => manager.mobApproachesImmovableObject(this)
+      case mob: Mob => manager.mobApproachesMob(this)
       case _ => error("Approaching unexpected Entity: " + other)
     }
   }

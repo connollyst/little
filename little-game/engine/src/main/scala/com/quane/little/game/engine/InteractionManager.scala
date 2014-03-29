@@ -32,5 +32,14 @@ class InteractionManager(game: LittleGameEngine) {
     game.eventBus.report(mob, LittleEvent.OnContact)
   }
 
+  def mobApproachesMob(mob: Mob): Unit = {
+    game.eventBus.report(mob, LittleEvent.OnMobNearby)
+  }
+
+  def mobContactsMob(mob: Mob): Unit = {
+    game.eventBus.report(mob, LittleEvent.OnContact)
+    game.eventBus.report(mob, LittleEvent.OnMobTouching)
+  }
+
 
 }

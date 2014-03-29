@@ -23,6 +23,8 @@ object LittleEvent {
   // Mobs (bad guys) related events
   object OnMobNearby extends LittleEvent
 
+  object OnMobTouching extends LittleEvent
+
   object OnMobMoved extends LittleEvent
 
   object OnMobGone extends LittleEvent
