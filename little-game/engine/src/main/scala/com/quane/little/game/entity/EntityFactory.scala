@@ -50,12 +50,12 @@ class EntityFactory(game: LittleGameEngine) {
           .addArg("degrees", new Value(260))
       )
     )
-    mob.operator.addEventListener(
-      new EventListener(
-        LittleEvent.OnFoodNearby,
-        new FunctionReference(mob.operator, "turn")
-      )
-    )
+    //    mob.operator.addEventListener(
+    //      new EventListener(
+    //        LittleEvent.OnFoodNearby,
+    //        new FunctionReference(mob.operator, "turn")
+    //      )
+    //    )
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnFoodConsumed,
