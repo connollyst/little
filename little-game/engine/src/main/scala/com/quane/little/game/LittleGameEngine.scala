@@ -20,7 +20,7 @@ class LittleGameEngine
   val eventBus: EventBus = new EventBus
   val engine: PhysicsEngine = new PhysicsEngine
   val builder = new BodyBuilder(this, engine.world)
-  val cleaner: EntityCleaner = new EntityCleaner(this, engine)
+  val cleaner: EntityRemover = new EntityRemover(this, engine)
   val entityFactory: EntityFactory = new EntityFactory(this)
   val entities: Map[String, Entity] = Map()
   val walls: Map[String, WorldEdge] = Map()
