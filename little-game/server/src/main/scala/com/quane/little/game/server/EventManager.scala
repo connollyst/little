@@ -2,11 +2,10 @@ package com.quane.little.game.server
 
 import com.quane.little.game.server.events.{IDEConnectionHandler, ServerReadyEventHandler, JoinEventHandler, LittleEvents}
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** Manages [[ClientCommunicator]] event handlers.
+  *
+  * @author Sean Connolly
+  */
 class EventManager(client: ClientCommunicator) {
 
   def init(): Unit = {
