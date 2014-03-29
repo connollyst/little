@@ -23,9 +23,8 @@ class LittleExtension
   val serializer = new ItemSerializer()
 
   override def init(): Unit = {
-    trace("Initializing Little room..")
     if (!isMMORoom) {
-      trace(ExtensionLogLevel.ERROR, "Not configured to be an MMO room!")
+      trace(ExtensionLogLevel.ERROR, "Must be configured as an MMO room.")
     }
     game.init()
     events.init()
