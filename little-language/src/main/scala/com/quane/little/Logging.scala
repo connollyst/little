@@ -14,4 +14,12 @@ trait Logging {
 
   def error(message: String) = logger.error(message)
 
+  def debug(message: String, cause: Exception) = logger.debug(message, cause)
+
+  def info(message: String, cause: Exception) = logger.info(message, cause)
+
+  def warn(message: String, cause: Exception) = logger.warn(message, cause)
+
+  def error(message: String, cause: Exception) = logger.error(message, cause)
+
 }
