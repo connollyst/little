@@ -5,12 +5,12 @@ import com.quane.little.game.server.events.{LittleEvents, IDEConnectionHandler, 
 
 import com.smartfoxserver.v2.extensions.{ExtensionLogLevel, SFSExtension}
 import com.smartfoxserver.v2.mmo._
-import com.smartfoxserver.v2.core.SFSEventType
 import com.smartfoxserver.v2.SmartFoxServer
 
 import collection.mutable
 import collection.mutable.ListBuffer
 import collection.JavaConversions._
+import com.quane.little.game.entity.{Entity, EntityRemovalListener}
 
 /**
  * The SmartFox server 'extension' for the little game.
@@ -18,7 +18,8 @@ import collection.JavaConversions._
  * @author Sean Connolly
  */
 class LittleExtension
-  extends SFSExtension {
+  extends SFSExtension
+  with EntityRemovalListener {
 
   val items: mutable.Map[String, MMOItem] = mutable.Map()
   val game = new LittleGameEngine
@@ -41,6 +42,14 @@ class LittleExtension
     addEventHandler(LittleEvents.USER_JOIN_ROOM, classOf[JoinEventHandler])
     addEventHandler(LittleEvents.SERVER_READY, new ServerReadyEventHandler())
     addRequestHandler(LittleEvents.IDE_AUTH, new IDEConnectionHandler())
+  }
+
+  override def entityRemoved(entity: Entity) = {
+    trace("Removing MMO item " + entity)
+    items.remove(entity.uuid.toString) match {
+      case Some(item) => getMMOApi.removeMMOItem(item)
+      case _ => trace("Tried to remove unknown MMO item " + entity)
+    }
   }
 
   def start(): Unit = {
