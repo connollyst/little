@@ -1,13 +1,13 @@
 package com.quane.little.game.server
 
 
+import collection.JavaConversions._
+import com.quane.little.game.entity.Entity
+import com.smartfoxserver.v2.SmartFoxServer
+import com.smartfoxserver.v2.core.SFSEventType
 import com.smartfoxserver.v2.extensions.{IClientRequestHandler, IServerEventHandler, ExtensionLogLevel, SFSExtension}
 import com.smartfoxserver.v2.mmo._
-import com.smartfoxserver.v2.SmartFoxServer
 
-import collection.JavaConversions._
-import com.smartfoxserver.v2.core.SFSEventType
-import com.quane.little.game.entity.Entity
 
 /**
  * The SmartFox server 'extension' for the little game.
@@ -46,10 +46,10 @@ class LittleExtension
     api.setMMOItemPosition(item, position, room)
   }
 
-  override def addListener(requestId: String, requestHandler: IClientRequestHandler) =
+  override def addHandler(requestId: String, requestHandler: IClientRequestHandler) =
     addRequestHandler(requestId, requestHandler)
 
-  override def addListener(eventType: SFSEventType, handler: IServerEventHandler) =
+  override def addHandler(eventType: SFSEventType, handler: IServerEventHandler) =
     addEventHandler(eventType, handler)
 
   def getMMOApi = server.getAPIManager.getMMOApi

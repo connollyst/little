@@ -10,9 +10,9 @@ import com.quane.little.game.server.events.{IDEConnectionHandler, ServerReadyEve
 class EventManager(client: ClientCommunicator) {
 
   def init(): Unit = {
-    client.addListener(LittleEvents.USER_JOIN_ROOM, new JoinEventHandler)
-    client.addListener(LittleEvents.SERVER_READY, new ServerReadyEventHandler)
-    client.addListener(LittleEvents.IDE_AUTH, new IDEConnectionHandler)
+    client.addHandler(LittleEvents.USER_JOIN_ROOM, new JoinEventHandler)
+    client.addHandler(LittleEvents.SERVER_READY, new ServerReadyEventHandler)
+    client.addHandler(LittleEvents.IDE_AUTH, new IDEConnectionHandler)
   }
 
 }
