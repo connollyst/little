@@ -22,7 +22,7 @@ class GameManager(client: ClientCommunicator,
       entity =>
         val id = entity.id
         val item = client.createItem(entity)
-        addItem(id, item)
+        items += (id -> item)
     }
   }
 
@@ -30,9 +30,6 @@ class GameManager(client: ClientCommunicator,
     game.start()
     updater.start()
   }
-
-  def addItem(id: String, item: MMOItem) =
-    items += (id -> item)
 
   override def entityRemoved(entity: Entity) =
     items.remove(entity.id) match {
