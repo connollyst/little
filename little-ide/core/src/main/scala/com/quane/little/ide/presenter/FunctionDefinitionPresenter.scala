@@ -1,9 +1,10 @@
 package com.quane.little.ide.presenter
 
-import scala._
-import com.quane.little.language.{FunctionParameter, Expression, FunctionDefinition}
-import scala.collection.mutable.ListBuffer
+import com.quane.little.data.FunctionDefinitionRepository
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewPresenter}
+import com.quane.little.language.{FunctionParameter, Expression, FunctionDefinition}
+import scala._
+import scala.collection.mutable.ListBuffer
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionDefinition]].
   *
@@ -12,6 +13,7 @@ import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionView
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   extends FunctionDefinitionViewPresenter {
 
+  private val _repo = new FunctionDefinitionRepository()
   private var _name = "???"
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
   private val _block = view.createBlock()
@@ -65,8 +67,8 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
       param =>
         fun.addParam(param.compile())
     }
-    // TODO this seems sloppy..?
-    fun.steps = _block.compile(fun).steps
+    fun.steps = _block.compile(fun).steps // TODO this seems sloppy..?
+    _repo.save(_name, fun) // TODO the name should be an id
     fun
   }
 
