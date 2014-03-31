@@ -1,7 +1,8 @@
 package com.quane.little.language
 
-import scala.collection.mutable.Map
+import com.fasterxml.jackson.annotation.JsonIgnore
 import com.quane.little.language.data.{Value, NoValueType, Variable, Nada}
+import scala.collection.mutable
 
 /** A Scope defines a space in which
   * [[com.quane.little.language.data.Variable]] objects can be stored and
@@ -19,23 +20,38 @@ import com.quane.little.language.data.{Value, NoValueType, Variable, Nada}
   */
 trait Scope {
 
+  private val variables = mutable.Map[String, Variable]()
+
+  @JsonIgnore
   var scope: Scope
 
+  /** Returns the current runtime.
+    *
+    * @return the current runtime.
+    */
+  // TODO should we make sure that the parent scope is different?
   def runtime: Runtime = scope.runtime
 
-  private val variables = Map[String, Variable]()
-
-  def save(name: String, value: Value) {
-    save(new Variable(name, value))
-  }
-
-  /** Stores the given [[com.quane.little.language.data.Variable]] in memory.
+  /** Stores the given [[com.quane.little.language.data.Variable]].
     *
     * If a [[com.quane.little.language.data.Variable]] of the same name
     * exists in this, or a higher scope, it is updated. Otherwise it is
     * created in this scope.
     *
-    * @param variable the variable to be stored in memory
+    * @param name the variable name to be stored
+    * @param value the variable value to be stored
+    */
+  def save(name: String, value: Value) {
+    save(new Variable(name, value))
+  }
+
+  /** Stores the given [[com.quane.little.language.data.Variable]].
+    *
+    * If a [[com.quane.little.language.data.Variable]] of the same name
+    * exists in this, or a higher scope, it is updated. Otherwise it is
+    * created in this scope.
+    *
+    * @param variable the variable to be stored
     */
   def save(variable: Variable) {
     val name = variable.name

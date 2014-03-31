@@ -1,5 +1,6 @@
 package com.quane.little.language
 
+import com.google.common.base.Objects
 import com.quane.little.language.data.Value
 import scala.collection.mutable.ListBuffer
 
@@ -8,7 +9,7 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class Block(var scope: Scope, _steps: ListBuffer[Expression])
+class Block(@transient override var scope: Scope, _steps: ListBuffer[Expression])
   extends Expression
   with Scope {
 
@@ -25,12 +26,11 @@ class Block(var scope: Scope, _steps: ListBuffer[Expression])
     this
   }
 
-  def evaluate: Value = {
-    _steps.map(step => step.evaluate).last
-  }
+  def evaluate: Value = _steps.map(step => step.evaluate).last
 
-  override def toString: String = {
-    getClass.getSimpleName + "{" + steps + "}"
-  }
+  override def toString: String =
+    Objects.toStringHelper(getClass)
+      .add("steps", steps)
+      .toString
 
 }
