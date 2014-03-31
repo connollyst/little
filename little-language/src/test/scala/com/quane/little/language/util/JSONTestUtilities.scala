@@ -41,7 +41,7 @@ object JSONTestUtilities {
     * @param name the name of the json file
     * @return the json
     */
-  private[util] def json(name: String): String = {
+  private[util] def getJSON(name: String): String = {
     val path = "json/" + name + ".json"
     getClass.getClassLoader.getResource(path) match {
       case url: URL =>

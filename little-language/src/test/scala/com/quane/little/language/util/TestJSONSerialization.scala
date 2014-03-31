@@ -21,7 +21,7 @@ class TestJSONSerialization
     val name = "runtime"
     val runtime = new Runtime()
     val actual = JSONSerializer.serialize(runtime)
-    val expected = json(name)
+    val expected = getJSON(name)
     assertJSON(expected, actual)
   }
 
@@ -30,7 +30,7 @@ class TestJSONSerialization
   test("serialize block") {
     val name = "block"
     val block = new Block(new Runtime())
-    assertSerialization(json(name), block)
+    assertSerialization(getJSON(name), block)
   }
 
   test("serialize block with steps") {
@@ -38,7 +38,7 @@ class TestJSONSerialization
     val block = new Block(new Runtime())
     block.addStep(Value("abc"))
     block.addStep(Value(123))
-    assertSerialization(json(name), block)
+    assertSerialization(getJSON(name), block)
   }
 
   /* Values */
@@ -46,37 +46,37 @@ class TestJSONSerialization
   test("serialize value blank") {
     val name = "value_blank"
     val v = Value("")
-    assertSerialization(json(name), v)
+    assertSerialization(getJSON(name), v)
   }
 
   test("serialize value string") {
     val name = "value_string"
     val v = Value("abc")
-    assertSerialization(json(name), v)
+    assertSerialization(getJSON(name), v)
   }
 
   test("serialize value integer") {
     val name = "value_integer"
     val v = Value(123)
-    assertSerialization(json(name), v)
+    assertSerialization(getJSON(name), v)
   }
 
   test("serialize value double") {
     val name = "value_double"
     val v = Value(12.34d)
-    assertSerialization(json(name), v)
+    assertSerialization(getJSON(name), v)
   }
 
   test("serialize value boolean true") {
     val name = "value_boolean_true"
     val v = Value(true)
-    assertSerialization(json(name), v)
+    assertSerialization(getJSON(name), v)
   }
 
   test("serialize value boolean false") {
     val name = "value_boolean_false"
     val v = Value(false)
-    assertSerialization(json(name), v)
+    assertSerialization(getJSON(name), v)
   }
 
   /* Functions */
@@ -84,14 +84,14 @@ class TestJSONSerialization
   test("serialize function reference") {
     val name = "function_reference_blank"
     val fun = new FunctionReference(new Runtime(), name)
-    assertSerialization(json(name), fun)
+    assertSerialization(getJSON(name), fun)
   }
 
   test("serialize function definition") {
     val name = "function_definition_blank"
     val fun = new FunctionDefinition(name)
     val actual = JSONSerializer.serialize(fun)
-    val expected = json(name)
+    val expected = getJSON(name)
     assertJSON(expected, actual)
   }
 
