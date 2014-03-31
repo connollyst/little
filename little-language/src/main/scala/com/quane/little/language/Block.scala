@@ -19,9 +19,16 @@ class Block(@transient override var scope: Scope, _steps: ListBuffer[Expression]
 
   def steps: List[Expression] = _steps.toList
 
+  def steps_=(steps: List[Expression]): Unit = {
+    _steps.clear()
+    _steps ++= steps
+  }
+
   def clear(): Unit = _steps.clear()
 
-  def addStep(step: Expression): Block = {
+  def addStep(step: Expression): Block = this += step
+
+  def +=(step: Expression): Block = {
     _steps += step
     this
   }
