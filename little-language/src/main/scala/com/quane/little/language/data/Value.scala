@@ -1,8 +1,8 @@
 package com.quane.little.language.data
 
+import com.google.common.base.Objects
 import com.quane.little.language.Expression
 import scala.None
-import com.google.common.base.Objects
 
 class Value(val primitive: Any)
   extends Expression
@@ -16,7 +16,7 @@ class Value(val primitive: Any)
       case s: String => StringValueType
       case None => NoValueType
       case _ => throw new IllegalArgumentException(
-        "Cannot resolve value type for " + primitive
+        "Cannot resolve value type for " + primitive.getClass + ": " + primitive
       )
     }
   }
