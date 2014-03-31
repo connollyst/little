@@ -1,7 +1,7 @@
 package com.quane.little.language
 
 import com.fasterxml.jackson.annotation.JsonIgnore
-import com.quane.little.language.data.{Value, NoValueType, Variable, Nada}
+import com.quane.little.language.data._
 import scala.collection.mutable
 
 /** A Scope defines a space in which
@@ -89,7 +89,7 @@ trait Scope {
     * @return is a variable for the given name defined?
     */
   def isDefined(name: String): Boolean = {
-    fetch(name).value.valueType != NoValueType
+    fetch(name).value.valueType != ValueType.Nada
   }
 
 }

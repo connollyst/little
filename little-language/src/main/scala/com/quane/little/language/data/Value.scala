@@ -1,5 +1,6 @@
 package com.quane.little.language.data
 
+import ValueType._
 import com.google.common.base.Objects
 import com.quane.little.language.Expression
 import scala.None
@@ -10,11 +11,11 @@ class Value(val primitive: Any)
 
   val valueType: ValueType = {
     primitive match {
-      case b: Boolean => BooleanValueType
-      case i: Int => IntValueType
-      case d: Double => DoubleValueType
-      case s: String => StringValueType
-      case None => NoValueType
+      case b: Boolean => ValueType.Boolean
+      case i: Int => ValueType.Integer
+      case d: Double => ValueType.Double
+      case s: String => ValueType.String
+      case None => ValueType.Nada
       case _ => throw new IllegalArgumentException(
         "Cannot resolve value type for " + primitive.getClass + ": " + primitive
       )
@@ -25,7 +26,7 @@ class Value(val primitive: Any)
 
   def asBool: Boolean = {
     valueType match {
-      case StringValueType =>
+      case ValueType.String =>
         val string = primitive.toString
         if (string equalsIgnoreCase "true") {
           true
@@ -38,9 +39,9 @@ class Value(val primitive: Any)
             toString + " cannot be converted to a Bool"
           )
         }
-      case BooleanValueType =>
+      case ValueType.Boolean =>
         primitive.asInstanceOf[Boolean]
-      case IntValueType =>
+      case ValueType.Integer =>
         primitive.asInstanceOf[Int] match {
           case 0 => false
           case 1 => true
@@ -48,12 +49,12 @@ class Value(val primitive: Any)
             toString + " cannot be converted to a Bool"
           )
         }
-      case DoubleValueType =>
+      case ValueType.Double =>
         // TODO implement Double -> Boolean
         throw new ClassCastException(
           toString + " cannot be converted to a Bool"
         )
-      case NoValueType =>
+      case ValueType.Nada =>
         // TODO implement Nada -> Boolean
         throw new ClassCastException(
           toString + " cannot be converted to a Bool"
@@ -63,7 +64,7 @@ class Value(val primitive: Any)
 
   def asInt: Int = {
     valueType match {
-      case StringValueType =>
+      case ValueType.String =>
         try {
           primitive.asInstanceOf[String].toInt
         } catch {
@@ -78,25 +79,25 @@ class Value(val primitive: Any)
                 )
             }
         }
-      case BooleanValueType =>
+      case ValueType.Boolean =>
         val boolean = primitive.asInstanceOf[Boolean]
         if (boolean) {
           1
         } else {
           0
         }
-      case IntValueType =>
+      case ValueType.Integer =>
         primitive.asInstanceOf[Int]
-      case DoubleValueType =>
+      case ValueType.Double =>
         asDouble.toInt
-      case NoValueType =>
+      case ValueType.Nada =>
         0
     }
   }
 
   def asDouble: Double = {
     valueType match {
-      case StringValueType =>
+      case ValueType.String =>
         try {
           primitive.asInstanceOf[String].toDouble
         } catch {
@@ -111,13 +112,13 @@ class Value(val primitive: Any)
                 )
             }
         }
-      case BooleanValueType =>
+      case ValueType.Boolean =>
         asInt
-      case IntValueType =>
+      case ValueType.Integer =>
         asInt
-      case DoubleValueType =>
+      case ValueType.Double =>
         primitive.asInstanceOf[Double]
-      case NoValueType =>
+      case ValueType.Nada =>
         0
     }
   }
@@ -144,23 +145,23 @@ class Value(val primitive: Any)
     // 1) If the values are the same primitive type, compare the primitives
     if (valueType == that.valueType) {
       return valueType match {
-        case StringValueType => asText compareTo that.asText
-        case BooleanValueType => asBool compareTo that.asBool
-        case IntValueType => asInt compareTo that.asInt
-        case DoubleValueType => asDouble compareTo that.asDouble
+        case ValueType.String => asText compareTo that.asText
+        case ValueType.Boolean => asBool compareTo that.asBool
+        case ValueType.Integer => asInt compareTo that.asInt
+        case ValueType.Double => asDouble compareTo that.asDouble
         case _ => throw new IllegalAccessException("Unrecognized value type: " + toString)
       }
     }
     // 2) If the primitive types are different, see if they can be cast (eg: Int & Double, Int & Boolean?)
     if ( // Compare int to double as int
-      (valueType == IntValueType && that.valueType == DoubleValueType)
-        || (valueType == DoubleValueType && that.valueType == IntValueType)
+      (valueType == ValueType.Integer && that.valueType == ValueType.Double)
+        || (valueType == ValueType.Double && that.valueType == ValueType.Integer)
         // Compare int to boolean as int
-        || (valueType == IntValueType && that.valueType == BooleanValueType)
-        || (valueType == BooleanValueType && that.valueType == IntValueType)
+        || (valueType == ValueType.Integer && that.valueType == ValueType.Boolean)
+        || (valueType == ValueType.Boolean && that.valueType == ValueType.Integer)
         // Compare double to boolean as int
-        || (valueType == DoubleValueType && that.valueType == BooleanValueType)
-        || (valueType == BooleanValueType && that.valueType == DoubleValueType)
+        || (valueType == ValueType.Double && that.valueType == ValueType.Boolean)
+        || (valueType == ValueType.Boolean && that.valueType == ValueType.Double)
     ) {
       return asInt compareTo that.asInt
       // TODO what other conversions are possible? boolean to 'true'/'false'?
@@ -188,17 +189,3 @@ class Nada
   override def asText: String = "nada"
 
 }
-
-sealed trait ValueType {
-  override def toString: String = getClass.getSimpleName
-}
-
-object StringValueType extends ValueType
-
-object BooleanValueType extends ValueType
-
-object IntValueType extends ValueType
-
-object DoubleValueType extends ValueType
-
-object NoValueType extends ValueType
