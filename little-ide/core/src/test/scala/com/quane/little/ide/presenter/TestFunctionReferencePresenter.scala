@@ -1,13 +1,13 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.language.{Scope, FunctionReference, Runtime}
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
-import org.scalatest.FunSuite
 import com.quane.little.ide.view.{FunctionReferenceView, MockFunctionArgumentView, MockFunctionReferenceView}
-import org.mockito.Mockito._
-import org.scalatest.mock.MockitoSugar
 import com.quane.little.language.data.Value
+import com.quane.little.language.{Scope, FunctionReference, Runtime}
+import org.junit.runner.RunWith
+import org.mockito.Mockito._
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
@@ -31,9 +31,9 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
     val view = mock[FunctionReferenceView]
     val presenter = new FunctionReferencePresenter(view)
     val function = new FunctionReference(mock[Scope], "funName")
-      .addArg("a", new Value(42))
-      .addArg("b", new Value("x"))
-      .addArg("c", new Value(true))
+      .addArg("a", Value(42))
+      .addArg("b", Value("x"))
+      .addArg("c", Value(true))
     when[FunctionArgumentPresenter[_]](view.createArgument())
       .thenReturn(mock[FunctionArgumentPresenter[_]])
     presenter.initialize(function)
@@ -82,7 +82,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
       .initialize(
         new FunctionReference(mock[Scope], "my name")
-          .addArg("x", new Value("y"))
+          .addArg("x", Value("y"))
       )
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 1)
@@ -92,8 +92,8 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
       .initialize(
         new FunctionReference(mock[Scope], "my name")
-          .addArg("a", new Value("x"))
-          .addArg("b", new Value("y"))
+          .addArg("a", Value("x"))
+          .addArg("b", Value("y"))
       )
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 2)
@@ -109,7 +109,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     presenter.add(
       new FunctionArgumentPresenter(new MockFunctionArgumentView)
-        .initialize("x", new Value("y"))
+        .initialize("x", Value("y"))
     )
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 1)
@@ -119,11 +119,11 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     presenter.add(
       new FunctionArgumentPresenter(new MockFunctionArgumentView)
-        .initialize("a", new Value("x"))
+        .initialize("a", Value("x"))
     )
     presenter.add(
       new FunctionArgumentPresenter(new MockFunctionArgumentView)
-        .initialize("b", new Value("y"))
+        .initialize("b", Value("y"))
     )
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 2)

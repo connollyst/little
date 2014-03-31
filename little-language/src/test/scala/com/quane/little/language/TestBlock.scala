@@ -1,9 +1,9 @@
 package com.quane.little.language
 
-import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
-import org.scalatest.FunSuite
+import com.quane.little.language.memory.Pointer
 import org.junit.runner.RunWith
+import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
@@ -39,8 +39,8 @@ class TestBlock extends FunSuite {
     val block = new Block(new Runtime)
     val pointer1 = new Pointer(block, "Obj1")
     val pointer2 = new Pointer(block, "Obj2")
-    block.addStep(new SetStatement(pointer1, new Value("A")))
-    block.addStep(new SetStatement(pointer2, new Value("B")))
+    block.addStep(new SetStatement(pointer1, Value("A")))
+    block.addStep(new SetStatement(pointer2, Value("B")))
     block.addStep(new SetStatement(pointer1, new GetStatement(pointer2)))
     block.evaluate
     val obj1 = block.fetch("Obj1")
@@ -53,7 +53,7 @@ class TestBlock extends FunSuite {
 
   test("test block with return from print statement") {
     val block = new Block(new Runtime)
-    block.addStep(new PrintStatement(new Value("A")))
+    block.addStep(new PrintStatement(Value("A")))
     val obj = block.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
@@ -61,7 +61,7 @@ class TestBlock extends FunSuite {
   test("test block with return from set statement") {
     val block = new Block(new Runtime)
     val pointer = new Pointer(block, "Obj")
-    block.addStep(new SetStatement(pointer, new Value("A")))
+    block.addStep(new SetStatement(pointer, Value("A")))
     val obj = block.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
@@ -69,7 +69,7 @@ class TestBlock extends FunSuite {
   test("test block with return from get statement") {
     val block = new Block(new Runtime)
     val pointer = new Pointer(block, "Obj")
-    block.addStep(new SetStatement(pointer, new Value("A")))
+    block.addStep(new SetStatement(pointer, Value("A")))
     block.addStep(new GetStatement(pointer))
     val obj = block.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)

@@ -5,123 +5,37 @@ import com.google.common.base.Objects
 import com.quane.little.language.Expression
 import scala.None
 
-class Value(val primitive: Any)
-  extends Expression
-  with Ordered[Value] {
+object Value {
 
-  val valueType: ValueType = {
+  def apply(primitive: Any): Value =
     primitive match {
-      case b: Boolean => ValueType.Boolean
-      case i: Int => ValueType.Integer
-      case d: Double => ValueType.Double
-      case s: String => ValueType.String
-      case None => ValueType.Nada
+      case b: Boolean => new Bool(b)
+      case i: Int => new Number(i)
+      case d: Double => new NumberDecimal(d)
+      case s: String => new Text(s)
+      case None => new Nada
       case _ => throw new IllegalArgumentException(
         "Cannot resolve value type for " + primitive.getClass + ": " + primitive
       )
     }
-  }
 
-  def asText: String = primitive.toString
+}
 
-  def asBool: Boolean = {
-    valueType match {
-      case ValueType.String =>
-        val string = primitive.toString
-        if (string equalsIgnoreCase "true") {
-          true
-        } else if (string equalsIgnoreCase "false") {
-          false
-        } else if (string.isEmpty) {
-          false
-        } else {
-          throw new ClassCastException(
-            toString + " cannot be converted to a Bool"
-          )
-        }
-      case ValueType.Boolean =>
-        primitive.asInstanceOf[Boolean]
-      case ValueType.Integer =>
-        primitive.asInstanceOf[Int] match {
-          case 0 => false
-          case 1 => true
-          case _ => throw new ClassCastException(
-            toString + " cannot be converted to a Bool"
-          )
-        }
-      case ValueType.Double =>
-        // TODO implement Double -> Boolean
-        throw new ClassCastException(
-          toString + " cannot be converted to a Bool"
-        )
-      case ValueType.Nada =>
-        // TODO implement Nada -> Boolean
-        throw new ClassCastException(
-          toString + " cannot be converted to a Bool"
-        )
-    }
-  }
+sealed trait Value
+  extends Expression
+  with Ordered[Value] {
 
-  def asInt: Int = {
-    valueType match {
-      case ValueType.String =>
-        try {
-          primitive.asInstanceOf[String].toInt
-        } catch {
-          case e: NumberFormatException =>
-            try {
-              // TODO avoid newing up a Value here
-              new Value(asBool).asInt
-            } catch {
-              case e: ClassCastException =>
-                throw new ClassCastException(
-                  primitive.toString + " cannot be converted to a Number"
-                )
-            }
-        }
-      case ValueType.Boolean =>
-        val boolean = primitive.asInstanceOf[Boolean]
-        if (boolean) {
-          1
-        } else {
-          0
-        }
-      case ValueType.Integer =>
-        primitive.asInstanceOf[Int]
-      case ValueType.Double =>
-        asDouble.toInt
-      case ValueType.Nada =>
-        0
-    }
-  }
+  private[language] val primitive: Any
 
-  def asDouble: Double = {
-    valueType match {
-      case ValueType.String =>
-        try {
-          primitive.asInstanceOf[String].toDouble
-        } catch {
-          case e: NumberFormatException =>
-            try {
-              // TODO avoid newing up a Value here
-              new Value(asBool).asDouble
-            } catch {
-              case e: ClassCastException =>
-                throw new ClassCastException(
-                  toString + " cannot be converted to a Double"
-                )
-            }
-        }
-      case ValueType.Boolean =>
-        asInt
-      case ValueType.Integer =>
-        asInt
-      case ValueType.Double =>
-        primitive.asInstanceOf[Double]
-      case ValueType.Nada =>
-        0
-    }
-  }
+  private[language] def valueType: ValueType
+
+  def asText: String
+
+  def asBool: Boolean
+
+  def asInt: Int
+
+  def asDouble: Double
 
 
   /** A value is an expression which evaluates to itself.
@@ -179,12 +93,142 @@ class Value(val primitive: Any)
 
 }
 
+class Bool(bool: Boolean)
+  extends Value {
+
+  override val primitive = bool
+
+  override def valueType: ValueType = ValueType.Boolean
+
+  override def asBool: Boolean = bool
+
+  override def asInt: Int = {
+    val boolean = bool.asInstanceOf[Boolean]
+    if (boolean) {
+      1
+    } else {
+      0
+    }
+  }
+
+  override def asDouble: Double = asInt
+
+  override def asText: String = bool.toString
+
+}
+
+class Number(int: Int)
+  extends Value {
+
+  override val primitive = int
+
+  override def valueType: ValueType = ValueType.Integer
+
+  override def asBool: Boolean =
+    int match {
+      case 1 => true
+      case _ => false
+    }
+
+  override def asInt: Int = int
+
+  override def asDouble: Double = int
+
+  override def asText: String = int.toString
+
+}
+
+class NumberDecimal(double: Double)
+  extends Value {
+
+  override val primitive = double
+
+  override def valueType: ValueType = ValueType.Double
+
+  override def asBool: Boolean =
+    double match {
+      case 1 => true
+      case _ => false
+    }
+
+  override def asInt: Int = double.toInt
+
+  override def asDouble: Double = double
+
+  override def asText: String = double.toString
+
+}
+
+class Text(string: String)
+  extends Value {
+
+  override val primitive = string
+
+  override def valueType: ValueType = ValueType.String
+
+  override def asBool: Boolean = {
+    if (string equalsIgnoreCase "true") {
+      true
+    } else if (string equalsIgnoreCase "false") {
+      false
+    } else if (string.isEmpty) {
+      false
+    } else {
+      throw new ClassCastException(
+        toString + " cannot be converted to a Bool"
+      )
+    }
+  }
+
+  override def asInt: Int = {
+    try {
+      string.toInt
+    } catch {
+      case e: NumberFormatException =>
+        try {
+          // TODO avoid newing up a Value here
+          Value(asBool).asInt
+        } catch {
+          case e: ClassCastException =>
+            throw new ClassCastException(
+              toString + " cannot be converted to a Number"
+            )
+        }
+    }
+  }
+
+  override def asDouble: Double =
+    try {
+      string.toDouble
+    } catch {
+      case e: NumberFormatException =>
+        try {
+          // TODO avoid newing up a Value here
+          Value(asBool).asDouble
+        } catch {
+          case e: ClassCastException =>
+            throw new ClassCastException(
+              toString + " cannot be converted to a Double"
+            )
+        }
+    }
+
+  override def asText: String = string
+
+}
+
 class Nada
-  extends Value(None) {
+  extends Value {
+
+  override val primitive = None
+
+  override def valueType: ValueType = ValueType.Nada
 
   override def asBool: Boolean = false
 
   override def asInt: Int = 0
+
+  override def asDouble: Double = 0.0d
 
   override def asText: String = "nada"
 

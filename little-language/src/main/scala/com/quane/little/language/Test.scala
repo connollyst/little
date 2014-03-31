@@ -13,7 +13,7 @@ class Test(left: Expression,
            right: Expression)
   extends Expression {
 
-  def evaluate: Value = new Value(isTrue)
+  def evaluate: Value = Value(isTrue)
 
   def isTrue: Boolean = {
     val l = left.evaluate.asBool

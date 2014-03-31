@@ -1,11 +1,11 @@
 package com.quane.little.language
 
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
-
 import com.quane.little.language.data.Value
 import com.quane.little.language.math._
 import com.quane.little.language.memory.Pointer
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+
 
 /** A set functions used during development - mostly to sanity check the
   * language and how it compiles.
@@ -37,7 +37,7 @@ object Functions {
   def stop: FunctionDefinition = {
     val fun = new FunctionDefinition("stop")
     val pointer = new Pointer(fun, Operable.SPEED)
-    fun.addStep(new SetStatement(pointer, new Value(0)))
+    fun.addStep(new SetStatement(pointer, Value(0)))
   }
 
   def turn: FunctionDefinition = {
@@ -48,8 +48,8 @@ object Functions {
   }
 
   def turnRandom(mob: Operator): Block = {
-    val min = new Value(1)
-    val max = new Value(360)
+    val min = Value(1)
+    val max = Value(360)
     val randomFun = new Block(mob)
     randomFun.addStep(
       new SetStatement(
@@ -75,8 +75,8 @@ object Functions {
     val myX = new GetStatement(fun, Operable.X)
     val myY = new GetStatement(fun, Operable.Y)
     // Step #1: Turn South if I'm facing North
-    val north = new Value(270)
-    val south = new Value(90)
+    val north = Value(270)
+    val south = Value(90)
     val isNorth = new Evaluation(myDirection, Equals, north)
     val turnSouth = new FunctionReference(fun, "turn").addArg("direction", south)
     val turnSouthIfNorth = new Conditional(fun, isNorth).addStep(turnSouth)
@@ -87,7 +87,7 @@ object Functions {
     fun.addStep(new SetStatement(homeXPointer, myX))
     fun.addStep(new SetStatement(homeYPointer, myY))
     // Step #3: Set speed to 10
-    fun.addStep(new FunctionReference(fun, "move").addArg("speed", new Value(10)))
+    fun.addStep(new FunctionReference(fun, "move").addArg("speed", Value(10)))
   }
 
   def printDirection: FunctionDefinition = {
@@ -114,14 +114,14 @@ object Functions {
     val deltaX = new Subtraction(toX, fromX)
     val deltaY = new Subtraction(toY, fromY)
     val radians = new ArcTan2(deltaY, deltaX)
-    val calculateAngleStep = new Division(new Multiplication(radians, new Value(180)), new Value(scala.math.Pi))
+    val calculateAngleStep = new Division(new Multiplication(radians, Value(180)), Value(scala.math.Pi))
 
     // Save the angle to memory
     val saveAngleStep = new SetStatement(anglePointer, calculateAngleStep)
 
     // Check if the angle is too small
-    val tooSmallChecker = new Evaluation(new GetStatement(anglePointer), LessThan, new Value(0))
-    val cleanerFunction = new SetStatement(anglePointer, new Addition(new GetStatement(anglePointer), new Value(360)))
+    val tooSmallChecker = new Evaluation(new GetStatement(anglePointer), LessThan, Value(0))
+    val cleanerFunction = new SetStatement(anglePointer, new Addition(new GetStatement(anglePointer), Value(360)))
     val tooSmallCleaner = new Conditional(angleFunction, tooSmallChecker).addStep(cleanerFunction)
 
     // Build the function

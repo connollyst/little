@@ -12,7 +12,7 @@ class Addition(a: Expression, b: Expression)
   def evaluate: Value = {
     val numberA = a.evaluate.asDouble
     val numberB = b.evaluate.asDouble
-    new Value(numberA + numberB)
+    Value(numberA + numberB)
   }
 
 }
@@ -23,7 +23,7 @@ class Subtraction(a: Expression, b: Expression)
   def evaluate: Value = {
     val numberA = a.evaluate.asDouble
     val numberB = b.evaluate.asDouble
-    new Value(numberA - numberB)
+    Value(numberA - numberB)
   }
 
 }
@@ -34,7 +34,7 @@ class Multiplication(a: Expression, b: Expression)
   def evaluate: Value = {
     val numberA = a.evaluate.asDouble
     val numberB = b.evaluate.asDouble
-    new Value(numberA * numberB)
+    Value(numberA * numberB)
   }
 
 }
@@ -45,7 +45,7 @@ class Division(a: Expression, b: Expression)
   def evaluate: Value = {
     val numberA = a.evaluate.asDouble
     val numberB = b.evaluate.asDouble
-    new Value(numberA / numberB)
+    Value(numberA / numberB)
   }
 
 }

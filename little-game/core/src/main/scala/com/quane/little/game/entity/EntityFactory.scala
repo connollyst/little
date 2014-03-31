@@ -40,14 +40,14 @@ class EntityFactory(game: Game) {
       new EventListener(
         LittleEvent.OnSpawn,
         new FunctionReference(mob.operator, "move")
-          .addArg("speed", new Value(5))
+          .addArg("speed", Value(5))
       )
     )
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnContact,
         new FunctionReference(mob.operator, "turnRelative")
-          .addArg("degrees", new Value(260))
+          .addArg("degrees", Value(260))
       )
     )
     //    mob.operator.addEventListener(

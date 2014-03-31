@@ -41,6 +41,6 @@ class ValuePresenter[V <: ValueView](view: V)
     * @param scope the scope in which to compile
     * @return the compiled expression
     */
-  override def compile(scope: Scope) = new Value(_value)
+  override def compile(scope: Scope) = Value(_value)
 
 }

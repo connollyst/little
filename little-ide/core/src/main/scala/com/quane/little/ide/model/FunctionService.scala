@@ -1,7 +1,7 @@
 package com.quane.little.ide.model
 
-import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition, Runtime}
 import com.quane.little.language.data.Value
+import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition, Runtime}
 
 /** A service for interacting with [[com.quane.little.language.Functions]].
   *
@@ -17,7 +17,7 @@ object FunctionService {
     definition.params foreach {
       param =>
       // TODO parameters should have default values
-        reference.addArg(param.name, new Value(""))
+        reference.addArg(param.name, Value(""))
     }
     reference
   }

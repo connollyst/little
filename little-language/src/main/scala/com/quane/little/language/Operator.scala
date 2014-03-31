@@ -1,10 +1,10 @@
 package com.quane.little.language
 
-import scala.collection.mutable.ListBuffer
+import com.quane.little.Logging
 import com.quane.little.language.data.{Value, Variable}
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.event.LittleEvent
-import com.quane.little.Logging
+import scala.collection.mutable.ListBuffer
 
 class Operator(override val runtime: Runtime, mob: Operable)
   extends Scope
@@ -12,9 +12,9 @@ class Operator(override val runtime: Runtime, mob: Operable)
 
   var scope: Scope = runtime
 
-  def x: Value = new Value(mob.x toDouble)
+  def x: Value = Value(mob.x toDouble)
 
-  def y: Value = new Value(mob.y toDouble)
+  def y: Value = Value(mob.y toDouble)
 
   def speed(speed: Int) = mob.speed = Math.max(Operable.MIN_SPEED, Math.min(speed, Operable.MAX_SPEED))
 
@@ -23,13 +23,13 @@ class Operator(override val runtime: Runtime, mob: Operable)
   def direction(degrees: Value) {
     if (degrees.asInt < 0) {
       // TODO avoid creating a new Value here
-      direction(new Value(360 + degrees.asInt))
+      direction(Value(360 + degrees.asInt))
     } else {
       mob.direction = degrees.asInt % 360
     }
   }
 
-  def direction: Value = new Value(mob.direction)
+  def direction: Value = Value(mob.direction)
 
   /* Listen for events */
 
@@ -72,7 +72,7 @@ class Operator(override val runtime: Runtime, mob: Operable)
     val variable = name match {
       case Operable.X => new Variable(name, x)
       case Operable.Y => new Variable(name, y)
-      case Operable.SPEED => new Variable(name, new Value(mob.speed))
+      case Operable.SPEED => new Variable(name, Value(mob.speed))
       case Operable.DIRECTION => new Variable(name, direction)
       case _ =>
         // It's not a special variable, fetch it from normal memory

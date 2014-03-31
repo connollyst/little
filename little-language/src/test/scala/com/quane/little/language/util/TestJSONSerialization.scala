@@ -40,8 +40,8 @@ class TestJSONSerialization
   test("serialize block with steps") {
     val name = "block_with_values"
     val block = new Block(new Runtime())
-    block.addStep(new Value("abc"))
-    block.addStep(new Value(123))
+    block.addStep(Value("abc"))
+    block.addStep(Value(123))
     assertSerialization(json(name), block)
   }
 
@@ -49,37 +49,37 @@ class TestJSONSerialization
 
   test("serialize value blank") {
     val name = "value_blank"
-    val v = new Value("")
+    val v = Value("")
     assertSerialization(json(name), v)
   }
 
   test("serialize value string") {
     val name = "value_string"
-    val v = new Value("abc")
+    val v = Value("abc")
     assertSerialization(json(name), v)
   }
 
   test("serialize value integer") {
     val name = "value_integer"
-    val v = new Value(123)
+    val v = Value(123)
     assertSerialization(json(name), v)
   }
 
   test("serialize value double") {
     val name = "value_double"
-    val v = new Value(12.34d)
+    val v = Value(12.34d)
     assertSerialization(json(name), v)
   }
 
   test("serialize value boolean true") {
     val name = "value_boolean_true"
-    val v = new Value(true)
+    val v = Value(true)
     assertSerialization(json(name), v)
   }
 
   test("serialize value boolean false") {
     val name = "value_boolean_false"
-    val v = new Value(false)
+    val v = Value(false)
     assertSerialization(json(name), v)
   }
 
@@ -113,9 +113,10 @@ class TestJSONSerialization
     * @param expected the expected json
     * @param actual the actual json
     */
-  private def assertJSON(expected: String, actual: String) =
+  private def assertJSON(expected: String, actual: String) = {
+    println(actual)
     JSONAssert.assertEquals(expected, actual, false)
-
+  }
 
   /** Get the expected JSON given the name of the serialized object.
     *

@@ -16,7 +16,7 @@ class Evaluation(left: Expression,
   def evaluate: Value = {
     val l = left.evaluate
     val r = right.evaluate
-    new Value(
+    Value(
       operator match {
         case Equals => l equals r
         case NotEquals => !(l equals r)

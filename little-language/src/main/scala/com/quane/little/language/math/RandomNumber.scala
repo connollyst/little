@@ -1,8 +1,8 @@
 package com.quane.little.language.math
 
+import com.quane.little.language.Expression
 import com.quane.little.language.data.Value
 import scala.util.Random
-import com.quane.little.language.Expression
 
 /** A numeric value generated randomly within the specified range, inclusive.
   *
@@ -12,7 +12,7 @@ import com.quane.little.language.Expression
 class RandomNumber(low: Value, high: Value)
   extends Expression {
 
-  override def evaluate: Value = new Value(low.asInt + Random.nextInt(high.asInt - low.asInt + 1))
+  override def evaluate: Value = Value(low.asInt + Random.nextInt(high.asInt - low.asInt + 1))
 
 }
 

@@ -1,15 +1,15 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.Value
+import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
 
 @RunWith(classOf[JUnitRunner])
 class TestTest extends FunSuite {
 
-  val t = new Value(true)
-  val f = new Value(false)
+  val t = Value(true)
+  val f = Value(false)
 
   // Test AND
   test("t && t == t") {

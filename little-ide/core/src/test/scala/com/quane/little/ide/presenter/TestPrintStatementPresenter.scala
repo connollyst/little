@@ -1,15 +1,15 @@
 package com.quane.little.ide.presenter
 
-import org.scalatest.FunSuite
-import org.scalatest.mock.MockitoSugar
 import com.quane.little.ide.view._
-import org.mockito.Mockito._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.data.Value
 import com.quane.little.language.{Expression, FunctionReference, Scope, GetStatement}
-import scala.Predef._
+import org.junit.runner.RunWith
 import org.mockito.Matchers.{eq => the}
+import org.mockito.Mockito._
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.mock.MockitoSugar
+import scala.Predef._
 
 @RunWith(classOf[JUnitRunner])
 class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
@@ -17,7 +17,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   test("test value is set") {
     val view = new MockPrintStatementView
     val presenter = new PrintStatementPresenter(view)
-    presenter.expression = new Value("text")
+    presenter.expression = Value("text")
     val valuePresenter = presenter.expression.asInstanceOf[ValuePresenter[_ <: ValueView]]
     assert(valuePresenter.value == "text")
   }
@@ -94,7 +94,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   /* Test Compilation */
 
   test("should compile print(value expression)") {
-    assertCompiledValue(new Value("text"))
+    assertCompiledValue(Value("text"))
   }
 
   test("should compile print(get expression)") {

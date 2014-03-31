@@ -1,11 +1,11 @@
 package com.quane.little.language
 
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.FunSuite
-import com.quane.little.language.memory.Pointer
-import com.quane.little.language.data.Value
 import com.quane.little.language.TestStatement._
+import com.quane.little.language.data.Value
+import com.quane.little.language.memory.Pointer
+import org.junit.runner.RunWith
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class TestStatement extends FunSuite {
@@ -14,7 +14,7 @@ class TestStatement extends FunSuite {
 
   test("test set simple value") {
     val block = new Block(new Runtime)
-    val set = new SetStatement(block, "Obj1", new Value("A"))
+    val set = new SetStatement(block, "Obj1", Value("A"))
     assertSet("Obj1", "A", block, set)
   }
   test("test set simple string") {
@@ -43,7 +43,7 @@ class TestStatement extends FunSuite {
   test("test set pointer with value") {
     val block = new Block(new Runtime)
     val pointer = new Pointer(block, "Obj1")
-    val set = new SetStatement(pointer, new Value("A"))
+    val set = new SetStatement(pointer, Value("A"))
     assertSet("Obj1", "A", block, set)
   }
   test("test set pointer with string value") {
@@ -75,7 +75,7 @@ class TestStatement extends FunSuite {
 
   test("test get with implicit pointer") {
     val block = new Block(new Runtime)
-    block.scope.save("Obj1", new Value("A"))
+    block.scope.save("Obj1", Value("A"))
     val get = new GetStatement(block, "Obj1")
     assertGet("Obj1", "A", block, get)
   }
@@ -84,7 +84,7 @@ class TestStatement extends FunSuite {
 
   test("test get with explicit pointer") {
     val block = new Block(new Runtime)
-    block.scope.save("Obj1", new Value("A"))
+    block.scope.save("Obj1", Value("A"))
     val pointer = new Pointer(block, "Obj1")
     val get = new GetStatement(pointer)
     assertGet("Obj1", "A", block, get)

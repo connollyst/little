@@ -1,14 +1,14 @@
 package com.quane.little.ide.presenter
 
-import org.scalatest.FunSuite
-import org.scalatest.mock.MockitoSugar
 import com.quane.little.ide.view._
-import org.mockito.Mockito._
-import org.mockito.Matchers._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import com.quane.little.language._
 import com.quane.little.language.data.Value
+import org.junit.runner.RunWith
+import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestSetStatementPresenter extends FunSuite with MockitoSugar {
@@ -88,7 +88,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val valuePresenter = new ValuePresenter(new MockValueView)
     when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
-    presenter.value = new Value("x")
+    presenter.value = Value("x")
     verify(view).createValueStatement()
   }
 
@@ -97,7 +97,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val valuePresenter = new ValuePresenter(new MockValueView)
     when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
-    presenter.value = new Value("x")
+    presenter.value = Value("x")
     assert(presenter.value == valuePresenter)
   }
 
@@ -106,7 +106,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val valuePresenter = mock[ValuePresenter[ValueView]]
     when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
-    val value = new Value("x")
+    val value = Value("x")
     presenter.value = value
     verify(valuePresenter).initialize(value)
   }
@@ -175,7 +175,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val valuePresenter = new ValuePresenter(new MockValueView)
     when[ValuePresenter[_]](view.createValueStatement())
       .thenReturn(valuePresenter)
-    val value = new Value("text")
+    val value = Value("text")
     presenter.value = value
     val compiled = presenter.compile(mock[Scope])
     assert(compiled.value == value)

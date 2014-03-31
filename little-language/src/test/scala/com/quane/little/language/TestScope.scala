@@ -1,9 +1,9 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.{Value, Variable}
-import org.scalatest.junit.JUnitRunner
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
 
 /** Tests for the [[com.quane.little.language.Scope]] trait.
   *
@@ -15,8 +15,8 @@ class TestScope extends FunSuite {
   test("test scope: fetch from parent scope") {
     val fun1 = new Block(new Runtime)
     val fun2 = new Block(fun1)
-    fun1.save(new Variable("Obj1", new Value("A")))
-    fun2.save(new Variable("Obj2", new Value("B")))
+    fun1.save(new Variable("Obj1", Value("A")))
+    fun2.save(new Variable("Obj2", Value("B")))
     val obj1 = fun2.fetch("Obj1")
     val obj2 = fun2.fetch("Obj2")
     val obj1Value = obj1.value.primitive
@@ -27,7 +27,7 @@ class TestScope extends FunSuite {
 
   test("test scope: is defined: positive") {
     val fun1 = new Block(new Runtime)
-    fun1.save(new Variable("Obj1", new Value("A")))
+    fun1.save(new Variable("Obj1", Value("A")))
     val defined = fun1.isDefined("Obj1")
     assert(defined, "expected 'Obj1' to be defined")
   }
@@ -40,9 +40,9 @@ class TestScope extends FunSuite {
 
   test("test scope: update value in parent scope") {
     val fun1 = new Block(new Runtime)
-    fun1.save(new Variable("Obj1", new Value("A")))
+    fun1.save(new Variable("Obj1", Value("A")))
     val fun2 = new Block(fun1)
-    fun2.save(new Variable("Obj1", new Value("B")))
+    fun2.save(new Variable("Obj1", Value("B")))
     val obj1 = fun1.fetch("Obj1")
     assert(obj1.value == "B", "expected 'Obj1' in upper scope to be 'B'")
   }

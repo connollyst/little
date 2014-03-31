@@ -1,9 +1,9 @@
 package com.quane.little.language
 
-import com.quane.little.language.memory.Pointer
-import com.quane.little.language.data.Value
 import com.google.common.base.Objects
 import com.quane.little.Logging
+import com.quane.little.language.data.Value
+import com.quane.little.language.memory.Pointer
 
 abstract class Statement
   extends Expression
@@ -12,16 +12,16 @@ class SetStatement(pointer: Pointer, val value: Expression)
   extends Statement {
 
   def this(pointer: Pointer, value: String) =
-    this(pointer, new Value(value))
+    this(pointer, Value(value))
 
   def this(pointer: Pointer, value: Boolean) =
-    this(pointer, new Value(value))
+    this(pointer, Value(value))
 
   def this(pointer: Pointer, value: Int) =
-    this(pointer, new Value(value))
+    this(pointer, Value(value))
 
   def this(pointer: Pointer, value: Double) =
-    this(pointer, new Value(value))
+    this(pointer, Value(value))
 
   def this(scope: Scope, name: String, value: Expression) =
     this(new Pointer(scope, name), value)
@@ -89,7 +89,7 @@ class PrintStatement(val value: Expression)
   extends Statement
   with Logging {
 
-  def this(value: String) = this(new Value(value))
+  def this(value: String) = this(Value(value))
 
   def evaluate: Value = {
     val text = value.evaluate

@@ -1,18 +1,18 @@
 package com.quane.little.language
 
-import org.scalatest.{BeforeAndAfter, FunSuite}
-import org.scalatest.junit.JUnitRunner
-import org.junit.runner.RunWith
 import com.quane.little.language.data.Value
 import com.quane.little.language.memory.Pointer
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.{BeforeAndAfter, FunSuite}
 
 @RunWith(classOf[JUnitRunner])
 class TestConditional extends FunSuite with BeforeAndAfter {
 
   private val name = "VariableName"
   private val value = "VariableValue"
-  private val positive = new Value(true)
-  private val negative = new Value(false)
+  private val positive = Value(true)
+  private val negative = Value(false)
 
   /** The conditional test evaluates to true; the expression should be evaluated.
     */
@@ -33,7 +33,7 @@ class TestConditional extends FunSuite with BeforeAndAfter {
   private def createTestBlock: Block = {
     val fun = new Block(new Runtime)
     val pointer = new Pointer(fun, name)
-    fun.addStep(new SetStatement(pointer, new Value(value)))
+    fun.addStep(new SetStatement(pointer, Value(value)))
   }
 
 }
