@@ -1,5 +1,6 @@
 package com.quane.little.language
 
+import com.fasterxml.jackson.annotation.JsonCreator
 import com.google.common.base.Objects
 import com.quane.little.language.data.Value
 import scala.collection.mutable.ListBuffer
@@ -15,6 +16,7 @@ class Block(parent: Option[Scope] = None, _steps: ListBuffer[Expression] = ListB
   def this(scope: Scope) = this(Some(scope))
 
   // TODO this constructor shouldn't be necessary
+  @JsonCreator
   def this() = this(None, ListBuffer[Expression]())
 
   def length: Int = _steps.length

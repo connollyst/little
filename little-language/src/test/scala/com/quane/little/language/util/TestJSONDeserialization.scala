@@ -30,6 +30,13 @@ class TestJSONDeserialization extends FlatSpec with ShouldMatchers {
     block.getClass should be(classOf[Block])
   }
 
+  // TODO fails
+  //  it should "deserialize block with values" in {
+  //    val name = "block_with_values"
+  //    val block = deserialize[Block](name)
+  //    block.getClass should be(classOf[Block])
+  //  }
+
   /* Values */
 
   it should "deserialize value blank" in {
