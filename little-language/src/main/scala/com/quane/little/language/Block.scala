@@ -14,6 +14,9 @@ class Block(parent: Option[Scope] = None, _steps: ListBuffer[Expression] = ListB
 
   def this(scope: Scope) = this(Some(scope))
 
+  // TODO this constructor shouldn't be necessary
+  def this() = this(None, ListBuffer[Expression]())
+
   def length: Int = _steps.length
 
   def steps: List[Expression] = _steps.toList

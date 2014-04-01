@@ -18,7 +18,7 @@ import scala.collection.mutable
   *
   * @author Sean Connolly
   */
-abstract class Scope(private var parent: Option[Scope] = None) {
+abstract class Scope(@transient private var parent: Option[Scope] = None) {
 
   def this(parent: Scope) = this(Some(parent))
 
