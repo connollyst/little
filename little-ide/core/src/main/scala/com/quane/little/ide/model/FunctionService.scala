@@ -13,7 +13,7 @@ object FunctionService {
 
   def fetchReference(name: String): FunctionReference = {
     val definition = fetchDefinition(name)
-    val reference = new FunctionReference(new Runtime, definition.name)
+    val reference = new FunctionReference(definition.name, new Runtime)
     definition.params foreach {
       param =>
       // TODO parameters should have default values

@@ -1,12 +1,12 @@
 package com.quane.little.ide.presenter
 
-import org.scalatest.FunSuite
-import org.scalatest.mock.MockitoSugar
 import com.quane.little.ide.view._
-import org.mockito.Mockito._
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import com.quane.little.language._
+import org.junit.runner.RunWith
+import org.mockito.Mockito._
+import org.scalatest.FunSuite
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends FunSuite with MockitoSugar {
@@ -116,7 +116,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
-    presenter.add(new FunctionReference(mock[Scope], "funName"))
+    presenter.add(new FunctionReference("funName", mock[Scope]))
     verify(view).addFunctionReference()
   }
 
@@ -125,7 +125,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
-    presenter.add(new FunctionReference(mock[Scope], "funName"))
+    presenter.add(new FunctionReference("funName", mock[Scope]))
     assert(presenter.steps.contains(functionPresenter))
   }
 
@@ -134,7 +134,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
-    val statement = new FunctionReference(mock[Scope], "funName")
+    val statement = new FunctionReference("funName", mock[Scope])
     presenter.add(statement)
     verify(functionPresenter).initialize(statement)
   }

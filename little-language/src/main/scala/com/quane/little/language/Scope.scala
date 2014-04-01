@@ -18,19 +18,33 @@ import scala.collection.mutable
   *
   * @author Sean Connolly
   */
-trait Scope {
+abstract class Scope(private var parent: Option[Scope] = None) {
+
+  def this(parent: Scope) = this(Some(parent))
 
   private val variables = mutable.Map[String, Variable]()
 
+  def scope: Scope = this
+
+  // TODO replace Jackson annotation with @transient for looser coupling
+
   @JsonIgnore
-  var scope: Scope
+  def parentScope: Scope =
+    parent match {
+      case Some(scope) if scope != this => scope
+      case Some(scope) => throw new IllegalAccessException("Parent scope is self for " + this)
+      case None => throw new IllegalAccessException("No parent scope for " + this)
+    }
+
+  @JsonIgnore
+  def parentScope_=(scope: Scope): Unit = parent = Some(scope)
 
   /** Returns the current runtime.
     *
     * @return the current runtime.
     */
   // TODO should we make sure that the parent scope is different?
-  def runtime: Runtime = scope.runtime
+  def runtime: Runtime = parentScope.runtime
 
   /** Stores the given [[com.quane.little.language.data.Variable]].
     *
@@ -55,10 +69,9 @@ trait Scope {
     */
   def save(variable: Variable) {
     val name = variable.name
-    if (scope != null && scope.isDefined(name)) {
-      scope.save(variable)
-    } else {
-      variables(name) = variable
+    parent match {
+      case Some(scope) if scope.isDefined(name) => scope.save(variable)
+      case _ => variables(name) = variable
     }
   }
 
@@ -74,10 +87,11 @@ trait Scope {
   def fetch(name: String): Variable = {
     if (variables.contains(name)) {
       variables(name)
-    } else if (scope != null && scope != this) {
-      scope.fetch(name)
     } else {
-      new Variable(name, new Nada)
+      parent match {
+        case Some(scope) if scope != this => scope.fetch(name)
+        case _ => new Variable(name, new Nada)
+      }
     }
   }
 

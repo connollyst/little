@@ -14,7 +14,7 @@ class TestFunction extends FunSuite {
     fun.addStep(new PrintStatement(Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
-    val ref = new FunctionReference(runtime, "myFun")
+    val ref = new FunctionReference("myFun", runtime)
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
@@ -25,7 +25,7 @@ class TestFunction extends FunSuite {
     fun.addStep(new SetStatement(pointer, Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
-    val ref = new FunctionReference(runtime, "myFun")
+    val ref = new FunctionReference("myFun", runtime)
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
@@ -37,7 +37,7 @@ class TestFunction extends FunSuite {
     fun.addStep(new GetStatement(pointer))
     val runtime = new Runtime
     runtime.saveFunction(fun)
-    val ref = new FunctionReference(runtime, "myFun")
+    val ref = new FunctionReference("myFun", runtime)
     val obj = ref.evaluate
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }

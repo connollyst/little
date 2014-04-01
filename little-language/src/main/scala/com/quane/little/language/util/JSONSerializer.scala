@@ -2,8 +2,10 @@ package com.quane.little.language.util
 
 import com.fasterxml.jackson.core.`type`.TypeReference
 import com.fasterxml.jackson.databind.ObjectMapper
+import com.fasterxml.jackson.databind.introspect.{Annotated, AnnotatedMember, JacksonAnnotationIntrospector}
 import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import java.lang.reflect.{Type, ParameterizedType}
+import scala.collection.JavaConversions._
 
 /** Wra
   *
@@ -11,8 +13,9 @@ import java.lang.reflect.{Type, ParameterizedType}
   */
 object JSONSerializer {
 
-  val mapper = new ObjectMapper()
+  val mapper: ObjectMapper = new ObjectMapper()
   mapper.registerModule(DefaultScalaModule)
+  mapper.setAnnotationIntrospector(new AnnotationIntrospector)
 
   def serialize(value: Any): String = {
     import java.io.StringWriter
@@ -39,6 +42,24 @@ object JSONSerializer {
 
       def getOwnerType = null
     }
+  }
+
+}
+
+class AnnotationIntrospector
+  extends JacksonAnnotationIntrospector {
+
+  override def hasIgnoreMarker(m: AnnotatedMember): Boolean = {
+    println("Looking for ignore marker: " + m)
+    hasTransientAnnotation(m)
+    super.hasIgnoreMarker(m)
+  }
+
+  private def hasTransientAnnotation(a: Annotated): Boolean = {
+    a.annotations() foreach {
+      annotation => println("   " + annotation)
+    }
+    false
   }
 
 }

@@ -78,7 +78,7 @@ object Functions {
     val north = Value(270)
     val south = Value(90)
     val isNorth = new Evaluation(myDirection, Equals, north)
-    val turnSouth = new FunctionReference(fun, "turn").addArg("direction", south)
+    val turnSouth = new FunctionReference("turn", fun).addArg("direction", south)
     val turnSouthIfNorth = new Conditional(fun, isNorth).addStep(turnSouth)
     fun.addStep(turnSouthIfNorth)
     // Step #2: Remember _Home_ is _Here_
@@ -87,7 +87,7 @@ object Functions {
     fun.addStep(new SetStatement(homeXPointer, myX))
     fun.addStep(new SetStatement(homeYPointer, myY))
     // Step #3: Set speed to 10
-    fun.addStep(new FunctionReference(fun, "move").addArg("speed", Value(10)))
+    fun.addStep(new FunctionReference("move", fun).addArg("speed", Value(10)))
   }
 
   def printDirection: FunctionDefinition = {

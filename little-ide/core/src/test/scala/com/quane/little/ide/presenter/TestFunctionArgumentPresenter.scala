@@ -95,7 +95,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
   }
 
   test("should compile print(function reference)") {
-    assertCompiledValue(new FunctionReference(mock[Scope], "funName"))
+    assertCompiledValue(new FunctionReference("funName", mock[Scope]))
   }
 
   private def assertCompiledValue(value: Expression) = {

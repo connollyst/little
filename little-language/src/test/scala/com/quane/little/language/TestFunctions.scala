@@ -12,7 +12,7 @@ class TestFunctions extends FunSuite {
     val runtime = new Runtime
     runtime.saveFunction(Functions.move)
     val guy = new Operator(runtime, new StubOperable)
-    new FunctionReference(guy, "move")
+    new FunctionReference("move", guy)
       .addArg("speed", Value(42))
       .evaluate
     assertSpeed(42, guy)
@@ -23,7 +23,7 @@ class TestFunctions extends FunSuite {
     runtime.saveFunction(Functions.stop)
     val guy = new Operator(runtime, new StubOperable)
     guy.speed(42)
-    new FunctionReference(guy, "stop")
+    new FunctionReference("stop", guy)
       .evaluate
     assertSpeed(0, guy)
   }
@@ -33,7 +33,7 @@ class TestFunctions extends FunSuite {
     runtime.saveFunction(Functions.turn)
     val guy = new Operator(runtime, new StubOperable)
     guy.direction(Value(137))
-    new FunctionReference(guy, "turn")
+    new FunctionReference("turn", guy)
       .addArg("direction", Value(42))
       .evaluate
     val dir = guy.direction.asInt
@@ -45,7 +45,7 @@ class TestFunctions extends FunSuite {
     runtime.saveFunction(Functions.turnRelative)
     val guy = new Operator(runtime, new StubOperable)
     guy.direction(Value(137))
-    val fun = new FunctionReference(guy, "turnRelative")
+    val fun = new FunctionReference("turnRelative", guy)
       .addArg("degrees", Value(60))
     fun.evaluate // 137 + 60 = 197
     fun.evaluate // 197 + 60 = 257

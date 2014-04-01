@@ -39,27 +39,21 @@ class EntityFactory(game: Game) {
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnSpawn,
-        new FunctionReference(mob.operator, "move")
+        new FunctionReference("move", mob.operator)
           .addArg("speed", Value(5))
       )
     )
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnContact,
-        new FunctionReference(mob.operator, "turnRelative")
+        new FunctionReference("turnRelative", mob.operator)
           .addArg("degrees", Value(260))
       )
     )
-    //    mob.operator.addEventListener(
-    //      new EventListener(
-    //        LittleEvent.OnFoodNearby,
-    //        new FunctionReference(mob.operator, "turn")
-    //      )
-    //    )
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnFoodConsumed,
-        new FunctionReference(mob.operator, "turn")
+        new FunctionReference("turn", mob.operator)
       )
     )
     game.eventBus.report(mob, LittleEvent.OnSpawn)

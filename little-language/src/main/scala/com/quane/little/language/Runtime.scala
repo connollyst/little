@@ -5,8 +5,11 @@ import scala.collection.mutable
 class Runtime
   extends Scope {
 
-  @transient
-  override var scope: Scope = this
+  // @transient override var parent: Option[Scope] = Some(this)
+  override def parentScope = this
+
+  override def parentScope_=(parent: Scope) =
+    throw new IllegalAccessException("Cannot set parent scope of " + this)
 
   /** Returns the current runtime; always this.
     *
@@ -16,9 +19,10 @@ class Runtime
 
   private val functions = mutable.Map[String, FunctionDefinition]()
 
-  def isFunctionDefined(name: String): Boolean = functions.contains(name)
+  def containsFunction(name: String) = functions.contains(name)
 
-  def saveFunction(function: FunctionDefinition) = functions(function.name) = function
+  def saveFunction(function: FunctionDefinition) =
+    functions += (function.name -> function)
 
   /** Returns the named [[com.quane.little.language.FunctionDefinition]].
     *

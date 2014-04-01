@@ -68,8 +68,7 @@ class GetStatement(pointer: Pointer)
   def name: String = pointer.variableName
 
   def evaluate: Value = {
-    val name = pointer.variableName
-    val variable = pointer.scope.fetch(name)
+    val variable = pointer.resolve()
     variable.value
   }
 

@@ -83,7 +83,7 @@ class TestJSONSerialization
 
   test("serialize function reference") {
     val name = "function_reference_blank"
-    val fun = new FunctionReference(new Runtime(), name)
+    val fun = new FunctionReference(name, new Runtime())
     assertSerialization(getJSON(name), fun)
   }
 

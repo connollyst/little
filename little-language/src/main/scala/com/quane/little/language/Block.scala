@@ -9,11 +9,10 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class Block(@transient override var scope: Scope, _steps: ListBuffer[Expression])
-  extends Expression
-  with Scope {
+class Block(parent: Option[Scope] = None, _steps: ListBuffer[Expression] = ListBuffer[Expression]())
+  extends Scope(parent) with Expression {
 
-  def this(scope: Scope) = this(scope, ListBuffer[Expression]())
+  def this(scope: Scope) = this(Some(scope))
 
   def length: Int = _steps.length
 

@@ -22,7 +22,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
   test("should initialize name") {
     val view = mock[FunctionReferenceView]
     val presenter = new FunctionReferencePresenter(view)
-    val function = new FunctionReference(mock[Scope], "funName")
+    val function = new FunctionReference("funName", mock[Scope])
     presenter.initialize(function)
     assert(presenter.name == "funName")
   }
@@ -30,7 +30,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
   test("should initialize arguments") {
     val view = mock[FunctionReferenceView]
     val presenter = new FunctionReferencePresenter(view)
-    val function = new FunctionReference(mock[Scope], "funName")
+    val function = new FunctionReference("funName", mock[Scope])
       .addArg("a", Value(42))
       .addArg("b", Value("x"))
       .addArg("c", Value(true))
@@ -48,11 +48,11 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
     verify(view).registerViewPresenter(presenter)
   }
 
-  test("should compile with scope") {
+  test("should compile with parent scope") {
     val scope = new Runtime
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     val function = presenter.compile(scope)
-    assert(function.scope == scope)
+    assert(function.parentScope == scope)
   }
 
   test("should compile with name (default)") {
@@ -72,7 +72,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
   test("should compile with 0 parameters (initialized)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
       .initialize(
-        new FunctionReference(mock[Scope], "my name")
+        new FunctionReference("my name", mock[Scope])
       )
     val function = presenter.compile(new Runtime)
     assert(function.args.size == 0)
@@ -81,7 +81,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
   test("should compile with 1 parameters (initialized)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
       .initialize(
-        new FunctionReference(mock[Scope], "my name")
+        new FunctionReference("my name", mock[Scope])
           .addArg("x", Value("y"))
       )
     val function = presenter.compile(new Runtime)
@@ -91,7 +91,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
   test("should compile with 2 parameters (initialized)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
       .initialize(
-        new FunctionReference(mock[Scope], "my name")
+        new FunctionReference("my name", mock[Scope])
           .addArg("a", Value("x"))
           .addArg("b", Value("y"))
       )

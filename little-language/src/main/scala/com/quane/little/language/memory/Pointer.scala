@@ -1,6 +1,7 @@
 package com.quane.little.language.memory
 
 import com.quane.little.language.Scope
+import com.quane.little.language.data.Variable
 
 /** Represents a pointer to a variable in memory.<br/>
   * Of course, this is not a real pointer to real memory. Instead, it is used
@@ -15,6 +16,10 @@ import com.quane.little.language.Scope
   *
   * @author Sean Connolly
   */
-class Pointer(val scope: Scope, val variableName: String)
+class Pointer(val scope: Scope, val variableName: String) {
 
-// TODO if the constructor requires a value, we can avoid nulls!
+  // TODO if the constructor requires a value, we can avoid nulls!
+
+  def resolve(): Variable = scope.fetch(variableName)
+
+}

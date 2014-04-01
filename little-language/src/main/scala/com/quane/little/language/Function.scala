@@ -10,10 +10,8 @@ import scala.collection.mutable.ListBuffer
   *
   * @param name the function name
   */
-class FunctionDefinition(@transient override var scope: Scope, val name: String)
+class FunctionDefinition(val name: String)
   extends Scope {
-
-  def this(name: String) = this(null, name)
 
   private val _params = new ListBuffer[FunctionParameter]
   private val block = new Block(this)
@@ -94,12 +92,13 @@ class FunctionParameter(val name: String) {
 
 /** Reference to a [[com.quane.little.language.Block]].
   *
-  * @param scope the scope in which the function is evaluated
+  * @param scope the scope in which the function reference is evaluated
   * @param name the name of the function
   */
-class FunctionReference(@transient override var scope: Scope, val name: String)
-  extends Expression
-  with Scope {
+class FunctionReference(val name: String, scope: Scope)
+  extends Scope(scope) with Expression {
+
+  // TODO _is_ a function reference really a scope, or does it just have one?
 
   val args = mutable.Map[String, Expression]()
 
@@ -115,10 +114,10 @@ class FunctionReference(@transient override var scope: Scope, val name: String)
    * @return the function's return value
    */
   override def evaluate: Value = {
-    val definition = scope.runtime.fetchFunction(name)
-    if (scope != definition) {
-      // TODO is this correct? where to args go?
-      definition.scope = scope
+    val definition = runtime.fetchFunction(name)
+    if (parentScope != definition) {
+      // TODO is this correct? where do args go?
+      definition.parentScope = parentScope
     }
     definition.evaluate(args.toMap)
   }

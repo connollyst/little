@@ -144,7 +144,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
-    presenter.value = new FunctionReference(mock[Scope], "funName")
+    presenter.value = new FunctionReference("funName", mock[Scope])
     verify(view).createFunctionReference()
   }
 
@@ -153,7 +153,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
-    presenter.value = new FunctionReference(mock[Scope], "funName")
+    presenter.value = new FunctionReference("funName", mock[Scope])
     assert(presenter.value == functionPresenter)
   }
 
@@ -162,7 +162,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
-    val statement = new FunctionReference(mock[Scope], "funName")
+    val statement = new FunctionReference("funName", mock[Scope])
     presenter.value = statement
     verify(functionPresenter).initialize(statement)
   }
@@ -199,7 +199,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val valuePresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.createFunctionReference())
       .thenReturn(valuePresenter)
-    val value = new FunctionReference(mock[Scope], "funName")
+    val value = new FunctionReference("funName", mock[Scope])
     presenter.value = value
     val compiled = presenter.compile(mock[Scope])
     assert(compiled.value == value)

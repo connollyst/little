@@ -38,9 +38,9 @@ sealed trait Value
   def asDouble: Double
 
 
-  /** A value is an expression which evaluates to itself.
+  /** A value evaluates to itself.
     *
-    * @return this
+    * @return the value itself
     */
   def evaluate: Value = this
 
@@ -56,6 +56,7 @@ sealed trait Value
   }
 
   def compare(that: Value): Int = {
+    // TODO move to individual implementation classes
     // 1) If the values are the same primitive type, compare the primitives
     if (valueType == that.valueType) {
       return valueType match {
