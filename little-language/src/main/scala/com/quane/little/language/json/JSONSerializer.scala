@@ -1,4 +1,4 @@
-package com.quane.little.language.util
+package com.quane.little.language.json
 
 import com.fasterxml.jackson.core.JsonParser
 import com.fasterxml.jackson.core.`type`.TypeReference

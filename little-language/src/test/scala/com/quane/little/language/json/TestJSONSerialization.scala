@@ -1,8 +1,8 @@
-package com.quane.little.language.util
+package com.quane.little.language.json
 
 import com.quane.little.language._
 import com.quane.little.language.data.Value
-import com.quane.little.language.util.JSONTestUtilities._
+import com.quane.little.language.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner

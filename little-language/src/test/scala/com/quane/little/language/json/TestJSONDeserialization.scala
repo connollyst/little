@@ -1,7 +1,7 @@
-package com.quane.little.language.util
+package com.quane.little.language.json
 
 import com.quane.little.language.data._
-import com.quane.little.language.util.JSONTestUtilities._
+import com.quane.little.language.json.JSONTestUtilities._
 import com.quane.little.language.{Block, Runtime}
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers

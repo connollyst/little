@@ -1,7 +1,6 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.Value
-import com.quane.little.language.util.ScopeSnapshot
 import org.junit.Assert._
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers

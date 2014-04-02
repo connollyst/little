@@ -1,4 +1,4 @@
-package com.quane.little.language.util
+package com.quane.little.language.json
 
 import com.google.common.io.Files
 import com.quane.little.language.Expression
@@ -20,7 +20,7 @@ object JSONTestUtilities {
     * @param e the expression to serialize
     * @tparam E the type of expression being serialized
     */
-  private[util] def assertSerialization[E <: Expression](expected: String, e: E) =
+  private[json] def assertSerialization[E <: Expression](expected: String, e: E) =
     assertJSON(expected, JSONSerializer.serialize(e))
 
   /** Assert that the `actual` JSON matches the expected JSON.
@@ -28,7 +28,7 @@ object JSONTestUtilities {
     * @param expected the expected json
     * @param actual the actual json
     */
-  private[util] def assertJSON(expected: String, actual: String) = {
+  private[json] def assertJSON(expected: String, actual: String) = {
     println(actual)
     JSONAssert.assertEquals(expected, actual, false)
   }
@@ -41,7 +41,7 @@ object JSONTestUtilities {
     * @param name the name of the json file
     * @return the json
     */
-  private[util] def getJSON(name: String): String = {
+  private[json] def getJSON(name: String): String = {
     val path = "json/" + name + ".json"
     getClass.getClassLoader.getResource(path) match {
       case url: URL =>
