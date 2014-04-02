@@ -1,6 +1,5 @@
-package com.quane.little.language.memory
+package com.quane.little.language
 
-import com.quane.little.language.Scope
 import com.quane.little.language.data.{Value, Variable}
 
 /** Represents a pointer to a variable in memory.<br/>

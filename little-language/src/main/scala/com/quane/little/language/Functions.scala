@@ -2,7 +2,6 @@ package com.quane.little.language
 
 import com.quane.little.language.data.Value
 import com.quane.little.language.math._
-import com.quane.little.language.memory.Pointer
 
 
 /** A set functions used during development - mostly to sanity check the

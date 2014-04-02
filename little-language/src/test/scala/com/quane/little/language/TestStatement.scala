@@ -2,7 +2,6 @@ package com.quane.little.language
 
 import com.quane.little.language.TestStatement._
 import com.quane.little.language.data.Value
-import com.quane.little.language.memory.Pointer
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
