@@ -2,13 +2,16 @@ package com.quane.little.language
 
 import com.quane.little.language.data.Value
 import org.junit.Assert._
+import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
 /** Test cases for the [[Conditional]] expression.
   *
   * @author Sean Connolly
   */
+@RunWith(classOf[JUnitRunner])
 class TestConditional extends FlatSpec with ShouldMatchers {
 
   private val name = "OuterScopeVariable"
