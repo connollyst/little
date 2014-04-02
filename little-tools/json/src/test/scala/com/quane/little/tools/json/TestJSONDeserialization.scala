@@ -1,8 +1,8 @@
-package com.quane.little.language.json
+package com.quane.little.tools.json
 
 import com.quane.little.language.data._
-import com.quane.little.language.json.JSONTestUtilities._
 import com.quane.little.language.{Block, Runtime}
+import com.quane.little.tools.json.JSONTestUtilities._
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 
@@ -30,12 +30,11 @@ class TestJSONDeserialization extends FlatSpec with ShouldMatchers {
     block.getClass should be(classOf[Block])
   }
 
-  // TODO fails
-  //  it should "deserialize block with values" in {
-  //    val name = "block_with_values"
-  //    val block = deserialize[Block](name)
-  //    block.getClass should be(classOf[Block])
-  //  }
+  it should "deserialize block with values" in {
+    val name = "block_with_values"
+    val block = deserialize[Block](name)
+    block.getClass should be(classOf[Block])
+  }
 
   /* Values */
 
@@ -82,6 +81,6 @@ class TestJSONDeserialization extends FlatSpec with ShouldMatchers {
   }
 
   private def deserialize[T: Manifest](jsonName: String): T =
-    JSONSerializer.deserialize[T](getJSON(jsonName))
+    new JSONDeserializer().deserialize[T](getJSON(jsonName))
 
 }

@@ -1,4 +1,4 @@
-package com.quane.little.language.json
+package com.quane.little.tools.json
 
 import com.google.common.io.Files
 import com.quane.little.language.Expression
@@ -7,11 +7,10 @@ import java.net.URL
 import java.nio.charset.Charset
 import org.skyscreamer.jsonassert.JSONAssert
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** Utilities for testing JSON serialization.
+  *
+  * @author Sean Connolly
+  */
 object JSONTestUtilities {
 
   /** Serialize the [[Expression]] and assert the JSON looks as expected.
@@ -21,7 +20,7 @@ object JSONTestUtilities {
     * @tparam E the type of expression being serialized
     */
   private[json] def assertSerialization[E <: Expression](expected: String, e: E) =
-    assertJSON(expected, JSONSerializer.serialize(e))
+    assertJSON(expected, new JSONSerializer().serialize(e))
 
   /** Assert that the `actual` JSON matches the expected JSON.
     *

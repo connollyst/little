@@ -25,9 +25,9 @@ sealed trait Value
   extends Expression
   with Ordered[Value] {
 
-  private[language] val primitive: Any
+  val primitive: Any
 
-  private[language] def valueType: ValueType
+  def valueType: ValueType
 
   def asText: String
 

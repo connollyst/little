@@ -65,6 +65,7 @@
         <module>little-data</module>
         <module>little-ide</module>
         <module>little-game</module>
+        <module>little-tools</module>
     </modules>
 
     <properties>

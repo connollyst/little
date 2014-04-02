@@ -1,8 +1,8 @@
-package com.quane.little.language.json
+package com.quane.little.tools.json
 
 import com.quane.little.language._
 import com.quane.little.language.data.Value
-import com.quane.little.language.json.JSONTestUtilities._
+import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
@@ -20,7 +20,7 @@ class TestJSONSerialization
   test("serialize runtime") {
     val name = "runtime"
     val runtime = new Runtime()
-    val actual = JSONSerializer.serialize(runtime)
+    val actual = new JSONSerializer().serialize(runtime)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }
@@ -29,11 +29,17 @@ class TestJSONSerialization
 
   test("serialize block") {
     val name = "block"
-    val block = new Block
+    val block = new Block()
     assertSerialization(getJSON(name), block)
   }
 
-  test("serialize block with steps") {
+  test("serialize block 2") {
+    val name = "block"
+    val block = new Block()
+    assertSerialization(getJSON(name), block)
+  }
+
+  test("serialize block with values") {
     val name = "block_with_values"
     val block = new Block
     block.addStep(Value("abc"))
@@ -90,7 +96,7 @@ class TestJSONSerialization
   test("serialize function definition") {
     val name = "function_definition_blank"
     val fun = new FunctionDefinition(name)
-    val actual = JSONSerializer.serialize(fun)
+    val actual = new JSONSerializer().serialize(fun)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }
