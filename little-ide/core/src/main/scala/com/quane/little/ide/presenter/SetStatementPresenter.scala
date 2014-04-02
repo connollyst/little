@@ -2,10 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{SetStatementViewPresenter, SetStatementView}
 import com.quane.little.language._
-import com.quane.little.language.memory.Pointer
 import com.quane.little.language.data.Value
-import scala._
-import scala.Some
 
 /** Presenter for views representing a [[com.quane.little.language.SetStatement]].
   *
@@ -69,7 +66,6 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
 
   override def onValueChange(p: ExpressionPresenter) = _value = Some(p)
 
-  override def compile(scope: Scope): SetStatement =
-    new SetStatement(new Pointer(scope, _name), value.compile(scope))
+  override def compile: SetStatement = new SetStatement(_name, value.compile)
 
 }

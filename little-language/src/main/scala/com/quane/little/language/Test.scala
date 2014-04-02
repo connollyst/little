@@ -13,18 +13,18 @@ class Test(left: Expression,
            right: Expression)
   extends Expression {
 
-  def evaluate: Value = Value(isTrue)
+  override def evaluate(scope: Scope): Value = Value(isTrue(scope))
 
-  def isTrue: Boolean = {
-    val l = left.evaluate.asBool
-    val r = right.evaluate.asBool
+  def isTrue(scope: Scope): Boolean = {
+    val l = left.evaluate(scope).asBool
+    val r = right.evaluate(scope).asBool
     operator match {
       case AND => l && r
       case OR => l || r
     }
   }
 
-  def isFalse: Boolean = !isTrue
+  def isFalse(scope: Scope): Boolean = !isTrue(scope)
 
 }
 

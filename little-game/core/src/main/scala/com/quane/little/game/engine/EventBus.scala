@@ -2,14 +2,12 @@ package com.quane.little.game.engine
 
 import com.quane.little.game.entity.Mob
 import com.quane.little.language.event.LittleEvent
-import scala.collection.mutable.HashMap
-import scala.collection.mutable.MultiMap
-import scala.collection.mutable.Set
+import scala.collection.mutable
 
 class EventBus {
 
   // Events that have occurred and are waiting to be handled
-  val queue = new HashMap[Mob, Set[LittleEvent]]() with MultiMap[Mob, LittleEvent]
+  val queue = new mutable.HashMap[Mob, mutable.Set[LittleEvent]]() with mutable.MultiMap[Mob, LittleEvent]
 
   def report(mob: Mob, event: LittleEvent): Unit = queue.addBinding(mob, event)
 
@@ -24,7 +22,7 @@ class EventBus {
         events foreach (
           event => {
             mob.operator.getEventListeners(event) foreach (
-              listener => listener.evaluate
+              listener => listener.evaluate(mob.operator)
               )
           })
       })

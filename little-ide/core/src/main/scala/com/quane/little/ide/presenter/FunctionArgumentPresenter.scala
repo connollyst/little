@@ -1,15 +1,15 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.language.{FunctionReference, GetStatement, Expression, Scope}
-import com.quane.little.language.data.Value
 import com.quane.little.ide.view.{FunctionArgumentViewPresenter, FunctionArgumentView}
+import com.quane.little.language.data.Value
+import com.quane.little.language.{FunctionReference, GetStatement, Expression}
 
 /** A presenter for views representing a function reference argument.
   *
   * @author Sean Connolly
   */
 class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
-  extends FunctionArgumentViewPresenter {
+  extends ExpressionPresenter with FunctionArgumentViewPresenter {
 
   private var _name: String = ""
   private var _value: Option[ExpressionPresenter] = None
@@ -59,6 +59,6 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
 
   override def onValueChange(p: ExpressionPresenter) = _value = Some(p)
 
-  def compile(scope: Scope): Expression = value.compile(scope)
+  override def compile: Expression = value.compile
 
 }

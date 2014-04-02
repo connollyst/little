@@ -61,13 +61,13 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
 
   override def onParamAdded(param: FunctionParameterPresenter[_]) = this += param
 
-  override def compile(): FunctionDefinition = {
+  override def compile: FunctionDefinition = {
     val fun = new FunctionDefinition(_name)
     _params.foreach {
       param =>
-        fun.addParam(param.compile())
+        fun.addParam(param.compile)
     }
-    fun.steps = _block.compile(fun).steps // TODO this seems sloppy..?
+    fun.steps = _block.compile.steps // TODO this seems sloppy..?
     _repo.save(_name, fun) // TODO the name should be an id
     fun
   }

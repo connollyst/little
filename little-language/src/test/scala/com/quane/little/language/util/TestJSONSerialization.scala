@@ -29,13 +29,13 @@ class TestJSONSerialization
 
   test("serialize block") {
     val name = "block"
-    val block = new Block(new Runtime())
+    val block = new Block
     assertSerialization(getJSON(name), block)
   }
 
   test("serialize block with steps") {
     val name = "block_with_values"
-    val block = new Block(new Runtime())
+    val block = new Block
     block.addStep(Value("abc"))
     block.addStep(Value(123))
     assertSerialization(getJSON(name), block)
@@ -83,7 +83,7 @@ class TestJSONSerialization
 
   test("serialize function reference") {
     val name = "function_reference_blank"
-    val fun = new FunctionReference(name, new Runtime())
+    val fun = new FunctionReference(name)
     assertSerialization(getJSON(name), fun)
   }
 

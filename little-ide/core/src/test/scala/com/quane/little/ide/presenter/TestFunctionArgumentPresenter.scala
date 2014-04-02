@@ -91,11 +91,11 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
   }
 
   test("should compile print(get expression)") {
-    assertCompiledValue(new GetStatement(mock[Scope], "varName"))
+    assertCompiledValue(new GetStatement("varName"))
   }
 
   test("should compile print(function reference)") {
-    assertCompiledValue(new FunctionReference("funName", mock[Scope]))
+    assertCompiledValue(new FunctionReference("funName"))
   }
 
   private def assertCompiledValue(value: Expression) = {
@@ -108,7 +108,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     when[FunctionReferencePresenter[_]](view.createFunctionReference())
       .thenReturn(new FunctionReferencePresenter(new MockFunctionReferenceView))
     presenter.value = value
-    val compiled = presenter.compile(mock[Scope])
+    val compiled = presenter.compile
     assert(compiled == value)
   }
 
@@ -116,7 +116,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
     intercept[IllegalAccessException] {
-      presenter.compile(mock[Scope])
+      presenter.compile
     }
   }
 

@@ -32,7 +32,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val setPresenter = new SetStatementPresenter(new MockSetStatementView)
     when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
-    presenter.add(new SetStatement(mock[Scope], "x", "y"))
+    presenter.add(new SetStatement("x", "y"))
     verify(view).addSetStatement()
   }
 
@@ -41,7 +41,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val setPresenter = new SetStatementPresenter(new MockSetStatementView)
     when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
-    presenter.add(new SetStatement(mock[Scope], "x", "y"))
+    presenter.add(new SetStatement("x", "y"))
     assert(presenter.steps.contains(setPresenter))
   }
 
@@ -50,7 +50,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val setPresenter = mock[SetStatementPresenter[SetStatementView]]
     when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
-    val statement = new SetStatement(mock[Scope], "x", "y")
+    val statement = new SetStatement("x", "y")
     presenter.add(statement)
     verify(setPresenter).initialize(statement)
   }
@@ -60,7 +60,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val getPresenter = new GetStatementPresenter(new MockGetStatementView)
     when[GetStatementPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
-    presenter.add(new GetStatement(mock[Scope], "x"))
+    presenter.add(new GetStatement("x"))
     verify(view).addGetStatement()
   }
 
@@ -69,7 +69,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val getPresenter = new GetStatementPresenter(new MockGetStatementView)
     when[GetStatementPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
-    presenter.add(new GetStatement(mock[Scope], "x"))
+    presenter.add(new GetStatement("x"))
     assert(presenter.steps.contains(getPresenter))
   }
 
@@ -78,7 +78,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val getPresenter = mock[GetStatementPresenter[GetStatementView]]
     when[GetStatementPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
-    val statement = new GetStatement(mock[Scope], "x")
+    val statement = new GetStatement("x")
     presenter.add(statement)
     verify(getPresenter).initialize(statement)
   }
@@ -116,7 +116,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
-    presenter.add(new FunctionReference("funName", mock[Scope]))
+    presenter.add(new FunctionReference("funName"))
     verify(view).addFunctionReference()
   }
 
@@ -125,7 +125,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
-    presenter.add(new FunctionReference("funName", mock[Scope]))
+    presenter.add(new FunctionReference("funName"))
     assert(presenter.steps.contains(functionPresenter))
   }
 
@@ -134,7 +134,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
-    val statement = new FunctionReference("funName", mock[Scope])
+    val statement = new FunctionReference("funName")
     presenter.add(statement)
     verify(functionPresenter).initialize(statement)
   }

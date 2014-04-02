@@ -4,7 +4,6 @@ import com.quane.little.ide.view.{PrintStatementViewPresenter, PrintStatementVie
 import com.quane.little.language._
 import com.quane.little.language.data.Value
 import scala._
-import scala.Some
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *
@@ -61,10 +60,8 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
 
   /** Compile to a [[com.quane.little.language.PrintStatement]].
     *
-    * @param scope the scope in which to compile
     * @return the compiled print statement
     */
-  override def compile(scope: Scope): PrintStatement =
-    new PrintStatement(expression.compile(scope))
+  override def compile: PrintStatement = new PrintStatement(expression.compile)
 
 }

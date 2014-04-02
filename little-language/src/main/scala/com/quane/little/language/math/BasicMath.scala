@@ -1,7 +1,7 @@
 package com.quane.little.language.math
 
-import com.quane.little.language.Expression
 import com.quane.little.language.data.Value
+import com.quane.little.language.{Scope, Expression}
 
 sealed trait BasicMath
   extends Math
@@ -9,9 +9,9 @@ sealed trait BasicMath
 class Addition(a: Expression, b: Expression)
   extends BasicMath {
 
-  def evaluate: Value = {
-    val numberA = a.evaluate.asDouble
-    val numberB = b.evaluate.asDouble
+  override def evaluate(scope: Scope): Value = {
+    val numberA = a.evaluate(scope).asDouble
+    val numberB = b.evaluate(scope).asDouble
     Value(numberA + numberB)
   }
 
@@ -20,9 +20,9 @@ class Addition(a: Expression, b: Expression)
 class Subtraction(a: Expression, b: Expression)
   extends BasicMath {
 
-  def evaluate: Value = {
-    val numberA = a.evaluate.asDouble
-    val numberB = b.evaluate.asDouble
+  override def evaluate(scope: Scope): Value = {
+    val numberA = a.evaluate(scope).asDouble
+    val numberB = b.evaluate(scope).asDouble
     Value(numberA - numberB)
   }
 
@@ -31,9 +31,9 @@ class Subtraction(a: Expression, b: Expression)
 class Multiplication(a: Expression, b: Expression)
   extends BasicMath {
 
-  def evaluate: Value = {
-    val numberA = a.evaluate.asDouble
-    val numberB = b.evaluate.asDouble
+  override def evaluate(scope: Scope): Value = {
+    val numberA = a.evaluate(scope).asDouble
+    val numberB = b.evaluate(scope).asDouble
     Value(numberA * numberB)
   }
 
@@ -42,9 +42,9 @@ class Multiplication(a: Expression, b: Expression)
 class Division(a: Expression, b: Expression)
   extends BasicMath {
 
-  def evaluate: Value = {
-    val numberA = a.evaluate.asDouble
-    val numberB = b.evaluate.asDouble
+  override def evaluate(scope: Scope): Value = {
+    val numberA = a.evaluate(scope).asDouble
+    val numberB = b.evaluate(scope).asDouble
     Value(numberA / numberB)
   }
 

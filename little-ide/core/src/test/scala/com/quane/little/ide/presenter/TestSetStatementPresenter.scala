@@ -116,7 +116,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val getPresenter = new GetStatementPresenter(new MockGetStatementView)
     when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
-    presenter.value = new GetStatement(mock[Scope], "x")
+    presenter.value = new GetStatement("x")
     verify(view).createGetStatement()
   }
 
@@ -125,7 +125,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val getPresenter = new GetStatementPresenter(new MockGetStatementView)
     when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
-    presenter.value = new GetStatement(mock[Scope], "x")
+    presenter.value = new GetStatement("x")
     assert(presenter.value == getPresenter)
   }
 
@@ -134,7 +134,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val getPresenter = mock[GetStatementPresenter[GetStatementView]]
     when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
-    val statement = new GetStatement(mock[Scope], "x")
+    val statement = new GetStatement("x")
     presenter.value = statement
     verify(getPresenter).initialize(statement)
   }
@@ -144,7 +144,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
-    presenter.value = new FunctionReference("funName", mock[Scope])
+    presenter.value = new FunctionReference("funName")
     verify(view).createFunctionReference()
   }
 
@@ -153,7 +153,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
-    presenter.value = new FunctionReference("funName", mock[Scope])
+    presenter.value = new FunctionReference("funName")
     assert(presenter.value == functionPresenter)
   }
 
@@ -162,7 +162,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val presenter = new SetStatementPresenter(view)
     val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
-    val statement = new FunctionReference("funName", mock[Scope])
+    val statement = new FunctionReference("funName")
     presenter.value = statement
     verify(functionPresenter).initialize(statement)
   }
@@ -177,7 +177,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
       .thenReturn(valuePresenter)
     val value = Value("text")
     presenter.value = value
-    val compiled = presenter.compile(mock[Scope])
+    val compiled = presenter.compile
     assert(compiled.value == value)
   }
 
@@ -187,9 +187,9 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val valuePresenter = new GetStatementPresenter(new MockGetStatementView)
     when[GetStatementPresenter[_]](view.createGetStatement())
       .thenReturn(valuePresenter)
-    val value = new GetStatement(mock[Scope], "varName")
+    val value = new GetStatement("varName")
     presenter.value = value
-    val compiled = presenter.compile(mock[Scope])
+    val compiled = presenter.compile
     assert(compiled.value == value)
   }
 
@@ -199,9 +199,9 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val valuePresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     when[FunctionReferencePresenter[_]](view.createFunctionReference())
       .thenReturn(valuePresenter)
-    val value = new FunctionReference("funName", mock[Scope])
+    val value = new FunctionReference("funName")
     presenter.value = value
-    val compiled = presenter.compile(mock[Scope])
+    val compiled = presenter.compile
     assert(compiled.value == value)
   }
 
@@ -209,7 +209,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
     intercept[IllegalAccessException] {
-      presenter.compile(mock[Scope])
+      presenter.compile
     }
   }
 

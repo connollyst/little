@@ -10,11 +10,10 @@ import scala.collection.mutable.ListBuffer
   *
   * @param name the function name
   */
-class FunctionDefinition(val name: String)
-  extends Scope {
+class FunctionDefinition(val name: String) {
 
   private val _params = new ListBuffer[FunctionParameter]
-  private val block = new Block(this)
+  private val block = new Block
 
   def paramCount: Int = _params.length
 
@@ -51,10 +50,11 @@ class FunctionDefinition(val name: String)
     }
   }
 
-  def evaluate(args: immutable.Map[String, Expression]): Value = {
+  def evaluate(scope: Scope, args: immutable.Map[String, Expression]): Value = {
+    val functionScope = new Scope(scope)
     validateArguments(args)
-    setArguments(args)
-    block.evaluate
+    setArguments(functionScope, args)
+    block.evaluate(functionScope)
   }
 
   private def validateArguments(args: immutable.Map[String, Expression]) = {
@@ -62,12 +62,11 @@ class FunctionDefinition(val name: String)
     // TODO validate all arguments are appropriate for this definition
   }
 
-  private def setArguments(args: immutable.Map[String, Expression]) = {
+  private def setArguments(scope: Scope, args: immutable.Map[String, Expression]) = {
     // TODO Set arguments in Scope (NON RECURSIVELY)
     args.foreach {
       case (argName, argValue) =>
-        // TODO should we store args in the block's scope?
-        save(argName, argValue.evaluate)
+        scope.save(argName, argValue.evaluate(scope))
     }
   }
 
@@ -92,11 +91,10 @@ class FunctionParameter(val name: String) {
 
 /** Reference to a [[com.quane.little.language.Block]].
   *
-  * @param scope the scope in which the function reference is evaluated
   * @param name the name of the function
   */
-class FunctionReference(val name: String, scope: Scope)
-  extends Scope(scope) with Expression {
+class FunctionReference(val name: String)
+  extends Expression {
 
   // TODO _is_ a function reference really a scope, or does it just have one?
 
@@ -113,13 +111,9 @@ class FunctionReference(val name: String, scope: Scope)
    *
    * @return the function's return value
    */
-  override def evaluate: Value = {
-    val definition = runtime.fetchFunction(name)
-    if (parentScope != definition) {
-      // TODO is this correct? where do args go?
-      definition.parentScope = parentScope
-    }
-    definition.evaluate(args.toMap)
+  override def evaluate(scope: Scope): Value = {
+    val definition = scope.runtime.fetchFunction(name)
+    definition.evaluate(scope, args.toMap)
   }
 
   override def equals(that: Any) = that match {

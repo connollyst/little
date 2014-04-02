@@ -3,23 +3,15 @@ package com.quane.little.language
 import scala.collection.mutable
 
 class Runtime
-  extends Scope {
+  extends Scope(None) {
 
-  // @transient override var parent: Option[Scope] = Some(this)
-  override def parentScope = this
-
-  override def parentScope_=(parent: Scope) =
-    throw new IllegalAccessException("Cannot set parent scope of " + this)
+  private val functions = mutable.Map[String, FunctionDefinition]()
 
   /** Returns the current runtime; always this.
     *
     * @return the current runtime, this.
     */
   override def runtime = this
-
-  private val functions = mutable.Map[String, FunctionDefinition]()
-
-  def containsFunction(name: String) = functions.contains(name)
 
   def saveFunction(function: FunctionDefinition) =
     functions += (function.name -> function)
@@ -37,5 +29,7 @@ class Runtime
       throw new RuntimeException("No function '" + name + "' in scope.")
     }
   }
+
+  def containsFunction(name: String) = functions.contains(name)
 
 }

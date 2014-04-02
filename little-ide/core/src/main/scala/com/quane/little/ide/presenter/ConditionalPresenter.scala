@@ -1,8 +1,8 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ConditionalView, ConditionalViewPresenter}
-import com.quane.little.language.{Conditional, Expression, Scope}
 import com.quane.little.language.exceptions.NotImplementedError
+import com.quane.little.language.{Conditional, Expression}
 
 /** A presenter for views representing an [[com.quane.little.language.Conditional]].
   *
@@ -34,9 +34,7 @@ class ConditionalPresenter[V <: ConditionalView](view: V)
 
   private[presenter] def steps_=(steps: List[Expression]): Unit = _thenBlock.steps = steps
 
-  override def compile(scope: Scope): Conditional = {
-    // TODO the else block is not supported yet!!!
-    new Conditional(_condition.compile(scope), _thenBlock.compile(scope))
-  }
+  override def compile: Conditional =
+    new Conditional(_condition.compile, _thenBlock.compile, _elseBlock.compile)
 
 }

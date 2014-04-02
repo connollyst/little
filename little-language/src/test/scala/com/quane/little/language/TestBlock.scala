@@ -1,16 +1,27 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.{Nada, Value}
 import com.quane.little.language.memory.Pointer
+import com.quane.little.language.util.ScopeSnapshot
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 
+/** Test cases for the [[Block]] expression.
+  *
+  * @author Sean Connolly
+  */
 @RunWith(classOf[JUnitRunner])
-class TestBlock extends FunSuite {
+class TestBlock
+  extends FunSuite {
 
   test("test new block") {
-    new Block(new Runtime)
+    new Block
+  }
+
+  test("evaluate with no steps returns Nada") {
+    val output = new Block().evaluate(new Runtime)
+    assert(output.isInstanceOf[Nada])
   }
 
   /** Test evaluating a block where two objects are created.
@@ -18,12 +29,14 @@ class TestBlock extends FunSuite {
     * Assert their stored values are accurate.
     */
   test("test block with new values") {
-    val block = new Block(new Runtime)
-    block.addStep(new SetStatement(block, "Obj1", "A"))
-    block.addStep(new SetStatement(block, "Obj2", "B"))
-    block.evaluate
-    val obj1 = block.fetch("Obj1")
-    val obj2 = block.fetch("Obj2")
+    val snapshot = new ScopeSnapshot
+    val block = new Block
+    block.addStep(new SetStatement("Obj1", "A"))
+    block.addStep(new SetStatement("Obj2", "B"))
+    block.addStep(snapshot)
+    block.evaluate(new Runtime)
+    val obj1 = snapshot.scope.fetch("Obj1")
+    val obj2 = snapshot.scope.fetch("Obj2")
     val obj1Value = obj1.value.primitive
     val obj2Value = obj2.value.primitive
     assert(obj1Value == "A", "expected Obj1 to be 'A' but is: " + obj1Value)
@@ -36,15 +49,17 @@ class TestBlock extends FunSuite {
     * Assert their stored values are accurate.
     */
   test("test block with value assignment") {
-    val block = new Block(new Runtime)
-    val pointer1 = new Pointer(block, "Obj1")
-    val pointer2 = new Pointer(block, "Obj2")
+    val snapshot = new ScopeSnapshot
+    val block = new Block
+    val pointer1 = new Pointer("Obj1")
+    val pointer2 = new Pointer("Obj2")
     block.addStep(new SetStatement(pointer1, Value("A")))
     block.addStep(new SetStatement(pointer2, Value("B")))
     block.addStep(new SetStatement(pointer1, new GetStatement(pointer2)))
-    block.evaluate
-    val obj1 = block.fetch("Obj1")
-    val obj2 = block.fetch("Obj2")
+    block.addStep(snapshot)
+    block.evaluate(new Runtime)
+    val obj1 = snapshot.scope.fetch("Obj1")
+    val obj2 = snapshot.scope.fetch("Obj2")
     val obj1Value = obj1.value.primitive
     val obj2Value = obj2.value.primitive
     assert(obj1Value == "B", "expected Obj1 to be 'B' but is: " + obj1Value)
@@ -52,26 +67,26 @@ class TestBlock extends FunSuite {
   }
 
   test("test block with return from print statement") {
-    val block = new Block(new Runtime)
+    val block = new Block
     block.addStep(new PrintStatement(Value("A")))
-    val obj = block.evaluate
+    val obj = block.evaluate(new Runtime)
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test block with return from set statement") {
-    val block = new Block(new Runtime)
-    val pointer = new Pointer(block, "Obj")
+    val block = new Block
+    val pointer = new Pointer("Obj")
     block.addStep(new SetStatement(pointer, Value("A")))
-    val obj = block.evaluate
+    val obj = block.evaluate(new Runtime)
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test block with return from get statement") {
-    val block = new Block(new Runtime)
-    val pointer = new Pointer(block, "Obj")
+    val block = new Block
+    val pointer = new Pointer("Obj")
     block.addStep(new SetStatement(pointer, Value("A")))
     block.addStep(new GetStatement(pointer))
-    val obj = block.evaluate
+    val obj = block.evaluate(new Runtime)
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 

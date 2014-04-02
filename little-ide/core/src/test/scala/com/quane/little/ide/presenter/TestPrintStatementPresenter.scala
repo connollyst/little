@@ -2,14 +2,12 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
 import com.quane.little.language.data.Value
-import com.quane.little.language.{Expression, FunctionReference, Scope, GetStatement}
+import com.quane.little.language.{Expression, FunctionReference, GetStatement}
 import org.junit.runner.RunWith
-import org.mockito.Matchers.{eq => the}
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
-import scala.Predef._
 
 @RunWith(classOf[JUnitRunner])
 class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
@@ -98,11 +96,11 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   }
 
   test("should compile print(get expression)") {
-    assertCompiledValue(new GetStatement(mock[Scope], "varName"))
+    assertCompiledValue(new GetStatement("varName"))
   }
 
   test("should compile print(function reference)") {
-    assertCompiledValue(new FunctionReference("funName", mock[Scope]))
+    assertCompiledValue(new FunctionReference("funName"))
   }
 
   private def assertCompiledValue(value: Expression) = {
@@ -115,7 +113,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     when[FunctionReferencePresenter[_]](view.createFunctionReference())
       .thenReturn(new FunctionReferencePresenter(new MockFunctionReferenceView))
     presenter.expression = value
-    val compiled = presenter.compile(mock[Scope])
+    val compiled = presenter.compile
     assert(compiled.value == value)
   }
 
@@ -123,7 +121,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
     intercept[IllegalAccessException] {
-      presenter.compile(mock[Scope])
+      presenter.compile
     }
   }
 

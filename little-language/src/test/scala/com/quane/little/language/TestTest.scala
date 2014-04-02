@@ -13,30 +13,30 @@ class TestTest extends FunSuite {
 
   // Test AND
   test("t && t == t") {
-    assert(new Test(t, AND, t).isTrue)
+    assert(new Test(t, AND, t).isTrue(new Runtime))
   }
   test("f && f == f") {
-    assert(new Test(f, AND, f).isFalse)
+    assert(new Test(f, AND, f).isFalse(new Runtime))
   }
   test("t && f == f") {
-    assert(new Test(t, AND, f).isFalse)
+    assert(new Test(t, AND, f).isFalse(new Runtime))
   }
   test("f && t == f") {
-    assert(new Test(f, AND, t).isFalse)
+    assert(new Test(f, AND, t).isFalse(new Runtime))
   }
 
   // Test OR
   test("t || t == f") {
-    assert(new Test(t, OR, t).isTrue)
+    assert(new Test(t, OR, t).isTrue(new Runtime))
   }
   test("f || f == t") {
-    assert(new Test(f, OR, f).isFalse)
+    assert(new Test(f, OR, f).isFalse(new Runtime))
   }
   test("t || f == t") {
-    assert(new Test(t, OR, f).isTrue)
+    assert(new Test(t, OR, f).isTrue(new Runtime))
   }
   test("f || t == t") {
-    assert(new Test(f, OR, t).isTrue)
+    assert(new Test(f, OR, t).isTrue(new Runtime))
   }
 
 }

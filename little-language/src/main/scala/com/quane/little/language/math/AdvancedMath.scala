@@ -1,7 +1,7 @@
 package com.quane.little.language.math
 
-import com.quane.little.language.Expression
 import com.quane.little.language.data.Value
+import com.quane.little.language.{Scope, Expression}
 import scala.math._
 
 sealed trait AdvancedMath
@@ -10,8 +10,8 @@ sealed trait AdvancedMath
 class ArcTan(x: Expression)
   extends AdvancedMath {
 
-  def evaluate: Value = {
-    val numberA = x.evaluate.asInt
+  override def evaluate(scope: Scope): Value = {
+    val numberA = x.evaluate(scope).asInt
     Value(atan(numberA))
   }
 
@@ -20,9 +20,9 @@ class ArcTan(x: Expression)
 class ArcTan2(a: Expression, b: Expression)
   extends AdvancedMath {
 
-  def evaluate: Value = {
-    val numberA = a.evaluate.asInt
-    val numberB = b.evaluate.asInt
+  override def evaluate(scope: Scope): Value = {
+    val numberA = a.evaluate(scope).asInt
+    val numberB = b.evaluate(scope).asInt
     Value(atan2(numberA, numberB))
   }
 

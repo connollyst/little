@@ -1,23 +1,17 @@
 package com.quane.little.language
 
-import com.fasterxml.jackson.annotation.JsonCreator
 import com.google.common.base.Objects
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.{Nada, Value}
 import scala.collection.mutable.ListBuffer
 
 
-/** A block is a scope consisting of one or more expressions.
+/** An expression consisting of zero or more expressions, to be evaluated in
+  * sequence, within a new [[Scope]].
   *
   * @author Sean Connolly
   */
-class Block(parent: Option[Scope] = None, _steps: ListBuffer[Expression] = ListBuffer[Expression]())
-  extends Scope(parent) with Expression {
-
-  def this(scope: Scope) = this(Some(scope))
-
-  // TODO this constructor shouldn't be necessary
-  @JsonCreator
-  def this() = this(None, ListBuffer[Expression]())
+class Block(_steps: ListBuffer[Expression] = ListBuffer[Expression]())
+  extends Expression {
 
   def length: Int = _steps.length
 
@@ -37,7 +31,15 @@ class Block(parent: Option[Scope] = None, _steps: ListBuffer[Expression] = ListB
     this
   }
 
-  def evaluate: Value = _steps.map(step => step.evaluate).last
+  override def evaluate(scope: Scope): Value = {
+    val blockScope = new Scope(scope)
+    val stepOutput = _steps.map(_.evaluate(blockScope))
+    if (stepOutput.isEmpty) {
+      new Nada
+    } else {
+      stepOutput.last
+    }
+  }
 
   override def toString: String =
     Objects.toStringHelper(getClass)

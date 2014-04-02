@@ -23,27 +23,26 @@ class SetStatement(pointer: Pointer, val value: Expression)
   def this(pointer: Pointer, value: Double) =
     this(pointer, Value(value))
 
-  def this(scope: Scope, name: String, value: Expression) =
-    this(new Pointer(scope, name), value)
+  def this(name: String, value: Expression) =
+    this(new Pointer(name), value)
 
-  def this(scope: Scope, name: String, value: String) =
-    this(new Pointer(scope, name), value)
+  def this(name: String, value: String) =
+    this(new Pointer(name), value)
 
-  def this(scope: Scope, name: String, value: Boolean) =
-    this(new Pointer(scope, name), value)
+  def this(name: String, value: Boolean) =
+    this(new Pointer(name), value)
 
-  def this(scope: Scope, name: String, value: Int) =
-    this(new Pointer(scope, name), value)
+  def this(name: String, value: Int) =
+    this(new Pointer(name), value)
 
-  def this(scope: Scope, name: String, value: Double) =
-    this(new Pointer(scope, name), value)
+  def this(name: String, value: Double) =
+    this(new Pointer(name), value)
 
   def name: String = pointer.variableName
 
-  def evaluate: Value = {
-    val name = pointer.variableName
-    val actualValue = value.evaluate
-    pointer.scope.save(name, actualValue)
+  override def evaluate(scope: Scope): Value = {
+    val actualValue = value.evaluate(scope)
+    pointer.update(scope, actualValue)
     actualValue
   }
 
@@ -63,12 +62,12 @@ class SetStatement(pointer: Pointer, val value: Expression)
 class GetStatement(pointer: Pointer)
   extends Statement {
 
-  def this(scope: Scope, name: String) = this(new Pointer(scope, name))
+  def this(name: String) = this(new Pointer(name))
 
   def name: String = pointer.variableName
 
-  def evaluate: Value = {
-    val variable = pointer.resolve()
+  override def evaluate(scope: Scope): Value = {
+    val variable = pointer.resolve(scope)
     variable.value
   }
 
@@ -90,8 +89,8 @@ class PrintStatement(val value: Expression)
 
   def this(value: String) = this(Value(value))
 
-  def evaluate: Value = {
-    val text = value.evaluate
+  override def evaluate(scope: Scope): Value = {
+    val text = value.evaluate(scope)
     // TODO this should display a speech bubble over the guy
     error(text.asText)
     text

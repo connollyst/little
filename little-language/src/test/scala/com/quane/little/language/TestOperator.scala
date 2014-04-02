@@ -14,54 +14,55 @@ import org.scalatest.junit.JUnitRunner
 class TestOperator extends FunSuite {
 
 
-  test("test guy: functions can access my memory") {
-    val guy = new Operator(new Runtime, new StubOperable)
-    val fun1 = new Block(guy)
-    guy.save(new Variable("MyA", Value("A")))
-    val obj1 = fun1.fetch("MyA")
-    assert(obj1.value.primitive == "A", "expected 'MyA' to be 'A' but is: " + obj1.value)
+  test("blocks (sub scope) can access operator memory") {
+    val operator = new Operator(new Runtime, new StubOperable)
+    operator.save(new Variable("x", Value(1234)))
+    val subScope = new Block
+    subScope += new GetStatement("x")
+    val x = subScope.evaluate(operator)
+    assert(x.primitive == 1234, "expected 'x' to be '1234' but is: " + x)
   }
 
-  test("test guy: 'speed' is defined") {
+  test("'speed' is defined") {
     val guy = new Operator(new Runtime, new StubOperable)
-    val defined = guy.isDefined(Operable.SPEED)
+    val defined = guy.contains(Operable.SPEED)
     assert(defined, "expected '" + Operable.SPEED + "' to be defined")
   }
 
-  test("test guy: 'direction' is defined") {
+  test("'direction' is defined") {
     val guy = new Operator(new Runtime, new StubOperable)
-    val defined = guy.isDefined(Operable.DIRECTION)
+    val defined = guy.contains(Operable.DIRECTION)
     assert(defined, "expected '" + Operable.DIRECTION + "' to be defined")
   }
 
-  test("test guy: set direction") {
+  test("set direction") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(Value(42))
-    assert(guy.direction == 42, "expected direction to be 42 but it was " + guy.direction)
+    assert(guy.direction.asInt == 42, "expected direction to be 42 but it was " + guy.direction)
   }
 
-  test("test guy: set direction: low limit") {
+  test("set direction: low limit") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(Value(0)) // A-Ok
-    assert(guy.direction == 0, "expected direction to be 0 but it was " + guy.direction)
+    assert(guy.direction.asInt == 0, "expected direction to be 0 but it was " + guy.direction)
   }
 
-  test("test guy: set direction: high limit") {
+  test("set direction: high limit") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(Value(360)) // is really 0 degrees
-    assert(guy.direction == 0, "expected direction to be 0 but it was " + guy.direction)
+    assert(guy.direction.asInt == 0, "expected direction to be 0 but it was " + guy.direction)
   }
 
-  test("test guy: set direction: very high") {
+  test("set direction: very high") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(Value(360 * 42 + 137)) // modulus should remove the excess
-    assert(guy.direction == 137, "expected direction to be 137 but it was " + guy.direction)
+    assert(guy.direction.asInt == 137, "expected direction to be 137 but it was " + guy.direction)
   }
 
-  test("test guy: set direction: very low") {
+  test("set direction: very low") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction(Value(0 - 137)) // negative degrees should loop around
-    assert(guy.direction == (360 - 137), "expected direction to be " + (360 - 137) + " but it was " + guy.direction)
+    assert(guy.direction.asInt == (360 - 137), "expected direction to be " + (360 - 137) + " but it was " + guy.direction)
   }
 
 }

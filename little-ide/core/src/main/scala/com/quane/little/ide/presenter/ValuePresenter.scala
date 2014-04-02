@@ -1,7 +1,6 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ValueView, ValueViewPresenter}
-import com.quane.little.language.Scope
 import com.quane.little.language.data.Value
 
 /** A presenter for views representing a [[com.quane.little.language.data.Value]].
@@ -38,9 +37,8 @@ class ValuePresenter[V <: ValueView](view: V)
 
   /** Compile the presented data to a [[com.quane.little.language.data.Value]].
     *
-    * @param scope the scope in which to compile
     * @return the compiled expression
     */
-  override def compile(scope: Scope) = Value(_value)
+  override def compile = Value(_value)
 
 }

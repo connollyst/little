@@ -2,7 +2,7 @@ package com.quane.little.language.data
 
 import ValueType._
 import com.google.common.base.Objects
-import com.quane.little.language.Expression
+import com.quane.little.language.{Scope, Expression}
 import scala.None
 
 object Value {
@@ -42,7 +42,7 @@ sealed trait Value
     *
     * @return the value itself
     */
-  def evaluate: Value = this
+  override def evaluate(scope: Scope): Value = this
 
   override def equals(other: Any): Boolean = {
     other match {

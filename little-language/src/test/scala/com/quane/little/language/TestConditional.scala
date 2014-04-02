@@ -1,39 +1,88 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.Value
-import com.quane.little.language.memory.Pointer
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.{BeforeAndAfter, FunSuite}
+import com.quane.little.language.util.ScopeSnapshot
+import org.junit.Assert._
+import org.scalatest.FlatSpec
+import org.scalatest.matchers.ShouldMatchers
 
-@RunWith(classOf[JUnitRunner])
-class TestConditional extends FunSuite with BeforeAndAfter {
+/** Test cases for the [[Conditional]] expression.
+  *
+  * @author Sean Connolly
+  */
+class TestConditional extends FlatSpec with ShouldMatchers {
 
-  private val name = "VariableName"
-  private val value = "VariableValue"
+  private val name = "OuterScopeVariable"
+  private val defaultValue = "DefaultValue"
+  private val thenValue = "ThenValue"
+  private val otherwiseValue = "OtherwiseValue"
   private val positive = Value(true)
   private val negative = Value(false)
 
-  /** The conditional test evaluates to true; the expression should be evaluated.
-    */
-  test("test condition evaluation: positive") {
-    val fun = createTestBlock
-    new Conditional(positive, fun).evaluate
-    assert(fun.fetch(name).value.asText == value)
+  "conditional expression" should "evaluate 'then' block" in {
+    val snapshot = evaluateConditional(positive)
+    val testValue = snapshot.scope.fetch(name).value
+    assertEquals(thenValue, testValue.asText)
+  }
+  it should "evaluate 'otherwise' block" in {
+    val snapshot = evaluateConditional(negative)
+    val testValue = snapshot.scope.fetch(name).value
+    assertEquals(otherwiseValue, testValue.asText)
+  }
+  it should "not store 'then' variables in outer scope" in {
+    val name = "InnerScopeVariable"
+    val then = new Block
+    val otherwise = new Block
+    then += new SetStatement(name, thenValue)
+    otherwise += new SetStatement(name, otherwiseValue)
+    val snapshot = evaluateConditional(positive, then, otherwise)
+    snapshot.scope.contains(name) should be(false)
+  }
+  it should "not store 'otherwise' variables in outer scope" in {
+    val name = "InnerScopeVariable"
+    val then = new Block
+    val otherwise = new Block
+    then += new SetStatement(name, thenValue)
+    otherwise += new SetStatement(name, otherwiseValue)
+    val snapshot = evaluateConditional(negative, then, otherwise)
+    snapshot.scope.contains(name) should be(false)
   }
 
-  /** The conditional test evaluates to false; the expression should not be evaluated.
+  /** Creates a [[Conditional]] expression using the provided `test`.
+    *
+    * A snapshot is returned which can be inspected to assert the conditional
+    * functionality.
+    *
+    * @param test the test expression
+    * @return a snapshot of the scope following the evaluation
     */
-  test("test condition evaluation: negative") {
-    val fun = createTestBlock
-    new Conditional(negative, fun).evaluate
-    assert(fun.fetch(name).value.asText != value)
+  private def evaluateConditional(test: Expression): ScopeSnapshot = {
+    val then = new Block
+    val otherwise = new Block
+    then += new SetStatement(name, thenValue)
+    otherwise += new SetStatement(name, otherwiseValue)
+    evaluateConditional(test, then, otherwise)
   }
 
-  private def createTestBlock: Block = {
-    val fun = new Block(new Runtime)
-    val pointer = new Pointer(fun, name)
-    fun.addStep(new SetStatement(pointer, Value(value)))
+  /** Creates a [[Conditional]] expression using the provided `test`, `then`,
+    * &amp; `otherwise` expressions.
+    *
+    * A snapshot is returned which can be inspected to assert the conditional
+    * functionality.
+    *
+    * @param test the test expression
+    * @param then the then block
+    * @param otherwise the otherwise block
+    * @return  a snapshot of the scope following the evaluation
+    */
+  private def evaluateConditional(test: Expression, then: Block, otherwise: Block): ScopeSnapshot = {
+    val snapshot = new ScopeSnapshot
+    val block = new Block
+    block += new SetStatement(name, defaultValue)
+    block += new Conditional(test, then, otherwise)
+    block += snapshot
+    block.evaluate(new Runtime)
+    snapshot
   }
 
 }

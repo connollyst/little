@@ -1,6 +1,6 @@
 package com.quane.little.language
 
-/** A dummy[[com.quane.little.language.Operable]] for testing purposes.
+/** A dummy [[Operable]] for testing purposes.
   *
   * @author Sean Connolly
   */

@@ -13,9 +13,9 @@ class Evaluation(left: Expression,
                  right: Expression)
   extends Expression {
 
-  def evaluate: Value = {
-    val l = left.evaluate
-    val r = right.evaluate
+  override def evaluate(scope: Scope): Value = {
+    val l = left.evaluate(scope)
+    val r = right.evaluate(scope)
     Value(
       operator match {
         case Equals => l equals r

@@ -1,14 +1,14 @@
 package com.quane.little.language.event
 
-import com.quane.little.language.{FunctionReference, Expression}
-import com.quane.little.language.data.Nada
 import com.google.common.base.Objects
+import com.quane.little.language.data.Nada
+import com.quane.little.language.{Scope, FunctionReference, Expression}
 
 class EventListener(val event: LittleEvent, val function: FunctionReference)
   extends Expression {
 
-  def evaluate: Nada = {
-    function.evaluate
+  override def evaluate(scope: Scope): Nada = {
+    function.evaluate(scope)
     new Nada
   }
 

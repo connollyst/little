@@ -10,7 +10,7 @@ import com.quane.little.language.data.Value
   */
 trait Expression {
 
-  def evaluate: Value
+  def evaluate(scope: Scope): Value
 
   override def toString: String =
     Objects.toStringHelper(getClass).toString

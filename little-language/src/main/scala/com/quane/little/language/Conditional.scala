@@ -1,44 +1,42 @@
 package com.quane.little.language
 
 import com.google.common.base.Objects
-import com.quane.little.language.data.{Value, Nada}
+import com.quane.little.language.data.Value
 
 
-/** A conditional is an [[com.quane.little.language.Expression]] which evaluates
-  * a [[com.quane.little.language.Block]] if its test evaluates to `true`.
+/** An [[Expression]] which evaluates the `then` block if the `test` evaluates
+  * to `true`, and the `otherwise` block if not.
   *
   * @author Sean Connolly
   */
-class Conditional(val test: Expression, val block: Block)
+class Conditional(val test: Expression, val then: Block, val otherwise: Block)
   extends Expression {
 
-  def this(scope: Scope, test: Expression) = {
-    this(test, new Block(scope))
+  def this(test: Expression) = {
+    this(test, new Block, new Block)
   }
 
-  def steps: List[Expression] = block.steps
+  def steps: List[Expression] = then.steps
 
   def addStep(step: Expression): Conditional = {
-    block.addStep(step)
+    then.addStep(step)
     this
   }
 
   /** Evaluate the conditional statement; only if the ''test'' evaluates
     * to `true`, the ''function'' is evaluated.
     */
-  override def evaluate: Value = {
-    if (test.evaluate.asBool) {
-      block.evaluate
+  override def evaluate(scope: Scope): Value =
+    if (test.evaluate(scope).asBool) {
+      then.evaluate(scope)
     } else {
-      // TODO we should have an ELSE block
-      new Nada
+      otherwise.evaluate(scope)
     }
-  }
 
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("test", test)
-      .add("block", block)
+      .add("block", then)
       .toString
 
 }

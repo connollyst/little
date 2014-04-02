@@ -4,10 +4,10 @@ import com.quane.little.ide.presenter.BlockPresenter
 import com.quane.little.ide.presenter.FunctionParameterPresenter
 import com.quane.little.ide.presenter.FunctionReferencePresenter
 import com.quane.little.ide.view.FunctionDefinitionView
-
-import com.vaadin.ui._
-import com.vaadin.server.Sizeable
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
+import com.vaadin.server.Sizeable
+import com.vaadin.ui._
+
 
 object FunctionDefinitionLayout {
   val Style = "l-function-def"
@@ -135,7 +135,7 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
     new Button.ClickListener {
       def buttonClick(event: Button.ClickEvent) = {
         val header = FunctionDefinitionHeader.this
-        val compiled = header.definition.compile()
+        val compiled = header.definition.compile
         println("Compiled: " + compiled)
       }
     })

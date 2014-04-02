@@ -1,7 +1,7 @@
 package com.quane.little.ide.model
 
 import com.quane.little.language.data.Value
-import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition, Runtime}
+import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
 
 /** A service for interacting with [[com.quane.little.language.Functions]].
   *
@@ -13,7 +13,7 @@ object FunctionService {
 
   def fetchReference(name: String): FunctionReference = {
     val definition = fetchDefinition(name)
-    val reference = new FunctionReference(definition.name, new Runtime)
+    val reference = new FunctionReference(definition.name)
     definition.params foreach {
       param =>
       // TODO parameters should have default values

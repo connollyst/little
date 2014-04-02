@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{FunctionReferenceViewPresenter, FunctionReferenceView}
-import com.quane.little.language.{Expression, FunctionReference, Scope}
+import com.quane.little.language.{Expression, FunctionReference}
 import scala.collection.mutable.ListBuffer
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionReference]].
@@ -38,14 +38,15 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
   private[presenter] def add(arg: FunctionArgumentPresenter[_]): Unit =
     args += arg
 
-  override def compile(scope: Scope): FunctionReference = {
-    val fun = new FunctionReference(_name, scope)
+  override def compile: FunctionReference = {
+    val fun = new FunctionReference(_name)
     compileArgs(fun)
     fun
   }
 
-  private def compileArgs(fun: FunctionReference) = args.foreach {
-    arg => fun.addArg(arg.name, arg.compile(fun))
-  }
+  private def compileArgs(fun: FunctionReference) =
+    args.foreach {
+      arg => fun.addArg(arg.name, arg.compile)
+    }
 
 }

@@ -1,10 +1,10 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.language._
-import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
-import scala.collection.mutable.ListBuffer
-import scala._
 import com.quane.little.ide.model.FunctionService
+import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
+import com.quane.little.language._
+import scala._
+import scala.collection.mutable.ListBuffer
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -83,11 +83,11 @@ class BlockPresenter[V <: BlockView](view: V)
     add(presenter, index)
   }
 
-  override def compile(scope: Scope): Block = {
-    val block = new Block(scope)
+  override def compile: Block = {
+    val block = new Block
     steps.foreach {
       step =>
-        block.addStep(step.compile(block))
+        block += step.compile
     }
     block
   }

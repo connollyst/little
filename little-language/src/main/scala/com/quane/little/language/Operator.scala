@@ -35,8 +35,6 @@ class Operator(override val runtime: Runtime, mob: Operable)
 
   def addEventListener(eventListener: EventListener) {
     debug("Listening for " + eventListener.event.getClass.getSimpleName + " events.")
-    // TODO set the function's scope to this guy
-    eventListener.function.parentScope = this
     eventListeners += eventListener
   }
 
