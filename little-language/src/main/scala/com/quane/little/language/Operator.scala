@@ -1,9 +1,9 @@
 package com.quane.little.language
 
-import com.quane.little.Logging
 import com.quane.little.language.data.{Value, Variable}
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.event.LittleEvent
+import com.quane.little.tools.Logging
 import scala.collection.mutable.ListBuffer
 
 class Operator(override val runtime: Runtime, mob: Operable)

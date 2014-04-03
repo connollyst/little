@@ -1,8 +1,8 @@
 package com.quane.little.language
 
 import com.google.common.base.Objects
-import com.quane.little.Logging
 import com.quane.little.language.data.Value
+import com.quane.little.tools.Logging
 
 abstract class Statement
   extends Expression
