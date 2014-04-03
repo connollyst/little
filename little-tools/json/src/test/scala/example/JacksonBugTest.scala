@@ -11,6 +11,22 @@ import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
+class Bar
+
+trait Baz
+
+class Foo {
+  val list = List[String]()
+}
+
+class FooBar {
+  val list = List[Bar]()
+}
+
+class FooBaz {
+  val list = List[Baz]()
+}
+
 @RunWith(classOf[JUnitRunner])
 class JacksonBugTest extends FlatSpec with ShouldMatchers {
 
@@ -233,6 +249,60 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
   it should "serialize FooBar with mapper with custom 'non-final' typing disabled" in {
     serialize(new FooBar, customTypeMapperDisabled(DefaultTyping.NON_FINAL))
   }
+  it should "serialize FooBaz with basic mapper" in {
+    serialize(new FooBaz, basicMapper)
+  }
+  it should "serialize FooBaz with mapper with default typing enabled" in {
+    serialize(new FooBaz, defaultTypeMapper)
+  }
+  it should "serialize FooBaz with mapper with custom 'java lang object' typing" in {
+    serialize(new FooBaz, customTypeMapper(DefaultTyping.JAVA_LANG_OBJECT))
+  }
+  it should "serialize FooBaz with mapper with custom 'java lang object' typing (always)" in {
+    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.JAVA_LANG_OBJECT))
+  }
+  it should "serialize FooBaz with mapper with custom 'java lang object' typing (never)" in {
+    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.JAVA_LANG_OBJECT))
+  }
+  it should "serialize FooBaz with mapper with custom 'java lang object' typing (disabled)" in {
+    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.JAVA_LANG_OBJECT))
+  }
+  it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing" in {
+    serialize(new FooBaz, customTypeMapper(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+  }
+  it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing (always)" in {
+    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+  }
+  it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing (never)" in {
+    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+  }
+  it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing (disabled)" in {
+    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing" in {
+    serialize(new FooBaz, customTypeMapper(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing (always)" in {
+    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing (never)" in {
+    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing disabled" in {
+    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-final' typing" in {
+    serialize(new FooBaz, customTypeMapper(DefaultTyping.NON_FINAL))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-final' typing (always)" in {
+    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.NON_FINAL))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-final' typing (never)" in {
+    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.NON_FINAL))
+  }
+  it should "serialize FooBaz with mapper with custom 'non-final' typing disabled" in {
+    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.NON_FINAL))
+  }
 
   private def serialize(value: Any, mapper: ObjectMapper) = {
     mapper.writeValueAsString(value)
@@ -289,13 +359,3 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
   }
 
 }
-
-class Foo {
-  val list = List[String]()
-}
-
-class FooBar {
-  val list = List[Bar]()
-}
-
-class Bar
