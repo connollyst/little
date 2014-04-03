@@ -13,6 +13,18 @@
     <packaging>jar</packaging>
     <name>Little Tools - JSON</name>
 
+    <repositories>
+        <!-- Necessary for jackson-module-scala snapshot -->
+        <repository>
+            <id>oss-sonatype</id>
+            <name>oss-sonatype</name>
+            <url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+            <snapshots>
+                <enabled>true</enabled>
+            </snapshots>
+        </repository>
+    </repositories>
+
     <build>
         <plugins>
             <plugin>
@@ -22,6 +34,11 @@
             </plugin>
         </plugins>
     </build>
+
+    <properties>
+        <jackson.scala.version>2.3.3-SNAPSHOT</jackson.scala.version>
+        <jsonassert.version>1.2.3</jsonassert.version>
+    </properties>
 
     <dependencies>
         <dependency>
@@ -34,7 +51,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.module</groupId>
             <artifactId>jackson-module-scala_${scala.version}</artifactId>
-            <version>2.3.2</version>
+            <version>${jackson.scala.version}</version>
         </dependency>
 
         <!-- Unit Test Dependencies -->
@@ -63,7 +80,7 @@
         <dependency>
             <groupId>org.skyscreamer</groupId>
             <artifactId>jsonassert</artifactId>
-            <version>1.2.3</version>
+            <version>${jsonassert.version}</version>
             <scope>test</scope>
         </dependency>
     </dependencies>
