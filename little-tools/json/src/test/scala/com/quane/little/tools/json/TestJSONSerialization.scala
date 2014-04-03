@@ -6,6 +6,7 @@ import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.mock.MockitoSugar
 
 /** Test of JSON serialization.
   *
@@ -13,7 +14,8 @@ import org.scalatest.junit.JUnitRunner
   */
 @RunWith(classOf[JUnitRunner])
 class TestJSONSerialization
-  extends FunSuite {
+  extends FunSuite
+  with MockitoSugar {
 
   /* Scopes */
 

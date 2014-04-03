@@ -1,7 +1,6 @@
 package com.quane.little.tools.json
 
 import com.google.common.io.Files
-import com.quane.little.language.Expression
 import java.io.{FileNotFoundException, File}
 import java.net.URL
 import java.nio.charset.Charset
@@ -19,7 +18,7 @@ object JSONTestUtilities {
     * @param e the expression to serialize
     * @tparam E the type of expression being serialized
     */
-  private[json] def assertSerialization[E <: Expression](expected: String, e: E) =
+  private[json] def assertSerialization[E](expected: String, e: E) =
     assertJSON(expected, new JSONSerializer().serialize(e))
 
   /** Assert that the `actual` JSON matches the expected JSON.

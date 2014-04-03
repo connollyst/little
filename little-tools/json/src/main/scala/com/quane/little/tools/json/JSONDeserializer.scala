@@ -9,7 +9,7 @@ class JSONDeserializer {
 
   val mapper: ObjectMapper = new ObjectMapper()
   mapper.registerModule(new DefaultScalaModule())
-  mapper.registerModule(new LittleLanguageModule())
+  mapper.registerModule(new ExpressionDeserializationModule())
 
   def deserialize[T: Manifest](value: String): T =
     mapper.readValue(value, typeReference[T])

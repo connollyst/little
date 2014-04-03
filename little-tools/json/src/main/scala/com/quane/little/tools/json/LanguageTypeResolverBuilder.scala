@@ -4,13 +4,14 @@ import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.ObjectMapper.{DefaultTypeResolverBuilder, DefaultTyping}
 import com.quane.little.language.Expression
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** A [[com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder]] which
+  * ensures objects in the [[com.quane.little.language]] package are serialized
+  * with type information.
+  *
+  * @author Sean Connolly
+  */
 class LanguageTypeResolverBuilder
-  extends DefaultTypeResolverBuilder(DefaultTyping.NON_FINAL) {
+  extends DefaultTypeResolverBuilder(DefaultTyping.JAVA_LANG_OBJECT) {
 
   private val expressionPackage = classOf[Expression].getPackage.getName
 
@@ -21,4 +22,5 @@ class LanguageTypeResolverBuilder
       false
     }
   }
+
 }

@@ -3,7 +3,9 @@ package com.quane.little.tools.json;
 import java.io.IOException;
 import java.io.StringWriter;
 
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder;
 import com.fasterxml.jackson.module.scala.DefaultScalaModule;
 
 public class JSONSerializer {
@@ -12,8 +14,12 @@ public class JSONSerializer {
 
 	public JSONSerializer() {
 		mapper = new ObjectMapper();
+		TypeResolverBuilder<?> typeResolver = new LanguageTypeResolverBuilder();
+		typeResolver.init(JsonTypeInfo.Id.CLASS, null);
+		typeResolver.inclusion(JsonTypeInfo.As.PROPERTY);
+		typeResolver.typeProperty("@type");
+		mapper.setDefaultTyping(typeResolver);
 		mapper.registerModule(new DefaultScalaModule());
-		mapper.registerModule(new LittleLanguageModule());
 	}
 
 	public String serialize(Object value) throws IOException {
