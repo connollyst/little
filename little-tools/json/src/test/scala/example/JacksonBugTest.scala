@@ -17,7 +17,7 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
   val alwaysUse = true
   val neverUse = false
 
-  "jackson-module-scala" should "serialize String with basic mapper" in {
+  "jackson" should "serialize String with basic mapper" in {
     serialize("foo", basicMapper)
   }
   it should "serialize String with mapper with default typing enabled" in {
