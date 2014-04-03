@@ -1,9 +1,9 @@
 package com.quane.little.game.entity
 
 import com.google.common.base.Objects
-import com.quane.little.Logging
 import com.quane.little.game.engine.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
+import com.quane.little.tools.Logging
 import java.util.UUID
 
 

@@ -1,6 +1,6 @@
 package com.quane.little.game
 
-import com.quane.little.Logging
+import com.quane.little.tools.Logging
 
 /** Run the game simulation.
   * TODO: follow thread at http://www.java-gaming.org/index.php?topic=24220.0

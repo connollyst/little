@@ -1,8 +1,8 @@
 package com.quane.little.game.server
 
-import com.quane.little.Logging
 import com.quane.little.game.entity.{EntityRemovalListener, Entity}
 import com.quane.little.game.{TimedUpdater, Game}
+import com.quane.little.tools.Logging
 import com.smartfoxserver.v2.mmo.{Vec3D, MMOItem}
 import scala.collection.mutable
 

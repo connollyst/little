@@ -1,10 +1,10 @@
 package com.quane.little.game
 
-import com.quane.little.Logging
 import com.quane.little.game.engine.EventBus
 import com.quane.little.game.entity._
 import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
+import com.quane.little.tools.Logging
 import scala.collection.mutable
 
 /** The game maintains the state of the world and all entities, tying together
