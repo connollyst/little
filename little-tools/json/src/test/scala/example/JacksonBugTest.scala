@@ -1,6 +1,7 @@
 package example
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo
+import com.fasterxml.jackson.databind.ObjectMapper.DefaultTyping._
 import com.fasterxml.jackson.databind.ObjectMapper._
 import com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder
 import com.fasterxml.jackson.databind.{JavaType, ObjectMapper}
@@ -40,52 +41,52 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
     serialize("foo", defaultTypeMapper)
   }
   it should "serialize String with mapper with custom 'java lang object' typing" in {
-    serialize("foo", customTypeMapper(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize("foo", customTypeMapper(JAVA_LANG_OBJECT))
   }
   it should "serialize String with mapper with custom 'java lang object' typing (always)" in {
-    serialize("foo", customTypeMapper(alwaysUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize("foo", customTypeMapper(alwaysUse, JAVA_LANG_OBJECT))
   }
   it should "serialize String with mapper with custom 'java lang object' typing (never)" in {
-    serialize("foo", customTypeMapper(neverUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize("foo", customTypeMapper(neverUse, JAVA_LANG_OBJECT))
   }
   it should "serialize String with mapper with custom 'java lang object' typing (disabled)" in {
-    serialize("foo", customTypeMapperDisabled(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize("foo", customTypeMapperDisabled(JAVA_LANG_OBJECT))
   }
   it should "serialize String with mapper with custom 'object and non-concrete' typing" in {
-    serialize("foo", customTypeMapper(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize("foo", customTypeMapper(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize String with mapper with custom 'object and non-concrete' typing (always)" in {
-    serialize("foo", customTypeMapper(alwaysUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize("foo", customTypeMapper(alwaysUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize String with mapper with custom 'object and non-concrete' typing (never)" in {
-    serialize("foo", customTypeMapper(neverUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize("foo", customTypeMapper(neverUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize String with mapper with custom 'object and non-concrete' typing (disabled)" in {
-    serialize("foo", customTypeMapperDisabled(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize("foo", customTypeMapperDisabled(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize String with mapper with custom 'non-concrete and arrays' typing" in {
-    serialize("foo", customTypeMapper(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize("foo", customTypeMapper(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize String with mapper with custom 'non-concrete and arrays' typing (always)" in {
-    serialize("foo", customTypeMapper(alwaysUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize("foo", customTypeMapper(alwaysUse, NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize String with mapper with custom 'non-concrete and arrays' typing (never)" in {
-    serialize("foo", customTypeMapper(neverUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize("foo", customTypeMapper(neverUse, NON_CONCRETE_AND_ARRAYS))
   }
-  it should "serialize String with mapper with custom 'non-concrete and arrays' typing disabled" in {
-    serialize("foo", customTypeMapperDisabled(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  it should "serialize String with mapper with custom 'non-concrete and arrays' typing (disabled)" in {
+    serialize("foo", customTypeMapperDisabled(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize String with mapper with custom 'non-final' typing" in {
-    serialize("foo", customTypeMapper(DefaultTyping.NON_FINAL))
+    serialize("foo", customTypeMapper(NON_FINAL))
   }
   it should "serialize String with mapper with custom 'non-final' typing (always)" in {
-    serialize("foo", customTypeMapper(alwaysUse, DefaultTyping.NON_FINAL))
+    serialize("foo", customTypeMapper(alwaysUse, NON_FINAL))
   }
   it should "serialize String with mapper with custom 'non-final' typing (never)" in {
-    serialize("foo", customTypeMapper(neverUse, DefaultTyping.NON_FINAL))
+    serialize("foo", customTypeMapper(neverUse, NON_FINAL))
   }
-  it should "serialize String with mapper with custom 'non-final' typing disabled" in {
-    serialize("foo", customTypeMapperDisabled(DefaultTyping.NON_FINAL))
+  it should "serialize String with mapper with custom 'non-final' typing (disabled)" in {
+    serialize("foo", customTypeMapperDisabled(NON_FINAL))
   }
   it should "serialize List[String] with basic mapper" in {
     serialize(List[String]("foo"), basicMapper)
@@ -94,52 +95,52 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
     serialize(List[String]("foo"), defaultTypeMapper)
   }
   it should "serialize List[String] with mapper with custom 'java lang object' typing" in {
-    serialize(List[String]("foo"), customTypeMapper(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(List[String]("foo"), customTypeMapper(JAVA_LANG_OBJECT))
   }
   it should "serialize List[String] with mapper with custom 'java lang object' typing (always)" in {
-    serialize(List[String]("foo"), customTypeMapper(alwaysUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(List[String]("foo"), customTypeMapper(alwaysUse, JAVA_LANG_OBJECT))
   }
   it should "serialize List[String] with mapper with custom 'java lang object' typing (never)" in {
-    serialize(List[String]("foo"), customTypeMapper(neverUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(List[String]("foo"), customTypeMapper(neverUse, JAVA_LANG_OBJECT))
   }
   it should "serialize List[String] with mapper with custom 'java lang object' typing (disabled)" in {
-    serialize(List[String]("foo"), customTypeMapperDisabled(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(List[String]("foo"), customTypeMapperDisabled(JAVA_LANG_OBJECT))
   }
   it should "serialize List[String] with mapper with custom 'object and non-concrete' typing" in {
-    serialize(List[String]("foo"), customTypeMapper(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(List[String]("foo"), customTypeMapper(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize List[String] with mapper with custom 'object and non-concrete' typing (always)" in {
-    serialize(List[String]("foo"), customTypeMapper(alwaysUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(List[String]("foo"), customTypeMapper(alwaysUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize List[String] with mapper with custom 'object and non-concrete' typing (never)" in {
-    serialize(List[String]("foo"), customTypeMapper(neverUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(List[String]("foo"), customTypeMapper(neverUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize List[String] with mapper with custom 'object and non-concrete' typing (disabled)" in {
-    serialize(List[String]("foo"), customTypeMapperDisabled(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(List[String]("foo"), customTypeMapperDisabled(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize List[String] with mapper with custom 'non-concrete and arrays' typing" in {
-    serialize(List[String]("foo"), customTypeMapper(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(List[String]("foo"), customTypeMapper(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize List[String] with mapper with custom 'non-concrete and arrays' typing (always)" in {
-    serialize(List[String]("foo"), customTypeMapper(alwaysUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(List[String]("foo"), customTypeMapper(alwaysUse, NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize List[String] with mapper with custom 'non-concrete and arrays' typing (never)" in {
-    serialize(List[String]("foo"), customTypeMapper(neverUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(List[String]("foo"), customTypeMapper(neverUse, NON_CONCRETE_AND_ARRAYS))
   }
-  it should "serialize List[String] with mapper with custom 'non-concrete and arrays' typing disabled" in {
-    serialize(List[String]("foo"), customTypeMapperDisabled(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  it should "serialize List[String] with mapper with custom 'non-concrete and arrays' typing (disabled)" in {
+    serialize(List[String]("foo"), customTypeMapperDisabled(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize List[String] with mapper with custom 'non-final' typing" in {
-    serialize(List[String]("foo"), customTypeMapper(DefaultTyping.NON_FINAL))
+    serialize(List[String]("foo"), customTypeMapper(NON_FINAL))
   }
   it should "serialize List[String] with mapper with custom 'non-final' typing (always)" in {
-    serialize(List[String]("foo"), customTypeMapper(alwaysUse, DefaultTyping.NON_FINAL))
+    serialize(List[String]("foo"), customTypeMapper(alwaysUse, NON_FINAL))
   }
   it should "serialize List[String] with mapper with custom 'non-final' typing (never)" in {
-    serialize(List[String]("foo"), customTypeMapper(neverUse, DefaultTyping.NON_FINAL))
+    serialize(List[String]("foo"), customTypeMapper(neverUse, NON_FINAL))
   }
-  it should "serialize List[String] with mapper with custom 'non-final' typing disabled" in {
-    serialize(List[String]("foo"), customTypeMapperDisabled(DefaultTyping.NON_FINAL))
+  it should "serialize List[String] with mapper with custom 'non-final' typing (disabled)" in {
+    serialize(List[String]("foo"), customTypeMapperDisabled(NON_FINAL))
   }
   it should "serialize Foo with basic mapper" in {
     serialize(new Foo, basicMapper)
@@ -148,52 +149,52 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
     serialize(new Foo, defaultTypeMapper)
   }
   it should "serialize Foo with mapper with custom 'java lang object' typing" in {
-    serialize(new Foo, customTypeMapper(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new Foo, customTypeMapper(JAVA_LANG_OBJECT))
   }
   it should "serialize Foo with mapper with custom 'java lang object' typing (always)" in {
-    serialize(new Foo, customTypeMapper(alwaysUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new Foo, customTypeMapper(alwaysUse, JAVA_LANG_OBJECT))
   }
   it should "serialize Foo with mapper with custom 'java lang object' typing (never)" in {
-    serialize(new Foo, customTypeMapper(neverUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new Foo, customTypeMapper(neverUse, JAVA_LANG_OBJECT))
   }
   it should "serialize Foo with mapper with custom 'java lang object' typing (disabled)" in {
-    serialize(new Foo, customTypeMapperDisabled(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new Foo, customTypeMapperDisabled(JAVA_LANG_OBJECT))
   }
   it should "serialize Foo with mapper with custom 'object and non-concrete' typing" in {
-    serialize(new Foo, customTypeMapper(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new Foo, customTypeMapper(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize Foo with mapper with custom 'object and non-concrete' typing (always)" in {
-    serialize(new Foo, customTypeMapper(alwaysUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new Foo, customTypeMapper(alwaysUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize Foo with mapper with custom 'object and non-concrete' typing (never)" in {
-    serialize(new Foo, customTypeMapper(neverUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new Foo, customTypeMapper(neverUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize Foo with mapper with custom 'object and non-concrete' typing (disabled)" in {
-    serialize(new Foo, customTypeMapperDisabled(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new Foo, customTypeMapperDisabled(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize Foo with mapper with custom 'non-concrete and arrays' typing" in {
-    serialize(new Foo, customTypeMapper(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new Foo, customTypeMapper(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize Foo with mapper with custom 'non-concrete and arrays' typing (always)" in {
-    serialize(new Foo, customTypeMapper(alwaysUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new Foo, customTypeMapper(alwaysUse, NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize Foo with mapper with custom 'non-concrete and arrays' typing (never)" in {
-    serialize(new Foo, customTypeMapper(neverUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new Foo, customTypeMapper(neverUse, NON_CONCRETE_AND_ARRAYS))
   }
-  it should "serialize Foo with mapper with custom 'non-concrete and arrays' typing disabled" in {
-    serialize(new Foo, customTypeMapperDisabled(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  it should "serialize Foo with mapper with custom 'non-concrete and arrays' typing (disabled)" in {
+    serialize(new Foo, customTypeMapperDisabled(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize Foo with mapper with custom 'non-final' typing" in {
-    serialize(new Foo, customTypeMapper(DefaultTyping.NON_FINAL))
+    serialize(new Foo, customTypeMapper(NON_FINAL))
   }
   it should "serialize Foo with mapper with custom 'non-final' typing (always)" in {
-    serialize(new Foo, customTypeMapper(alwaysUse, DefaultTyping.NON_FINAL))
+    serialize(new Foo, customTypeMapper(alwaysUse, NON_FINAL))
   }
   it should "serialize Foo with mapper with custom 'non-final' typing (never)" in {
-    serialize(new Foo, customTypeMapper(neverUse, DefaultTyping.NON_FINAL))
+    serialize(new Foo, customTypeMapper(neverUse, NON_FINAL))
   }
-  it should "serialize Foo with mapper with custom 'non-final' typing disabled" in {
-    serialize(new Foo, customTypeMapperDisabled(DefaultTyping.NON_FINAL))
+  it should "serialize Foo with mapper with custom 'non-final' typing (disabled)" in {
+    serialize(new Foo, customTypeMapperDisabled(NON_FINAL))
   }
   it should "serialize FooBar with basic mapper" in {
     serialize(new FooBar, basicMapper)
@@ -202,52 +203,52 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
     serialize(new FooBar, defaultTypeMapper)
   }
   it should "serialize FooBar with mapper with custom 'java lang object' typing" in {
-    serialize(new FooBar, customTypeMapper(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBar, customTypeMapper(JAVA_LANG_OBJECT))
   }
   it should "serialize FooBar with mapper with custom 'java lang object' typing (always)" in {
-    serialize(new FooBar, customTypeMapper(alwaysUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBar, customTypeMapper(alwaysUse, JAVA_LANG_OBJECT))
   }
   it should "serialize FooBar with mapper with custom 'java lang object' typing (never)" in {
-    serialize(new FooBar, customTypeMapper(neverUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBar, customTypeMapper(neverUse, JAVA_LANG_OBJECT))
   }
   it should "serialize FooBar with mapper with custom 'java lang object' typing (disabled)" in {
-    serialize(new FooBar, customTypeMapperDisabled(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBar, customTypeMapperDisabled(JAVA_LANG_OBJECT))
   }
   it should "serialize FooBar with mapper with custom 'object and non-concrete' typing" in {
-    serialize(new FooBar, customTypeMapper(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBar, customTypeMapper(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBar with mapper with custom 'object and non-concrete' typing (always)" in {
-    serialize(new FooBar, customTypeMapper(alwaysUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBar, customTypeMapper(alwaysUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBar with mapper with custom 'object and non-concrete' typing (never)" in {
-    serialize(new FooBar, customTypeMapper(neverUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBar, customTypeMapper(neverUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBar with mapper with custom 'object and non-concrete' typing (disabled)" in {
-    serialize(new FooBar, customTypeMapperDisabled(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBar, customTypeMapperDisabled(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBar with mapper with custom 'non-concrete and arrays' typing" in {
-    serialize(new FooBar, customTypeMapper(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new FooBar, customTypeMapper(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize FooBar with mapper with custom 'non-concrete and arrays' typing (always)" in {
-    serialize(new FooBar, customTypeMapper(alwaysUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new FooBar, customTypeMapper(alwaysUse, NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize FooBar with mapper with custom 'non-concrete and arrays' typing (never)" in {
-    serialize(new FooBar, customTypeMapper(neverUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new FooBar, customTypeMapper(neverUse, NON_CONCRETE_AND_ARRAYS))
   }
-  it should "serialize FooBar with mapper with custom 'non-concrete and arrays' typing disabled" in {
-    serialize(new FooBar, customTypeMapperDisabled(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  it should "serialize FooBar with mapper with custom 'non-concrete and arrays' typing (disabled)" in {
+    serialize(new FooBar, customTypeMapperDisabled(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize FooBar with mapper with custom 'non-final' typing" in {
-    serialize(new FooBar, customTypeMapper(DefaultTyping.NON_FINAL))
+    serialize(new FooBar, customTypeMapper(NON_FINAL))
   }
   it should "serialize FooBar with mapper with custom 'non-final' typing (always)" in {
-    serialize(new FooBar, customTypeMapper(alwaysUse, DefaultTyping.NON_FINAL))
+    serialize(new FooBar, customTypeMapper(alwaysUse, NON_FINAL))
   }
   it should "serialize FooBar with mapper with custom 'non-final' typing (never)" in {
-    serialize(new FooBar, customTypeMapper(neverUse, DefaultTyping.NON_FINAL))
+    serialize(new FooBar, customTypeMapper(neverUse, NON_FINAL))
   }
-  it should "serialize FooBar with mapper with custom 'non-final' typing disabled" in {
-    serialize(new FooBar, customTypeMapperDisabled(DefaultTyping.NON_FINAL))
+  it should "serialize FooBar with mapper with custom 'non-final' typing (disabled)" in {
+    serialize(new FooBar, customTypeMapperDisabled(NON_FINAL))
   }
   it should "serialize FooBaz with basic mapper" in {
     serialize(new FooBaz, basicMapper)
@@ -256,52 +257,52 @@ class JacksonBugTest extends FlatSpec with ShouldMatchers {
     serialize(new FooBaz, defaultTypeMapper)
   }
   it should "serialize FooBaz with mapper with custom 'java lang object' typing" in {
-    serialize(new FooBaz, customTypeMapper(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBaz, customTypeMapper(JAVA_LANG_OBJECT))
   }
   it should "serialize FooBaz with mapper with custom 'java lang object' typing (always)" in {
-    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBaz, customTypeMapper(alwaysUse, JAVA_LANG_OBJECT))
   }
   it should "serialize FooBaz with mapper with custom 'java lang object' typing (never)" in {
-    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBaz, customTypeMapper(neverUse, JAVA_LANG_OBJECT))
   }
   it should "serialize FooBaz with mapper with custom 'java lang object' typing (disabled)" in {
-    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.JAVA_LANG_OBJECT))
+    serialize(new FooBaz, customTypeMapperDisabled(JAVA_LANG_OBJECT))
   }
   it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing" in {
-    serialize(new FooBaz, customTypeMapper(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBaz, customTypeMapper(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing (always)" in {
-    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBaz, customTypeMapper(alwaysUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing (never)" in {
-    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBaz, customTypeMapper(neverUse, OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBaz with mapper with custom 'object and non-concrete' typing (disabled)" in {
-    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.OBJECT_AND_NON_CONCRETE))
+    serialize(new FooBaz, customTypeMapperDisabled(OBJECT_AND_NON_CONCRETE))
   }
   it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing" in {
-    serialize(new FooBaz, customTypeMapper(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new FooBaz, customTypeMapper(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing (always)" in {
-    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new FooBaz, customTypeMapper(alwaysUse, NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing (never)" in {
-    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+    serialize(new FooBaz, customTypeMapper(neverUse, NON_CONCRETE_AND_ARRAYS))
   }
-  it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing disabled" in {
-    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.NON_CONCRETE_AND_ARRAYS))
+  it should "serialize FooBaz with mapper with custom 'non-concrete and arrays' typing (disabled)" in {
+    serialize(new FooBaz, customTypeMapperDisabled(NON_CONCRETE_AND_ARRAYS))
   }
   it should "serialize FooBaz with mapper with custom 'non-final' typing" in {
-    serialize(new FooBaz, customTypeMapper(DefaultTyping.NON_FINAL))
+    serialize(new FooBaz, customTypeMapper(NON_FINAL))
   }
   it should "serialize FooBaz with mapper with custom 'non-final' typing (always)" in {
-    serialize(new FooBaz, customTypeMapper(alwaysUse, DefaultTyping.NON_FINAL))
+    serialize(new FooBaz, customTypeMapper(alwaysUse, NON_FINAL))
   }
   it should "serialize FooBaz with mapper with custom 'non-final' typing (never)" in {
-    serialize(new FooBaz, customTypeMapper(neverUse, DefaultTyping.NON_FINAL))
+    serialize(new FooBaz, customTypeMapper(neverUse, NON_FINAL))
   }
-  it should "serialize FooBaz with mapper with custom 'non-final' typing disabled" in {
-    serialize(new FooBaz, customTypeMapperDisabled(DefaultTyping.NON_FINAL))
+  it should "serialize FooBaz with mapper with custom 'non-final' typing (disabled)" in {
+    serialize(new FooBaz, customTypeMapperDisabled(NON_FINAL))
   }
 
   private def serialize(value: Any, mapper: ObjectMapper) = {
