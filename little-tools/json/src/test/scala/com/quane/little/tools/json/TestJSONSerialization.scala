@@ -35,12 +35,6 @@ class TestJSONSerialization
     assertSerialization(getJSON(name), block)
   }
 
-  test("serialize block 2") {
-    val name = "block"
-    val block = new Block()
-    assertSerialization(getJSON(name), block)
-  }
-
   test("serialize block with values") {
     val name = "block_with_values"
     val block = new Block

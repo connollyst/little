@@ -12,7 +12,8 @@ import org.skyscreamer.jsonassert.JSONAssert
   */
 object JSONTestUtilities {
 
-  /** Serialize the [[Expression]] and assert the JSON looks as expected.
+  /** Serialize the [[com.quane.little.language.Expression]] and assert the JSON
+    * looks as expected.
     *
     * @param expected the expected json
     * @param e the expression to serialize
