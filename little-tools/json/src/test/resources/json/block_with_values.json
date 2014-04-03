@@ -1,8 +1,14 @@
-{"steps": [
-    {
-        "primitive": "abc"
-    },
-    {
-        "primitive": 123
-    }
-]}
+{
+
+    "@class": "com.quane.little.language.Block",
+    "steps": [
+        {
+            "@class": "com.quane.little.language.data.Text",
+            "primitive": "abc"
+        },
+        {
+            "@class": "com.quane.little.language.data.Number",
+            "primitive": 123
+        }
+    ]
+}

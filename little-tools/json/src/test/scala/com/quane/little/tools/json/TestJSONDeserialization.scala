@@ -37,6 +37,7 @@ class TestJSONDeserialization extends FlatSpec with ShouldMatchers {
     val name = "block_with_values"
     val block = deserialize[Block](name)
     block.getClass should be(classOf[Block])
+    block.length should be(2)
   }
 
   /* Values */

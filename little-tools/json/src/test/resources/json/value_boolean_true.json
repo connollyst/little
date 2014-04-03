@@ -1,3 +1,4 @@
 {
+    "@class": "com.quane.little.language.data.Bool",
     "primitive": true
 }

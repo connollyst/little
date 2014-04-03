@@ -15,9 +15,8 @@ import com.quane.little.tools.json.LanguageTypeResolverBuilder._
 class LanguageTypeResolverBuilder
   extends DefaultTypeResolverBuilder(DefaultTyping.NON_FINAL) {
 
-  init(JsonTypeInfo.Id.NAME, null)
+  init(JsonTypeInfo.Id.CLASS, null)
   inclusion(JsonTypeInfo.As.PROPERTY)
-  typeProperty(TYPE_PROPERTY)
 
   /** Method called to check if the default type handler should be used for
     * given type.
@@ -35,7 +34,6 @@ class LanguageTypeResolverBuilder
 
 object LanguageTypeResolverBuilder {
 
-  val TYPE_PROPERTY = "type"
   val LANGUAGE_PACKAGE = classOf[Expression].getPackage.getName
 
 }

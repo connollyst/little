@@ -29,7 +29,7 @@ object JSONTestUtilities {
     */
   private[json] def assertJSON(expected: String, actual: String) = {
     println(actual)
-    JSONAssert.assertEquals(expected, actual, false)
+    JSONAssert.assertEquals(expected, actual, true)
   }
 
   /** Get the expected JSON given the name of the serialized object.
