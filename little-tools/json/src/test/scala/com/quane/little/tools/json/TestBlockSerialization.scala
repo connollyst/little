@@ -4,26 +4,24 @@ import com.quane.little.language.Block
 import com.quane.little.language.data.Value
 import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
-import org.scalatest.FunSuite
+import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.mock.MockitoSugar
+import org.scalatest.matchers.ShouldMatchers
 
 /** Test JSON serialization of [[Block]] expressions.
   *
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestBlockSerialization
-  extends FunSuite
-  with MockitoSugar {
+class TestBlockSerialization extends FlatSpec with ShouldMatchers {
 
-  test("serialize block") {
+  "json serializer" should "serialize block" in {
     val name = "block"
     val block = new Block()
     assertSerialization(getJSON(name), block)
   }
 
-  test("serialize block with values") {
+  it should "serialize block with values" in {
     val name = "block_with_values"
     val block = new Block
     block.addStep(Value("abc"))

@@ -14,9 +14,7 @@ import org.scalatest.matchers.ShouldMatchers
 @RunWith(classOf[JUnitRunner])
 class TestBlockDeserialization extends FlatSpec with ShouldMatchers {
 
-  /* Scopes */
-
-  "json serializer" should "deserialize runtime" in {
+  "json deserializer" should "deserialize runtime" in {
     val runtime = deserialize[Runtime]("runtime")
     runtime.getClass should be(classOf[Runtime])
   }
