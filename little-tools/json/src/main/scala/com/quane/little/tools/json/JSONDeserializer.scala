@@ -7,8 +7,8 @@ import java.lang.reflect.{ParameterizedType, Type}
 
 class JSONDeserializer {
 
-  val mapper: ObjectMapper = new ObjectMapper()
-  mapper.registerModule(new DefaultScalaModule())
+  val mapper: ObjectMapper = new ObjectMapper
+  mapper.registerModule(new DefaultScalaModule)
   mapper.setDefaultTyping(new LanguageTypeResolverBuilder)
 
   def deserialize[T: Manifest](value: String): T =

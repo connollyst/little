@@ -10,7 +10,7 @@ object Value {
   def apply(primitive: Any): Value =
     primitive match {
       case b: Boolean => new Bool(b)
-      case i: Int => new Number(i)
+      case i: Int => new NumberSimple(i)
       case d: Double => new NumberDecimal(d)
       case s: String => new Text(s)
       case None => new Nada
@@ -94,17 +94,15 @@ sealed trait Value
 
 }
 
-class Bool(bool: Boolean)
+class Bool(override val primitive: Boolean)
   extends Value {
-
-  override val primitive = bool
 
   override def valueType: ValueType = ValueType.Boolean
 
-  override def asBool: Boolean = bool
+  override def asBool: Boolean = primitive
 
   override def asInt: Int = {
-    val boolean = bool.asInstanceOf[Boolean]
+    val boolean = primitive.asInstanceOf[Boolean]
     if (boolean) {
       1
     } else {
@@ -114,65 +112,61 @@ class Bool(bool: Boolean)
 
   override def asDouble: Double = asInt
 
-  override def asText: String = bool.toString
+  override def asText: String = primitive.toString
 
 }
 
-class Number(int: Int)
+class NumberSimple(override val primitive: Int)
   extends Value {
 
-  override val primitive = int
 
   override def valueType: ValueType = ValueType.Integer
 
   override def asBool: Boolean =
-    int match {
+    primitive match {
       case 1 => true
       case _ => false
     }
 
-  override def asInt: Int = int
+  override def asInt: Int = primitive
 
-  override def asDouble: Double = int
+  override def asDouble: Double = primitive
 
-  override def asText: String = int.toString
+  override def asText: String = primitive.toString
 
 }
 
-class NumberDecimal(double: Double)
+class NumberDecimal(override val primitive: Double)
   extends Value {
 
-  override val primitive = double
 
   override def valueType: ValueType = ValueType.Double
 
   override def asBool: Boolean =
-    double match {
+    primitive match {
       case 1 => true
       case _ => false
     }
 
-  override def asInt: Int = double.toInt
+  override def asInt: Int = primitive.toInt
 
-  override def asDouble: Double = double
+  override def asDouble: Double = primitive
 
-  override def asText: String = double.toString
+  override def asText: String = primitive.toString
 
 }
 
-class Text(string: String)
+class Text(override val primitive: String)
   extends Value {
-
-  override val primitive = string
 
   override def valueType: ValueType = ValueType.String
 
   override def asBool: Boolean = {
-    if (string equalsIgnoreCase "true") {
+    if (primitive equalsIgnoreCase "true") {
       true
-    } else if (string equalsIgnoreCase "false") {
+    } else if (primitive equalsIgnoreCase "false") {
       false
-    } else if (string.isEmpty) {
+    } else if (primitive.isEmpty) {
       false
     } else {
       throw new ClassCastException(
@@ -183,7 +177,7 @@ class Text(string: String)
 
   override def asInt: Int = {
     try {
-      string.toInt
+      primitive.toInt
     } catch {
       case e: NumberFormatException =>
         try {
@@ -200,7 +194,7 @@ class Text(string: String)
 
   override def asDouble: Double =
     try {
-      string.toDouble
+      primitive.toDouble
     } catch {
       case e: NumberFormatException =>
         try {
@@ -214,7 +208,7 @@ class Text(string: String)
         }
     }
 
-  override def asText: String = string
+  override def asText: String = primitive
 
 }
 

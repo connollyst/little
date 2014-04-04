@@ -1,4 +1,4 @@
 {
-    "@class": "com.quane.little.language.data.Number",
+    "@class": "com.quane.little.language.data.NumberSimple",
     "primitive": 123
 }

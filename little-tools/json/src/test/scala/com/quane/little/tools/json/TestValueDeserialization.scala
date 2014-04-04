@@ -16,44 +16,27 @@ class TestValueDeserialization extends FlatSpec with ShouldMatchers {
 
   "json deserializer" should "deserialize value blank" in {
     val value = deserialize[Value]("value_blank")
-    value.getClass should be(classOf[Text])
-    value.valueType should be(ValueType.String)
-    value.primitive should be("")
+    value should be(new Text(""))
   }
-
   it should "deserialize value string" in {
     val value = deserialize[Value]("value_string")
-    value.getClass should be(classOf[Text])
-    value.valueType should be(ValueType.String)
-    value.primitive should be("abc")
+    value should be(new Text("abc"))
   }
-
   it should "deserialize value integer" in {
     val value = deserialize[Value]("value_integer")
-    value.getClass should be(classOf[Number])
-    value.valueType should be(ValueType.Integer)
-    value.primitive should be(123)
+    value should be(new NumberSimple(123))
   }
-
   it should "deserialize value double" in {
     val value = deserialize[Value]("value_double")
-    value.getClass should be(classOf[NumberDecimal])
-    value.valueType should be(ValueType.Double)
-    value.primitive should be(12.34)
+    value should be(new NumberDecimal(12.34))
   }
-
   it should "deserialize value boolean true" in {
     val value = deserialize[Value]("value_boolean_true")
-    value.getClass should be(classOf[Bool])
-    value.valueType should be(ValueType.Boolean)
-    value.primitive should be(Boolean.box(true))
+    value should be(new Bool(true))
   }
-
   it should "deserialize value boolean false" in {
     val value = deserialize[Value]("value_boolean_false")
-    value.getClass should be(classOf[Bool])
-    value.valueType should be(ValueType.Boolean)
-    value.primitive should be(Boolean.box(false))
+    value should be(new Bool(false))
   }
 
   private def deserialize[T: Manifest](jsonName: String): T =
