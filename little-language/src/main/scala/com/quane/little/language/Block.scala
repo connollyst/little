@@ -13,6 +13,8 @@ import scala.collection.mutable.ListBuffer
 class Block(_steps: ListBuffer[Expression] = ListBuffer[Expression]())
   extends Expression {
 
+  def this() = this(ListBuffer[Expression]())
+
   def length: Int = _steps.length
 
   def steps: List[Expression] = _steps.toList
