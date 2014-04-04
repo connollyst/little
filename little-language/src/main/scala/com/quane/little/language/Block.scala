@@ -43,6 +43,14 @@ class Block(_steps: ListBuffer[Expression] = ListBuffer[Expression]())
     }
   }
 
+  override def equals(other: Any): Boolean =
+    other match {
+      case that: Block => steps.equals(that.steps)
+      case _ => false
+    }
+
+  override def hashCode(): Int = 42 * steps.hashCode() + 137
+
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("steps", steps)
