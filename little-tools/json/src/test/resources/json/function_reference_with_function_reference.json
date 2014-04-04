@@ -1,0 +1,11 @@
+{
+    "@class": "com.quane.little.language.FunctionReference",
+    "name": "function_reference_with_function_reference",
+    "args": {
+        "x": {
+            "@class": "com.quane.little.language.FunctionReference",
+            "name": "inner_function",
+            "args": {}
+        }
+    }
+}

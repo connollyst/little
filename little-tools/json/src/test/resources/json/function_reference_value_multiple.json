@@ -1,0 +1,18 @@
+{
+    "@class": "com.quane.little.language.FunctionReference",
+    "name": "function_reference_value_multiple",
+    "args": {
+        "x": {
+            "@class": "com.quane.little.language.data.Text",
+            "primitive": "abc"
+        },
+        "y": {
+            "@class": "com.quane.little.language.data.Number",
+            "primitive": 123
+        },
+        "z": {
+            "@class": "com.quane.little.language.data.Bool",
+            "primitive": true
+        }
+    }
+}
