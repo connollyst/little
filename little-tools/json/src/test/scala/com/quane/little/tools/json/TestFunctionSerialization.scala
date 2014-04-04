@@ -25,14 +25,14 @@ class TestFunctionSerialization extends FlatSpec with ShouldMatchers {
   }
 
   it should "serialize function reference with single value argument" in {
-    val name = "function_reference_value_single"
+    val name = "function_reference_with_single_value_arg"
     val fun = new FunctionReference(name)
     fun.addArg("x", Value("abc"))
     assertSerialization(getJSON(name), fun)
   }
 
   it should "serialize function reference with multiple value arguments" in {
-    val name = "function_reference_value_multiple"
+    val name = "function_reference_with_multiple_value_args"
     val fun = new FunctionReference(name)
     fun.addArg("x", Value("abc"))
     fun.addArg("y", Value(123))
@@ -41,7 +41,7 @@ class TestFunctionSerialization extends FlatSpec with ShouldMatchers {
   }
 
   it should "serialize function reference with function reference argument" in {
-    val name = "function_reference_with_function_reference"
+    val name = "function_reference_with_function_reference_arg"
     val fun = new FunctionReference(name)
     fun.addArg("x", new FunctionReference("inner_function"))
     assertSerialization(getJSON(name), fun)

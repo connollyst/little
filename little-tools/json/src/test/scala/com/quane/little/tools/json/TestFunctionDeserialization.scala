@@ -1,7 +1,7 @@
 package com.quane.little.tools.json
 
-import com.quane.little.language.FunctionReference
 import com.quane.little.language.data.Value
+import com.quane.little.language.{Expression, FunctionReference}
 import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -30,14 +30,28 @@ class TestFunctionDeserialization extends FlatSpec with ShouldMatchers {
     val fun = deserialize[FunctionReference](name)
     fun.args.isEmpty should be(true)
   }
-  it should "deserialize function reference args of single value" in {
-    val name = "function_reference_value_single"
+  it should "deserialize function reference arg of single value" in {
+    val name = "function_reference_with_single_value_arg"
     val fun = deserialize[FunctionReference](name)
     fun.args.size should be(1)
     assertArgEquals[Value](fun, "x", Value("abc"))
   }
+  it should "deserialize function reference args of multiple values" in {
+    val name = "function_reference_with_multiple_value_args"
+    val fun = deserialize[FunctionReference](name)
+    fun.args.size should be(3)
+    assertArgEquals[Value](fun, "x", Value("abc"))
+    assertArgEquals[Value](fun, "y", Value(123))
+    assertArgEquals[Value](fun, "z", Value(true))
+  }
+  it should "deserialize function reference with arg of function reference" in {
+    val name = "function_reference_with_function_reference_arg"
+    val fun = deserialize[FunctionReference](name)
+    fun.args.size should be(1)
+    assertArgEquals(fun, "x", new FunctionReference("inner_function"))
+  }
 
-  private def assertArgEquals[E](fun: FunctionReference, argName: String, argExpected: E): Unit = {
+  private def assertArgEquals[E <: Expression](fun: FunctionReference, argName: String, argExpected: E): Unit = {
     fun.args.contains(argName) should be(true)
     fun.args(argName) should be(argExpected)
   }

@@ -1,6 +1,6 @@
 {
     "@class": "com.quane.little.language.FunctionReference",
-    "name": "function_reference_with_function_reference",
+    "name": "function_reference_with_function_reference_arg",
     "args": {
         "x": {
             "@class": "com.quane.little.language.FunctionReference",
