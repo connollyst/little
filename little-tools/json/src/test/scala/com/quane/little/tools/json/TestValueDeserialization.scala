@@ -1,7 +1,6 @@
 package com.quane.little.tools.json
 
 import com.quane.little.language.data._
-import com.quane.little.language.{Block, Runtime}
 import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -13,36 +12,9 @@ import org.scalatest.matchers.ShouldMatchers
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestJSONDeserialization extends FlatSpec with ShouldMatchers {
+class TestValueDeserialization extends FlatSpec with ShouldMatchers {
 
-  /* Scopes */
-
-  "json serializer" should "deserialize runtime" in {
-    val runtime = deserialize[Runtime]("runtime")
-    runtime.getClass should be(classOf[Runtime])
-  }
-
-  it should "deserialize runtime's runtime as itself" in {
-    val runtime = deserialize[Runtime]("runtime")
-    runtime.runtime should be(runtime)
-  }
-
-  it should "deserialize block" in {
-    val name = "block"
-    val block = deserialize[Block](name)
-    block.getClass should be(classOf[Block])
-  }
-
-  it should "deserialize block with values" in {
-    val name = "block_with_values"
-    val block = deserialize[Block](name)
-    block.getClass should be(classOf[Block])
-    block.length should be(2)
-  }
-
-  /* Values */
-
-  it should "deserialize value blank" in {
+  "json deserializer" should "deserialize value blank" in {
     val value = deserialize[Value]("value_blank")
     value.getClass should be(classOf[Text])
     value.valueType should be(ValueType.String)
