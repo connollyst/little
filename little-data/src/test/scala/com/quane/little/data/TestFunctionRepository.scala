@@ -2,34 +2,35 @@ package com.quane.little.data
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
-import com.quane.little.data.model.User
+import com.quane.little.data.model.FunctionORM
+import com.quane.little.language.Functions
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
 @RunWith(classOf[JUnitRunner])
-class TestUserRepository extends FlatSpecMongoDB with ShouldMatchers {
+class TestFunctionRepository extends FlatSpecMongoDB with ShouldMatchers {
 
-  "json serializer" should "persist user" in {
-    val mongoClient = mongoDBClient
+  "json serializer" should "persist bson function" in {
+    val mongoClient = MongoClient()
     println("Connected to MongoDB @ " + mongoClient.address)
     val mongoDB = mongoClient("little_db")
     println("Connected to MongoDB '" + mongoDB.name + "'")
-    val collection = mongoDB("test_users2")
+    val collection = mongoDB("test_functionz3")
     println("Working with collection '" + collection.name + "': " + collection.size)
     collection foreach {
       record => println(":: " + record)
     }
-    // Write a new user into the database
-    val user = new User("sean")
-    println("Writing user to MongoDB: " + user)
-    val json = new LittleJSON().serialize(user)
+    // Write a new function into the database
+    val function = new FunctionORM(Functions.blank)
+    println("Writing function to MongoDB: " + function)
+    val json = new LittleJSON().serialize(function)
     println(json)
     JSON.parse(json) match {
       case dbObject: DBObject =>
         val writeResult = collection += dbObject
-        println("Wrote user to MongoDB: " + user + ": " + writeResult)
+        println("Wrote function to MongoDB: " + function + ": " + writeResult)
       case _ => throw new RuntimeException("=*(")
     }
     // Now let's print out the database
@@ -38,8 +39,8 @@ class TestUserRepository extends FlatSpecMongoDB with ShouldMatchers {
       record =>
         val json = JSON.serialize(record)
         println(":: " + json)
-        val u = new LittleJSON().deserialize[User](json)
-        println("::>> " + u)
+        val fun = new LittleJSON().deserialize[FunctionORM](json)
+        println("::>> " + fun)
     }
   }
 
