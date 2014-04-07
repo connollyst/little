@@ -10,8 +10,17 @@
     </parent>
 
     <artifactId>little-data</artifactId>
-    <packaging>pom</packaging>
     <name>Little Data Persistence</name>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>${scala.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
 
     <dependencies>
         <!-- The data layer stores Little code -->
@@ -20,5 +29,35 @@
             <artifactId>little-language</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- JSON serialization utilities for Little code -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>little-json</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+
+        <!-- Data objects are persisted in MongoDB -->
+        <dependency>
+            <groupId>org.mongodb</groupId>
+            <artifactId>casbah-core_${scala.version}</artifactId>
+            <version>2.6.5</version>
+        </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.version}</artifactId>
+            <version>${scalatest.version}</version>
+            <scope>test</scope>
+        </dependency>
+
     </dependencies>
 </project>
