@@ -1,5 +1,6 @@
 package com.quane.little.data
 
+import com.quane.little.data.model.FunctionDefinitionRecord
 import com.quane.little.language.FunctionDefinition
 import scala.collection.mutable
 
@@ -8,7 +9,7 @@ import scala.collection.mutable
   *
   * @author Sean Connolly
   */
-class FunctionDefinitionRepository {
+class FunctionDefinitionRepository extends MongoRepository[FunctionDefinitionRecord] {
 
   private val funs: mutable.Map[String, FunctionDefinition] = mutable.Map()
 

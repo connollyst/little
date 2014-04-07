@@ -1,6 +1,5 @@
 package com.quane.little.data
 
-import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
 import com.quane.little.data.model.FunctionDefinitionRecord
 import com.quane.little.language.Functions
@@ -22,14 +21,7 @@ class TestFunctionDefinitionRepository extends FlatSpec with EmbeddedMongoDB wit
     // Write a new function into the database
     val function = new FunctionDefinitionRecord("1234", Functions.blank)
     println("Writing function to MongoDB: " + function)
-    val json = new LittleJSON().serialize(function)
-    println(json)
-    JSON.parse(json) match {
-      case dbObject: DBObject =>
-        val writeResult = collection += dbObject
-        println("Wrote function to MongoDB: " + function + ": " + writeResult)
-      case _ => throw new RuntimeException("=*(")
-    }
+    new FunctionDefinitionRepository().insert(collection, function)
     // Now let's print out the database
     val cursor = collection.find()
     cursor foreach {

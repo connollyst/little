@@ -1,6 +1,5 @@
 package com.quane.little.data
 
-import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
 import com.quane.little.data.model.UserRecord
 import com.quane.little.tools.json.LittleJSON
@@ -21,14 +20,7 @@ class TestUserRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatche
     // Write a new user into the database
     val user = new UserRecord("sean")
     println("Writing user to MongoDB: " + user)
-    val json = new LittleJSON().serialize(user)
-    println(json)
-    JSON.parse(json) match {
-      case dbObject: DBObject =>
-        val writeResult = collection += dbObject
-        println("Wrote user to MongoDB: " + user + ": " + writeResult)
-      case _ => throw new RuntimeException("=*(")
-    }
+    new UserRepository().insert(collection, user)
     // Now let's print out the database
     val cursor = collection.find()
     cursor foreach {
