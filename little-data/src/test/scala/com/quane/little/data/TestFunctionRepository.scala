@@ -14,11 +14,7 @@ import org.scalatest.matchers.ShouldMatchers
 class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
 
   "json serializer" should "persist bson function" in {
-    val mongoClient = MongoClient()
-    println("Connected to MongoDB @ " + mongoClient.address)
-    val mongoDB = mongoClient("little_db")
-    println("Connected to MongoDB '" + mongoDB.name + "'")
-    val collection = mongoDB("test_functionz3")
+    val collection = mongoCollection("little_db", "test_users")
     println("Working with collection '" + collection.name + "': " + collection.size)
     collection foreach {
       record => println(":: " + record)

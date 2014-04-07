@@ -1,7 +1,7 @@
 package com.quane.little.data
 
 import com.github.simplyscala.{MongodProps, MongoEmbedDatabase}
-import com.mongodb.casbah.MongoClient
+import com.mongodb.casbah.{MongoCollection, MongoDB, MongoClient}
 import org.scalatest.BeforeAndAfter
 
 /** A ScalaTest mixin which starts up and shuts down an embedded MongoDB
@@ -26,6 +26,9 @@ trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfter {
     mongoStop(mongoProps)
   }
 
-  def mongoDBClient: MongoClient = MongoClient(mongoHost, mongoPort)
+  def mongoClient: MongoClient = MongoClient(mongoHost, mongoPort)
 
+  def mongoDB(db: String): MongoDB = mongoClient(db)
+
+  def mongoCollection(db: String, name: String): MongoCollection = mongoDB(db)(name)
 }
