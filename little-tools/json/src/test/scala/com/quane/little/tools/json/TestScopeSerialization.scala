@@ -19,7 +19,7 @@ class TestScopeSerialization extends FlatSpec with ShouldMatchers {
   "json serializer" should "serialize runtime" in {
     val name = "runtime"
     val runtime = new Runtime()
-    val actual = new JSONSerializer().serialize(runtime)
+    val actual = new LittleJSON().serialize(runtime)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }

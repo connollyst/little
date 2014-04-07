@@ -52,7 +52,7 @@ class TestFunctionSerialization extends FlatSpec with ShouldMatchers {
   it should "serialize blank function definition" in {
     val name = "function_definition_blank"
     val fun = new FunctionDefinition(name)
-    val actual = new JSONSerializer().serialize(fun)
+    val actual = new LittleJSON().serialize(fun)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }

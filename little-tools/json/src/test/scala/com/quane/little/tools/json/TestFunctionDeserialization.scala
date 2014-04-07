@@ -67,6 +67,6 @@ class TestFunctionDeserialization extends FlatSpec with ShouldMatchers {
   }
 
   private def deserialize[T: Manifest](jsonName: String): T =
-    new JSONDeserializer().deserialize[T](getJSON(jsonName))
+    new LittleJSON().deserialize[T](getJSON(jsonName))
 
 }

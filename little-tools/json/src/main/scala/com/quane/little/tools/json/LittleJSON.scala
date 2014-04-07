@@ -1,15 +1,13 @@
 package com.quane.little.tools.json
 
 import com.fasterxml.jackson.core.`type`.TypeReference
-import com.fasterxml.jackson.databind.ObjectMapper
-import com.fasterxml.jackson.module.scala.DefaultScalaModule
 import java.lang.reflect.{ParameterizedType, Type}
 
-class JSONDeserializer {
+class LittleJSON() {
 
-  val mapper: ObjectMapper = new ObjectMapper
-  mapper.registerModule(new DefaultScalaModule)
-  mapper.setDefaultTyping(new LanguageTypeResolverBuilder)
+  val mapper = new LittleJSONMapper()
+
+  def serialize(value: Any): String = mapper.writeValueAsString(value)
 
   def deserialize[T: Manifest](value: String): T =
     mapper.readValue(value, typeReference[T])

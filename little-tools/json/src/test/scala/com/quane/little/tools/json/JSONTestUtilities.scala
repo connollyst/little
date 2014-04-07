@@ -20,7 +20,7 @@ object JSONTestUtilities {
     * @tparam E the type of expression being serialized
     */
   private[json] def assertSerialization[E](expected: String, e: E) =
-    assertJSON(expected, new JSONSerializer().serialize(e))
+    assertJSON(expected, new LittleJSON().serialize(e))
 
   /** Assert that the `actual` JSON matches the expected JSON.
     *
