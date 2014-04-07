@@ -5,13 +5,12 @@ import com.mongodb.util.JSON
 import com.quane.little.data.model.{FunctionORM, User}
 import com.quane.little.language.Functions
 import com.quane.little.tools.json.LittleJSON
-import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
 
-class TestUserRepository extends FlatSpec with ShouldMatchers {
+class TestUserRepository extends FlatSpecMongoDB with ShouldMatchers {
 
   "json serializer" should "persist user" in {
-    val mongoClient = MongoClient()
+    val mongoClient = mongoDBClient
     println("Connected to MongoDB @ " + mongoClient.address)
     val mongoDB = mongoClient("little_db")
     println("Connected to MongoDB '" + mongoDB.name + "'")
