@@ -7,7 +7,7 @@ import com.quane.little.language.FunctionDefinition
   *
   * @author Sean Connolly
   */
-class FunctionDefinitionRecord(var definition: FunctionDefinition) {
+class FunctionDefinitionRecord(val ownerId: String, var definition: FunctionDefinition) {
 
   var _id: ID = _
 

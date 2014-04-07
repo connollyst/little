@@ -11,7 +11,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
+class TestFunctionDefinitionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
 
   "json serializer" should "persist bson function" in {
     val collection = mongoCollection("little_db", "test_users")
@@ -20,7 +20,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
       record => println(":: " + record)
     }
     // Write a new function into the database
-    val function = new FunctionDefinitionRecord(Functions.blank)
+    val function = new FunctionDefinitionRecord("1234", Functions.blank)
     println("Writing function to MongoDB: " + function)
     val json = new LittleJSON().serialize(function)
     println(json)
