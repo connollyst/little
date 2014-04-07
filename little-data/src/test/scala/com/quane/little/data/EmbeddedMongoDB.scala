@@ -2,18 +2,20 @@ package com.quane.little.data
 
 import com.github.simplyscala.{MongodProps, MongoEmbedDatabase}
 import com.mongodb.casbah.MongoClient
-import org.scalatest.{FlatSpec, BeforeAndAfter}
+import org.scalatest.BeforeAndAfter
 
-/** A ScalaTest [[FlatSpec]] which starts up and shuts down an embedded MongoDB
-  * database before and after the test suite.
+/** A ScalaTest mixin which starts up and shuts down an embedded MongoDB
+  * instance before and after the test suite.
   *
   * @author Sean Connolly
   */
-class FlatSpecMongoDB extends FlatSpec with MongoEmbedDatabase with BeforeAndAfter {
+trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfter {
+  this: com.quane.little.data.EmbeddedMongoDB with org.scalatest.Suite =>
 
-  val mongoHost = "127.0.0.1"
-  val mongoPort = 12345
   val mongoVersion = "2.4.10"
+  val mongoHost = "127.0.0.1"
+  // TODO resolve available port
+  val mongoPort = 12345
   var mongoProps: MongodProps = null
 
   before {

@@ -6,11 +6,12 @@ import com.quane.little.data.model.FunctionORM
 import com.quane.little.language.Functions
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
+import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionRepository extends FlatSpecMongoDB with ShouldMatchers {
+class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
 
   "json serializer" should "persist bson function" in {
     val mongoClient = MongoClient()

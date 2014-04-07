@@ -5,11 +5,12 @@ import com.mongodb.util.JSON
 import com.quane.little.data.model.User
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
+import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 
 @RunWith(classOf[JUnitRunner])
-class TestUserRepository extends FlatSpecMongoDB with ShouldMatchers {
+class TestUserRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
 
   "json serializer" should "persist user" in {
     val mongoClient = mongoDBClient
