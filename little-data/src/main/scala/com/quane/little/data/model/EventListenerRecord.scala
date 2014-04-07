@@ -1,13 +1,13 @@
 package com.quane.little.data.model
 
 import com.google.common.base.Objects
-import com.quane.little.language.FunctionDefinition
+import com.quane.little.language.event.EventListener
 
-/**
- *
- * @author Sean Connolly
- */
-class FunctionORM(var definition: FunctionDefinition) {
+/** A database record for an [[EventListener]].
+  *
+  * @author Sean Connolly
+  */
+class EventListenerRecord(var definition: EventListener) {
 
   var _id: ID = _
 

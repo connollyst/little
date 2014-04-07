@@ -2,7 +2,7 @@ package com.quane.little.data
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
-import com.quane.little.data.model.FunctionORM
+import com.quane.little.data.model.FunctionDefinitionRecord
 import com.quane.little.language.Functions
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
@@ -20,7 +20,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
       record => println(":: " + record)
     }
     // Write a new function into the database
-    val function = new FunctionORM(Functions.blank)
+    val function = new FunctionDefinitionRecord(Functions.blank)
     println("Writing function to MongoDB: " + function)
     val json = new LittleJSON().serialize(function)
     println(json)
@@ -36,7 +36,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
       record =>
         val json = JSON.serialize(record)
         println(":: " + json)
-        val fun = new LittleJSON().deserialize[FunctionORM](json)
+        val fun = new LittleJSON().deserialize[FunctionDefinitionRecord](json)
         println("::>> " + fun)
     }
   }

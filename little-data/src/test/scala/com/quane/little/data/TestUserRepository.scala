@@ -2,7 +2,7 @@ package com.quane.little.data
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
-import com.quane.little.data.model.User
+import com.quane.little.data.model.UserRecord
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -19,7 +19,7 @@ class TestUserRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatche
       record => println(":: " + record)
     }
     // Write a new user into the database
-    val user = new User("sean")
+    val user = new UserRecord("sean")
     println("Writing user to MongoDB: " + user)
     val json = new LittleJSON().serialize(user)
     println(json)
@@ -35,7 +35,7 @@ class TestUserRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatche
       record =>
         val json = JSON.serialize(record)
         println(":: " + json)
-        val u = new LittleJSON().deserialize[User](json)
+        val u = new LittleJSON().deserialize[UserRecord](json)
         println("::>> " + u)
     }
   }
