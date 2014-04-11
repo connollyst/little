@@ -1,6 +1,7 @@
 package com.quane.little.tools.json
 
-import com.quane.little.language.FunctionReference
+import com.quane.little.language.data.Value
+import com.quane.little.language.{Expression, FunctionDefinition, FunctionReference}
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
