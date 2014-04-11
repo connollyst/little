@@ -1,7 +1,6 @@
 package com.quane.little.tools.json
 
 import com.quane.little.language.data._
-import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
@@ -12,7 +11,8 @@ import org.scalatest.matchers.ShouldMatchers
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestValueDeserialization extends FlatSpec with ShouldMatchers {
+class TestValueDeserialization
+  extends FlatSpec with ShouldMatchers with JSONTestUtilities {
 
   "json deserializer" should "deserialize value blank" in {
     val value = deserialize[Value]("value_blank")

@@ -1,7 +1,6 @@
 package com.quane.little.tools.json
 
 import com.quane.little.language.Runtime
-import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
@@ -12,7 +11,8 @@ import org.scalatest.matchers.ShouldMatchers
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestScopeSerialization extends FlatSpec with ShouldMatchers {
+class TestScopeSerialization
+  extends FlatSpec with ShouldMatchers with JSONTestUtilities {
 
   // TODO does it make sense to ever serialize a scope??
 

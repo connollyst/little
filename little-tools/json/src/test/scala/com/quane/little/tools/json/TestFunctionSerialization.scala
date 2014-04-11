@@ -2,7 +2,6 @@ package com.quane.little.tools.json
 
 import com.quane.little.language._
 import com.quane.little.language.data.Value
-import com.quane.little.tools.json.JSONTestUtilities._
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
@@ -14,7 +13,8 @@ import org.scalatest.matchers.ShouldMatchers
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestFunctionSerialization extends FlatSpec with ShouldMatchers {
+class TestFunctionSerialization
+  extends FlatSpec with ShouldMatchers with JSONTestUtilities {
 
   /* Function References */
 

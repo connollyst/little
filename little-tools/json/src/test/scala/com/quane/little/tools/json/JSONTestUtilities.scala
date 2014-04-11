@@ -10,7 +10,7 @@ import org.skyscreamer.jsonassert.JSONAssert
   *
   * @author Sean Connolly
   */
-object JSONTestUtilities {
+trait JSONTestUtilities {
 
   /** Serialize the [[com.quane.little.language.Expression]] and assert the JSON
     * looks as expected.
