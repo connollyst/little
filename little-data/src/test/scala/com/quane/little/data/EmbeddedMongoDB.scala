@@ -2,14 +2,14 @@ package com.quane.little.data
 
 import com.github.simplyscala.{MongodProps, MongoEmbedDatabase}
 import com.mongodb.casbah.{MongoCollection, MongoDB, MongoClient}
-import org.scalatest.BeforeAndAfter
+import org.scalatest.BeforeAndAfterAll
 
 /** A ScalaTest mixin which starts up and shuts down an embedded MongoDB
   * instance before and after the test suite.
   *
   * @author Sean Connolly
   */
-trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfter {
+trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfterAll {
   this: com.quane.little.data.EmbeddedMongoDB with org.scalatest.Suite =>
 
   val mongoVersion = "2.4.10"
@@ -18,11 +18,11 @@ trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfter {
   val mongoPort = 12345
   var mongoProps: MongodProps = null
 
-  before {
+  override def beforeAll() {
     mongoProps = mongoStart()
   }
 
-  after {
+  override def afterAll() {
     mongoStop(mongoProps)
   }
 
@@ -31,4 +31,5 @@ trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfter {
   def mongoDB(db: String): MongoDB = mongoClient(db)
 
   def mongoCollection(db: String, name: String): MongoCollection = mongoDB(db)(name)
+
 }

@@ -7,13 +7,14 @@ import com.quane.little.language.FunctionDefinition
   *
   * @author Sean Connolly
   */
-class FunctionDefinitionRecord(val ownerId: String, var definition: FunctionDefinition) {
+class FunctionDefinitionRecord(val ownerId: String, var definition: FunctionDefinition)
+  extends HasRecordID {
 
-  var _id: ID = _
+  var id: RecordID = _
 
   override def toString: String =
     Objects.toStringHelper(getClass)
-      .add("id", _id)
+      .add("id", id)
       .add("definition", definition)
       .toString
 

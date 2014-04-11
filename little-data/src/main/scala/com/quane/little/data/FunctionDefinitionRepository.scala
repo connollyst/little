@@ -1,20 +1,12 @@
 package com.quane.little.data
 
+import com.mongodb.casbah.Imports._
 import com.quane.little.data.model.FunctionDefinitionRecord
-import com.quane.little.language.FunctionDefinition
-import scala.collection.mutable
 
 /** Provides storage and retrieval access to the repository of
-  * [[com.quane.little.language.FunctionDefinition]] objects.
+  * [[FunctionDefinitionRecord]] objects.
   *
   * @author Sean Connolly
   */
-class FunctionDefinitionRepository extends MongoRepository[FunctionDefinitionRecord] {
-
-  private val funs: mutable.Map[String, FunctionDefinition] = mutable.Map()
-
-  def fetch(id: String): FunctionDefinition = funs(id)
-
-  def save(id: String, fun: FunctionDefinition): Unit = funs += (id -> fun)
-
-}
+class FunctionDefinitionRepository(collection: MongoCollection)
+  extends MongoRepository[FunctionDefinitionRecord](collection)

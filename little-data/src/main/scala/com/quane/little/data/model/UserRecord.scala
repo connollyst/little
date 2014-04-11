@@ -1,24 +1,39 @@
 package com.quane.little.data.model
 
+import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.common.base.Objects
 
 /** A database record for a user.
   *
   * @author Sean Connolly
   */
-class UserRecord(val username: String) {
+class UserRecord(val username: String, val firstname: String, val lastname: String)
+  extends HasRecordID {
 
-  var _id: ID = _
-  var firstname: String = _
-  var lastname: String = _
+  @JsonProperty("_id")
+  var id: RecordID = _
 
   def fullname = firstname + " " + lastname
 
+  override def equals(other: Any): Boolean = other match {
+    case that: UserRecord =>
+      username == that.username &&
+        firstname == that.firstname &&
+        lastname == that.lastname
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(username, firstname, lastname)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
   override def toString: String =
     Objects.toStringHelper(getClass)
-      .add("id", _id)
+      .add("id", id)
       .add("username", username)
       .add("fullname", fullname)
       .toString
+
 
 }

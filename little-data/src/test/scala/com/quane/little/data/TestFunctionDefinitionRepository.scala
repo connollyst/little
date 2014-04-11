@@ -21,7 +21,7 @@ class TestFunctionDefinitionRepository extends FlatSpec with EmbeddedMongoDB wit
     // Write a new function into the database
     val function = new FunctionDefinitionRecord("1234", Functions.blank)
     println("Writing function to MongoDB: " + function)
-    new FunctionDefinitionRepository().insert(collection, function)
+    new FunctionDefinitionRepository(collection).insert(function)
     // Now let's print out the database
     val cursor = collection.find()
     cursor foreach {
