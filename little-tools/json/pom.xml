@@ -37,7 +37,6 @@
 
     <properties>
         <jackson.scala.version>2.3.3-SNAPSHOT</jackson.scala.version>
-        <jsonassert.version>1.2.3</jsonassert.version>
     </properties>
 
     <dependencies>
