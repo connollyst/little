@@ -14,36 +14,31 @@ import org.scalatest.matchers.ShouldMatchers
 class TestValueSerialization
   extends FlatSpec with ShouldMatchers with JSONTestUtilities {
 
-  "json serializer" should "serialize value blank" in {
+  "JSON serializer" should "serialize value blank" in {
     val name = "value_blank"
     val v = Value("")
     assertSerialization(getJSON(name), v)
   }
-
   it should "serialize value string" in {
     val name = "value_string"
     val v = Value("abc")
     assertSerialization(getJSON(name), v)
   }
-
   it should "serialize value integer" in {
     val name = "value_integer"
     val v = Value(123)
     assertSerialization(getJSON(name), v)
   }
-
   it should "serialize value double" in {
     val name = "value_double"
     val v = Value(12.34d)
     assertSerialization(getJSON(name), v)
   }
-
   it should "serialize value boolean true" in {
     val name = "value_boolean_true"
     val v = Value(true)
     assertSerialization(getJSON(name), v)
   }
-
   it should "serialize value boolean false" in {
     val name = "value_boolean_false"
     val v = Value(false)

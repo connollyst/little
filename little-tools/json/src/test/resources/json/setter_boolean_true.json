@@ -1,0 +1,7 @@
+{
+    "_class": "com.quane.little.language.SetStatement",
+    "value": {
+        "_class": "com.quane.little.language.data.Bool",
+        "primitive": true
+    }
+}
