@@ -17,35 +17,35 @@ class TestSetterSerialization
 
   "JSON serializer" should "serialize a set statement with a string value" in {
     val name = "setter_string"
-    val setter = new SetStatement("MyVariable", "abc")
+    val setter = new SetStatement("MyVariable", Value("abc"))
     val actual = new LittleJSON().serialize(setter)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }
   it should "serialize a set statement with an integer value" in {
     val name = "setter_integer"
-    val setter = new SetStatement("MyVariable", 1234)
+    val setter = new SetStatement("MyVariable", Value(1234))
     val actual = new LittleJSON().serialize(setter)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }
   it should "serialize a set statement with a double value" in {
     val name = "setter_double"
-    val setter = new SetStatement("MyVariable", 12.34)
+    val setter = new SetStatement("MyVariable", Value(12.34))
     val actual = new LittleJSON().serialize(setter)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }
   it should "serialize a set statement with an boolean value (true)" in {
     val name = "setter_boolean_true"
-    val setter = new SetStatement("MyVariable", true)
+    val setter = new SetStatement("MyVariable", Value(true))
     val actual = new LittleJSON().serialize(setter)
     val expected = getJSON(name)
     assertJSON(expected, actual)
   }
   it should "serialize a set statement with an boolean value (false)" in {
     val name = "setter_boolean_false"
-    val setter = new SetStatement("MyVariable", false)
+    val setter = new SetStatement("MyVariable", Value(false))
     val actual = new LittleJSON().serialize(setter)
     val expected = getJSON(name)
     assertJSON(expected, actual)

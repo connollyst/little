@@ -29,8 +29,8 @@ class TestBlock
   test("test block with new values") {
     val snapshot = new ScopeSnapshot
     val block = new Block
-    block.addStep(new SetStatement("Obj1", "A"))
-    block.addStep(new SetStatement("Obj2", "B"))
+    block.addStep( SetStatement("Obj1", "A"))
+    block.addStep( SetStatement("Obj2", "B"))
     block.addStep(snapshot)
     block.evaluate(new Runtime)
     val obj1 = snapshot.scope.fetch("Obj1")
@@ -49,11 +49,9 @@ class TestBlock
   test("test block with value assignment") {
     val snapshot = new ScopeSnapshot
     val block = new Block
-    val pointer1 = new Pointer("Obj1")
-    val pointer2 = new Pointer("Obj2")
-    block.addStep(new SetStatement(pointer1, Value("A")))
-    block.addStep(new SetStatement(pointer2, Value("B")))
-    block.addStep(new SetStatement(pointer1, new GetStatement(pointer2)))
+    block.addStep(new SetStatement("Obj1", Value("A")))
+    block.addStep(new SetStatement("Obj2", Value("B")))
+    block.addStep(new SetStatement("Obj1", new GetStatement("Obj2")))
     block.addStep(snapshot)
     block.evaluate(new Runtime)
     val obj1 = snapshot.scope.fetch("Obj1")
@@ -73,17 +71,15 @@ class TestBlock
 
   test("test block with return from set statement") {
     val block = new Block
-    val pointer = new Pointer("Obj")
-    block.addStep(new SetStatement(pointer, Value("A")))
+    block.addStep(new SetStatement("Obj", Value("A")))
     val obj = block.evaluate(new Runtime)
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
   test("test block with return from get statement") {
     val block = new Block
-    val pointer = new Pointer("Obj")
-    block.addStep(new SetStatement(pointer, Value("A")))
-    block.addStep(new GetStatement(pointer))
+    block.addStep(new SetStatement("Obj", Value("A")))
+    block.addStep(new GetStatement("Obj"))
     val obj = block.evaluate(new Runtime)
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }

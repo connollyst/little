@@ -7,6 +7,7 @@ import org.mockito.Mockito._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends FunSuite with MockitoSugar {
@@ -32,7 +33,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val setPresenter = new SetStatementPresenter(new MockSetStatementView)
     when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
-    presenter.add(new SetStatement("x", "y"))
+    presenter.add(new SetStatement("x", Value("y")))
     verify(view).addSetStatement()
   }
 
@@ -41,7 +42,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val setPresenter = new SetStatementPresenter(new MockSetStatementView)
     when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
-    presenter.add(new SetStatement("x", "y"))
+    presenter.add(new SetStatement("x", Value("y")))
     assert(presenter.steps.contains(setPresenter))
   }
 
@@ -50,7 +51,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val setPresenter = mock[SetStatementPresenter[SetStatementView]]
     when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
-    val statement = new SetStatement("x", "y")
+    val statement = new SetStatement("x", Value("y"))
     presenter.add(statement)
     verify(setPresenter).initialize(statement)
   }

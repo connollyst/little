@@ -12,6 +12,9 @@ import org.skyscreamer.jsonassert.JSONAssert
   */
 trait JSONTestUtilities {
 
+  private[json] def deserialize[T: Manifest](jsonName: String): T =
+    new LittleJSON().deserialize[T](getJSON(jsonName))
+
   /** Serialize the [[com.quane.little.language.Expression]] and assert the JSON
     * looks as expected.
     *

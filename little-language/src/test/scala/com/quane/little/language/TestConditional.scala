@@ -15,9 +15,9 @@ import org.scalatest.matchers.ShouldMatchers
 class TestConditional extends FlatSpec with ShouldMatchers {
 
   private val name = "OuterScopeVariable"
-  private val defaultValue = "DefaultValue"
-  private val thenValue = "ThenValue"
-  private val otherwiseValue = "OtherwiseValue"
+  private val defaultValue = Value("DefaultValue")
+  private val thenValue = Value("ThenValue")
+  private val otherwiseValue = Value("OtherwiseValue")
   private val positive = Value(true)
   private val negative = Value(false)
 

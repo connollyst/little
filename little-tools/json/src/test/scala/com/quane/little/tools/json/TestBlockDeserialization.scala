@@ -30,7 +30,4 @@ class TestBlockDeserialization
     })
   }
 
-  private def deserialize[T: Manifest](jsonName: String): T =
-    new LittleJSON().deserialize[T](getJSON(jsonName))
-
 }

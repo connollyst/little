@@ -66,7 +66,4 @@ class TestFunctionDeserialization
     fun.args(argName) should be(argExpected)
   }
 
-  private def deserialize[T: Manifest](jsonName: String): T =
-    new LittleJSON().deserialize[T](getJSON(jsonName))
-
 }

@@ -7,41 +7,34 @@ import com.quane.little.tools.Logging
 abstract class Statement
   extends Expression
 
-class SetStatement(pointer: Pointer, val value: Expression)
+object SetStatement {
+
+  def apply(pointer: Pointer, value: String): SetStatement = this(pointer, Value(value))
+
+  def apply(pointer: Pointer, value: Boolean): SetStatement = this(pointer, Value(value))
+
+  def apply(pointer: Pointer, value: Int): SetStatement = this(pointer, Value(value))
+
+  def apply(pointer: Pointer, value: Double): SetStatement = this(pointer, Value(value))
+
+  def apply(pointer: Pointer, value: Expression): SetStatement = new SetStatement(pointer.variableName, value)
+
+  def apply(name: String, value: String): SetStatement = new SetStatement(name, Value(value))
+
+  def apply(name: String, value: Boolean): SetStatement = new SetStatement(name, Value(value))
+
+  def apply(name: String, value: Int): SetStatement = new SetStatement(name, Value(value))
+
+  def apply(name: String, value: Double): SetStatement = new SetStatement(name, Value(value))
+
+}
+
+class SetStatement(val name: String, val value: Expression)
   extends Statement {
-
-  def this(pointer: Pointer, value: String) =
-    this(pointer, Value(value))
-
-  def this(pointer: Pointer, value: Boolean) =
-    this(pointer, Value(value))
-
-  def this(pointer: Pointer, value: Int) =
-    this(pointer, Value(value))
-
-  def this(pointer: Pointer, value: Double) =
-    this(pointer, Value(value))
-
-  def this(name: String, value: Expression) =
-    this(new Pointer(name), value)
-
-  def this(name: String, value: String) =
-    this(new Pointer(name), value)
-
-  def this(name: String, value: Boolean) =
-    this(new Pointer(name), value)
-
-  def this(name: String, value: Int) =
-    this(new Pointer(name), value)
-
-  def this(name: String, value: Double) =
-    this(new Pointer(name), value)
-
-  def name: String = pointer.variableName
 
   override def evaluate(scope: Scope): Value = {
     val actualValue = value.evaluate(scope)
-    pointer.update(scope, actualValue)
+    new Pointer(name).update(scope, actualValue)
     actualValue
   }
 
@@ -52,7 +45,7 @@ class SetStatement(pointer: Pointer, val value: Expression)
 
   override def toString: String =
     Objects.toStringHelper(getClass)
-      .add("name", pointer.variableName)
+      .add("name", name)
       .add("value", value)
       .toString
 

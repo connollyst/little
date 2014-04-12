@@ -26,7 +26,7 @@ class TestValueSerialization
   }
   it should "serialize value integer" in {
     val name = "value_integer"
-    val v = Value(123)
+    val v = Value(1234)
     assertSerialization(getJSON(name), v)
   }
   it should "serialize value double" in {

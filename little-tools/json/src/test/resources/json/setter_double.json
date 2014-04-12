@@ -1,5 +1,6 @@
 {
     "_class": "com.quane.little.language.SetStatement",
+    "name": "MyVariable",
     "value": {
         "_class": "com.quane.little.language.data.NumberDecimal",
         "primitive": 12.34

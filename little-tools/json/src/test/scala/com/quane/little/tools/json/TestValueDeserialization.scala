@@ -24,7 +24,7 @@ class TestValueDeserialization
   }
   it should "deserialize value integer" in {
     val value = deserialize[Value]("value_integer")
-    value should be(new NumberSimple(123))
+    value should be(new NumberSimple(1234))
   }
   it should "deserialize value double" in {
     val value = deserialize[Value]("value_double")
@@ -38,8 +38,5 @@ class TestValueDeserialization
     val value = deserialize[Value]("value_boolean_false")
     value should be(new Bool(false))
   }
-
-  private def deserialize[T: Manifest](jsonName: String): T =
-    new LittleJSON().deserialize[T](getJSON(jsonName))
 
 }

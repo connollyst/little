@@ -15,43 +15,33 @@ object Functions {
 
   def move: FunctionDefinition = {
     val fun = new FunctionDefinition("move").addParam("speed")
-    val speedArg = new Pointer("speed")
-    val guySpeed = new Pointer(Operable.SPEED)
-    fun.addStep(new SetStatement(guySpeed, new GetStatement(speedArg)))
+    fun.addStep(new SetStatement(Operable.SPEED, new GetStatement("speed")))
   }
 
   def stop: FunctionDefinition = {
     val fun = new FunctionDefinition("stop")
-    val pointer = new Pointer(Operable.SPEED)
-    fun.addStep(new SetStatement(pointer, Value(0)))
+    fun.addStep(new SetStatement(Operable.SPEED, Value(0)))
   }
 
   def turn: FunctionDefinition = {
     val fun = new FunctionDefinition("turn").addParam("direction")
-    val directionArg = new Pointer("direction")
-    val myDirection = new Pointer(Operable.DIRECTION)
-    fun.addStep(new SetStatement(myDirection, new GetStatement(directionArg)))
+    fun.addStep(new SetStatement(Operable.DIRECTION, new GetStatement("direction")))
   }
 
   def turnRandom: Block = {
     val min = Value(1)
     val max = Value(360)
+    val setter = new SetStatement(Operable.DIRECTION, new RandomNumber(min, max))
     val randomFun = new Block
-    randomFun.addStep(
-      new SetStatement(
-        new Pointer(Operable.DIRECTION), new RandomNumber(min, max)
-      )
-    )
+    randomFun.addStep(setter)
   }
 
   def turnRelative: FunctionDefinition = {
     val relativelyFun = new FunctionDefinition("turnRelative").addParam("degrees")
-    val dirPointer = new Pointer(Operable.DIRECTION)
-    val getCurrentDir = new GetStatement(dirPointer)
-    val dirChangeArg = new Pointer("degrees")
-    val dirChange = new GetStatement(dirChangeArg)
+    val getCurrentDir = new GetStatement(Operable.DIRECTION)
+    val dirChange = new GetStatement("degrees")
     val getNewDirection = new Addition(getCurrentDir, dirChange)
-    val setNewDirection = new SetStatement(dirPointer, getNewDirection)
+    val setNewDirection = new SetStatement(Operable.DIRECTION, getNewDirection)
     relativelyFun.addStep(setNewDirection)
   }
 
@@ -68,10 +58,8 @@ object Functions {
     val turnSouthIfNorth = new Conditional(isNorth).addStep(turnSouth)
     fun.addStep(turnSouthIfNorth)
     // Step #2: Remember _Home_ is _Here_
-    val homeXPointer = new Pointer("HomeX")
-    val homeYPointer = new Pointer("HomeY")
-    fun.addStep(new SetStatement(homeXPointer, myX))
-    fun.addStep(new SetStatement(homeYPointer, myY))
+    fun.addStep(new SetStatement("HomeX", myX))
+    fun.addStep(new SetStatement("HomeY", myY))
     // Step #3: Set speed to 10
     fun.addStep(new FunctionReference("move").addArg("speed", Value(10)))
   }
@@ -94,7 +82,7 @@ object Functions {
 
   def getAngleBetween(fromX: Expression, fromY: Expression, toX: Expression, toY: Expression): Block = {
     val angleFunction = new Block
-    val anglePointer = new Pointer("angle")
+    val anglePointer = "angle"
     // Build the angle calculation
     val deltaX = new Subtraction(toX, fromX)
     val deltaY = new Subtraction(toY, fromY)

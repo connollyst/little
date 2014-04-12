@@ -17,19 +17,19 @@ class TestStatement
     assertSet("Obj1", "A", set)
   }
   test("test set simple string") {
-    val set = new SetStatement("Obj1", "A")
+    val set = SetStatement("Obj1", "A")
     assertSet("Obj1", "A", set)
   }
   test("test set simple boolean") {
-    val set = new SetStatement("Obj1", true)
+    val set = SetStatement("Obj1", true)
     assertSet("Obj1", true, set)
   }
   test("test set simple int") {
-    val set = new SetStatement("Obj1", 1)
+    val set = SetStatement("Obj1", 1)
     assertSet("Obj1", 1, set)
   }
   test("test set simple double") {
-    val set = new SetStatement("Obj1", 1.0)
+    val set = SetStatement("Obj1", 1.0)
     assertSet("Obj1", 1.0, set)
   }
 
@@ -37,27 +37,27 @@ class TestStatement
 
   test("test set pointer with value") {
     val pointer = new Pointer("Obj1")
-    val set = new SetStatement(pointer, Value("A"))
+    val set = SetStatement(pointer, Value("A"))
     assertSet("Obj1", "A", set)
   }
   test("test set pointer with string value") {
     val pointer = new Pointer("Obj1")
-    val set = new SetStatement(pointer, "A")
+    val set = SetStatement(pointer, "A")
     assertSet("Obj1", "A", set)
   }
   test("test set pointer with boolean value") {
     val pointer = new Pointer("Obj1")
-    val set = new SetStatement(pointer, true)
+    val set = SetStatement(pointer, true)
     assertSet("Obj1", true, set)
   }
   test("test set pointer with int value") {
     val pointer = new Pointer("Obj1")
-    val set = new SetStatement(pointer, 1)
+    val set = SetStatement(pointer, 1)
     assertSet("Obj1", 1, set)
   }
   test("test set pointer with double value") {
     val pointer = new Pointer("Obj1")
-    val set = new SetStatement(pointer, 1.0)
+    val set = SetStatement(pointer, 1.0)
     assertSet("Obj1", 1.0, set)
   }
 
