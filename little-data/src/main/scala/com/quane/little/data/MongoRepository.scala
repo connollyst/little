@@ -5,7 +5,7 @@ import com.mongodb.util.JSON
 import com.quane.little.data.model.{RecordId, HasRecordId}
 import com.quane.little.tools.json.LittleJSON
 
-/** A MongoDB repository trait.
+/** An abstract MongoDB repository.
   *
   * @author Sean Connolly
   */
