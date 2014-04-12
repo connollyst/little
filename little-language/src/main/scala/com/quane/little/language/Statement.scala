@@ -4,8 +4,7 @@ import com.google.common.base.Objects
 import com.quane.little.language.data.Value
 import com.quane.little.tools.Logging
 
-abstract class Statement
-  extends Expression
+sealed trait Statement extends Expression
 
 object SetStatement {
 
