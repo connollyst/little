@@ -41,15 +41,11 @@ class SetStatement(val name: String, val value: Expression)
 
 }
 
-class GetStatement(pointer: Pointer)
+class GetStatement(val name: String)
   extends Statement {
 
-  def this(name: String) = this(new Pointer(name))
-
-  def name: String = pointer.variableName
-
   override def evaluate(scope: Scope): Value = {
-    val variable = pointer.resolve(scope)
+    val variable = new Pointer(name).resolve(scope)
     variable.value
   }
 
@@ -60,7 +56,7 @@ class GetStatement(pointer: Pointer)
 
   override def toString: String =
     Objects.toStringHelper(getClass)
-      .add("name", pointer.variableName)
+      .add("name", name)
       .toString
 
 }

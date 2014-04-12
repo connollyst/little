@@ -10,46 +10,36 @@ import org.scalatest.junit.JUnitRunner
 class TestStatement
   extends FunSuite {
 
-  /* Set Statement with implicit Pointer */
+  /* Set Statement */
 
-  test("test set simple value") {
-    val set = new SetStatement("Obj1", Value("A"))
-    assertSet("Obj1", "A", set)
+  test("test setter with value") {
+    val set = new SetStatement("Obj", Value("A"))
+    assertSet("Obj", "A", set)
   }
-  test("test set simple string") {
-    val set = SetStatement("Obj1", "A")
-    assertSet("Obj1", "A", set)
+  test("test setter with string") {
+    val set = SetStatement("Obj", "A")
+    assertSet("Obj", "A", set)
   }
-  test("test set simple boolean") {
-    val set = SetStatement("Obj1", true)
-    assertSet("Obj1", true, set)
+  test("test setter with boolean") {
+    val set = SetStatement("Obj", true)
+    assertSet("Obj", true, set)
   }
-  test("test set simple int") {
-    val set = SetStatement("Obj1", 1)
-    assertSet("Obj1", 1, set)
+  test("test setter with int") {
+    val set = SetStatement("Obj", 1)
+    assertSet("Obj", 1, set)
   }
-  test("test set simple double") {
-    val set = SetStatement("Obj1", 1.0)
-    assertSet("Obj1", 1.0, set)
+  test("test setter with double") {
+    val set = SetStatement("Obj", 1.0)
+    assertSet("Obj", 1.0, set)
   }
 
-  /* Get Statement with implicit Pointer */
+  /* Get Statement */
 
-  test("test get with implicit pointer") {
+  test("test getter") {
     val scope = new Scope(None)
-    scope.save("Obj1", Value("A"))
+    scope.save("Obj", Value("A"))
     val get = new GetStatement("Obj1")
-    assertGet("Obj1", "A", scope, get)
-  }
-
-  /* Get Statement with explicit Pointer */
-
-  test("test get with explicit pointer") {
-    val scope = new Scope(None)
-    scope.save("Obj1", Value("A"))
-    val pointer = new Pointer("Obj1")
-    val get = new GetStatement(pointer)
-    assertGet("Obj1", "A", scope, get)
+    assertGet("Obj", "A", scope, get)
   }
 
 }
