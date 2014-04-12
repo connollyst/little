@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.common.base.Objects
 import com.quane.little.language.FunctionDefinition
 
-/** A database record for a [[FunctionDefinition]].
+/** A database record for a [[com.quane.little.language.FunctionDefinition]].
   *
   * @author Sean Connolly
   */
