@@ -23,14 +23,12 @@ class TestFunctionSerialization
     val fun = new FunctionReference(name)
     assertSerialization(getJSON(name), fun)
   }
-
   it should "serialize function reference with single value argument" in {
     val name = "function_reference_with_single_value_arg"
     val fun = new FunctionReference(name)
     fun.addArg("x", Value("abc"))
     assertSerialization(getJSON(name), fun)
   }
-
   it should "serialize function reference with multiple value arguments" in {
     val name = "function_reference_with_multiple_value_args"
     val fun = new FunctionReference(name)
@@ -39,7 +37,6 @@ class TestFunctionSerialization
     fun.addArg("z", Value(true))
     assertSerialization(getJSON(name), fun)
   }
-
   it should "serialize function reference with function reference argument" in {
     val name = "function_reference_with_function_reference_arg"
     val fun = new FunctionReference(name)

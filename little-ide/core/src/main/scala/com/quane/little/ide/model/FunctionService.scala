@@ -28,10 +28,12 @@ object FunctionService {
     val collection = mongoCollection("little", "functions")
     val repo = new FunctionRepository(collection)
     repo.find(id) match {
-      case Some(record) => println("Updating " + id)
+      case Some(record) =>
+        record.definition = fun
+        repo.update(record)
+        record
       case None => throw new RuntimeException("No FunctionDefinition for " + id)
     }
-    repo.find(id).get
   }
 
   def insert(username: String, fun: FunctionDefinition): FunctionRecord = {

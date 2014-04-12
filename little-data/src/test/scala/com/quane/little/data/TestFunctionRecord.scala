@@ -9,7 +9,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.skyscreamer.jsonassert.JSONAssert
 
-/** Test cases for the [[FunctionRecord]].
+/** Test cases for the [[com.quane.little.data.model.FunctionRecord]].
   *
   * @author Sean Connolly
   */

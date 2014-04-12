@@ -109,8 +109,6 @@ class FunctionParameter(val name: String) {
 class FunctionReference(val name: String)
   extends Expression {
 
-  // TODO _is_ a function reference really a scope, or does it just have one?
-
   val args = mutable.Map[String, Expression]()
 
   def addArg(name: String, value: Expression): FunctionReference = {

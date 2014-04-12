@@ -1,7 +1,7 @@
 package com.quane.little.data
 
 import com.quane.little.data.model.{RecordId, FunctionRecord}
-import com.quane.little.language.FunctionDefinition
+import com.quane.little.language.{PrintStatement, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -45,14 +45,33 @@ class TestFunctionRepository
     repo.insert(function)
     function.definition should be(definition)
   }
-  it should "update with known id" in {
+  it should "update with known id (id doesn't change)" in {
     val repo = functionRepository
     val function = new FunctionRecord(ownerId, definition)
     repo.insert(function)
     val recordId = function.id
-    repo.insert(function)
+    repo.update(function)
     function.id should be(recordId)
     // TODO change all fields but id and assert everything persisted w/ fetch
+  }
+  it should "update function with known id (definition changes)" in {
+    val originalDefinition = new FunctionDefinition("Original Function")
+    val updatedDefinition = new FunctionDefinition("Updated Function")
+    originalDefinition.addParam("Param 1")
+    originalDefinition.addParam("Param 2")
+    updatedDefinition.addParam("Param A")
+    updatedDefinition.addParam("Param B")
+    originalDefinition.addStep(new PrintStatement("Hello Original World!"))
+    updatedDefinition.addStep(new PrintStatement("Hello Updated World!"))
+    val repo = functionRepository
+    val function = new FunctionRecord(ownerId, originalDefinition)
+    repo.insert(function)
+    val recordId = function.id
+    function.definition = updatedDefinition
+    repo.update(function)
+    function.id should be(recordId)
+    function.ownerId should be(ownerId)
+    function.definition should be(updatedDefinition)
   }
   it should "error out on insert with known id" in {
     val repo = functionRepository
@@ -99,12 +118,12 @@ class TestFunctionRepository
       "Cannot update FunctionRecord with unknown id: UnknownId1234"
     )
   }
-  it should "fetch function function" in {
+  it should "fetch function" in {
     val repo = functionRepository
-    val recordIn = new FunctionRecord(ownerId, definition)
-    repo.insert(recordIn)
-    val recordOut = repo.find(recordIn.id).get
-    recordOut should be(recordIn)
+    val functionIn = new FunctionRecord(ownerId, definition)
+    repo.insert(functionIn)
+    val functionOut = repo.find(functionIn.id).get
+    functionOut should be(functionIn)
   }
 
   private def userRepository: UserRepository =
