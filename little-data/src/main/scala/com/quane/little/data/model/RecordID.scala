@@ -10,11 +10,17 @@ import org.bson.types.ObjectId
   */
 class RecordID(@JsonProperty("$oid") oid: String) {
 
-  def this(oid: ObjectId) = this(oid.toStringMongod)
+  def toObjectId: ObjectId = new ObjectId(oid)
 
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("$oid", oid)
       .toString
+
+}
+
+object RecordID {
+
+  def apply(oid: ObjectId): RecordID = new RecordID(oid.toStringMongod)
 
 }

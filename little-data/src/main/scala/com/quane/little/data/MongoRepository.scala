@@ -9,7 +9,7 @@ import com.quane.little.tools.json.LittleJSON
   *
   * @author Sean Connolly
   */
-abstract class MongoRepository[T <: HasRecordID](collection: MongoCollection) {
+abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCollection) {
 
   private val little = new LittleJSON()
 
@@ -24,13 +24,20 @@ abstract class MongoRepository[T <: HasRecordID](collection: MongoCollection) {
           )
         }
         dbObject._id match {
-          case Some(id) => record.id = new RecordID(id)
+          case Some(id) => record.id = RecordID(id)
           case None => throw new RuntimeException(
             "Expected DBObject was assigned an OID."
           )
         }
       case _ => throw new RuntimeException("Expected DBObject for " + json)
     }
+  }
+
+  def find(id: RecordID): T = {
+    val query = MongoDBObject("_id" -> id.toObjectId)
+    val cursor = collection.findOne(query)
+    val json = JSON.serialize(cursor)
+    little.deserialize[T](json)
   }
 
 }

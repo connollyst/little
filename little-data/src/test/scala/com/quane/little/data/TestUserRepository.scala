@@ -16,12 +16,15 @@ import org.scalatest.matchers.ShouldMatchers
 @RunWith(classOf[JUnitRunner])
 class TestUserRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
 
+  val username = "TestUsername"
+  val firstname = "TestFirstname"
+  val lastname = "TestLastname"
   val littleJSON = new LittleJSON()
 
   "UserRepository" should "assign a user record id on insert" in {
     val collection = mongoCollection
     val repo = new UserRepository(collection)
-    val user = new UserRecord("connollyst", "Sean", "Connolly")
+    val user = new UserRecord(username, firstname, lastname)
     user.id should be(null)
     repo.insert(user)
     user.id should not be null
@@ -29,31 +32,39 @@ class TestUserRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatche
   it should "maintain a user's username on insert" in {
     val collection = mongoCollection
     val repo = new UserRepository(collection)
-    val user = new UserRecord("connollyst", "Sean", "Connolly")
+    val user = new UserRecord(username, firstname, lastname)
     repo.insert(user)
-    user.username should be("connollyst")
+    user.username should be(username)
   }
   it should "maintain a user's first name on insert" in {
     val collection = mongoCollection
     val repo = new UserRepository(collection)
-    val user = new UserRecord("connollyst", "Sean", "Connolly")
+    val user = new UserRecord(username, firstname, lastname)
     repo.insert(user)
-    user.firstname should be("Sean")
+    user.firstname should be(firstname)
   }
   it should "maintain a user's last name on insert" in {
     val collection = mongoCollection
     val repo = new UserRepository(collection)
-    val user = new UserRecord("connollyst", "Sean", "Connolly")
+    val user = new UserRecord(username, firstname, lastname)
     repo.insert(user)
-    user.lastname should be("Connolly")
+    user.lastname should be(lastname)
   }
   it should "insert user record" in {
     val collection = mongoCollection
     val repo = new UserRepository(collection)
-    val userIn = new UserRecord("connollyst", "Sean", "Connolly")
+    val userIn = new UserRecord(username, firstname, lastname)
     repo.insert(userIn)
     val jsonOut = JSON.serialize(collection.findOne())
     val userOut = littleJSON.deserialize[UserRecord](jsonOut)
+    userOut should be(userIn)
+  }
+  it should "fetch user record" in {
+    val collection = mongoCollection
+    val repo = new UserRepository(collection)
+    val userIn = new UserRecord(username, firstname, lastname)
+    repo.insert(userIn)
+    val userOut = repo.find(userIn.id)
     userOut should be(userIn)
   }
 
