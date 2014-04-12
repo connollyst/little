@@ -33,11 +33,20 @@ abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCol
     }
   }
 
-  def find(id: RecordID): T = {
+  def find(id: RecordID): Option[T] = {
     val query = MongoDBObject("_id" -> id.toObjectId)
-    val cursor = collection.findOne(query)
-    val json = JSON.serialize(cursor)
-    little.deserialize[T](json)
+    val result = collection.findOne(query)
+    deserialize(result)
   }
+
+  def deserialize[A <% DBObject](o: Option[A]): Option[T] =
+    o match {
+      case Some(cursor) =>
+        val json = JSON.serialize(cursor)
+        val record = little.deserialize[T](json)
+        Some(record)
+      case None =>
+        None
+    }
 
 }

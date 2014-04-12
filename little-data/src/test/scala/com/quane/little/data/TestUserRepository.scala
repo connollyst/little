@@ -64,7 +64,7 @@ class TestUserRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatche
     val repo = new UserRepository(collection)
     val userIn = new UserRecord(username, firstname, lastname)
     repo.insert(userIn)
-    val userOut = repo.find(userIn.id)
+    val userOut = repo.find(userIn.id).get
     userOut should be(userIn)
   }
 
