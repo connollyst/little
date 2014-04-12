@@ -8,9 +8,19 @@ import org.bson.types.ObjectId
   *
   * @param oid the record's oid
   */
-class RecordID(@JsonProperty("$oid") oid: String) {
+class RecordID(@JsonProperty("$oid") val oid: String) {
 
   def toObjectId: ObjectId = new ObjectId(oid)
+
+  override def equals(other: Any): Boolean = other match {
+    case that: RecordID => oid == that.oid
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(oid)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
 
   override def toString: String =
     Objects.toStringHelper(getClass)

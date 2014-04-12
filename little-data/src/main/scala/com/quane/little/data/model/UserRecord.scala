@@ -17,14 +17,15 @@ class UserRecord(val username: String, val firstname: String, val lastname: Stri
 
   override def equals(other: Any): Boolean = other match {
     case that: UserRecord =>
-      username == that.username &&
+      id == that.id &&
+        username == that.username &&
         firstname == that.firstname &&
         lastname == that.lastname
     case _ => false
   }
 
   override def hashCode(): Int = {
-    val state = Seq(username, firstname, lastname)
+    val state = Seq(id, username, firstname, lastname)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 

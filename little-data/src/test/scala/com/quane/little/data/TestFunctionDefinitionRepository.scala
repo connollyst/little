@@ -1,36 +1,62 @@
 package com.quane.little.data
 
-import com.mongodb.util.JSON
-import com.quane.little.data.model.FunctionDefinitionRecord
-import com.quane.little.language.Functions
+import com.quane.little.data.model.{RecordID, FunctionDefinitionRecord}
+import com.quane.little.language.FunctionDefinition
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
-import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{BeforeAndAfterAll, FlatSpec}
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionDefinitionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
+class TestFunctionDefinitionRepository
+  extends FlatSpec with EmbeddedMongoDB with ShouldMatchers with BeforeAndAfterAll {
 
-  "json serializer" should "persist bson function" in {
-    val collection = mongoCollection("little_db", "test_users")
-    println("Working with collection '" + collection.name + "': " + collection.size)
-    collection foreach {
-      record => println(":: " + record)
-    }
-    // Write a new function into the database
-    val function = new FunctionDefinitionRecord("1234", Functions.blank)
-    println("Writing function to MongoDB: " + function)
-    new FunctionDefinitionRepository(collection).insert(function)
-    // Now let's print out the database
-    val cursor = collection.find()
-    cursor foreach {
-      record =>
-        val json = JSON.serialize(record)
-        println(":: " + json)
-        val fun = new LittleJSON().deserialize[FunctionDefinitionRecord](json)
-        println("::>> " + fun)
-    }
+  val littleJSON = new LittleJSON()
+  var ownerId: RecordID = _
+  val definition = new FunctionDefinition("MyFunction")
+
+  /** Before the tests start, prepare a [[com.quane.little.data.model.UserRecord]]
+    * to test with.
+    *
+    * Also, start up the [[com.quane.little.data.EmbeddedMongoDB]].
+    */
+  override def beforeAll() {
+    mongoProps = mongoStart()
+    ownerId = userRepository.insert("Username", "FirstName", "LastName").id
   }
+
+  "FunctionDefinitionRepository" should "assign a record id on insert" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    record.id should be(null)
+    repo.insert(record)
+    record.id should not be null
+  }
+  it should "maintain an owner's id on insert" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    repo.insert(record)
+    record.ownerId should be(ownerId)
+  }
+  it should "maintain a function's definition on insert" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    repo.insert(record)
+    record.definition should be(definition)
+  }
+  it should "fetch user record" in {
+    val repo = functionRepository
+    val recordIn = new FunctionDefinitionRecord(ownerId, definition)
+    repo.insert(recordIn)
+    val recordOut = repo.find(recordIn.id).get
+    recordOut should be(recordIn)
+  }
+
+  private def userRepository: UserRepository =
+    new UserRepository(mongoCollection("little_db", "test_users"))
+
+  private def functionRepository: FunctionDefinitionRepository =
+    new FunctionDefinitionRepository(mongoCollection("little_db", "test_functions"))
 
 }

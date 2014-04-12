@@ -50,7 +50,6 @@ abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCol
     o match {
       case Some(cursor) =>
         val json = JSON.serialize(cursor)
-        println("Deserializing: " + json)
         val record = little.deserialize[T](json)
         Some(record)
       case None =>

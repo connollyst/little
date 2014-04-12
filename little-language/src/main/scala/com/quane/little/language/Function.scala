@@ -70,6 +70,19 @@ class FunctionDefinition(val name: String) {
     }
   }
 
+  override def equals(other: Any): Boolean = other match {
+    case that: FunctionDefinition =>
+      name == that.name &&
+        params == that.params &&
+        block == that.block
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(name, params, block)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("name", name)
