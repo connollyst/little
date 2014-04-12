@@ -17,6 +17,7 @@ class LanguageTypeResolverBuilder
 
   init(JsonTypeInfo.Id.CLASS, null)
   inclusion(JsonTypeInfo.As.PROPERTY)
+  typeProperty("_class")
 
   /** Method called to check if the default type handler should be used for
     * given type.
