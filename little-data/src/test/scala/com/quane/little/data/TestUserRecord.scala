@@ -1,6 +1,6 @@
 package com.quane.little.data
 
-import com.quane.little.data.model.{UserRecord, RecordID}
+import com.quane.little.data.model.{UserRecord, RecordId}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -17,7 +17,7 @@ class TestUserRecord extends FlatSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
   val user = new UserRecord("User Name", "First Name", "Last Name")
-  user.id = new RecordID("abcd1234")
+  user.id = new RecordId("abcd1234")
   val json = // TODO move to JSON file
     """{
       |"_id" : { "$oid" : "abcd1234"},

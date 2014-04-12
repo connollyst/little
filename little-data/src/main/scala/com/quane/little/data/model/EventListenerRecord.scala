@@ -9,7 +9,7 @@ import com.quane.little.language.event.EventListener
   */
 class EventListenerRecord(var definition: EventListener) {
 
-  var _id: RecordID = _
+  var _id: RecordId = _
 
   override def toString: String =
     Objects.toStringHelper(getClass)

@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{RecordID, FunctionDefinitionRecord}
+import com.quane.little.data.model.{RecordId, FunctionDefinitionRecord}
 import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewPresenter}
 import com.quane.little.language.{FunctionDefinition, FunctionParameter, Expression}
@@ -14,7 +14,7 @@ import scala.collection.mutable.ListBuffer
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   extends FunctionDefinitionViewPresenter {
 
-  private var _id: Option[RecordID] = None
+  private var _id: Option[RecordId] = None
   private val _username = "connollyst"
   private var _name = "???"
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]

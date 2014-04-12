@@ -8,10 +8,10 @@ import com.google.common.base.Objects
   * @author Sean Connolly
   */
 class UserRecord(val username: String, val firstname: String, val lastname: String)
-  extends HasRecordID {
+  extends HasRecordId {
 
   @JsonProperty("_id")
-  var id: RecordID = _
+  var id: RecordId = _
 
   def fullname = firstname + " " + lastname
 

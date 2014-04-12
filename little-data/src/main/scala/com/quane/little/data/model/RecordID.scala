@@ -8,12 +8,12 @@ import org.bson.types.ObjectId
   *
   * @param oid the record's oid
   */
-class RecordID(@JsonProperty("$oid") val oid: String) {
+class RecordId(@JsonProperty("$oid") val oid: String) {
 
   def toObjectId: ObjectId = new ObjectId(oid)
 
   override def equals(other: Any): Boolean = other match {
-    case that: RecordID => oid == that.oid
+    case that: RecordId => oid == that.oid
     case _ => false
   }
 
@@ -29,8 +29,8 @@ class RecordID(@JsonProperty("$oid") val oid: String) {
 
 }
 
-object RecordID {
+object RecordId {
 
-  def apply(oid: ObjectId): RecordID = new RecordID(oid.toStringMongod)
+  def apply(oid: ObjectId): RecordId = new RecordId(oid.toStringMongod)
 
 }

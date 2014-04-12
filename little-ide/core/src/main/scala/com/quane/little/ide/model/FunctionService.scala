@@ -2,7 +2,7 @@ package com.quane.little.ide.model
 
 import com.mongodb.casbah.{MongoCollection, MongoDB, MongoClient}
 import com.quane.little.data.FunctionDefinitionRepository
-import com.quane.little.data.model.{RecordID, FunctionDefinitionRecord}
+import com.quane.little.data.model.{RecordId, FunctionDefinitionRecord}
 import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
 
@@ -14,7 +14,7 @@ object FunctionService {
 
   val FunctionNames = List("blank", "move", "stop", "turn", "voyage", "print dir")
 
-  def upsert(username: String, id: Option[RecordID], fun: FunctionDefinition): FunctionDefinitionRecord = {
+  def upsert(username: String, id: Option[RecordId], fun: FunctionDefinition): FunctionDefinitionRecord = {
     println("Saving " + fun + " for " + username)
     new FunctionDefinitionRecord(username, fun)
     val collection = mongoCollection("little", "functions")
@@ -25,7 +25,7 @@ object FunctionService {
     }
   }
 
-  def update(id: RecordID, fun: FunctionDefinition): FunctionDefinitionRecord = {
+  def update(id: RecordId, fun: FunctionDefinition): FunctionDefinitionRecord = {
     val collection = mongoCollection("little", "functions")
     val repo = new FunctionDefinitionRepository(collection)
     repo.find(id) match {

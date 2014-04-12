@@ -1,6 +1,6 @@
 package com.quane.little.data
 
-import com.quane.little.data.model.{RecordID, FunctionDefinitionRecord}
+import com.quane.little.data.model.{RecordId, FunctionDefinitionRecord}
 import com.quane.little.language.FunctionDefinition
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
@@ -13,7 +13,7 @@ class TestFunctionDefinitionRepository
   extends FlatSpec with EmbeddedMongoDB with ShouldMatchers with BeforeAndAfterAll {
 
   val littleJSON = new LittleJSON()
-  var ownerId: RecordID = _
+  var ownerId: RecordId = _
   val definition = new FunctionDefinition("MyFunction")
 
   /** Before the tests start, prepare a [[com.quane.little.data.model.UserRecord]]
@@ -80,7 +80,7 @@ class TestFunctionDefinitionRepository
   it should "error out on insert with unknown id" in {
     val repo = functionRepository
     val record = new FunctionDefinitionRecord(ownerId, definition)
-    record.id = new RecordID("UnknownId1234")
+    record.id = new RecordId("UnknownId1234")
     val thrown = intercept[IllegalArgumentException] {
       repo.insert(record)
     }
@@ -91,7 +91,7 @@ class TestFunctionDefinitionRepository
   it should "error out on update with unknown id" in {
     val repo = functionRepository
     val record = new FunctionDefinitionRecord(ownerId, definition)
-    record.id = new RecordID("UnknownId1234")
+    record.id = new RecordId("UnknownId1234")
     val thrown = intercept[IllegalArgumentException] {
       repo.update(record)
     }

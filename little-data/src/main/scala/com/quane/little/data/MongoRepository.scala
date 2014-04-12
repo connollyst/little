@@ -2,14 +2,14 @@ package com.quane.little.data
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
-import com.quane.little.data.model.{RecordID, HasRecordID}
+import com.quane.little.data.model.{RecordId, HasRecordId}
 import com.quane.little.tools.json.LittleJSON
 
 /** A MongoDB repository trait.
   *
   * @author Sean Connolly
   */
-abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCollection) {
+abstract class MongoRepository[T <: HasRecordId : Manifest](collection: MongoCollection) {
 
   private val little = new LittleJSON()
 
@@ -29,7 +29,7 @@ abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCol
           )
         }
         dbObject._id match {
-          case Some(id) => record.id = RecordID(id)
+          case Some(id) => record.id = RecordId(id)
           case None => throw new RuntimeException(
             "Expected DBObject was assigned an OID."
           )
@@ -38,14 +38,14 @@ abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCol
     }
   }
 
-  def find(id: Option[RecordID]): Option[T] = {
+  def find(id: Option[RecordId]): Option[T] = {
     id match {
       case Some(rid) => find(rid)
       case None => None
     }
   }
 
-  def find(id: RecordID): Option[T] = {
+  def find(id: RecordId): Option[T] = {
     val query = MongoDBObject("_id" -> id.toObjectId)
     val result = collection.findOne(query)
     deserialize(result)

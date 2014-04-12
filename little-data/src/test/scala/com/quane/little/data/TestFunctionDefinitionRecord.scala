@@ -1,6 +1,6 @@
 package com.quane.little.data
 
-import com.quane.little.data.model.{FunctionDefinitionRecord, RecordID}
+import com.quane.little.data.model.{FunctionDefinitionRecord, RecordId}
 import com.quane.little.language.FunctionDefinition
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
@@ -17,8 +17,8 @@ import org.skyscreamer.jsonassert.JSONAssert
 class TestFunctionDefinitionRecord extends FlatSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
-  val functionRecordId = new RecordID("FunctionDefinitionRecordID")
-  val userRecordId = new RecordID("UserRecordID")
+  val functionRecordId = new RecordId("FunctionDefinitionRecordID")
+  val userRecordId = new RecordId("UserRecordID")
   val functionDefinition = new FunctionDefinition("MyFunction")
   val function = new FunctionDefinitionRecord(userRecordId, functionDefinition)
   function.id = functionRecordId

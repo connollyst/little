@@ -1,13 +1,13 @@
 package com.quane.little.data.model
 
-/** A trait indicating a record with an id, a [[RecordID]].
+/** A trait indicating a record with an id, a [[RecordId]].
   *
   * @author Sean Connolly
   */
-trait HasRecordID {
+trait HasRecordId {
 
-  def id: RecordID
+  def id: RecordId
 
-  def id_=(id: RecordID)
+  def id_=(id: RecordId)
 
 }
