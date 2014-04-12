@@ -20,6 +20,17 @@ object UserService {
     }
   }
 
+  def fetch(username: String): UserRecord = {
+    val collection = mongoCollection("little", "users")
+    val repo = new UserRepository(collection)
+    repo.find(username) match {
+      case Some(user) => user
+      case None => throw new IllegalArgumentException(
+        "No user record for username '" + username + "'."
+      )
+    }
+  }
+
   private def mongoClient: MongoClient = MongoClient()
 
   private def mongoDB(db: String): MongoDB = mongoClient(db)

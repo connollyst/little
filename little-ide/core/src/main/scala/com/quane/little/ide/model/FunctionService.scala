@@ -16,7 +16,6 @@ object FunctionService {
 
   def upsert(username: String, id: Option[RecordId], fun: FunctionDefinition): FunctionRecord = {
     println("Saving " + fun + " for " + username)
-    new FunctionRecord(username, fun)
     val collection = mongoCollection("little", "functions")
     val repo = new FunctionRepository(collection)
     repo.find(id) match {
@@ -38,7 +37,8 @@ object FunctionService {
   def insert(username: String, fun: FunctionDefinition): FunctionRecord = {
     val collection = mongoCollection("little", "functions")
     val repo = new FunctionRepository(collection)
-    val record = new FunctionRecord(username, fun)
+    val user = UserService.fetch(username)
+    val record = new FunctionRecord(user.id, fun)
     repo.insert(record)
     record
   }
