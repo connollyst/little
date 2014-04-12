@@ -1,5 +1,8 @@
 package com.quane.little.ide.model
 
+import com.mongodb.casbah.{MongoCollection, MongoDB, MongoClient}
+import com.quane.little.data.FunctionDefinitionRepository
+import com.quane.little.data.model.{RecordID, FunctionDefinitionRecord}
 import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
 
@@ -10,6 +13,35 @@ import com.quane.little.language.{FunctionReference, Functions, FunctionDefiniti
 object FunctionService {
 
   val FunctionNames = List("blank", "move", "stop", "turn", "voyage", "print dir")
+
+  def upsert(username: String, id: Option[RecordID], fun: FunctionDefinition): FunctionDefinitionRecord = {
+    println("Saving " + fun + " for " + username)
+    new FunctionDefinitionRecord(username, fun)
+    val collection = mongoCollection("little", "functions")
+    val repo = new FunctionDefinitionRepository(collection)
+    repo.find(id) match {
+      case Some(record) => update(id.get, fun)
+      case None => insert(username, fun)
+    }
+  }
+
+  def update(id: RecordID, fun: FunctionDefinition): FunctionDefinitionRecord = {
+    val collection = mongoCollection("little", "functions")
+    val repo = new FunctionDefinitionRepository(collection)
+    repo.find(id) match {
+      case Some(record) => println("Updating " + id)
+      case None => throw new RuntimeException("No FunctionDefinition for " + id)
+    }
+    repo.find(id).get
+  }
+
+  def insert(username: String, fun: FunctionDefinition): FunctionDefinitionRecord = {
+    val collection = mongoCollection("little", "functions")
+    val repo = new FunctionDefinitionRepository(collection)
+    val record = new FunctionDefinitionRecord(username, fun)
+    repo.insert(record)
+    record
+  }
 
   def fetchReference(name: String): FunctionReference = {
     val definition = fetchDefinition(name)
@@ -33,5 +65,11 @@ object FunctionService {
       case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
     }
   }
+
+  private def mongoClient: MongoClient = MongoClient()
+
+  private def mongoDB(db: String): MongoDB = mongoClient(db)
+
+  private def mongoCollection(db: String, name: String): MongoCollection = mongoDB(db)(name)
 
 }

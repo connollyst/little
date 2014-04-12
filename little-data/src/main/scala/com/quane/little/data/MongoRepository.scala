@@ -33,6 +33,13 @@ abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCol
     }
   }
 
+  def find(id: Option[RecordID]): Option[T] = {
+    id match {
+      case Some(rid) => find(rid)
+      case None => None
+    }
+  }
+
   def find(id: RecordID): Option[T] = {
     val query = MongoDBObject("_id" -> id.toObjectId)
     val result = collection.findOne(query)
@@ -43,6 +50,7 @@ abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCol
     o match {
       case Some(cursor) =>
         val json = JSON.serialize(cursor)
+        println("Deserializing: " + json)
         val record = little.deserialize[T](json)
         Some(record)
       case None =>

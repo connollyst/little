@@ -1,7 +1,9 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.data.model.{RecordID, FunctionDefinitionRecord}
+import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewPresenter}
-import com.quane.little.language.{FunctionParameter, Expression, FunctionDefinition}
+import com.quane.little.language.{FunctionDefinition, FunctionParameter, Expression}
 import scala._
 import scala.collection.mutable.ListBuffer
 
@@ -12,6 +14,8 @@ import scala.collection.mutable.ListBuffer
 class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   extends FunctionDefinitionViewPresenter {
 
+  private var _id: Option[RecordID] = None
+  private val _username = "connollyst"
   private var _name = "???"
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
   private val _block = view.createBlock()
@@ -67,6 +71,18 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     }
     fun.steps = _block.compile.steps // TODO this seems sloppy..?
     fun
+  }
+
+  override def save: FunctionDefinitionRecord = {
+    val fun = compile
+    _id match {
+      case Some(id) =>
+        FunctionService.update(id, fun)
+      case None =>
+        val record = FunctionService.insert(_username, fun)
+        _id = Some(record.id)
+        record
+    }
   }
 
 }

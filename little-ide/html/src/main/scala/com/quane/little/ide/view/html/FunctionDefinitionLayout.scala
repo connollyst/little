@@ -131,12 +131,12 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
         definition.requestNewParameter()
     })
 
-  private def createSaveButton() = new Button("Compile",
+  private def createSaveButton() = new Button("Save",
     new Button.ClickListener {
       def buttonClick(event: Button.ClickEvent) = {
         val header = FunctionDefinitionHeader.this
-        val compiled = header.definition.compile
-        println("Compiled: " + compiled)
+        val saved = header.definition.save
+        println("Saved: " + saved)
       }
     })
 
