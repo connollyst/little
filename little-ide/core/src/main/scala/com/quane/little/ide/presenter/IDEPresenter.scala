@@ -15,6 +15,7 @@ class IDEPresenter[V <: IDEView](view: V)
   val toolbox = view.createToolbox()
   val workspace = view.createWorkspace()
 
-  UserService.upsert("connollyst")
+  val user = UserService.upsert("connollyst")
+  println("Logged in as " + user.fullname)
 
 }
