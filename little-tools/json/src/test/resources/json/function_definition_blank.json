@@ -1,5 +1,5 @@
 {
-    "@class": "com.quane.little.language.FunctionDefinition",
+    "_class": "com.quane.little.language.FunctionDefinition",
     "name": "function_definition_blank",
     "params": [],
     "steps": []

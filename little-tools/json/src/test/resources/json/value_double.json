@@ -1,4 +1,4 @@
 {
-    "@class": "com.quane.little.language.data.NumberDecimal",
+    "_class": "com.quane.little.language.data.NumberDecimal",
     "primitive": 12.34
 }

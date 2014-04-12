@@ -1,5 +1,5 @@
 {
-    "@class": "com.quane.little.language.FunctionReference",
+    "_class": "com.quane.little.language.FunctionReference",
     "name": "function_reference_blank",
     "args": {}
 }

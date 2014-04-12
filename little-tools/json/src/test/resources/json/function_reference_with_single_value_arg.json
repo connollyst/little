@@ -1,9 +1,9 @@
 {
-    "@class": "com.quane.little.language.FunctionReference",
+    "_class": "com.quane.little.language.FunctionReference",
     "name": "function_reference_with_single_value_arg",
     "args": {
         "x": {
-            "@class": "com.quane.little.language.data.Text",
+            "_class": "com.quane.little.language.data.Text",
             "primitive": "abc"
         }
     }
