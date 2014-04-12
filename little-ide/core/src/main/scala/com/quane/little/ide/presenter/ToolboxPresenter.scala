@@ -28,4 +28,9 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
   view.createToolboxItem("Math", "*", new Multiplication(Value(1), Value(1)))
   view.createToolboxItem("Math", "/", new Division(Value(1), Value(1)))
 
+  view.createToolboxItem("My Functions", "blank", new FunctionReference("blank"))
+  view.createToolboxItem("My Functions", "move", new FunctionReference("move"))
+  view.createToolboxItem("My Functions", "stop", new FunctionReference("stop"))
+  view.createToolboxItem("My Functions", "turn", new FunctionReference("turn"))
+
 }
