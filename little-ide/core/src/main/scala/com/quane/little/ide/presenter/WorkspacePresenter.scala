@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
 import com.quane.little.ide.model.FunctionService
+import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
 
 /** Presenter for the workspace in which the user can build code.
   *

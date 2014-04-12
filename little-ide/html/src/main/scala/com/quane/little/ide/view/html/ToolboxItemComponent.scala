@@ -12,14 +12,13 @@ class ToolboxItemComponent(name: String)
   setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER)
   setSizeUndefined()
 
-
   // TODO should look like the real expression
   // TODO should carry the real expression as d&d payload
-
 
   //  def getStep: View[_] = {
   //    component
   //  }
+
   override def getTransferable(rawVariables: util.Map[String, AnyRef]) = {
     println("Getting ToolboxItem transferable w/ raws: " + rawVariables.toString)
     new ExpressionTransferable(this)
@@ -41,6 +40,7 @@ class ExpressionTransferable(source: Component) extends Transferable {
   override def getData(dataFlavor: String): AnyRef = {
     println("Getting data for " + dataFlavor)
     dataFlavor match {
+      // TODO we should probably pass view/presenters, no?
       case "little-expression" => Value(1)
       case _ => None
     }
