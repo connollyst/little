@@ -8,14 +8,14 @@ import com.quane.little.language.FunctionDefinition
   *
   * @author Sean Connolly
   */
-class FunctionDefinitionRecord(val ownerId: RecordId, var definition: FunctionDefinition)
+class FunctionRecord(val ownerId: RecordId, var definition: FunctionDefinition)
   extends HasRecordId {
 
   @JsonProperty("_id")
   var id: RecordId = _
 
   override def equals(other: Any): Boolean = other match {
-    case that: FunctionDefinitionRecord =>
+    case that: FunctionRecord =>
       id == that.id &&
         ownerId == that.ownerId &&
         definition == that.definition

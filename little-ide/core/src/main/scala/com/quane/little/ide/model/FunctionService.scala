@@ -1,8 +1,8 @@
 package com.quane.little.ide.model
 
 import com.mongodb.casbah.{MongoCollection, MongoDB, MongoClient}
-import com.quane.little.data.FunctionDefinitionRepository
-import com.quane.little.data.model.{RecordId, FunctionDefinitionRecord}
+import com.quane.little.data.FunctionRepository
+import com.quane.little.data.model.{RecordId, FunctionRecord}
 import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
 
@@ -14,20 +14,20 @@ object FunctionService {
 
   val FunctionNames = List("blank", "move", "stop", "turn", "voyage", "print dir")
 
-  def upsert(username: String, id: Option[RecordId], fun: FunctionDefinition): FunctionDefinitionRecord = {
+  def upsert(username: String, id: Option[RecordId], fun: FunctionDefinition): FunctionRecord = {
     println("Saving " + fun + " for " + username)
-    new FunctionDefinitionRecord(username, fun)
+    new FunctionRecord(username, fun)
     val collection = mongoCollection("little", "functions")
-    val repo = new FunctionDefinitionRepository(collection)
+    val repo = new FunctionRepository(collection)
     repo.find(id) match {
       case Some(record) => update(id.get, fun)
       case None => insert(username, fun)
     }
   }
 
-  def update(id: RecordId, fun: FunctionDefinition): FunctionDefinitionRecord = {
+  def update(id: RecordId, fun: FunctionDefinition): FunctionRecord = {
     val collection = mongoCollection("little", "functions")
-    val repo = new FunctionDefinitionRepository(collection)
+    val repo = new FunctionRepository(collection)
     repo.find(id) match {
       case Some(record) => println("Updating " + id)
       case None => throw new RuntimeException("No FunctionDefinition for " + id)
@@ -35,10 +35,10 @@ object FunctionService {
     repo.find(id).get
   }
 
-  def insert(username: String, fun: FunctionDefinition): FunctionDefinitionRecord = {
+  def insert(username: String, fun: FunctionDefinition): FunctionRecord = {
     val collection = mongoCollection("little", "functions")
-    val repo = new FunctionDefinitionRepository(collection)
-    val record = new FunctionDefinitionRecord(username, fun)
+    val repo = new FunctionRepository(collection)
+    val record = new FunctionRecord(username, fun)
     repo.insert(record)
     record
   }

@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{RecordId, FunctionDefinitionRecord}
+import com.quane.little.data.model.{RecordId, FunctionRecord}
 import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewPresenter}
 import com.quane.little.language.{FunctionDefinition, FunctionParameter, Expression}
@@ -73,7 +73,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     fun
   }
 
-  override def save: FunctionDefinitionRecord = {
+  override def save: FunctionRecord = {
     val fun = compile
     _id match {
       case Some(id) =>

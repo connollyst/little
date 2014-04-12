@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.data.model.FunctionDefinitionRecord
+import com.quane.little.data.model.FunctionRecord
 import com.quane.little.ide.presenter.{BlockPresenter, FunctionReferencePresenter, FunctionParameterPresenter}
 import com.quane.little.language.FunctionDefinition
 
@@ -20,7 +20,7 @@ trait FunctionDefinitionView extends View[FunctionDefinitionViewPresenter] {
       _.compile
     }.toList
 
-  def save: List[FunctionDefinitionRecord] =
+  def save: List[FunctionRecord] =
     _viewPresenter.map {
       _.save
     }.toList
@@ -34,6 +34,6 @@ trait FunctionDefinitionViewPresenter extends ViewPresenter {
 
   def compile: FunctionDefinition
 
-  def save: FunctionDefinitionRecord
+  def save: FunctionRecord
 
 }

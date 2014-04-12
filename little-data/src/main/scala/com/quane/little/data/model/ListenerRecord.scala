@@ -7,7 +7,7 @@ import com.quane.little.language.event.EventListener
   *
   * @author Sean Connolly
   */
-class EventListenerRecord(var definition: EventListener) {
+class ListenerRecord(var definition: EventListener) {
 
   var _id: RecordId = _
 
