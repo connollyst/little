@@ -2,6 +2,8 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
 import com.quane.little.language.FunctionReference
+import com.quane.little.language.data.Value
+import com.quane.little.language.math.{Multiplication, Division, Subtraction, Addition}
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -20,5 +22,10 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
   view.createToolboxTab("My Variables")
 
   view.createToolboxItem("Motion", "move forward", new FunctionReference("move"))
+
+  view.createToolboxItem("Math", "+", new Addition(Value(1), Value(1)))
+  view.createToolboxItem("Math", "-", new Subtraction(Value(1), Value(1)))
+  view.createToolboxItem("Math", "*", new Multiplication(Value(1), Value(1)))
+  view.createToolboxItem("Math", "/", new Division(Value(1), Value(1)))
 
 }
