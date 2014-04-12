@@ -9,16 +9,6 @@ abstract class Statement
 
 object SetStatement {
 
-  def apply(pointer: Pointer, value: String): SetStatement = this(pointer, Value(value))
-
-  def apply(pointer: Pointer, value: Boolean): SetStatement = this(pointer, Value(value))
-
-  def apply(pointer: Pointer, value: Int): SetStatement = this(pointer, Value(value))
-
-  def apply(pointer: Pointer, value: Double): SetStatement = this(pointer, Value(value))
-
-  def apply(pointer: Pointer, value: Expression): SetStatement = new SetStatement(pointer.variableName, value)
-
   def apply(name: String, value: String): SetStatement = new SetStatement(name, Value(value))
 
   def apply(name: String, value: Boolean): SetStatement = new SetStatement(name, Value(value))
