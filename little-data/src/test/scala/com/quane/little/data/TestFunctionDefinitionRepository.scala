@@ -45,7 +45,61 @@ class TestFunctionDefinitionRepository
     repo.insert(record)
     record.definition should be(definition)
   }
-  it should "fetch user record" in {
+  it should "update with known id" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    repo.insert(record)
+    val recordId = record.id
+    repo.insert(record)
+    record.id should be(recordId)
+    // TODO change all fields but id and assert everything persisted w/ fetch
+  }
+  it should "error out on insert with known id" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    repo.insert(record)
+    val recordId = record.id
+    val thrown = intercept[IllegalArgumentException] {
+      repo.insert(record)
+    }
+    thrown.getMessage should be(
+      "Cannot insert FunctionRecord with known id: " + recordId.oid
+    )
+  }
+  it should "error out on update without id" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    record.id = null
+    val thrown = intercept[IllegalArgumentException] {
+      repo.update(record)
+    }
+    thrown.getMessage should be(
+      "Cannot update FunctionRecord with no id."
+    )
+  }
+  it should "error out on insert with unknown id" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    record.id = new RecordID("UnknownId1234")
+    val thrown = intercept[IllegalArgumentException] {
+      repo.insert(record)
+    }
+    thrown.getMessage should be(
+      "Cannot insert FunctionRecord with unknown id: UnknownId1234"
+    )
+  }
+  it should "error out on update with unknown id" in {
+    val repo = functionRepository
+    val record = new FunctionDefinitionRecord(ownerId, definition)
+    record.id = new RecordID("UnknownId1234")
+    val thrown = intercept[IllegalArgumentException] {
+      repo.update(record)
+    }
+    thrown.getMessage should be(
+      "Cannot update FunctionRecord with unknown id: UnknownId1234"
+    )
+  }
+  it should "fetch function record" in {
     val repo = functionRepository
     val recordIn = new FunctionDefinitionRecord(ownerId, definition)
     repo.insert(recordIn)

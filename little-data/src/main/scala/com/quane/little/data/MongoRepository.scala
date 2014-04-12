@@ -13,6 +13,11 @@ abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCol
 
   private val little = new LittleJSON()
 
+  def update(record: T) = {
+    // TODO check id exists
+    insert(record)
+  }
+
   def insert(record: T) = {
     val json = little.serialize(record)
     JSON.parse(json) match {
