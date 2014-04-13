@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.SetStatement
+import com.quane.little.language.{FunctionReference, SetStatement}
 import com.quane.little.language.data.Value
 
 /** Test JSON serialization of [[com.quane.little.language.SetStatement]] objects.
@@ -46,6 +46,21 @@ class TestSetterSerialization
   it should "serialize a set statement with an boolean value (false)" in {
     val name = "setter_boolean_false"
     val setter = new SetStatement("MyVariable", Value(false))
+    val actual = new LittleJSON().serialize(setter)
+    val expected = getJSON(name)
+    assertJSON(expected, actual)
+  }
+  it should "serialize a set statement with a function reference value" in {
+    val name = "setter_function_reference"
+    val setter = new SetStatement(
+      "MyVariable",
+      new FunctionReference("MyFunction")
+        .addArg("arg1", Value("abc"))
+        .addArg("arg2", Value(1234))
+        .addArg("arg3", Value(12.34))
+        .addArg("arg4", Value(true))
+        .addArg("arg5", Value(false))
+    )
     val actual = new LittleJSON().serialize(setter)
     val expected = getJSON(name)
     assertJSON(expected, actual)

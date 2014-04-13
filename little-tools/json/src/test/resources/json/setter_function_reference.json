@@ -1,0 +1,30 @@
+{
+    "_class": "com.quane.little.language.SetStatement",
+    "name": "MyVariable",
+    "value": {
+        "_class": "com.quane.little.language.FunctionReference",
+        "name": "MyFunction",
+        "args": {
+            "arg1": {
+                "_class": "com.quane.little.language.data.Text",
+                "primitive": "abc"
+            },
+            "arg2": {
+                "_class": "com.quane.little.language.data.NumberSimple",
+                "primitive": 1234
+            },
+            "arg3": {
+                "_class": "com.quane.little.language.data.NumberDecimal",
+                "primitive": 12.34
+            },
+            "arg4": {
+                "_class": "com.quane.little.language.data.Bool",
+                "primitive": true
+            },
+            "arg5": {
+                "_class": "com.quane.little.language.data.Bool",
+                "primitive": false
+            }
+        }
+    }
+}

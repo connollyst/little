@@ -45,5 +45,11 @@ class TestSetterDeserialization
     setter.name should be("MyVariable")
     setter.value should be(new Bool(false))
   }
+  it should "deserialize a setter with a function reference" in {
+    val name = "setter_function_reference"
+    val setter = deserialize[SetStatement](name)
+    setter.name should be("MyVariable")
+    setter.value should be(new Bool(false))
+  }
 
 }
