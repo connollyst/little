@@ -27,16 +27,6 @@ class PrintStatementLayout
   addComponent(new PrintMenuBar(this))
   addComponent(CloseButton(this))
 
-  // TODO skip if already a value statement
-  private[html] def requestAddTextLiteral() = presenter.onValueChange(createValueStatement())
-
-  // TODO skip if already a get statement
-  private[html] def requestAddGetStatement() = presenter.onValueChange(createGetStatement())
-
-  // TODO skip if already this function reference
-  // TODO we need to look up the function definition
-  private[html] def requestAddFunctionReference(name: String) = presenter.onValueChange(createFunctionReference())
-
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
     removePrintValue()
     val view = new ValueLayout
@@ -76,20 +66,20 @@ private class PrintMenuBar(view: PrintStatementLayout)
 
   val item = addItem("∆", null, null)
   item.addItem("text", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.requestAddTextLiteral()
+    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddTextLiteral()
   })
   item.addItem("get", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.requestAddGetStatement()
+    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddGetStatement()
   })
   val functions = item.addItem("functions", null, null)
   functions.addItem("move", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.requestAddFunctionReference(item.getText)
+    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
   })
   functions.addItem("stop", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.requestAddFunctionReference(item.getText)
+    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
   })
   functions.addItem("turn", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.requestAddFunctionReference(item.getText)
+    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
   })
 
 }

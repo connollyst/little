@@ -23,11 +23,11 @@ trait SetStatementView extends ExpressionView[SetStatementViewPresenter] {
 
 trait PrintStatementView extends ExpressionView[PrintStatementViewPresenter] {
 
-  def createValueStatement(): ValuePresenter[_]
+  def createValueStatement(): ValuePresenter[_ <: ValueView]
 
-  def createGetStatement(): GetStatementPresenter[_]
+  def createGetStatement(): GetStatementPresenter[_ <: GetStatementView]
 
-  def createFunctionReference(): FunctionReferencePresenter[_]
+  def createFunctionReference(): FunctionReferencePresenter[_ <: FunctionReferenceView]
 
 }
 
@@ -47,6 +47,10 @@ trait SetStatementViewPresenter extends ExpressionViewPresenter {
 
 trait PrintStatementViewPresenter extends ExpressionViewPresenter {
 
-  def onValueChange(p: ExpressionPresenter): Unit
+  def requestAddTextLiteral(): Unit
+
+  def requestAddGetStatement(): Unit
+
+  def requestAddFunctionReference(name: String): Unit
 
 }

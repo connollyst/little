@@ -13,7 +13,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
   extends StatementPresenter
   with PrintStatementViewPresenter {
 
-  private var _expression: Option[ExpressionPresenter] = None
+  private var _expression: Option[_ <: ExpressionPresenter] = None
 
   view.registerViewPresenter(this)
 
@@ -56,7 +56,15 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     _expression = Some(presenter)
   }
 
-  override def onValueChange(p: ExpressionPresenter) = _expression = Some(p)
+  // TODO skip if already a value statement
+  override def requestAddTextLiteral() = _expression = Some(view.createValueStatement())
+
+  // TODO skip if already a get statement
+  override def requestAddGetStatement() = _expression = Some(view.createGetStatement())
+
+  // TODO skip if already this function reference
+  // TODO we need to look up the function definition
+  override def requestAddFunctionReference(name: String) = _expression = Some(view.createFunctionReference())
 
   /** Compile to a [[com.quane.little.language.PrintStatement]].
     *
