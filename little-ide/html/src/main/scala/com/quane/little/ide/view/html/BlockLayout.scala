@@ -128,14 +128,6 @@ class BlockLayout
     presenter.requestAddConditional(index)
   }
 
-  def requestAddGetStatement(index: Int) = presenter.requestAddGetStatement(index)
-
-  def requestAddSetStatement(index: Int) = presenter.requestAddSetStatement(index)
-
-  def requestAddPrintStatement(index: Int) = presenter.requestAddPrintStatement(index)
-
-  def requestAddFunctionReference(name: String, index: Int) = presenter.requestAddFunctionReference(name, index)
-
 }
 
 private class BlockStepSeparator(block: BlockLayout)
@@ -189,28 +181,28 @@ private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
 
   val item = addItem("+", null, null)
   item.addItem("get", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.requestAddGetStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddGetStatement(index)
   })
   item.addItem("set", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.requestAddSetStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddSetStatement(index)
   })
   item.addItem("print", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.requestAddPrintStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddPrintStatement(index)
   })
   item.addSeparator()
   item.addItem("if/else", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.requestAddConditional(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddConditional(index)
   })
   item.addSeparator()
   val functions = item.addItem("functions", null, null)
   functions.addItem("move", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.requestAddFunctionReference(item.getText, index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddFunctionReference(item.getText, index)
   })
   functions.addItem("stop", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.requestAddFunctionReference(item.getText, index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddFunctionReference(item.getText, index)
   })
   functions.addItem("turn", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.requestAddFunctionReference(item.getText, index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddFunctionReference(item.getText, index)
   })
 
   private def index: Int = block.stepIndex(separator)
