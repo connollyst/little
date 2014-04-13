@@ -2,8 +2,8 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter._
 import com.quane.vaadin.scala.DroppableTarget
-import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
-import com.vaadin.event.dd.acceptcriteria.{AcceptCriterion, AcceptAll}
+import com.vaadin.event.dd.DropHandler
+import com.vaadin.event.dd.acceptcriteria.AcceptCriterion
 import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui.{Component, MenuBar, HorizontalLayout, VerticalLayout}
@@ -131,49 +131,11 @@ class BlockLayout
 }
 
 private class BlockStepSeparator(block: BlockLayout)
-  extends DroppableTarget(new HorizontalLayout) {
+  extends HorizontalLayout {
 
-  component.setStyleName(BlockLayout.StyleSeparator)
+  setStyleName(BlockLayout.StyleSeparator)
+  addComponent(new BlockMenuBar(block, this))
 
-  component.addComponent(new BlockMenuBar(block, this))
-
-  setDropHandler(new DropHandler() {
-
-    // TODO only accept appropriate Little components
-    override def getAcceptCriterion: AcceptCriterion = AcceptAll.get()
-
-    override def drop(event: DragAndDropEvent): Unit = {
-      //      val droppedStep = getDroppedStep(event)
-      //      val list = getStepList
-      //      if (list.contains(droppedStep)) {
-      //        list.removeComponent(droppedStep)
-      //      }
-      //      val separator = ExpressionListSeparator.this
-      //      val separatorIndex = list.componentIndex(separator)
-      //      list.addComponent(droppedStep, separatorIndex + 1)
-    }
-
-    //    def getStepList: BlockLayout = {
-    //      val t = ExpressionListSeparator.this
-    //      val p = t.parent
-    //      p.asInstanceOf[BlockLayout]
-    //    }
-    //
-    //    def getDroppedStep(event: DragAndDropEvent): ExpressionView[ExpressionPresenter] = {
-    //      val sourceComponent = event.getTransferable.getSourceComponent.asInstanceOf[Component]
-    //      if (sourceComponent.isInstanceOf[ExpressionView[ExpressionPresenter]]) {
-    //        // An existing step is being moved from elsewhere
-    //        sourceComponent.asInstanceOf[ExpressionView[ExpressionPresenter]]
-    //      } else if (sourceComponent.isInstanceOf[ToolboxItemComponent]) {
-    //        // A new step is being dropped from the toolbox
-    //        sourceComponent.asInstanceOf[ToolboxItemComponent].getStep
-    //      } else {
-    //        throw new ClassCastException("Drop not supported for "
-    //          + sourceComponent.getClass.getSimpleName)
-    //      }
-    //    }
-
-  })
 }
 
 private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
