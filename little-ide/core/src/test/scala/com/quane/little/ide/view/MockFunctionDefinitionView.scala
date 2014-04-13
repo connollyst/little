@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{FunctionParameterPresenter, BlockPresenter, FunctionReferencePresenter}
+import com.quane.little.ide.presenter.{FunctionParameterPresenter, BlockPresenter}
 
 /** An implementation of [[com.quane.little.ide.view.FunctionDefinitionView]]
   * for testing purposes.
@@ -11,12 +11,10 @@ class MockFunctionDefinitionView
   extends FunctionDefinitionView
   with MockView {
 
-  def setName(name: String) = Unit
+  override def setName(name: String) = Unit
 
-  def createFunctionParameter() = new FunctionParameterPresenter(new MockFunctionParameterView)
+  override def createFunctionParameter() = new FunctionParameterPresenter(new MockFunctionParameterView)
 
-  def createBlock() = new BlockPresenter(new MockBlockView)
-
-  def createFunctionReference() = new FunctionReferencePresenter(new MockFunctionReferenceView)
+  override def createBlock() = new BlockPresenter(new MockBlockView)
 
 }

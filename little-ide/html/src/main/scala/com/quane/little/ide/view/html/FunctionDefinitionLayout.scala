@@ -2,7 +2,6 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter.BlockPresenter
 import com.quane.little.ide.presenter.FunctionParameterPresenter
-import com.quane.little.ide.presenter.FunctionReferencePresenter
 import com.quane.little.ide.view.FunctionDefinitionView
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.server.Sizeable
@@ -68,13 +67,6 @@ class FunctionDefinitionLayout
   override def createBlock(): BlockPresenter[_] = {
     // TODO this goes against the pattern, we should create the block view here
     new BlockPresenter(stepList)
-  }
-
-  override def createFunctionReference(): FunctionReferencePresenter[_] = {
-    val view = new FunctionReferenceLayout()
-    // TODO replace stepList with body
-    stepList.addComponent(view)
-    new FunctionReferencePresenter(view)
   }
 
   private[html] def onNameChange(name: String): Unit = presenter.onNameChange(name)
