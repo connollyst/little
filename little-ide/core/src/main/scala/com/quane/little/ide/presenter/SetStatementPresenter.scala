@@ -64,7 +64,15 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
 
   override def onNameChange(name: String): Unit = _name = name
 
-  override def onValueChange(p: ExpressionPresenter) = _value = Some(p)
+  // TODO skip if already a value statement
+  override def requestAddTextLiteral() = _value = Some(view.createValueStatement())
+
+  // TODO skip if already a get statement
+  override def requestAddGetStatement() = _value = Some(view.createGetStatement())
+
+  // TODO skip if already this function reference
+  // TODO we need to look up the function definition
+  override def requestAddFunctionReference(name: String) = _value = Some(view.createFunctionReference())
 
   override def compile: SetStatement = new SetStatement(_name, value.compile)
 

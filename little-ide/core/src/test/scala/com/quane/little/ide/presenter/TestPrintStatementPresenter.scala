@@ -15,8 +15,8 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   test("test value is set") {
     val view = new MockPrintStatementView
     val presenter = new PrintStatementPresenter(view)
-    presenter.expression = Value("text")
-    val valuePresenter = presenter.expression.asInstanceOf[ValuePresenter[_ <: ValueView]]
+    presenter.value = Value("text")
+    val valuePresenter = presenter.value.asInstanceOf[ValuePresenter[_ <: ValueView]]
     assert(valuePresenter.value == "text")
   }
 
@@ -34,7 +34,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val valuePresenter = mock[ValuePresenter[ValueView]]
     when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
     val value = mock[Value]
-    presenter.expression = value
+    presenter.value = value
     verify(view).createValueStatement()
     verify(valuePresenter).initialize(value)
   }
@@ -45,7 +45,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val valuePresenter = mock[GetStatementPresenter[GetStatementView]]
     when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(valuePresenter)
     val getter = mock[GetStatement]
-    presenter.expression = getter
+    presenter.value = getter
     verify(view).createGetStatement()
     verify(valuePresenter).initialize(getter)
   }
@@ -56,7 +56,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val valuePresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(valuePresenter)
     val function = mock[FunctionReference]
-    presenter.expression = function
+    presenter.value = function
     verify(view).createFunctionReference()
     verify(valuePresenter).initialize(function)
   }
@@ -67,7 +67,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
     intercept[IllegalArgumentException] {
-      presenter.expression = mock[Expression]
+      presenter.value = mock[Expression]
     }
   }
 
@@ -94,7 +94,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
       .thenReturn(new ValuePresenter(new MockValueView))
     when[FunctionReferencePresenter[_]](view.createFunctionReference())
       .thenReturn(new FunctionReferencePresenter(new MockFunctionReferenceView))
-    presenter.expression = value
+    presenter.value = value
     val compiled = presenter.compile
     assert(compiled.value == value)
   }

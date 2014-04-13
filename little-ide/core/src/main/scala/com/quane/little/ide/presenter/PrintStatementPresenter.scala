@@ -13,7 +13,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
   extends StatementPresenter
   with PrintStatementViewPresenter {
 
-  private var _expression: Option[_ <: ExpressionPresenter] = None
+  private var _value: Option[_ <: ExpressionPresenter] = None
 
   view.registerViewPresenter(this)
 
@@ -23,7 +23,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     * @return the initialized presenter
     */
   private[presenter] def initialize(p: PrintStatement): PrintStatementPresenter[V] = {
-    expression = p.value
+    value = p.value
     this
   }
 
@@ -31,8 +31,8 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     *
     * @return the value expression
     */
-  private[presenter] def expression: ExpressionPresenter =
-    _expression match {
+  private[presenter] def value: ExpressionPresenter =
+    _value match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No print expression specified.")
     }
@@ -41,7 +41,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     *
     * @param e the value expression
     */
-  private[presenter] def expression_=(e: Expression): Unit = {
+  private[presenter] def value_=(e: Expression): Unit = {
     println("Setting print expression: " + e)
     val presenter =
       e match {
@@ -53,23 +53,23 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
           view.createFunctionReference().initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)
       }
-    _expression = Some(presenter)
+    _value = Some(presenter)
   }
 
   // TODO skip if already a value statement
-  override def requestAddTextLiteral() = _expression = Some(view.createValueStatement())
+  override def requestAddTextLiteral() = _value = Some(view.createValueStatement())
 
   // TODO skip if already a get statement
-  override def requestAddGetStatement() = _expression = Some(view.createGetStatement())
+  override def requestAddGetStatement() = _value = Some(view.createGetStatement())
 
   // TODO skip if already this function reference
   // TODO we need to look up the function definition
-  override def requestAddFunctionReference(name: String) = _expression = Some(view.createFunctionReference())
+  override def requestAddFunctionReference(name: String) = _value = Some(view.createFunctionReference())
 
   /** Compile to a [[com.quane.little.language.PrintStatement]].
     *
     * @return the compiled print statement
     */
-  override def compile: PrintStatement = new PrintStatement(expression.compile)
+  override def compile: PrintStatement = new PrintStatement(value.compile)
 
 }

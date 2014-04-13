@@ -55,24 +55,6 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     verify(view, never()).setName("sean is cool")
   }
 
-  test("test value is set on view event") {
-    val view = mock[SetStatementView]
-    val presenter = new SetStatementPresenter(view)
-    val value = mock[ExpressionPresenter]
-    presenter.onValueChange(value)
-    assert(presenter.value == value)
-  }
-
-  test("test value is not propagated to view on view event") {
-    val view = mock[SetStatementView]
-    val presenter = new SetStatementPresenter(view)
-    val value = mock[ExpressionPresenter]
-    presenter.onValueChange(value)
-    verify(view, never()).createGetStatement()
-    verify(view, never()).createValueStatement()
-    verify(view, never()).createFunctionReference()
-  }
-
   /* Test setting expressions for the value */
 
   test("should error when adding unknown expression") {

@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{ExpressionPresenter, FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
+import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 
 
 trait GetStatementView extends ExpressionView[GetStatementViewPresenter] {
@@ -13,11 +13,11 @@ trait SetStatementView extends ExpressionView[SetStatementViewPresenter] {
 
   def setName(name: String): Unit
 
-  def createValueStatement(): ValuePresenter[_]
+  def createValueStatement(): ValuePresenter[_ <: ValueView]
 
-  def createGetStatement(): GetStatementPresenter[_]
+  def createGetStatement(): GetStatementPresenter[_ <: GetStatementView]
 
-  def createFunctionReference(): FunctionReferencePresenter[_]
+  def createFunctionReference(): FunctionReferencePresenter[_ <: FunctionReferenceView]
 
 }
 
@@ -41,7 +41,11 @@ trait SetStatementViewPresenter extends ExpressionViewPresenter {
 
   def onNameChange(name: String): Unit
 
-  def onValueChange(p: ExpressionPresenter): Unit
+  def requestAddTextLiteral(): Unit
+
+  def requestAddGetStatement(): Unit
+
+  def requestAddFunctionReference(name: String): Unit
 
 }
 
