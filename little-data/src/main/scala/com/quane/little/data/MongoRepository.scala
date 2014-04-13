@@ -53,12 +53,18 @@ abstract class MongoRepository[T <: HasRecordId : Manifest](collection: MongoCol
 
   protected def deserialize[A <% DBObject](o: Option[A]): Option[T] =
     o match {
-      case Some(cursor) =>
-        val json = JSON.serialize(cursor)
-        val record = little.deserialize[T](json)
-        Some(record)
-      case None =>
-        None
+      case Some(cursor) => Some(deserialize(cursor))
+      case None => None
     }
+
+  protected def deserialize[A <% DBObject](o: A): T = {
+    val json = JSON.serialize(o)
+    little.deserialize[T](json)
+  }
+
+  protected def deserializeList(cursor: MongoCursor): List[T] =
+    cursor.map {
+      o: DBObject => deserialize(o)
+    }.toList
 
 }
