@@ -23,10 +23,7 @@ class ValueLayout
   private def createValueField() = new TextField {
     setInputPrompt("value")
     addTextChangeListener(new TextChangeListener {
-      def textChange(event: TextChangeEvent) =
-        _viewPresenter.foreach {
-          listener => listener.onValueChange(event.getText)
-        }
+      def textChange(event: TextChangeEvent) = presenter.onValueChange(event.getText)
     })
   }
 

@@ -8,7 +8,6 @@ import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.server.Sizeable
 import com.vaadin.ui._
 
-
 object FunctionDefinitionLayout {
   val Style = "l-function-def"
   val StyleBody = Style + "-body"
@@ -40,9 +39,7 @@ class FunctionDefinitionLayout
 
   override def setName(name: String): Unit = header.name_=(name)
 
-  private def createHeader(): FunctionDefinitionHeader = {
-    new FunctionDefinitionHeader(this)
-  }
+  private def createHeader(): FunctionDefinitionHeader = new FunctionDefinitionHeader(this)
 
   private def createBody(): Component = {
     val body = new HorizontalLayout
@@ -80,17 +77,9 @@ class FunctionDefinitionLayout
     new FunctionReferencePresenter(view)
   }
 
-  private[html] def onNameChange(name: String): Unit = {
-    _viewPresenter.foreach {
-      listener => listener.onNameChange(name)
-    }
-  }
+  private[html] def onNameChange(name: String): Unit = presenter.onNameChange(name)
 
-  private[html] def requestNewParameter(): Unit = {
-    _viewPresenter.foreach {
-      listener => listener.onParamAdded(createFunctionParameter())
-    }
-  }
+  private[html] def requestNewParameter(): Unit = presenter.onParamAdded(createFunctionParameter())
 
 }
 
@@ -103,8 +92,8 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
   private val saveButton = createSaveButton()
   private val closeButton = createCloseButton()
 
-  setStyleName(FunctionDefinitionLayout.StyleHead)
   setSpacing(true)
+  setStyleName(FunctionDefinitionLayout.StyleHead)
   addComponent(nameField)
   addComponent(parameterLayout)
   addComponent(newParameterButton)
@@ -142,12 +131,8 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
 
   private def createCloseButton() = CloseButton(definition)
 
-  def name_=(n: String) = {
-    nameField.setValue(n)
-  }
+  def name_=(n: String) = nameField.setValue(n)
 
-  def parameters_+=(p: FunctionParameterComponent) = {
-    parameterLayout.addComponent(p)
-  }
+  def parameters_+=(p: FunctionParameterComponent) = parameterLayout.addComponent(p)
 
 }

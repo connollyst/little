@@ -4,7 +4,6 @@ import com.quane.little.data.model.FunctionRecord
 import com.quane.little.ide.presenter.{BlockPresenter, FunctionReferencePresenter, FunctionParameterPresenter}
 import com.quane.little.language.FunctionDefinition
 
-
 trait FunctionDefinitionView extends View[FunctionDefinitionViewPresenter] {
 
   def setName(name: String): Unit
@@ -15,15 +14,10 @@ trait FunctionDefinitionView extends View[FunctionDefinitionViewPresenter] {
 
   def createFunctionReference(): FunctionReferencePresenter[_]
 
-  def compile: List[FunctionDefinition] =
-    _viewPresenter.map {
-      _.compile
-    }.toList
+  def compile: FunctionDefinition = presenter.compile
 
-  def save: List[FunctionRecord] =
-    _viewPresenter.map {
-      _.save
-    }.toList
+  def save: FunctionRecord = presenter.save
+
 }
 
 trait FunctionDefinitionViewPresenter extends ViewPresenter {

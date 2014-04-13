@@ -10,7 +10,7 @@ import com.google.common.base.Objects
   */
 trait View[L <: ViewPresenter] {
 
-  protected var _viewPresenter: Option[L] = None
+  private var _viewPresenter: Option[L] = None
 
   //  protected var _viewParent: Option[ViewWithChildren[_]] = None
 

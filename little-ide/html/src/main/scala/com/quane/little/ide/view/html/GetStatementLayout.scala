@@ -31,11 +31,7 @@ class GetStatementLayout
   private def createNameField() = new TextField {
     setInputPrompt("variable name")
     addTextChangeListener(new TextChangeListener {
-      def textChange(event: TextChangeEvent) = {
-        _viewPresenter.foreach {
-          listener => listener.onNameChange(event.getText)
-        }
-      }
+      def textChange(event: TextChangeEvent) = presenter.onNameChange(event.getText)
     })
   }
 

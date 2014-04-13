@@ -22,11 +22,7 @@ class FunctionParameterComponent
   setInputPrompt("parameter name")
 
   addTextChangeListener(new TextChangeListener {
-    def textChange(event: TextChangeEvent): Unit = {
-      _viewPresenter.foreach {
-        listener => listener.onNameChanged(event.getText)
-      }
-    }
+    def textChange(event: TextChangeEvent): Unit = presenter.onNameChanged(event.getText)
   })
 
   override def setName(name: String): Unit = setValue(name)

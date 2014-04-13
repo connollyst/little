@@ -30,30 +30,15 @@ class FunctionArgumentComponent
   addComponent(new FunctionArgumentMenuBar(this))
   addComponent(CloseButton(this))
 
-  private[html] def requestAddTextLiteral() = {
-    // TODO skip if already a value statement
-    val view = createValueStatement()
-    _viewPresenter.foreach {
-      listener => listener.onValueChange(view)
-    }
-  }
+  // TODO skip if already a value statement
+  private[html] def requestAddTextLiteral() = presenter.onValueChange(createValueStatement())
 
-  private[html] def requestAddGetStatement() = {
-    // TODO skip if already a get statement
-    val view = createGetStatement()
-    _viewPresenter.foreach {
-      listener => listener.onValueChange(view)
-    }
-  }
+  // TODO skip if already a get statement
+  private[html] def requestAddGetStatement() = presenter.onValueChange(createGetStatement())
 
-  private[html] def requestAddFunctionReference(name: String) = {
-    // TODO skip if already this function reference
-    val view = createFunctionReference()
-    _viewPresenter.foreach {
-      // TODO we need to look up the function definition
-      listener => listener.onValueChange(view)
-    }
-  }
+  // TODO skip if already this function reference
+  // TODO we need to look up the function definition
+  private[html] def requestAddFunctionReference(name: String) = presenter.onValueChange(createFunctionReference())
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
     removeValueComponent()

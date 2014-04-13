@@ -4,7 +4,6 @@ import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
-import com.vaadin.ui.MenuBar.Command
 
 object PrintStatementLayout {
   val Style = "l-print"
@@ -28,30 +27,15 @@ class PrintStatementLayout
   addComponent(new PrintMenuBar(this))
   addComponent(CloseButton(this))
 
-  private[html] def requestAddTextLiteral() = {
-    // TODO skip if already a value statement
-    val view = createValueStatement()
-    _viewPresenter.foreach {
-      listener => listener.onValueChange(view)
-    }
-  }
+  // TODO skip if already a value statement
+  private[html] def requestAddTextLiteral() = presenter.onValueChange(createValueStatement())
 
-  private[html] def requestAddGetStatement() = {
-    // TODO skip if already a get statement
-    val view = createGetStatement()
-    _viewPresenter.foreach {
-      listener => listener.onValueChange(view)
-    }
-  }
+  // TODO skip if already a get statement
+  private[html] def requestAddGetStatement() = presenter.onValueChange(createGetStatement())
 
-  private[html] def requestAddFunctionReference(name: String) = {
-    // TODO skip if already this function reference
-    val view = createFunctionReference()
-    _viewPresenter.foreach {
-      // TODO we need to look up the function definition
-      listener => listener.onValueChange(view)
-    }
-  }
+  // TODO skip if already this function reference
+  // TODO we need to look up the function definition
+  private[html] def requestAddFunctionReference(name: String) = presenter.onValueChange(createFunctionReference())
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
     removePrintValue()
@@ -91,26 +75,21 @@ private class PrintMenuBar(view: PrintStatementLayout)
   extends MenuBar {
 
   val item = addItem("∆", null, null)
-  item.addItem("text", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      view.requestAddTextLiteral()
+  item.addItem("text", null, new MenuBar.Command {
+    def menuSelected(item: MenuBar#MenuItem) = view.requestAddTextLiteral()
   })
-  item.addItem("get", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      view.requestAddGetStatement()
+  item.addItem("get", null, new MenuBar.Command {
+    def menuSelected(item: MenuBar#MenuItem) = view.requestAddGetStatement()
   })
   val functions = item.addItem("functions", null, null)
-  functions.addItem("move", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      view.requestAddFunctionReference(item.getText)
+  functions.addItem("move", null, new MenuBar.Command {
+    def menuSelected(item: MenuBar#MenuItem) = view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("stop", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      view.requestAddFunctionReference(item.getText)
+  functions.addItem("stop", null, new MenuBar.Command {
+    def menuSelected(item: MenuBar#MenuItem) = view.requestAddFunctionReference(item.getText)
   })
-  functions.addItem("turn", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      view.requestAddFunctionReference(item.getText)
+  functions.addItem("turn", null, new MenuBar.Command {
+    def menuSelected(item: MenuBar#MenuItem) = view.requestAddFunctionReference(item.getText)
   })
 
 }

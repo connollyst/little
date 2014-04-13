@@ -125,34 +125,17 @@ class BlockLayout
     // TODO: DEBUGGING: I think the way we are using generics doesn't extend to
     val pres: BlockViewPresenter = presenter
     pres.requestAddConditional(index)
-    _viewPresenter.foreach {
-      listener => listener.requestAddConditional(index)
-    }
+    presenter.requestAddConditional(index)
   }
 
-  def requestAddGetStatement(index: Int) = {
-    _viewPresenter.foreach {
-      listener => listener.requestAddGetStatement(index)
-    }
-  }
+  def requestAddGetStatement(index: Int) = presenter.requestAddGetStatement(index)
 
-  def requestAddSetStatement(index: Int) = {
-    _viewPresenter.foreach {
-      listener => listener.requestAddSetStatement(index)
-    }
-  }
+  def requestAddSetStatement(index: Int) = presenter.requestAddSetStatement(index)
 
-  def requestAddPrintStatement(index: Int) = {
-    _viewPresenter.foreach {
-      listener => listener.requestAddPrintStatement(index)
-    }
-  }
+  def requestAddPrintStatement(index: Int) = presenter.requestAddPrintStatement(index)
 
-  def requestAddFunctionReference(name: String, index: Int) = {
-    _viewPresenter.foreach {
-      listener => listener.requestAddFunctionReference(name, index)
-    }
-  }
+  def requestAddFunctionReference(name: String, index: Int) = presenter.requestAddFunctionReference(name, index)
+
 }
 
 private class BlockStepSeparator(block: BlockLayout)
@@ -164,10 +147,8 @@ private class BlockStepSeparator(block: BlockLayout)
 
   setDropHandler(new DropHandler() {
 
-    override def getAcceptCriterion: AcceptCriterion = {
-      // TODO only accept appropriate Little components
-      AcceptAll.get()
-    }
+    // TODO only accept appropriate Little components
+    override def getAcceptCriterion: AcceptCriterion = AcceptAll.get()
 
     override def drop(event: DragAndDropEvent): Unit = {
       //      val droppedStep = getDroppedStep(event)
@@ -208,35 +189,28 @@ private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
 
   val item = addItem("+", null, null)
   item.addItem("get", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      block.requestAddGetStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.requestAddGetStatement(index)
   })
   item.addItem("set", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      block.requestAddSetStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.requestAddSetStatement(index)
   })
   item.addItem("print", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      block.requestAddPrintStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.requestAddPrintStatement(index)
   })
   item.addSeparator()
   item.addItem("if/else", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      block.requestAddConditional(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.requestAddConditional(index)
   })
   item.addSeparator()
   val functions = item.addItem("functions", null, null)
   functions.addItem("move", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      block.requestAddFunctionReference(item.getText, index)
+    def menuSelected(item: MenuBar#MenuItem) = block.requestAddFunctionReference(item.getText, index)
   })
   functions.addItem("stop", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      block.requestAddFunctionReference(item.getText, index)
+    def menuSelected(item: MenuBar#MenuItem) = block.requestAddFunctionReference(item.getText, index)
   })
   functions.addItem("turn", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      block.requestAddFunctionReference(item.getText, index)
+    def menuSelected(item: MenuBar#MenuItem) = block.requestAddFunctionReference(item.getText, index)
   })
 
   private def index: Int = block.stepIndex(separator)
