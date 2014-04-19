@@ -4,8 +4,8 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.SetStatement
-import com.quane.little.language.data.{Text, Bool, NumberSimple, NumberDecimal}
+import com.quane.little.language.{FunctionReference, SetStatement}
+import com.quane.little.language.data._
 
 /** Test JSON serialization of [[com.quane.little.language.SetStatement]] objects.
   *
@@ -49,7 +49,14 @@ class TestSetterDeserialization
     val name = "setter_function_reference"
     val setter = deserialize[SetStatement](name)
     setter.name should be("MyVariable")
-    setter.value should be(new Bool(false))
+    setter.value should be(
+      new FunctionReference("MyFunction")
+        .addArg("arg1", Value("abc"))
+        .addArg("arg2", Value(1234))
+        .addArg("arg3", Value(12.34))
+        .addArg("arg4", Value(true))
+        .addArg("arg5", Value(false))
+    )
   }
 
 }
