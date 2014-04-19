@@ -1,9 +1,8 @@
 package com.quane.little.ide.model
 
-import com.mongodb.casbah.{MongoCollection, MongoDB, MongoClient}
+import com.mongodb.casbah.{MongoDB, MongoClient, MongoCollection}
 import com.quane.little.data.FunctionRepository
 import com.quane.little.data.model.{UserRecord, RecordId, FunctionRecord}
-import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
 
 /** A service for interacting with [[com.quane.little.language.Functions]].
@@ -14,11 +13,34 @@ object FunctionService {
 
   val FunctionNames = List("blank", "move", "stop", "turn", "voyage", "print dir")
 
-  def findByUser(user: UserRecord): List[FunctionRecord] = {
-    println("Fetching all for " + user)
+  def findReferencesByUser(username: String): List[FunctionReference] =
+    findDefinitionsByUser(username).map(definition => definition.asReference)
+
+  def findReferencesByUser(user: UserRecord): List[FunctionReference] =
+    findDefinitionsByUser(user).map(definition => definition.asReference)
+
+  def findDefinitionsByUser(username: String): List[FunctionDefinition] =
+    findDefinitionsByUser(UserService.fetch(username))
+
+  def findDefinitionsByUser(user: UserRecord): List[FunctionDefinition] = {
+    println("Fetching all functions for " + user)
     val collection = mongoCollection("little", "functions")
     val repo = new FunctionRepository(collection)
-    repo.findByUser(user)
+    repo.findByUser(user).map(function => function.definition)
+  }
+
+  def findReference(name: String): FunctionReference = findDefinition(name).asReference
+
+  def findDefinition(name: String): FunctionDefinition = {
+    name match {
+      case "blank" => Functions.blank
+      case "move" => Functions.move
+      case "stop" => Functions.stop
+      case "turn" => Functions.turn
+      case "voyage" => Functions.voyage
+      case "print dir" => Functions.printDirection
+      case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
+    }
   }
 
   def upsert(username: String, id: Option[RecordId], fun: FunctionDefinition): FunctionRecord = {
@@ -50,29 +72,6 @@ object FunctionService {
     val record = new FunctionRecord(user.id, fun)
     repo.insert(record)
     record
-  }
-
-  def fetchReference(name: String): FunctionReference = {
-    val definition = fetchDefinition(name)
-    val reference = new FunctionReference(definition.name)
-    definition.params foreach {
-      param =>
-      // TODO parameters should have default values
-        reference.addArg(param.name, Value(""))
-    }
-    reference
-  }
-
-  def fetchDefinition(name: String): FunctionDefinition = {
-    name match {
-      case "blank" => Functions.blank
-      case "move" => Functions.move
-      case "stop" => Functions.stop
-      case "turn" => Functions.turn
-      case "voyage" => Functions.voyage
-      case "print dir" => Functions.printDirection
-      case _ => throw new IllegalArgumentException("Unknown function: '" + name + "'")
-    }
   }
 
   private def mongoClient: MongoClient = MongoClient()

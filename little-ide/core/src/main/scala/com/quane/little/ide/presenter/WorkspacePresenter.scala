@@ -13,7 +13,7 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
   view.registerViewPresenter(this)
 
   override def openFunctionDefinition(name: String) = {
-    val fun = FunctionService.fetchDefinition(name)
+    val fun = FunctionService.findDefinition(name)
     view.createFunctionDefinition().initialize(fun)
   }
 

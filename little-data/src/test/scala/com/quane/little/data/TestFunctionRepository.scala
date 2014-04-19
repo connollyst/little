@@ -1,7 +1,7 @@
 package com.quane.little.data
 
 import com.quane.little.data.model.{RecordId, FunctionRecord}
-import com.quane.little.language.{PrintStatement, FunctionDefinition}
+import com.quane.little.language.{Functions, PrintStatement, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -118,9 +118,28 @@ class TestFunctionRepository
       "Cannot update FunctionRecord with unknown id: UnknownId1234"
     )
   }
-  it should "fetch function" in {
+  it should "insert simple function" in {
     val repo = functionRepository
     val functionIn = new FunctionRecord(ownerId, definition)
+    repo.insert(functionIn)
+    functionIn.id should not be (null)
+  }
+  it should "insert and find simple function" in {
+    val repo = functionRepository
+    val functionIn = new FunctionRecord(ownerId, definition)
+    repo.insert(functionIn)
+    val functionOut = repo.find(functionIn.id).get
+    functionOut should be(functionIn)
+  }
+  it should "insert complex function" in {
+    val repo = functionRepository
+    val functionIn = new FunctionRecord(ownerId, Functions.voyage)
+    repo.insert(functionIn)
+    functionIn.id should not be (null)
+  }
+  it should "insert and find complex function" in {
+    val repo = functionRepository
+    val functionIn = new FunctionRecord(ownerId, Functions.voyage)
     repo.insert(functionIn)
     val functionOut = repo.find(functionIn.id).get
     functionOut should be(functionIn)

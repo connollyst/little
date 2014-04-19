@@ -18,5 +18,5 @@ class IDEPresenter[V <: IDEView](view: V)
   val user = UserService.upsert("connollyst")
   println("Logged in as " + user.username + ": " + user.id)
 
-  FunctionService.findByUser(user)
+  FunctionService.findDefinitionsByUser(user)
 }
