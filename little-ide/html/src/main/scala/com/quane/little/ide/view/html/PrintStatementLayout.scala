@@ -4,6 +4,7 @@ import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
+import com.quane.little.ide.presenter.command.{IDECommandExecutor, AddValueCommand}
 
 object PrintStatementLayout {
   val Style = "l-print"
@@ -66,7 +67,8 @@ private class PrintMenuBar(view: PrintStatementLayout)
 
   val item = addItem("∆", null, null)
   item.addItem("text", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddTextLiteral()
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddValueCommand(view.presenter))
   })
   item.addItem("get", null, new MenuBar.Command {
     def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddGetStatement()

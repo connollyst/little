@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
+import com.quane.little.ide.presenter.{AcceptsValue, FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 
 
 trait GetStatementView extends ExpressionView[GetStatementViewPresenter] {
@@ -49,9 +49,9 @@ trait SetStatementViewPresenter extends ExpressionViewPresenter {
 
 }
 
-trait PrintStatementViewPresenter extends ExpressionViewPresenter {
-
-  def requestAddTextLiteral(): Unit
+trait PrintStatementViewPresenter
+  extends ExpressionViewPresenter
+  with AcceptsValue {
 
   def requestAddGetStatement(): Unit
 
