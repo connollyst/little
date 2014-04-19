@@ -10,7 +10,6 @@ import com.vaadin.ui.{ComponentContainer, Component}
   */
 trait RemovableComponent
   extends Component {
-  //  with ViewWithChildren[_] {
 
   def removeFromParent(): Option[ViewPresenter] = {
     // TODO null check?
@@ -18,7 +17,6 @@ trait RemovableComponent
       case container: ComponentContainer => container.removeComponent(this)
       case _ => throw new IllegalAccessException("Cannot remove " + this + " from " + getParent)
     }
-    //    super.removeFromParent()
     None
   }
 

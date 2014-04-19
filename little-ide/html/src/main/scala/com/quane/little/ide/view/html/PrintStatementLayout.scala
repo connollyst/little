@@ -2,7 +2,6 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
-import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
 import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddGetterCommand, IDECommandExecutor, AddValueCommand}
 
@@ -20,7 +19,7 @@ class PrintStatementLayout
   with RemovableComponent {
 
   private val printLabel = new Label("print")
-  private var printValue: Option[ExpressionView[_]] = None
+  private var printValue: Option[ExpressionView[_] with RemovableComponent] = None
 
   setStyleName(ExpressionLayout.Style + " " + PrintStatementLayout.Style)
   setSpacing(true)
@@ -29,7 +28,7 @@ class PrintStatementLayout
   addComponent(CloseButton(this))
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
-    removePrintValue()
+    removePrintValueView()
     val view = new ValueLayout
     printValue = Some(view)
     addComponent(view)
@@ -37,7 +36,7 @@ class PrintStatementLayout
   }
 
   override def createGetStatement(): GetStatementPresenter[GetStatementLayout] = {
-    removePrintValue()
+    removePrintValueView()
     val view = new GetStatementLayout
     printValue = Some(view)
     addComponent(view)
@@ -45,16 +44,16 @@ class PrintStatementLayout
   }
 
   override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceLayout] = {
-    removePrintValue()
+    removePrintValueView()
     val view = new FunctionReferenceLayout
     printValue = Some(view)
     addComponent(view)
     new FunctionReferencePresenter(view)
   }
 
-  private def removePrintValue(): Unit = {
+  private def removePrintValueView(): Unit = {
     printValue match {
-      case e: Some[ExpressionView[_]] => throw new NotImplementedError("boooooozzzzeee") //e.get.removeFromParent()
+      case Some(removable) => removable.removeFromParent()
       case None => // do nothing
     }
     printValue = None

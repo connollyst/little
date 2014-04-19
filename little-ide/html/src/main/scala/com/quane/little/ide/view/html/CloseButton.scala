@@ -1,12 +1,14 @@
 package com.quane.little.ide.view.html
 
 import com.vaadin.ui.Button
+import com.vaadin.ui.Button.ClickEvent
 
 object CloseButton {
 
   def apply(c: RemovableComponent) = new CloseButton {
-    //    clickListeners += c.removeFromParent()
-    println("Sean, you've been drinking.")
+    addClickListener(new Button.ClickListener() {
+      override def buttonClick(event: ClickEvent): Unit = c.removeFromParent()
+    })
   }
 
 }
