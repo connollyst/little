@@ -10,10 +10,10 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class Block(_steps: ListBuffer[Expression] = ListBuffer[Expression]())
+class Block
   extends Expression {
 
-  def this() = this(ListBuffer[Expression]())
+  private val _steps: ListBuffer[Expression] = ListBuffer[Expression]()
 
   def length: Int = _steps.length
 
