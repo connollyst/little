@@ -50,6 +50,16 @@ class FunctionDefinition(val name: String) {
     }
   }
 
+  def asReference: FunctionReference = {
+    val reference = new FunctionReference(name)
+    params foreach {
+      param =>
+      // TODO parameters should have default values
+        reference.addArg(param.name, Value(""))
+    }
+    reference
+  }
+
   def evaluate(scope: Scope, args: immutable.Map[String, Expression]): Value = {
     val functionScope = new Scope(scope)
     validateArguments(args)
