@@ -4,7 +4,7 @@ import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
-import com.quane.little.ide.presenter.command.{IDECommandExecutor, AddValueCommand}
+import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddGetterCommand, IDECommandExecutor, AddValueCommand}
 
 object PrintStatementLayout {
   val Style = "l-print"
@@ -71,17 +71,21 @@ private class PrintMenuBar(view: PrintStatementLayout)
       IDECommandExecutor.execute(new AddValueCommand(view.presenter))
   })
   item.addItem("get", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddGetStatement()
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddGetterCommand(view.presenter))
   })
   val functions = item.addItem("functions", null, null)
   functions.addItem("move", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddFunctionReferenceCommand(view.presenter, item.getText))
   })
   functions.addItem("stop", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddFunctionReferenceCommand(view.presenter, item.getText))
   })
   functions.addItem("turn", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddFunctionReferenceCommand(view.presenter, item.getText))
   })
 
 }
