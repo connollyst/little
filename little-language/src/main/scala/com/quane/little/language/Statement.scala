@@ -64,8 +64,6 @@ class PrintStatement(val value: Expression)
   extends Statement
   with Logging {
 
-  def this(value: String) = this(Value(value))
-
   override def evaluate(scope: Scope): Value = {
     val text = value.evaluate(scope)
     // TODO this should display a speech bubble over the guy

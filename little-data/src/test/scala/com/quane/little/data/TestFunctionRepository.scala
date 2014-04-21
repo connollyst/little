@@ -7,6 +7,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
+import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionRepository
@@ -61,8 +62,8 @@ class TestFunctionRepository
     originalDefinition.addParam("Param 2")
     updatedDefinition.addParam("Param A")
     updatedDefinition.addParam("Param B")
-    originalDefinition.addStep(new PrintStatement("Hello Original World!"))
-    updatedDefinition.addStep(new PrintStatement("Hello Updated World!"))
+    originalDefinition.addStep(new PrintStatement(Value("Hello Original World!")))
+    updatedDefinition.addStep(new PrintStatement(Value("Hello Updated World!")))
     val repo = functionRepository
     val function = new FunctionRecord(ownerId, originalDefinition)
     repo.insert(function)

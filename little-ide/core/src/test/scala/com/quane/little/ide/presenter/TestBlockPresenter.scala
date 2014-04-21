@@ -89,7 +89,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val printPresenter = new PrintStatementPresenter(new MockPrintStatementView)
     when[PrintStatementPresenter[_]](view.addPrintStatement()).thenReturn(printPresenter)
-    presenter.add(new PrintStatement("x"))
+    presenter.add(new PrintStatement(Value("x")))
     verify(view).addPrintStatement()
   }
 
@@ -98,7 +98,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val printPresenter = new PrintStatementPresenter(new MockPrintStatementView)
     when[PrintStatementPresenter[_]](view.addPrintStatement()).thenReturn(printPresenter)
-    presenter.add(new PrintStatement("x"))
+    presenter.add(new PrintStatement(Value("x")))
     assert(presenter.steps.contains(printPresenter))
   }
 
@@ -107,7 +107,7 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
     val presenter = new BlockPresenter(view)
     val printPresenter = mock[PrintStatementPresenter[PrintStatementView]]
     when[PrintStatementPresenter[_]](view.addPrintStatement()).thenReturn(printPresenter)
-    val statement = new PrintStatement("x")
+    val statement = new PrintStatement(Value("x"))
     presenter.add(statement)
     verify(printPresenter).initialize(statement)
   }
