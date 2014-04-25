@@ -36,9 +36,9 @@ class TestStatement
   /* Get Statement */
 
   test("test getter") {
-    val scope = new Scope(None)
+    val scope = new Runtime
     scope.save("Obj", Value("A"))
-    val get = new GetStatement("Obj1")
+    val get = new GetStatement("Obj")
     assertGet("Obj", "A", scope, get)
   }
 
