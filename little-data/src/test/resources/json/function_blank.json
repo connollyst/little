@@ -1,0 +1,14 @@
+{
+    "_id": {
+        "$oid": "FunctionDefinitionRecordID"
+    },
+    "ownerId": {
+        "$oid": "UserRecordID"
+    },
+    "definition": {
+        "_class": "com.quane.little.language.FunctionDefinition",
+        "name": "MyFunction",
+        "steps": [],
+        "params": [ ]
+    }
+}

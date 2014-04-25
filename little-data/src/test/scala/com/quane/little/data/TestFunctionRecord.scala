@@ -8,6 +8,10 @@ import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.skyscreamer.jsonassert.JSONAssert
+import java.net.URL
+import com.google.common.io.Files
+import java.io.{FileNotFoundException, File}
+import java.nio.charset.Charset
 
 /** Test cases for the [[com.quane.little.data.model.FunctionRecord]].
   *
@@ -22,37 +26,35 @@ class TestFunctionRecord extends FlatSpec with ShouldMatchers {
   val definition = new FunctionDefinition("MyFunction")
   val function = new FunctionRecord(userId, definition)
   function.id = functionId
-  val json = // TODO move to JSON file
-    """{
-      |"_id":{"$oid":"FunctionDefinitionRecordID"},
-      |"ownerId":{"$oid":"UserRecordID"},
-      |"definition":{
-      |     "@class":"com.quane.little.language.FunctionDefinition",
-      |     "name":"MyFunction",
-      |     "params":[],
-      |     "steps":[]
-      |}
-      |}"""
-      .stripMargin
 
   "FunctionDefinitionRecord" should "serialize to JSON" in {
-    JSONAssert.assertEquals(json, littleJSON.serialize(function), true)
+    JSONAssert.assertEquals(getJSON("function_blank"), littleJSON.serialize(function), true)
   }
   it should "deserialize record id from JSON" in {
-    val actual = littleJSON.deserialize[FunctionRecord](json)
+    val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
     actual.id should be(functionId)
   }
   it should "deserialize owner record id from JSON" in {
-    val actual = littleJSON.deserialize[FunctionRecord](json)
+    val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
     actual.ownerId should be(userId)
   }
   it should "deserialize function definition from JSON" in {
-    val actual = littleJSON.deserialize[FunctionRecord](json)
+    val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
     actual.definition should be(definition)
   }
   it should "deserialize from JSON" in {
-    val actual = littleJSON.deserialize[FunctionRecord](json)
+    val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
     actual should be(function)
+  }
+
+  private[data] def getJSON(name: String): String = {
+    val path = "json/" + name + ".json"
+    getClass.getClassLoader.getResource(path) match {
+      case url: URL =>
+        Files.toString(new File(url.getFile), Charset.defaultCharset())
+      case _ =>
+        throw new FileNotFoundException(path)
+    }
   }
 
 }
