@@ -2,14 +2,14 @@ package com.quane.little.data
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
-import com.quane.little.data.model.{RecordId, HasRecordID}
+import com.quane.little.data.model.{RecordId, HasRecordId}
 import com.quane.little.tools.json.LittleJSON
 
 /** An abstract MongoDB repository.
   *
   * @author Sean Connolly
   */
-abstract class MongoRepository[T <: HasRecordID : Manifest](collection: MongoCollection) {
+abstract class MongoRepository[T <: HasRecordId : Manifest](collection: MongoCollection) {
 
   private val little = new LittleJSON()
 
