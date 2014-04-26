@@ -15,8 +15,9 @@ class IDEPresenter[V <: IDEView](view: V)
   val toolbox = view.createToolbox()
   val workspace = view.createWorkspace()
 
-  val user = UserService.upsert("connollyst")
+  val username = "connollyst"
+  val user = UserService.upsert(username)
   println("Logged in as " + user.username + ": " + user.id)
 
-  FunctionService.findDefinitionsByUser(user)
+  FunctionService.findDefinitionsByUser(username)
 }

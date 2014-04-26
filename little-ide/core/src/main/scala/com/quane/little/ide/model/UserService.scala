@@ -11,6 +11,12 @@ import com.quane.little.data.model.UserRecord
  */
 object UserService {
 
+  val SYSTEM_USERNAME = "little"
+
+  /** Initialize the data source.
+    */
+  def init(): Unit = upsert(SYSTEM_USERNAME)
+
   def upsert(username: String): UserRecord = {
     val collection = mongoCollection("little", "users")
     val repo = new UserRepository(collection)
@@ -29,6 +35,12 @@ object UserService {
         "No user record for username '" + username + "'."
       )
     }
+  }
+
+  def exists(username: String): Boolean = {
+    val collection = mongoCollection("little", "users")
+    val repo = new UserRepository(collection)
+    repo.find(username).isDefined
   }
 
   private def mongoClient: MongoClient = MongoClient()

@@ -24,16 +24,17 @@ class WorkspaceLayout
   addComponent(
     new VerticalLayout {
       // TODO this isn't a long term solution
-      FunctionService.FunctionNames.foreach {
+      FunctionService.findByUser("connollyst") foreach {
         function =>
           addComponent(new Button(
-            function,
+            function.definition.name,
             new ClickListener {
               def buttonClick(event: ClickEvent) =
                 IDECommandExecutor.execute(
-                  new AddFunctionDefinitionCommand(presenter, function)
+                  new AddFunctionDefinitionCommand(presenter, function.id)
                 )
-            }))
+            }
+          ))
       }
     }
   )

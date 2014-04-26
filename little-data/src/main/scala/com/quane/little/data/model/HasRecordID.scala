@@ -1,6 +1,6 @@
 package com.quane.little.data.model
 
-/** A trait indicating a record with an id, a [[RecordId]].
+/** A trait indicating a record with an id, a [[com.quane.little.data.model.RecordId]].
   *
   * @author Sean Connolly
   */

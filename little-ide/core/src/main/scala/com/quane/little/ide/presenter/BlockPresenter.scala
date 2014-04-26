@@ -5,6 +5,7 @@ import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.language._
 import scala._
 import scala.collection.mutable.ListBuffer
+import com.quane.little.data.model.RecordId
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -77,8 +78,8 @@ class BlockPresenter[V <: BlockView](view: V)
 
   override def requestAddPrintStatement(index: Int) = add(view.addPrintStatement(index), index)
 
-  override def requestAddFunctionReference(name: String, index: Int) = {
-    val fun = FunctionService.findReference(name)
+  override def requestAddFunctionReference(id: RecordId, index: Int) = {
+    val fun = FunctionService.findReference(id)
     val presenter = view.addFunctionReference(index).initialize(fun)
     add(presenter, index)
   }

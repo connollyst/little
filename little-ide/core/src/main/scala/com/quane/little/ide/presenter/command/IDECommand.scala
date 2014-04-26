@@ -1,6 +1,7 @@
 package com.quane.little.ide.presenter.command
 
 import com.quane.little.ide.presenter.{PresenterAcceptsFunctionDefinition, PresenterAcceptsFunctionReference, PresenterAcceptsGetter, PresenterAcceptsValue}
+import com.quane.little.data.model.RecordId
 
 /** An IDE command: an action, usually initiated by the user, which can be
   * executed and undone if necessary.
@@ -15,26 +16,26 @@ sealed trait IDECommand {
 
 }
 
-class AddValueCommand(receiver: PresenterAcceptsValue) extends IDECommand {
+class AddValueCommand(receiver: PresenterAcceptsValue, index: Int = 0) extends IDECommand {
 
-  override private[presenter] def execute(): Unit = receiver.requestAddTextLiteral()
-
-}
-
-class AddGetterCommand(receiver: PresenterAcceptsGetter) extends IDECommand {
-
-  override private[presenter] def execute(): Unit = receiver.requestAddGetStatement()
+  override private[presenter] def execute(): Unit = receiver.requestAddTextLiteral(index)
 
 }
 
-class AddFunctionReferenceCommand(receiver: PresenterAcceptsFunctionReference, name: String) extends IDECommand {
+class AddGetterCommand(receiver: PresenterAcceptsGetter, index: Int = 0) extends IDECommand {
 
-  override private[presenter] def execute(): Unit = receiver.requestAddFunctionReference(name)
+  override private[presenter] def execute(): Unit = receiver.requestAddGetStatement(index)
 
 }
 
-class AddFunctionDefinitionCommand(receiver: PresenterAcceptsFunctionDefinition, id: String) extends IDECommand {
+class AddFunctionReferenceCommand(receiver: PresenterAcceptsFunctionReference, id: RecordId, index: Int = 0) extends IDECommand {
 
-  override private[presenter] def execute(): Unit = receiver.requestAddFunctionDefinition(id)
+  override private[presenter] def execute(): Unit = receiver.requestAddFunctionReference(id, index)
+
+}
+
+class AddFunctionDefinitionCommand(receiver: PresenterAcceptsFunctionDefinition, id: RecordId, index: Int = 0) extends IDECommand {
+
+  override private[presenter] def execute(): Unit = receiver.requestAddFunctionDefinition(id, index)
 
 }

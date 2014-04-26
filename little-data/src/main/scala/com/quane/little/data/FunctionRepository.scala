@@ -17,4 +17,10 @@ class FunctionRepository(collection: MongoCollection)
     deserializeList(results)
   }
 
+  def findByUser(user: UserRecord, name: String): Option[FunctionRecord] = {
+    val query = MongoDBObject("ownerId" -> user.id.toObjectId, "definition.name" -> name)
+    val result = collection.findOne(query)
+    deserialize(result)
+  }
+
 }

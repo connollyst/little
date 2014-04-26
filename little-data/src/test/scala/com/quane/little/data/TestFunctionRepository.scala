@@ -123,7 +123,7 @@ class TestFunctionRepository
     val repo = functionRepository
     val functionIn = new FunctionRecord(ownerId, definition)
     repo.insert(functionIn)
-    functionIn.id should not be (null)
+    functionIn.id should not be null
   }
   it should "insert and find simple function" in {
     val repo = functionRepository
@@ -136,7 +136,7 @@ class TestFunctionRepository
     val repo = functionRepository
     val functionIn = new FunctionRecord(ownerId, Functions.voyage)
     repo.insert(functionIn)
-    functionIn.id should not be (null)
+    functionIn.id should not be null
   }
   it should "insert and find complex function" in {
     val repo = functionRepository

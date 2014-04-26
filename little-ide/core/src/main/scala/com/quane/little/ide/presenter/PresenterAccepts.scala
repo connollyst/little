@@ -1,5 +1,7 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.data.model.RecordId
+
 /**
  *
  *
@@ -9,24 +11,24 @@ sealed trait PresenterAccepts
 
 trait PresenterAcceptsValue extends PresenterAccepts {
 
-  def requestAddTextLiteral(): Unit
+  def requestAddTextLiteral(index: Int): Unit
 
 }
 
 trait PresenterAcceptsGetter extends PresenterAccepts {
 
-  def requestAddGetStatement(): Unit
+  def requestAddGetStatement(index: Int): Unit
 
 }
 
 trait PresenterAcceptsFunctionReference extends PresenterAccepts {
 
-  def requestAddFunctionReference(name: String): Unit
+  def requestAddFunctionReference(id: RecordId, index: Int): Unit
 
 }
 
 trait PresenterAcceptsFunctionDefinition extends PresenterAccepts {
 
-  def requestAddFunctionDefinition(id: String): Unit
+  def requestAddFunctionDefinition(id: RecordId, index: Int): Unit
 
 }

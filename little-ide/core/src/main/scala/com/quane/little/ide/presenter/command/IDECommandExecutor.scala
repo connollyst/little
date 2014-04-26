@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter.command
 
-/** An executor for [[IDECommand]] instances. Maintains a history of commands
-  * executed for easy undos.
+/** An executor for [[IDECommand]] instances.
+  * Maintains a history of commands executed for easy undo/redo.
   *
   * @author Sean Connolly
   */

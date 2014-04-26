@@ -6,6 +6,8 @@ import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{MenuBar, TextField, HorizontalLayout, Label}
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.ui.MenuBar.Command
+import com.quane.little.ide.model.FunctionService
+import com.quane.little.ide.presenter.command.{AddGetterCommand, AddValueCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 
 object SetStatementLayout {
   val Style = "l-set"
@@ -79,20 +81,20 @@ private class ValueMenuBar(view: SetStatementLayout)
 
   val item = addItem("∆", null, null)
   item.addItem("text", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddTextLiteral()
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddValueCommand(view.presenter))
   })
   item.addItem("get", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddGetStatement()
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddGetterCommand(view.presenter))
   })
   val functions = item.addItem("functions", null, null)
-  functions.addItem("move", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
-  })
-  functions.addItem("stop", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
-  })
-  functions.addItem("turn", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
-  })
+  FunctionService.findByUser("connollyst") foreach {
+    function =>
+      functions.addItem(function.definition.name, null, new Command {
+        def menuSelected(item: MenuBar#MenuItem) =
+          IDECommandExecutor.execute(new AddFunctionReferenceCommand(view.presenter, function.id))
+      })
+  }
 
 }

@@ -4,6 +4,8 @@ import com.quane.little.ide.view.{PrintStatementViewPresenter, PrintStatementVie
 import com.quane.little.language._
 import com.quane.little.language.data.Value
 import scala._
+import com.quane.little.data.model.RecordId
+import com.quane.little.ide.model.FunctionService
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *
@@ -57,14 +59,18 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
   }
 
   // TODO skip if already a value statement
-  override def requestAddTextLiteral() = _value = Some(view.createValueStatement())
+  override def requestAddTextLiteral(index: Int) =
+    _value = Some(view.createValueStatement())
 
   // TODO skip if already a get statement
-  override def requestAddGetStatement() = _value = Some(view.createGetStatement())
+  override def requestAddGetStatement(index: Int) =
+    _value = Some(view.createGetStatement())
 
   // TODO skip if already this function reference
-  // TODO we need to look up the function definition
-  override def requestAddFunctionReference(name: String) = _value = Some(view.createFunctionReference())
+  override def requestAddFunctionReference(id: RecordId, index: Int) = {
+    val fun = FunctionService.findReference(id)
+    _value = Some(view.createFunctionReference().initialize(fun))
+  }
 
   /** Compile to a [[com.quane.little.language.PrintStatement]].
     *

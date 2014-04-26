@@ -1,13 +1,12 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter._
-import com.quane.vaadin.scala.DroppableTarget
-import com.vaadin.event.dd.DropHandler
-import com.vaadin.event.dd.acceptcriteria.AcceptCriterion
 import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui.{Component, MenuBar, HorizontalLayout, VerticalLayout}
 import com.vaadin.ui.MenuBar.Command
+import com.quane.little.ide.model.FunctionService
+import com.quane.little.ide.presenter.command.{AddGetterCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 
 object BlockLayout {
   val DefaultIndex = -1
@@ -143,7 +142,8 @@ private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
 
   val item = addItem("+", null, null)
   item.addItem("get", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddGetStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) =
+      IDECommandExecutor.execute(new AddGetterCommand(block.presenter, index))
   })
   item.addItem("set", null, new Command {
     def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddSetStatement(index)
@@ -157,15 +157,13 @@ private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
   })
   item.addSeparator()
   val functions = item.addItem("functions", null, null)
-  functions.addItem("move", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddFunctionReference(item.getText, index)
-  })
-  functions.addItem("stop", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddFunctionReference(item.getText, index)
-  })
-  functions.addItem("turn", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddFunctionReference(item.getText, index)
-  })
+  FunctionService.findByUser("connollyst") foreach {
+    function =>
+      functions.addItem(function.definition.name, null, new Command {
+        def menuSelected(item: MenuBar#MenuItem) =
+          IDECommandExecutor.execute(new AddFunctionReferenceCommand(block.presenter, function.id, index))
+      })
+  }
 
   private def index: Int = block.stepIndex(separator)
 
