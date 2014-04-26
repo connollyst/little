@@ -4,7 +4,7 @@ package com.quane.little.data.model
   *
   * @author Sean Connolly
   */
-trait HasRecordId {
+trait HasRecordID {
 
   def id: RecordId
 

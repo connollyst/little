@@ -9,7 +9,7 @@ import com.quane.little.language.event.EventListener
   * @author Sean Connolly
   */
 class ListenerRecord(val ownerId: RecordId, var listener: EventListener)
-  extends HasRecordId {
+  extends HasRecordID {
 
   @JsonProperty("_id")
   var id: RecordId = _

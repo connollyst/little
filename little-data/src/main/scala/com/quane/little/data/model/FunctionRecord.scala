@@ -9,7 +9,7 @@ import com.quane.little.language.FunctionDefinition
   * @author Sean Connolly
   */
 class FunctionRecord(val ownerId: RecordId, var definition: FunctionDefinition)
-  extends HasRecordId {
+  extends HasRecordID {
 
   @JsonProperty("_id")
   var id: RecordId = _
