@@ -24,3 +24,9 @@ trait PresenterAcceptsFunctionReference extends PresenterAccepts {
   def requestAddFunctionReference(name: String): Unit
 
 }
+
+trait PresenterAcceptsFunctionDefinition extends PresenterAccepts {
+
+  def requestAddFunctionDefinition(id: String): Unit
+
+}

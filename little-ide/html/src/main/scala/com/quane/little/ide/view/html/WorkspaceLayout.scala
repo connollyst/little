@@ -6,6 +6,7 @@ import com.quane.little.ide.view.WorkspaceView
 import com.quane.vaadin.scala.VaadinMixin
 import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.ui.{Button, VerticalLayout, HorizontalLayout}
+import com.quane.little.ide.presenter.command.{AddFunctionDefinitionCommand, IDECommandExecutor}
 
 object WorkspaceLayout {
   val Style = "l-workspace"
@@ -25,9 +26,14 @@ class WorkspaceLayout
       // TODO this isn't a long term solution
       FunctionService.FunctionNames.foreach {
         function =>
-          addComponent(new Button(function, new ClickListener {
-            def buttonClick(event: ClickEvent) = presenter.openFunctionDefinition(function)
-          }))
+          addComponent(new Button(
+            function,
+            new ClickListener {
+              def buttonClick(event: ClickEvent) =
+                IDECommandExecutor.execute(
+                  new AddFunctionDefinitionCommand(presenter, function)
+                )
+            }))
       }
     }
   )

@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter.command
 
-import com.quane.little.ide.presenter.{PresenterAcceptsFunctionReference, PresenterAcceptsGetter, PresenterAcceptsValue}
+import com.quane.little.ide.presenter.{PresenterAcceptsFunctionDefinition, PresenterAcceptsFunctionReference, PresenterAcceptsGetter, PresenterAcceptsValue}
 
 /** An IDE command: an action, usually initiated by the user, which can be
   * executed and undone if necessary.
@@ -30,5 +30,11 @@ class AddGetterCommand(receiver: PresenterAcceptsGetter) extends IDECommand {
 class AddFunctionReferenceCommand(receiver: PresenterAcceptsFunctionReference, name: String) extends IDECommand {
 
   override private[presenter] def execute(): Unit = receiver.requestAddFunctionReference(name)
+
+}
+
+class AddFunctionDefinitionCommand(receiver: PresenterAcceptsFunctionDefinition, id: String) extends IDECommand {
+
+  override private[presenter] def execute(): Unit = receiver.requestAddFunctionDefinition(id)
 
 }

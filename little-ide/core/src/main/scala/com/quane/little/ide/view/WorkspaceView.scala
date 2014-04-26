@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.FunctionDefinitionPresenter
+import com.quane.little.ide.presenter.{PresenterAcceptsFunctionDefinition, FunctionDefinitionPresenter}
 
 trait WorkspaceView extends View[WorkspaceViewPresenter] {
 
@@ -8,8 +8,6 @@ trait WorkspaceView extends View[WorkspaceViewPresenter] {
 
 }
 
-trait WorkspaceViewPresenter extends ViewPresenter {
-
-  def openFunctionDefinition(name: String)
-
-}
+trait WorkspaceViewPresenter
+  extends ViewPresenter
+  with PresenterAcceptsFunctionDefinition
