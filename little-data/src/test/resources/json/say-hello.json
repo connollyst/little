@@ -1,0 +1,18 @@
+{
+    "_id": 1,
+    "ownerId": 2,
+    "definition": {
+        "_class": "com.quane.little.language.FunctionDefinition",
+        "name": "sayHello",
+        "steps": [
+            {
+                "_class": "com.quane.little.language.PrintStatement",
+                "value": {
+                    "_class": "com.quane.little.language.data.Text",
+                    "primitive": "HELLO WORLD"
+                }
+            }
+        ],
+        "params": [ ]
+    }
+}

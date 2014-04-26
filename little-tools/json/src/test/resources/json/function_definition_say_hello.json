@@ -1,0 +1,14 @@
+{
+    "_class": "com.quane.little.language.FunctionDefinition",
+    "name": "sayHello",
+    "steps": [
+        {
+            "_class": "com.quane.little.language.PrintStatement",
+            "value": {
+                "_class": "com.quane.little.language.data.Text",
+                "primitive": "Hello World!"
+            }
+        }
+    ],
+    "params": [ ]
+}
