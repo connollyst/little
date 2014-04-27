@@ -52,6 +52,13 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <dependency>
+            <groupId>com.github.simplyscala</groupId>
+            <artifactId>scalatest-embedmongo_${scala.version}</artifactId>
+            <version>0.2.1</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>
