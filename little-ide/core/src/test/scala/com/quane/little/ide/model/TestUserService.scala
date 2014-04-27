@@ -33,5 +33,16 @@ class TestUserService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers 
     val user = users.fetch(name)
     user should not be null
   }
+  it should "not find system user before initialization" in {
+    val thrown = intercept[IllegalArgumentException] {
+      users.fetch(UserService.SYSTEM_USERNAME)
+    }
+    thrown.getMessage should be("No user record for username '" + UserService.SYSTEM_USERNAME + "'.")
+  }
+  it should "find system user after initialization" in {
+    users.init()
+    val user = users.fetch(UserService.SYSTEM_USERNAME)
+    user should not be null
+  }
 
 }
