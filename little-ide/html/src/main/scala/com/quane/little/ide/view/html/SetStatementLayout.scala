@@ -89,7 +89,7 @@ private class ValueMenuBar(view: SetStatementLayout)
       IDECommandExecutor.execute(new AddGetterCommand(view.presenter))
   })
   val functions = item.addItem("functions", null, null)
-  FunctionService.findByUser("connollyst") foreach {
+  FunctionService().findByUser("connollyst") foreach {
     function =>
       functions.addItem(function.definition.name, null, new Command {
         def menuSelected(item: MenuBar#MenuItem) =

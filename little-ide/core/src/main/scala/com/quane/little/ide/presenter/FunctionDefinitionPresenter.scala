@@ -77,9 +77,9 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     val fun = compile
     _id match {
       case Some(id) =>
-        FunctionService.update(id, fun)
+        FunctionService().update(id, fun)
       case None =>
-        val record = FunctionService.insert(_username, fun)
+        val record = FunctionService().insert(_username, fun)
         _id = Some(record.id)
         record
     }

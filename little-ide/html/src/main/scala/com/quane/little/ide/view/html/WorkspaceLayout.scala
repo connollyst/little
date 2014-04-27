@@ -24,7 +24,7 @@ class WorkspaceLayout
   addComponent(
     new VerticalLayout {
       // TODO this isn't a long term solution
-      FunctionService.findByUser("connollyst") foreach {
+      FunctionService().findByUser("connollyst") foreach {
         function =>
           addComponent(new Button(
             function.definition.name,

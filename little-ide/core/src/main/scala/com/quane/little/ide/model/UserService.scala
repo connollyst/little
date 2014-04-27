@@ -1,24 +1,36 @@
 package com.quane.little.ide.model
 
-import com.mongodb.casbah.{MongoCollection, MongoDB, MongoClient}
+import com.mongodb.casbah.{MongoCollection, MongoClient}
 import com.quane.little.data.UserRepository
 import com.quane.little.data.model.UserRecord
 
-/**
- *
- *
- * @author Sean Connolly
- */
 object UserService {
 
   val SYSTEM_USERNAME = "little"
 
+  private var instance: Option[UserService] = None
+
+  def apply(): UserService = {
+    if (!instance.isDefined) {
+      instance = Some(new UserService(MongoClient()))
+    }
+    instance.get
+  }
+
+  def apply(client: MongoClient): UserService = {
+    instance = Some(new UserService(client))
+    instance.get
+  }
+
+}
+
+class UserService(client: MongoClient) {
+
   /** Initialize the data source.
     */
-  def init(): Unit = upsert(SYSTEM_USERNAME)
+  def init(): Unit = upsert(UserService.SYSTEM_USERNAME)
 
   def upsert(username: String): UserRecord = {
-    val collection = mongoCollection("little", "users")
     val repo = new UserRepository(collection)
     repo.find(username) match {
       case Some(user) => user
@@ -27,7 +39,6 @@ object UserService {
   }
 
   def fetch(username: String): UserRecord = {
-    val collection = mongoCollection("little", "users")
     val repo = new UserRepository(collection)
     repo.find(username) match {
       case Some(user) => user
@@ -38,15 +49,11 @@ object UserService {
   }
 
   def exists(username: String): Boolean = {
-    val collection = mongoCollection("little", "users")
     val repo = new UserRepository(collection)
     repo.find(username).isDefined
   }
 
-  private def mongoClient: MongoClient = MongoClient()
-
-  private def mongoDB(db: String): MongoDB = mongoClient(db)
-
-  private def mongoCollection(db: String, name: String): MongoCollection = mongoDB(db)(name)
+  private def collection: MongoCollection = client("little")("users")
 
 }
+

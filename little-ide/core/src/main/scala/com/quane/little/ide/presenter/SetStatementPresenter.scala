@@ -74,7 +74,7 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
 
   // TODO skip if already this function reference
   override def requestAddFunctionReference(id: RecordId, index: Int) = {
-    val fun = FunctionService.findReference(id)
+    val fun = FunctionService().findReference(id)
     _value = Some(view.createFunctionReference().initialize(fun))
   }
 

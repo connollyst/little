@@ -14,7 +14,7 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
   view.registerViewPresenter(this)
 
   override def requestAddFunctionDefinition(id: RecordId, index: Int): Unit = {
-    val fun = FunctionService.findDefinition(id)
+    val fun = FunctionService().findDefinition(id)
     view.createFunctionDefinition().initialize(fun)
   }
 

@@ -4,7 +4,7 @@ import com.mongodb.casbah.Imports._
 import com.quane.little.data.model.UserRecord
 import com.quane.little.tools.Logging
 
-/** Provides storage and retrieval access to the repository of [[UserRecord]]
+/** Provides storage and retrieval access to the repository of [[com.quane.little.data.model.UserRecord]]
   * objects.
   *
   * @author Sean Connolly

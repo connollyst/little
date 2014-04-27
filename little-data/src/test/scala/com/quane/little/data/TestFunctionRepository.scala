@@ -23,7 +23,7 @@ class TestFunctionRepository
     * Also, start up the [[com.quane.little.data.EmbeddedMongoDB]].
     */
   override def beforeAll() {
-    mongoProps = mongoStart()
+    super.beforeAll()
     ownerId = userRepository.insert("Username", "FirstName", "LastName").id
   }
 
