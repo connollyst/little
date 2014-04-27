@@ -11,8 +11,6 @@ import com.quane.little.language.{FunctionReference, Functions, FunctionDefiniti
   */
 object FunctionService {
 
-  val FunctionNames = List("blank", "move", "stop", "turn", "voyage", "print dir")
-
   /** Initialize the data source.
     */
   def init(): Unit = {
