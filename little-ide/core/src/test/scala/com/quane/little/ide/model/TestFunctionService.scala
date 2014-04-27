@@ -23,25 +23,25 @@ class TestFunctionService extends FlatSpec with EmbeddedMongoDB with ShouldMatch
 
   override def beforeAll() {
     super.beforeAll()
+    users.init()
     users.upsert(userOne)
     users.upsert(userTwo)
     // TODO if we always initialize, we can't test initialization..
-    users.init()
     functions.init()
   }
 
-  "FunctionService" should "should detect existing function" in {
+  "FunctionService" should "detect existing function" in {
     val name = "MyFunction"
     functions.insert(userOne, new FunctionDefinition(name))
     val exists = functions.exists(userOne, name)
     exists should be(right = true)
   }
-  it should "should not detect non-existing function" in {
+  it should "not detect non-existing function" in {
     val name = "UnknownFunction"
     val exists = functions.exists(userOne, name)
     exists should be(right = false)
   }
-  it should "should not detect other user's existing function" in {
+  it should "not detect other user's existing function" in {
     val name = "HisFunction"
     functions.insert(userTwo, new FunctionDefinition(name))
     val exists = functions.exists(userOne, name)
