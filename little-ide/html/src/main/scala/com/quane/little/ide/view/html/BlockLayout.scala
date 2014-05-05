@@ -11,6 +11,7 @@ import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.DroppableTarget
 import com.quane.little.data.model.RecordId
+import com.quane.little.ide.view.html.dnd.FunctionTransferable
 
 object BlockLayout {
   val DefaultIndex = -1
@@ -145,9 +146,9 @@ private class BlockStepSeparator(block: BlockLayout)
 
     override def drop(event: DragAndDropEvent) =
       event.getTransferable match {
-        case transferable: ExpressionTransferable => addFunction(transferable.getFunctionId)
+        case transferable: FunctionTransferable => addFunction(transferable.getFunctionId)
         case _ =>
-          throw new IllegalArgumentException("Expected " + classOf[ExpressionTransferable])
+          throw new IllegalArgumentException("Expected " + classOf[FunctionTransferable])
       }
   })
   // TODO expand to fill separator height & width
