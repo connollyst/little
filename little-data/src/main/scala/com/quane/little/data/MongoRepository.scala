@@ -15,6 +15,7 @@ abstract class MongoRepository[T <: HasRecordId : Manifest](collection: MongoCol
 
   def update(record: T) = {
     // TODO check id exists
+    // TODO check name not taken
     insert(record)
   }
 

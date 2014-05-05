@@ -48,6 +48,9 @@ class FunctionService(client: MongoClient) {
   def exists(username: String, functionName: String): Boolean =
     exists(UserService().fetch(username), functionName)
 
+  private def exists(userId: RecordId, functionName: String): Boolean =
+    exists(UserService().fetch(userId), functionName)
+
   private def exists(user: UserRecord, functionName: String): Boolean =
     new FunctionRepository(collection).findByUser(user, functionName).isDefined
 
@@ -83,6 +86,9 @@ class FunctionService(client: MongoClient) {
     val repo = new FunctionRepository(collection)
     repo.find(id) match {
       case Some(record) =>
+        if (exists(record.ownerId, fun.name)) {
+          throw new IllegalArgumentException("Another function with the name '" + fun.name + "' already exists.")
+        }
         record.definition = fun
         repo.update(record)
         record

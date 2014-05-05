@@ -2,7 +2,7 @@ package com.quane.little.ide.model
 
 import com.mongodb.casbah.{MongoCollection, MongoClient}
 import com.quane.little.data.UserRepository
-import com.quane.little.data.model.UserRecord
+import com.quane.little.data.model.{RecordId, UserRecord}
 
 object UserService {
 
@@ -44,6 +44,16 @@ class UserService(client: MongoClient) {
       case Some(user) => user
       case None => throw new IllegalArgumentException(
         "No user record for username '" + username + "'."
+      )
+    }
+  }
+
+  def fetch(userId: RecordId): UserRecord = {
+    val repo = new UserRepository(collection)
+    repo.find(userId) match {
+      case Some(user) => user
+      case None => throw new IllegalArgumentException(
+        "No user record for userId '" + userId + "'."
       )
     }
   }
