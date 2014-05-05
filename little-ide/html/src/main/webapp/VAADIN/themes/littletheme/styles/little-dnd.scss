@@ -1,0 +1,17 @@
+/**
+ * Styles for drag and drop indicators.
+ */
+
+.v-ddwrapper-over,
+.v-ddwrapper-over-top,
+.v-ddwrapper-over-bottom,
+.v-ddwrapper-over-left,
+.v-ddwrapper-over-right {
+  // TODO avoid using !important
+  border: 2px solid #1d9dff !important;
+  background-color: #bcdcff !important;
+  padding: 0 !important;
+  -moz-border-radius: 5px !important;
+  -webkit-border-radius: 5px !important;
+  border-radius: 5px !important;
+}
