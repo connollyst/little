@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
-import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
+import com.quane.little.ide.view.WorkspaceView
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.ui.{CssLayout, HorizontalLayout}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
@@ -27,7 +27,7 @@ class WorkspaceLayout
   setStyleName(WorkspaceLayout.Style)
   val workspace = new DroppableTarget(new HorizontalLayout())
   workspace.component.setSpacing(true)
-  workspace.setDropHandler(new WorkspaceDropHandler(presenter))
+  workspace.setDropHandler(new WorkspaceDropHandler(this))
   workspace.setSizeFull()
   add(workspace)
 
@@ -42,9 +42,9 @@ class WorkspaceLayout
 /**
  * Handler for drag &amp; drop events onto the workspace.
  *
- * @param presenter the workspace presenter to interact with
+ * @param workspace the workspace to interact with
  */
-class WorkspaceDropHandler(presenter: WorkspaceViewPresenter) extends DropHandler {
+class WorkspaceDropHandler(workspace: WorkspaceLayout) extends DropHandler {
 
   override def getAcceptCriterion = AcceptAll.get()
 
@@ -52,7 +52,7 @@ class WorkspaceDropHandler(presenter: WorkspaceViewPresenter) extends DropHandle
     event.getTransferable match {
       case transferable: FunctionTransferable =>
         IDECommandExecutor.execute(
-          new AddFunctionDefinitionCommand(presenter, transferable.functionId)
+          new AddFunctionDefinitionCommand(workspace.presenter, transferable.functionId)
         )
     }
 

@@ -22,7 +22,8 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
 
   view.registerViewPresenter(this)
 
-  private[presenter] def initialize(fun: FunctionDefinition): FunctionDefinitionPresenter[V] = {
+  private[presenter] def initialize(id: RecordId, fun: FunctionDefinition): FunctionDefinitionPresenter[V] = {
+    _id = Some(id)
     name = fun.name
     steps = fun.steps
     parameters = fun.params
@@ -77,8 +78,10 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     val fun = compile
     _id match {
       case Some(id) =>
+        println("Saving changes to " + id + "..")
         FunctionService().update(id, fun)
       case None =>
+        println("Saving new function definition..")
         val record = FunctionService().insert(_username, fun)
         _id = Some(record.id)
         record
