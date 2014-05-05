@@ -1,9 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
-import com.quane.little.language.FunctionReference
-import com.quane.little.language.data.Value
-import com.quane.little.language.math.{Multiplication, Division, Subtraction, Addition}
+import com.quane.little.ide.model.FunctionService
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -21,16 +19,10 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
   view.createToolboxTab("My Functions")
   view.createToolboxTab("My Variables")
 
-  view.createToolboxItem("Motion", "move forward", new FunctionReference("move"))
-
-  view.createToolboxItem("Math", "+", new Addition(Value(1), Value(1)))
-  view.createToolboxItem("Math", "-", new Subtraction(Value(1), Value(1)))
-  view.createToolboxItem("Math", "*", new Multiplication(Value(1), Value(1)))
-  view.createToolboxItem("Math", "/", new Division(Value(1), Value(1)))
-
-  view.createToolboxItem("My Functions", "blank", new FunctionReference("blank"))
-  view.createToolboxItem("My Functions", "move", new FunctionReference("move"))
-  view.createToolboxItem("My Functions", "stop", new FunctionReference("stop"))
-  view.createToolboxItem("My Functions", "turn", new FunctionReference("turn"))
+  FunctionService().findByUser("connollyst") foreach {
+    function =>
+      // TODO function.category
+      view.createToolboxItem("Sensing", function.definition.name, function.id)
+  }
 
 }

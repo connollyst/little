@@ -3,10 +3,14 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.presenter._
 import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
-import com.vaadin.ui.{Component, MenuBar, HorizontalLayout, VerticalLayout}
+import com.vaadin.ui._
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.presenter.command.{AddGetterCommand, AddFunctionReferenceCommand, IDECommandExecutor}
+import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
+import com.vaadin.event.dd.acceptcriteria.AcceptAll
+import com.quane.vaadin.scala.DroppableTarget
+import com.quane.little.data.model.RecordId
 
 object BlockLayout {
   val DefaultIndex = -1
@@ -132,8 +136,32 @@ class BlockLayout
 private class BlockStepSeparator(block: BlockLayout)
   extends HorizontalLayout {
 
+  setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
   addComponent(new BlockMenuBar(block, this))
+  val dndTarget = new DroppableTarget[HorizontalLayout](new HorizontalLayout())
+  dndTarget.setDropHandler(new DropHandler {
+    override def getAcceptCriterion = AcceptAll.get()
+
+    override def drop(event: DragAndDropEvent) =
+      event.getTransferable match {
+        case transferable: ExpressionTransferable => addFunction(transferable.getFunctionId)
+        case _ =>
+          throw new IllegalArgumentException("Expected " + classOf[ExpressionTransferable])
+      }
+  })
+  // TODO expand to fill separator height & width
+  dndTarget.component.setHeight("20px")
+  dndTarget.component.setWidth("200px")
+  dndTarget.setSizeFull()
+  addComponent(dndTarget)
+
+  def addFunction(functionId: RecordId) =
+    IDECommandExecutor.execute(
+      new AddFunctionReferenceCommand(block.presenter, functionId, index)
+    )
+
+  def index: Int = block.stepIndex(this)
 
 }
 
@@ -143,17 +171,17 @@ private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
   val item = addItem("+", null, null)
   item.addItem("get", null, new Command {
     def menuSelected(item: MenuBar#MenuItem) =
-      IDECommandExecutor.execute(new AddGetterCommand(block.presenter, index))
+      IDECommandExecutor.execute(new AddGetterCommand(block.presenter, separator.index))
   })
   item.addItem("set", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddSetStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddSetStatement(separator.index)
   })
   item.addItem("print", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddPrintStatement(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddPrintStatement(separator.index)
   })
   item.addSeparator()
   item.addItem("if/else", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddConditional(index)
+    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddConditional(separator.index)
   })
   item.addSeparator()
   val functions = item.addItem("functions", null, null)
@@ -161,10 +189,8 @@ private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
     function =>
       functions.addItem(function.definition.name, null, new Command {
         def menuSelected(item: MenuBar#MenuItem) =
-          IDECommandExecutor.execute(new AddFunctionReferenceCommand(block.presenter, function.id, index))
+          separator.addFunction(function.id)
       })
   }
-
-  private def index: Int = block.stepIndex(separator)
 
 }

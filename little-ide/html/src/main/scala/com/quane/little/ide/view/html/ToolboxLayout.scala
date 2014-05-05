@@ -1,9 +1,9 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.ToolboxView
-import com.quane.little.language.Expression
 import com.vaadin.ui.Accordion
 import scala.collection.mutable
+import com.quane.little.data.model.RecordId
 
 object ToolboxLayout {
   val Style = "l-toolbox"
@@ -25,7 +25,7 @@ class ToolboxLayout
     addTab(tabContent, title)
   }
 
-  override def createToolboxItem(tabTitle: String, title: String, expression: Expression) =
-    tabContents(tabTitle).addComponent(new ToolboxItemComponent(title))
+  override def createToolboxItem(tabTitle: String, title: String, functionId: RecordId) =
+    tabContents(tabTitle).addComponent(new ToolboxItemComponent(title, functionId))
 
 }

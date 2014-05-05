@@ -13,7 +13,8 @@ class IDELayout
 
   setSizeFull()
   setSplitPosition(25, Sizeable.Unit.PERCENTAGE)
-  createGameWindow()
+
+  // createGameWindow()
 
   private def createGameWindow() = {
     val subWindow = new GameWindow()
