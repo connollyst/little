@@ -1,10 +1,9 @@
 package com.quane.little.language.data
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** Defines the primitive type of the [[Value]] for better internal manipulation.
+  *
+  * @author Sean Connolly
+  */
 object ValueType extends Enumeration {
   type ValueType = Value
   val Boolean, Integer, Double, String, Nada = Value

@@ -4,6 +4,8 @@ import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.quane.little.data.model.{UserRecord, RecordId, FunctionRecord}
 import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
 import com.quane.little.data.FunctionRepository
+import com.quane.little.data.model.CodeCategory.CodeCategory
+import com.quane.little.data.model.CodeCategory
 
 /** A service for interacting with [[com.quane.little.language.Functions]].
   *
@@ -32,17 +34,17 @@ class FunctionService(client: MongoClient) {
   /** Initialize the data source.
     */
   def init(): Unit = {
-    init(Functions.blank)
-    init(Functions.move)
-    init(Functions.stop)
-    init(Functions.turn)
-    init(Functions.voyage)
-    init(Functions.printDirection)
+    init(CodeCategory.Basic, Functions.blank)
+    init(CodeCategory.Basic, Functions.printDirection)
+    init(CodeCategory.Motion, Functions.move)
+    init(CodeCategory.Motion, Functions.stop)
+    init(CodeCategory.Motion, Functions.turn)
+    init(CodeCategory.Motion, Functions.voyage)
   }
 
-  private def init(function: FunctionDefinition) =
+  private def init(category: CodeCategory, function: FunctionDefinition) =
     if (!exists(UserService.SYSTEM_USERNAME, function.name)) {
-      insert(UserService.SYSTEM_USERNAME, function)
+      insert(UserService.SYSTEM_USERNAME, category, function)
     }
 
   def exists(username: String, functionName: String): Boolean =
@@ -76,12 +78,6 @@ class FunctionService(client: MongoClient) {
       case None => throw new RuntimeException("No function definition for " + id)
     }
 
-  def upsert(username: String, id: Option[RecordId], fun: FunctionDefinition): FunctionRecord =
-    new FunctionRepository(collection).find(id) match {
-      case Some(record) => update(id.get, fun)
-      case None => insert(username, fun)
-    }
-
   def update(id: RecordId, fun: FunctionDefinition): FunctionRecord = {
     val repo = new FunctionRepository(collection)
     repo.find(id) match {
@@ -96,14 +92,14 @@ class FunctionService(client: MongoClient) {
     }
   }
 
-  def insert(username: String, fun: FunctionDefinition): FunctionRecord = {
+  def insert(username: String, category: CodeCategory, fun: FunctionDefinition): FunctionRecord = {
     val user = UserService().fetch(username)
     if (exists(user, fun.name)) {
       throw new IllegalArgumentException("Function name taken '" + fun.name + "'")
     } else if (isReservedSystemName(fun.name)) {
       throw new IllegalArgumentException("Function name reserved '" + fun.name + "'")
     }
-    val record = new FunctionRecord(user.id, fun)
+    val record = new FunctionRecord(user.id, category, fun)
     new FunctionRepository(collection).insert(record)
     record
   }

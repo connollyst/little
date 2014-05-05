@@ -2,6 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
 import com.quane.little.ide.model.FunctionService
+import com.quane.little.data.model.CodeCategory
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -12,17 +13,14 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
 
   view.registerViewPresenter(this)
 
-  view.createToolboxTab("Sensing")
-  view.createToolboxTab("Motion")
-  view.createToolboxTab("Operators")
-  view.createToolboxTab("Math")
-  view.createToolboxTab("My Functions")
-  view.createToolboxTab("My Variables")
+  CodeCategory.values foreach {
+    category =>
+      view.createToolboxTab(category)
+  }
 
   FunctionService().findByUser("connollyst") foreach {
     function =>
-      // TODO function.category
-      view.createToolboxItem("Sensing", function.definition.name, function.id)
+      view.createToolboxItem(function.category, function.definition.name, function.id)
   }
 
 }

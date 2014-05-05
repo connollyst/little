@@ -10,15 +10,14 @@ import com.quane.little.ide.view.{IDEViewPresenter, IDEView}
 class IDEPresenter[V <: IDEView](view: V)
   extends IDEViewPresenter {
 
-  view.registerViewPresenter(this)
-
-  val toolbox = view.createToolbox()
-  val workspace = view.createWorkspace()
-
   UserService().init()
   FunctionService().init()
 
   val user = UserService().upsert("connollyst")
   println("Logged in as " + user.username + ": " + user.id)
+
+  view.registerViewPresenter(this)
+  view.createToolbox()
+  view.createWorkspace()
 
 }
