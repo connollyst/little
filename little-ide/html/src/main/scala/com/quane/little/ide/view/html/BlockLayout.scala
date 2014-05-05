@@ -146,7 +146,7 @@ private class BlockStepSeparator(block: BlockLayout)
 
     override def drop(event: DragAndDropEvent) =
       event.getTransferable match {
-        case transferable: FunctionTransferable => addFunction(transferable.getFunctionId)
+        case transferable: FunctionTransferable => addFunction(transferable.functionId)
         case _ =>
           throw new IllegalArgumentException("Expected " + classOf[FunctionTransferable])
       }

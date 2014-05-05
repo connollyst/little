@@ -44,7 +44,7 @@ class IDELayout
   private def toolbox: ToolboxLayout = {
     _toolbox match {
       case Some(t) => t
-      case _ => throw new IllegalAccessException("No toolbox defined.")
+      case None => throw new IllegalAccessException("No toolbox defined.")
     }
   }
 
@@ -56,7 +56,7 @@ class IDELayout
   private def workspace: WorkspaceLayout = {
     _workspace match {
       case Some(t) => t
-      case _ => throw new IllegalAccessException("No workspace defined.")
+      case None => throw new IllegalAccessException("No workspace defined.")
     }
   }
 

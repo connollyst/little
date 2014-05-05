@@ -1,11 +1,12 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.presenter.FunctionDefinitionPresenter
 import com.quane.little.ide.view.WorkspaceView
-import com.quane.vaadin.scala.VaadinMixin
-import com.vaadin.ui.Button.{ClickEvent, ClickListener}
-import com.vaadin.ui.{Button, VerticalLayout, HorizontalLayout}
+import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
+import com.vaadin.ui.{CssLayout, HorizontalLayout}
+import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
+import com.vaadin.event.dd.acceptcriteria.AcceptAll
+import com.quane.little.ide.view.html.dnd.FunctionTransferable
 import com.quane.little.ide.presenter.command.{AddFunctionDefinitionCommand, IDECommandExecutor}
 
 object WorkspaceLayout {
@@ -13,33 +14,33 @@ object WorkspaceLayout {
 }
 
 class WorkspaceLayout
-  extends HorizontalLayout
+  extends CssLayout
   with WorkspaceView
   with RemovableComponent
   with VaadinMixin {
 
-  setSpacing(true)
+  setSizeFull()
   setStyleName(WorkspaceLayout.Style)
+  val workspace = new DroppableTarget(new HorizontalLayout())
+  workspace.component.setSpacing(true)
+  workspace.setDropHandler(new DropHandler {
+    override def getAcceptCriterion = AcceptAll.get()
 
-  addComponent(
-    new VerticalLayout {
-      // TODO this isn't a long term solution
-      FunctionService().findByUser("connollyst") foreach {
-        function =>
-          addComponent(new Button(
-            function.definition.name,
-            new ClickListener {
-              def buttonClick(event: ClickEvent) =
-                IDECommandExecutor.execute(
-                  new AddFunctionDefinitionCommand(presenter, function.id)
-                )
-            }
-          ))
+    override def drop(event: DragAndDropEvent) =
+      event.getTransferable match {
+        case transferable: FunctionTransferable =>
+          IDECommandExecutor.execute(
+            new AddFunctionDefinitionCommand(presenter, transferable.functionId)
+          )
       }
-    }
-  )
+  })
+  workspace.setSizeFull()
+  add(workspace)
 
-  override def createFunctionDefinition(): FunctionDefinitionPresenter[_] =
-    new FunctionDefinitionPresenter(add(new FunctionDefinitionLayout()))
+  override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
+    val view = new FunctionDefinitionLayout()
+    workspace.component.addComponent(view)
+    new FunctionDefinitionPresenter(view)
+  }
 
 }

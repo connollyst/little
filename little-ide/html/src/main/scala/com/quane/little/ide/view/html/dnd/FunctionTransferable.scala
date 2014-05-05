@@ -16,7 +16,7 @@ object FunctionTransferable {
  *
  * @author Sean Connolly
  */
-class FunctionTransferable(source: Component, functionId: RecordId) extends Transferable {
+class FunctionTransferable(source: Component, val functionId: RecordId) extends Transferable {
 
   private var data = mutable.Map[String, AnyRef](
     FunctionTransferable.FUNCTION_ID -> functionId
@@ -29,7 +29,5 @@ class FunctionTransferable(source: Component, functionId: RecordId) extends Tran
   override def getDataFlavors: util.Collection[String] = data.keys
 
   override def getData(dataFlavor: String): AnyRef = data(dataFlavor)
-
-  def getFunctionId: RecordId = functionId
 
 }
