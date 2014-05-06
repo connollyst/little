@@ -18,7 +18,7 @@ class LittleExtension
 
   val game = new GameManager(this)
   val events = new EventManager(this)
-  val serializer = new ItemSerializer()
+  val serializer = new EntitySerializer()
 
   override def init(): Unit = {
     if (!isMMORoom) {

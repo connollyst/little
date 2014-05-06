@@ -9,7 +9,7 @@ import org.scalatest.mock.MockitoSugar
 import com.quane.little.game.entity.Mob
 import com.smartfoxserver.v2.mmo.IMMOItemVariable
 
-/** Test cases for the [[ItemSerializer]].
+/** Test cases for the [[EntitySerializer]].
   *
   * @author Sean Connolly
   */
@@ -18,7 +18,7 @@ class TestItemSerializer
   extends FunSuite
   with MockitoSugar {
 
-  val serializer = new ItemSerializer
+  val serializer = new EntitySerializer
 
   test("test mob id serialized") {
     val id = "abcd"
