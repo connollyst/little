@@ -29,7 +29,7 @@ abstract class Entity(val body: EntityBody, manager: InteractionManager)
 
   def isGuy = false
 
-  def touchedBy(other: Entity): Unit = debug("Touched " + other)
+  def touchedBy(other: Entity): Unit = debug("Touching " + other)
 
   def approachedBy(other: Entity): Unit = debug("Approaching " + other)
 
