@@ -1,13 +1,11 @@
 package com.quane.little.game.server
 
-
 import collection.JavaConversions._
 import com.quane.little.game.entity.Entity
 import com.smartfoxserver.v2.SmartFoxServer
 import com.smartfoxserver.v2.core.SFSEventType
 import com.smartfoxserver.v2.extensions.{IClientRequestHandler, IServerEventHandler, ExtensionLogLevel, SFSExtension}
 import com.smartfoxserver.v2.mmo._
-
 
 /**
  * The SmartFox server 'extension' for the little game.
@@ -39,8 +37,8 @@ class LittleExtension
   override def setItemPosition(item: MMOItem, position: Vec3D) = {
     val api = getMMOApi
     val data = serializer.serialize(position)
+    api.setMMOItemPosition(item, position, room) // must come first to ensure item is added to room
     api.setMMOItemVariables(item, data)
-    api.setMMOItemPosition(item, position, room)
   }
 
   override def addHandler(requestId: String, requestHandler: IClientRequestHandler) =
