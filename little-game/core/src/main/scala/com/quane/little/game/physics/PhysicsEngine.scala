@@ -1,6 +1,6 @@
 package com.quane.little.game.physics
 
-import com.quane.little.game.entity.{Entity, EntityRemovalListener, Mob}
+import com.quane.little.game.entity._
 import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.World
 import com.quane.little.tools.Logging
@@ -36,7 +36,9 @@ class PhysicsEngine
   def updateAll(entities: Iterable[Entity]) {
     entities foreach {
       case mob: Mob => updateMob(mob)
-      case other => debug("Not updating physical state of " + other)
+      case food: Food => // TODO update food state
+      case edge: WorldEdge => // world edges are static, no update necessary
+      case other => error("Cannot update state of " + other)
     }
     world.step(timeStep, velocityIterations, positionIterations)
   }
@@ -45,20 +47,20 @@ class PhysicsEngine
     *
     * @param mob the mob to update
     */
-  private def updateMob(mob: Mob) = {
+  private def updateMob(mob: Mob) =
+  // accelerateGuyToSpeed(mob)
+  // rotateGuyToDirection(mob)
+  // TODO setting velocity directly bypasses the physics simulation
     setMobVelocity(mob)
-    // TODO setting velocity directly bypasses the physics simulation
-    // accelerateGuyToSpeed(mob)
-    // rotateGuyToDirection(mob)
-  }
+
 
   /** Removes the specified entity from the physics simulation.
     *
     * @param entity the entity to remove
     */
-  override def entityRemoved(entity: Entity): Unit = {
+  override def entityRemoved(entity: Entity) =
     world.destroyBody(entity.body.physicalBody)
-  }
+
 
   /** DEPRECATED: this is simpler but by using setLinearVelocity we are
     * essentially bypassing the physics simulation
