@@ -1,7 +1,7 @@
 package com.quane.little.game.server
 
 import com.quane.little.game.Game
-import com.quane.little.game.entity.Entity
+import com.quane.little.game.entity.{EntityRemover, Entity}
 import com.smartfoxserver.v2.mmo.{Vec3D, MMOItem}
 import org.junit.Assert._
 import org.junit.runner.RunWith
@@ -64,6 +64,7 @@ class TestGameManager
     val entities = mockEntities(ids: _*)
     when(game.entities).thenReturn(entities)
     when(game.entity(anyString())).thenCallRealMethod()
+    when(game.cleaner).thenReturn(mock[EntityRemover])
     game
   }
 
