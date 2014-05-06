@@ -13,7 +13,7 @@ import org.scalatest.mock.MockitoSugar
 import scala.collection.mutable
 import org.scalatest.matchers.ShouldMatchers
 
-/** Test cases for [[LittleExtension]]
+/** Test cases for [[GameManager]]
   *
   * @author Sean Connolly
   */
