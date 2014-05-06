@@ -60,7 +60,7 @@ class Game
     if (entities.contains(id)) {
       entities(id)
     } else {
-      throw new IllegalAccessException("No entity with id " + id)
+      throw new IllegalArgumentException("No entity with id " + id)
     }
   }
 
@@ -72,7 +72,6 @@ class Game
     eventBus.evaluateAll()
   }
 
-  override def entityRemoved(entity: Entity) =
-    entities -= entity.id
+  override def entityRemoved(entity: Entity) = entities -= entity.id
 
 }
