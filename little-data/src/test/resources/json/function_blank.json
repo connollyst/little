@@ -5,6 +5,10 @@
     "ownerId": {
         "$oid": "UserRecordID"
     },
+    "category": {
+        "enumClass": "com.quane.little.data.model.CodeCategory",
+        "value": "Misc"
+    },
     "definition": {
         "_class": "com.quane.little.language.FunctionDefinition",
         "name": "MyFunction",

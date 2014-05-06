@@ -23,12 +23,15 @@ class TestFunctionRecord extends FlatSpec with ShouldMatchers {
   val littleJSON = new LittleJSON()
   val functionId = new RecordId("FunctionDefinitionRecordID")
   val userId = new RecordId("UserRecordID")
+  val category = CodeCategory.Misc
   val definition = new FunctionDefinition("MyFunction")
-  val function = new FunctionRecord(userId, CodeCategory.Misc, definition)
+  val function = new FunctionRecord(userId, category, definition)
   function.id = functionId
 
   "FunctionDefinitionRecord" should "serialize to JSON" in {
-    JSONAssert.assertEquals(getJSON("function_blank"), littleJSON.serialize(function), true)
+    val expected = getJSON("function_blank")
+    val actual = littleJSON.serialize(function)
+    JSONAssert.assertEquals(expected, actual, true)
   }
   it should "deserialize record id from JSON" in {
     val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
@@ -37,6 +40,10 @@ class TestFunctionRecord extends FlatSpec with ShouldMatchers {
   it should "deserialize owner record id from JSON" in {
     val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
     actual.ownerId should be(userId)
+  }
+  it should "deserialize code category from JSON" in {
+    val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
+    actual.category should be(category)
   }
   it should "deserialize function definition from JSON" in {
     val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
