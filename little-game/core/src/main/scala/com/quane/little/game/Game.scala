@@ -66,7 +66,7 @@ class Game
 
   /** Update the game engine's state.
     */
-  private def updateState(): Unit = {
+  def updateState(): Unit = {
     cleaner.cleanAll()
     engine.updateAll(entities.values)
     eventBus.evaluateAll()

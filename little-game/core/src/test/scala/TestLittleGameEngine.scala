@@ -1,6 +1,7 @@
 import com.quane.little.game.Game
 import org.junit.runner.RunWith
-import org.scalatest.FunSuite
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 
 /** Test cases for the [[com.quane.little.game.Game]].
@@ -8,11 +9,17 @@ import org.scalatest.junit.JUnitRunner
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestLittleGameEngine
-  extends FunSuite {
+class TestLittleGameEngine extends FlatSpec with ShouldMatchers {
 
-  test("test engine initialization") {
-    new Game().initialize()
+  "Game" should "initialize without error" in {
+    val game = new Game()
+    game.initialize()
+  }
+
+  it should "update without error" in {
+    val game = new Game()
+    game.initialize()
+    game.updateState()
   }
 
 }

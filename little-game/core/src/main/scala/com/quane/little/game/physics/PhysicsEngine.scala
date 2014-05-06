@@ -3,6 +3,7 @@ package com.quane.little.game.physics
 import com.quane.little.game.entity.{Entity, EntityRemovalListener, Mob}
 import org.jbox2d.common.Vec2
 import org.jbox2d.dynamics.World
+import com.quane.little.tools.Logging
 
 /** The physics simulation engine takes care of moving entities about and
   * detecting collisions.
@@ -10,7 +11,8 @@ import org.jbox2d.dynamics.World
   * @author Sean Connolly
   */
 class PhysicsEngine
-  extends EntityRemovalListener {
+  extends EntityRemovalListener
+  with Logging {
 
   // the length of time passed to simulate (seconds)
   private val timeStep = 1 / 30f
@@ -33,12 +35,21 @@ class PhysicsEngine
     */
   def updateAll(entities: Iterable[Entity]) {
     entities foreach {
-      case mob: Mob =>
-        setMobVelocity(mob)
-      // accelerateGuyToSpeed(mob)
-      // rotateGuyToDirection(mob)
+      case mob: Mob => updateMob(mob)
+      case other => debug("Not updating physical state of " + other)
     }
     world.step(timeStep, velocityIterations, positionIterations)
+  }
+
+  /** Update the physics simulation for the given mob.
+    *
+    * @param mob the mob to update
+    */
+  private def updateMob(mob: Mob) = {
+    setMobVelocity(mob)
+    // TODO setting velocity directly bypasses the physics simulation
+    // accelerateGuyToSpeed(mob)
+    // rotateGuyToDirection(mob)
   }
 
   /** Removes the specified entity from the physics simulation.
