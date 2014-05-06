@@ -7,21 +7,27 @@ import org.junit.Assert._
 import org.junit.runner.RunWith
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.scalatest.FunSuite
+import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import scala.collection.mutable
+import org.scalatest.matchers.ShouldMatchers
 
 /** Test cases for [[LittleExtension]]
   *
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestGameManager
-  extends FunSuite
-  with MockitoSugar {
+class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
 
-  test("game initialized") {
+  "GameManager" should "register as entity removal listener" in {
+    val client = mock[ClientCommunicator]
+    val game = mockGame()
+    val manager = new GameManager(client, game)
+    verify(game.cleaner).add(manager)
+  }
+
+  it should "initialize game" in {
     val client = mock[ClientCommunicator]
     val game = mockGame()
     val manager = new GameManager(client, game)
@@ -29,7 +35,7 @@ class TestGameManager
     verify(game).initialize()
   }
 
-  test("game items initialized") {
+  it should "initialize game items" in {
     val client = mock[ClientCommunicator]
     val game = mockGame("x", "y", "z")
     val manager = new GameManager(client, game)
@@ -37,7 +43,7 @@ class TestGameManager
     assertEquals(3, manager.items.size)
   }
 
-  test("item removed from client") {
+  it should "remove item from client" in {
     val client = mock[ClientCommunicator]
     val manager = new GameManager(client)
     val id = "a"
@@ -48,7 +54,7 @@ class TestGameManager
     verify(client).removeItem(item)
   }
 
-  test("send items") {
+  it should "send items" in {
     val client = mock[ClientCommunicator]
     val game = mockGame("x", "y", "z")
     val manager = new GameManager(client, game)
