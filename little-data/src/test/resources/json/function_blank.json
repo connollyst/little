@@ -1,6 +1,6 @@
 {
     "_id": {
-        "$oid": "FunctionDefinitionRecordID"
+        "$oid": "BlankFunctionDefinitionRecordID"
     },
     "ownerId": {
         "$oid": "UserRecordID"
@@ -11,7 +11,7 @@
     },
     "definition": {
         "_class": "com.quane.little.language.FunctionDefinition",
-        "name": "MyFunction",
+        "name": "BlankFunction",
         "steps": [],
         "params": [ ]
     }

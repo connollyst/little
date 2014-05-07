@@ -1,0 +1,39 @@
+{
+    "ownerId": {
+        "$oid": "UserRecordID"
+    },
+    "category": {
+        "enumClass": "com.quane.little.data.model.CodeCategory",
+        "value": "Misc"
+    },
+    "definition": {
+        "_class": "com.quane.little.language.FunctionDefinition",
+        "name": "turnRelative",
+        "steps": [
+            {
+                "_class": "com.quane.little.language.SetStatement",
+                "name": "GuyDirection",
+                "value": {
+                    "_class": "com.quane.little.language.math.Addition",
+                    "l": {
+                        "_class": "com.quane.little.language.GetStatement",
+                        "name": "GuyDirection"
+                    },
+                    "r": {
+                        "_class": "com.quane.little.language.GetStatement",
+                        "name": "degrees"
+                    }
+                }
+            }
+        ],
+        "params": [
+            {
+                "_class": "com.quane.little.language.FunctionParameter",
+                "name": "degrees"
+            }
+        ]
+    },
+    "_id": {
+        "$oid": "ComplexFunctionDefinitionRecordID"
+    }
+}

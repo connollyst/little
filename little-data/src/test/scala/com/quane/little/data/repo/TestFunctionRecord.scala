@@ -1,7 +1,7 @@
 package com.quane.little.data.repo
 
 import com.quane.little.data.model.{CodeCategory, FunctionRecord, RecordId}
-import com.quane.little.language.FunctionDefinition
+import com.quane.little.language.{Functions, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -21,21 +21,25 @@ import java.nio.charset.Charset
 class TestFunctionRecord extends FlatSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
-  val functionId = new RecordId("FunctionDefinitionRecordID")
   val userId = new RecordId("UserRecordID")
   val category = CodeCategory.Misc
-  val definition = new FunctionDefinition("MyFunction")
-  val function = new FunctionRecord(userId, category, definition)
-  function.id = functionId
+  val definitionBlank = new FunctionDefinition("BlankFunction")
+  val functionBlankId = new RecordId("BlankFunctionDefinitionRecordID")
+  val functionBlank = new FunctionRecord(userId, category, definitionBlank)
+  functionBlank.id = functionBlankId
+  val definitionComplex = Functions.turnRelative
+  val functionComplexId = new RecordId("ComplexFunctionDefinitionRecordID")
+  val functionComplex = new FunctionRecord(userId, category, definitionComplex)
+  functionComplex.id = functionComplexId
 
-  "FunctionDefinitionRecord" should "serialize to JSON" in {
+  "FunctionDefinitionRecord" should "serialize blank function to JSON" in {
     val expected = getJSON("function_blank")
-    val actual = littleJSON.serialize(function)
+    val actual = littleJSON.serialize(functionBlank)
     JSONAssert.assertEquals(expected, actual, true)
   }
   it should "deserialize record id from JSON" in {
     val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
-    actual.id should be(functionId)
+    actual.id should be(functionBlankId)
   }
   it should "deserialize owner record id from JSON" in {
     val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
@@ -47,11 +51,17 @@ class TestFunctionRecord extends FlatSpec with ShouldMatchers {
   }
   it should "deserialize function definition from JSON" in {
     val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
-    actual.definition should be(definition)
+    actual.definition should be(definitionBlank)
   }
   it should "deserialize from JSON" in {
     val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
-    actual should be(function)
+    actual should be(functionBlank)
+  }
+  it should "serialize complex function to JSON" in {
+    val expected = getJSON("function_turnRelative")
+    val actual = littleJSON.serialize(functionComplex)
+    println(actual)
+    JSONAssert.assertEquals(expected, actual, true)
   }
 
   private[data] def getJSON(name: String): String = {
