@@ -1,4 +1,4 @@
-package com.quane.little.data
+package com.quane.little.data.repo
 
 import com.mongodb.casbah.MongoCollection
 import com.quane.little.data.model.UserRecord
@@ -7,7 +7,6 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.data.repo.UserRepository
 
 /** Test cases for the [[UserRepository]].
   *

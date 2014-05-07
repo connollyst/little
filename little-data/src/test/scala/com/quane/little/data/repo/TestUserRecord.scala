@@ -1,4 +1,4 @@
-package com.quane.little.data
+package com.quane.little.data.repo
 
 import com.quane.little.data.model.{UserRecord, RecordId}
 import com.quane.little.tools.json.LittleJSON
