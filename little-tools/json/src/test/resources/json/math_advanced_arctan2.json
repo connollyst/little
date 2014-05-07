@@ -1,0 +1,11 @@
+{
+    "_class": "com.quane.little.language.math.ArcTan2",
+    "l": {
+        "_class": "com.quane.little.language.data.NumberSimple",
+        "primitive": 1234
+    },
+    "r": {
+        "_class": "com.quane.little.language.data.NumberSimple",
+        "primitive": 4567
+    }
+}

@@ -1,51 +1,44 @@
 package com.quane.little.language.math
 
-import com.quane.little.language.data.Value
 import com.quane.little.language.{Scope, Expression}
+import com.quane.little.language.data.Value
 
-sealed trait BasicMath
-  extends Math
-
-class Addition(a: Expression, b: Expression)
-  extends BasicMath {
+abstract class BasicMath(val l: Expression, val r: Expression) extends Math {
 
   override def evaluate(scope: Scope): Value = {
-    val numberA = a.evaluate(scope).asDouble
-    val numberB = b.evaluate(scope).asDouble
-    Value(numberA + numberB)
+    val left = l.evaluate(scope)
+    val right = r.evaluate(scope)
+    evaluate(left, right)
   }
+
+  def evaluate(left: Value, right: Value): Value
 
 }
 
-class Subtraction(a: Expression, b: Expression)
-  extends BasicMath {
+class Addition(l: Expression, r: Expression) extends BasicMath(l, r) {
 
-  override def evaluate(scope: Scope): Value = {
-    val numberA = a.evaluate(scope).asDouble
-    val numberB = b.evaluate(scope).asDouble
-    Value(numberA - numberB)
-  }
+  override def evaluate(left: Value, right: Value): Value =
+    Value(left.asDouble + right.asDouble)
 
 }
 
-class Multiplication(a: Expression, b: Expression)
-  extends BasicMath {
+class Subtraction(l: Expression, r: Expression) extends BasicMath(l, r) {
 
-  override def evaluate(scope: Scope): Value = {
-    val numberA = a.evaluate(scope).asDouble
-    val numberB = b.evaluate(scope).asDouble
-    Value(numberA * numberB)
-  }
+  override def evaluate(left: Value, right: Value): Value =
+    Value(left.asDouble - right.asDouble)
 
 }
 
-class Division(a: Expression, b: Expression)
-  extends BasicMath {
+class Multiplication(l: Expression, r: Expression) extends BasicMath(l, r) {
 
-  override def evaluate(scope: Scope): Value = {
-    val numberA = a.evaluate(scope).asDouble
-    val numberB = b.evaluate(scope).asDouble
-    Value(numberA / numberB)
-  }
+  override def evaluate(left: Value, right: Value): Value =
+    Value(left.asDouble * right.asDouble)
+
+}
+
+class Division(l: Expression, r: Expression) extends BasicMath(l, r) {
+
+  override def evaluate(left: Value, right: Value): Value =
+    Value(left.asDouble / right.asDouble)
 
 }

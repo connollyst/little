@@ -4,11 +4,9 @@ import com.quane.little.language.data.Value
 import com.quane.little.language.{Scope, Expression}
 import scala.math._
 
-sealed trait AdvancedMath
-  extends Math
+sealed trait AdvancedMath extends Math
 
-class ArcTan(x: Expression)
-  extends AdvancedMath {
+class ArcTan(val x: Expression) extends AdvancedMath {
 
   override def evaluate(scope: Scope): Value = {
     val numberA = x.evaluate(scope).asInt
@@ -17,13 +15,12 @@ class ArcTan(x: Expression)
 
 }
 
-class ArcTan2(a: Expression, b: Expression)
-  extends AdvancedMath {
+class ArcTan2(val l: Expression, val r: Expression) extends AdvancedMath {
 
   override def evaluate(scope: Scope): Value = {
-    val numberA = a.evaluate(scope).asInt
-    val numberB = b.evaluate(scope).asInt
-    Value(atan2(numberA, numberB))
+    val left = l.evaluate(scope).asInt
+    val right = r.evaluate(scope).asInt
+    Value(atan2(left, right))
   }
 
 }
