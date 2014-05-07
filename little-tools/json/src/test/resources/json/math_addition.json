@@ -1,0 +1,11 @@
+{
+    "_class": "com.quane.little.language.math.Addition",
+    "l": {
+        "_class": "com.quane.little.language.data.NumberSimple",
+        "primitive": 1234
+    },
+    "r": {
+        "_class": "com.quane.little.language.data.NumberDecimal",
+        "primitive": 45.67
+    }
+}
