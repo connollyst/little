@@ -39,6 +39,7 @@ class FunctionService(client: MongoClient) {
     init(CodeCategory.Motion, Functions.move)
     init(CodeCategory.Motion, Functions.stop)
     init(CodeCategory.Motion, Functions.turn)
+    init(CodeCategory.Motion, Functions.turnRelative)
     init(CodeCategory.Motion, Functions.voyage)
   }
 

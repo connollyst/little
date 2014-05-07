@@ -4,9 +4,10 @@ import com.quane.little.game.Game
 import com.quane.little.game.engine.InteractionManager
 import com.quane.little.language.data.Value
 import com.quane.little.language.event.{EventListener, LittleEvent}
-import com.quane.little.language.{FunctionReference, Functions}
+import com.quane.little.language.FunctionReference
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
+import com.quane.little.data.service.FunctionService
 
 
 class EntityFactory(game: Game) {
@@ -29,13 +30,9 @@ class EntityFactory(game: Game) {
 
   def createMob(x: Float, y: Float): Mob = {
     val mob = new Mob(game.builder.buildBody(x, y), manager)
-    game.eventBus.report(mob, LittleEvent.OnSpawn)
-    mob.operator.runtime.saveFunction(Functions.move)
-    mob.operator.runtime.saveFunction(Functions.stop)
-    mob.operator.runtime.saveFunction(Functions.turn)
-    mob.operator.runtime.saveFunction(Functions.turnRelative)
-    mob.operator.runtime.saveFunction(Functions.printDirection)
-    mob.operator.runtime.saveFunction(Functions.voyage)
+    FunctionService().findDefinitionsByUser("connollyst") foreach {
+      function => mob.operator.runtime.saveFunction(function)
+    }
     mob.operator.addEventListener(
       new EventListener(
         LittleEvent.OnSpawn,
