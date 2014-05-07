@@ -7,6 +7,7 @@ import org.scalatest.matchers.ShouldMatchers
 import com.quane.little.language.FunctionDefinition
 import com.mongodb.casbah.MongoClient
 import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.service.{UserService, FunctionService}
 
 /** Test cases for the [[FunctionService]]
   *

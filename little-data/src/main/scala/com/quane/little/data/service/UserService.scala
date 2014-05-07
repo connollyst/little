@@ -1,4 +1,4 @@
-package com.quane.little.ide.model
+package com.quane.little.data.service
 
 import com.mongodb.casbah.{MongoCollection, MongoClient}
 import com.quane.little.data.UserRepository

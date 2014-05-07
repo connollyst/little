@@ -6,8 +6,8 @@ import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{MenuBar, TextField, HorizontalLayout, Label}
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.ui.MenuBar.Command
-import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.presenter.command.{AddGetterCommand, AddValueCommand, AddFunctionReferenceCommand, IDECommandExecutor}
+import com.quane.little.data.service.FunctionService
 
 object SetStatementLayout {
   val Style = "l-set"

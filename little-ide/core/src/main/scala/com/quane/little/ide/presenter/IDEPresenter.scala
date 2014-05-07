@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.model.{FunctionService, UserService}
 import com.quane.little.ide.view.{IDEViewPresenter, IDEView}
+import com.quane.little.data.service.{UserService, FunctionService}
 
 /** Presenter for the base view of the IDE.
   *

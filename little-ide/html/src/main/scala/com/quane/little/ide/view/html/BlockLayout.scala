@@ -5,13 +5,13 @@ import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.vaadin.ui.MenuBar.Command
-import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.presenter.command.{AddGetterCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.DroppableTarget
 import com.quane.little.data.model.RecordId
 import com.quane.little.ide.view.html.dnd.FunctionTransferable
+import com.quane.little.data.service.FunctionService
 
 object BlockLayout {
   val DefaultIndex = -1

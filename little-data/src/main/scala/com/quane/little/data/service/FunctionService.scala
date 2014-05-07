@@ -1,4 +1,4 @@
-package com.quane.little.ide.model
+package com.quane.little.data.service
 
 import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.quane.little.data.model.{UserRecord, RecordId, FunctionRecord}

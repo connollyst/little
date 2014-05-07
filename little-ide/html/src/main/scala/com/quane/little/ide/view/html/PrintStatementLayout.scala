@@ -4,8 +4,8 @@ import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
 import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddGetterCommand, IDECommandExecutor, AddValueCommand}
-import com.quane.little.ide.model.FunctionService
 import com.vaadin.ui.MenuBar.Command
+import com.quane.little.data.service.FunctionService
 
 object PrintStatementLayout {
   val Style = "l-print"

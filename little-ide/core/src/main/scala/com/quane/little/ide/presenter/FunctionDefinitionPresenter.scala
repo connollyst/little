@@ -1,11 +1,11 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.{CodeCategory, RecordId, FunctionRecord}
-import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewPresenter}
 import com.quane.little.language.{FunctionDefinition, FunctionParameter, Expression}
 import scala._
 import scala.collection.mutable.ListBuffer
+import com.quane.little.data.service.FunctionService
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionDefinition]].
   *

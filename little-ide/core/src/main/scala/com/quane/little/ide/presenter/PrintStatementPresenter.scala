@@ -5,7 +5,7 @@ import com.quane.little.language._
 import com.quane.little.language.data.Value
 import scala._
 import com.quane.little.data.model.RecordId
-import com.quane.little.ide.model.FunctionService
+import com.quane.little.data.service.FunctionService
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *

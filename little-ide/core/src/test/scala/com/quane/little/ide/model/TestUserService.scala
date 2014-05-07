@@ -5,6 +5,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.mongodb.casbah.MongoClient
+import com.quane.little.data.service.UserService
 
 /** Test cases for the [[UserService]]
   *

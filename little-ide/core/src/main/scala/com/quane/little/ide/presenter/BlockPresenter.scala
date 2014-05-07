@@ -1,11 +1,11 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.model.FunctionService
 import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.language._
 import scala._
 import scala.collection.mutable.ListBuffer
 import com.quane.little.data.model.RecordId
+import com.quane.little.data.service.FunctionService
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *

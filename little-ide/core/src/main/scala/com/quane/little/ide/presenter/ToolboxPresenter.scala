@@ -1,8 +1,8 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
-import com.quane.little.ide.model.FunctionService
 import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.service.FunctionService
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
