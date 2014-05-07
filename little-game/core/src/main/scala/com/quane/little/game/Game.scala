@@ -60,7 +60,7 @@ class Game
     if (entities.contains(id)) {
       entities(id)
     } else {
-      throw new IllegalArgumentException("No entity with id " + id)
+      throw new IllegalArgumentException("No entity with id '" + id + "'")
     }
   }
 

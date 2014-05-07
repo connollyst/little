@@ -18,9 +18,9 @@ class GameManager(client: ClientCommunicator, val game: Game = new Game)
   with Logging {
 
   val items: mutable.Map[String, MMOItem] = mutable.Map()
-  val updater = new Thread(new TimedUpdater(15) {
+  val updater = new TimedUpdater(15) {
     def update() = sendItems()
-  })
+  }
 
   game.cleaner.add(this)
 
@@ -37,7 +37,12 @@ class GameManager(client: ClientCommunicator, val game: Game = new Game)
 
   def start() = {
     game.start()
-    updater.start()
+    new Thread(updater).start()
+  }
+
+  def stop() = {
+    updater.stop()
+    game.stop()
   }
 
   def sendItems() =

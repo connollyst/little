@@ -1,6 +1,6 @@
 package com.quane.little.game.server
 
-import com.quane.little.game.Game
+import com.quane.little.game.{TimedUpdater, Game}
 import com.quane.little.game.entity.{EntityRemover, Entity}
 import com.smartfoxserver.v2.mmo.{Vec3D, MMOItem}
 import org.junit.Assert._
@@ -92,6 +92,40 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
     assertEquals(x, position.getValue.floatX, 0)
     assertEquals(y, position.getValue.floatY, 0)
   }
+
+  it should "gracefully handle exceptions while sending items" in {
+    val client = mock[ClientCommunicator]
+    val game = mockGame("a")
+    val manager = new GameManager(client, game)
+    manager.items += ("a" -> mock[MMOItem])
+    when(client.setItemPosition(any[MMOItem], any[Vec3D])).thenThrow(classOf[Exception])
+    // Exception should be caught safely..
+    manager.sendItems()
+  }
+
+  it should "start updater when starting" in {
+    val client = mock[ClientCommunicator]
+    val thread = mock[TimedUpdater]
+    val manager = new GameManager(client) {
+      override val updater = thread
+    }
+    manager.start()
+    Thread.sleep(100)
+    verify(thread).run()
+  }
+
+  it should "stop updater when stopping" in {
+    val client = mock[ClientCommunicator]
+    val thread = mock[TimedUpdater]
+    val manager = new GameManager(client) {
+      override val updater = thread
+    }
+    manager.start()
+    Thread.sleep(100)
+    manager.stop()
+    verify(thread).stop()
+  }
+
 
   private def mockGame(ids: String*): Game = {
     val game = mock[Game]
