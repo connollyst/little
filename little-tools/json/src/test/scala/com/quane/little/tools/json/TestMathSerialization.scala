@@ -17,22 +17,22 @@ class TestMathSerialization
 
   "JSON serializer" should "serialize addition" in {
     val name = "math_basic_addition"
-    val v = new Addition(Value(1234), Value(45.67))
+    val v = new Addition(Value(1234), Value(56.78))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize subtraction" in {
     val name = "math_basic_subtraction"
-    val v = new Subtraction(Value(1234), Value(45.67))
+    val v = new Subtraction(Value(1234), Value(56.78))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize multiplication" in {
     val name = "math_basic_multiplication"
-    val v = new Multiplication(Value(1234), Value(45.67))
+    val v = new Multiplication(Value(1234), Value(56.78))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize division" in {
     val name = "math_basic_division"
-    val v = new Division(Value(1234), Value(45.67))
+    val v = new Division(Value(1234), Value(56.78))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize arctan" in {
@@ -42,7 +42,7 @@ class TestMathSerialization
   }
   it should "serialize arctan2" in {
     val name = "math_advanced_arctan2"
-    val v = new ArcTan2(Value(1234), Value(4567))
+    val v = new ArcTan2(Value(1234), Value(5678))
     assertSerialization(getJSON(name), v)
   }
 
