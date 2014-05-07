@@ -1,13 +1,13 @@
-package com.quane.little.ide.model
+package com.quane.little.data.service
 
 import org.scalatest.FlatSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.mongodb.casbah.MongoClient
-import com.quane.little.data.service.UserService
+import com.quane.little.data.EmbeddedMongoDB
 
-/** Test cases for the [[UserService]]
+/** Test cases for the [[com.quane.little.data.service.UserService]]
   *
   * @author Sean Connolly
   */

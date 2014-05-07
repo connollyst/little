@@ -1,4 +1,4 @@
-package com.quane.little.ide.model
+package com.quane.little.data.service
 
 import org.scalatest.FlatSpec
 import org.junit.runner.RunWith
@@ -7,9 +7,9 @@ import org.scalatest.matchers.ShouldMatchers
 import com.quane.little.language.FunctionDefinition
 import com.mongodb.casbah.MongoClient
 import com.quane.little.data.model.CodeCategory
-import com.quane.little.data.service.{UserService, FunctionService}
+import com.quane.little.data.EmbeddedMongoDB
 
-/** Test cases for the [[FunctionService]]
+/** Test cases for the [[com.quane.little.data.service.FunctionService]]
   *
   * @author Sean Connolly
   */
