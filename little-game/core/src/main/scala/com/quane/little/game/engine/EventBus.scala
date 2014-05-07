@@ -3,8 +3,9 @@ package com.quane.little.game.engine
 import com.quane.little.game.entity.Mob
 import com.quane.little.language.event.LittleEvent
 import scala.collection.mutable
+import com.quane.little.tools.Logging
 
-class EventBus {
+class EventBus extends Logging {
 
   // Events that have occurred and are waiting to be handled
   val queue = new mutable.HashMap[Mob, mutable.Set[LittleEvent]]() with mutable.MultiMap[Mob, LittleEvent]
@@ -21,9 +22,11 @@ class EventBus {
         val events = queue.get(mob).orNull
         events foreach (
           event => {
-            mob.operator.getEventListeners(event) foreach (
-              listener => listener.evaluate(mob.operator)
-              )
+            mob.operator.getEventListeners(event) foreach {
+              listener =>
+                debug("Evaluating " + event + " listener for " + mob.id + ": " + listener)
+                listener.evaluate(mob.operator)
+            }
           })
       })
     queue.clear()
