@@ -12,6 +12,8 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import scala.collection.mutable
 import org.scalatest.matchers.ShouldMatchers
+import org.mockito.ArgumentCaptor
+import org.mockito.Matchers.{eq => mockEq}
 
 /** Test cases for [[GameManager]]
   *
@@ -35,15 +37,15 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
     verify(game).initialize()
   }
 
-  it should "initialize game items" in {
+  it should "initialize game entity" in {
     val client = mock[ClientCommunicator]
-    val game = mockGame("x", "y", "z")
+    val game = mockGame("a", "b", "c")
     val manager = new GameManager(client, game)
     manager.init()
     assertEquals(3, manager.items.size)
   }
 
-  it should "remove item from client" in {
+  it should "remove entity from client" in {
     val client = mock[ClientCommunicator]
     val manager = new GameManager(client)
     val id = "a"
@@ -54,23 +56,49 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
     verify(client).removeItem(item)
   }
 
-  it should "send items" in {
+  it should "not remove unknown entity from client" in {
     val client = mock[ClientCommunicator]
-    val game = mockGame("x", "y", "z")
+    val manager = new GameManager(client)
+    manager.entityRemoved(mockEntity("unknown"))
+    verify(client, never).removeItem(any[MMOItem])
+  }
+
+  it should "send entity to client" in {
+    val client = mock[ClientCommunicator]
+    val game = mockGame("a", "b", "c")
     val manager = new GameManager(client, game)
-    manager.items += ("x" -> mock[MMOItem])
-    manager.items += ("y" -> mock[MMOItem])
-    manager.items += ("z" -> mock[MMOItem])
+    manager.items += ("a" -> mock[MMOItem])
+    manager.items += ("b" -> mock[MMOItem])
+    manager.items += ("c" -> mock[MMOItem])
     manager.sendItems()
     verify(client, times(3)).setItemPosition(any[MMOItem], any[Vec3D])
   }
 
+  it should "send entity coordinates to client" in {
+    val client = mock[ClientCommunicator]
+    val game = mockGame("a")
+    val manager = new GameManager(client, game)
+    val x = 12.34f
+    val y = 45.67f
+    val id = "a"
+    val item = mock[MMOItem]
+    val entity = game.entity(id)
+    when(entity.x).thenReturn(x)
+    when(entity.y).thenReturn(y)
+    manager.items += (id -> item)
+    manager.sendItems()
+    val position = ArgumentCaptor.forClass(classOf[Vec3D])
+    verify(client).setItemPosition(mockEq(item), position.capture)
+    assertEquals(x, position.getValue.floatX, 0)
+    assertEquals(y, position.getValue.floatY, 0)
+  }
+
   private def mockGame(ids: String*): Game = {
     val game = mock[Game]
+    when(game.cleaner).thenReturn(mock[EntityRemover])
     val entities = mockEntities(ids: _*)
     when(game.entities).thenReturn(entities)
     when(game.entity(anyString())).thenCallRealMethod()
-    when(game.cleaner).thenReturn(mock[EntityRemover])
     game
   }
 

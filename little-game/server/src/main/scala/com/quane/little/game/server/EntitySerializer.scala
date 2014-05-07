@@ -21,8 +21,8 @@ class EntitySerializer {
 
   def serialize(position: Vec3D): List[IMMOItemVariable] = {
     val variables = new ListBuffer[IMMOItemVariable]
-    variables += new MMOItemVariable("x", position.floatX())
-    variables += new MMOItemVariable("y", position.floatY())
+    variables += new MMOItemVariable("x", position.floatX)
+    variables += new MMOItemVariable("y", position.floatY)
     variables.toList
   }
 
