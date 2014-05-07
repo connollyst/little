@@ -1,4 +1,4 @@
-package com.quane.little.data
+package com.quane.little.data.repo
 
 import com.mongodb.casbah.Imports._
 import com.quane.little.data.model.UserRecord

@@ -7,6 +7,7 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
+import com.quane.little.data.repo.UserRepository
 
 /** Test cases for the [[UserRepository]].
   *

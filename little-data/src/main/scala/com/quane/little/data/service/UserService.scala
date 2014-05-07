@@ -1,8 +1,8 @@
 package com.quane.little.data.service
 
 import com.mongodb.casbah.{MongoCollection, MongoClient}
-import com.quane.little.data.UserRepository
 import com.quane.little.data.model.{RecordId, UserRecord}
+import com.quane.little.data.repo.UserRepository
 
 object UserService {
 

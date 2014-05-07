@@ -8,6 +8,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
 import com.quane.little.language.data.Value
+import com.quane.little.data.repo.{UserRepository, FunctionRepository}
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionRepository
