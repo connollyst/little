@@ -18,18 +18,22 @@ class EventListenerLayout
   with EventListenerView
   with RemovableComponent {
 
+  val header = new EventListenerHeader
+  var function: Option[FunctionReferenceLayout] = None
+
   setStyleName(EventListenerLayout.Style)
+  addComponent(header)
 
-  addComponent(new EventListenerHeader)
+  override def setEvent(event: Event) = header.label.setValue(event.toString)
 
-  override def setEvent(event: Event) = {
-    // TODO update UI
-  }
-
-
-  override def createFunctionReference(): FunctionReferencePresenter[_] = {
+  override def createFunctionReference() = {
+    function match {
+      case Some(f) => f.removeFromParent()
+      case None => // no problem
+    }
     val view = new FunctionReferenceLayout
-    // TODO add to view
+    addComponent(view)
+    function = Some(view)
     new FunctionReferencePresenter(view)
   }
 
@@ -38,6 +42,7 @@ class EventListenerLayout
 class EventListenerHeader
   extends HorizontalLayout {
 
-  addComponent(new Label("TODO"))
+  val label = new Label("TODO")
+  addComponent(label)
 
 }
