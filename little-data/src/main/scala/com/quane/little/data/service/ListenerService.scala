@@ -3,7 +3,7 @@ package com.quane.little.data.service
 import com.mongodb.casbah.{MongoCollection, MongoClient}
 import com.quane.little.data.model.ListenerRecord
 import com.quane.little.data.repo.ListenerRepository
-import com.quane.little.language.event.{LittleEvent, EventListener}
+import com.quane.little.language.event.{Event, EventListener}
 import com.quane.little.language.FunctionReference
 import com.quane.little.language.data.Value
 
@@ -42,7 +42,7 @@ class ListenerService(client: MongoClient) {
       new ListenerRecord(
         user.id,
         new EventListener(
-          LittleEvent.OnSpawn,
+          Event.OnSpawn,
           new FunctionReference("move")
             .addArg("speed", Value(5))
         )
@@ -52,7 +52,7 @@ class ListenerService(client: MongoClient) {
       new ListenerRecord(
         user.id,
         new EventListener(
-          LittleEvent.OnContact,
+          Event.OnContact,
           new FunctionReference("turnRelative")
             .addArg("degrees", Value(260))
         )
@@ -62,7 +62,7 @@ class ListenerService(client: MongoClient) {
       new ListenerRecord(
         user.id,
         new EventListener(
-          LittleEvent.OnFoodConsumed,
+          Event.OnFoodConsumed,
           new FunctionReference("turn")
         )
       )

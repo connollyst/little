@@ -1,12 +1,13 @@
 package com.quane.little.game.physics
 
 import com.quane.little.game.entity.Entity
-import com.quane.little.language.event.LittleEvent
 import com.quane.little.tools.Logging
 import org.jbox2d.callbacks.{ContactImpulse, ContactListener}
 import org.jbox2d.collision.Manifold
 import org.jbox2d.dynamics.Body
 import org.jbox2d.dynamics.contacts.Contact
+import com.quane.little.language.event.Event.Event
+import com.quane.little.language.event.Event
 
 /** A Box2D contact listener which translates physical body and sensor
   * interactions in the simulation to [[Entity]] level interactions.
@@ -26,17 +27,17 @@ class PhysicalContactListener
   }
 
   override def beginContact(contact: Contact) =
-    reportInteraction(LittleEvent.OnContact, contact)
+    reportInteraction(Event.OnContact, contact)
 
   override def endContact(contact: Contact) =
-    reportInteraction(LittleEvent.OnContactEnded, contact)
+    reportInteraction(Event.OnContactEnded, contact)
 
   /** Report the interaction event.
     *
     * @param event the interaction event type
     * @param interaction the physical interaction data
     */
-  private def reportInteraction(event: LittleEvent, interaction: Contact) {
+  private def reportInteraction(event: Event, interaction: Contact) {
     val fixtureA = interaction.getFixtureA
     val fixtureB = interaction.getFixtureB
     val bodyA = fixtureA.getBody
@@ -64,7 +65,7 @@ class PhysicalContactListener
     * @param entityA one of the interacting Entities
     * @param entityB the other interacting Entity
     */
-  private def reportProximity(event: LittleEvent, entityA: Entity, entityB: Entity) {
+  private def reportProximity(event: Event, entityA: Entity, entityB: Entity) {
     if (!entityA.isRemoved && !entityB.isRemoved) {
       // TODO handle proximity ending
       entityB.approachedBy(entityA)
@@ -82,7 +83,7 @@ class PhysicalContactListener
     * @param entityA one of the interacting Entities
     * @param entityB the other interacting Entity
     */
-  private def reportContact(event: LittleEvent, entityA: Entity, entityB: Entity) {
+  private def reportContact(event: Event, entityA: Entity, entityB: Entity) {
     if (!entityA.isRemoved && !entityB.isRemoved) {
       // TODO handle contact ending
       entityA.touchedBy(entityB)

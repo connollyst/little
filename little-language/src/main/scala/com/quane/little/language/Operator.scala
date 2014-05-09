@@ -2,9 +2,9 @@ package com.quane.little.language
 
 import com.quane.little.language.data.{Value, Variable}
 import com.quane.little.language.event.EventListener
-import com.quane.little.language.event.LittleEvent
 import com.quane.little.tools.Logging
 import scala.collection.mutable.ListBuffer
+import com.quane.little.language.event.Event.Event
 
 class Operator(override val runtime: Runtime, mob: Operable)
   extends Scope(runtime)
@@ -38,7 +38,7 @@ class Operator(override val runtime: Runtime, mob: Operable)
     eventListeners += eventListener
   }
 
-  def getEventListeners(event: LittleEvent): List[EventListener] = {
+  def getEventListeners(event: Event): List[EventListener] = {
     val listening = new ListBuffer[EventListener]
     eventListeners.foreach(
       listener =>

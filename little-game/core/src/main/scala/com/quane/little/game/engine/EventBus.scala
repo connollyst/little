@@ -1,16 +1,16 @@
 package com.quane.little.game.engine
 
 import com.quane.little.game.entity.Mob
-import com.quane.little.language.event.LittleEvent
 import scala.collection.mutable
 import com.quane.little.tools.Logging
+import com.quane.little.language.event.Event.Event
 
 class EventBus extends Logging {
 
   // Events that have occurred and are waiting to be handled
-  val queue = new mutable.HashMap[Mob, mutable.Set[LittleEvent]]() with mutable.MultiMap[Mob, LittleEvent]
+  val queue = new mutable.HashMap[Mob, mutable.Set[Event]]() with mutable.MultiMap[Mob, Event]
 
-  def report(mob: Mob, event: LittleEvent): Unit = queue.addBinding(mob, event)
+  def report(mob: Mob, event: Event): Unit = queue.addBinding(mob, event)
 
   /** Evaluate all queued events.
     */

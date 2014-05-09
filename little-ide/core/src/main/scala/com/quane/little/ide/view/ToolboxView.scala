@@ -1,13 +1,12 @@
 package com.quane.little.ide.view
 
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.model.CodeCategory.CodeCategory
 
 trait ToolboxView extends View[ToolboxViewPresenter] {
 
-  def createToolboxTab(category: CodeCategory)
+  def createToolboxTab(category: String)
 
-  def createToolboxItem(category: CodeCategory, title: String, functionId: RecordId)
+  def createToolboxItem(category: String, title: String, functionId: RecordId)
 
 }
 

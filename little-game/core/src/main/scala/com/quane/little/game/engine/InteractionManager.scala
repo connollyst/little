@@ -3,12 +3,12 @@ package com.quane.little.game.engine
 import com.quane.little.game.Game
 import com.quane.little.game.entity.Food
 import com.quane.little.game.entity.Mob
-import com.quane.little.language.event.LittleEvent
+import com.quane.little.language.event.Event
 
 class InteractionManager(game: Game) {
 
   def mobApproachesFood(mob: Mob, food: Food): Unit = {
-    game.eventBus.report(mob, LittleEvent.OnFoodNearby)
+    game.eventBus.report(mob, Event.OnFoodNearby)
   }
 
   /** Interaction between a mob and food.
@@ -19,7 +19,7 @@ class InteractionManager(game: Game) {
     * @param food the food being consumed
     */
   def mobConsumesFood(mob: Mob, food: Food): Unit = {
-    game.eventBus.report(mob, LittleEvent.OnFoodConsumed)
+    game.eventBus.report(mob, Event.OnFoodConsumed)
     game.cleaner.remove(food)
     mob.heal(food.health)
   }
@@ -29,16 +29,16 @@ class InteractionManager(game: Game) {
   }
 
   def mobContactsImmovableObject(mob: Mob): Unit = {
-    game.eventBus.report(mob, LittleEvent.OnContact)
+    game.eventBus.report(mob, Event.OnContact)
   }
 
   def mobApproachesMob(mob: Mob): Unit = {
-    game.eventBus.report(mob, LittleEvent.OnMobNearby)
+    game.eventBus.report(mob, Event.OnMobNearby)
   }
 
   def mobContactsMob(mob: Mob): Unit = {
-    game.eventBus.report(mob, LittleEvent.OnContact)
-    game.eventBus.report(mob, LittleEvent.OnMobTouching)
+    game.eventBus.report(mob, Event.OnContact)
+    game.eventBus.report(mob, Event.OnMobTouching)
   }
 
 

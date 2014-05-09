@@ -4,7 +4,6 @@ import com.quane.little.ide.view.ToolboxView
 import com.vaadin.ui.Accordion
 import scala.collection.mutable
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.vaadin.ui.TabSheet.Tab
 
 object ToolboxLayout {
@@ -16,27 +15,27 @@ class ToolboxLayout
   with ToolboxView
   with RemovableComponent {
 
-  private val tabContents: mutable.Map[CodeCategory, ToolboxSectionComponent] = mutable.Map()
+  private val tabContents: mutable.Map[String, ToolboxSectionComponent] = mutable.Map()
 
   setSizeFull()
   setStyleName(ToolboxLayout.Style)
 
-  override def createToolboxTab(category: CodeCategory) = {
+  override def createToolboxTab(category: String) = {
     val tabContent = new ToolboxSectionComponent()
     tabContents += (category -> tabContent)
     addTab(tabContent, category.toString)
   }
 
-  override def createToolboxItem(category: CodeCategory, title: String, functionId: RecordId) =
+  override def createToolboxItem(category: String, title: String, functionId: RecordId) =
     addToolboxItem(category, new ToolboxItemComponent(title, functionId))
 
-  private def addToolboxItem(category: CodeCategory, item: ToolboxItemComponent) = {
+  private def addToolboxItem(category: String, item: ToolboxItemComponent) = {
     val tab = getTab(category)
     val content = tabContents(category)
     content.add(item)
     tab.setCaption(category.toString + " (" + content.count + ")")
   }
 
-  private def getTab(category: CodeCategory): Tab = getTab(tabContents(category))
+  private def getTab(category: String): Tab = getTab(tabContents(category))
 
 }

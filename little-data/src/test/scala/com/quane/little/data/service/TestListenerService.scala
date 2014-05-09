@@ -26,8 +26,13 @@ class TestListenerService extends FlatSpec with EmbeddedMongoDB with ShouldMatch
     users.upsert(userOne)
   }
 
-  "ListenerService" should "detect existing function" in {
+  "ListenerService" should "init" in {
     listeners.init()
+  }
+
+  it should "fetch listeners by user" in {
+    listeners.init()
+    listeners.findByUser(userOne)
   }
 
 }
