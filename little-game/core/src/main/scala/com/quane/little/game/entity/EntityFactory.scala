@@ -28,11 +28,12 @@ class EntityFactory(game: Game) {
 
   def createMob(x: Float, y: Float): Mob = {
     val mob = new Mob(game.builder.buildBody(x, y), manager)
-    FunctionService().findDefinitionsByUser("connollyst") foreach {
+    val username = "connollyst" //  TODO this is temporary
+    FunctionService().findDefinitionsByUser(username) foreach {
       function => mob.operator.runtime.saveFunction(function)
     }
     ListenerService().init() // TODO this is temporary
-    ListenerService().findListenersByUser("connollyst") foreach {
+    ListenerService().findListenersByUser(username) foreach {
       listener => mob.operator.addEventListener(listener)
     }
     game.eventBus.report(mob, LittleEvent.OnSpawn)
