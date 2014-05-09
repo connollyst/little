@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.{ListenerService, FunctionService}
 
 /** Presenter for the workspace in which the user can build code.
   *
@@ -13,9 +13,14 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
 
   view.registerViewPresenter(this)
 
-  override def requestAddFunctionDefinition(id: RecordId, index: Int): Unit = {
-    val fun = FunctionService().findDefinition(id)
-    view.createFunctionDefinition().initialize(id, fun)
+  override def requestAddEventListener(id: RecordId, index: Int) = {
+    val listener = ListenerService().findListener(id)
+    view.createEventListener().initialize(id, listener)
+  }
+
+  override def requestAddFunctionDefinition(id: RecordId, index: Int) = {
+    val function = FunctionService().findDefinition(id)
+    view.createFunctionDefinition().initialize(id, function)
   }
 
 }

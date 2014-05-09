@@ -1,6 +1,6 @@
 package com.quane.little.data.repo
 
-import com.quane.little.data.model.{CodeCategory, FunctionRecord, RecordId}
+import com.quane.little.data.model.{FunctionCategory, FunctionRecord, RecordId}
 import com.quane.little.language.{Functions, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
@@ -22,7 +22,7 @@ class TestFunctionRecord extends FlatSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
   val userId = new RecordId("UserRecordID")
-  val category = CodeCategory.Misc
+  val category = FunctionCategory.Misc
   val definitionBlank = new FunctionDefinition("BlankFunction")
   val functionBlankId = new RecordId("BlankFunctionDefinitionRecordID")
   val functionBlank = new FunctionRecord(userId, category, definitionBlank)

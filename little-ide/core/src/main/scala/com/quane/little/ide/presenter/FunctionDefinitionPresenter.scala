@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{CodeCategory, RecordId, FunctionRecord}
+import com.quane.little.data.model.{FunctionCategory, RecordId, FunctionRecord}
 import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewPresenter}
 import com.quane.little.language.{FunctionDefinition, FunctionParameter, Expression}
 import scala._
@@ -82,7 +82,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
         FunctionService().update(id, fun)
       case None =>
         println("Saving new function definition..")
-        val record = FunctionService().insert(_username, CodeCategory.Misc, fun)
+        val record = FunctionService().insert(_username, FunctionCategory.Misc, fun)
         _id = Some(record.id)
         record
     }

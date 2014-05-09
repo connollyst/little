@@ -1,13 +1,14 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.FunctionDefinitionPresenter
+import com.quane.little.ide.presenter.{EventListenerPresenter, FunctionDefinitionPresenter}
 import com.quane.little.ide.view.WorkspaceView
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.ui.{CssLayout, HorizontalLayout}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
-import com.quane.little.ide.view.html.dnd.FunctionTransferable
-import com.quane.little.ide.presenter.command.{AddFunctionDefinitionCommand, IDECommandExecutor}
+import com.quane.little.ide.view.html.dnd.CodeTransferable
+import com.quane.little.ide.presenter.command.{AddEventListenerCommand, AddFunctionDefinitionCommand, IDECommandExecutor}
+import com.quane.little.data.model.CodeCategory
 
 object WorkspaceLayout {
   val Style = "l-workspace"
@@ -31,6 +32,13 @@ class WorkspaceLayout
   workspace.setSizeFull()
   add(workspace)
 
+
+  override def createEventListener(): EventListenerPresenter[_] = {
+    val view = new EventListenerLayout()
+    workspace.component.addComponent(view)
+    new EventListenerPresenter(view)
+  }
+
   override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
     val view = new FunctionDefinitionLayout()
     workspace.component.addComponent(view)
@@ -50,9 +58,13 @@ class WorkspaceDropHandler(workspace: WorkspaceLayout) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: FunctionTransferable =>
+      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
         IDECommandExecutor.execute(
-          new AddFunctionDefinitionCommand(workspace.presenter, transferable.functionId)
+          new AddFunctionDefinitionCommand(workspace.presenter, transferable.codeId)
+        )
+      case transferable: CodeTransferable if transferable.category == CodeCategory.EventListener =>
+        IDECommandExecutor.execute(
+          new AddEventListenerCommand(workspace.presenter, transferable.codeId)
         )
     }
 

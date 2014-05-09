@@ -3,8 +3,8 @@ package com.quane.little.data.service
 import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.quane.little.data.model.{UserRecord, RecordId, FunctionRecord}
 import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
-import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.model.FunctionCategory.FunctionCategory
+import com.quane.little.data.model.FunctionCategory
 import com.quane.little.data.repo.FunctionRepository
 
 /** A service for interacting with [[com.quane.little.data.model.FunctionRecord]].
@@ -34,16 +34,16 @@ class FunctionService(client: MongoClient) {
   /** Initialize the data source.
     */
   def init(): Unit = {
-    init(CodeCategory.Basic, Functions.blank)
-    init(CodeCategory.Basic, Functions.printDirection)
-    init(CodeCategory.Motion, Functions.move)
-    init(CodeCategory.Motion, Functions.stop)
-    init(CodeCategory.Motion, Functions.turn)
-    init(CodeCategory.Motion, Functions.turnRelative)
-    init(CodeCategory.Motion, Functions.voyage)
+    init(FunctionCategory.Basic, Functions.blank)
+    init(FunctionCategory.Basic, Functions.printDirection)
+    init(FunctionCategory.Motion, Functions.move)
+    init(FunctionCategory.Motion, Functions.stop)
+    init(FunctionCategory.Motion, Functions.turn)
+    init(FunctionCategory.Motion, Functions.turnRelative)
+    init(FunctionCategory.Motion, Functions.voyage)
   }
 
-  private def init(category: CodeCategory, function: FunctionDefinition) =
+  private def init(category: FunctionCategory, function: FunctionDefinition) =
     if (!exists(UserService.SYSTEM_USERNAME, function.name)) {
       insert(UserService.SYSTEM_USERNAME, category, function)
     }
@@ -93,7 +93,7 @@ class FunctionService(client: MongoClient) {
     }
   }
 
-  def insert(username: String, category: CodeCategory, fun: FunctionDefinition): FunctionRecord = {
+  def insert(username: String, category: FunctionCategory, fun: FunctionDefinition): FunctionRecord = {
     val user = UserService().fetch(username)
     if (exists(user, fun.name)) {
       throw new IllegalArgumentException("Function name taken '" + fun.name + "'")

@@ -3,13 +3,13 @@ package com.quane.little.data.model
 import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.common.base.Objects
 import com.quane.little.language.FunctionDefinition
-import com.quane.little.data.model.CodeCategory.CodeCategory
+import com.quane.little.data.model.FunctionCategory.FunctionCategory
 
 /** A database record for a [[com.quane.little.language.FunctionDefinition]].
   *
   * @author Sean Connolly
   */
-class FunctionRecord(val ownerId: RecordId, val category: CodeCategory, var definition: FunctionDefinition)
+class FunctionRecord(val ownerId: RecordId, val category: FunctionCategory, var definition: FunctionDefinition)
   extends HasRecordId {
 
   @JsonProperty("_id")

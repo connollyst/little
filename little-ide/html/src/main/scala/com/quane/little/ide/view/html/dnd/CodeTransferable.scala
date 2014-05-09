@@ -6,20 +6,18 @@ import scala.collection.JavaConversions._
 import com.vaadin.event.Transferable
 import com.quane.little.data.model.RecordId
 import com.vaadin.ui.Component
+import com.quane.little.data.model.CodeCategory._
 
-object FunctionTransferable {
-  val FUNCTION_ID = "little-function-id"
+object CodeTransferable {
+  val CODE_CATEGORY = "little-code-category"
+  val CODE_ID = "little-code-id"
 }
 
-/**
- *
- *
- * @author Sean Connolly
- */
-class FunctionTransferable(source: Component, val functionId: RecordId) extends Transferable {
+class CodeTransferable(source: Component, val category: CodeCategory, val codeId: RecordId) extends Transferable {
 
   private var data = mutable.Map[String, AnyRef](
-    FunctionTransferable.FUNCTION_ID -> functionId
+    CodeTransferable.CODE_CATEGORY -> category,
+    CodeTransferable.CODE_ID -> codeId
   )
 
   override def getSourceComponent = source

@@ -1,7 +1,7 @@
 package com.quane.little.data.service
 
 import com.mongodb.casbah.{MongoCollection, MongoClient}
-import com.quane.little.data.model.ListenerRecord
+import com.quane.little.data.model.{RecordId, ListenerRecord}
 import com.quane.little.data.repo.ListenerRepository
 import com.quane.little.language.event.{Event, EventListener}
 import com.quane.little.language.FunctionReference
@@ -68,6 +68,12 @@ class ListenerService(client: MongoClient) {
       )
     )
   }
+
+  def findListener(id: RecordId): EventListener =
+    repository.find(id) match {
+      case Some(record) => record.listener
+      case None => throw new RuntimeException("No event listener for " + id)
+    }
 
   def findListenersByUser(username: String): List[EventListener] =
     findByUser(username).map(_.listener)

@@ -1,9 +1,8 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
-import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.model.{CodeCategory, FunctionCategory}
 import com.quane.little.data.service.{ListenerService, FunctionService}
-import com.quane.little.language.event.Event
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -15,34 +14,25 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
   view.registerViewPresenter(this)
 
   initFunctions()
-  initEvents()
   initEventListeners()
 
   private def initFunctions() = {
-    CodeCategory.values foreach {
+    FunctionCategory.values foreach {
       category =>
-        view.createToolboxTab(category.toString)
+        view.createToolboxTab(CodeCategory.Function, category)
     }
     FunctionService().findByUser("connollyst") foreach {
       function =>
-        view.createToolboxItem(function.category.toString, function.definition.name, function.id)
-    }
-  }
-
-  private def initEvents() = {
-    view.createToolboxTab("Events")
-    Event.values foreach {
-      event =>
-        view.createToolboxItem("Events", event.toString, null)
+        view.createToolboxItem(CodeCategory.Function, function.category, function.definition.name, function.id)
     }
   }
 
   private def initEventListeners() = {
-    view.createToolboxTab("Event Handlers")
+    view.createToolboxTab(CodeCategory.EventListener)
     ListenerService().init()
     ListenerService().findByUser("connollyst") foreach {
       listener =>
-        view.createToolboxItem("Event Handlers", listener.listener.event.toString, listener.id)
+        view.createToolboxItem(CodeCategory.EventListener, listener.listener.event.toString, listener.id)
     }
   }
 
