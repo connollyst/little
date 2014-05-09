@@ -9,6 +9,8 @@ import com.quane.little.language.FunctionReference
 class EventListenerPresenter[V <: EventListenerView](view: V)
   extends EventListenerViewPresenter {
 
+  view.registerViewPresenter(this)
+
   private var _event: Option[Event] = None
   private val _function = view.createFunctionReference()
 
