@@ -4,7 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty
 import com.google.common.base.Objects
 import com.quane.little.language.event.EventListener
 
-/** A database record for an [[EventListener]].
+/** A database record for an [[com.quane.little.language.event.EventListener]].
   *
   * @author Sean Connolly
   */

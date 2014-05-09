@@ -7,7 +7,7 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.CodeCategory
 import com.quane.little.data.repo.FunctionRepository
 
-/** A service for interacting with [[com.quane.little.language.Functions]].
+/** A service for interacting with [[com.quane.little.data.model.FunctionRecord]].
   *
   * @author Sean Connolly
   */

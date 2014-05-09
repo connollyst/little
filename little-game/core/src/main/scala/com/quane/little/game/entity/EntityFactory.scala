@@ -2,12 +2,10 @@ package com.quane.little.game.entity
 
 import com.quane.little.game.Game
 import com.quane.little.game.engine.InteractionManager
-import com.quane.little.language.data.Value
-import com.quane.little.language.event.{EventListener, LittleEvent}
-import com.quane.little.language.FunctionReference
+import com.quane.little.language.event.LittleEvent
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.{ListenerService, FunctionService}
 
 
 class EntityFactory(game: Game) {
@@ -33,26 +31,10 @@ class EntityFactory(game: Game) {
     FunctionService().findDefinitionsByUser("connollyst") foreach {
       function => mob.operator.runtime.saveFunction(function)
     }
-    mob.operator.addEventListener(
-      new EventListener(
-        LittleEvent.OnSpawn,
-        new FunctionReference("move")
-          .addArg("speed", Value(5))
-      )
-    )
-    mob.operator.addEventListener(
-      new EventListener(
-        LittleEvent.OnContact,
-        new FunctionReference("turnRelative")
-          .addArg("degrees", Value(260))
-      )
-    )
-    mob.operator.addEventListener(
-      new EventListener(
-        LittleEvent.OnFoodConsumed,
-        new FunctionReference("turn")
-      )
-    )
+    ListenerService().init() // TODO this is temporary
+    ListenerService().findListenersByUser("connollyst") foreach {
+      listener => mob.operator.addEventListener(listener)
+    }
     game.eventBus.report(mob, LittleEvent.OnSpawn)
     mob
   }
