@@ -1,24 +1,28 @@
+$header-bg-color: #131313;
+$header-color: #ccc;
+$header-color-over: #65c765;
+
 .littletheme .l-ide {
-  background-color: #333
 }
 
 .littletheme .l-ide-head {
   padding: 0 100px;
+  background-color: $header-bg-color;
   border-bottom: 2px solid rgba(0, 0, 0, 0.0784314);
 }
 
 .littletheme .l-ide-head .h1 {
-  color: #ccc;
+  color: $header-color;
   font-weight: 100;
   text-shadow: #111 0 -1px 1px;
 }
 
 .littletheme .l-ide-head .l-button {
-  color: #ccc
+  color: $header-color
 }
 
 .littletheme .l-ide-head .l-button:hover {
-  color: #65c765;
+  color: $header-color-over;
   font-weight: 100;
   cursor: pointer;
 }
