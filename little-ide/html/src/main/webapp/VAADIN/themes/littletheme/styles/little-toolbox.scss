@@ -14,27 +14,29 @@
 /* Accordion Styles */
 
 .littletheme .l-toolbox-accordion {
-
 }
 
 .littletheme .l-toolbox-accordion-item {
-}
-
-.littletheme .l-toolbox-accordion-item-open {
-
-}
-
-.littletheme .l-toolbox-accordion-item-first {
 }
 
 .littletheme .l-toolbox-accordion-item-caption {
   background-color: rgb(35, 44, 49);
   border-top: 1px solid black;
   padding: 5px 10px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  -webkit-transition-delay: 0s, 0s, 0s;
+  -webkit-transition-duration: 0.25s, 0.25s, 0.25s;
+  -webkit-transition-property: color, background-color, border-color;
+  -webkit-transition-timing-function: linear, linear, linear;
+  transition-delay: 0s, 0s, 0s;
+  transition-duration: 0.25s, 0.25s, 0.25s;
+  transition-property: color, background-color, border-color;
+  transition-timing-function: linear, linear, linear;
 }
 
-.littletheme .l-toolbox-accordion-item-open .l-toolbox-accordion-item-caption {
-  background-color: rgb(25, 32, 36);
+.littletheme .l-toolbox-accordion-item-caption:hover {
+  background-color: #334450;
 }
 
 .littletheme .l-toolbox-accordion-item-caption .v-caption {
@@ -49,12 +51,23 @@
   line-height: 30px;
 }
 
+.littletheme .l-toolbox-accordion-item-content .v-ddwrapper,
+.littletheme .l-toolbox-accordion-item-content .v-ddwrapper .v-label {
+  cursor: move !important;
+}
+
+/* Accordion Open Styles */
+
+.littletheme .l-toolbox-accordion-item-open .l-toolbox-accordion-item-caption {
+  background-color: rgb(25, 32, 36);
+}
+
+.littletheme .l-toolbox-accordion-item-open .l-toolbox-accordion-item-caption .v-caption {
+  cursor: default;
+}
+
 .littletheme .l-toolbox-accordion-item-open .l-toolbox-accordion-item-content {
   border-top: 2px solid black;
   background-color: rgb(45, 57, 64);
 }
 
-.littletheme .l-toolbox-accordion-item-open .l-toolbox-accordion-item-content .v-ddwrapper,
-.littletheme .l-toolbox-accordion-item-open .l-toolbox-accordion-item-content .v-ddwrapper .v-label {
-  cursor: move !important;
-}
