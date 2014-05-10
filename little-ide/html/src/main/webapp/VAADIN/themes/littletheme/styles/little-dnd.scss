@@ -8,8 +8,8 @@
 .v-ddwrapper-over-left,
 .v-ddwrapper-over-right {
   // TODO avoid using !important
-  border: 2px solid #1d9dff !important;
-  background-color: #bcdcff !important;
+  border: 2px solid rgba(101, 199, 101, 0.6) !important;
+  background-color: rgba(101, 199, 101, 0.1) !important;
   padding: 0 !important;
   -moz-border-radius: 5px !important;
   -webkit-border-radius: 5px !important;
