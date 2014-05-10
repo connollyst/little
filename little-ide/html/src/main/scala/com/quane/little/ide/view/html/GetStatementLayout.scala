@@ -3,6 +3,7 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.view.GetStatementView
 import com.vaadin.ui.{TextField, HorizontalLayout}
 import com.vaadin.event.FieldEvents.{TextChangeEvent, TextChangeListener}
+import com.quane.vaadin.scala.VaadinMixin
 
 object GetStatementLayout {
   val Style = "l-get"
@@ -16,11 +17,12 @@ object GetStatementLayout {
 class GetStatementLayout
   extends HorizontalLayout
   with GetStatementView
-  with RemovableComponent {
+  with RemovableComponent
+  with VaadinMixin {
 
   private val nameField = createNameField()
 
-  setStyleName(ExpressionLayout.Style + " " + GetStatementLayout.Style)
+  setStyleNames(ExpressionLayout.Style, GetStatementLayout.Style)
   nameField.setStyleName(GetStatementLayout.StyleValue)
 
   addComponent(nameField)

@@ -15,4 +15,6 @@ trait VaadinMixin
     c
   }
 
+  def setStyleNames(names: String*): Unit = setStyleName(names.mkString(" "))
+
 }

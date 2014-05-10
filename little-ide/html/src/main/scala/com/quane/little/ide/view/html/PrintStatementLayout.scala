@@ -6,6 +6,7 @@ import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
 import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddGetterCommand, IDECommandExecutor, AddValueCommand}
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.data.service.FunctionService
+import com.quane.vaadin.scala.VaadinMixin
 
 object PrintStatementLayout {
   val Style = "l-print"
@@ -18,12 +19,13 @@ object PrintStatementLayout {
 class PrintStatementLayout
   extends HorizontalLayout
   with PrintStatementView
-  with RemovableComponent {
+  with RemovableComponent
+  with VaadinMixin {
 
   private val printLabel = new Label("print")
   private var printValue: Option[ExpressionView[_] with RemovableComponent] = None
 
-  setStyleName(ExpressionLayout.Style + " " + PrintStatementLayout.Style)
+  setStyleNames(ExpressionLayout.Style, PrintStatementLayout.Style)
   setSpacing(true)
   addComponent(printLabel)
   addComponent(new PrintMenuBar(this))

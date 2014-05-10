@@ -8,6 +8,7 @@ import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.ide.presenter.command.{AddGetterCommand, AddValueCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 import com.quane.little.data.service.FunctionService
+import com.quane.vaadin.scala.VaadinMixin
 
 object SetStatementLayout {
   val Style = "l-set"
@@ -20,12 +21,13 @@ object SetStatementLayout {
 class SetStatementLayout
   extends HorizontalLayout
   with SetStatementView
-  with RemovableComponent {
+  with RemovableComponent
+  with VaadinMixin {
 
   private val nameField = createNameTextField()
   private var valueComponent: Option[ExpressionView[_]] = None
 
-  setStyleName(ExpressionLayout.Style + " " + SetStatementLayout.Style)
+  setStyleNames(ExpressionLayout.Style, SetStatementLayout.Style)
   setSpacing(true)
 
   addComponent(nameField)
