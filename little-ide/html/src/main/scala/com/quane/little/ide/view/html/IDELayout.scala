@@ -39,14 +39,7 @@ class IDELayout
   add(header)
   add(center)
 
-  setExpandRatio(center, 1.0f)
-
-  // createGameWindow()
-
-  private def createGameWindow() = {
-    val subWindow = new GameWindow()
-    UI.getCurrent.addWindow(subWindow)
-  }
+  setExpandRatio(center, 1f)
 
   override def createToolbox() = {
     center.toolbox = new ToolboxLayout
