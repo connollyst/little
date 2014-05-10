@@ -21,8 +21,10 @@ class ToolboxLayout
   private val tabContents: mutable.Map[String, ToolboxSectionComponent] = mutable.Map()
 
   setSizeFull()
-  //  setStyleName(ToolboxLayout.Style)
   setPrimaryStyleName(ToolboxLayout.StyleAccordion)
+
+  override def setSelectedTab(category: CodeCategory) =
+    setSelectedTab(getTab(category))
 
   override def createToolboxTab(category: CodeCategory) =
     addTab(category, new ToolboxSectionComponent())

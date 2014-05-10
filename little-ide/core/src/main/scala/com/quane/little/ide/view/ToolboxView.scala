@@ -6,13 +6,15 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
 
 trait ToolboxView extends View[ToolboxViewPresenter] {
 
-  def createToolboxTab(category: CodeCategory)
+  def setSelectedTab(category: CodeCategory): Unit
 
-  def createToolboxTab(category: CodeCategory, subcategory: FunctionCategory)
+  def createToolboxTab(category: CodeCategory): Unit
 
-  def createToolboxItem(category: CodeCategory, title: String, functionId: RecordId)
+  def createToolboxTab(category: CodeCategory, subcategory: FunctionCategory): Unit
 
-  def createToolboxItem(category: CodeCategory, subcategory: FunctionCategory, title: String, functionId: RecordId)
+  def createToolboxItem(category: CodeCategory, title: String, functionId: RecordId): Unit
+
+  def createToolboxItem(category: CodeCategory, subcategory: FunctionCategory, title: String, functionId: RecordId): Unit
 
 }
 

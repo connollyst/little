@@ -29,6 +29,7 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
 
   private def initEventListeners() = {
     view.createToolboxTab(CodeCategory.EventListener)
+    view.setSelectedTab(CodeCategory.EventListener)
     ListenerService().init()
     ListenerService().findByUser("connollyst") foreach {
       listener =>

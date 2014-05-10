@@ -2,7 +2,8 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.FunctionReferenceView
 import com.quane.little.ide.presenter.FunctionArgumentPresenter
-import com.vaadin.ui.{Label, HorizontalLayout}
+import com.vaadin.ui.{Alignment, Label, HorizontalLayout}
+import com.quane.vaadin.scala.VaadinMixin
 
 object FunctionReferenceLayout {
   val Style = ExpressionLayout.Style + " l-function-ref"
@@ -15,12 +16,14 @@ object FunctionReferenceLayout {
 class FunctionReferenceLayout
   extends HorizontalLayout
   with FunctionReferenceView
-  with RemovableComponent {
+  with RemovableComponent
+  with VaadinMixin {
 
   private val nameLabel = new Label("???")
 
-  setStyleName(FunctionReferenceLayout.Style)
   setSpacing(true)
+  setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
+  setStyleNames(ExpressionLayout.Style, FunctionReferenceLayout.Style)
 
   addComponent(nameLabel)
   addComponent(CloseButton(this))
