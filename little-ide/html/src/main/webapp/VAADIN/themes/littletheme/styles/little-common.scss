@@ -2,7 +2,7 @@ $close-btn-width: 20px;
 $close-btn-radius: $close-btn-width / 2;
 
 .l-close-btn {
-  color: #FFFFFF;
+  color: #fff;
   background: #606061;
   -webkit-border-radius: $close-btn-radius;
   -moz-border-radius: $close-btn-radius;
@@ -13,10 +13,11 @@ $close-btn-radius: $close-btn-width / 2;
 }
 
 .l-close-btn:hover {
+  cursor: pointer;
   background: crimson;
-  box-shadow: 1px 1px 3px #9e9e9e;
-  -moz-box-shadow: 1px 1px 3px #9e9e9e;
-  -webkit-box-shadow: 1px 1px 3px #9e9e9e;
+  box-shadow: 1px 1px 3px #333;
+  -moz-box-shadow: 1px 1px 3px #333;
+  -webkit-box-shadow: 1px 1px 3px #333;
 }
 
 .l-close-btn-wrap {
