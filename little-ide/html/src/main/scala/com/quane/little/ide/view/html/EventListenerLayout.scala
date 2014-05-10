@@ -56,24 +56,7 @@ class EventListenerHeader(view: EventListenerLayout)
   var event: Option[Event] = None
   val eventBox = new ComboBox() {
     setImmediate(true)
-    addValueChangeListener(new ValueChangeListener {
-      override def valueChange(changeEvent: ValueChangeEvent) =
-        changeEvent.getProperty.getValue match {
-          case newEvent: Event =>
-            event match {
-              case Some(oldEvent) if newEvent == oldEvent =>
-              // do nothing
-              case Some(e) =>
-                view.presenter.onEventChange(newEvent)
-              case None =>
-                view.presenter.onEventChange(newEvent)
-            }
-          case null =>
-          // empty selection
-          case _ =>
-            throw new IllegalArgumentException("Expected " + Event)
-        }
-    })
+    addValueChangeListener(new EventChangeListener)
   }
   Event.values foreach {
     event => eventBox.addItem(event)
@@ -84,6 +67,30 @@ class EventListenerHeader(view: EventListenerLayout)
     event = Some(e)
     // TODO the new event is sent to the server, even if just sent FROM there
     eventBox.setValue(e)
+  }
+
+  /** Listener for when a new [[com.quane.little.language.event.Event]] is
+    * selected. Notifies the presenter when appropriate.
+    *
+    * @author Sean Connolly
+    */
+  private class EventChangeListener extends ValueChangeListener {
+    override def valueChange(changeEvent: ValueChangeEvent) =
+      changeEvent.getProperty.getValue match {
+        case newEvent: Event =>
+          event match {
+            case Some(oldEvent) if newEvent == oldEvent =>
+            // do nothing
+            case Some(e) =>
+              view.presenter.onEventChange(newEvent)
+            case None =>
+              view.presenter.onEventChange(newEvent)
+          }
+        case null =>
+        // empty selection
+        case _ =>
+          throw new IllegalArgumentException("Expected " + Event)
+      }
   }
 
 }
