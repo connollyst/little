@@ -61,9 +61,11 @@ class GamespaceListenerLayout(view: GamespaceLayout)
     val wrapper = new HorizontalLayout
     wrapper.addComponent(label)
     wrapper.addComponent(button)
+    wrapper.setSizeFull()
     wrapper.setSpacing(true)
     wrapper.setStyleName(ExpressionLayout.Style)
     wrapper.setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
+    wrapper.setExpandRatio(label, 1f)
     add(wrapper)
   }
 
