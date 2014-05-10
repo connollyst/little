@@ -15,7 +15,7 @@ object IDELayout {
 
   val Style = "l-ide"
   val StyleHeader = Style + "-head"
-  val StyleBody = Style + "-body"
+  val StyleCenter = Style + "-center"
   val StyleFooter = Style + "-foot"
 }
 
@@ -85,8 +85,8 @@ class IDELayout
   private class IDELayoutCenter
     extends HorizontalSplitPanel {
 
-    setStyleName(IDELayout.StyleBody)
-    setSplitPosition(25, Sizeable.Unit.PERCENTAGE)
+    setPrimaryStyleName(IDELayout.StyleCenter)
+    setSplitPosition(20, Sizeable.Unit.PERCENTAGE)
 
     var _toolbox: Option[ToolboxLayout] = None
     var _workspace: Option[WorkspaceLayout] = None

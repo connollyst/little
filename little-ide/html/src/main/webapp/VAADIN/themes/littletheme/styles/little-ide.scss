@@ -27,8 +27,19 @@ $header-color-over: #65c765;
   cursor: pointer;
 }
 
-.littletheme .l-ide-body {
+.littletheme .l-ide-center {
 
+}
+
+.littletheme .l-ide-center .v-splitpanel-hsplitter {
+  width: 2px;
+  background-image: none;
+  background-color: #000;
+  border-right: 3px solid hsl(202, 17%, 20%);
+}
+
+.littletheme .l-ide-center .v-splitpanel-hsplitter div {
+  background-image: none;
 }
 
 .littletheme .l-ide-foot {
