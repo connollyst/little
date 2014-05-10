@@ -16,6 +16,7 @@
     <properties>
         <vaadin.version>7.1.9</vaadin.version>
         <vaadin.plugin.version>${vaadin.version}</vaadin.plugin.version>
+        <vaadin.fonticon.version>7.1.1</vaadin.fonticon.version>
     </properties>
 
     <repositories>
@@ -100,6 +101,11 @@
             <groupId>com.vaadin</groupId>
             <artifactId>vaadin-themes</artifactId>
             <version>${vaadin.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>fonticon</artifactId>
+            <version>${vaadin.fonticon.version}</version>
         </dependency>
         <!-- Should be run within a Servlet 3 container -->
         <dependency>
