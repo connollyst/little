@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.FunctionReferencePresenter
+import com.quane.little.ide.presenter.{PresenterAcceptsFunctionReference, FunctionReferencePresenter}
 import com.quane.little.language.event.Event.Event
 
 trait EventListenerView extends View[EventListenerViewPresenter] {
@@ -11,7 +11,9 @@ trait EventListenerView extends View[EventListenerViewPresenter] {
 
 }
 
-trait EventListenerViewPresenter extends ViewPresenter {
+trait EventListenerViewPresenter
+  extends ViewPresenter
+  with PresenterAcceptsFunctionReference {
 
   def onEventChange(event: Event): Unit
 

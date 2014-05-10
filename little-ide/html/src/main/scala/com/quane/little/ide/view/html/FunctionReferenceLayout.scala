@@ -4,6 +4,7 @@ import com.quane.little.ide.view.FunctionReferenceView
 import com.quane.little.ide.presenter.FunctionArgumentPresenter
 import com.vaadin.ui.{Alignment, Label, HorizontalLayout}
 import com.quane.vaadin.scala.VaadinMixin
+import scala.collection.mutable
 
 object FunctionReferenceLayout {
   val Style = ExpressionLayout.Style + " l-function-ref"
@@ -20,6 +21,7 @@ class FunctionReferenceLayout
   with VaadinMixin {
 
   private val nameLabel = new Label("???")
+  private val args = mutable.ListBuffer[FunctionArgumentComponent]()
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
@@ -28,12 +30,18 @@ class FunctionReferenceLayout
   addComponent(nameLabel)
   addComponent(CloseButton(this))
 
-  override def setName(name: String): Unit = nameLabel.setValue(name)
+  override def setName(name: String) = nameLabel.setValue(name)
 
   override def createArgument(): FunctionArgumentPresenter[_] = {
     val view = new FunctionArgumentComponent
+    args += view
     addComponent(view)
     new FunctionArgumentPresenter(view)
   }
+
+  override def clearArguments() =
+    args foreach {
+      arg => removeComponent(arg)
+    }
 
 }

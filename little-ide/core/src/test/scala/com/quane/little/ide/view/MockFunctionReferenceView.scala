@@ -11,8 +11,10 @@ class MockFunctionReferenceView
   extends FunctionReferenceView
   with MockView {
 
-  def setName(name: String) = Unit
+  override def setName(name: String) = Unit
 
-  def createArgument() = new FunctionArgumentPresenter(new MockFunctionArgumentView)
+  override def createArgument() = new FunctionArgumentPresenter(new MockFunctionArgumentView)
+
+  override def clearArguments() = Unit
 
 }

@@ -18,6 +18,7 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
   view.registerViewPresenter(this)
 
   private[presenter] def initialize(fun: FunctionReference): FunctionReferencePresenter[V] = {
+    view.clearArguments()
     name = fun.name
     fun.args foreach {
       case (name, value) => add(name, value)

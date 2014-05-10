@@ -8,6 +8,8 @@ trait FunctionReferenceView extends ExpressionView[FunctionReferenceViewPresente
 
   def createArgument(): FunctionArgumentPresenter[_]
 
+  def clearArguments(): Unit
+
 }
 
 trait FunctionReferenceViewPresenter extends ExpressionViewPresenter
