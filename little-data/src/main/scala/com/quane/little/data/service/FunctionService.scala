@@ -83,9 +83,7 @@ class FunctionService(client: MongoClient) {
     val repo = new FunctionRepository(collection)
     repo.find(id) match {
       case Some(record) =>
-        if (exists(record.ownerId, fun.name)) {
-          throw new IllegalArgumentException("Another function with the name '" + fun.name + "' already exists.")
-        }
+        // TODO check if name is taken by another function
         record.definition = fun
         repo.update(record)
         record
