@@ -69,6 +69,7 @@ class EventListenerHeader(view: EventListenerLayout)
   add(new Label("When"))
   add(eventBox)
   add(new Label("then.."))
+  add(CloseButton(view))
 
   def setEvent(e: Event) = {
     event = Some(e)
