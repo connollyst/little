@@ -13,11 +13,12 @@ class IDEPresenter[V <: IDEView](view: V)
   UserService().init()
   FunctionService().init()
 
+  // TODO this is temporary
   val user = UserService().upsert("connollyst")
-  println("Logged in as " + user.username + ": " + user.id)
 
   view.registerViewPresenter(this)
   view.createToolbox()
   view.createWorkspace()
+  view.createGamespace()
 
 }

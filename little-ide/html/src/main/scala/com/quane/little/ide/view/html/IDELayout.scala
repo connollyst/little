@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.IDEView
-import com.quane.little.ide.presenter.{ToolboxPresenter, WorkspacePresenter}
+import com.quane.little.ide.presenter.{GamespacePresenter, ToolboxPresenter, WorkspacePresenter}
 import com.vaadin.ui._
 import com.vaadin.server.Sizeable
 import scala.Some
@@ -58,6 +58,12 @@ class IDELayout
     new WorkspacePresenter(center.workspace)
   }
 
+
+  override def createGamespace() = {
+    center.gamespace = new GamespaceLayout
+    new GamespacePresenter(center.gamespace)
+  }
+
   /** The IDE header, containing basic controls and links.
     */
   private final class IDELayoutHeader
@@ -90,6 +96,11 @@ class IDELayout
 
     var _toolbox: Option[ToolboxLayout] = None
     var _workspace: Option[WorkspaceLayout] = None
+    var _gamespace: Option[GamespaceLayout] = None
+
+    val _rightPanel = new HorizontalSplitPanel
+    _rightPanel.setSplitPosition(70, Sizeable.Unit.PERCENTAGE)
+    setSecondComponent(_rightPanel)
 
     private[IDELayout] def toolbox_=(t: ToolboxLayout) = {
       if (_toolbox.isDefined) throw new IllegalAccessException("Toolbox already defined.")
@@ -97,25 +108,36 @@ class IDELayout
       setFirstComponent(t)
     }
 
-    private[IDELayout] def toolbox: ToolboxLayout = {
+    private[IDELayout] def toolbox: ToolboxLayout =
       _toolbox match {
         case Some(t) => t
         case None => throw new IllegalAccessException("No toolbox defined.")
       }
-    }
 
     private[IDELayout] def workspace_=(w: WorkspaceLayout) = {
       if (_workspace.isDefined) throw new IllegalAccessException("Workspace already defined.")
       _workspace = Some(w)
-      setSecondComponent(w)
+      _rightPanel.setFirstComponent(w)
     }
 
-    private[IDELayout] def workspace: WorkspaceLayout = {
+    private[IDELayout] def workspace: WorkspaceLayout =
       _workspace match {
-        case Some(t) => t
+        case Some(w) => w
         case None => throw new IllegalAccessException("No workspace defined.")
       }
+
+    private[IDELayout] def gamespace_=(g: GamespaceLayout) = {
+      if (_gamespace.isDefined) throw new IllegalAccessException("Gamespace already defined.")
+      _gamespace = Some(g)
+      _rightPanel.setSecondComponent(g)
     }
+
+    private[IDELayout] def gamespace: GamespaceLayout =
+      _gamespace match {
+        case Some(g) => g
+        case None => throw new IllegalAccessException("No gamespace defined.")
+      }
+
   }
 
 }
