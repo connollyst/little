@@ -9,6 +9,7 @@ import com.vaadin.data.Property.{ValueChangeEvent, ValueChangeListener}
 
 object EventListenerLayout {
   val Style = "l-event-listener"
+  val StyleHeader = Style + "-head"
 }
 
 /** An HTML layout view representing an event listener.
@@ -44,8 +45,9 @@ class EventListenerLayout
 class EventListenerHeader(view: EventListenerLayout)
   extends HorizontalLayout {
 
-  var event: Option[Event] = None
+  setStyleName(EventListenerLayout.StyleHeader)
 
+  var event: Option[Event] = None
   val eventBox = new ComboBox() {
     // TODO this doesn't seem to fire right away? =\
     addValueChangeListener(new ValueChangeListener {
@@ -55,11 +57,15 @@ class EventListenerHeader(view: EventListenerLayout)
         value match {
           case newEvent: Event =>
             event match {
-              case Some(oldEvent) if newEvent != oldEvent =>
+              case Some(oldEvent) if newEvent == oldEvent =>
+              // do nothing
+              case Some(e) =>
                 view.presenter.onEventChange(newEvent)
               case None =>
                 view.presenter.onEventChange(newEvent)
             }
+          case null =>
+          // empty selection
           case _ =>
             throw new IllegalArgumentException("Expected " + Event)
         }
@@ -73,7 +79,7 @@ class EventListenerHeader(view: EventListenerLayout)
 
   def setEvent(e: Event) = {
     event = Some(e)
-    eventBox.setValue(event)
+    eventBox.setValue(e)
   }
 
 }
