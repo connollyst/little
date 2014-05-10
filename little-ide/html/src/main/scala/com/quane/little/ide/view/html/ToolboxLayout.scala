@@ -10,6 +10,7 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
 
 object ToolboxLayout {
   val Style = "l-toolbox"
+  val StyleAccordion = Style + "-accordion"
 }
 
 class ToolboxLayout
@@ -20,7 +21,8 @@ class ToolboxLayout
   private val tabContents: mutable.Map[String, ToolboxSectionComponent] = mutable.Map()
 
   setSizeFull()
-  setStyleName(ToolboxLayout.Style)
+  //  setStyleName(ToolboxLayout.Style)
+  setPrimaryStyleName(ToolboxLayout.StyleAccordion)
 
   override def createToolboxTab(category: CodeCategory) =
     addTab(category, new ToolboxSectionComponent())
