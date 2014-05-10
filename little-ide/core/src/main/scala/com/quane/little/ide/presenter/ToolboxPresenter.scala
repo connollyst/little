@@ -9,7 +9,8 @@ import com.quane.little.data.service.FunctionService
   * @author Sean Connolly
   */
 class ToolboxPresenter[V <: ToolboxView](val view: V)
-  extends ToolboxViewPresenter {
+  extends ToolboxViewPresenter
+  with HasWorkspace {
 
   view.registerViewPresenter(this)
 

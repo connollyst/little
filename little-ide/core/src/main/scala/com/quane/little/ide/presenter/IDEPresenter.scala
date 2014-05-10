@@ -17,8 +17,12 @@ class IDEPresenter[V <: IDEView](view: V)
   val user = UserService().upsert("connollyst")
 
   view.registerViewPresenter(this)
-  view.createToolbox()
-  view.createWorkspace()
-  view.createGamespace()
+
+  val toolbox = view.createToolbox()
+  val workspace = view.createWorkspace()
+  val gamespace = view.createGamespace()
+
+  toolbox.workspace = workspace
+  gamespace.workspace = workspace
 
 }

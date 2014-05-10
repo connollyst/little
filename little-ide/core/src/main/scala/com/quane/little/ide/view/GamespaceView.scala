@@ -13,4 +13,8 @@ trait GamespaceView extends View[GamespaceViewPresenter] {
 
 }
 
-trait GamespaceViewPresenter extends ViewPresenter
+trait GamespaceViewPresenter extends ViewPresenter {
+
+  def openGameListener(listenerId: RecordId): Unit
+
+}
