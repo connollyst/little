@@ -42,6 +42,12 @@ class EventListenerLayout
 
 }
 
+/** The header of the HTML event listener layout.
+  * Provides the controls enabling the user to configure the event listener.
+  *
+  * @param view the event listener layout
+  * @author Sean Connolly
+  */
 class EventListenerHeader(view: EventListenerLayout)
   extends HorizontalLayout {
 
@@ -49,12 +55,10 @@ class EventListenerHeader(view: EventListenerLayout)
 
   var event: Option[Event] = None
   val eventBox = new ComboBox() {
-    // TODO this doesn't seem to fire right away? =\
+    setImmediate(true)
     addValueChangeListener(new ValueChangeListener {
-      override def valueChange(changeEvent: ValueChangeEvent) = {
-        val value = changeEvent.getProperty.getValue
-        println("New event selected: " + value)
-        value match {
+      override def valueChange(changeEvent: ValueChangeEvent) =
+        changeEvent.getProperty.getValue match {
           case newEvent: Event =>
             event match {
               case Some(oldEvent) if newEvent == oldEvent =>
@@ -69,7 +73,6 @@ class EventListenerHeader(view: EventListenerLayout)
           case _ =>
             throw new IllegalArgumentException("Expected " + Event)
         }
-      }
     })
   }
   Event.values foreach {
@@ -79,6 +82,7 @@ class EventListenerHeader(view: EventListenerLayout)
 
   def setEvent(e: Event) = {
     event = Some(e)
+    // TODO the new event is sent to the server, even if just sent FROM there
     eventBox.setValue(e)
   }
 
