@@ -1,5 +1,5 @@
 .littletheme .l-ide {
-
+  background-color: #333
 }
 
 .littletheme .l-ide-head {
@@ -8,20 +8,18 @@
 }
 
 .littletheme .l-ide-head .h1 {
-  font-size: 24px;
-  line-height: 30px;
+  color: #ccc;
   font-weight: 100;
-  color: crimson;
-  letter-spacing: -0.02em;
-  text-shadow: #fff 0 -1px 1px;
+  text-shadow: #111 0 -1px 1px;
 }
 
 .littletheme .l-ide-head .l-button {
-
+  color: #ccc
 }
 
 .littletheme .l-ide-head .l-button:hover {
-  color: crimson;
+  color: #65c765;
+  font-weight: 100;
   cursor: pointer;
 }
 
