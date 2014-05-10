@@ -5,14 +5,35 @@ import com.quane.little.ide.presenter.{ToolboxPresenter, WorkspacePresenter}
 import com.vaadin.ui._
 import com.vaadin.server.Sizeable
 import scala.Some
+import com.quane.vaadin.scala.VaadinMixin
+import com.vaadin.ui.themes.Reindeer
 
+object IDELayout {
+  val Style = "l-ide"
+  val StyleHeader = Style + "-head"
+  val StyleBody = Style + "-body"
+  val StyleFooter = Style + "-foot"
+}
+
+/** The base view of the HTML IDE.
+  *
+  * @author Sean Connolly
+  */
 class IDELayout
-  extends HorizontalSplitPanel
+  extends VerticalLayout
   with IDEView
-  with RemovableComponent {
+  with RemovableComponent
+  with VaadinMixin {
 
   setSizeFull()
-  setSplitPosition(25, Sizeable.Unit.PERCENTAGE)
+  setStyleName(IDELayout.Style)
+
+  private val header = new IDELayoutHeader
+  private val center = new IDELayoutCenter
+  add(header)
+  add(center)
+
+  setExpandRatio(center, 1.0f)
 
   // createGameWindow()
 
@@ -22,41 +43,66 @@ class IDELayout
   }
 
   override def createToolbox() = {
-    toolbox = new ToolboxLayout
-    setFirstComponent(toolbox)
-    new ToolboxPresenter(toolbox)
+    center.toolbox = new ToolboxLayout
+    new ToolboxPresenter(center.toolbox)
   }
 
   override def createWorkspace() = {
-    workspace = new WorkspaceLayout
-    setSecondComponent(workspace)
-    new WorkspacePresenter(workspace)
+    center.workspace = new WorkspaceLayout
+    new WorkspacePresenter(center.workspace)
   }
 
-  var _toolbox: Option[ToolboxLayout] = None
-  var _workspace: Option[WorkspaceLayout] = None
+  /** The IDE header, containing basic controls and links.
+    */
+  private final class IDELayoutHeader
+    extends HorizontalLayout
+    with VaadinMixin {
 
-  private def toolbox_=(t: ToolboxLayout) = {
-    if (_toolbox.isDefined) throw new IllegalAccessException("Toolbox already defined.")
-    _toolbox = Some(t)
+    setHeight(60, Sizeable.Unit.PIXELS)
+    setWidth(100, Sizeable.Unit.PERCENTAGE)
+    setStyleName(IDELayout.StyleHeader)
+    setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
+
+    add(new Label("little")).setStyleName(Reindeer.LABEL_H1)
+
   }
 
-  private def toolbox: ToolboxLayout = {
-    _toolbox match {
-      case Some(t) => t
-      case None => throw new IllegalAccessException("No toolbox defined.")
+  /** The center part of the IDE, containing the toolbox and workspace alongside
+    * each other.
+    */
+  private class IDELayoutCenter
+    extends HorizontalSplitPanel {
+
+    setStyleName(IDELayout.StyleBody)
+    setSplitPosition(25, Sizeable.Unit.PERCENTAGE)
+
+    var _toolbox: Option[ToolboxLayout] = None
+    var _workspace: Option[WorkspaceLayout] = None
+
+    private[IDELayout] def toolbox_=(t: ToolboxLayout) = {
+      if (_toolbox.isDefined) throw new IllegalAccessException("Toolbox already defined.")
+      _toolbox = Some(t)
+      setFirstComponent(t)
     }
-  }
 
-  private def workspace_=(w: WorkspaceLayout) = {
-    if (_workspace.isDefined) throw new IllegalAccessException("Workspace already defined.")
-    _workspace = Some(w)
-  }
+    private[IDELayout] def toolbox: ToolboxLayout = {
+      _toolbox match {
+        case Some(t) => t
+        case None => throw new IllegalAccessException("No toolbox defined.")
+      }
+    }
 
-  private def workspace: WorkspaceLayout = {
-    _workspace match {
-      case Some(t) => t
-      case None => throw new IllegalAccessException("No workspace defined.")
+    private[IDELayout] def workspace_=(w: WorkspaceLayout) = {
+      if (_workspace.isDefined) throw new IllegalAccessException("Workspace already defined.")
+      _workspace = Some(w)
+      setSecondComponent(w)
+    }
+
+    private[IDELayout] def workspace: WorkspaceLayout = {
+      _workspace match {
+        case Some(t) => t
+        case None => throw new IllegalAccessException("No workspace defined.")
+      }
     }
   }
 
