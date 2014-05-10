@@ -1,11 +1,13 @@
 package com.quane.little.ide.view.html
 
-import com.vaadin.ui.{ComboBox, HorizontalLayout, VerticalLayout}
+import com.vaadin.ui._
 import com.quane.little.ide.view.EventListenerView
 import com.quane.little.ide.presenter.FunctionReferencePresenter
 import com.quane.little.language.event.Event
 import com.quane.little.language.event.Event.Event
 import com.vaadin.data.Property.{ValueChangeEvent, ValueChangeListener}
+import com.quane.vaadin.scala.VaadinMixin
+import scala.Some
 
 object EventListenerLayout {
   val Style = "l-event-listener"
@@ -49,23 +51,27 @@ class EventListenerLayout
   * @author Sean Connolly
   */
 class EventListenerHeader(view: EventListenerLayout)
-  extends HorizontalLayout {
+  extends HorizontalLayout
+  with VaadinMixin {
 
-  setStyleName(EventListenerLayout.StyleHeader)
+  setSpacing(true)
+  setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
+  setStyleNames(ExpressionLayout.Style, EventListenerLayout.StyleHeader)
 
   var event: Option[Event] = None
   val eventBox = new ComboBox() {
     setImmediate(true)
     addValueChangeListener(new EventChangeListener)
+    Event.values foreach {
+      event => addItem(event)
+    }
   }
-  Event.values foreach {
-    event => eventBox.addItem(event)
-  }
-  addComponent(eventBox)
+  add(new Label("When"))
+  add(eventBox)
+  add(new Label("then.."))
 
   def setEvent(e: Event) = {
     event = Some(e)
-    // TODO the new event is sent to the server, even if just sent FROM there
     eventBox.setValue(e)
   }
 
@@ -75,6 +81,7 @@ class EventListenerHeader(view: EventListenerLayout)
     * @author Sean Connolly
     */
   private class EventChangeListener extends ValueChangeListener {
+    // TODO the new event is sent to the server, even if just sent FROM there
     override def valueChange(changeEvent: ValueChangeEvent) =
       changeEvent.getProperty.getValue match {
         case newEvent: Event =>
