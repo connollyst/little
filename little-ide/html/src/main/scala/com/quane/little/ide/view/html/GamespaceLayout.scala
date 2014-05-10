@@ -3,6 +3,9 @@ package com.quane.little.ide.view.html
 import com.vaadin.ui._
 import com.quane.little.ide.view.GamespaceView
 import com.vaadin.server.Sizeable
+import com.quane.little.language.event.EventListener
+import com.quane.little.data.model.RecordId
+import com.quane.vaadin.scala.VaadinMixin
 
 object GamespaceLayout {
   val Style = "l-gamespace"
@@ -15,14 +18,17 @@ class GamespaceLayout
   with GamespaceView {
 
   setLocked(true)
-  setStyleName(GamespaceLayout.Style)
+  setPrimaryStyleName(GamespaceLayout.Style)
   setSplitPosition(33, Sizeable.Unit.PERCENTAGE)
 
   val game = new CssLayout()
-  val listeners = new GamespaceAccordion
+  val listeners = new GamespaceListenerLayout
 
   setFirstComponent(game)
   setSecondComponent(listeners)
+
+  override def createGameListener(listener: EventListener, listenerId: RecordId) =
+    listeners.addGameListener(listener, listenerId)
 
 }
 
@@ -33,9 +39,17 @@ class GamespaceViewer
 
 }
 
-class GamespaceAccordion
-  extends Accordion {
+class GamespaceListenerLayout
+  extends VerticalLayout
+  with VaadinMixin {
 
+  setSpacing(true)
   setStyleName(GamespaceLayout.StyleListeners)
+
+  def addGameListener(listener: EventListener, listenerId: RecordId) = {
+    val label = new Label(listener.event + ": " + listener.function.name)
+    label.setStyleName(ExpressionLayout.Style)
+    add(label)
+  }
 
 }
