@@ -2,7 +2,7 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
-import com.vaadin.ui.{MenuBar, HorizontalLayout, Label}
+import com.vaadin.ui.{Alignment, MenuBar, HorizontalLayout, Label}
 import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddGetterCommand, IDECommandExecutor, AddValueCommand}
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.data.service.FunctionService
@@ -25,8 +25,10 @@ class PrintStatementLayout
   private val printLabel = new Label("print")
   private var printValue: Option[ExpressionView[_] with RemovableComponent] = None
 
-  setStyleNames(ExpressionLayout.Style, PrintStatementLayout.Style)
   setSpacing(true)
+  setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
+  setStyleNames(ExpressionLayout.Style, PrintStatementLayout.Style)
+
   addComponent(printLabel)
   addComponent(new PrintMenuBar(this))
   addComponent(CloseButton(this))
