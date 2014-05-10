@@ -1,13 +1,13 @@
 $bg-color: #fff;
 $fg-color: #999;
-$text-color: whitesmoke;
+$text-color: #111;
 $border-color: crimson;
 $border-radius: 4px;
 
 .l-expression {
   position: relative;
   margin: 2px 0;
-  padding: 2px;
+  padding: 0 10px;
   color: $text-color;
   background-color: $fg-color;
   border-radius: $border-radius;
