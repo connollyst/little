@@ -5,10 +5,14 @@ import com.quane.little.ide.presenter.{ToolboxPresenter, WorkspacePresenter}
 import com.vaadin.ui._
 import com.vaadin.server.Sizeable
 import scala.Some
-import com.quane.vaadin.scala.VaadinMixin
+import com.quane.vaadin.scala.{LabelIcon, VaadinMixin}
+import com.porotype.iconfont.FontAwesome
+import com.porotype.iconfont.FontAwesome.{IconVariant, Icon}
 import com.vaadin.ui.themes.Reindeer
 
 object IDELayout {
+  val Title = "little"
+
   val Style = "l-ide"
   val StyleHeader = Style + "-head"
   val StyleBody = Style + "-body"
@@ -24,6 +28,8 @@ class IDELayout
   with IDEView
   with RemovableComponent
   with VaadinMixin {
+
+  FontAwesome.load()
 
   setSizeFull()
   setStyleName(IDELayout.Style)
@@ -63,7 +69,13 @@ class IDELayout
     setStyleName(IDELayout.StyleHeader)
     setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
 
-    add(new Label("little")).setStyleName(Reindeer.LABEL_H1)
+    val title = add(new Label(IDELayout.Title))
+    val play = add(LabelIcon(Icon.play_circle, IconVariant.SIZE_2X))
+
+    title.setStyleName(Reindeer.LABEL_H1)
+    play.setStyleName("l-button")
+
+    setExpandRatio(title, 1.0f)
 
   }
 
