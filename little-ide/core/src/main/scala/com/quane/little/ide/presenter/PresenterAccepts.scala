@@ -10,18 +10,6 @@ trait PresenterAcceptsPrimitive extends PresenterAccepts {
 
 }
 
-trait PresenterAcceptsValue extends PresenterAccepts {
-
-  def requestAddTextLiteral(index: Int): Unit
-
-}
-
-trait PresenterAcceptsGetter extends PresenterAccepts {
-
-  def requestAddGetStatement(index: Int): Unit
-
-}
-
 trait PresenterAcceptsFunctionReference extends PresenterAccepts {
 
   def requestAddFunctionReference(id: RecordId, index: Int): Unit

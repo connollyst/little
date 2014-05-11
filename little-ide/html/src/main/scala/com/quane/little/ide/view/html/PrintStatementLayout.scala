@@ -3,9 +3,9 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetStatementPresenter}
 import com.vaadin.ui.{Alignment, MenuBar, HorizontalLayout, Label}
-import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddGetterCommand, IDECommandExecutor, AddValueCommand}
+import com.quane.little.ide.presenter.command.{AddPrimitiveCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 import com.vaadin.ui.MenuBar.Command
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.{PrimitiveService, FunctionService}
 import com.quane.vaadin.scala.VaadinMixin
 
 object PrintStatementLayout {
@@ -71,14 +71,13 @@ private class PrintMenuBar(view: PrintStatementLayout)
   extends MenuBar {
 
   val item = addItem("∆", null, null)
-  item.addItem("text", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      IDECommandExecutor.execute(new AddValueCommand(view.presenter))
-  })
-  item.addItem("get", null, new MenuBar.Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      IDECommandExecutor.execute(new AddGetterCommand(view.presenter))
-  })
+  PrimitiveService().allPrimitives foreach {
+    primitive =>
+      item.addItem(primitive.oid, null, new Command {
+        override def menuSelected(selectedItem: MenuBar#MenuItem) =
+          IDECommandExecutor.execute(new AddPrimitiveCommand(view.presenter, primitive))
+      })
+  }
   val functions = item.addItem("functions", null, null)
   FunctionService().findByUser("connollyst") foreach {
     function =>

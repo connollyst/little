@@ -88,12 +88,6 @@ class BlockPresenter[V <: BlockView](view: V)
 
   override def requestAddConditional(index: Int) = add(view.addConditional(index), index)
 
-  override def requestAddGetStatement(index: Int) = add(view.addGetStatement(index), index)
-
-  override def requestAddSetStatement(index: Int) = add(view.addSetStatement(index), index)
-
-  override def requestAddPrintStatement(index: Int) = add(view.addPrintStatement(index), index)
-
   override def requestAddFunctionReference(id: RecordId, index: Int) = {
     val fun = FunctionService().findReference(id)
     val presenter = view.addFunctionReference(index).initialize(fun)

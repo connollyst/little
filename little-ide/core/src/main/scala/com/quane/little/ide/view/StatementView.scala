@@ -2,7 +2,6 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-
 trait GetStatementView extends ExpressionView[GetStatementViewPresenter] {
 
   def setName(name: String): Unit
@@ -39,8 +38,7 @@ trait GetStatementViewPresenter extends ExpressionViewPresenter {
 
 trait SetStatementViewPresenter
   extends ExpressionViewPresenter
-  with PresenterAcceptsValue
-  with PresenterAcceptsGetter
+  with PresenterAcceptsPrimitive
   with PresenterAcceptsFunctionReference {
 
   def onNameChange(name: String): Unit
@@ -49,6 +47,5 @@ trait SetStatementViewPresenter
 
 trait PrintStatementViewPresenter
   extends ExpressionViewPresenter
-  with PresenterAcceptsValue
-  with PresenterAcceptsGetter
+  with PresenterAcceptsPrimitive
   with PresenterAcceptsFunctionReference

@@ -11,7 +11,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.DroppableTarget
 import com.quane.little.data.model.{CodeCategory, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.{PrimitiveService, FunctionService}
 
 object BlockLayout {
   val DefaultIndex = -1
@@ -139,7 +139,7 @@ private class BlockStepSeparator(block: BlockLayout)
 
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
-  addComponent(new BlockMenuBar(block, this))
+  addComponent(new BlockMenuBar(this))
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
   // TODO expand to fill separator height & width
@@ -162,25 +162,17 @@ private class BlockStepSeparator(block: BlockLayout)
 
 }
 
-private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
+private class BlockMenuBar(separator: BlockStepSeparator)
   extends MenuBar {
 
   val item = addItem("+", null, null)
-  item.addItem("get", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) =
-      IDECommandExecutor.execute(new AddGetterCommand(block.presenter, separator.index))
-  })
-  item.addItem("set", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddSetStatement(separator.index)
-  })
-  item.addItem("print", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddPrintStatement(separator.index)
-  })
-  item.addSeparator()
-  item.addItem("if/else", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = block.presenter.requestAddConditional(separator.index)
-  })
-  item.addSeparator()
+  PrimitiveService().allPrimitives foreach {
+    primitive =>
+      item.addItem(primitive.oid, null, new Command {
+        override def menuSelected(selectedItem: MenuBar#MenuItem) =
+          separator.addPrimitive(primitive)
+      })
+  }
   val functions = item.addItem("functions", null, null)
   FunctionService().findByUser("connollyst") foreach {
     function =>

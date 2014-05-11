@@ -29,13 +29,8 @@ trait BlockView extends View[BlockViewPresenter] {
 trait BlockViewPresenter
   extends ViewPresenter
   with PresenterAcceptsPrimitive
-  with PresenterAcceptsGetter
   with PresenterAcceptsFunctionReference {
 
   def requestAddConditional(index: Int): Unit
-
-  def requestAddSetStatement(index: Int): Unit
-
-  def requestAddPrintStatement(index: Int): Unit
 
 }
