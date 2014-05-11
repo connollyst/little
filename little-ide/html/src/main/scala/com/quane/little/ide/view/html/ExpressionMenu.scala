@@ -6,7 +6,7 @@ import com.vaadin.ui.MenuBar.Command
 import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddPrimitiveCommand, IDECommandExecutor}
 import com.quane.little.ide.view.{ViewPresenter, View}
 import com.quane.little.ide.presenter.{PresenterAccepts, PresenterAcceptsPrimitive, PresenterAcceptsFunctionReference}
-import com.quane.little.data.model.PrimitiveRecord
+import com.quane.little.data.model.{RecordId, PrimitiveRecord}
 
 /** A menu for selecting an [[com.quane.little.language.Expression]] to be added
   * to a view. The options available are defined by the presenter's manifest.
@@ -15,10 +15,14 @@ import com.quane.little.data.model.PrimitiveRecord
   *
   * @author Sean Connolly
   */
-private class ExpressionMenu[P <: ViewPresenter](view: View[P])(implicit m: Manifest[P])
+class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit m: Manifest[P])
   extends MenuBar {
 
-  val item = addItem("∆", null)
+  def this(view: View[P])(implicit m: Manifest[P]) = this(view, {
+    0
+  })
+
+  private val item = addItem("∆", null)
   initPrimitiveMenuItems()
   initFunctionMenuItems()
 
@@ -29,10 +33,7 @@ private class ExpressionMenu[P <: ViewPresenter](view: View[P])(implicit m: Mani
       primitive =>
         if (accepts(primitive)) {
           item.addItem(primitive.name, new Command {
-            override def menuSelected(selectedItem: MenuBar#MenuItem) = {
-              val p = view.presenter.asInstanceOf[PresenterAcceptsPrimitive]
-              IDECommandExecutor.execute(new AddPrimitiveCommand(p, primitive.id))
-            }
+            def menuSelected(selectedItem: MenuBar#MenuItem) = addPrimitiveClicked(primitive.id)
           })
         } else {
           item.addItem(primitive.name, null).setEnabled(false)
@@ -48,10 +49,7 @@ private class ExpressionMenu[P <: ViewPresenter](view: View[P])(implicit m: Mani
       FunctionService().findByUser("connollyst") foreach {
         function =>
           functions.addItem(function.definition.name, new Command {
-            def menuSelected(item: MenuBar#MenuItem) = {
-              val p = view.presenter.asInstanceOf[PresenterAcceptsFunctionReference]
-              IDECommandExecutor.execute(new AddFunctionReferenceCommand(p, function.id))
-            }
+            def menuSelected(item: MenuBar#MenuItem) = addFunctionClicked(function.id)
           })
       }
     } else {
@@ -61,4 +59,15 @@ private class ExpressionMenu[P <: ViewPresenter](view: View[P])(implicit m: Mani
 
   private def accepts(primitive: PrimitiveRecord): Boolean =
     PresenterAccepts.acceptsPrimitive(view, primitive)
+
+  def addPrimitiveClicked(id: RecordId) = {
+    val p = view.presenter.asInstanceOf[PresenterAcceptsPrimitive]
+    IDECommandExecutor.execute(new AddPrimitiveCommand(p, id, index))
+  }
+
+  def addFunctionClicked(id: RecordId) = {
+    val p = view.presenter.asInstanceOf[PresenterAcceptsFunctionReference]
+    IDECommandExecutor.execute(new AddFunctionReferenceCommand(p, id, index))
+  }
+
 }

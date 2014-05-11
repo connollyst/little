@@ -4,13 +4,11 @@ import com.quane.little.ide.presenter._
 import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
-import com.vaadin.ui.MenuBar.Command
 import com.quane.little.ide.presenter.command._
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.DroppableTarget
 import com.quane.little.data.model.{CodeCategory, RecordId}
-import com.quane.little.data.service.{PrimitiveService, FunctionService}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 
 object BlockLayout {
@@ -137,9 +135,13 @@ class BlockLayout
 private class BlockStepSeparator(block: BlockLayout)
   extends HorizontalLayout {
 
+  val menu = new ExpressionMenu(block, index)
+
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
-  addComponent(new BlockMenuBar(this))
+  println("Adding block expression menu..")
+  addComponent(menu)
+  println("Done adding block expression menu..")
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
   // TODO expand to fill separator height & width
@@ -158,30 +160,9 @@ private class BlockStepSeparator(block: BlockLayout)
       new AddPrimitiveCommand(block.presenter, primitiveId, index)
     )
 
-  def index: Int = block.stepIndex(this)
-
-}
-
-private class BlockMenuBar(separator: BlockStepSeparator)
-  extends MenuBar {
-
-  // TODO this menubar can be consolidated with the others, we just need the index
-
-  val item = addItem("+", null, null)
-  PrimitiveService().all foreach {
-    primitive =>
-      item.addItem(primitive.name, null, new Command {
-        override def menuSelected(selectedItem: MenuBar#MenuItem) =
-          separator.addPrimitive(primitive.id)
-      })
-  }
-  val functions = item.addItem("functions", null, null)
-  FunctionService().findByUser("connollyst") foreach {
-    function =>
-      functions.addItem(function.definition.name, null, new Command {
-        def menuSelected(item: MenuBar#MenuItem) =
-          separator.addFunction(function.id)
-      })
+  def index: Int = {
+    println("Getting separator index..")
+    block.stepIndex(this)
   }
 
 }
