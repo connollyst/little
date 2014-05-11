@@ -6,12 +6,12 @@ import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.ide.presenter.command._
-import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
+import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.DroppableTarget
 import com.quane.little.data.model.{CodeCategory, RecordId}
-import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.data.service.{PrimitiveService, FunctionService}
+import com.quane.little.ide.view.html.dnd.CodeTransferable
 
 object BlockLayout {
   val DefaultIndex = -1
@@ -165,6 +165,8 @@ private class BlockStepSeparator(block: BlockLayout)
 private class BlockMenuBar(separator: BlockStepSeparator)
   extends MenuBar {
 
+  // TODO this menubar can be consolidated with the others, we just need the index
+
   val item = addItem("+", null, null)
   PrimitiveService().all foreach {
     primitive =>
@@ -183,7 +185,6 @@ private class BlockMenuBar(separator: BlockStepSeparator)
   }
 
 }
-
 
 /**
  * Handler for drag &amp; drop events onto a block.

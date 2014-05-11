@@ -3,8 +3,7 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
 import com.quane.little.language.exceptions.NotImplementedError
-import com.vaadin.ui.{MenuBar, Label, HorizontalLayout}
-import com.vaadin.ui.MenuBar.Command
+import com.vaadin.ui.{Label, HorizontalLayout}
 
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
@@ -27,7 +26,7 @@ class FunctionArgumentComponent
 
   addComponent(nameLabel)
   addComponent(new Label("="))
-  addComponent(new FunctionArgumentMenuBar(this))
+  addComponent(new ExpressionMenu(this))
   addComponent(CloseButton(this))
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
@@ -63,28 +62,5 @@ class FunctionArgumentComponent
   }
 
   override def setName(name: String): Unit = nameLabel.setValue(name)
-
-}
-
-private class FunctionArgumentMenuBar(view: FunctionArgumentComponent)
-  extends MenuBar {
-
-  val item = addItem("∆", null, null)
-  item.addItem("text", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddTextLiteral()
-  })
-  item.addItem("get", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddGetStatement()
-  })
-  val functions = item.addItem("functions", null, null)
-  functions.addItem("move", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
-  })
-  functions.addItem("stop", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
-  })
-  functions.addItem("turn", null, new Command {
-    def menuSelected(item: MenuBar#MenuItem) = view.presenter.requestAddFunctionReference(item.getText)
-  })
 
 }
