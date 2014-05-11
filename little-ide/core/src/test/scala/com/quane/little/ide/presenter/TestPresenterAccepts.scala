@@ -13,31 +13,32 @@ import org.scalatest.mock.MockitoSugar
 class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSugar {
 
   "SetStatementView" should "accept get" in {
-    val get = primitive(ExpressionService.Get)
+    val get = expression(ExpressionService.Get)
     val view = mock[SetStatementView]
     val accepts = PresenterAccepts.acceptsPrimitive(view, get)
     accepts should be(right = true)
   }
   it should "not accept set" in {
-    val set = primitive(StatementService.Set)
+    val set = statement(StatementService.Set)
     val view = mock[SetStatementView]
     val accepts = PresenterAccepts.acceptsPrimitive(view, set)
     accepts should be(right = false)
   }
   it should "not accept print" in {
-    val print = primitive(StatementService.Print)
+    val print = statement(StatementService.Print)
     val view = mock[SetStatementView]
     val accepts = PresenterAccepts.acceptsPrimitive(view, print)
     accepts should be(right = false)
   }
   it should "not accept conditional" in {
-    val conditional = primitive(ExpressionService.Conditional)
+    val conditional = expression(ExpressionService.Conditional)
     val view = mock[SetStatementView]
     val accepts = PresenterAccepts.acceptsPrimitive(view, conditional)
     accepts should be(right = false)
   }
 
-  private def primitive(id: String): PrimitiveRecord =
-    StatementService().find(new RecordId(id))
+  private def expression(id: String): PrimitiveRecord = ExpressionService().find(new RecordId(id))
+
+  private def statement(id: String): PrimitiveRecord = StatementService().find(new RecordId(id))
 
 }
