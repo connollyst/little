@@ -8,7 +8,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfter, FlatSpec}
 import org.mockito.Mockito._
 import com.quane.little.data.model.RecordId
-import com.quane.little.ide.presenter.{PresenterAcceptsStatement, PresenterAcceptsExpression, PresenterAcceptsFunctionReference}
+import com.quane.little.ide.presenter.{PresenterAcceptsStatement, PresenterAcceptsExpression}
 import com.quane.little.ide.view.{View, ViewPresenter}
 import com.quane.little.data.service.{ExpressionService, StatementService}
 
@@ -27,7 +27,7 @@ class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfte
     menu.addExpressionClicked(new RecordId(ExpressionService.PrimitiveGet))
     assertTrue("index should have been resolved", indexCalled)
   }
-  it should "not resolve index until 'add expression' clicked" in {
+  it should "not resolve index until 'add statement' clicked" in {
     val menu = mockMenu()
     assertFalse("index should not be resolved yet", indexCalled)
     menu.addStatementClicked(new RecordId(StatementService.PrimitiveSet))
@@ -70,6 +70,7 @@ class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfte
     extends ViewPresenter
     with PresenterAcceptsExpression
     with PresenterAcceptsStatement
-    with PresenterAcceptsFunctionReference
+
+  // TODO with PresenterAcceptsFunctionReference
 
 }
