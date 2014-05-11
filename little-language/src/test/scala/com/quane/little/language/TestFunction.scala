@@ -1,34 +1,38 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.{Nada, Value}
 import org.junit.runner.RunWith
-import org.scalatest.FunSuite
+import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.ShouldMatchers
 
+/** Test cases for both the [[FunctionDefinition]] and [[FunctionReference]]
+  * classes, asserting aspects of how functions behave in general.
+  *
+  * @author Sean Connolly
+  */
 @RunWith(classOf[JUnitRunner])
-class TestFunction extends FunSuite {
+class TestFunction extends FlatSpec with ShouldMatchers {
 
-  test("test function reference with return from print statement") {
+  "FunctionReference" should "return nada from print statement" in {
     val fun = new FunctionDefinition("myFun")
     fun.addStep(new PrintStatement(Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference("myFun")
     val obj = ref.evaluate(runtime)
-    assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
+    assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }
-
-  test("test function reference with return from set statement") {
+  it should "return nada from set statement" in {
     val fun = new FunctionDefinition("myFun")
     fun.addStep(new SetStatement("Obj", Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference("myFun")
     val obj = ref.evaluate(runtime)
-    assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
+    assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }
-
-  test("test function reference with return from get statement") {
+  it should "return value from get expression" in {
     val fun = new FunctionDefinition("myFun")
     fun.addStep(new SetStatement("Obj", Value("A")))
     fun.addStep(new GetStatement("Obj"))
