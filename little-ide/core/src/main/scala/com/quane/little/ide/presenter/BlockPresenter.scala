@@ -38,7 +38,6 @@ class BlockPresenter[V <: BlockView](view: V)
   private[presenter] def add(step: Expression): Unit = add(step, length)
 
   private[presenter] def add(step: Expression, index: Int): Unit = {
-    println("Adding step @ " + index + ": " + step)
     val presenter =
       step match {
         case s: SetStatement =>

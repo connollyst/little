@@ -35,10 +35,8 @@ class EventListenerPresenter[V <: EventListenerView](view: V)
 
   override def onEventChange(e: Event) = event = e
 
-  override def requestAddFunctionReference(id: RecordId, index: Int) = {
-    println("Adding function reference to event listener")
+  override def requestAddFunctionReference(id: RecordId, index: Int) =
     _function.initialize(FunctionService().findReference(id))
-  }
 
   def compile: EventListener = new EventListener(event, function.compile)
 

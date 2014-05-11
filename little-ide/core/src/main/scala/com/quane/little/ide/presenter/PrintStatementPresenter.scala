@@ -44,7 +44,6 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     * @param e the value expression
     */
   private[presenter] def value_=(e: Expression): Unit = {
-    println("Setting print expression: " + e)
     val presenter =
       e match {
         case v: Value =>

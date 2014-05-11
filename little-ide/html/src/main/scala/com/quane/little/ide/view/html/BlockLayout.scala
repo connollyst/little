@@ -135,13 +135,9 @@ class BlockLayout
 private class BlockStepSeparator(block: BlockLayout)
   extends HorizontalLayout {
 
-  val menu = new ExpressionMenu(block, index)
-
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
-  println("Adding block expression menu..")
-  addComponent(menu)
-  println("Done adding block expression menu..")
+  addComponent(new ExpressionMenu(block, index))
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
   // TODO expand to fill separator height & width
@@ -160,10 +156,7 @@ private class BlockStepSeparator(block: BlockLayout)
       new AddPrimitiveCommand(block.presenter, primitiveId, index)
     )
 
-  def index: Int = {
-    println("Getting separator index..")
-    block.stepIndex(this)
-  }
+  def index: Int = block.stepIndex(this)
 
 }
 
