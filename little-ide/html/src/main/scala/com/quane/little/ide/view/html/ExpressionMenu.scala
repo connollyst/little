@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.vaadin.ui.MenuBar
-import com.quane.little.data.service.{FunctionService, StatementService}
+import com.quane.little.data.service.{ExpressionService, FunctionService, StatementService}
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.ide.presenter.command.{AddStatementCommand, AddExpressionCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 import com.quane.little.ide.view.{ViewPresenter, View}
@@ -30,7 +30,7 @@ class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit 
   /** Initialize the menu items for primitive expressions.
     */
   private def initExpressionMenuItems(): Unit = {
-    StatementService().all foreach {
+    ExpressionService().all foreach {
       expression =>
         if (accepts(expression)) {
           item.addItem(expression.name, new Command {

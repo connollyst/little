@@ -5,7 +5,7 @@ import com.quane.little.language._
 import scala._
 import scala.collection.mutable.ListBuffer
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{StatementService, FunctionService}
+import com.quane.little.data.service.{ExpressionService, StatementService, FunctionService}
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -69,7 +69,7 @@ class BlockPresenter[V <: BlockView](view: V) extends BlockViewPresenter {
 
 
   override def requestAddExpression(id: RecordId, index: Int) = {
-    val presenter = StatementService().findStatement(id) match {
+    val presenter = ExpressionService().findExpression(id) match {
       case get: GetStatement =>
         view.addGetStatement(index).initialize(get)
       case conditional: Conditional =>
