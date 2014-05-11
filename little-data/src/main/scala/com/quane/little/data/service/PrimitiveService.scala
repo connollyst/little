@@ -2,9 +2,9 @@ package com.quane.little.data.service
 
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.language._
-import com.quane.little.language.data.Value
 import scala.collection.immutable
 import scala.Some
+import com.quane.little.language.data.Value
 
 object PrimitiveService {
 
@@ -39,11 +39,10 @@ object PrimitiveService {
 
 }
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** A service for accessing primitives of the little language.
+  *
+  * @author Sean Connolly
+  */
 class PrimitiveService {
 
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
@@ -66,6 +65,11 @@ class PrimitiveService {
     new PrimitiveRecord(id, PrimitiveService.PrimitivesNames(id.oid), PrimitiveFactory.create(id.oid))
 }
 
+/** A factory for creating an [[com.quane.little.language.Expression]] for a
+  * primitive's id.
+  *
+  * @author Sean Connolly
+  */
 object PrimitiveFactory {
 
   def create(id: String): Expression = {
