@@ -1,6 +1,6 @@
 package com.quane.little.data.service
 
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.language.{SetStatement, GetStatement, PrintStatement, Expression}
 import com.quane.little.language.data.Value
 
@@ -35,14 +35,23 @@ object PrimitiveService {
  */
 class PrimitiveService {
 
-  def allPrimitives: List[RecordId] =
+  // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
+
+  def allPrimitives: List[Expression] =
     PrimitiveService.Primitives map {
-      primitive => new RecordId(primitive)
+      id => PrimitiveFactory.create(id)
+    }
+
+  def all: List[PrimitiveRecord] =
+    PrimitiveService.Primitives map {
+      id => new PrimitiveRecord(new RecordId(id), PrimitiveFactory.create(id))
     }
 
   def findPrimitive(id: RecordId): Expression =
-  // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
     PrimitiveFactory.create(id.oid)
+
+  def find(id: RecordId): PrimitiveRecord =
+    new PrimitiveRecord(id, PrimitiveFactory.create(id.oid))
 
 }
 

@@ -17,7 +17,8 @@ class FunctionRecord(val ownerId: RecordId, val category: FunctionCategory, var 
 
   override def equals(other: Any): Boolean = other match {
     case that: FunctionRecord =>
-      id == that.id &&
+      that.isInstanceOf[FunctionRecord] &&
+        id == that.id &&
         ownerId == that.ownerId &&
         definition == that.definition
     case _ => false
