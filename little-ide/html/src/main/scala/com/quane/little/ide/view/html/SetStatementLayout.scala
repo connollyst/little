@@ -2,7 +2,6 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, SetStatementView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
-import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{MenuBar, TextField, HorizontalLayout, Label}
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.ui.MenuBar.Command
@@ -25,7 +24,7 @@ class SetStatementLayout
   with VaadinMixin {
 
   private val nameField = createNameTextField()
-  private var valueComponent: Option[ExpressionView[_]] = None
+  private var valueComponent: Option[ExpressionView[_] with RemovableComponent] = None
 
   setStyleNames(ExpressionLayout.Style, SetStatementLayout.Style)
   setSpacing(true)
@@ -70,7 +69,7 @@ class SetStatementLayout
 
   private def removeValueComponent(): Unit = {
     valueComponent match {
-      case e: Some[ExpressionView[_]] => throw new NotImplementedError("drink") //e.get.removeFromParent()
+      case Some(v) => v.removeFromParent()
       case None => // do nothing
     }
     valueComponent = None
