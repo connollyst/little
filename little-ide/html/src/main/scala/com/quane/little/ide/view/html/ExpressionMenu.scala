@@ -89,6 +89,6 @@ class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit 
   }
 
   private def accepts(primitive: PrimitiveRecord): Boolean =
-    PresenterAccepts.acceptsPrimitive(view, primitive)
+    PresenterAccepts.accepts(view, primitive)
 
 }

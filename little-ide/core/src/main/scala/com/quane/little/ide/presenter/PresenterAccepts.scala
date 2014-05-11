@@ -6,7 +6,7 @@ import com.quane.little.ide.view.{ViewPresenter, View}
 
 object PresenterAccepts {
 
-  def acceptsPrimitive[P <: ViewPresenter](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
+  def accepts[P <: ViewPresenter](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
     record.id.oid match {
       case StatementService.Set => m <:< manifest[PresenterAcceptsStatement]
       case StatementService.Print => m <:< manifest[PresenterAcceptsStatement]
