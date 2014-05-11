@@ -36,7 +36,8 @@ class Conditional(val test: Expression, val then: Block, val otherwise: Block)
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("test", test)
-      .add("block", then)
+      .add("then", then)
+      .add("else", otherwise)
       .toString
 
 }

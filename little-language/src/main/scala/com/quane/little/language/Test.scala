@@ -8,9 +8,7 @@ import com.quane.little.language.data.Value
   * @param operator the test operator
   * @param right the right operand
   */
-class Test(left: Expression,
-           operator: LogicalOperator,
-           right: Expression)
+class Test(left: Expression, operator: LogicalOperator, right: Expression)
   extends Expression {
 
   override def evaluate(scope: Scope): Value = Value(isTrue(scope))

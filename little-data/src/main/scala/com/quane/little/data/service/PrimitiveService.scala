@@ -1,9 +1,10 @@
 package com.quane.little.data.service
 
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
-import com.quane.little.language.{SetStatement, GetStatement, PrintStatement, Expression}
+import com.quane.little.language._
 import com.quane.little.language.data.Value
 import scala.collection.immutable
+import scala.Some
 
 object PrimitiveService {
 
@@ -20,15 +21,20 @@ object PrimitiveService {
   val PrimitiveGet = "_little_get"
   val PrimitiveSet = "_little_set"
   val PrimitivePrint = "_little_print"
+  val PrimitiveConditional = "_little_conditional"
+
   val Primitives = immutable.List[String](
     PrimitiveGet,
     PrimitiveSet,
-    PrimitivePrint
+    PrimitivePrint,
+    PrimitiveConditional
   )
+
   val PrimitivesNames = immutable.Map[String, String](
     PrimitiveGet -> "get",
     PrimitiveSet -> "set",
-    PrimitivePrint -> "print"
+    PrimitivePrint -> "print",
+    PrimitiveConditional -> "if/else"
   )
 
 }
@@ -67,6 +73,7 @@ object PrimitiveFactory {
       case PrimitiveService.PrimitiveGet => new GetStatement("")
       case PrimitiveService.PrimitiveSet => new SetStatement("", Value(""))
       case PrimitiveService.PrimitivePrint => new PrintStatement(Value(""))
+      case PrimitiveService.PrimitiveConditional => new Conditional(new Evaluation(Value(1), Equals, Value(1)))
       case _ => throw new IllegalAccessException("No primitive '" + id + "'")
     }
   }
