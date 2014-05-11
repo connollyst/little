@@ -16,6 +16,11 @@ object GamespaceLayout {
   val GameURL = new ExternalResource("http://127.0.0.1/little")
 }
 
+/** Layout containing the core game elements: a display of the game itself and
+  * the tools for editing the [[EventListener]] list.
+  *
+  * @author Sean connolly
+  */
 class GamespaceLayout
   extends VerticalSplitPanel
   with GamespaceView {
@@ -35,6 +40,10 @@ class GamespaceLayout
 
 }
 
+/** Browser frame displaying the game.
+  *
+  * @author Sean connolly
+  */
 class GamespaceViewer
   extends BrowserFrame("", GamespaceLayout.GameURL) {
 
@@ -43,6 +52,13 @@ class GamespaceViewer
 
 }
 
+/** Layout containing this user's [[EventListener]] list and controls for
+  * creating and editing them.
+  *
+  * @param view the root gamespace layout
+  *
+  * @author Sean connolly
+  */
 class GamespaceListenerLayout(view: GamespaceLayout)
   extends VerticalLayout
   with VaadinMixin {
