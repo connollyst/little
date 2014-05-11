@@ -2,13 +2,15 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-trait GetStatementView extends ExpressionView[GetStatementViewPresenter] {
+trait GetStatementView
+  extends ExpressionView[GetStatementViewPresenter] {
 
   def setName(name: String): Unit
 
 }
 
-trait SetStatementView extends ExpressionView[SetStatementViewPresenter] {
+trait SetStatementView
+  extends ExpressionView[SetStatementViewPresenter] {
 
   def setName(name: String): Unit
 
@@ -20,7 +22,8 @@ trait SetStatementView extends ExpressionView[SetStatementViewPresenter] {
 
 }
 
-trait PrintStatementView extends ExpressionView[PrintStatementViewPresenter] {
+trait PrintStatementView
+  extends ExpressionView[PrintStatementViewPresenter] {
 
   def createValueStatement(): ValuePresenter[_ <: ValueView]
 
@@ -30,7 +33,8 @@ trait PrintStatementView extends ExpressionView[PrintStatementViewPresenter] {
 
 }
 
-trait GetStatementViewPresenter extends ExpressionViewPresenter {
+trait GetStatementViewPresenter
+  extends ExpressionViewPresenter {
 
   def onNameChange(name: String): Unit
 
@@ -38,7 +42,7 @@ trait GetStatementViewPresenter extends ExpressionViewPresenter {
 
 trait SetStatementViewPresenter
   extends ExpressionViewPresenter
-  with PresenterAcceptsPrimitive
+  with PresenterAcceptsGet
   with PresenterAcceptsFunctionReference {
 
   def onNameChange(name: String): Unit
@@ -47,5 +51,5 @@ trait SetStatementViewPresenter
 
 trait PrintStatementViewPresenter
   extends ExpressionViewPresenter
-  with PresenterAcceptsPrimitive
+  with PresenterAcceptsGet
   with PresenterAcceptsFunctionReference
