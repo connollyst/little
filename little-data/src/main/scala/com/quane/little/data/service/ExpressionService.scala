@@ -18,17 +18,17 @@ object ExpressionService {
     instance.get
   }
 
-  val PrimitiveGet = "_little_get"
-  val PrimitiveConditional = "_little_conditional"
+  val Get = "_little_get"
+  val Conditional = "_little_conditional"
 
-  val Primitives = immutable.List[String](
-    PrimitiveGet,
-    PrimitiveConditional
+  val All = immutable.List[String](
+    Get,
+    Conditional
   )
 
-  val PrimitivesNames = immutable.Map[String, String](
-    PrimitiveGet -> "get",
-    PrimitiveConditional -> "if/else"
+  val Names = immutable.Map[String, String](
+    Get -> "get",
+    Conditional -> "if/else"
   )
 
 }
@@ -42,12 +42,12 @@ class ExpressionService {
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
   def allExpressions: Iterable[Expression] =
-    ExpressionService.Primitives map {
+    ExpressionService.All map {
       id => ExpressionFactory.create(id)
     }
 
   def all: Iterable[PrimitiveRecord] =
-    ExpressionService.Primitives map {
+    ExpressionService.All map {
       id => createRecord(new RecordId(id))
     }
 
@@ -56,7 +56,7 @@ class ExpressionService {
   def find(id: RecordId): PrimitiveRecord = createRecord(id)
 
   def createRecord(id: RecordId): PrimitiveRecord =
-    new PrimitiveRecord(id, ExpressionService.PrimitivesNames(id.oid), ExpressionFactory.create(id.oid))
+    new PrimitiveRecord(id, ExpressionService.Names(id.oid), ExpressionFactory.create(id.oid))
 }
 
 /** A factory for creating an [[com.quane.little.language.Expression]] for a
@@ -68,8 +68,8 @@ object ExpressionFactory {
 
   def create(id: String): Expression = {
     id match {
-      case ExpressionService.PrimitiveGet => new GetStatement("")
-      case ExpressionService.PrimitiveConditional => new Conditional(new Evaluation(Value(1), Equals, Value(1)))
+      case ExpressionService.Get => new GetStatement("")
+      case ExpressionService.Conditional => new Conditional(new Evaluation(Value(1), Equals, Value(1)))
       case _ => throw new IllegalAccessException("No expression '" + id + "'")
     }
   }

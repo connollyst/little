@@ -8,10 +8,10 @@ object PresenterAccepts {
 
   def acceptsPrimitive[P <: ViewPresenter](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
     record.id.oid match {
-      case StatementService.PrimitiveSet => m <:< manifest[PresenterAcceptsStatement]
-      case StatementService.PrimitivePrint => m <:< manifest[PresenterAcceptsStatement]
-      case ExpressionService.PrimitiveGet => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.PrimitiveConditional => m <:< manifest[PresenterAcceptsExpression]
+      case StatementService.Set => m <:< manifest[PresenterAcceptsStatement]
+      case StatementService.Print => m <:< manifest[PresenterAcceptsStatement]
+      case ExpressionService.Get => m <:< manifest[PresenterAcceptsExpression]
+      case ExpressionService.Conditional => m <:< manifest[PresenterAcceptsExpression]
       case _ => throw new IllegalArgumentException("Unsupported primitive type: " + record.id.oid)
     }
 

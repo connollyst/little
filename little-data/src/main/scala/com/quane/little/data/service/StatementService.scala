@@ -18,17 +18,17 @@ object StatementService {
     instance.get
   }
 
-  val PrimitiveSet = "_little_set"
-  val PrimitivePrint = "_little_print"
+  val Set = "_little_set"
+  val Print = "_little_print"
 
-  val Primitives = immutable.List[String](
-    PrimitiveSet,
-    PrimitivePrint
+  val All = immutable.List[String](
+    Set,
+    Print
   )
 
-  val PrimitivesNames = immutable.Map[String, String](
-    PrimitiveSet -> "set",
-    PrimitivePrint -> "print"
+  val Names = immutable.Map[String, String](
+    Set -> "set",
+    Print -> "print"
   )
 
 }
@@ -41,22 +41,22 @@ class StatementService {
 
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
-  def allPrimitives: Iterable[EvaluableCode] =
-    StatementService.Primitives map {
+  def allStatement: Iterable[EvaluableCode] =
+    StatementService.All map {
       id => StatementFactory.create(id)
     }
 
   def all: Iterable[PrimitiveRecord] =
-    StatementService.Primitives map {
+    StatementService.All map {
       id => createRecord(new RecordId(id))
     }
 
-  def findPrimitive(id: RecordId): EvaluableCode = StatementFactory.create(id.oid)
+  def findStatement(id: RecordId): EvaluableCode = StatementFactory.create(id.oid)
 
   def find(id: RecordId): PrimitiveRecord = createRecord(id)
 
   def createRecord(id: RecordId): PrimitiveRecord =
-    new PrimitiveRecord(id, StatementService.PrimitivesNames(id.oid), StatementFactory.create(id.oid))
+    new PrimitiveRecord(id, StatementService.Names(id.oid), StatementFactory.create(id.oid))
 }
 
 /** A factory for creating an [[com.quane.little.language.Expression]] for a
@@ -68,8 +68,8 @@ object StatementFactory {
 
   def create(id: String): EvaluableCode = {
     id match {
-      case StatementService.PrimitiveSet => new SetStatement("", Value(""))
-      case StatementService.PrimitivePrint => new PrintStatement(Value(""))
+      case StatementService.Set => new SetStatement("", Value(""))
+      case StatementService.Print => new PrintStatement(Value(""))
       case _ => throw new IllegalAccessException("No statement '" + id + "'")
     }
   }

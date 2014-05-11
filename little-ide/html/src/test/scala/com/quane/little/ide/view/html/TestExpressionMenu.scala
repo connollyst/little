@@ -24,13 +24,13 @@ class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfte
   "ExpressionMenu" should "not resolve index until 'add expression' clicked" in {
     val menu = mockMenu()
     assertFalse("index should not be resolved yet", indexCalled)
-    menu.addExpressionClicked(new RecordId(ExpressionService.PrimitiveGet))
+    menu.addExpressionClicked(new RecordId(ExpressionService.Get))
     assertTrue("index should have been resolved", indexCalled)
   }
   it should "not resolve index until 'add statement' clicked" in {
     val menu = mockMenu()
     assertFalse("index should not be resolved yet", indexCalled)
-    menu.addStatementClicked(new RecordId(StatementService.PrimitiveSet))
+    menu.addStatementClicked(new RecordId(StatementService.Set))
     assertTrue("index should have been resolved", indexCalled)
   }
   it should "not resolve index until 'add function' clicked" in {

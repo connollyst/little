@@ -69,7 +69,7 @@ class BlockPresenter[V <: BlockView](view: V) extends BlockViewPresenter {
 
 
   override def requestAddExpression(id: RecordId, index: Int) = {
-    val presenter = StatementService().findPrimitive(id) match {
+    val presenter = StatementService().findStatement(id) match {
       case get: GetStatement =>
         view.addGetStatement(index).initialize(get)
       case conditional: Conditional =>
@@ -81,7 +81,7 @@ class BlockPresenter[V <: BlockView](view: V) extends BlockViewPresenter {
   }
 
   override def requestAddStatement(id: RecordId, index: Int) = {
-    val presenter = StatementService().findPrimitive(id) match {
+    val presenter = StatementService().findStatement(id) match {
       case set: SetStatement =>
         view.addSetStatement(index).initialize(set)
       case print: PrintStatement =>
