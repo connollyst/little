@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.presenter._
-import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
+import com.quane.little.ide.view.BlockView
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
@@ -122,13 +122,6 @@ class BlockLayout
   //  def component(index: Int): Component = {
   //    super.components[index]
   //  }
-
-  def requestAddConditional(index: Int) = {
-    // TODO: DEBUGGING: I think the way we are using generics doesn't extend to
-    val pres: BlockViewPresenter = presenter
-    pres.requestAddConditional(index)
-    presenter.requestAddConditional(index)
-  }
 
 }
 

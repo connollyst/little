@@ -31,8 +31,4 @@ trait BlockViewPresenter
   with PresenterAcceptsSet
   with PresenterAcceptsPrint
   with PresenterAcceptsConditional
-  with PresenterAcceptsFunctionReference {
-
-  def requestAddConditional(index: Int): Unit
-
-}
+  with PresenterAcceptsFunctionReference

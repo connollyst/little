@@ -70,22 +70,21 @@ class BlockPresenter[V <: BlockView](view: V)
   private[presenter] def get(index: Int): ExpressionPresenter = _steps(index)
 
 
-  override def requestAddPrimitive(id: RecordId, index: Int) =
-    PrimitiveService().findPrimitive(id) match {
+  override def requestAddPrimitive(id: RecordId, index: Int) = {
+    val presenter = PrimitiveService().findPrimitive(id) match {
       case get: GetStatement =>
-        val presenter = view.addGetStatement(index).initialize(get)
-        add(presenter, index)
+        view.addGetStatement(index).initialize(get)
       case set: SetStatement =>
-        val presenter = view.addSetStatement(index).initialize(set)
-        add(presenter, index)
+        view.addSetStatement(index).initialize(set)
       case print: PrintStatement =>
-        val presenter = view.addPrintStatement(index).initialize(print)
-        add(presenter, index)
+        view.addPrintStatement(index).initialize(print)
+      case conditional: Conditional =>
+        view.addConditional(index).initialize(conditional)
       case primitive: Any =>
-        throw new IllegalArgumentException("Unsupported primitive " + primitive)
+        throw new IllegalArgumentException("Unsupported primitive: " + primitive)
     }
-
-  override def requestAddConditional(index: Int) = add(view.addConditional(index), index)
+    add(presenter, index)
+  }
 
   override def requestAddFunctionReference(id: RecordId, index: Int) = {
     val fun = FunctionService().findReference(id)

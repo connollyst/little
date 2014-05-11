@@ -16,8 +16,6 @@ class Conditional(val test: Expression, val then: Block, val otherwise: Block)
     this(test, new Block, new Block)
   }
 
-  def steps: List[Expression] = then.steps
-
   def addStep(step: Expression): Conditional = {
     then.addStep(step)
     this
