@@ -26,7 +26,6 @@ class GetStatementLayout
   nameField.setStyleName(GetStatementLayout.StyleValue)
 
   addComponent(nameField)
-  addComponent(CloseButton(this))
 
   override def setName(name: String): Unit = nameField.setValue(name)
 

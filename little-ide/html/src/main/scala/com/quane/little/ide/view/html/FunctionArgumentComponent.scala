@@ -26,7 +26,6 @@ class FunctionArgumentComponent
   addComponent(nameLabel)
   addComponent(new Label("="))
   addComponent(new ExpressionMenu(this))
-  addComponent(CloseButton(this))
 
   private def value[T <: ExpressionView[_] with RemovableComponent]: T =
     valueComponent match {
