@@ -2,12 +2,13 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.RecordId
 
-/**
- *
- *
- * @author Sean Connolly
- */
 sealed trait PresenterAccepts
+
+trait PresenterAcceptsPrimitive extends PresenterAccepts {
+
+  def requestAddPrimitive(id: RecordId, index: Int): Unit
+
+}
 
 trait PresenterAcceptsValue extends PresenterAccepts {
 

@@ -16,32 +16,26 @@ sealed trait IDECommand {
 
 }
 
+class AddPrimitiveCommand(receiver: PresenterAcceptsPrimitive, id: RecordId, index: Int = 0) extends IDECommand {
+  override private[presenter] def execute() = receiver.requestAddPrimitive(id, index)
+}
+
 class AddValueCommand(receiver: PresenterAcceptsValue, index: Int = 0) extends IDECommand {
-
-  override private[presenter] def execute(): Unit = receiver.requestAddTextLiteral(index)
-
+  override private[presenter] def execute() = receiver.requestAddTextLiteral(index)
 }
 
 class AddGetterCommand(receiver: PresenterAcceptsGetter, index: Int = 0) extends IDECommand {
-
-  override private[presenter] def execute(): Unit = receiver.requestAddGetStatement(index)
-
+  override private[presenter] def execute() = receiver.requestAddGetStatement(index)
 }
 
 class AddFunctionReferenceCommand(receiver: PresenterAcceptsFunctionReference, id: RecordId, index: Int = 0) extends IDECommand {
-
-  override private[presenter] def execute(): Unit = receiver.requestAddFunctionReference(id, index)
-
+  override private[presenter] def execute() = receiver.requestAddFunctionReference(id, index)
 }
 
 class AddFunctionDefinitionCommand(receiver: PresenterAcceptsFunctionDefinition, id: RecordId, index: Int = 0) extends IDECommand {
-
-  override private[presenter] def execute(): Unit = receiver.requestAddFunctionDefinition(id, index)
-
+  override private[presenter] def execute() = receiver.requestAddFunctionDefinition(id, index)
 }
 
 class AddEventListenerCommand(receiver: PresenterAcceptsEventListener, id: RecordId, index: Int = 0) extends IDECommand {
-
-  override private[presenter] def execute(): Unit = receiver.requestAddEventListener(id, index)
-
+  override private[presenter] def execute() = receiver.requestAddEventListener(id, index)
 }

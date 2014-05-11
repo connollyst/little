@@ -66,6 +66,8 @@ class WorkspaceDropHandler(workspace: WorkspaceLayout) extends DropHandler {
         IDECommandExecutor.execute(
           new AddEventListenerCommand(workspace.presenter, transferable.codeId)
         )
+      case _ =>
+        throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
     }
 
 }

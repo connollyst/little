@@ -28,6 +28,7 @@ trait BlockView extends View[BlockViewPresenter] {
 
 trait BlockViewPresenter
   extends ViewPresenter
+  with PresenterAcceptsPrimitive
   with PresenterAcceptsGetter
   with PresenterAcceptsFunctionReference {
 

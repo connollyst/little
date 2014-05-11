@@ -5,11 +5,11 @@ import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.vaadin.ui.MenuBar.Command
-import com.quane.little.ide.presenter.command.{AddGetterCommand, AddFunctionReferenceCommand, IDECommandExecutor}
+import com.quane.little.ide.presenter.command._
 import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.DroppableTarget
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.{CodeCategory, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.data.service.FunctionService
 
@@ -140,17 +140,8 @@ private class BlockStepSeparator(block: BlockLayout)
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
   addComponent(new BlockMenuBar(block, this))
-  val dndTarget = new DroppableTarget[HorizontalLayout](new HorizontalLayout())
-  dndTarget.setDropHandler(new DropHandler {
-    override def getAcceptCriterion = AcceptAll.get()
-
-    override def drop(event: DragAndDropEvent) =
-      event.getTransferable match {
-        case transferable: CodeTransferable => addFunction(transferable.codeId)
-        case _ =>
-          throw new IllegalArgumentException("Expected " + classOf[CodeTransferable])
-      }
-  })
+  val dndTarget = new DroppableTarget(new HorizontalLayout())
+  dndTarget.setDropHandler(new BlockDropHandler(this))
   // TODO expand to fill separator height & width
   dndTarget.component.setHeight("20px")
   dndTarget.component.setWidth("200px")
@@ -160,6 +151,11 @@ private class BlockStepSeparator(block: BlockLayout)
   def addFunction(functionId: RecordId) =
     IDECommandExecutor.execute(
       new AddFunctionReferenceCommand(block.presenter, functionId, index)
+    )
+
+  def addPrimitive(primitiveId: RecordId) =
+    IDECommandExecutor.execute(
+      new AddPrimitiveCommand(block.presenter, primitiveId, index)
     )
 
   def index: Int = block.stepIndex(this)
@@ -193,5 +189,27 @@ private class BlockMenuBar(block: BlockLayout, separator: BlockStepSeparator)
           separator.addFunction(function.id)
       })
   }
+
+}
+
+
+/**
+ * Handler for drag &amp; drop events onto a block.
+ *
+ * @param block the block to interact with
+ */
+class BlockDropHandler(block: BlockStepSeparator) extends DropHandler {
+
+  override def getAcceptCriterion = AcceptAll.get()
+
+  override def drop(event: DragAndDropEvent) =
+    event.getTransferable match {
+      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
+        block.addFunction(transferable.codeId)
+      case transferable: CodeTransferable if transferable.category == CodeCategory.Primitive =>
+        block.addPrimitive(transferable.codeId)
+      case _ =>
+        throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
+    }
 
 }

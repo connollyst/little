@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
 import com.quane.little.data.model.{CodeCategory, FunctionCategory}
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.{PrimitiveService, FunctionService}
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -15,9 +15,16 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
   view.registerViewPresenter(this)
 
   // Initialize the tabs
+  view.createToolboxTab(CodeCategory.Primitive)
   FunctionCategory.values foreach {
     category =>
       view.createToolboxTab(CodeCategory.Function, category)
+  }
+
+  // Load all primitives
+  PrimitiveService().allPrimitives foreach {
+    primitive =>
+      view.createToolboxItem(CodeCategory.Primitive, primitive.oid, primitive)
   }
 
   // Load this user's code

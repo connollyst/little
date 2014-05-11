@@ -5,7 +5,7 @@ import com.quane.little.language._
 import scala._
 import scala.collection.mutable.ListBuffer
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.{PrimitiveService, FunctionService}
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -69,6 +69,22 @@ class BlockPresenter[V <: BlockView](view: V)
     * @return the step presenter
     */
   private[presenter] def get(index: Int): ExpressionPresenter = _steps(index)
+
+
+  override def requestAddPrimitive(id: RecordId, index: Int) =
+    PrimitiveService().findPrimitive(id) match {
+      case get: GetStatement =>
+        val presenter = view.addGetStatement(index).initialize(get)
+        add(presenter, index)
+      case set: SetStatement =>
+        val presenter = view.addSetStatement(index).initialize(set)
+        add(presenter, index)
+      case print: PrintStatement =>
+        val presenter = view.addPrintStatement(index).initialize(print)
+        add(presenter, index)
+      case primitive: Any =>
+        throw new IllegalArgumentException("Unsupported primitive " + primitive)
+    }
 
   override def requestAddConditional(index: Int) = add(view.addConditional(index), index)
 

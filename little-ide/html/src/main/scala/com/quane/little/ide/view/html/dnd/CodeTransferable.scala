@@ -7,6 +7,7 @@ import com.vaadin.event.Transferable
 import com.quane.little.data.model.RecordId
 import com.vaadin.ui.Component
 import com.quane.little.data.model.CodeCategory._
+import com.google.common.base.Objects
 
 object CodeTransferable {
   val CODE_CATEGORY = "little-code-category"
@@ -28,4 +29,10 @@ class CodeTransferable(source: Component, val category: CodeCategory, val codeId
 
   override def getData(dataFlavor: String): AnyRef = data(dataFlavor)
 
+  override def toString: String =
+    Objects.toStringHelper(getClass)
+      .add("category", category)
+      .add("id", codeId)
+      .add("source", source)
+      .toString
 }
