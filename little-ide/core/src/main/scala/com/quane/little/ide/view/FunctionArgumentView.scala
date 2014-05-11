@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
+import com.quane.little.ide.presenter._
 
 trait FunctionArgumentView extends View[FunctionArgumentViewPresenter] {
 
@@ -14,12 +14,11 @@ trait FunctionArgumentView extends View[FunctionArgumentViewPresenter] {
 
 }
 
-trait FunctionArgumentViewPresenter extends ViewPresenter {
+trait FunctionArgumentViewPresenter
+  extends ViewPresenter
+  with PresenterAcceptsGet
+  with PresenterAcceptsFunctionReference {
 
   def requestAddTextLiteral(): Unit
-
-  def requestAddGetStatement(): Unit
-
-  def requestAddFunctionReference(name: String): Unit
 
 }

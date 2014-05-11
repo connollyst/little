@@ -2,7 +2,6 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
 import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetStatementPresenter, ValuePresenter}
-import com.quane.little.language.exceptions.NotImplementedError
 import com.vaadin.ui.{Label, HorizontalLayout}
 
 object FunctionArgumentComponent {
@@ -19,7 +18,7 @@ class FunctionArgumentComponent
   with RemovableComponent {
 
   private val nameLabel = new Label()
-  private var valueComponent: Option[ExpressionView[_]] = None
+  private var valueComponent: Option[ExpressionView[_] with RemovableComponent] = None
 
   setStyleName(FunctionArgumentComponent.Style)
   setSpacing(true)
@@ -29,33 +28,41 @@ class FunctionArgumentComponent
   addComponent(new ExpressionMenu(this))
   addComponent(CloseButton(this))
 
-  override def createValueStatement(): ValuePresenter[ValueLayout] = {
+  private def value[T <: ExpressionView[_] with RemovableComponent]: T =
+    valueComponent match {
+      case Some(v) => v match {
+        case t: T => t
+        case _ =>
+          throw new IllegalAccessException("Didn't expect value component to be a" + v.getClass)
+      }
+      case None =>
+        throw new IllegalAccessException("Expected value component")
+    }
+
+  private def value_=(view: ExpressionView[_] with RemovableComponent) = {
     removeValueComponent()
-    val view = new ValueLayout
     valueComponent = Some(view)
     addComponent(view)
-    new ValuePresenter(view)
+  }
+
+  override def createValueStatement(): ValuePresenter[ValueLayout] = {
+    value = new ValueLayout
+    new ValuePresenter(value)
   }
 
   override def createGetStatement(): GetStatementPresenter[GetStatementLayout] = {
-    removeValueComponent()
-    val view = new GetStatementLayout
-    valueComponent = Some(view)
-    addComponent(view)
-    new GetStatementPresenter(view)
+    value = new GetStatementLayout
+    new GetStatementPresenter(value)
   }
 
   override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceLayout] = {
-    removeValueComponent()
-    val view = new FunctionReferenceLayout
-    valueComponent = Some(view)
-    addComponent(view)
-    new FunctionReferencePresenter(view)
+    value = new FunctionReferenceLayout
+    new FunctionReferencePresenter(value)
   }
 
   private def removeValueComponent(): Unit = {
     valueComponent match {
-      case e: Some[ExpressionView[_]] => throw new NotImplementedError("booooozzzzeeee") // e.get.removeFromParent()
+      case Some(e) => e.removeFromParent()
       case None => // do nothing
     }
     valueComponent = None

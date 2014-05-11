@@ -3,6 +3,8 @@ package com.quane.little.ide.presenter
 import com.quane.little.ide.view.{FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, GetStatement, Expression}
+import com.quane.little.data.model.RecordId
+import com.quane.little.data.service.{FunctionService, PrimitiveService}
 
 /** A presenter for views representing a function reference argument.
   *
@@ -46,6 +48,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   private[presenter] def value_=(e: Expression): Unit = {
     val presenter =
       e match {
+        // TODO skip if nothing has changed
         case v: Value =>
           view.createValueStatement().initialize(v)
         case g: GetStatement =>
@@ -60,12 +63,11 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   // TODO skip if already a value statement
   override def requestAddTextLiteral() = _value = Some(view.createValueStatement())
 
-  // TODO skip if already a get statement
-  override def requestAddGetStatement() = _value = Some(view.createGetStatement())
+  override def requestAddPrimitive(id: RecordId, index: Int) =
+    value = PrimitiveService().findPrimitive(id)
 
-  // TODO skip if already this function reference
-  // TODO we need to look up the function definition
-  override def requestAddFunctionReference(name: String) = _value = Some(view.createFunctionReference())
+  override def requestAddFunctionReference(id: RecordId, index: Int) =
+    value = FunctionService().findReference(id)
 
   override def compile: Expression = value.compile
 
