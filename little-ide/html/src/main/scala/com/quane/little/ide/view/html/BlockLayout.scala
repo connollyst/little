@@ -168,7 +168,7 @@ private class BlockMenuBar(separator: BlockStepSeparator)
   val item = addItem("+", null, null)
   PrimitiveService().all foreach {
     primitive =>
-      item.addItem(primitive.id.oid, null, new Command {
+      item.addItem(primitive.name, null, new Command {
         override def menuSelected(selectedItem: MenuBar#MenuItem) =
           separator.addPrimitive(primitive.id)
       })

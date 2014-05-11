@@ -8,7 +8,7 @@ import com.google.common.base.Objects
   *
   * @author Sean Connolly
   */
-class PrimitiveRecord(var id: RecordId, val expression: Expression)
+class PrimitiveRecord(var id: RecordId, val name: String, val expression: Expression)
   extends HasRecordId {
 
   override def equals(other: Any): Boolean = other match {

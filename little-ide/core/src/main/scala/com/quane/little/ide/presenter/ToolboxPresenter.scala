@@ -24,7 +24,7 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)
   // Load all primitives
   PrimitiveService().all foreach {
     primitive =>
-      view.createToolboxItem(CodeCategory.Primitive, primitive.id.oid, primitive.id)
+      view.createToolboxItem(CodeCategory.Primitive, primitive.name, primitive.id)
   }
 
   // Load this user's code

@@ -4,9 +4,9 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.data.Value
 import com.quane.little.language.{SetStatement, GetStatement, PrintStatement}
 import com.quane.little.data.model.RecordId
+import com.quane.little.language.data.Value
 
 /** Test cases for the [[com.quane.little.data.service.ListenerService]]
   *
