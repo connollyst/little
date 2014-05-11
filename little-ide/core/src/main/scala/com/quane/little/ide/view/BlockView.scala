@@ -28,7 +28,9 @@ trait BlockView extends View[BlockViewPresenter] {
 
 trait BlockViewPresenter
   extends ViewPresenter
-  with PresenterAcceptsPrimitive
+  with PresenterAcceptsSet
+  with PresenterAcceptsPrint
+  with PresenterAcceptsConditional
   with PresenterAcceptsFunctionReference {
 
   def requestAddConditional(index: Int): Unit
