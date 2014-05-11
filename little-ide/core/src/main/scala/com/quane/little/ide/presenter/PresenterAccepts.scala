@@ -1,17 +1,17 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
-import com.quane.little.data.service.PrimitiveService
+import com.quane.little.data.service.{ExpressionService, StatementService}
 import com.quane.little.ide.view.{ViewPresenter, View}
 
 object PresenterAccepts {
 
   def acceptsPrimitive[P <: ViewPresenter](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
     record.id.oid match {
-      case PrimitiveService.PrimitiveGet => m <:< manifest[PresenterAcceptsGet]
-      case PrimitiveService.PrimitiveSet => m <:< manifest[PresenterAcceptsSet]
-      case PrimitiveService.PrimitivePrint => m <:< manifest[PresenterAcceptsPrint]
-      case PrimitiveService.PrimitiveConditional => m <:< manifest[PresenterAcceptsConditional]
+      case StatementService.PrimitiveSet => m <:< manifest[PresenterAcceptsStatement]
+      case StatementService.PrimitivePrint => m <:< manifest[PresenterAcceptsStatement]
+      case ExpressionService.PrimitiveGet => m <:< manifest[PresenterAcceptsExpression]
+      case ExpressionService.PrimitiveConditional => m <:< manifest[PresenterAcceptsExpression]
       case _ => throw new IllegalArgumentException("Unsupported primitive type: " + record.id.oid)
     }
 
@@ -19,19 +19,17 @@ object PresenterAccepts {
 
 sealed trait PresenterAccepts
 
-trait PresenterAcceptsPrimitive extends PresenterAccepts {
+trait PresenterAcceptsExpression extends PresenterAccepts {
 
-  def requestAddPrimitive(id: RecordId, index: Int): Unit
+  def requestAddExpression(id: RecordId, index: Int): Unit
 
 }
 
-trait PresenterAcceptsGet extends PresenterAcceptsPrimitive
+trait PresenterAcceptsStatement extends PresenterAccepts {
 
-trait PresenterAcceptsSet extends PresenterAcceptsPrimitive
+  def requestAddStatement(id: RecordId, index: Int): Unit
 
-trait PresenterAcceptsPrint extends PresenterAcceptsPrimitive
-
-trait PresenterAcceptsConditional extends PresenterAcceptsPrimitive
+}
 
 trait PresenterAcceptsFunctionReference extends PresenterAccepts {
 

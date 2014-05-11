@@ -1,11 +1,11 @@
 package com.quane.little.ide.view.html
 
 import com.vaadin.ui.MenuBar
-import com.quane.little.data.service.{FunctionService, PrimitiveService}
+import com.quane.little.data.service.{FunctionService, StatementService}
 import com.vaadin.ui.MenuBar.Command
-import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddPrimitiveCommand, IDECommandExecutor}
+import com.quane.little.ide.presenter.command.{AddStatementCommand, AddExpressionCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 import com.quane.little.ide.view.{ViewPresenter, View}
-import com.quane.little.ide.presenter.{PresenterAccepts, PresenterAcceptsPrimitive, PresenterAcceptsFunctionReference}
+import com.quane.little.ide.presenter.{PresenterAcceptsStatement, PresenterAcceptsExpression, PresenterAccepts, PresenterAcceptsFunctionReference}
 import com.quane.little.data.model.{RecordId, PrimitiveRecord}
 
 /** A menu for selecting an [[com.quane.little.language.Expression]] to be added
@@ -23,20 +23,36 @@ class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit 
   })
 
   private val item = addItem("∆", null)
-  initPrimitiveMenuItems()
+  initExpressionMenuItems()
+  initStatementMenuItems()
   initFunctionMenuItems()
 
   /** Initialize the menu items for primitive expressions.
     */
-  private def initPrimitiveMenuItems(): Unit = {
-    PrimitiveService().all foreach {
-      primitive =>
-        if (accepts(primitive)) {
-          item.addItem(primitive.name, new Command {
-            def menuSelected(selectedItem: MenuBar#MenuItem) = addPrimitiveClicked(primitive.id)
+  private def initExpressionMenuItems(): Unit = {
+    StatementService().all foreach {
+      expression =>
+        if (accepts(expression)) {
+          item.addItem(expression.name, new Command {
+            def menuSelected(selectedItem: MenuBar#MenuItem) = addExpressionClicked(expression.id)
           })
         } else {
-          item.addItem(primitive.name, null).setEnabled(false)
+          item.addItem(expression.name, null).setEnabled(false)
+        }
+    }
+  }
+
+  /** Initialize the menu items for primitive expressions.
+    */
+  private def initStatementMenuItems(): Unit = {
+    StatementService().all foreach {
+      statement =>
+        if (accepts(statement)) {
+          item.addItem(statement.name, new Command {
+            def menuSelected(selectedItem: MenuBar#MenuItem) = addStatementClicked(statement.id)
+          })
+        } else {
+          item.addItem(statement.name, null).setEnabled(false)
         }
     }
   }
@@ -57,17 +73,22 @@ class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit 
     }
   }
 
-  private def accepts(primitive: PrimitiveRecord): Boolean =
-    PresenterAccepts.acceptsPrimitive(view, primitive)
+  def addExpressionClicked(id: RecordId) = {
+    val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
+    IDECommandExecutor.execute(new AddExpressionCommand(p, id, index))
+  }
 
-  def addPrimitiveClicked(id: RecordId) = {
-    val p = view.presenter.asInstanceOf[PresenterAcceptsPrimitive]
-    IDECommandExecutor.execute(new AddPrimitiveCommand(p, id, index))
+  def addStatementClicked(id: RecordId) = {
+    val p = view.presenter.asInstanceOf[PresenterAcceptsStatement]
+    IDECommandExecutor.execute(new AddStatementCommand(p, id, index))
   }
 
   def addFunctionClicked(id: RecordId) = {
     val p = view.presenter.asInstanceOf[PresenterAcceptsFunctionReference]
     IDECommandExecutor.execute(new AddFunctionReferenceCommand(p, id, index))
   }
+
+  private def accepts(primitive: PrimitiveRecord): Boolean =
+    PresenterAccepts.acceptsPrimitive(view, primitive)
 
 }

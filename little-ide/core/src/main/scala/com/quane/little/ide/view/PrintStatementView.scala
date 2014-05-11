@@ -2,9 +2,8 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-trait FunctionArgumentView extends View[FunctionArgumentViewPresenter] {
-
-  def setName(name: String): Unit
+trait PrintStatementView
+  extends StatementView[PrintStatementViewPresenter] {
 
   def createValueStatement(): ValuePresenter[_ <: ValueView]
 
@@ -14,11 +13,7 @@ trait FunctionArgumentView extends View[FunctionArgumentViewPresenter] {
 
 }
 
-trait FunctionArgumentViewPresenter
-  extends ExpressionViewPresenter
+trait PrintStatementViewPresenter
+  extends StatementViewPresenter
   with PresenterAcceptsExpression
-  with PresenterAcceptsFunctionReference {
-
-  def requestAddTextLiteral(): Unit
-
-}
+  with PresenterAcceptsFunctionReference

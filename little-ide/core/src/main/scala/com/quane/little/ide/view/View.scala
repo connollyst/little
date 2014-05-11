@@ -5,18 +5,18 @@ import com.google.common.base.Objects
 
 /** A basic IDE view.
   *
-  * @tparam L the view listener type
+  * @tparam P the view listener type
   * @author Sean Connolly
   */
-trait View[L <: ViewPresenter] {
+trait View[P <: ViewPresenter] {
 
-  private var _viewPresenter: Option[L] = None
+  private var _viewPresenter: Option[P] = None
 
   /** Register this view's presenter.
     *
     * @param presenter the view's presenter
     */
-  def registerViewPresenter(presenter: L) = {
+  def registerViewPresenter(presenter: P) = {
     _viewPresenter match {
       case None => _viewPresenter = Some(presenter)
       case Some(p) => throw new IllegalAccessException(
@@ -26,7 +26,7 @@ trait View[L <: ViewPresenter] {
     }
   }
 
-  def presenter: L = {
+  def presenter: P = {
     _viewPresenter match {
       case Some(p) => p
       case None => throw new IllegalAccessException(

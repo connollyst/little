@@ -2,7 +2,8 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter.FunctionArgumentPresenter
 
-trait FunctionReferenceView extends ExpressionView[FunctionReferenceViewPresenter] {
+trait FunctionReferenceView
+  extends ExpressionView[FunctionReferenceViewPresenter] {
 
   def setName(name: String): Unit
 
@@ -12,4 +13,5 @@ trait FunctionReferenceView extends ExpressionView[FunctionReferenceViewPresente
 
 }
 
-trait FunctionReferenceViewPresenter extends ExpressionViewPresenter
+trait FunctionReferenceViewPresenter
+  extends ExpressionViewPresenter

@@ -1,7 +1,7 @@
 package com.quane.little.data.repo
 
 import com.quane.little.data.model.{FunctionCategory, FunctionRecord, RecordId}
-import com.quane.little.language.{Functions, FunctionDefinition}
+import com.quane.little.language.FunctionDefinition
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -12,6 +12,7 @@ import java.net.URL
 import com.google.common.io.Files
 import java.io.{FileNotFoundException, File}
 import java.nio.charset.Charset
+import com.quane.little.language.util.Functions
 
 /** Test cases for the [[com.quane.little.data.model.FunctionRecord]].
   *

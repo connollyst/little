@@ -12,11 +12,9 @@ import com.quane.little.language.data.Value
 class Conditional(val test: Expression, val then: Block, val otherwise: Block)
   extends Expression {
 
-  def this(test: Expression) = {
-    this(test, new Block, new Block)
-  }
+  def this(test: Expression) = this(test, new Block, new Block)
 
-  def addStep(step: Expression): Conditional = {
+  def addStep(step: EvaluableCode): Conditional = {
     then.addStep(step)
     this
   }

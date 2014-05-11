@@ -6,7 +6,7 @@ package com.quane.little.data.model
   */
 object CodeCategory extends Enumeration {
   type CodeCategory = Value
-  val Primitive, Function, Event, EventListener = Value
+  val Expression, Statement, Function, EventListener = Value
 }
 
 /** User to organize functions in the UI.

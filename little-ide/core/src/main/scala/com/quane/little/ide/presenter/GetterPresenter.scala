@@ -1,14 +1,14 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{GetStatementViewPresenter, GetStatementView}
+import com.quane.little.ide.view.{GetterViewPresenter, GetStatementView}
 import com.quane.little.language.GetStatement
 
 /** Presenter for views representing a [[com.quane.little.language.GetStatement]].
   *
   * @author Sean Connolly
   */
-class GetStatementPresenter[V <: GetStatementView](view: V)
-  extends StatementPresenter with GetStatementViewPresenter {
+class GetterPresenter[V <: GetStatementView](view: V)
+  extends GetterViewPresenter {
 
   private var _name = ""
 
@@ -21,7 +21,7 @@ class GetStatementPresenter[V <: GetStatementView](view: V)
     * @param g the get statement
     * @return the initialized presenter
     */
-  private[presenter] def initialize(g: GetStatement): GetStatementPresenter[V] = {
+  private[presenter] def initialize(g: GetStatement): GetterPresenter[V] = {
     name = g.name
     this
   }

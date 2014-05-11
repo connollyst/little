@@ -8,9 +8,9 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfter, FlatSpec}
 import org.mockito.Mockito._
 import com.quane.little.data.model.RecordId
-import com.quane.little.ide.presenter.{PresenterAcceptsFunctionReference, PresenterAcceptsPrimitive}
+import com.quane.little.ide.presenter.{PresenterAcceptsStatement, PresenterAcceptsExpression, PresenterAcceptsFunctionReference}
 import com.quane.little.ide.view.{View, ViewPresenter}
-import com.quane.little.data.service.PrimitiveService
+import com.quane.little.data.service.{ExpressionService, StatementService}
 
 @RunWith(classOf[JUnitRunner])
 class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfter with MockitoSugar {
@@ -21,10 +21,16 @@ class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfte
     indexCalled = false
   }
 
-  "ExpressionMenu" should "not resolve index until 'add primitive' clicked" in {
+  "ExpressionMenu" should "not resolve index until 'add expression' clicked" in {
     val menu = mockMenu()
     assertFalse("index should not be resolved yet", indexCalled)
-    menu.addPrimitiveClicked(new RecordId(PrimitiveService.PrimitiveGet))
+    menu.addExpressionClicked(new RecordId(ExpressionService.PrimitiveGet))
+    assertTrue("index should have been resolved", indexCalled)
+  }
+  it should "not resolve index until 'add expression' clicked" in {
+    val menu = mockMenu()
+    assertFalse("index should not be resolved yet", indexCalled)
+    menu.addStatementClicked(new RecordId(StatementService.PrimitiveSet))
     assertTrue("index should have been resolved", indexCalled)
   }
   it should "not resolve index until 'add function' clicked" in {
@@ -62,7 +68,8 @@ class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfte
     */
   trait Presenter
     extends ViewPresenter
-    with PresenterAcceptsPrimitive
+    with PresenterAcceptsExpression
+    with PresenterAcceptsStatement
     with PresenterAcceptsFunctionReference
 
 }

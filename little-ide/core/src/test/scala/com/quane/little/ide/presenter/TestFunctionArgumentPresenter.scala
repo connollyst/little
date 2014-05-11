@@ -47,8 +47,8 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
   test("test get expression propagates to view") {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
-    val valuePresenter = mock[GetStatementPresenter[GetStatementView]]
-    when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(valuePresenter)
+    val valuePresenter = mock[GetterPresenter[GetStatementView]]
+    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(valuePresenter)
     val getter = mock[GetStatement]
     presenter.value = getter
     verify(view).createGetStatement()
@@ -83,8 +83,8 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
   private def assertCompiledValue(value: Expression) = {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
-    when[GetStatementPresenter[_]](view.createGetStatement())
-      .thenReturn(new GetStatementPresenter(new MockGetStatementView))
+    when[GetterPresenter[_]](view.createGetStatement())
+      .thenReturn(new GetterPresenter(new MockGetStatementView))
     when[ValuePresenter[_]](view.createValueStatement())
       .thenReturn(new ValuePresenter(new MockValueView))
     when[FunctionReferencePresenter[_]](view.createFunctionReference())

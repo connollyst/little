@@ -96,8 +96,8 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test get statement added to view") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getPresenter = new GetStatementPresenter(new MockGetStatementView)
-    when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
+    val getPresenter = new GetterPresenter(new MockGetStatementView)
+    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
     presenter.value = new GetStatement("x")
     verify(view).createGetStatement()
   }
@@ -105,8 +105,8 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test get statement added to presenter") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getPresenter = new GetStatementPresenter(new MockGetStatementView)
-    when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
+    val getPresenter = new GetterPresenter(new MockGetStatementView)
+    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
     presenter.value = new GetStatement("x")
     assert(presenter.value == getPresenter)
   }
@@ -114,8 +114,8 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test get statement initialized") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getPresenter = mock[GetStatementPresenter[GetStatementView]]
-    when[GetStatementPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
+    val getPresenter = mock[GetterPresenter[GetStatementView]]
+    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
     val statement = new GetStatement("x")
     presenter.value = statement
     verify(getPresenter).initialize(statement)
@@ -166,8 +166,8 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("should compile print(get expression)") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val valuePresenter = new GetStatementPresenter(new MockGetStatementView)
-    when[GetStatementPresenter[_]](view.createGetStatement())
+    val valuePresenter = new GetterPresenter(new MockGetStatementView)
+    when[GetterPresenter[_]](view.createGetStatement())
       .thenReturn(valuePresenter)
     val value = new GetStatement("varName")
     presenter.value = value

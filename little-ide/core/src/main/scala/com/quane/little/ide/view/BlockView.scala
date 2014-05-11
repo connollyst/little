@@ -8,9 +8,9 @@ trait BlockView extends View[BlockViewPresenter] {
 
   def addConditional(index: Int): ConditionalPresenter[_]
 
-  def addGetStatement(): GetStatementPresenter[_]
+  def addGetStatement(): GetterPresenter[_]
 
-  def addGetStatement(index: Int): GetStatementPresenter[_]
+  def addGetStatement(index: Int): GetterPresenter[_]
 
   def addSetStatement(): SetStatementPresenter[_]
 
@@ -27,8 +27,7 @@ trait BlockView extends View[BlockViewPresenter] {
 }
 
 trait BlockViewPresenter
-  extends ViewPresenter
-  with PresenterAcceptsSet
-  with PresenterAcceptsPrint
-  with PresenterAcceptsConditional
+  extends ExpressionViewPresenter
+  with PresenterAcceptsExpression
+  with PresenterAcceptsStatement
   with PresenterAcceptsFunctionReference

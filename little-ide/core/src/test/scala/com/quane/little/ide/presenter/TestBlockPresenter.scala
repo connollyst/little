@@ -59,8 +59,8 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test get statement added to view") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val getPresenter = new GetStatementPresenter(new MockGetStatementView)
-    when[GetStatementPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
+    val getPresenter = new GetterPresenter(new MockGetStatementView)
+    when[GetterPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
     presenter.add(new GetStatement("x"))
     verify(view).addGetStatement()
   }
@@ -68,8 +68,8 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test get statement added to presenter") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val getPresenter = new GetStatementPresenter(new MockGetStatementView)
-    when[GetStatementPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
+    val getPresenter = new GetterPresenter(new MockGetStatementView)
+    when[GetterPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
     presenter.add(new GetStatement("x"))
     assert(presenter.steps.contains(getPresenter))
   }
@@ -77,8 +77,8 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test get statement initialized") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val getPresenter = mock[GetStatementPresenter[GetStatementView]]
-    when[GetStatementPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
+    val getPresenter = mock[GetterPresenter[GetStatementView]]
+    when[GetterPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
     val statement = new GetStatement("x")
     presenter.add(statement)
     verify(getPresenter).initialize(statement)

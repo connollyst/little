@@ -1,8 +1,8 @@
 package com.quane.little.language
 
-import com.google.common.base.Objects
 import com.quane.little.language.data.{Nada, Value}
 import scala.collection.mutable.ListBuffer
+import com.google.common.base.Objects
 
 
 /** An expression consisting of zero or more expressions, to be evaluated in
@@ -10,32 +10,40 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class Block
-  extends Expression {
+class Block extends Expression {
 
-  private val _steps: ListBuffer[Expression] = ListBuffer[Expression]()
+  private val _steps: ListBuffer[EvaluableCode] = ListBuffer[EvaluableCode]()
 
   def length: Int = _steps.length
 
-  def steps: List[Expression] = _steps.toList
+  def steps: List[EvaluableCode] = _steps.toList
 
-  def steps_=(steps: List[Expression]): Unit = {
+  def steps_=(steps: List[EvaluableCode]): Unit = {
     _steps.clear()
     _steps ++= steps
   }
 
   def clear(): Unit = _steps.clear()
 
-  def addStep(step: Expression): Block = this += step
+  def addStep(step: EvaluableCode): Block = this += step
 
-  def +=(step: Expression): Block = {
+  def +=(step: EvaluableCode): Block = {
     _steps += step
     this
   }
 
   override def evaluate(scope: Scope): Value = {
     val blockScope = new Scope(scope)
-    val stepOutput = _steps.map(_.evaluate(blockScope))
+    val stepOutput = _steps.map(
+      step =>
+        step match {
+          case e: Expression =>
+            e.evaluate(blockScope)
+          case s: Statement =>
+            s.evaluate(blockScope)
+            new Nada
+        }
+    )
     if (stepOutput.isEmpty) {
       new Nada
     } else {

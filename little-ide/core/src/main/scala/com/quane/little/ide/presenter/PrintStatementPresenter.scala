@@ -1,21 +1,20 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{PrintStatementViewPresenter, PrintStatementView}
+import com.quane.little.ide.view.{ExpressionViewPresenter, PrintStatementViewPresenter, PrintStatementView}
 import com.quane.little.language._
 import com.quane.little.language.data.Value
 import scala._
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{PrimitiveService, FunctionService}
+import com.quane.little.data.service.{ExpressionService, FunctionService}
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *
   * @author Sean Connolly
   */
 class PrintStatementPresenter[V <: PrintStatementView](view: V)
-  extends StatementPresenter
-  with PrintStatementViewPresenter {
+  extends PrintStatementViewPresenter {
 
-  private var _value: Option[_ <: ExpressionPresenter] = None
+  private var _value: Option[_ <: ExpressionViewPresenter] = None
 
   view.registerViewPresenter(this)
 
@@ -33,7 +32,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     *
     * @return the value expression
     */
-  private[presenter] def value: ExpressionPresenter =
+  private[presenter] def value: ExpressionViewPresenter =
     _value match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No print expression specified.")
@@ -57,8 +56,8 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     _value = Some(presenter)
   }
 
-  override def requestAddPrimitive(id: RecordId, index: Int) =
-    value = PrimitiveService().findPrimitive(id)
+  override def requestAddExpression(id: RecordId, index: Int) =
+    value = ExpressionService().findExpression(id)
 
   // TODO skip if already this function reference
   override def requestAddFunctionReference(id: RecordId, index: Int) =

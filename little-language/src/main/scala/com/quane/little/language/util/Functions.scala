@@ -1,7 +1,8 @@
-package com.quane.little.language
+package com.quane.little.language.util
 
 import com.quane.little.language.data.Value
 import com.quane.little.language.math._
+import com.quane.little.language._
 
 
 /** A set functions used during development - mostly to sanity check the

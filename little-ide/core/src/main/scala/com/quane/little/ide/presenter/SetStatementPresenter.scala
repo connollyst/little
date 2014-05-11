@@ -1,21 +1,20 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{SetStatementViewPresenter, SetStatementView}
+import com.quane.little.ide.view.{ExpressionViewPresenter, SetStatementViewPresenter, SetStatementView}
 import com.quane.little.language._
 import com.quane.little.language.data.Value
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{PrimitiveService, FunctionService}
+import com.quane.little.data.service.{ExpressionService, FunctionService}
 
 /** Presenter for views representing a [[com.quane.little.language.SetStatement]].
   *
   * @author Sean Connolly
   */
 class SetStatementPresenter[V <: SetStatementView](view: V)
-  extends StatementPresenter
-  with SetStatementViewPresenter {
+  extends SetStatementViewPresenter {
 
   private var _name = ""
-  private var _value: Option[ExpressionPresenter] = None
+  private var _value: Option[ExpressionViewPresenter] = None
 
   view.registerViewPresenter(this)
   view.setName(_name)
@@ -38,9 +37,9 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
     view.setName(name)
   }
 
-  private[presenter] def value: ExpressionPresenter = {
+  private[presenter] def value: ExpressionViewPresenter = {
     _value match {
-      case e: Some[ExpressionPresenter] => e.get
+      case e: Some[ExpressionViewPresenter] => e.get
       case _ => throw new IllegalAccessException("No value expression set.")
     }
   }
@@ -66,10 +65,12 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
 
   override def onNameChange(name: String): Unit = _name = name
 
-  override def requestAddPrimitive(id: RecordId, index: Int) = value = PrimitiveService().findPrimitive(id)
+  override def requestAddExpression(id: RecordId, index: Int) =
+    value = ExpressionService().findExpression(id)
 
   // TODO skip if already this function reference
-  override def requestAddFunctionReference(id: RecordId, index: Int) = value = FunctionService().findReference(id)
+  override def requestAddFunctionReference(id: RecordId, index: Int) =
+    value = FunctionService().findReference(id)
 
   override def compile: SetStatement = new SetStatement(_name, value.compile)
 

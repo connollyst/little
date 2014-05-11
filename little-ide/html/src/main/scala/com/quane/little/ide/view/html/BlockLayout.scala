@@ -39,7 +39,7 @@ class BlockLayout
   override def addGetStatement() = addGetStatement(DefaultIndex)
 
   override def addGetStatement(index: Int) =
-    new GetStatementPresenter(add(new GetStatementLayout(), componentIndex(index)))
+    new GetterPresenter(add(new GetStatementLayout(), componentIndex(index)))
 
   override def addSetStatement() = addSetStatement(DefaultIndex)
 
@@ -144,9 +144,14 @@ private class BlockStepSeparator(block: BlockLayout)
       new AddFunctionReferenceCommand(block.presenter, functionId, index)
     )
 
-  def addPrimitive(primitiveId: RecordId) =
+  def addExpression(primitiveId: RecordId) =
     IDECommandExecutor.execute(
-      new AddPrimitiveCommand(block.presenter, primitiveId, index)
+      new AddExpressionCommand(block.presenter, primitiveId, index)
+    )
+
+  def addStatement(primitiveId: RecordId) =
+    IDECommandExecutor.execute(
+      new AddStatementCommand(block.presenter, primitiveId, index)
     )
 
   def index: Int = block.stepIndex(this)
@@ -164,10 +169,12 @@ class BlockDropHandler(block: BlockStepSeparator) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
+      case transferable: CodeTransferable if transferable.category == CodeCategory.Expression =>
+        block.addExpression(transferable.codeId)
+      case transferable: CodeTransferable if transferable.category == CodeCategory.Statement =>
+        block.addStatement(transferable.codeId)
       case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
         block.addFunction(transferable.codeId)
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Primitive =>
-        block.addPrimitive(transferable.codeId)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
     }

@@ -2,10 +2,11 @@ package com.quane.little.data.service
 
 import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.quane.little.data.model.{UserRecord, RecordId, FunctionRecord}
-import com.quane.little.language.{FunctionReference, Functions, FunctionDefinition}
+import com.quane.little.language.{FunctionReference, FunctionDefinition}
 import com.quane.little.data.model.FunctionCategory.FunctionCategory
 import com.quane.little.data.model.FunctionCategory
 import com.quane.little.data.repo.FunctionRepository
+import com.quane.little.language.util.Functions
 
 /** A service for interacting with [[com.quane.little.data.model.FunctionRecord]].
   *

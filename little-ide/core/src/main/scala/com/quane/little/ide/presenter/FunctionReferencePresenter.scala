@@ -10,8 +10,7 @@ import scala.collection.mutable.ListBuffer
   */
 class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
                                                              args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])
-  extends ExpressionPresenter
-  with FunctionReferenceViewPresenter {
+  extends FunctionReferenceViewPresenter {
 
   private var _name: String = "???"
 

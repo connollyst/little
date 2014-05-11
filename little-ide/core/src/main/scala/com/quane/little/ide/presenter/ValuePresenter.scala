@@ -8,8 +8,7 @@ import com.quane.little.language.data.Value
   * @author Sean Connolly
   */
 class ValuePresenter[V <: ValueView](view: V)
-  extends ExpressionPresenter
-  with ValueViewPresenter {
+  extends ValueViewPresenter {
 
   private var _value: String = ""
 

@@ -1,6 +1,5 @@
 package com.quane.little.language
 
-import com.google.common.base.Objects
 import com.quane.little.language.data.Value
 
 /** An expression is one of the lowest level components of the language. It has a
@@ -8,11 +7,8 @@ import com.quane.little.language.data.Value
   *
   * @author Sean Connolly
   */
-trait Expression {
+trait Expression extends EvaluableCode {
 
   def evaluate(scope: Scope): Value
-
-  override def toString: String =
-    Objects.toStringHelper(getClass).toString
 
 }

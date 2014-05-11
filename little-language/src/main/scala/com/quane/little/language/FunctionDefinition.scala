@@ -1,10 +1,9 @@
 package com.quane.little.language
 
-import collection.immutable
-import collection.mutable
-import com.google.common.base.Objects
-import com.quane.little.language.data.Value
 import scala.collection.mutable.ListBuffer
+import com.quane.little.language.data.Value
+import scala.collection.immutable
+import com.google.common.base.Objects
 
 /** Defines a function.
   *
@@ -19,7 +18,7 @@ class FunctionDefinition(val name: String) {
 
   def stepCount: Int = block.length
 
-  def addStep(step: Expression): FunctionDefinition = {
+  def addStep(step: EvaluableCode): FunctionDefinition = {
     block.addStep(step)
     this
   }
@@ -41,9 +40,9 @@ class FunctionDefinition(val name: String) {
     }
   }
 
-  def steps: List[Expression] = block.steps
+  def steps: List[EvaluableCode] = block.steps
 
-  def steps_=(steps: List[Expression]) = {
+  def steps_=(steps: List[EvaluableCode]) = {
     block.clear()
     steps.foreach {
       step => block.addStep(step)
@@ -54,7 +53,7 @@ class FunctionDefinition(val name: String) {
     val reference = new FunctionReference(name)
     params foreach {
       param =>
-      // TODO parameters should have default values
+        // TODO parameters should have default values
         reference.addArg(param.name, Value(""))
     }
     reference
@@ -111,42 +110,3 @@ class FunctionParameter(val name: String) {
   override def toString = name
 
 }
-
-/** Reference to a [[com.quane.little.language.Block]].
-  *
-  * @param name the name of the function
-  */
-class FunctionReference(val name: String)
-  extends Expression {
-
-  val args = mutable.Map[String, Expression]()
-
-  def addArg(name: String, value: Expression): FunctionReference = {
-    // TODO assert arg is not already set
-    args(name) = value
-    this
-  }
-
-  /**
-   * Evaluate the referenced function.
-   *
-   * @return the function's return value
-   */
-  override def evaluate(scope: Scope): Value = {
-    val definition = scope.runtime.fetchFunction(name)
-    definition.evaluate(scope, args.toMap)
-  }
-
-  override def equals(that: Any) = that match {
-    case f: FunctionReference => name.equals(f.name) && args.equals(f.args)
-    case _ => false
-  }
-
-  override def toString: String =
-    Objects.toStringHelper(getClass)
-      .add("name", name)
-      .add("args", args mkString("[", ",", "]"))
-      .toString
-
-}
-

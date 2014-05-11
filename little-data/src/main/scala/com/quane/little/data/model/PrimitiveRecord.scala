@@ -1,6 +1,6 @@
 package com.quane.little.data.model
 
-import com.quane.little.language.Expression
+import com.quane.little.language.EvaluableCode
 import com.google.common.base.Objects
 
 /** A database record for a primitive [[com.quane.little.language.Expression]].
@@ -8,7 +8,7 @@ import com.google.common.base.Objects
   *
   * @author Sean Connolly
   */
-class PrimitiveRecord(var id: RecordId, val name: String, val expression: Expression)
+class PrimitiveRecord(var id: RecordId, val name: String, val expression: EvaluableCode)
   extends HasRecordId {
 
   override def equals(other: Any): Boolean = other match {

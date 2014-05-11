@@ -1,20 +1,20 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{FunctionArgumentViewPresenter, FunctionArgumentView}
+import com.quane.little.ide.view.{ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, GetStatement, Expression}
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{FunctionService, PrimitiveService}
+import com.quane.little.data.service.{ExpressionService, FunctionService}
 
 /** A presenter for views representing a function reference argument.
   *
   * @author Sean Connolly
   */
 class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
-  extends ExpressionPresenter with FunctionArgumentViewPresenter {
+  extends FunctionArgumentViewPresenter {
 
   private var _name: String = ""
-  private var _value: Option[ExpressionPresenter] = None
+  private var _value: Option[ExpressionViewPresenter] = None
 
   view.registerViewPresenter(this)
 
@@ -35,7 +35,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
     *
     * @return the value expression
     */
-  private[presenter] def value: ExpressionPresenter =
+  private[presenter] def value: ExpressionViewPresenter =
     _value match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No argument value expression specified.")
@@ -63,8 +63,8 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
   // TODO skip if already a value statement
   override def requestAddTextLiteral() = _value = Some(view.createValueStatement())
 
-  override def requestAddPrimitive(id: RecordId, index: Int) =
-    value = PrimitiveService().findPrimitive(id)
+  override def requestAddExpression(id: RecordId, index: Int) =
+    value = ExpressionService().findExpression(id)
 
   override def requestAddFunctionReference(id: RecordId, index: Int) =
     value = FunctionService().findReference(id)

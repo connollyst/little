@@ -4,6 +4,7 @@ import com.quane.little.language.data.Value
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import com.quane.little.language.util.Functions
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctions extends FunSuite {

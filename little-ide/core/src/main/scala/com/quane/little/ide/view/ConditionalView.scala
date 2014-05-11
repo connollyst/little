@@ -1,10 +1,10 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{BlockPresenter, ExpressionPresenter}
+import com.quane.little.ide.presenter.BlockPresenter
 
 trait ConditionalView extends ExpressionView[ConditionalViewPresenter] {
 
-  def setConditionStatement(): ExpressionPresenter
+  def setConditionStatement(): ExpressionViewPresenter
 
   def setThenBlock(): BlockPresenter[_]
 

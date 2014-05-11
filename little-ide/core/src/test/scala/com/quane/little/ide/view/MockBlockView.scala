@@ -15,9 +15,9 @@ class MockBlockView
 
   def addConditional(index: Int) = new ConditionalPresenter(new MockConditionalView)
 
-  def addGetStatement() = new GetStatementPresenter(new MockGetStatementView)
+  def addGetStatement() = new GetterPresenter(new MockGetStatementView)
 
-  def addGetStatement(index: Int) = new GetStatementPresenter(new MockGetStatementView)
+  def addGetStatement(index: Int) = new GetterPresenter(new MockGetStatementView)
 
   def addSetStatement() = new SetStatementPresenter(new MockSetStatementView)
 

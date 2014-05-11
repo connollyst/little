@@ -4,7 +4,11 @@ import com.google.common.base.Objects
 import com.quane.little.language.data.Value
 import com.quane.little.tools.Logging
 
-sealed trait Statement extends Expression
+sealed trait Statement extends EvaluableCode {
+
+  def evaluate(scope: Scope): Unit
+
+}
 
 object SetStatement {
 
@@ -21,11 +25,8 @@ object SetStatement {
 class SetStatement(val name: String, val value: Expression)
   extends Statement {
 
-  override def evaluate(scope: Scope): Value = {
-    val actualValue = value.evaluate(scope)
-    new Pointer(name).update(scope, actualValue)
-    actualValue
-  }
+  override def evaluate(scope: Scope): Unit =
+    new Pointer(name).update(scope, value.evaluate(scope))
 
   override def equals(that: Any) = that match {
     case s: SetStatement => name.equals(s.name) && value.equals(s.value)
@@ -41,7 +42,7 @@ class SetStatement(val name: String, val value: Expression)
 }
 
 class GetStatement(val name: String)
-  extends Statement {
+  extends Expression {
 
   override def evaluate(scope: Scope): Value = {
     val variable = new Pointer(name).resolve(scope)
@@ -64,11 +65,10 @@ class PrintStatement(val value: Expression)
   extends Statement
   with Logging {
 
-  override def evaluate(scope: Scope): Value = {
+  override def evaluate(scope: Scope): Unit = {
     val text = value.evaluate(scope)
     // TODO this should display a speech bubble over the guy
     error(text.asText)
-    text
   }
 
   override def equals(that: Any) = that match {

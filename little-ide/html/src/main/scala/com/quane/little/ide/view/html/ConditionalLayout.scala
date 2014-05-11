@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.ConditionalView
-import com.quane.little.ide.presenter.{ExpressionPresenter, BlockPresenter}
+import com.quane.little.ide.view.{ExpressionViewPresenter, ConditionalView}
+import com.quane.little.ide.presenter.BlockPresenter
 import com.vaadin.ui._
 import com.vaadin.server.Sizeable
 
@@ -71,7 +71,7 @@ class ConditionalLayout
     footer
   }
 
-  override def setConditionStatement(): ExpressionPresenter = {
+  override def setConditionStatement(): ExpressionViewPresenter = {
     // TODO this expression layout belongs in the header
     new BlockPresenter(new BlockLayout)
   }

@@ -1,7 +1,7 @@
 package com.quane.little.data.repo
 
 import com.quane.little.data.model.{FunctionCategory, RecordId, FunctionRecord}
-import com.quane.little.language.{Functions, PrintStatement, FunctionDefinition}
+import com.quane.little.language.{PrintStatement, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -9,6 +9,7 @@ import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.{BeforeAndAfterAll, FlatSpec}
 import com.quane.little.language.data.Value
 import com.quane.little.data.EmbeddedMongoDB
+import com.quane.little.language.util.Functions
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionRepository

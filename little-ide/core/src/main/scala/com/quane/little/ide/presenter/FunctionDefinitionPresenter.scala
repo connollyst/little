@@ -1,8 +1,8 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.{FunctionCategory, RecordId, FunctionRecord}
-import com.quane.little.ide.view.{FunctionDefinitionView, FunctionDefinitionViewPresenter}
-import com.quane.little.language.{FunctionDefinition, FunctionParameter, Expression}
+import com.quane.little.ide.view.{EvaluableCodeViewPresenter, FunctionDefinitionView, FunctionDefinitionViewPresenter}
+import com.quane.little.language.{EvaluableCode, FunctionDefinition, FunctionParameter}
 import scala._
 import scala.collection.mutable.ListBuffer
 import com.quane.little.data.service.FunctionService
@@ -47,11 +47,11 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     }
   }
 
-  private[presenter] def +=(step: ExpressionPresenter): Unit = _block.add(step)
+  private[presenter] def +=(step: EvaluableCodeViewPresenter): Unit = _block.add(step)
 
-  private[presenter] def steps: List[_ <: ExpressionPresenter] = _block.steps
+  private[presenter] def steps: List[_ <: EvaluableCodeViewPresenter] = _block.steps
 
-  private[presenter] def steps_=(steps: List[_ <: Expression]): Unit = _block.steps = steps
+  private[presenter] def steps_=(steps: List[_ <: EvaluableCode]): Unit = _block.steps = steps
 
   private[presenter] def name: String = _name
 
