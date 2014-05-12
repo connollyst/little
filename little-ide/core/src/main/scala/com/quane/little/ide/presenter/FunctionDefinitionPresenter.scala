@@ -30,6 +30,13 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     this
   }
 
+  private[presenter] def name: String = _name
+
+  private[presenter] def name_=(n: String): Unit = {
+    _name = n
+    view.setName(_name)
+  }
+
   private[presenter] def +=(param: FunctionParameter): Unit = {
     val presenter = view.createFunctionParameter()
     presenter.name = param.name
@@ -53,13 +60,6 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
 
   private[presenter] def steps_=(steps: List[_ <: EvaluableCode]): Unit = _block.steps = steps
 
-  private[presenter] def name: String = _name
-
-  private[presenter] def name_=(n: String): Unit = {
-    _name = n
-    view.setName(_name)
-  }
-
   override def onNameChange(name: String): Unit = _name = name
 
   override def onParamAdded(param: FunctionParameterPresenter[_]) = this += param
@@ -78,7 +78,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     val fun = compile
     _id match {
       case Some(id) =>
-        println("Saving changes to " + id + "..")
+        println("Saving changes to function definition " + id + "..")
         FunctionService().update(id, fun)
       case None =>
         println("Saving new function definition..")

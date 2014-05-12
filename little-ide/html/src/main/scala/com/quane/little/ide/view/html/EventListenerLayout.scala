@@ -2,13 +2,13 @@ package com.quane.little.ide.view.html
 
 import com.vaadin.ui._
 import com.quane.little.ide.view.EventListenerView
-import com.quane.little.ide.presenter.FunctionReferencePresenter
+import com.quane.little.ide.presenter.BlockPresenter
 import com.quane.little.language.event.Event
 import com.quane.little.language.event.Event.Event
 import com.vaadin.data.Property.{ValueChangeEvent, ValueChangeListener}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import scala.Some
-import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
+import com.vaadin.event.dd.DropHandler
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.data.model.CodeCategory
@@ -32,18 +32,13 @@ class EventListenerLayout
   with VaadinMixin {
 
   val header = new EventListenerHeader(this)
-  val body = new EventListenerBody(this)
-  val footer = new EventListenerFooter(this)
 
   setStyleName(EventListenerLayout.Style)
   add(header)
-  add(body)
-  add(footer)
 
   override def setEvent(event: Event) = header.setEvent(event)
 
-  override def createFunctionReference() =
-    new FunctionReferencePresenter(body.createFunctionReference())
+  override def createBlock() = new BlockPresenter(add(new BlockLayout))
 
 }
 
@@ -103,49 +98,5 @@ class EventListenerHeader(view: EventListenerLayout)
           throw new IllegalArgumentException("Expected " + Event)
       }
   }
-
-}
-
-class EventListenerBody(view: EventListenerLayout)
-  extends CssLayout
-  with VaadinMixin {
-
-  setStyleName(EventListenerLayout.StyleBody)
-
-  var function: Option[FunctionReferenceLayout] = None
-  var dropTarget = add(new DroppableTarget(new CssLayout))
-  dropTarget.setDropHandler(new EventListenerDropHandler(view))
-
-  def createFunctionReference(): FunctionReferenceLayout = {
-    function match {
-      case Some(f) => f.removeFromParent()
-      case None => // no problem
-    }
-    val view = new FunctionReferenceLayout
-    function = Some(view)
-    dropTarget.component.addComponent(view)
-    view
-  }
-
-  private class EventListenerDropHandler(view: EventListenerLayout)
-    extends DropHandler {
-    override def getAcceptCriterion = AcceptAll.get()
-
-    override def drop(event: DragAndDropEvent) =
-      event.getTransferable match {
-        case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
-          IDECommandExecutor.execute(
-            new AddFunctionReferenceCommand(view.presenter, transferable.codeId)
-          )
-      }
-  }
-
-}
-
-class EventListenerFooter(view: EventListenerLayout)
-  extends CssLayout
-  with VaadinMixin {
-
-  setStyleNames(ExpressionLayout.Style, EventListenerLayout.StyleFooter)
 
 }

@@ -72,7 +72,7 @@ class GamespaceListenerLayout(view: GamespaceLayout)
   }))
 
   def addGameListener(listener: EventListener, listenerId: RecordId) = {
-    val label = new Label(listener.event + ": " + listener.function.name)
+    val label = new Label(listener.event.toString)
     val button = new NativeButton(Icon.edit.variant(IconVariant.SIZE_LARGE),
       new ClickListener() {
         override def buttonClick(event: ClickEvent) = {

@@ -6,6 +6,7 @@ import com.quane.little.data.repo.ListenerRepository
 import com.quane.little.language.event.{Event, EventListener}
 import com.quane.little.language.FunctionReference
 import com.quane.little.language.data.Value
+import scala.Some
 
 /** A service for interacting with [[com.quane.little.data.model.FunctionRecord]].
   *
@@ -41,18 +42,15 @@ class ListenerService(client: MongoClient) {
     repo.insert(
       new ListenerRecord(
         user.id,
-        new EventListener(
-          Event.OnSpawn,
-          new FunctionReference("move")
-            .addArg("speed", Value(5))
+        new EventListener(Event.OnSpawn).addStep(
+          new FunctionReference("move").addArg("speed", Value(5))
         )
       )
     )
     repo.insert(
       new ListenerRecord(
         user.id,
-        new EventListener(
-          Event.OnContact,
+        new EventListener(Event.OnContact).addStep(
           new FunctionReference("turnRelative")
             .addArg("degrees", Value(260))
         )
@@ -61,8 +59,7 @@ class ListenerService(client: MongoClient) {
     repo.insert(
       new ListenerRecord(
         user.id,
-        new EventListener(
-          Event.OnFoodConsumed,
+        new EventListener(Event.OnFoodConsumed).addStep(
           new FunctionReference("turn")
         )
       )
@@ -80,6 +77,25 @@ class ListenerService(client: MongoClient) {
 
   def findByUser(username: String): List[ListenerRecord] =
     repository.findByUser(UserService().fetch(username))
+
+  def update(id: RecordId, listener: EventListener): ListenerRecord = {
+    val repo = repository
+    repo.find(id) match {
+      case Some(record) =>
+        // TODO check if name is taken by another function
+        record.listener = listener
+        repo.update(record)
+        record
+      case None => throw new RuntimeException("No event listener for " + id)
+    }
+  }
+
+  def insert(username: String, listener: EventListener): ListenerRecord = {
+    val user = UserService().fetch(username)
+    val record = new ListenerRecord(user.id, listener)
+    repository.insert(record)
+    record
+  }
 
   private def repository: ListenerRepository = new ListenerRepository(collection)
 

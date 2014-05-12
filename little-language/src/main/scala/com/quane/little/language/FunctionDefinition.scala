@@ -35,19 +35,12 @@ class FunctionDefinition(val name: String) {
 
   def params_=(params: List[FunctionParameter]) = {
     _params.clear()
-    params.foreach {
-      param => addParam(param)
-    }
+    _params ++= params
   }
 
   def steps: List[EvaluableCode] = block.steps
 
-  def steps_=(steps: List[EvaluableCode]) = {
-    block.clear()
-    steps.foreach {
-      step => block.addStep(step)
-    }
-  }
+  def steps_=(steps: List[EvaluableCode]) = block.steps = steps
 
   def asReference: FunctionReference = {
     val reference = new FunctionReference(name)

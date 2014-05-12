@@ -1,22 +1,34 @@
 package com.quane.little.language.event
 
 import com.google.common.base.Objects
-import com.quane.little.language.data.Nada
-import com.quane.little.language.{Code, Scope, FunctionReference}
+import com.quane.little.language._
 import com.quane.little.language.event.Event.Event
 
-class EventListener(val event: Event, val function: FunctionReference)
+class EventListener(val event: Event)
   extends Code {
 
+  private val block = new Block
+
+  def stepCount: Int = block.length
+
+  def addStep(step: EvaluableCode): EventListener = {
+    block.addStep(step)
+    this
+  }
+
+  def steps: List[EvaluableCode] = block.steps
+
+  def steps_=(steps: List[EvaluableCode]) = block.steps = steps
+
   def evaluate(scope: Scope): Unit = {
-    function.evaluate(scope)
-    new Nada
+    val listenerScope = new Scope(scope)
+    block.evaluate(listenerScope)
   }
 
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("event", event)
-      .add("function", function)
+      .add("block", block)
       .toString
 
 }
