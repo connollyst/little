@@ -16,8 +16,9 @@ class GamespacePresenter[V <: GamespaceView](view: V)
       view.createGameListener(record.listener, record.id)
   }
 
-  override def openGameListener(listenerId: RecordId) =
-    workspace.requestAddEventListener(listenerId, 0)
+  override def newGameListener() = workspace.requestAddBlankEventListener(0)
+
+  override def openGameListener(listenerId: RecordId) = workspace.requestAddEventListener(listenerId, 0)
 
 
 }

@@ -13,14 +13,17 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)
 
   view.registerViewPresenter(this)
 
+  override def requestAddFunctionDefinition(id: RecordId, index: Int) = {
+    val function = FunctionService().findDefinition(id)
+    view.createFunctionDefinition().initialize(id, function)
+  }
+
   override def requestAddEventListener(id: RecordId, index: Int) = {
     val listener = ListenerService().findListener(id)
     view.createEventListener().initialize(id, listener)
   }
 
-  override def requestAddFunctionDefinition(id: RecordId, index: Int) = {
-    val function = FunctionService().findDefinition(id)
-    view.createFunctionDefinition().initialize(id, function)
-  }
+  override def requestAddBlankEventListener(index: Int) =
+    view.createEventListener()
 
 }

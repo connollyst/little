@@ -47,4 +47,6 @@ trait PresenterAcceptsEventListener extends PresenterAccepts {
 
   def requestAddEventListener(id: RecordId, index: Int): Unit
 
+  def requestAddBlankEventListener(index: Int): Unit
+
 }
