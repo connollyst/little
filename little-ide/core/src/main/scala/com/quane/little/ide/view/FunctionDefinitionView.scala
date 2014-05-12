@@ -15,7 +15,7 @@ trait FunctionDefinitionView
 
   def compile: FunctionDefinition = presenter.compile
 
-  def save: FunctionRecord = presenter.save
+  def save(): FunctionRecord = presenter.save()
 
 }
 
@@ -28,6 +28,6 @@ trait FunctionDefinitionViewPresenter
 
   def compile: FunctionDefinition
 
-  def save: FunctionRecord
+  def save(): FunctionRecord
 
 }

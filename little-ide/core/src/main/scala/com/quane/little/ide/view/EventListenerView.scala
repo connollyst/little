@@ -11,6 +11,8 @@ trait EventListenerView extends View[EventListenerViewPresenter] {
 
   def createBlock(): BlockPresenter[_]
 
+  def save(): ListenerRecord = presenter.save()
+
 }
 
 trait EventListenerViewPresenter

@@ -9,26 +9,14 @@ $border-radius-small: 2px;
 /* Function Definition */
 
 .l-function-def-head {
-  padding: 10px;
-  min-height: 20px;
-  min-width: 100px;
-  background-color: $fg-color;
-  border-left: 1px solid $border-color;
-  border-top-left-radius: $border-radius-big;
-  border-top-right-radius: $border-radius-big;
-  border-bottom-right-radius: $border-radius-small;
+  padding: 5px 10px;
+  height: 32px;
+  background-color: #39d1b4;
+  border-bottom: 1px solid #626262;
 }
 
 .l-function-def-head-name {
 
-}
-
-.l-function-def-head .l-close-btn {
-  visibility: hidden;
-}
-
-.l-function-def-head:hover .l-close-btn {
-  visibility: visible;
 }
 
 .l-function-def-param {

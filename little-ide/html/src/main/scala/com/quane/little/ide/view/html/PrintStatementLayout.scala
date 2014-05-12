@@ -28,7 +28,7 @@ class PrintStatementLayout
 
   addComponent(printLabel)
   addComponent(new ExpressionMenu(this))
-  addComponent(CloseButton(this))
+  addComponent(Buttons.closeButton(this))
 
   override def createValueStatement(): ValuePresenter[ValueLayout] = {
     removePrintValueView()

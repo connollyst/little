@@ -1,11 +1,11 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.BlockPresenter
-import com.quane.little.ide.presenter.FunctionParameterPresenter
+import com.quane.little.ide.presenter.{FunctionParameterPresenter, BlockPresenter}
 import com.quane.little.ide.view.FunctionDefinitionView
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.server.Sizeable
 import com.vaadin.ui._
+import com.quane.vaadin.scala.VaadinMixin
 
 object FunctionDefinitionLayout {
   val Style = "l-function-def"
@@ -38,7 +38,7 @@ class FunctionDefinitionLayout
 
   override def setName(name: String): Unit = header.name_=(name)
 
-  private def createHeader(): FunctionDefinitionHeader = new FunctionDefinitionHeader(this)
+  private def createHeader() = new FunctionDefinitionHeader(this)
 
   private def createBody(): Component = {
     val body = new HorizontalLayout
@@ -75,28 +75,30 @@ class FunctionDefinitionLayout
 
 }
 
-private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
-  extends HorizontalLayout {
+private class FunctionDefinitionHeader(view: FunctionDefinitionLayout)
+  extends HorizontalLayout
+  with VaadinMixin {
 
   private val nameField = createNameField()
   private val parameterLayout = createParameterLayout()
   private val newParameterButton = createNewParameterButton()
   private val saveButton = createSaveButton()
-  private val closeButton = createCloseButton()
 
   setSpacing(true)
+  setWidth(100, Sizeable.Unit.PERCENTAGE)
+  setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
   setStyleName(FunctionDefinitionLayout.StyleHead)
-  addComponent(nameField)
-  addComponent(parameterLayout)
-  addComponent(newParameterButton)
-  addComponent(saveButton)
-  addComponent(closeButton)
+  add(nameField)
+  add(parameterLayout)
+  add(newParameterButton)
+  add(saveButton)
+  setExpandRatio(parameterLayout, 1f)
 
   private def createNameField(): TextField = new TextField {
     setInputPrompt("function name")
     addTextChangeListener(new TextChangeListener {
       def textChange(event: TextChangeEvent) =
-        definition.onNameChange(event.getText)
+        view.onNameChange(event.getText)
     })
     setStyleName(FunctionDefinitionLayout.StyleHeadNameField)
     // TODO should be a label that, when clicked, becomes a text field
@@ -106,22 +108,9 @@ private class FunctionDefinitionHeader(val definition: FunctionDefinitionLayout)
     setSpacing(true)
   }
 
-  private def createNewParameterButton() = new Button("+",
-    new Button.ClickListener {
-      def buttonClick(event: Button.ClickEvent) =
-        definition.requestNewParameter()
-    })
+  private def createNewParameterButton() = Buttons.blueButton("+", view.requestNewParameter)
 
-  private def createSaveButton() = new Button("Save",
-    new Button.ClickListener {
-      def buttonClick(event: Button.ClickEvent) = {
-        val header = FunctionDefinitionHeader.this
-        val saved = header.definition.save
-        println("Saved: " + saved)
-      }
-    })
-
-  private def createCloseButton() = CloseButton(definition)
+  private def createSaveButton() = Buttons.blueButton("Save", view.save)
 
   def name_=(n: String) = nameField.setValue(n)
 

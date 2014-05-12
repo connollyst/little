@@ -28,7 +28,7 @@ class FunctionReferenceLayout
   setStyleNames(ExpressionLayout.Style, FunctionReferenceLayout.Style)
 
   addComponent(nameLabel)
-  addComponent(CloseButton(this))
+  addComponent(Buttons.closeButton(this))
 
   override def setName(name: String) = nameLabel.setValue(name)
 

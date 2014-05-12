@@ -30,7 +30,7 @@ class SetStatementLayout
   addComponent(nameField)
   addComponent(new Label("="))
   addComponent(new ExpressionMenu(this))
-  addComponent(CloseButton(this))
+  addComponent(Buttons.closeButton(this))
 
   override def setName(name: String): Unit = nameField.setValue(name)
 

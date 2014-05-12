@@ -31,3 +31,49 @@ $close-btn-radius: $close-btn-width / 2;
   text-decoration: none;
   line-height: $close-btn-width + 1;
 }
+
+.l-blue-btn {
+  -webkit-box-shadow: rgba(255, 255, 255, 0.0980392) 1px 1px 0px 0px inset, rgba(0, 0, 0, 0.0980392) 1px 1px 0px 0px;
+  -webkit-font-smoothing: antialiased;
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  background-color: rgb(0, 136, 204);
+  background-image: -webkit-linear-gradient(top, rgba(255, 255, 255, 0.0980392), transparent);
+  background-repeat: repeat-x;
+  border-bottom-color: rgba(0, 0, 0, 0.701961);
+  border-bottom-left-radius: 3px;
+  border-bottom-right-radius: 3px;
+  border-bottom-style: solid;
+  border-bottom-width: 1px;
+  border-image-outset: 0px;
+  border-image-repeat: stretch;
+  border-image-slice: 100%;
+  border-image-source: none;
+  border-image-width: 1;
+  border-left-color: rgba(0, 0, 0, 0.701961);
+  border-left-style: solid;
+  border-left-width: 1px;
+  border-right-color: rgba(0, 0, 0, 0.701961);
+  border-right-style: solid;
+  border-right-width: 1px;
+  border-top-color: rgba(0, 0, 0, 0.701961);
+  border-top-left-radius: 3px;
+  border-top-right-radius: 3px;
+  border-top-style: solid;
+  border-top-width: 1px;
+  box-shadow: rgba(255, 255, 255, 0.0980392) 1px 1px 0px 0px inset, rgba(0, 0, 0, 0.0980392) 1px 1px 0px 0px;
+  box-sizing: border-box;
+  cursor: pointer;
+  display: block;
+  float: left;
+  font-family: 'Open Sans', 'Hevetica Neue', Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: bold;
+  height: 24px;
+  line-height: 24px;
+  padding: 0px 10px;
+  text-decoration: none;
+}
+
+.l-blue-btn span {
+  color: #fff;
+}

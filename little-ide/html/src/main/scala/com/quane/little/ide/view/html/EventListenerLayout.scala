@@ -8,13 +8,11 @@ import com.quane.little.language.event.Event.Event
 import com.vaadin.data.Property.{ValueChangeEvent, ValueChangeListener}
 import com.quane.vaadin.scala.VaadinMixin
 import scala.Some
-import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.server.Sizeable
 
 object EventListenerLayout {
   val Style = "l-event-listener"
   val StyleHeader = Style + "-head"
-  val StyleHeaderSaveButton = StyleHeader + "-save-btn"
 }
 
 /** An HTML layout view representing an event listener.
@@ -30,7 +28,7 @@ class EventListenerLayout
   setSizeFull()
   setStyleName(EventListenerLayout.Style)
 
-  val header = add(new EventListenerHeader(this))
+  private val header = add(new EventListenerHeader(this))
 
   override def setEvent(event: Event) = header.setEvent(event)
 
@@ -44,33 +42,28 @@ class EventListenerLayout
   * @param view the event listener layout
   * @author Sean Connolly
   */
-class EventListenerHeader(view: EventListenerLayout)
+private class EventListenerHeader(view: EventListenerLayout)
   extends HorizontalLayout
   with VaadinMixin {
-
-  setSpacing(true)
-  setWidth(100, Sizeable.Unit.PERCENTAGE)
-  setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
-  setStyleName(EventListenerLayout.StyleHeader)
 
   var event: Option[Event] = None
   val eventBox = new ComboBox() {
     setImmediate(true)
     addValueChangeListener(new EventChangeListener)
     Event.values foreach {
-      event => addItem(event)
+      addItem(_)
     }
   }
   val label = new Label("then..")
-  val saveButton = new NativeButton("Save", new ClickListener {
-    override def buttonClick(event: ClickEvent) =
-      view.presenter.save()
-  })
-  saveButton.setPrimaryStyleName(EventListenerLayout.StyleHeaderSaveButton)
+  val saveButton = Buttons.blueButton("Save", view.save)
+
+  setSpacing(true)
+  setWidth(100, Sizeable.Unit.PERCENTAGE)
+  setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
+  setStyleName(EventListenerLayout.StyleHeader)
   add(eventBox)
   add(label)
   add(saveButton)
-
   setExpandRatio(label, 1f)
 
   def setEvent(e: Event) = {
