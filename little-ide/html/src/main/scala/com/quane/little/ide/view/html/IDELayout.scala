@@ -47,7 +47,7 @@ class IDELayout
   }
 
   override def createWorkspace() = {
-    center.workspace = new WorkspaceLayout
+    center.workspace = new WorkspaceTabSheet
     new WorkspacePresenter(center.workspace)
   }
 
@@ -88,7 +88,7 @@ class IDELayout
     setSplitPosition(20, Sizeable.Unit.PERCENTAGE)
 
     var _toolbox: Option[ToolboxLayout] = None
-    var _workspace: Option[WorkspaceLayout] = None
+    var _workspace: Option[WorkspaceTabSheet] = None
     var _gamespace: Option[GamespaceLayout] = None
 
     val _rightPanel = new HorizontalSplitPanel
@@ -107,13 +107,13 @@ class IDELayout
         case None => throw new IllegalAccessException("No toolbox defined.")
       }
 
-    private[IDELayout] def workspace_=(w: WorkspaceLayout) = {
+    private[IDELayout] def workspace_=(w: WorkspaceTabSheet) = {
       if (_workspace.isDefined) throw new IllegalAccessException("Workspace already defined.")
       _workspace = Some(w)
       _rightPanel.setFirstComponent(w)
     }
 
-    private[IDELayout] def workspace: WorkspaceLayout =
+    private[IDELayout] def workspace: WorkspaceTabSheet =
       _workspace match {
         case Some(w) => w
         case None => throw new IllegalAccessException("No workspace defined.")

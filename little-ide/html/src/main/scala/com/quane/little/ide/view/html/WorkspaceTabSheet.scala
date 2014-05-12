@@ -3,47 +3,60 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.presenter.{EventListenerPresenter, FunctionDefinitionPresenter}
 import com.quane.little.ide.view.WorkspaceView
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
-import com.vaadin.ui.{CssLayout, HorizontalLayout}
+import com.vaadin.ui.{AbsoluteLayout, TabSheet}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.ide.presenter.command.{AddEventListenerCommand, AddFunctionDefinitionCommand, IDECommandExecutor}
 import com.quane.little.data.model.CodeCategory
 
-object WorkspaceLayout {
+object WorkspaceTabSheet {
   val Style = "l-workspace"
+  val StyleBody = Style + "-body"
 }
 
 /** The workspace is the tabletop on which the user develops their code.
   *
   * @author Sean Connolly
   */
-class WorkspaceLayout
-  extends CssLayout
+class WorkspaceTabSheet
+  extends TabSheet
   with WorkspaceView
-  with RemovableComponent
   with VaadinMixin {
 
   setSizeFull()
-  setStyleName(WorkspaceLayout.Style)
-  val workspace = new DroppableTarget(new HorizontalLayout())
-  workspace.component.setSpacing(true)
-  workspace.setDropHandler(new WorkspaceDropHandler(this))
-  workspace.setSizeFull()
-  add(workspace)
-
+  setStyleName(WorkspaceTabSheet.Style)
 
   override def createEventListener(): EventListenerPresenter[_] = {
     val view = new EventListenerLayout()
-    workspace.component.addComponent(view)
+    val workspace = createWorkspace()
+    workspace.addComponent(view)
     new EventListenerPresenter(view)
   }
 
   override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
     val view = new FunctionDefinitionLayout()
-    workspace.component.addComponent(view)
+    val workspace = createWorkspace()
+    workspace.addComponent(view)
     new FunctionDefinitionPresenter(view)
   }
+
+  private def createWorkspace(): WorkspaceLayout = {
+    val layout = new WorkspaceLayout()
+    val workspace = new DroppableTarget(layout)
+    workspace.setDropHandler(new WorkspaceDropHandler(this))
+    workspace.setSizeFull()
+    addTab(workspace, "new tab")
+    setSelectedTab(workspace)
+    layout
+  }
+
+}
+
+class WorkspaceLayout
+  extends AbsoluteLayout {
+
+  setStyleName(WorkspaceTabSheet.StyleBody)
 
 }
 
@@ -52,7 +65,7 @@ class WorkspaceLayout
  *
  * @param workspace the workspace to interact with
  */
-class WorkspaceDropHandler(workspace: WorkspaceLayout) extends DropHandler {
+class WorkspaceDropHandler(workspace: WorkspaceTabSheet) extends DropHandler {
 
   override def getAcceptCriterion = AcceptAll.get()
 
