@@ -69,10 +69,6 @@ class EventListenerHeader(view: EventListenerLayout)
     override def buttonClick(event: ClickEvent) =
       view.presenter.save()
   }))
-  addComponent(new NativeButton("X", new ClickListener {
-    override def buttonClick(event: ClickEvent) =
-      view.removeFromParent()
-  }))
 
   def setEvent(e: Event) = {
     event = Some(e)

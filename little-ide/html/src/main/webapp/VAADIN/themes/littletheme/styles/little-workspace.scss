@@ -10,6 +10,22 @@ $workspace-tabsheet-bg-color: #e6e7e8;
 .littletheme .l-workspace {
 }
 
+.littletheme .l-workspace .v-tabsheet-spacertd,
+.littletheme .l-workspace .v-tabsheet-spacertd div,
+.littletheme .l-workspace .v-tabsheet-tabitemcell,
+.littletheme .l-workspace .v-tabsheet-tabitemcell-selected,
+.littletheme .l-workspace .v-tabsheet-tabitemcell-first,
+.littletheme .l-workspace .v-tabsheet-tabitemcell-selected-first,
+.littletheme .l-workspace .v-tabsheet-tabitem,
+.littletheme .l-workspace .v-tabsheet-tabitem-selected,
+.littletheme .l-workspace .v-tabsheet-tabitem .v-caption,
+.littletheme .l-workspace .v-tabsheet-tabitem-selected .v-caption,
+.littletheme .l-workspace .v-tabsheet-tabitem .v-tabsheet-caption-close,
+.littletheme .l-workspace .v-tabsheet-tabitem-selected .v-tabsheet-caption-close,
+.littletheme .l-workspace .v-tabsheet-tabitem-selected .v-tabsheet-caption-close:hover {
+  background-image: none;
+}
+
 .littletheme .l-workspace .v-tabsheet-tabcontainer {
   padding-top: 9px;
   border-top: 1px solid $workspace-tabsheet-border-color;
@@ -34,21 +50,16 @@ $workspace-tabsheet-bg-color: #e6e7e8;
 
 .littletheme .l-workspace .v-tabsheet-tabitem-selected {
   color: $workspace-tabsheet-open-color;
-  background-color: $workspace-tabsheet-open-bg-color;
   border-color: $workspace-tabsheet-open-border-color;
+  background-color: $workspace-tabsheet-open-bg-color;
 }
 
-.littletheme .l-workspace .v-tabsheet-spacertd,
-.littletheme .l-workspace .v-tabsheet-spacertd div,
-.littletheme .l-workspace .v-tabsheet-tabitemcell,
-.littletheme .l-workspace .v-tabsheet-tabitemcell-selected,
-.littletheme .l-workspace .v-tabsheet-tabitemcell-first,
-.littletheme .l-workspace .v-tabsheet-tabitemcell-selected-first,
-.littletheme .l-workspace .v-tabsheet-tabitem,
-.littletheme .l-workspace .v-tabsheet-tabitem-selected,
-.littletheme .l-workspace .v-tabsheet-tabitem .v-caption,
-.littletheme .l-workspace .v-tabsheet-tabitem-selected .v-caption {
-  background-image: none;
+.littletheme .l-workspace .v-tabsheet-tabitem .v-tabsheet-caption-close {
+  text-indent: 0;
+}
+
+.littletheme .l-workspace .v-tabsheet-tabitem .v-tabsheet-caption-close:hover {
+  color: darkred;
 }
 
 .littletheme .l-workspace .v-ddwrapper {

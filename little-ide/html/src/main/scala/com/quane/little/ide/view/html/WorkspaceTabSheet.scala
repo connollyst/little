@@ -46,7 +46,7 @@ class WorkspaceTabSheet
     val workspace = new DroppableTarget(layout)
     workspace.setDropHandler(new WorkspaceDropHandler(this))
     workspace.setSizeFull()
-    addTab(workspace, "new tab")
+    addTab(workspace, "new tab").setClosable(true)
     setSelectedTab(workspace)
     layout
   }
