@@ -14,8 +14,7 @@ import com.vaadin.server.Sizeable
 object EventListenerLayout {
   val Style = "l-event-listener"
   val StyleHeader = Style + "-head"
-  val StyleBody = Style + "-body"
-  val StyleFooter = Style + "-foot"
+  val StyleHeaderSaveButton = StyleHeader + "-save-btn"
 }
 
 /** An HTML layout view representing an event listener.
@@ -52,7 +51,7 @@ class EventListenerHeader(view: EventListenerLayout)
   setSpacing(true)
   setWidth(100, Sizeable.Unit.PERCENTAGE)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
-  setStyleNames(EventListenerLayout.StyleHeader)
+  setStyleName(EventListenerLayout.StyleHeader)
 
   var event: Option[Event] = None
   val eventBox = new ComboBox() {
@@ -62,13 +61,17 @@ class EventListenerHeader(view: EventListenerLayout)
       event => addItem(event)
     }
   }
-  addComponent(new Label("When"))
-  addComponent(eventBox)
-  addComponent(new Label("then.."))
-  addComponent(new NativeButton("Save", new ClickListener {
+  val label = new Label("then..")
+  val saveButton = new NativeButton("Save", new ClickListener {
     override def buttonClick(event: ClickEvent) =
       view.presenter.save()
-  }))
+  })
+  saveButton.setPrimaryStyleName(EventListenerLayout.StyleHeaderSaveButton)
+  add(eventBox)
+  add(label)
+  add(saveButton)
+
+  setExpandRatio(label, 1f)
 
   def setEvent(e: Event) = {
     event = Some(e)

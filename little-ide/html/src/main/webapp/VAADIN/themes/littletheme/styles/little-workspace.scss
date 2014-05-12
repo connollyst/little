@@ -1,11 +1,11 @@
-$workspace-tabsheet-open-border-color: #33a288;
+$workspace-tabsheet-open-border-color: #215846;
 $workspace-tabsheet-open-bg-color: #39d1b4;
 $workspace-tabsheet-open-color: #222;
-$workspace-tabsheet-closed-border-color: #b2b3b4;
-$workspace-tabsheet-closed-bg-color: #c3c4c5;
-$workspace-tabsheet-closed-color: #464646;
-$workspace-tabsheet-border-color: #c3c4c5;
-$workspace-tabsheet-bg-color: #e6e7e8;
+$workspace-tabsheet-closed-border-color: #39393a;
+$workspace-tabsheet-closed-bg-color: #909192;
+$workspace-tabsheet-closed-color: #cfcfcf;
+$workspace-tabsheet-border-color: #282828;
+$workspace-tabsheet-bg-color: #626262;
 
 .littletheme .l-workspace {
 }
@@ -62,12 +62,15 @@ $workspace-tabsheet-bg-color: #e6e7e8;
   color: darkred;
 }
 
+.littletheme .l-workspace .v-tabsheet-content {
+  border: none;
+}
+
 .littletheme .l-workspace .v-ddwrapper {
   padding: 0;
 }
 
 .littletheme .l-workspace .l-workspace-body {
-  border-top: 1px solid #ccc;
   background-color: #fff;
   background-size: 200px 200px, 200px 200px, 40px 40px, 40px 40px;
   background-position: -2px -2px, -2px -2px, -1px -1px, -1px -1px;
