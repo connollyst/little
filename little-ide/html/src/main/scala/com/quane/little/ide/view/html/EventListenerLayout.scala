@@ -6,13 +6,10 @@ import com.quane.little.ide.presenter.BlockPresenter
 import com.quane.little.language.event.Event
 import com.quane.little.language.event.Event.Event
 import com.vaadin.data.Property.{ValueChangeEvent, ValueChangeListener}
-import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
+import com.quane.vaadin.scala.VaadinMixin
 import scala.Some
-import com.vaadin.event.dd.DropHandler
-import com.vaadin.event.dd.acceptcriteria.AcceptAll
-import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.data.model.CodeCategory
-import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, IDECommandExecutor}
+import com.vaadin.ui.Button.{ClickEvent, ClickListener}
+import com.vaadin.server.Sizeable
 
 object EventListenerLayout {
   val Style = "l-event-listener"
@@ -31,10 +28,10 @@ class EventListenerLayout
   with RemovableComponent
   with VaadinMixin {
 
-  val header = new EventListenerHeader(this)
-
+  setSizeFull()
   setStyleName(EventListenerLayout.Style)
-  add(header)
+
+  val header = add(new EventListenerHeader(this))
 
   override def setEvent(event: Event) = header.setEvent(event)
 
@@ -53,8 +50,9 @@ class EventListenerHeader(view: EventListenerLayout)
   with VaadinMixin {
 
   setSpacing(true)
+  setWidth(100, Sizeable.Unit.PERCENTAGE)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
-  setStyleNames(ExpressionLayout.Style, EventListenerLayout.StyleHeader)
+  setStyleNames(EventListenerLayout.StyleHeader)
 
   var event: Option[Event] = None
   val eventBox = new ComboBox() {
@@ -64,10 +62,17 @@ class EventListenerHeader(view: EventListenerLayout)
       event => addItem(event)
     }
   }
-  add(new Label("When"))
-  add(eventBox)
-  add(new Label("then.."))
-  add(CloseButton(view))
+  addComponent(new Label("When"))
+  addComponent(eventBox)
+  addComponent(new Label("then.."))
+  addComponent(new NativeButton("Save", new ClickListener {
+    override def buttonClick(event: ClickEvent) =
+      view.presenter.save()
+  }))
+  addComponent(new NativeButton("X", new ClickListener {
+    override def buttonClick(event: ClickEvent) =
+      view.removeFromParent()
+  }))
 
   def setEvent(e: Event) = {
     event = Some(e)

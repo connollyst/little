@@ -20,6 +20,6 @@ trait EventListenerViewPresenter
 
   def compile: EventListener
 
-  def save: ListenerRecord
+  def save(): ListenerRecord
 
 }

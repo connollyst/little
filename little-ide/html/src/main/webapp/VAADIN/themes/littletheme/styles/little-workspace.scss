@@ -1,3 +1,56 @@
+$workspace-tabsheet-open-border-color: #33a288;
+$workspace-tabsheet-open-bg-color: #39d1b4;
+$workspace-tabsheet-open-color: #222;
+$workspace-tabsheet-closed-border-color: #b2b3b4;
+$workspace-tabsheet-closed-bg-color: #c3c4c5;
+$workspace-tabsheet-closed-color: #464646;
+$workspace-tabsheet-border-color: #c3c4c5;
+$workspace-tabsheet-bg-color: #e6e7e8;
+
+.littletheme .l-workspace {
+}
+
+.littletheme .l-workspace .v-tabsheet-tabcontainer {
+  padding-top: 9px;
+  border-top: 1px solid $workspace-tabsheet-border-color;
+  background-color: $workspace-tabsheet-bg-color;
+}
+
+.littletheme .l-workspace .v-tabsheet-spacertd div {
+}
+
+.littletheme .l-workspace .v-tabsheet-tabitemcell {
+  background-color: $workspace-tabsheet-bg-color;
+}
+
+.littletheme .l-workspace .v-tabsheet-tabitem {
+  color: $workspace-tabsheet-closed-color;
+  background-color: $workspace-tabsheet-closed-bg-color;
+  border: 1px solid $workspace-tabsheet-closed-border-color;
+  border-bottom: none;
+  font-size: 14px;
+  text-shadow: none;
+}
+
+.littletheme .l-workspace .v-tabsheet-tabitem-selected {
+  color: $workspace-tabsheet-open-color;
+  background-color: $workspace-tabsheet-open-bg-color;
+  border-color: $workspace-tabsheet-open-border-color;
+}
+
+.littletheme .l-workspace .v-tabsheet-spacertd,
+.littletheme .l-workspace .v-tabsheet-spacertd div,
+.littletheme .l-workspace .v-tabsheet-tabitemcell,
+.littletheme .l-workspace .v-tabsheet-tabitemcell-selected,
+.littletheme .l-workspace .v-tabsheet-tabitemcell-first,
+.littletheme .l-workspace .v-tabsheet-tabitemcell-selected-first,
+.littletheme .l-workspace .v-tabsheet-tabitem,
+.littletheme .l-workspace .v-tabsheet-tabitem-selected,
+.littletheme .l-workspace .v-tabsheet-tabitem .v-caption,
+.littletheme .l-workspace .v-tabsheet-tabitem-selected .v-caption {
+  background-image: none;
+}
+
 .littletheme .l-workspace .v-ddwrapper {
   padding: 0;
 }
@@ -19,6 +72,10 @@
   linear-gradient(90deg, rgba(0, 0, 0, .075) 2px, transparent 2px),
   linear-gradient(rgba(0, 0, 0, .05) 1px, transparent 1px),
   linear-gradient(90deg, rgba(0, 0, 0, .05) 1px, transparent 1px);
+}
+
+.littletheme .l-workspace .l-workspace-body .v-absolutelayout-wrapper {
+  width: 100%;
 }
 
 .littletheme .l-workspace .l-workspace-body .v-spacing {

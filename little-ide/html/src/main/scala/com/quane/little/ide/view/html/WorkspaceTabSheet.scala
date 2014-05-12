@@ -56,6 +56,7 @@ class WorkspaceTabSheet
 class WorkspaceLayout
   extends AbsoluteLayout {
 
+  setSizeFull()
   setStyleName(WorkspaceTabSheet.StyleBody)
 
 }
