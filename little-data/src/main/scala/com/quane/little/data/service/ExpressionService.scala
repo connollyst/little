@@ -3,7 +3,6 @@ package com.quane.little.data.service
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.language._
 import scala.collection.immutable
-import scala.Some
 import com.quane.little.language.data.Value
 
 object ExpressionService {
@@ -13,7 +12,7 @@ object ExpressionService {
   def apply(): ExpressionService = {
     // Note: we provide this apply() just to be consistent with other services
     if (!instance.isDefined) {
-      instance = Some(new ExpressionService)
+      instance = Some(new MongoExpressionService)
     }
     instance.get
   }
@@ -33,30 +32,46 @@ object ExpressionService {
 
 }
 
-/** A service for accessing primitives of the little language.
+trait ExpressionService {
+
+  def allExpressions: Iterable[Expression]
+
+  def all: Iterable[PrimitiveRecord]
+
+  def findExpression(id: RecordId): Expression
+
+  def find(id: RecordId): PrimitiveRecord
+
+  def createRecord(id: RecordId): PrimitiveRecord
+
+}
+
+/** A service for accessing primitive expressions of the little language.
   *
   * @author Sean Connolly
   */
-class ExpressionService {
+class MongoExpressionService extends ExpressionService {
 
+  // TODO erm.. this isn't related to MongoDB at all..?
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
-  def allExpressions: Iterable[Expression] =
+  override def allExpressions: Iterable[Expression] =
     ExpressionService.All map {
       id => ExpressionFactory.create(id)
     }
 
-  def all: Iterable[PrimitiveRecord] =
+  override def all: Iterable[PrimitiveRecord] =
     ExpressionService.All map {
       id => createRecord(new RecordId(id))
     }
 
-  def findExpression(id: RecordId): Expression = ExpressionFactory.create(id.oid)
+  override def findExpression(id: RecordId): Expression = ExpressionFactory.create(id.oid)
 
-  def find(id: RecordId): PrimitiveRecord = createRecord(id)
+  override def find(id: RecordId): PrimitiveRecord = createRecord(id)
 
-  def createRecord(id: RecordId): PrimitiveRecord =
+  override def createRecord(id: RecordId): PrimitiveRecord =
     new PrimitiveRecord(id, ExpressionService.Names(id.oid), ExpressionFactory.create(id.oid))
+
 }
 
 /** A factory for creating an [[com.quane.little.language.Expression]] for a

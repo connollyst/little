@@ -12,25 +12,39 @@ object UserService {
 
   def apply(): UserService = {
     if (!instance.isDefined) {
-      instance = Some(new UserService(MongoClient()))
+      instance = Some(new MongoUserService(MongoClient()))
     }
     instance.get
   }
 
   def apply(client: MongoClient): UserService = {
-    instance = Some(new UserService(client))
+    instance = Some(new MongoUserService(client))
     instance.get
   }
 
 }
 
-class UserService(client: MongoClient) {
+trait UserService {
+
+  def init(): Unit
+
+  def upsert(username: String): UserRecord
+
+  def fetch(username: String): UserRecord
+
+  def fetch(userId: RecordId): UserRecord
+
+  def exists(username: String): Boolean
+
+}
+
+class MongoUserService(client: MongoClient) extends UserService {
 
   /** Initialize the data source.
     */
-  def init(): Unit = upsert(UserService.SYSTEM_USERNAME)
+  override def init(): Unit = upsert(UserService.SYSTEM_USERNAME)
 
-  def upsert(username: String): UserRecord = {
+  override def upsert(username: String): UserRecord = {
     val repo = new UserRepository(collection)
     repo.find(username) match {
       case Some(user) => user
@@ -38,7 +52,7 @@ class UserService(client: MongoClient) {
     }
   }
 
-  def fetch(username: String): UserRecord = {
+  override def fetch(username: String): UserRecord = {
     val repo = new UserRepository(collection)
     repo.find(username) match {
       case Some(user) => user
@@ -48,7 +62,7 @@ class UserService(client: MongoClient) {
     }
   }
 
-  def fetch(userId: RecordId): UserRecord = {
+  override def fetch(userId: RecordId): UserRecord = {
     val repo = new UserRepository(collection)
     repo.find(userId) match {
       case Some(user) => user
@@ -58,7 +72,7 @@ class UserService(client: MongoClient) {
     }
   }
 
-  def exists(username: String): Boolean = {
+  override def exists(username: String): Boolean = {
     val repo = new UserRepository(collection)
     repo.find(username).isDefined
   }

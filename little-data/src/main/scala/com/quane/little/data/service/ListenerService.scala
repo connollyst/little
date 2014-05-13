@@ -18,21 +18,38 @@ object ListenerService {
 
   def apply(): ListenerService = {
     if (!instance.isDefined) {
-      instance = Some(new ListenerService(MongoClient()))
+      instance = Some(new MongoListenerService(MongoClient()))
     }
     instance.get
   }
 
   def apply(client: MongoClient): ListenerService = {
-    instance = Some(new ListenerService(client))
+    instance = Some(new MongoListenerService(client))
     instance.get
   }
 
 }
 
-class ListenerService(client: MongoClient) {
+trait ListenerService {
 
-  def init(): Unit = {
+  def init(): Unit
+
+  def findListener(id: RecordId): EventListener
+
+  def findListenersByUser(username: String): List[EventListener] =
+    findByUser(username).map(_.listener)
+
+  def findByUser(username: String): List[ListenerRecord]
+
+  def update(id: RecordId, listener: EventListener): ListenerRecord
+
+  def insert(username: String, listener: EventListener): ListenerRecord
+
+}
+
+class MongoListenerService(client: MongoClient) extends ListenerService {
+
+  override def init(): Unit = {
     // TODO this is all temporary!
     if (findListenersByUser("connollyst").nonEmpty) {
       return
@@ -66,19 +83,16 @@ class ListenerService(client: MongoClient) {
     )
   }
 
-  def findListener(id: RecordId): EventListener =
+  override def findListener(id: RecordId): EventListener =
     repository.find(id) match {
       case Some(record) => record.listener
       case None => throw new RuntimeException("No event listener for " + id)
     }
 
-  def findListenersByUser(username: String): List[EventListener] =
-    findByUser(username).map(_.listener)
-
-  def findByUser(username: String): List[ListenerRecord] =
+  override def findByUser(username: String): List[ListenerRecord] =
     repository.findByUser(UserService().fetch(username))
 
-  def update(id: RecordId, listener: EventListener): ListenerRecord = {
+  override def update(id: RecordId, listener: EventListener): ListenerRecord = {
     val repo = repository
     repo.find(id) match {
       case Some(record) =>
@@ -90,7 +104,7 @@ class ListenerService(client: MongoClient) {
     }
   }
 
-  def insert(username: String, listener: EventListener): ListenerRecord = {
+  override def insert(username: String, listener: EventListener): ListenerRecord = {
     val user = UserService().fetch(username)
     val record = new ListenerRecord(user.id, listener)
     repository.insert(record)

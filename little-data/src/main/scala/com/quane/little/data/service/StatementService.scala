@@ -13,7 +13,7 @@ object StatementService {
   def apply(): StatementService = {
     // Note: we provide this apply() just to be consistent with other services
     if (!instance.isDefined) {
-      instance = Some(new StatementService)
+      instance = Some(new MongoStatementService)
     }
     instance.get
   }
@@ -33,30 +33,46 @@ object StatementService {
 
 }
 
-/** A service for accessing statements of the little language.
+trait StatementService {
+
+  def allStatement: Iterable[EvaluableCode]
+
+  def all: Iterable[PrimitiveRecord]
+
+  def findStatement(id: RecordId): EvaluableCode
+
+  def find(id: RecordId): PrimitiveRecord
+
+  def createRecord(id: RecordId): PrimitiveRecord
+
+}
+
+/** A service for accessing primitive statements of the little language.
   *
   * @author Sean Connolly
   */
-class StatementService {
+class MongoStatementService extends StatementService {
 
+  // TODO erm.. this isn't related to MongoDB at all..?
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
-  def allStatement: Iterable[EvaluableCode] =
+  override def allStatement: Iterable[EvaluableCode] =
     StatementService.All map {
       id => StatementFactory.create(id)
     }
 
-  def all: Iterable[PrimitiveRecord] =
+  override def all: Iterable[PrimitiveRecord] =
     StatementService.All map {
       id => createRecord(new RecordId(id))
     }
 
-  def findStatement(id: RecordId): EvaluableCode = StatementFactory.create(id.oid)
+  override def findStatement(id: RecordId): EvaluableCode = StatementFactory.create(id.oid)
 
-  def find(id: RecordId): PrimitiveRecord = createRecord(id)
+  override def find(id: RecordId): PrimitiveRecord = createRecord(id)
 
-  def createRecord(id: RecordId): PrimitiveRecord =
+  override def createRecord(id: RecordId): PrimitiveRecord =
     new PrimitiveRecord(id, StatementService.Names(id.oid), StatementFactory.create(id.oid))
+
 }
 
 /** A factory for creating an [[com.quane.little.language.Expression]] for a
