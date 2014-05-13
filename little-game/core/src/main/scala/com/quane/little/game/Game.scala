@@ -6,6 +6,7 @@ import com.quane.little.game.physics.PhysicsEngine
 import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.tools.Logging
 import scala.collection.mutable
+import com.quane.little.data.service.{ListenerService, FunctionService}
 
 /** The game maintains the state of the world and all entities, tying together
   * the physics simulator with the Little data model and language evaluation.
@@ -17,6 +18,7 @@ class Game
   with Logging {
 
   val hertz = 30.0
+  val poll = 0.5
   val eventBus: EventBus = new EventBus
   val engine: PhysicsEngine = new PhysicsEngine
   val cleaner: EntityRemover = new EntityRemover
@@ -26,6 +28,7 @@ class Game
   val entities: mutable.Map[String, Entity] = mutable.Map()
 
   val stateUpdater = new TimedUpdater(hertz, updateState)
+  val codeUpdate = new TimedUpdater(poll, updateCode)
 
   cleaner.add(this)
   cleaner.add(engine)
@@ -69,6 +72,23 @@ class Game
     cleaner.cleanAll()
     engine.updateAll(entities.values)
     eventBus.evaluateAll()
+  }
+
+  def updateCode(): Unit = {
+    val username = "connollyst"
+    FunctionService().init() // TODO this is temporary
+    ListenerService().init() // TODO this is temporary
+    val functions = FunctionService().findDefinitionsByUser(username)
+    val listeners = ListenerService().findListenersByUser(username)
+    entities.values foreach {
+      case mob: Mob =>
+        functions foreach {
+          function => mob.operator.runtime.saveFunction(function)
+        }
+        listeners foreach {
+          listener => mob.operator.addEventListener(listener)
+        }
+    }
   }
 
   override def entityRemoved(entity: Entity) = entities -= entity.id
