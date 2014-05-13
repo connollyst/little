@@ -13,7 +13,7 @@ object GamespaceLayout {
   val Style = "l-gamespace"
   val StyleView = Style + "-viewer"
   val StyleListeners = Style + "-listeners"
-  val GameURL = new ExternalResource("http://127.0.0.1/little")
+  val GameURL = new ExternalResource("http://localhost/~sean/little/game/little/little.html?ide_id=debug")
 }
 
 /** Layout containing the core game elements: a display of the game itself and
