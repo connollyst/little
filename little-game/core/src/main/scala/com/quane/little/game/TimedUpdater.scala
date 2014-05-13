@@ -11,7 +11,7 @@ object TimedUpdater {
   *
   * @author Sean Connolly
   */
-abstract class TimedUpdater(perSecond: Double)
+class TimedUpdater(perSecond: Double, update: () => Unit)
   extends Runnable
   with Logging {
 
@@ -55,7 +55,5 @@ abstract class TimedUpdater(perSecond: Double)
       }
     }
   }
-
-  def update()
 
 }

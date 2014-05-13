@@ -25,9 +25,8 @@ class Game
 
   val entities: mutable.Map[String, Entity] = mutable.Map()
 
-  val updater = new TimedUpdater(hertz) {
-    def update() = updateState()
-  }
+  val stateUpdater = new TimedUpdater(hertz, updateState)
+
   cleaner.add(this)
   cleaner.add(engine)
 
@@ -44,15 +43,15 @@ class Game
   }
 
   def start() = {
-    if (!updater.isRunning) {
-      new Thread(updater).start()
+    if (!stateUpdater.isRunning) {
+      new Thread(stateUpdater).start()
     } else {
       warn("Skipping start game, already running.")
     }
   }
 
   def stop() = {
-    updater.stop()
+    stateUpdater.stop()
     info("Game stopped..")
   }
 
