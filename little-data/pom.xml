@@ -22,6 +22,10 @@
         </plugins>
     </build>
 
+    <properties>
+        <mongo.casbah.version>2.6.5</mongo.casbah.version>
+    </properties>
+
     <dependencies>
         <!-- The data layer stores Little code -->
         <dependency>
@@ -41,7 +45,7 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>casbah-core_${scala.version}</artifactId>
-            <version>2.6.5</version>
+            <version>${mongo.casbah.version}</version>
         </dependency>
 
         <!-- Test Dependencies -->
