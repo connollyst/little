@@ -101,10 +101,8 @@ class BlockPresenter[V <: BlockView](view: V) extends BlockViewPresenter {
   override def compile: Block = {
     val block = new Block
     steps.foreach {
-      _ match {
-        case step: ExpressionViewPresenter => block += step.compile
-        case step: StatementViewPresenter => block += step.compile
-      }
+      case step: ExpressionViewPresenter => block += step.compile
+      case step: StatementViewPresenter => block += step.compile
     }
     block
   }
