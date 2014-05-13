@@ -2,11 +2,10 @@ package com.quane.little.game.entity
 
 import com.quane.little.game.Game
 import com.quane.little.game.engine.InteractionManager
-import com.quane.little.language.event.Event
 import scala.collection.mutable.ListBuffer
 import scala.util.Random
-import com.quane.little.data.service.{ListenerService, FunctionService}
-
+import com.quane.little.data.service.{FunctionService, UserService, ListenerService}
+import com.quane.little.language.event.Event
 
 class EntityFactory(game: Game) {
 
@@ -27,12 +26,14 @@ class EntityFactory(game: Game) {
   }
 
   def createMob(x: Float, y: Float): Mob = {
-    val mob = new Mob(game.builder.buildBody(x, y), manager)
     val username = "connollyst" //  TODO this is temporary
+    UserService().init() // TODO this is temporary
+    FunctionService().init() // TODO this is temporary
+    ListenerService().init() // TODO this is temporary
+    val mob = new Mob(game.builder.buildBody(x, y), manager)
     FunctionService().findDefinitionsByUser(username) foreach {
       function => mob.operator.runtime.saveFunction(function)
     }
-    ListenerService().init() // TODO this is temporary
     ListenerService().findListenersByUser(username) foreach {
       listener => mob.operator.addEventListener(listener)
     }
