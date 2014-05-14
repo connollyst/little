@@ -10,7 +10,7 @@ import org.scalatest.junit.JUnitRunner
 @RunWith(classOf[JUnitRunner])
 class TestWorkspacePresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterInjector
+  implicit val bindingModule = PresenterBindingModule
 
   test("test listener registered") {
     val view = mock[WorkspaceView]

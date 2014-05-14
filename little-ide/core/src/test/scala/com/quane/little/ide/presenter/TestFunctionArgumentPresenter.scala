@@ -12,7 +12,7 @@ import com.quane.little.language.data.Value
 @RunWith(classOf[JUnitRunner])
 class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterInjector
+  implicit val bindingModule = PresenterBindingModule
 
   test("test name is set") {
     val presenter = new FunctionArgumentPresenter(mock[FunctionArgumentView])

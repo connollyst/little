@@ -12,7 +12,7 @@ import com.quane.little.language.data.Value
 @RunWith(classOf[JUnitRunner])
 class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterInjector
+  implicit val bindingModule = PresenterBindingModule
 
   test("test value is set") {
     val view = new MockPrintStatementView

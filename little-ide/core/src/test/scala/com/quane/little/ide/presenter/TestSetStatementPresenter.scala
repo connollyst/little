@@ -13,7 +13,7 @@ import com.quane.little.language.{FunctionReference, GetStatement, Expression}
 @RunWith(classOf[JUnitRunner])
 class TestSetStatementPresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterInjector
+  implicit val bindingModule = PresenterBindingModule
 
   test("test name is set") {
     val view = mock[SetStatementView]

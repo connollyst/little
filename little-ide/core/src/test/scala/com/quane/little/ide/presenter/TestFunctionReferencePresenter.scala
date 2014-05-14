@@ -12,7 +12,7 @@ import com.quane.little.language.FunctionReference
 @RunWith(classOf[JUnitRunner])
 class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterInjector
+  implicit val bindingModule = PresenterBindingModule
 
   test("should set name") {
     val view = mock[FunctionReferenceView]

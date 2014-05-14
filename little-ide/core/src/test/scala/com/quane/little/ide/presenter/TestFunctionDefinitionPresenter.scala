@@ -11,7 +11,7 @@ import com.quane.little.language.FunctionParameter
 @RunWith(classOf[JUnitRunner])
 class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterInjector
+  implicit val bindingModule = PresenterBindingModule
 
   test("test name is set") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
