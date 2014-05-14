@@ -23,19 +23,29 @@ class FunctionDefinition(val name: String) {
     this
   }
 
-  def addParam(name: String): FunctionDefinition =
-    addParam(new FunctionParameter(name))
-
-  def addParam(param: FunctionParameter): FunctionDefinition = {
-    _params += param
+  def addParam(name: String): FunctionDefinition = {
+    this += name
     this
   }
+
+  def addParam(param: FunctionParameter): FunctionDefinition = {
+    this += param
+    this
+  }
+
+  def +=(name: String) = _params += new FunctionParameter(name)
+
+  def +=(param: FunctionParameter) = _params += param
 
   def params: List[FunctionParameter] = _params.toList
 
   def params_=(params: List[FunctionParameter]) = {
     _params.clear()
-    _params ++= params
+    params.foreach {
+      param => _params += param
+    }
+    // TODO why does this cause tests to fail?..:
+    // _params ++= params
   }
 
   def steps: List[EvaluableCode] = block.steps
