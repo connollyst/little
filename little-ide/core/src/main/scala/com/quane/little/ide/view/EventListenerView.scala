@@ -1,6 +1,8 @@
 package com.quane.little.ide.view
 
 import com.quane.little.data.model.ListenerRecord
+import com.quane.little.language.event.Event.Event
+import com.quane.little.language.event.EventListener
 
 trait EventListenerView extends View[EventListenerViewPresenter] {
 

@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
-import com.quane.little.language.GetStatement
+import com.quane.little.language.{FunctionReference, Expression, GetStatement}
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}

@@ -6,6 +6,7 @@ import scala.collection.mutable.ListBuffer
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, StatementService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.language._
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *

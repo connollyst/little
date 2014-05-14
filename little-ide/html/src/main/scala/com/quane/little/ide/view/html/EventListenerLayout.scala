@@ -6,6 +6,8 @@ import com.vaadin.data.Property.{ValueChangeEvent, ValueChangeListener}
 import com.quane.vaadin.scala.VaadinMixin
 import scala.Some
 import com.vaadin.server.Sizeable
+import com.quane.little.language.event.Event
+import com.quane.little.language.event.Event.Event
 
 object EventListenerLayout {
   val Style = "l-event-listener"

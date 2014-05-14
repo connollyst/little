@@ -1,6 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{FunctionParameterViewPresenter, FunctionParameterView}
+import com.quane.little.language.FunctionParameter
 
 /** A presenter for views representing a function definition parameter.
   *

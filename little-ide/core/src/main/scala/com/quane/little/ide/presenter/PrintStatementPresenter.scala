@@ -5,6 +5,8 @@ import scala._
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.language.{FunctionReference, GetStatement, Expression, PrintStatement}
+import com.quane.little.language.data.Value
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *

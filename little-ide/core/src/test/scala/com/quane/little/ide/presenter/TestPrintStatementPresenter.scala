@@ -1,12 +1,13 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.Expression
+import com.quane.little.language.{FunctionReference, GetStatement, Expression}
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
 class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
@@ -99,7 +100,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     when(view.createValueStatement()).thenReturn(new MockValueView)
     when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
     presenter.value = value
-    val compiled = presenter.compile
+    val compiled = presenter.compile()
     assert(compiled.value == value)
   }
 
@@ -107,7 +108,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
     intercept[IllegalAccessException] {
-      presenter.compile
+      presenter.compile()
     }
   }
 

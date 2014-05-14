@@ -1,9 +1,10 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.Expression
+import com.quane.little.language.{EvaluableCode, Conditional, Expression}
 import com.google.common.base.Objects
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.language.exceptions.NotImplementedError
 
 /** A presenter for views representing an [[com.quane.little.language.Conditional]].
   *
@@ -40,7 +41,7 @@ class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingMo
 
   private[presenter] def otherwise_=(steps: List[EvaluableCode]): Unit = _elseBlock.steps = steps
 
-  override def compile: Conditional =
+  override def compile(): Conditional =
     new Conditional(_condition.compile, _thenBlock.compile, _elseBlock.compile)
 
   override def toString: String =

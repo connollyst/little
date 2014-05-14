@@ -1,6 +1,7 @@
 package com.quane.little.ide.view
 
 import com.quane.little.data.model.FunctionRecord
+import com.quane.little.language.FunctionDefinition
 
 trait FunctionDefinitionView
   extends View[FunctionDefinitionViewPresenter] {

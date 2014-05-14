@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{FunctionReferenceViewPresenter, FunctionReferenceView}
-import com.quane.little.language.FunctionReference
+import com.quane.little.language.{Expression, FunctionReference}
 import scala.collection.mutable.ListBuffer
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
@@ -16,7 +16,7 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
 
   private val presenterFactory = inject[PresenterFactory]
 
-  private var _name: String = "???"
+  private var _name: String = ""
 
   view.registerViewPresenter(this)
 
@@ -46,7 +46,7 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
   private[presenter] def add(arg: FunctionArgumentPresenter[_]): Unit =
     args += arg
 
-  override def compile: FunctionReference = {
+  override def compile(): FunctionReference = {
     val fun = new FunctionReference(_name)
     compileArgs(fun)
     fun
@@ -54,7 +54,7 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
 
   private def compileArgs(fun: FunctionReference) =
     args.foreach {
-      arg => fun.addArg(arg.name, arg.compile)
+      arg => fun.addArg(arg.name, arg.compile())
     }
 
 }

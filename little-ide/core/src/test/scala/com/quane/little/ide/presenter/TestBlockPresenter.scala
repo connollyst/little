@@ -6,6 +6,8 @@ import org.mockito.Mockito._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import com.quane.little.language._
+import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends FunSuite with MockitoSugar {

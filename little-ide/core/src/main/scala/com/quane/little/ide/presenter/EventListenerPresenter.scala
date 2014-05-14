@@ -4,6 +4,9 @@ import com.quane.little.ide.view.{EvaluableCodeViewPresenter, EventListenerViewP
 import com.quane.little.data.model.{ListenerRecord, RecordId}
 import com.quane.little.data.service.ListenerService
 import com.escalatesoft.subcut.inject.BindingModule
+import com.quane.little.language.event.Event.Event
+import com.quane.little.language.event.EventListener
+import com.quane.little.language.EvaluableCode
 
 class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindingModule: BindingModule)
   extends EventListenerViewPresenter {

@@ -6,6 +6,8 @@ import org.mockito.Mockito._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import com.quane.little.language.{Expression, FunctionReference, GetStatement}
+import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {

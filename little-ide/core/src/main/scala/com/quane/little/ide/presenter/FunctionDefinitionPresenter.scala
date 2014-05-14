@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.{FunctionCategory, RecordId, FunctionRecord}
 import com.quane.little.ide.view.{EvaluableCodeViewPresenter, FunctionDefinitionView, FunctionDefinitionViewPresenter}
-import com.quane.little.language.EvaluableCode
+import com.quane.little.language.{FunctionParameter, FunctionDefinition, EvaluableCode}
 import scala._
 import scala.collection.mutable.ListBuffer
 import com.quane.little.data.service.FunctionService

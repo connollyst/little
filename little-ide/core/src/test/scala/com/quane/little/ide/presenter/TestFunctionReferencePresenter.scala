@@ -6,6 +6,8 @@ import org.mockito.Mockito._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import com.quane.little.language.data.Value
+import com.quane.little.language.FunctionReference
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
@@ -49,14 +51,14 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
 
   test("should compile with name (default)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.name == "???", "expected '???' but got '" + function.name + "'")
   }
 
   test("should compile with name") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
     presenter.name = "newName"
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.name == "newName")
   }
 
@@ -66,7 +68,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
       .initialize(
         new FunctionReference("my name")
       )
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.args.size == 0)
   }
 
@@ -76,7 +78,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
         new FunctionReference("my name")
           .addArg("x", Value("y"))
       )
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.args.size == 1)
   }
 
@@ -87,13 +89,13 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
           .addArg("a", Value("x"))
           .addArg("b", Value("y"))
       )
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.args.size == 2)
   }
 
   test("should compile with 0 parameters (added)") {
     val presenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.args.size == 0)
   }
 
@@ -103,7 +105,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
       new FunctionArgumentPresenter(new MockFunctionArgumentView)
         .initialize("x", Value("y"))
     )
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.args.size == 1)
   }
 
@@ -117,7 +119,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
       new FunctionArgumentPresenter(new MockFunctionArgumentView)
         .initialize("b", Value("y"))
     )
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.args.size == 2)
   }
 

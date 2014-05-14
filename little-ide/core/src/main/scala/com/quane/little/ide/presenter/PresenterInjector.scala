@@ -2,6 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.NewBindingModule
 import com.quane.little.data.service._
+import com.mongodb.casbah.MongoClient
 
 object PresenterInjector extends NewBindingModule(module => {
 
