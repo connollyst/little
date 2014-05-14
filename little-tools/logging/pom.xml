@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.quane.little</groupId>
         <artifactId>little-tools</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>0.0.8-SNAPSHOT</version>
     </parent>
 
     <artifactId>little-logging</artifactId>
@@ -36,7 +36,7 @@
         </dependency>
 
         <dependency>
-        <groupId>org.slf4j</groupId>
+            <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
             <version>${slf4j.version}</version>
         </dependency>

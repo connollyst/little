@@ -6,7 +6,7 @@
     <parent>
         <groupId>com.quane.little</groupId>
         <artifactId>little-ide</artifactId>
-        <version>0.0.7-SNAPSHOT</version>
+        <version>0.0.8-SNAPSHOT</version>
     </parent>
 
     <artifactId>little-ide-core</artifactId>
@@ -29,6 +29,13 @@
             <groupId>${project.groupId}</groupId>
             <artifactId>little-data</artifactId>
             <version>${project.version}</version>
+        </dependency>
+
+        <!-- Subcut for dependency injection -->
+        <dependency>
+            <groupId>com.escalatesoft.subcut</groupId>
+            <artifactId>subcut_${scala.version}</artifactId>
+            <version>${subcut.version}</version>
         </dependency>
 
         <!-- Unit Test Dependencies -->
