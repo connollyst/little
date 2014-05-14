@@ -15,7 +15,7 @@ import com.quane.little.language.data.Value
 @RunWith(classOf[JUnitRunner])
 class TestStatementService extends FlatSpec with ShouldMatchers {
 
-  val service = new MongoStatementService
+  val service = new BasicStatementService
 
   "StatementService" should "support all statements" in {
     StatementService.All foreach {

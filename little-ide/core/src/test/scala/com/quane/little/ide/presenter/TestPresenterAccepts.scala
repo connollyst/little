@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.data.service.{ExpressionService, StatementService}
+import com.quane.little.data.service.{BasicStatementService, BasicExpressionService, ExpressionService, StatementService}
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.ide.view._
 import org.scalatest.mock.MockitoSugar
@@ -37,8 +37,8 @@ class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSuga
     accepts should be(right = true)
   }
 
-  private def expression(id: String): PrimitiveRecord = ExpressionService().find(new RecordId(id))
+  private def expression(id: String): PrimitiveRecord = new BasicExpressionService().find(new RecordId(id))
 
-  private def statement(id: String): PrimitiveRecord = StatementService().find(new RecordId(id))
+  private def statement(id: String): PrimitiveRecord = new BasicStatementService().find(new RecordId(id))
 
 }

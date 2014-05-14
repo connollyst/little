@@ -3,20 +3,9 @@ package com.quane.little.data.service
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.language._
 import scala.collection.immutable
-import scala.Some
 import com.quane.little.language.data.Value
 
 object StatementService {
-
-  private var instance: Option[StatementService] = None
-
-  def apply(): StatementService = {
-    // Note: we provide this apply() just to be consistent with other services
-    if (!instance.isDefined) {
-      instance = Some(new MongoStatementService)
-    }
-    instance.get
-  }
 
   val Set = "_little_set"
   val Print = "_little_print"
@@ -51,9 +40,8 @@ trait StatementService {
   *
   * @author Sean Connolly
   */
-class MongoStatementService extends StatementService {
+class BasicStatementService extends StatementService {
 
-  // TODO erm.. this isn't related to MongoDB at all..?
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
   override def allStatement: Iterable[EvaluableCode] =

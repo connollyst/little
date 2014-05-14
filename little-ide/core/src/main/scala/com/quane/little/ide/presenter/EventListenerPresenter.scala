@@ -3,15 +3,18 @@ package com.quane.little.ide.presenter
 import com.quane.little.ide.view.{EvaluableCodeViewPresenter, EventListenerViewPresenter, EventListenerView}
 import com.quane.little.data.model.{ListenerRecord, RecordId}
 import com.quane.little.data.service.ListenerService
-import com.escalatesoft.subcut.inject.BindingModule
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.language.event.Event.Event
 import com.quane.little.language.event.EventListener
 import com.quane.little.language.EvaluableCode
 
 class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindingModule: BindingModule)
-  extends EventListenerViewPresenter {
+  extends EventListenerViewPresenter
+  with Injectable {
 
   view.registerViewPresenter(this)
+
+  private val listenerService = inject[ListenerService]
 
   private var _id: Option[RecordId] = None
   private val _username = "connollyst"
@@ -42,7 +45,7 @@ class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindi
 
   def compile(): EventListener = {
     val listener = new EventListener(event)
-    listener.steps = _block.compile.steps
+    listener.steps = _block.compile().steps
     listener
   }
 
@@ -51,10 +54,10 @@ class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindi
     _id match {
       case Some(id) =>
         println("Saving changes to listener " + id + "..")
-        ListenerService().update(id, listener)
+        listenerService.update(id, listener)
       case None =>
         println("Saving new listener..")
-        val record = ListenerService().insert(_username, listener)
+        val record = listenerService.insert(_username, listener)
         _id = Some(record.id)
         record
     }

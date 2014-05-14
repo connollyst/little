@@ -5,20 +5,21 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.quane.little.language.FunctionDefinition
-import com.mongodb.casbah.MongoClient
 import com.quane.little.data.model.FunctionCategory
-import com.quane.little.data.EmbeddedMongoDB
+import com.quane.little.data.{EmbeddedDatabaseBindingModule, EmbeddedMongoDB}
+import com.escalatesoft.subcut.inject.Injectable
 
 /** Test cases for the [[com.quane.little.data.service.FunctionService]]
   *
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestFunctionService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
+class TestFunctionService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers with Injectable {
 
-  val client = MongoClient(mongoHost, mongoPort)
-  val users = UserService(client)
-  val functions = FunctionService(client)
+  implicit val bindingModule = EmbeddedDatabaseBindingModule
+
+  val users = inject[UserService]
+  val functions = inject[FunctionService]
 
   val userOne = "userOne"
   val userTwo = "userTwo"

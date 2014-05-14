@@ -6,6 +6,8 @@ import com.smartfoxserver.v2.SmartFoxServer
 import com.smartfoxserver.v2.core.SFSEventType
 import com.smartfoxserver.v2.extensions.{IClientRequestHandler, IServerEventHandler, ExtensionLogLevel, SFSExtension}
 import com.smartfoxserver.v2.mmo._
+import com.quane.little.game.Game
+import com.quane.little.data.DataBindingModule
 
 /**
  * The SmartFox server 'extension' for the little game.
@@ -16,7 +18,9 @@ class LittleExtension
   extends SFSExtension
   with ClientCommunicator {
 
-  val game = new GameManager(this)
+  implicit val bindingModule = DataBindingModule
+
+  val game = new GameManager(this, new Game)
   val events = new EventManager(this)
   val serializer = new EntitySerializer()
 

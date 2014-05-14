@@ -17,6 +17,8 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bin
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
+  private val expressionService = inject[ExpressionService]
+  private val functionService = inject[FunctionService]
 
   private var _value: Option[_ <: ExpressionViewPresenter] = None
 
@@ -61,11 +63,11 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bin
   }
 
   override def requestAddExpression(id: RecordId, index: Int) =
-    value = ExpressionService().findExpression(id)
+    value = expressionService.findExpression(id)
 
   // TODO skip if already this function reference
   override def requestAddFunctionReference(id: RecordId, index: Int) =
-    value = FunctionService().findReference(id)
+    value = functionService.findReference(id)
 
   /** Compile to a [[com.quane.little.language.PrintStatement]].
     *

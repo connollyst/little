@@ -1,14 +1,14 @@
+import com.quane.little.data.DataBindingModule
 import com.quane.little.game.Game
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** A runnable headless game simulation client.
+  *
+  * @author Sean Connolly
+  */
 object GameRunner {
 
   def main(args: Array[String]) {
-    val game = new Game()
+    val game = new Game()(DataBindingModule)
     game.initialize()
     game.start()
   }

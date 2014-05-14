@@ -7,29 +7,12 @@ import com.quane.little.language.event.{Event, EventListener}
 import com.quane.little.language.FunctionReference
 import com.quane.little.language.data.Value
 import scala.Some
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** A service for interacting with [[com.quane.little.data.model.FunctionRecord]].
   *
   * @author Sean Connolly
   */
-object ListenerService {
-
-  private var instance: Option[ListenerService] = None
-
-  def apply(): ListenerService = {
-    if (!instance.isDefined) {
-      instance = Some(new MongoListenerService(MongoClient()))
-    }
-    instance.get
-  }
-
-  def apply(client: MongoClient): ListenerService = {
-    instance = Some(new MongoListenerService(client))
-    instance.get
-  }
-
-}
-
 trait ListenerService {
 
   def init(): Unit
@@ -47,14 +30,19 @@ trait ListenerService {
 
 }
 
-class MongoListenerService(client: MongoClient) extends ListenerService {
+class MongoListenerService(implicit val bindingModule: BindingModule)
+  extends ListenerService
+  with Injectable {
+
+  private val client = inject[MongoClient]
+  private val userService = inject[UserService]
 
   override def init(): Unit = {
     // TODO this is all temporary!
     if (findListenersByUser("connollyst").nonEmpty) {
       return
     }
-    val user = UserService().fetch("connollyst")
+    val user = userService.fetch("connollyst")
     val repo = repository
     repo.insert(
       new ListenerRecord(
@@ -90,7 +78,7 @@ class MongoListenerService(client: MongoClient) extends ListenerService {
     }
 
   override def findByUser(username: String): List[ListenerRecord] =
-    repository.findByUser(UserService().fetch(username))
+    repository.findByUser(userService.fetch(username))
 
   override def update(id: RecordId, listener: EventListener): ListenerRecord = {
     val repo = repository
@@ -105,7 +93,7 @@ class MongoListenerService(client: MongoClient) extends ListenerService {
   }
 
   override def insert(username: String, listener: EventListener): ListenerRecord = {
-    val user = UserService().fetch(username)
+    val user = userService.fetch(username)
     val record = new ListenerRecord(user.id, listener)
     repository.insert(record)
     record

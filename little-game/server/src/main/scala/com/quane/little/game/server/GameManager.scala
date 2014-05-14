@@ -13,7 +13,7 @@ import scala.collection.mutable
   *
   * @author Sean Connolly
   */
-class GameManager(client: ClientCommunicator, val game: Game = new Game)
+class GameManager(client: ClientCommunicator, val game: Game)
   extends EntityRemovalListener
   with Logging {
 

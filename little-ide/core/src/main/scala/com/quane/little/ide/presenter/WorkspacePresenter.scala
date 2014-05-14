@@ -13,21 +13,21 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)(implicit val bindingModule
   extends WorkspaceViewPresenter
   with Injectable {
 
-  // TODO inject function & listener services
-
   view.registerViewPresenter(this)
 
+  private val functionService = inject[FunctionService]
+  private val listenerService = inject[ListenerService]
+
   override def requestAddFunctionDefinition(id: RecordId, index: Int) = {
-    val function = FunctionService().findDefinition(id)
+    val function = functionService.findDefinition(id)
     new FunctionDefinitionPresenter(view.createFunctionDefinition()).initialize(id, function)
   }
 
   override def requestAddEventListener(id: RecordId, index: Int) = {
-    val listener = ListenerService().findListener(id)
+    val listener = listenerService.findListener(id)
     new EventListenerPresenter(view.createEventListener()).initialize(id, listener)
   }
 
-  override def requestAddBlankEventListener(index: Int) =
-    view.createEventListener()
+  override def requestAddBlankEventListener(index: Int) = view.createEventListener()
 
 }

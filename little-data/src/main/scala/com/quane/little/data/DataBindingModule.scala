@@ -13,11 +13,13 @@ object DataBindingModule extends NewBindingModule(module => {
 
   import module._
 
-  bind[UserService] toModuleSingle { implicit module => new MongoUserService(MongoClient())}
-  bind[FunctionService] toModuleSingle { implicit module => new MongoFunctionService(MongoClient())}
-  bind[ListenerService] toModuleSingle { implicit module => new MongoListenerService(MongoClient())}
-  bind[ExpressionService] toModuleSingle { implicit module => new MongoExpressionService()}
-  bind[StatementService] toModuleSingle { implicit module => new MongoStatementService()}
+  bind[MongoClient] toSingle {
+    MongoClient()
+  }
+  bind[UserService] toModuleSingle { implicit module => new MongoUserService}
+  bind[FunctionService] toModuleSingle { implicit module => new MongoFunctionService}
+  bind[ListenerService] toModuleSingle { implicit module => new MongoListenerService}
+  bind[ExpressionService] toModuleSingle { implicit module => new BasicExpressionService}
+  bind[StatementService] toModuleSingle { implicit module => new BasicStatementService}
 
 })
-

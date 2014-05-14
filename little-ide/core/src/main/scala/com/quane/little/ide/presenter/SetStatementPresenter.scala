@@ -16,6 +16,8 @@ class SetStatementPresenter[V <: SetStatementView](view: V)(implicit val binding
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
+  private val expressionService = inject[ExpressionService]
+  private val functionService = inject[FunctionService]
 
   private var _name = ""
   private var _value: Option[ExpressionViewPresenter] = None
@@ -70,11 +72,11 @@ class SetStatementPresenter[V <: SetStatementView](view: V)(implicit val binding
   override def onNameChange(name: String): Unit = _name = name
 
   override def requestAddExpression(id: RecordId, index: Int) =
-    value = ExpressionService().findExpression(id)
+    value = expressionService.findExpression(id)
 
   // TODO skip if already this function reference
   override def requestAddFunctionReference(id: RecordId, index: Int) =
-    value = FunctionService().findReference(id)
+    value = functionService.findReference(id)
 
   override def compile(): SetStatement = new SetStatement(_name, value.compile())
 

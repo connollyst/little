@@ -17,6 +17,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
+  private val functionService = inject[FunctionService]
 
   private var _id: Option[RecordId] = None
   private val _username = "connollyst"
@@ -75,7 +76,8 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
       param =>
         fun.addParam(param.compile())
     }
-    fun.steps = _block.compile.steps // TODO this seems sloppy..?
+    // TODO this seems sloppy..
+    fun.steps = _block.compile().steps
     fun
   }
 
@@ -84,10 +86,10 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
     _id match {
       case Some(id) =>
         println("Saving changes to function definition " + id + "..")
-        FunctionService().update(id, fun)
+        functionService.update(id, fun)
       case None =>
         println("Saving new function definition..")
-        val record = FunctionService().insert(_username, FunctionCategory.Misc, fun)
+        val record = functionService.insert(_username, FunctionCategory.Misc, fun)
         _id = Some(record.id)
         record
     }

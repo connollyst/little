@@ -7,16 +7,6 @@ import com.quane.little.language.data.Value
 
 object ExpressionService {
 
-  private var instance: Option[ExpressionService] = None
-
-  def apply(): ExpressionService = {
-    // Note: we provide this apply() just to be consistent with other services
-    if (!instance.isDefined) {
-      instance = Some(new MongoExpressionService)
-    }
-    instance.get
-  }
-
   val Get = "_little_get"
   val Conditional = "_little_conditional"
 
@@ -50,9 +40,8 @@ trait ExpressionService {
   *
   * @author Sean Connolly
   */
-class MongoExpressionService extends ExpressionService {
+class BasicExpressionService extends ExpressionService {
 
-  // TODO erm.. this isn't related to MongoDB at all..?
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
   override def allExpressions: Iterable[Expression] =

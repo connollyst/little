@@ -7,15 +7,20 @@ import com.quane.little.game.physics.bodies.BodyBuilder
 import com.quane.little.tools.Logging
 import scala.collection.mutable
 import com.quane.little.data.service.{ListenerService, FunctionService}
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** The game maintains the state of the world and all entities, tying together
   * the physics simulator with the Little data model and language evaluation.
   *
   * @author Sean Connolly
   */
-class Game
+class Game(implicit val bindingModule: BindingModule)
   extends EntityRemovalListener
+  with Injectable
   with Logging {
+
+  private val functionService = inject[FunctionService]
+  private val listenerService = inject[ListenerService]
 
   val hertz = 30.0
   val poll = 0.5
@@ -76,10 +81,10 @@ class Game
 
   def updateCode(): Unit = {
     val username = "connollyst"
-    FunctionService().init() // TODO this is temporary
-    ListenerService().init() // TODO this is temporary
-    val functions = FunctionService().findDefinitionsByUser(username)
-    val listeners = ListenerService().findListenersByUser(username)
+    functionService.init() // TODO this is temporary
+    listenerService.init() // TODO this is temporary
+    val functions = functionService.findDefinitionsByUser(username)
+    val listeners = listenerService.findListenersByUser(username)
     entities.values foreach {
       case mob: Mob =>
         functions foreach {

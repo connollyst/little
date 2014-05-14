@@ -1,26 +1,13 @@
 package com.quane.little.data.service
 
-import com.mongodb.casbah.{MongoCollection, MongoClient}
+import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.quane.little.data.model.{RecordId, UserRecord}
 import com.quane.little.data.repo.UserRepository
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 object UserService {
 
   val SYSTEM_USERNAME = "little"
-
-  private var instance: Option[UserService] = None
-
-  def apply(): UserService = {
-    if (!instance.isDefined) {
-      instance = Some(new MongoUserService(MongoClient()))
-    }
-    instance.get
-  }
-
-  def apply(client: MongoClient): UserService = {
-    instance = Some(new MongoUserService(client))
-    instance.get
-  }
 
 }
 
@@ -38,7 +25,11 @@ trait UserService {
 
 }
 
-class MongoUserService(client: MongoClient) extends UserService {
+class MongoUserService(implicit val bindingModule: BindingModule)
+  extends UserService
+  with Injectable {
+
+  private val client = inject[MongoClient]
 
   /** Initialize the data source.
     */

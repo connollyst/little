@@ -4,18 +4,19 @@ import org.scalatest.FlatSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import com.mongodb.casbah.MongoClient
-import com.quane.little.data.EmbeddedMongoDB
+import com.quane.little.data.{EmbeddedDatabaseBindingModule, EmbeddedMongoDB}
+import com.escalatesoft.subcut.inject.Injectable
 
 /** Test cases for the [[com.quane.little.data.service.UserService]]
   *
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestUserService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
+class TestUserService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers with Injectable {
 
-  val client = MongoClient(mongoHost, mongoPort)
-  val users = UserService(client)
+  implicit val bindingModule = EmbeddedDatabaseBindingModule
+
+  val users = inject[UserService]
 
   "UserService" should "insert new user" in {
     val name = "UserOne"

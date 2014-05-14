@@ -47,7 +47,7 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
 
   it should "remove entity from client" in {
     val client = mock[ClientCommunicator]
-    val manager = new GameManager(client)
+    val manager = new GameManager(client, mockGame())
     val id = "a"
     val item = mock[MMOItem]
     val entity = mockEntity(id)
@@ -58,7 +58,7 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
 
   it should "not remove unknown entity from client" in {
     val client = mock[ClientCommunicator]
-    val manager = new GameManager(client)
+    val manager = new GameManager(client, mockGame())
     manager.entityRemoved(mockEntity("unknown"))
     verify(client, never).removeItem(any[MMOItem])
   }
@@ -106,7 +106,7 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
   it should "start updater when starting" in {
     val client = mock[ClientCommunicator]
     val thread = mock[TimedUpdater]
-    val manager = new GameManager(client) {
+    val manager = new GameManager(client, mockGame()) {
       override val updater = thread
     }
     manager.start()
@@ -117,7 +117,7 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
   it should "stop updater when stopping" in {
     val client = mock[ClientCommunicator]
     val thread = mock[TimedUpdater]
-    val manager = new GameManager(client) {
+    val manager = new GameManager(client, mockGame()) {
       override val updater = thread
     }
     manager.start()

@@ -15,7 +15,7 @@ import com.quane.little.language.data.Value
 @RunWith(classOf[JUnitRunner])
 class TestExpressionService extends FlatSpec with ShouldMatchers {
 
-  val service = new MongoExpressionService
+  val service = new BasicExpressionService
 
   "ExpressionService" should "support all expressions" in {
     ExpressionService.All foreach {

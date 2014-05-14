@@ -1,3 +1,4 @@
+import com.quane.little.data.DataBindingModule
 import com.quane.little.game.Game
 import org.junit.runner.RunWith
 import org.scalatest.matchers.ShouldMatchers
@@ -10,6 +11,8 @@ import org.scalatest.junit.JUnitRunner
   */
 @RunWith(classOf[JUnitRunner])
 class TestLittleGameEngine extends FlatSpec with ShouldMatchers {
+
+  implicit val bindingModule = DataBindingModule
 
   "Game" should "initialize without error" in {
     val game = new Game()

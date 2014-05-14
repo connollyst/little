@@ -6,8 +6,14 @@ import scala.collection.mutable.ListBuffer
 import scala.util.Random
 import com.quane.little.data.service.{FunctionService, UserService, ListenerService}
 import com.quane.little.language.event.Event
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
-class EntityFactory(game: Game) {
+class EntityFactory(game: Game)(implicit val bindingModule: BindingModule)
+  extends Injectable {
+
+  private val userService = inject[UserService]
+  private val functionService = inject[FunctionService]
+  private val listenerService = inject[ListenerService]
 
   val manager = new InteractionManager(game)
 
@@ -27,14 +33,14 @@ class EntityFactory(game: Game) {
 
   def createMob(x: Float, y: Float): Mob = {
     val username = "connollyst" //  TODO this is temporary
-    UserService().init() // TODO this is temporary
-    FunctionService().init() // TODO this is temporary
-    ListenerService().init() // TODO this is temporary
+    userService.init() // TODO this is temporary
+    functionService.init() // TODO this is temporary
+    listenerService.init() // TODO this is temporary
     val mob = new Mob(game.builder.buildBody(x, y), manager)
-    FunctionService().findDefinitionsByUser(username) foreach {
+    functionService.findDefinitionsByUser(username) foreach {
       function => mob.operator.runtime.saveFunction(function)
     }
-    ListenerService().findListenersByUser(username) foreach {
+    listenerService.findListenersByUser(username) foreach {
       listener => mob.operator.addEventListener(listener)
     }
     game.eventBus.report(mob, Event.OnSpawn)
