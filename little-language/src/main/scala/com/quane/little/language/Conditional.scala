@@ -29,6 +29,22 @@ class Conditional(val test: Expression, val then: Block, val otherwise: Block)
       otherwise.evaluate(scope)
     }
 
+  def canEqual(other: Any): Boolean = other.isInstanceOf[Conditional]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: Conditional =>
+      (that canEqual this) &&
+        test == that.test &&
+        then == that.then &&
+        otherwise == that.otherwise
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(test, then, otherwise)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("test", test)
