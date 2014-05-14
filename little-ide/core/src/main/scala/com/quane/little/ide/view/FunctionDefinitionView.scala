@@ -1,19 +1,17 @@
 package com.quane.little.ide.view
 
 import com.quane.little.data.model.FunctionRecord
-import com.quane.little.ide.presenter.{BlockPresenter, FunctionParameterPresenter}
-import com.quane.little.language.FunctionDefinition
 
 trait FunctionDefinitionView
   extends View[FunctionDefinitionViewPresenter] {
 
   def setName(name: String): Unit
 
-  def createFunctionParameter(): FunctionParameterPresenter[_]
+  def createFunctionParameter(): FunctionParameterView
 
-  def createBlock(): BlockPresenter[_]
+  def createBlock(): BlockView
 
-  def compile: FunctionDefinition = presenter.compile
+  def compile(): FunctionDefinition = presenter.compile()
 
   def save(): FunctionRecord = presenter.save()
 
@@ -24,9 +22,9 @@ trait FunctionDefinitionViewPresenter
 
   def onNameChange(name: String): Unit
 
-  def onParamAdded(param: FunctionParameterPresenter[_]): Unit
+  def requestAddParameter(): Unit
 
-  def compile: FunctionDefinition
+  def compile(): FunctionDefinition
 
   def save(): FunctionRecord
 

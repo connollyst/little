@@ -2,16 +2,22 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
-import com.quane.little.language.{FunctionReference, GetStatement, Expression}
+import com.quane.little.language.GetStatement
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** A presenter for views representing a function reference argument.
   *
   * @author Sean Connolly
   */
-class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
-  extends FunctionArgumentViewPresenter {
+class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val bindingModule: BindingModule)
+  extends FunctionArgumentViewPresenter
+  with Injectable {
+
+  private val presenterFactory = inject[PresenterFactory]
+  private val expressionService = inject[ExpressionService]
+  private val functionService = inject[FunctionService]
 
   private var _name: String = ""
   private var _value: Option[ExpressionViewPresenter] = None
@@ -49,26 +55,23 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)
     val presenter =
       e match {
         // TODO skip if nothing has changed
-        case v: Value =>
-          view.createValueStatement().initialize(v)
         case g: GetStatement =>
-          view.createGetStatement().initialize(g)
+          presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
+        case v: Value =>
+          presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)
         case f: FunctionReference =>
-          view.createFunctionReference().initialize(f)
+          presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)
       }
     _value = Some(presenter)
   }
 
-  // TODO skip if already a value statement
-  override def requestAddTextLiteral() = _value = Some(view.createValueStatement())
-
   override def requestAddExpression(id: RecordId, index: Int) =
-    value = ExpressionService().findExpression(id)
+    value = expressionService.findExpression(id)
 
   override def requestAddFunctionReference(id: RecordId, index: Int) =
-    value = FunctionService().findReference(id)
+    value = functionService.findReference(id)
 
-  override def compile: Expression = value.compile
+  override def compile(): Expression = value.compile()
 
 }

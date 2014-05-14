@@ -2,27 +2,27 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-trait BlockView extends View[BlockViewPresenter] {
+trait BlockView extends ExpressionView[BlockViewPresenter] {
 
-  def addConditional(): ConditionalPresenter[_]
+  def addConditional(): ConditionalView
 
-  def addConditional(index: Int): ConditionalPresenter[_]
+  def addConditional(index: Int): ConditionalView
 
-  def addGetStatement(): GetterPresenter[_]
+  def addGetStatement(): GetStatementView
 
-  def addGetStatement(index: Int): GetterPresenter[_]
+  def addGetStatement(index: Int): GetStatementView
 
-  def addSetStatement(): SetStatementPresenter[_]
+  def addSetStatement(): SetStatementView
 
-  def addSetStatement(index: Int): SetStatementPresenter[_]
+  def addSetStatement(index: Int): SetStatementView
 
-  def addPrintStatement(): PrintStatementPresenter[_]
+  def addPrintStatement(): PrintStatementView
 
-  def addPrintStatement(index: Int): PrintStatementPresenter[_]
+  def addPrintStatement(index: Int): PrintStatementView
 
-  def addFunctionReference(): FunctionReferencePresenter[_]
+  def addFunctionReference(): FunctionReferenceView
 
-  def addFunctionReference(index: Int): FunctionReferencePresenter[_]
+  def addFunctionReference(index: Int): FunctionReferenceView
 
 }
 

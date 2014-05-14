@@ -1,8 +1,6 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language._
-import com.quane.little.language.data.Value
 import org.junit.runner.RunWith
 import org.mockito.Matchers._
 import org.mockito.Mockito._
@@ -12,6 +10,8 @@ import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestSetStatementPresenter extends FunSuite with MockitoSugar {
+
+  implicit val bindingModule = PresenterInjector
 
   test("test name is set") {
     val view = mock[SetStatementView]
@@ -68,8 +68,8 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test value expression added to view") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val valuePresenter = new ValuePresenter(new MockValueView)
-    when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
+    val valueView = mock[ValueView]
+    when(view.createValueStatement()).thenReturn(valueView)
     presenter.value = Value("x")
     verify(view).createValueStatement()
   }
@@ -77,27 +77,30 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test value expression added to presenter") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val valuePresenter = new ValuePresenter(new MockValueView)
-    when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
+    val valueView = mock[ValueView]
+    val valuePresenter = new ValuePresenter(valueView)
+    when(view.createValueStatement()).thenReturn(valueView)
     presenter.value = Value("x")
+    // TODO test isn't applicable as presenter comes from factory
     assert(presenter.value == valuePresenter)
   }
 
   test("test value expression initialized") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val valuePresenter = mock[ValuePresenter[ValueView]]
-    when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
+    val valueView = mock[ValueView]
+    val valuePresenter = new ValuePresenter(valueView)
+    when(view.createValueStatement()).thenReturn(valueView)
     val value = Value("x")
     presenter.value = value
+    // TODO test isn't applicable as presenter comes from factory
     verify(valuePresenter).initialize(value)
   }
 
   test("test get statement added to view") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getPresenter = new GetterPresenter(new MockGetStatementView)
-    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
+    when(view.createGetStatement()).thenReturn(mock[GetStatementView])
     presenter.value = new GetStatement("x")
     verify(view).createGetStatement()
   }
@@ -105,27 +108,30 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test get statement added to presenter") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getPresenter = new GetterPresenter(new MockGetStatementView)
-    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
+    val getterView = mock[GetStatementView]
+    val getterPresenter = new GetterPresenter(getterView)
+    when(view.createGetStatement()).thenReturn(getterView)
     presenter.value = new GetStatement("x")
-    assert(presenter.value == getPresenter)
+    // TODO test isn't applicable as presenter comes from factory
+    assert(presenter.value == getterPresenter)
   }
 
   test("test get statement initialized") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getPresenter = mock[GetterPresenter[GetStatementView]]
-    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(getPresenter)
+    val getterView = mock[GetStatementView]
+    val getterPresenter = mock[GetterPresenter[GetStatementView]]
+    when(view.createGetStatement()).thenReturn(getterView)
     val statement = new GetStatement("x")
     presenter.value = statement
-    verify(getPresenter).initialize(statement)
+    // TODO test isn't applicable as presenter comes from factory
+    verify(getterPresenter).initialize(statement)
   }
 
   test("test function reference added to view") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
+    when(view.createFunctionReference()).thenReturn(mock[FunctionReferenceView])
     presenter.value = new FunctionReference("funName")
     verify(view).createFunctionReference()
   }
@@ -133,19 +139,23 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test function reference added to presenter") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
+    val functionView = new MockFunctionReferenceView
+    val functionPresenter = new FunctionReferencePresenter(functionView)
+    when(view.createFunctionReference()).thenReturn(functionView)
     presenter.value = new FunctionReference("funName")
+    // TODO test isn't applicable as presenter comes from factory
     assert(presenter.value == functionPresenter)
   }
 
   test("test function reference initialized with value") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
-    when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(functionPresenter)
+    val functionView = new MockFunctionReferenceView
+    val functionPresenter = new FunctionReferencePresenter(functionView)
+    when(view.createFunctionReference()).thenReturn(functionView)
     val statement = new FunctionReference("funName")
     presenter.value = statement
+    // TODO test isn't applicable as presenter comes from factory
     verify(functionPresenter).initialize(statement)
   }
 
@@ -154,36 +164,30 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("should compile print(value expression)") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val valuePresenter = new ValuePresenter(new MockValueView)
-    when[ValuePresenter[_]](view.createValueStatement())
-      .thenReturn(valuePresenter)
+    when(view.createValueStatement()).thenReturn(mock[ValueView])
     val value = Value("text")
     presenter.value = value
-    val compiled = presenter.compile
+    val compiled = presenter.compile()
     assert(compiled.value == value)
   }
 
   test("should compile print(get expression)") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val valuePresenter = new GetterPresenter(new MockGetStatementView)
-    when[GetterPresenter[_]](view.createGetStatement())
-      .thenReturn(valuePresenter)
+    when(view.createGetStatement()).thenReturn(mock[GetStatementView])
     val value = new GetStatement("varName")
     presenter.value = value
-    val compiled = presenter.compile
+    val compiled = presenter.compile()
     assert(compiled.value == value)
   }
 
   test("should compile print(function reference)") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val valuePresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    when[FunctionReferencePresenter[_]](view.createFunctionReference())
-      .thenReturn(valuePresenter)
+    when(view.createFunctionReference()).thenReturn(mock[FunctionReferenceView])
     val value = new FunctionReference("funName")
     presenter.value = value
-    val compiled = presenter.compile
+    val compiled = presenter.compile()
     assert(compiled.value == value)
   }
 
@@ -191,7 +195,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
     intercept[IllegalAccessException] {
-      presenter.compile
+      presenter.compile()
     }
   }
 

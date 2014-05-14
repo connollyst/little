@@ -1,34 +1,34 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter._
+import com.escalatesoft.subcut.inject.BindingModule
 
 /** An implementation of [[com.quane.little.ide.view.BlockView]] for testing
   * purposes.
   *
   * @author Sean Connolly
   */
-class MockBlockView
+class MockBlockView(implicit val bindingModule: BindingModule)
   extends BlockView
   with MockView {
 
-  def addConditional() = new ConditionalPresenter(new MockConditionalView)
+  def addConditional() = new MockConditionalView
 
-  def addConditional(index: Int) = new ConditionalPresenter(new MockConditionalView)
+  def addConditional(index: Int) = new MockConditionalView
 
-  def addGetStatement() = new GetterPresenter(new MockGetStatementView)
+  def addGetStatement() = new MockGetStatementView
 
-  def addGetStatement(index: Int) = new GetterPresenter(new MockGetStatementView)
+  def addGetStatement(index: Int) = new MockGetStatementView
 
-  def addSetStatement() = new SetStatementPresenter(new MockSetStatementView)
+  def addSetStatement() = new MockSetStatementView
 
-  def addSetStatement(index: Int) = new SetStatementPresenter(new MockSetStatementView)
+  def addSetStatement(index: Int) = new MockSetStatementView
 
-  def addPrintStatement() = new PrintStatementPresenter(new MockPrintStatementView)
+  def addPrintStatement() = new MockPrintStatementView
 
-  def addPrintStatement(index: Int) = new PrintStatementPresenter(new MockPrintStatementView)
+  def addPrintStatement(index: Int) = new MockPrintStatementView
 
-  def addFunctionReference() = new FunctionReferencePresenter(new MockFunctionReferenceView)
+  def addFunctionReference() = new MockFunctionReferenceView
 
-  def addFunctionReference(index: Int) = new FunctionReferencePresenter(new MockFunctionReferenceView)
+  def addFunctionReference(index: Int) = new MockFunctionReferenceView
 
 }

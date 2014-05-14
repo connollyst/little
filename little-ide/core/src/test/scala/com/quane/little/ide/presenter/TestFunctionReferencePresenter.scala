@@ -1,8 +1,6 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{FunctionReferenceView, MockFunctionArgumentView, MockFunctionReferenceView}
-import com.quane.little.language.FunctionReference
-import com.quane.little.language.data.Value
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
@@ -11,6 +9,8 @@ import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
+
+  implicit val bindingModule = PresenterInjector
 
   test("should set name") {
     val view = mock[FunctionReferenceView]
@@ -34,8 +34,7 @@ class TestFunctionReferencePresenter extends FunSuite with MockitoSugar {
       .addArg("a", Value(42))
       .addArg("b", Value("x"))
       .addArg("c", Value(true))
-    when[FunctionArgumentPresenter[_]](view.createArgument())
-      .thenReturn(mock[FunctionArgumentPresenter[_]])
+    when(view.createArgument()).thenReturn(mock[MockFunctionArgumentView])
     presenter.initialize(function)
     verify(view, times(3)).createArgument()
   }

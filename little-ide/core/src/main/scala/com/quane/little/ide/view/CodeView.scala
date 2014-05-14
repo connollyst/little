@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.language.{Statement, Expression}
+import com.quane.little.language.Expression
 
 sealed trait CodeView[P <: CodeViewPresenter] extends View[P]
 
@@ -26,7 +26,7 @@ trait ExpressionViewPresenter extends EvaluableCodeViewPresenter {
     *
     * @return the compiled expression
     */
-  def compile: Expression
+  def compile(): Expression
 
 }
 
@@ -46,6 +46,6 @@ trait StatementViewPresenter extends EvaluableCodeViewPresenter {
     *
     * @return the compiled statement
     */
-  def compile: Statement
+  def compile(): Statement
 
 }

@@ -1,12 +1,12 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{EventListenerPresenter, PresenterAcceptsEventListener, PresenterAcceptsFunctionDefinition, FunctionDefinitionPresenter}
+import com.quane.little.ide.presenter.{PresenterAcceptsEventListener, PresenterAcceptsFunctionDefinition}
 
 trait WorkspaceView extends View[WorkspaceViewPresenter] {
 
-  def createFunctionDefinition(): FunctionDefinitionPresenter[_]
+  def createFunctionDefinition(): FunctionDefinitionView
 
-  def createEventListener(): EventListenerPresenter[_]
+  def createEventListener(): EventListenerView
 }
 
 trait WorkspaceViewPresenter

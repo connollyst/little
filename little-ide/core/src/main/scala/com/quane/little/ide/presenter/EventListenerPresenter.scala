@@ -1,13 +1,11 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{EvaluableCodeViewPresenter, EventListenerViewPresenter, EventListenerView}
-import com.quane.little.language.event.EventListener
 import com.quane.little.data.model.{ListenerRecord, RecordId}
-import com.quane.little.language.event.Event.Event
-import com.quane.little.language.EvaluableCode
 import com.quane.little.data.service.ListenerService
+import com.escalatesoft.subcut.inject.BindingModule
 
-class EventListenerPresenter[V <: EventListenerView](view: V)
+class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindingModule: BindingModule)
   extends EventListenerViewPresenter {
 
   view.registerViewPresenter(this)
@@ -15,7 +13,7 @@ class EventListenerPresenter[V <: EventListenerView](view: V)
   private var _id: Option[RecordId] = None
   private val _username = "connollyst"
   private var _event: Option[Event] = None
-  private val _block = view.createBlock()
+  private val _block = new BlockPresenter(view.createBlock())
 
   private[presenter] def initialize(id: RecordId, listener: EventListener): EventListenerPresenter[V] = {
     _id = Some(id)
@@ -39,14 +37,14 @@ class EventListenerPresenter[V <: EventListenerView](view: V)
 
   override def onEventChange(e: Event) = event = e
 
-  def compile: EventListener = {
+  def compile(): EventListener = {
     val listener = new EventListener(event)
     listener.steps = _block.compile.steps
     listener
   }
 
-  override def save: ListenerRecord = {
-    val listener = compile
+  override def save(): ListenerRecord = {
+    val listener = compile()
     _id match {
       case Some(id) =>
         println("Saving changes to listener " + id + "..")

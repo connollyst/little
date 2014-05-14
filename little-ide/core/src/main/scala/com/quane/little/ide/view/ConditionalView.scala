@@ -1,14 +1,12 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.BlockPresenter
-
 trait ConditionalView extends ExpressionView[ConditionalViewPresenter] {
 
-  def setConditionStatement(): ExpressionViewPresenter
+  def setConditionStatement(): BlockView
 
-  def setThenBlock(): BlockPresenter[_]
+  def setThenBlock(): BlockView
 
-  def setElseBlock(): BlockPresenter[_]
+  def setElseBlock(): BlockView
 
 }
 

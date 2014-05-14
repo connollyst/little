@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.{EventListenerPresenter, FunctionDefinitionPresenter}
-import com.quane.little.ide.view.WorkspaceView
+import com.quane.little.ide.presenter.EventListenerPresenter
+import com.quane.little.ide.view.{FunctionDefinitionView, EventListenerView, WorkspaceView}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.ui.{AbsoluteLayout, TabSheet}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
@@ -27,22 +27,20 @@ class WorkspaceTabSheet
   setSizeFull()
   setStyleName(WorkspaceTabSheet.Style)
 
-  override def createEventListener(): EventListenerPresenter[_] = {
+  override def createEventListener(): EventListenerView = {
     val view = new EventListenerLayout()
     val workspace = createWorkspace()
-    workspace.addComponent(view)
-    new EventListenerPresenter(view)
+    workspace.add(view)
   }
 
-  override def createFunctionDefinition(): FunctionDefinitionPresenter[_] = {
+  override def createFunctionDefinition(): FunctionDefinitionView = {
     val view = new FunctionDefinitionLayout()
     val workspace = createWorkspace()
-    workspace.addComponent(view)
-    new FunctionDefinitionPresenter(view)
+    workspace.add(view)
   }
 
-  private def createWorkspace(): WorkspaceLayout = {
-    val layout = new WorkspaceLayout()
+  private def createWorkspace(): WorkspaceLayout with VaadinMixin = {
+    val layout = new WorkspaceLayout with VaadinMixin
     val workspace = new DroppableTarget(layout)
     workspace.setDropHandler(new WorkspaceDropHandler(this))
     workspace.setSizeFull()

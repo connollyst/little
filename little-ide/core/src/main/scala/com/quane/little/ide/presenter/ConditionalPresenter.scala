@@ -1,20 +1,21 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.exceptions.NotImplementedError
-import com.quane.little.language.{EvaluableCode, Conditional, Expression}
+import com.quane.little.language.Expression
 import com.google.common.base.Objects
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** A presenter for views representing an [[com.quane.little.language.Conditional]].
   *
   * @author Sean Connolly
   */
-class ConditionalPresenter[V <: ConditionalView](view: V)
-  extends ConditionalViewPresenter {
+class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingModule: BindingModule)
+  extends ConditionalViewPresenter
+  with Injectable {
 
-  private val _condition: ExpressionViewPresenter = view.setConditionStatement()
-  private val _thenBlock: BlockPresenter[_] = view.setThenBlock()
-  private val _elseBlock: BlockPresenter[_] = view.setElseBlock()
+  private val _condition = new BlockPresenter(view.setConditionStatement())
+  private val _thenBlock = new BlockPresenter(view.setThenBlock())
+  private val _elseBlock = new BlockPresenter(view.setElseBlock())
 
   view.registerViewPresenter(this)
 

@@ -6,19 +6,15 @@ trait FunctionArgumentView extends View[FunctionArgumentViewPresenter] {
 
   def setName(name: String): Unit
 
-  def createValueStatement(): ValuePresenter[_ <: ValueView]
+  def createValueStatement(): ValueView
 
-  def createGetStatement(): GetterPresenter[_ <: GetStatementView]
+  def createGetStatement(): GetStatementView
 
-  def createFunctionReference(): FunctionReferencePresenter[_ <: FunctionReferenceView]
+  def createFunctionReference(): FunctionReferenceView
 
 }
 
 trait FunctionArgumentViewPresenter
   extends ExpressionViewPresenter
   with PresenterAcceptsExpression
-  with PresenterAcceptsFunctionReference {
-
-  def requestAddTextLiteral(): Unit
-
-}
+  with PresenterAcceptsFunctionReference

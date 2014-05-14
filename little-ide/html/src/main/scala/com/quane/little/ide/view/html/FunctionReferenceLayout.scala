@@ -1,7 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.FunctionReferenceView
-import com.quane.little.ide.presenter.FunctionArgumentPresenter
+import com.quane.little.ide.view.{FunctionArgumentView, FunctionReferenceView}
 import com.vaadin.ui.{Alignment, Label, HorizontalLayout}
 import com.quane.vaadin.scala.VaadinMixin
 import scala.collection.mutable
@@ -27,16 +26,15 @@ class FunctionReferenceLayout
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
   setStyleNames(ExpressionLayout.Style, FunctionReferenceLayout.Style)
 
-  addComponent(nameLabel)
-  addComponent(Buttons.closeButton(this))
+  add(nameLabel)
+  add(Buttons.closeButton(this))
 
   override def setName(name: String) = nameLabel.setValue(name)
 
-  override def createArgument(): FunctionArgumentPresenter[_] = {
+  override def createArgument(): FunctionArgumentView = {
     val view = new FunctionArgumentComponent
     args += view
-    addComponent(view)
-    new FunctionArgumentPresenter(view)
+    add(view)
   }
 
   override def clearArguments() =

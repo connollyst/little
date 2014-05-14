@@ -2,23 +2,27 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.{FunctionCategory, RecordId, FunctionRecord}
 import com.quane.little.ide.view.{EvaluableCodeViewPresenter, FunctionDefinitionView, FunctionDefinitionViewPresenter}
-import com.quane.little.language.{EvaluableCode, FunctionDefinition, FunctionParameter}
+import com.quane.little.language.EvaluableCode
 import scala._
 import scala.collection.mutable.ListBuffer
 import com.quane.little.data.service.FunctionService
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionDefinition]].
   *
   * @author Sean Connolly
   */
-class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
-  extends FunctionDefinitionViewPresenter {
+class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit val bindingModule: BindingModule)
+  extends FunctionDefinitionViewPresenter
+  with Injectable {
+
+  private val presenterFactory = inject[PresenterFactory]
 
   private var _id: Option[RecordId] = None
   private val _username = "connollyst"
-  private var _name = "???"
+  private var _name = ""
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
-  private val _block = view.createBlock()
+  private val _block = new BlockPresenter(view.createBlock())
 
   view.registerViewPresenter(this)
 
@@ -38,9 +42,10 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   }
 
   private[presenter] def +=(param: FunctionParameter): Unit = {
-    val presenter = view.createFunctionParameter()
-    presenter.name = param.name
-    this += presenter
+    val paramView = view.createFunctionParameter()
+    val paramPresenter = presenterFactory.createFunctionParameter(paramView)
+    paramPresenter.initialize(param)
+    this += paramPresenter
   }
 
   private[presenter] def +=(param: FunctionParameterPresenter[_]): Unit = _params += param
@@ -62,13 +67,13 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
 
   override def onNameChange(name: String): Unit = _name = name
 
-  override def onParamAdded(param: FunctionParameterPresenter[_]) = this += param
+  override def requestAddParameter() = this += new FunctionParameter("")
 
   override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(_name)
     _params.foreach {
       param =>
-        fun.addParam(param.compile)
+        fun.addParam(param.compile())
     }
     fun.steps = _block.compile.steps // TODO this seems sloppy..?
     fun

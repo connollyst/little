@@ -1,8 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.data.Value
-import com.quane.little.language.{Expression, FunctionReference, GetStatement}
+import com.quane.little.language.Expression
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
@@ -11,6 +10,8 @@ import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
+
+  implicit val bindingModule = PresenterInjector
 
   test("test value is set") {
     val view = new MockPrintStatementView
@@ -31,34 +32,40 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   test("test value expression propagates to view") {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
+    val valueView = mock[ValueView]
     val valuePresenter = mock[ValuePresenter[ValueView]]
-    when[ValuePresenter[_]](view.createValueStatement()).thenReturn(valuePresenter)
+    when(view.createValueStatement()).thenReturn(valueView)
     val value = mock[Value]
     presenter.value = value
     verify(view).createValueStatement()
+    // TODO test isn't applicable as presenter comes from factory
     verify(valuePresenter).initialize(value)
   }
 
   test("test get expression propagates to view") {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
-    val valuePresenter = mock[GetterPresenter[GetStatementView]]
-    when[GetterPresenter[_]](view.createGetStatement()).thenReturn(valuePresenter)
+    val getterView = mock[GetStatementView]
+    val getterPresenter = mock[GetterPresenter[GetStatementView]]
+    when(view.createGetStatement()).thenReturn(getterView)
     val getter = mock[GetStatement]
     presenter.value = getter
     verify(view).createGetStatement()
-    verify(valuePresenter).initialize(getter)
+    // TODO test isn't applicable as presenter comes from factory
+    verify(getterPresenter).initialize(getter)
   }
 
   test("test function reference expression propagates to view") {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
-    val valuePresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
-    when[FunctionReferencePresenter[_]](view.createFunctionReference()).thenReturn(valuePresenter)
+    val functionView = mock[FunctionReferenceView]
+    val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
+    when(view.createFunctionReference()).thenReturn(functionView)
     val function = mock[FunctionReference]
     presenter.value = function
     verify(view).createFunctionReference()
-    verify(valuePresenter).initialize(function)
+    // TODO test isn't applicable as presenter comes from factory
+    verify(functionPresenter).initialize(function)
   }
 
   /* Test setting expressions for the value */
@@ -88,12 +95,9 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   private def assertCompiledValue(value: Expression) = {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
-    when[GetterPresenter[_]](view.createGetStatement())
-      .thenReturn(new GetterPresenter(new MockGetStatementView))
-    when[ValuePresenter[_]](view.createValueStatement())
-      .thenReturn(new ValuePresenter(new MockValueView))
-    when[FunctionReferencePresenter[_]](view.createFunctionReference())
-      .thenReturn(new FunctionReferencePresenter(new MockFunctionReferenceView))
+    when(view.createGetStatement()).thenReturn(new MockGetStatementView)
+    when(view.createValueStatement()).thenReturn(new MockValueView)
+    when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
     presenter.value = value
     val compiled = presenter.compile
     assert(compiled.value == value)

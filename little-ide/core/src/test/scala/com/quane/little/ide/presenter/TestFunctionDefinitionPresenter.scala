@@ -1,7 +1,6 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.FunctionParameter
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
@@ -10,6 +9,8 @@ import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
+
+  implicit val bindingModule = PresenterInjector
 
   test("test name is set") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
@@ -35,27 +36,28 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
   test("test param name propagates to view") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
+    val paramView = mock[FunctionParameterView]
     val paramPresenter = mock[FunctionParameterPresenter[FunctionParameterView]]
-    when[FunctionParameterPresenter[_]](view.createFunctionParameter())
-      .thenReturn(paramPresenter)
+    when(view.createFunctionParameter()).thenReturn(paramView)
     presenter += new FunctionParameter("sean is cool")
     verify(view).createFunctionParameter()
+    // TODO test isn't applicable as presenter comes from factory
     verify(paramPresenter).name = "sean is cool"
   }
 
   test("test param is added on view event") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
-    presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
+    presenter.requestAddParameter()
     assert(presenter.parameters.length == 1)
-    presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
+    presenter.requestAddParameter()
     assert(presenter.parameters.length == 2)
   }
 
   test("test param is not propagated to view on view event") {
     val view = mock[FunctionDefinitionView]
     val presenter = new FunctionDefinitionPresenter(view)
-    presenter.onParamAdded(mock[FunctionParameterPresenter[_]])
+    presenter.requestAddParameter()
     verify(view, never()).createFunctionParameter()
   }
 

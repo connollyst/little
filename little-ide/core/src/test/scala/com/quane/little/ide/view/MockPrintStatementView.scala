@@ -1,7 +1,5 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.{ValuePresenter, GetterPresenter, FunctionReferencePresenter}
-
 /** An implementation of [[com.quane.little.ide.view.PrintStatementView]] for
   * testing purposes.
   *
@@ -11,10 +9,10 @@ class MockPrintStatementView
   extends PrintStatementView
   with MockView {
 
-  override def createValueStatement() = new ValuePresenter(new MockValueView)
+  override def createValueStatement() = new MockValueView
 
-  override def createGetStatement() = new GetterPresenter(new MockGetStatementView)
+  override def createGetStatement() = new MockGetStatementView
 
-  override def createFunctionReference() = new FunctionReferencePresenter(new MockFunctionReferenceView)
+  override def createFunctionReference() = new MockFunctionReferenceView
 
 }

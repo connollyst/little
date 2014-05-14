@@ -1,7 +1,6 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
-import com.quane.little.ide.presenter.{FunctionReferencePresenter, GetterPresenter, ValuePresenter}
 import com.vaadin.ui.{Label, HorizontalLayout}
 
 object FunctionArgumentComponent {
@@ -44,19 +43,19 @@ class FunctionArgumentComponent
     addComponent(view)
   }
 
-  override def createValueStatement(): ValuePresenter[ValueLayout] = {
+  override def createValueStatement(): ValueLayout = {
     value = new ValueLayout
-    new ValuePresenter(value)
+    value
   }
 
-  override def createGetStatement(): GetterPresenter[GetStatementLayout] = {
+  override def createGetStatement(): GetStatementLayout = {
     value = new GetStatementLayout
-    new GetterPresenter(value)
+    value
   }
 
-  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceLayout] = {
+  override def createFunctionReference(): FunctionReferenceLayout = {
     value = new FunctionReferenceLayout
-    new FunctionReferencePresenter(value)
+    value
   }
 
   private def removeValueComponent(): Unit = {

@@ -1,7 +1,6 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{FunctionParameterViewPresenter, FunctionParameterView}
-import com.quane.little.language.FunctionParameter
 
 /** A presenter for views representing a function definition parameter.
   *
@@ -16,6 +15,11 @@ class FunctionParameterPresenter[V <: FunctionParameterView](view: V)
 
   override def onNameChanged(n: String) = _name = n
 
+  private[presenter] def initialize(param: FunctionParameter): FunctionParameterPresenter[V] = {
+    name = param.name
+    this
+  }
+
   private[presenter] def name: String = _name
 
   private[presenter] def name_=(n: String): Unit = {
@@ -23,6 +27,6 @@ class FunctionParameterPresenter[V <: FunctionParameterView](view: V)
     view.setName(_name)
   }
 
-  def compile: FunctionParameter = new FunctionParameter(name)
+  def compile(): FunctionParameter = new FunctionParameter(name)
 
 }

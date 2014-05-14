@@ -1,6 +1,5 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter._
 import com.quane.little.ide.view.BlockView
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
@@ -33,28 +32,23 @@ class BlockLayout
 
   override def addConditional() = addConditional(DefaultIndex)
 
-  override def addConditional(index: Int) =
-    new ConditionalPresenter(add(new ConditionalLayout(), componentIndex(index)))
+  override def addConditional(index: Int) = add(new ConditionalLayout(), componentIndex(index))
 
   override def addGetStatement() = addGetStatement(DefaultIndex)
 
-  override def addGetStatement(index: Int) =
-    new GetterPresenter(add(new GetStatementLayout(), componentIndex(index)))
+  override def addGetStatement(index: Int) = add(new GetStatementLayout(), componentIndex(index))
 
   override def addSetStatement() = addSetStatement(DefaultIndex)
 
-  override def addSetStatement(index: Int) =
-    new SetStatementPresenter(add(new SetStatementLayout(), componentIndex(index)))
+  override def addSetStatement(index: Int) = add(new SetStatementLayout(), componentIndex(index))
 
   override def addPrintStatement() = addPrintStatement(DefaultIndex)
 
-  override def addPrintStatement(index: Int) =
-    new PrintStatementPresenter(add(new PrintStatementLayout(), componentIndex(index)))
+  override def addPrintStatement(index: Int) = add(new PrintStatementLayout(), componentIndex(index))
 
   override def addFunctionReference() = addFunctionReference(DefaultIndex)
 
-  override def addFunctionReference(index: Int) =
-    new FunctionReferencePresenter(add(new FunctionReferenceLayout(), componentIndex(index)))
+  override def addFunctionReference(index: Int) = add(new FunctionReferenceLayout(), componentIndex(index))
 
   override def addComponent(component: Component) = {
     super.addComponent(component)

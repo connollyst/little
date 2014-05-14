@@ -1,7 +1,6 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
-import com.quane.little.ide.presenter.{FunctionReferencePresenter, ValuePresenter, GetterPresenter}
 import com.vaadin.ui.{Alignment, HorizontalLayout, Label}
 import com.quane.vaadin.scala.VaadinMixin
 
@@ -30,28 +29,25 @@ class PrintStatementLayout
   addComponent(new ExpressionMenu(this))
   addComponent(Buttons.closeButton(this))
 
-  override def createValueStatement(): ValuePresenter[ValueLayout] = {
+  override def createValueStatement(): ValueLayout = {
     removePrintValueView()
     val view = new ValueLayout
     printValue = Some(view)
-    addComponent(view)
-    new ValuePresenter(view)
+    add(view)
   }
 
-  override def createGetStatement(): GetterPresenter[GetStatementLayout] = {
+  override def createGetStatement(): GetStatementLayout = {
     removePrintValueView()
     val view = new GetStatementLayout
     printValue = Some(view)
-    addComponent(view)
-    new GetterPresenter(view)
+    add(view)
   }
 
-  override def createFunctionReference(): FunctionReferencePresenter[FunctionReferenceLayout] = {
+  override def createFunctionReference(): FunctionReferenceLayout = {
     removePrintValueView()
     val view = new FunctionReferenceLayout
     printValue = Some(view)
-    addComponent(view)
-    new FunctionReferencePresenter(view)
+    add(view)
   }
 
   private def removePrintValueView(): Unit = {

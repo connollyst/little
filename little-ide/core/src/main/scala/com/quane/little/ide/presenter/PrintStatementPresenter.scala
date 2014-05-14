@@ -1,18 +1,20 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ExpressionViewPresenter, PrintStatementViewPresenter, PrintStatementView}
-import com.quane.little.language._
-import com.quane.little.language.data.Value
 import scala._
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *
   * @author Sean Connolly
   */
-class PrintStatementPresenter[V <: PrintStatementView](view: V)
-  extends PrintStatementViewPresenter {
+class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bindingModule: BindingModule)
+  extends PrintStatementViewPresenter
+  with Injectable {
+
+  private val presenterFactory = inject[PresenterFactory]
 
   private var _value: Option[_ <: ExpressionViewPresenter] = None
 
@@ -45,13 +47,13 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
   private[presenter] def value_=(e: Expression): Unit = {
     val presenter =
       e match {
-        case v: Value =>
-          view.createValueStatement().initialize(v)
         case g: GetStatement =>
-          view.createGetStatement().initialize(g)
+          presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
+        case v: Value =>
+          presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)
         case f: FunctionReference =>
-          view.createFunctionReference().initialize(f)
-        case _ => throw new IllegalArgumentException("Expression not supported: " + e)
+          presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
+        case _ => throw new IllegalArgumentException("Not supported: " + e)
       }
     _value = Some(presenter)
   }
@@ -67,6 +69,6 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)
     *
     * @return the compiled print statement
     */
-  override def compile: PrintStatement = new PrintStatement(value.compile)
+  override def compile(): PrintStatement = new PrintStatement(value.compile())
 
 }

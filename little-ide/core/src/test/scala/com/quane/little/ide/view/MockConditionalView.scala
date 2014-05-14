@@ -1,21 +1,21 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.BlockPresenter
+import com.escalatesoft.subcut.inject.BindingModule
 
 /** An implementation of [[com.quane.little.ide.view.ConditionalView]] for
   * testing purposes.
   *
   * @author Sean Connolly
   */
-class MockConditionalView
+class MockConditionalView(implicit val bindingModule: BindingModule)
   extends ConditionalView
   with MockView {
 
   // TODO is there a better mock condition here?
-  def setConditionStatement() = new BlockPresenter(new MockBlockView)
+  def setConditionStatement() = new MockBlockView
 
-  def setThenBlock() = new BlockPresenter(new MockBlockView)
+  def setThenBlock() = new MockBlockView
 
-  def setElseBlock() = new BlockPresenter(new MockBlockView)
+  def setElseBlock() = new MockBlockView
 
 }

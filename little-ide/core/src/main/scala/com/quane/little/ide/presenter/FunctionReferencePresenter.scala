@@ -1,16 +1,20 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{FunctionReferenceViewPresenter, FunctionReferenceView}
-import com.quane.little.language.{Expression, FunctionReference}
+import com.quane.little.language.FunctionReference
 import scala.collection.mutable.ListBuffer
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionReference]].
   *
   * @author Sean Connolly
   */
 class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
-                                                             args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])
-  extends FunctionReferenceViewPresenter {
+                                                             args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])(implicit val bindingModule: BindingModule)
+  extends FunctionReferenceViewPresenter
+  with Injectable {
+
+  private val presenterFactory = inject[PresenterFactory]
 
   private var _name: String = "???"
 
@@ -32,8 +36,12 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
     view.setName(_name)
   }
 
-  private[presenter] def add(name: String, value: Expression): Unit =
-    add(view.createArgument().initialize(name, value))
+  private[presenter] def add(name: String, value: Expression): Unit = {
+    val argView = view.createArgument()
+    val argPresenter = presenterFactory.createArgument(argView)
+    argPresenter.initialize(name, value)
+    add(argPresenter)
+  }
 
   private[presenter] def add(arg: FunctionArgumentPresenter[_]): Unit =
     args += arg

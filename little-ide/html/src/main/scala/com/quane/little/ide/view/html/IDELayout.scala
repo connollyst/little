@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.IDEView
-import com.quane.little.ide.presenter.{GamespacePresenter, ToolboxPresenter, WorkspacePresenter}
+import com.quane.little.ide.presenter.GamespacePresenter
 import com.vaadin.ui._
 import com.vaadin.server.Sizeable
 import scala.Some
@@ -43,18 +43,18 @@ class IDELayout
 
   override def createToolbox() = {
     center.toolbox = new ToolboxLayout
-    new ToolboxPresenter(center.toolbox)
+    center.toolbox
   }
 
   override def createWorkspace() = {
     center.workspace = new WorkspaceTabSheet
-    new WorkspacePresenter(center.workspace)
+    center.workspace
   }
 
 
   override def createGamespace() = {
     center.gamespace = new GamespaceLayout
-    new GamespacePresenter(center.gamespace)
+    center.gamespace
   }
 
   /** The IDE header, containing basic controls and links.

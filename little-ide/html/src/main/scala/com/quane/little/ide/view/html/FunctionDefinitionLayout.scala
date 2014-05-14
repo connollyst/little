@@ -1,6 +1,5 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.{FunctionParameterPresenter, BlockPresenter}
 import com.quane.little.ide.view.FunctionDefinitionView
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.vaadin.server.Sizeable
@@ -58,20 +57,17 @@ class FunctionDefinitionLayout
     footer
   }
 
-  override def createFunctionParameter(): FunctionParameterPresenter[_] = {
+  override def createFunctionParameter(): FunctionParameterComponent = {
     val view = new FunctionParameterComponent()
+    // TODO simplify this assignment
     header.parameters_+=(view)
-    new FunctionParameterPresenter(view)
+    view
   }
 
-  override def createBlock(): BlockPresenter[_] = {
-    // TODO this goes against the pattern, we should create the block view here
-    new BlockPresenter(stepList)
+  override def createBlock(): BlockLayout = {
+    // TODO this goes against the pattern, we should create the block view here!
+    stepList
   }
-
-  private[html] def onNameChange(name: String): Unit = presenter.onNameChange(name)
-
-  private[html] def requestNewParameter(): Unit = presenter.onParamAdded(createFunctionParameter())
 
 }
 
@@ -98,7 +94,8 @@ private class FunctionDefinitionHeader(view: FunctionDefinitionLayout)
     setInputPrompt("function name")
     addTextChangeListener(new TextChangeListener {
       def textChange(event: TextChangeEvent) =
-        view.onNameChange(event.getText)
+      // TODO convert to Command
+        view.presenter.onNameChange(event.getText)
     })
     setStyleName(FunctionDefinitionLayout.StyleHeadNameField)
     // TODO should be a label that, when clicked, becomes a text field
@@ -108,7 +105,8 @@ private class FunctionDefinitionHeader(view: FunctionDefinitionLayout)
     setSpacing(true)
   }
 
-  private def createNewParameterButton() = Buttons.blueButton("+", view.requestNewParameter)
+  // TODO convert to Command
+  private def createNewParameterButton() = Buttons.blueButton("+", view.presenter.requestAddParameter)
 
   private def createSaveButton() = Buttons.blueButton("Save", view.save)
 

@@ -5,11 +5,11 @@ import com.quane.little.ide.presenter._
 trait PrintStatementView
   extends StatementView[PrintStatementViewPresenter] {
 
-  def createValueStatement(): ValuePresenter[_ <: ValueView]
+  def createValueStatement(): ValueView
 
-  def createGetStatement(): GetterPresenter[_ <: GetStatementView]
+  def createGetStatement(): GetStatementView
 
-  def createFunctionReference(): FunctionReferencePresenter[_ <: FunctionReferenceView]
+  def createFunctionReference(): FunctionReferenceView
 
 }
 

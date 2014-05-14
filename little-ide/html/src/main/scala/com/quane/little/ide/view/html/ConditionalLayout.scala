@@ -1,9 +1,9 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{ExpressionViewPresenter, ConditionalView}
-import com.quane.little.ide.presenter.BlockPresenter
+import com.quane.little.ide.view.{BlockView, ConditionalView}
 import com.vaadin.ui._
 import com.vaadin.server.Sizeable
+import com.quane.vaadin.scala.VaadinMixin
 
 object ConditionalLayout {
   val Style = "l-if"
@@ -23,8 +23,8 @@ class ConditionalLayout
   with ConditionalView
   with RemovableComponent {
 
-  private val thenBlockWrapper = new CssLayout
-  private val elseBlockWrapper = new CssLayout
+  private val thenBlockWrapper = new CssLayout with VaadinMixin
+  private val elseBlockWrapper = new CssLayout with VaadinMixin
 
   setSpacing(false)
   setStyleName(ConditionalLayout.Style)
@@ -71,24 +71,14 @@ class ConditionalLayout
     footer
   }
 
-  override def setConditionStatement(): ExpressionViewPresenter = {
-    // TODO this expression layout belongs in the header
-    new BlockPresenter(new BlockLayout)
-  }
+  // TODO this expression layout belongs in the header
+  override def setConditionStatement() = new BlockLayout
 
-  override def setThenBlock(): BlockPresenter[BlockLayout] = {
-    val view = new BlockLayout
-    // TODO remove children, if any
-    thenBlockWrapper.addComponent(view)
-    new BlockPresenter(view)
-  }
+  override def setThenBlock(): BlockView =
+    thenBlockWrapper.removeAll().add(new BlockLayout)
 
-  override def setElseBlock(): BlockPresenter[BlockLayout] = {
-    val view = new BlockLayout
-    // TODO remove children, if any
-    elseBlockWrapper.addComponent(view)
-    new BlockPresenter(view)
-  }
+  override def setElseBlock(): BlockView =
+    elseBlockWrapper.removeAll().add(new BlockLayout)
 
 }
 

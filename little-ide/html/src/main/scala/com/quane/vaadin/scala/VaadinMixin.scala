@@ -15,6 +15,11 @@ trait VaadinMixin
     c
   }
 
+  def removeAll(): VaadinMixin = {
+    removeAllComponents()
+    this
+  }
+
   def setStyleNames(names: String*): Unit = setStyleName(names.mkString(" "))
 
 }

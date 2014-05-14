@@ -1,17 +1,19 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ExpressionViewPresenter, SetStatementViewPresenter, SetStatementView}
-import com.quane.little.language._
-import com.quane.little.language.data.Value
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
+import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** Presenter for views representing a [[com.quane.little.language.SetStatement]].
   *
   * @author Sean Connolly
   */
-class SetStatementPresenter[V <: SetStatementView](view: V)
-  extends SetStatementViewPresenter {
+class SetStatementPresenter[V <: SetStatementView](view: V)(implicit val bindingModule: BindingModule)
+  extends SetStatementViewPresenter
+  with Injectable {
+
+  private val presenterFactory = inject[PresenterFactory]
 
   private var _name = ""
   private var _value: Option[ExpressionViewPresenter] = None
@@ -51,12 +53,12 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
   private[presenter] def value_=(e: Expression): Unit = {
     val presenter =
       e match {
-        case v: Value =>
-          view.createValueStatement().initialize(v)
         case g: GetStatement =>
-          view.createGetStatement().initialize(g)
+          presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
+        case v: Value =>
+          presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)
         case f: FunctionReference =>
-          view.createFunctionReference().initialize(f)
+          presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)
       }
     // TODO skip if the presenter type hasn't changed (?)
@@ -72,6 +74,6 @@ class SetStatementPresenter[V <: SetStatementView](view: V)
   override def requestAddFunctionReference(id: RecordId, index: Int) =
     value = FunctionService().findReference(id)
 
-  override def compile: SetStatement = new SetStatement(_name, value.compile)
+  override def compile(): SetStatement = new SetStatement(_name, value.compile())
 
 }

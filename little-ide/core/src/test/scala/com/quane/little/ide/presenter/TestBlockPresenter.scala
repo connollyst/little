@@ -1,16 +1,16 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language._
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
-import com.quane.little.language.data.Value
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends FunSuite with MockitoSugar {
+
+  implicit val bindingModule = PresenterInjector
 
   test("test listener registered") {
     val view = mock[BlockView]
@@ -31,8 +31,8 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test set statement added to view") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val setPresenter = new SetStatementPresenter(new MockSetStatementView)
-    when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
+    val setView = mock[SetStatementView]
+    when(view.addSetStatement()).thenReturn(setView)
     presenter.add(new SetStatement("x", Value("y")))
     verify(view).addSetStatement()
   }
@@ -40,27 +40,30 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test set statement added to presenter") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val setPresenter = new SetStatementPresenter(new MockSetStatementView)
-    when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
+    val setView = mock[SetStatementView]
+    when(view.addSetStatement()).thenReturn(setView)
     presenter.add(new SetStatement("x", Value("y")))
-    assert(presenter.steps.contains(setPresenter))
+    // TODO test isn't applicable as presenter comes from factory
+    assert(presenter.steps.contains(setView))
   }
 
   test("test set statement initialized") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
+    val setView = mock[SetStatementView]
     val setPresenter = mock[SetStatementPresenter[SetStatementView]]
-    when[SetStatementPresenter[_]](view.addSetStatement()).thenReturn(setPresenter)
+    when(view.addSetStatement()).thenReturn(setView)
     val statement = new SetStatement("x", Value("y"))
     presenter.add(statement)
+    // TODO test isn't applicable as presenter comes from factory
     verify(setPresenter).initialize(statement)
   }
 
   test("test get statement added to view") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val getPresenter = new GetterPresenter(new MockGetStatementView)
-    when[GetterPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
+    val getView = mock[GetStatementView]
+    when(view.addGetStatement()).thenReturn(getView)
     presenter.add(new GetStatement("x"))
     verify(view).addGetStatement()
   }
@@ -68,27 +71,31 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test get statement added to presenter") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val getPresenter = new GetterPresenter(new MockGetStatementView)
-    when[GetterPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
+    val getView = mock[GetStatementView]
+    val getPresenter = mock[GetterPresenter[GetStatementView]]
+    when(view.addGetStatement()).thenReturn(getView)
     presenter.add(new GetStatement("x"))
+    // TODO test isn't applicable as presenter comes from factory
     assert(presenter.steps.contains(getPresenter))
   }
 
   test("test get statement initialized") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
+    val getView = mock[GetStatementView]
     val getPresenter = mock[GetterPresenter[GetStatementView]]
-    when[GetterPresenter[_]](view.addGetStatement()).thenReturn(getPresenter)
+    when(view.addGetStatement()).thenReturn(getView)
     val statement = new GetStatement("x")
     presenter.add(statement)
+    // TODO test isn't applicable as presenter comes from factory
     verify(getPresenter).initialize(statement)
   }
 
   test("test print statement added to view") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val printPresenter = new PrintStatementPresenter(new MockPrintStatementView)
-    when[PrintStatementPresenter[_]](view.addPrintStatement()).thenReturn(printPresenter)
+    val printView = mock[PrintStatementView]
+    when(view.addPrintStatement()).thenReturn(printView)
     presenter.add(new PrintStatement(Value("x")))
     verify(view).addPrintStatement()
   }
@@ -96,27 +103,31 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test print statement added to presenter") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val printPresenter = new PrintStatementPresenter(new MockPrintStatementView)
-    when[PrintStatementPresenter[_]](view.addPrintStatement()).thenReturn(printPresenter)
+    val printView = mock[PrintStatementView]
+    val printPresenter = mock[PrintStatementPresenter[PrintStatementView]]
+    when(view.addPrintStatement()).thenReturn(printView)
     presenter.add(new PrintStatement(Value("x")))
+    // TODO test isn't applicable as presenter comes from factory
     assert(presenter.steps.contains(printPresenter))
   }
 
   test("test print statement initialized with value") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
+    val printView = mock[PrintStatementView]
     val printPresenter = mock[PrintStatementPresenter[PrintStatementView]]
-    when[PrintStatementPresenter[_]](view.addPrintStatement()).thenReturn(printPresenter)
+    when(view.addPrintStatement()).thenReturn(printView)
     val statement = new PrintStatement(Value("x"))
     presenter.add(statement)
+    // TODO test isn't applicable as presenter comes from factory
     verify(printPresenter).initialize(statement)
   }
 
   test("test function reference added to view") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
+    val functionView = mock[FunctionReferenceView]
+    when(view.addFunctionReference()).thenReturn(functionView)
     presenter.add(new FunctionReference("funName"))
     verify(view).addFunctionReference()
   }
@@ -124,19 +135,23 @@ class TestBlockPresenter extends FunSuite with MockitoSugar {
   test("test function reference added to presenter") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
-    val functionPresenter = new FunctionReferencePresenter(new MockFunctionReferenceView)
-    when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
+    val functionView = mock[FunctionReferenceView]
+    val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
+    when(view.addFunctionReference()).thenReturn(functionView)
     presenter.add(new FunctionReference("funName"))
+    // TODO test isn't applicable as presenter comes from factory
     assert(presenter.steps.contains(functionPresenter))
   }
 
   test("test function reference initialized with value") {
     val view = mock[BlockView]
     val presenter = new BlockPresenter(view)
+    val functionView = mock[FunctionReferenceView]
     val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
-    when[FunctionReferencePresenter[_]](view.addFunctionReference()).thenReturn(functionPresenter)
+    when(view.addFunctionReference()).thenReturn(functionView)
     val statement = new FunctionReference("funName")
     presenter.add(statement)
+    // TODO test isn't applicable as presenter comes from factory
     verify(functionPresenter).initialize(statement)
   }
 

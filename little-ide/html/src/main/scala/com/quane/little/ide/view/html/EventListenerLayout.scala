@@ -2,9 +2,6 @@ package com.quane.little.ide.view.html
 
 import com.vaadin.ui._
 import com.quane.little.ide.view.EventListenerView
-import com.quane.little.ide.presenter.BlockPresenter
-import com.quane.little.language.event.Event
-import com.quane.little.language.event.Event.Event
 import com.vaadin.data.Property.{ValueChangeEvent, ValueChangeListener}
 import com.quane.vaadin.scala.VaadinMixin
 import scala.Some
@@ -32,7 +29,7 @@ class EventListenerLayout
 
   override def setEvent(event: Event) = header.setEvent(event)
 
-  override def createBlock() = new BlockPresenter(add(new BlockLayout))
+  override def createBlock() = add(new BlockLayout)
 
 }
 
