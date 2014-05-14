@@ -18,7 +18,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   private val _username = "connollyst"
   private var _name = "???"
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
-  private val _block = new BlockPresenter(view.createBlock())
+  private val _block = view.createBlock()
 
   view.registerViewPresenter(this)
 
