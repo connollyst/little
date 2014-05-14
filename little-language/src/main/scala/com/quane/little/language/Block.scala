@@ -34,16 +34,13 @@ class Block extends Expression {
 
   override def evaluate(scope: Scope): Value = {
     val blockScope = new Scope(scope)
-    val stepOutput = _steps.map(
-      step =>
-        step match {
-          case e: Expression =>
-            e.evaluate(blockScope)
-          case s: Statement =>
-            s.evaluate(blockScope)
-            new Nada
-        }
-    )
+    val stepOutput = _steps.map {
+      case e: Expression =>
+        e.evaluate(blockScope)
+      case s: Statement =>
+        s.evaluate(blockScope)
+        new Nada
+    }
     if (stepOutput.isEmpty) {
       new Nada
     } else {
