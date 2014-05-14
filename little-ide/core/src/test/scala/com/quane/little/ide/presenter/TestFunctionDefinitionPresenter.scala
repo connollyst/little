@@ -77,27 +77,27 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
 
   test("test compiled name (default)") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.name == "???", "expected '???' but got '" + function.name + "'")
   }
 
   test("test compiled name") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
     presenter.name = "new name"
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.name == "new name")
   }
 
   test("test compiled with 0 parameters") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.paramCount == 0)
   }
 
   test("test compiled with 1 parameters") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
     presenter += new FunctionParameterPresenter(new MockFunctionParameterView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.paramCount == 1)
   }
 
@@ -105,20 +105,20 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
     presenter += new FunctionParameterPresenter(new MockFunctionParameterView)
     presenter += new FunctionParameterPresenter(new MockFunctionParameterView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.paramCount == 2)
   }
 
   test("test compiled with 0 steps") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.stepCount == 0)
   }
 
   test("test compiled with 1 step") {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
     presenter += new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.stepCount == 1)
   }
 
@@ -126,7 +126,7 @@ class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
     presenter += new FunctionReferencePresenter(new MockFunctionReferenceView)
     presenter += new FunctionReferencePresenter(new MockFunctionReferenceView)
-    val function = presenter.compile
+    val function = presenter.compile()
     assert(function.stepCount == 2)
   }
 

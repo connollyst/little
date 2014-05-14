@@ -18,7 +18,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
   private val _username = "connollyst"
   private var _name = "???"
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
-  private val _block = view.createBlock()
+  private val _block = new BlockPresenter(view.createBlock())
 
   view.registerViewPresenter(this)
 
@@ -64,7 +64,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
 
   override def onParamAdded(param: FunctionParameterPresenter[_]) = this += param
 
-  override def compile: FunctionDefinition = {
+  override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(_name)
     _params.foreach {
       param =>
@@ -74,8 +74,8 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)
     fun
   }
 
-  override def save: FunctionRecord = {
-    val fun = compile
+  override def save(): FunctionRecord = {
+    val fun = compile()
     _id match {
       case Some(id) =>
         println("Saving changes to function definition " + id + "..")
