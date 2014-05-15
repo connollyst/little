@@ -1,6 +1,5 @@
-package com.quane.little.data.repo
+package com.quane.little.data.model
 
-import com.quane.little.data.model.{FunctionCategory, FunctionRecord, RecordId}
 import com.quane.little.language.FunctionDefinition
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith

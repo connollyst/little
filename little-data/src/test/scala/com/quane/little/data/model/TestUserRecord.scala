@@ -1,6 +1,5 @@
-package com.quane.little.data.repo
+package com.quane.little.data.model
 
-import com.quane.little.data.model.{UserRecord, RecordId}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
@@ -8,7 +7,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.skyscreamer.jsonassert.JSONAssert
 
-/** Test cases for the [[UserRecord]].
+/** Test cases for the [[com.quane.little.data.model.UserRecord]].
   *
   * @author Sean Connolly
   */
