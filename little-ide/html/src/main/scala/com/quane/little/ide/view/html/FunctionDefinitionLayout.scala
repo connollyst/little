@@ -69,6 +69,8 @@ class FunctionDefinitionLayout
     stepList
   }
 
+  private[html] def requestAddParameter() = presenter.requestAddParameter()
+
 }
 
 private class FunctionDefinitionHeader(view: FunctionDefinitionLayout)
@@ -106,7 +108,7 @@ private class FunctionDefinitionHeader(view: FunctionDefinitionLayout)
   }
 
   // TODO convert to Command
-  private def createNewParameterButton() = Buttons.blueButton("+", view.presenter.requestAddParameter)
+  private def createNewParameterButton() = Buttons.blueButton("+", view.requestAddParameter)
 
   private def createSaveButton() = Buttons.blueButton("Save", view.save)
 
