@@ -9,11 +9,12 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language.data.Value
 import com.quane.little.language.{FunctionReference, GetStatement, Expression}
+import com.quane.little.ide.IDEBindingModule
 
 @RunWith(classOf[JUnitRunner])
 class TestSetStatementPresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterBindingModule
+  implicit val bindingModule = IDEBindingModule
 
   test("test name is set") {
     val view = mock[SetStatementView]

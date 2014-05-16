@@ -8,11 +8,12 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language._
 import com.quane.little.language.data.Value
+import com.quane.little.ide.IDEBindingModule
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterBindingModule
+  implicit val bindingModule = IDEBindingModule
 
   test("test listener registered") {
     val view = mock[BlockView]

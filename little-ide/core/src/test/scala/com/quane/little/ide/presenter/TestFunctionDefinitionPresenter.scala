@@ -7,11 +7,12 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language.FunctionParameter
+import com.quane.little.ide.IDEBindingModule
 
 @RunWith(classOf[JUnitRunner])
 class TestFunctionDefinitionPresenter extends FunSuite with MockitoSugar {
 
-  implicit val bindingModule = PresenterBindingModule
+  implicit val bindingModule = IDEBindingModule
 
   test("test name is set") {
     val presenter = new FunctionDefinitionPresenter(mock[FunctionDefinitionView])
