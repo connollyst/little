@@ -1,11 +1,10 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.presenter.EventListenerPresenter
 import com.quane.little.ide.view.{FunctionDefinitionView, EventListenerView, WorkspaceView}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.ui.{AbsoluteLayout, TabSheet}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
-import com.vaadin.event.dd.acceptcriteria.AcceptAll
+import com.vaadin.event.dd.acceptcriteria.ContainsDataFlavor
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.ide.presenter.command.{AddEventListenerCommand, AddFunctionDefinitionCommand, IDECommandExecutor}
 import com.quane.little.data.model.CodeCategory
@@ -66,7 +65,7 @@ class WorkspaceLayout
  */
 class WorkspaceDropHandler(workspace: WorkspaceTabSheet) extends DropHandler {
 
-  override def getAcceptCriterion = AcceptAll.get()
+  override def getAcceptCriterion = new ContainsDataFlavor("TODO")
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
