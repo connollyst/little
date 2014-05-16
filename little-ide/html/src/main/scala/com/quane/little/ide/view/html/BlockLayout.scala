@@ -121,6 +121,7 @@ private class BlockStepSeparator(block: BlockLayout)
 
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
+  setDefaultComponentAlignment(Alignment.MIDDLE_CENTER)
   add(new ExpressionMenu(block, index))
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
