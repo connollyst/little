@@ -7,6 +7,7 @@ import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.language.{FunctionReference, GetStatement, Expression, PrintStatement}
 import com.quane.little.language.data.Value
+import com.google.common.base.Objects
 
 /** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
   *
@@ -74,5 +75,10 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bin
     * @return the compiled print statement
     */
   override def compile(): PrintStatement = new PrintStatement(value.compile())
+
+  override def toString =
+    Objects.toStringHelper(getClass)
+      .add("value", _value)
+      .toString
 
 }

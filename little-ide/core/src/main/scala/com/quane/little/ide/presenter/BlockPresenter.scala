@@ -49,14 +49,14 @@ class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: Bindin
         case s: SetStatement =>
           presenterFactory.createSetPresenter(view.addSetStatement()).initialize(s)
         case g: GetStatement =>
-          new GetterPresenter(view.addGetStatement()).initialize(g)
+          presenterFactory.createGetPresenter(view.addGetStatement()).initialize(g)
         case p: PrintStatement =>
           new PrintStatementPresenter(view.addPrintStatement()).initialize(p)
         case c: Conditional =>
           new ConditionalPresenter(view.addConditional()).initialize(c)
         case f: FunctionReference =>
-          new FunctionReferencePresenter(view.addFunctionReference()).initialize(f)
-        case _ => throw new IllegalArgumentException("Expression not supported: " + step)
+          presenterFactory.createFunctionReference(view.addFunctionReference()).initialize(f)
+        case _ => throw new IllegalArgumentException("Not supported: " + step)
       }
     add(presenter, index)
   }
