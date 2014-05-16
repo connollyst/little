@@ -113,10 +113,6 @@ class BlockLayout
     */
   def componentCount: Int = getComponentCount
 
-  //  def component(index: Int): Component = {
-  //    super.components[index]
-  //  }
-
 }
 
 private class BlockStepSeparator(block: BlockLayout)
@@ -128,9 +124,6 @@ private class BlockStepSeparator(block: BlockLayout)
   add(new ExpressionMenu(block, index))
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
-  // TODO expand to fill separator height & width
-  dndTarget.component.setHeight("20px")
-  dndTarget.component.setWidth("100%")
   dndTarget.setSizeFull()
   add(dndTarget)
   setExpandRatio(dndTarget, 1f)
