@@ -6,23 +6,23 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.quane.little.language.FunctionDefinition
 import com.quane.little.data.model.FunctionCategory
-import com.quane.little.data.{EmbeddedDatabaseBindingModule, EmbeddedMongoDB}
-import com.escalatesoft.subcut.inject.Injectable
+import com.quane.little.data.{DataBindingModule, EmbeddedMongoDB}
+import com.mongodb.casbah.MongoClient
+import com.escalatesoft.subcut.inject.{Injectable, NewBindingModule}
 
 /** Test cases for the [[com.quane.little.data.service.FunctionService]]
   *
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestFunctionService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers with Injectable {
+class TestFunctionService extends FlatSpec with ShouldMatchers with EmbeddedMongoDB with Injectable {
 
-  implicit val bindingModule = EmbeddedDatabaseBindingModule
-
-  val users = inject[UserService]
-  val functions = inject[FunctionService]
+  implicit val bindingModule = TestFunctionServiceBindingModule
 
   val userOne = "userOne"
   val userTwo = "userTwo"
+  val users = inject[UserService]
+  val functions = inject[FunctionService]
 
   override def beforeAll() {
     super.beforeAll()
@@ -52,3 +52,16 @@ class TestFunctionService extends FlatSpec with EmbeddedMongoDB with ShouldMatch
   }
 
 }
+
+object TestFunctionServiceBindingModule extends NewBindingModule(module => {
+
+  import module._
+
+  module <~ DataBindingModule
+
+  // Override the normal MongoDB client with that of the embedded database
+  bind[MongoClient] toProvider {
+    MongoClient(EmbeddedMongoDB.Host, EmbeddedMongoDB.Port)
+  }
+
+})

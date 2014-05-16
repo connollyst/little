@@ -6,14 +6,13 @@ import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.{BeforeAndAfterAll, FlatSpec}
+import org.scalatest.FlatSpec
 import com.quane.little.language.data.Value
 import com.quane.little.data.EmbeddedMongoDB
 import com.quane.little.language.util.Functions
 
 @RunWith(classOf[JUnitRunner])
-class TestFunctionRepository
-  extends FlatSpec with EmbeddedMongoDB with ShouldMatchers with BeforeAndAfterAll {
+class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
   var ownerId: RecordId = _

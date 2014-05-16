@@ -4,17 +4,18 @@ import org.scalatest.FlatSpec
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.data.{EmbeddedDatabaseBindingModule, EmbeddedMongoDB}
-import com.escalatesoft.subcut.inject.Injectable
+import com.quane.little.data.{DataBindingModule, EmbeddedMongoDB}
+import com.escalatesoft.subcut.inject.{NewBindingModule, Injectable}
+import com.mongodb.casbah.MongoClient
 
 /** Test cases for the [[com.quane.little.data.service.UserService]]
   *
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestUserService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers with Injectable {
+class TestUserService extends FlatSpec with ShouldMatchers with EmbeddedMongoDB with Injectable {
 
-  implicit val bindingModule = EmbeddedDatabaseBindingModule
+  implicit val bindingModule = TestUserServiceBindingModule
 
   val users = inject[UserService]
 
@@ -48,3 +49,16 @@ class TestUserService extends FlatSpec with EmbeddedMongoDB with ShouldMatchers 
   }
 
 }
+
+object TestUserServiceBindingModule extends NewBindingModule(module => {
+
+  import module._
+
+  module <~ DataBindingModule
+
+  // Override the normal MongoDB client with that of the embedded database
+  bind[MongoClient] toProvider {
+    MongoClient(EmbeddedMongoDB.Host, EmbeddedMongoDB.Port)
+  }
+
+})

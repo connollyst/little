@@ -14,6 +14,7 @@ object DataBindingModule extends NewBindingModule(module => {
   import module._
 
   bind[MongoClient] toSingle {
+    println("Getting real MongoDB client!")
     MongoClient()
   }
   bind[UserService] toModuleSingle { implicit module => new MongoUserService}

@@ -13,13 +13,13 @@ trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfterAll {
   this: com.quane.little.data.EmbeddedMongoDB with org.scalatest.Suite =>
 
   val mongoVersion = "2.4.10"
-  val mongoHost = "127.0.0.1"
-  // TODO resolve available port
-  val mongoPort = 12345
+  val mongoHost = EmbeddedMongoDB.Host
+  var mongoPort = EmbeddedMongoDB.Port
   var mongoProps: MongodProps = null
 
   override def beforeAll() {
-    mongoProps = mongoStart()
+    println("Starting embedded MongoDB instance for " + getClass + " @ " + mongoPort)
+    mongoProps = mongoStart(mongoPort)
   }
 
   override def afterAll() {
@@ -31,5 +31,13 @@ trait EmbeddedMongoDB extends MongoEmbedDatabase with BeforeAndAfterAll {
   def mongoDB(db: String): MongoDB = mongoClient(db)
 
   def mongoCollection(db: String, name: String): MongoCollection = mongoDB(db)(name)
+
+}
+
+object EmbeddedMongoDB {
+
+  val Host = "127.0.0.1"
+  // TODO resolve available port
+  val Port = 13742
 
 }
