@@ -6,7 +6,7 @@ import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
-import com.quane.vaadin.scala.DroppableTarget
+import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
 import com.quane.little.data.model.{CodeCategory, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 
@@ -120,18 +120,20 @@ class BlockLayout
 }
 
 private class BlockStepSeparator(block: BlockLayout)
-  extends HorizontalLayout {
+  extends HorizontalLayout
+  with VaadinMixin {
 
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
-  addComponent(new ExpressionMenu(block, index))
+  add(new ExpressionMenu(block, index))
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
   // TODO expand to fill separator height & width
   dndTarget.component.setHeight("20px")
-  dndTarget.component.setWidth("200px")
+  dndTarget.component.setWidth("100%")
   dndTarget.setSizeFull()
-  addComponent(dndTarget)
+  add(dndTarget)
+  setExpandRatio(dndTarget, 1f)
 
   def addFunction(functionId: RecordId) =
     IDECommandExecutor.execute(
