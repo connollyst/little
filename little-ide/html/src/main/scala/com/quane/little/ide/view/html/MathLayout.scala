@@ -3,10 +3,18 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.view.{ExpressionView, MathView}
 import com.vaadin.ui.{Alignment, Label, CssLayout, HorizontalLayout}
 import com.quane.little.language.math.BasicMathOperation
-import com.quane.vaadin.scala.VaadinMixin
+import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
+import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
+import com.vaadin.event.dd.acceptcriteria.AcceptAll
+import com.quane.little.ide.view.html.dnd.CodeTransferable
+import com.quane.little.data.model.CodeCategory
+import com.quane.little.ide.presenter.command._
+import com.quane.little.ide.view.html.MathLayout._
 
 object MathLayout {
   val Style = "l-math"
+  val LeftIndex = 0
+  val RightIndex = 1
 }
 
 /** An HTML layout view representing a [[com.quane.little.language.math.Math]]
@@ -19,8 +27,8 @@ class MathLayout
   with MathView
   with VaadinMixin {
 
-  private val leftValueWrapper = new CssLayout
-  private val rightValueWrapper = new CssLayout
+  private val leftValueWrapper = new DroppableTarget(new CssLayout, new MathDropHandler(this, LeftIndex))
+  private val rightValueWrapper = new DroppableTarget(new CssLayout, new MathDropHandler(this, RightIndex))
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
@@ -45,15 +53,35 @@ class MathLayout
   override def createRightFunctionReference() = setRightValueComponent(new FunctionReferenceLayout)
 
   private def setLeftValueComponent[T <: ExpressionView[_] with RemovableComponent](view: T): T = {
-    leftValueWrapper.removeAllComponents()
-    leftValueWrapper.addComponent(view)
+    leftValueWrapper.component.removeAllComponents()
+    leftValueWrapper.component.addComponent(view)
     view
   }
 
   private def setRightValueComponent[T <: ExpressionView[_] with RemovableComponent](view: T): T = {
-    rightValueWrapper.removeAllComponents()
-    rightValueWrapper.addComponent(view)
+    rightValueWrapper.component.removeAllComponents()
+    rightValueWrapper.component.addComponent(view)
     view
   }
+
+}
+
+private class MathDropHandler(view: MathLayout, index: Int) extends DropHandler {
+
+  override def getAcceptCriterion = AcceptAll.get()
+
+  override def drop(event: DragAndDropEvent) =
+    event.getTransferable match {
+      case transferable: CodeTransferable if transferable.category == CodeCategory.Expression =>
+        IDECommandExecutor.execute(
+          new AddExpressionCommand(view.presenter, transferable.codeId, index)
+        )
+      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
+        IDECommandExecutor.execute(
+          new AddFunctionReferenceCommand(view.presenter, transferable.codeId, index)
+        )
+      case _ =>
+        throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
+    }
 
 }
