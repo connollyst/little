@@ -48,7 +48,7 @@ abstract class BasicMath(val l: Expression, val r: Expression) extends Math {
     evaluate(left, right)
   }
 
-  val operation: BasicMathOperation
+  def operation: BasicMathOperation
 
   def evaluate(left: Value, right: Value): Value
 
@@ -81,7 +81,7 @@ class Addition(l: Expression, r: Expression) extends BasicMath(l, r) {
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)
 
-  override val operation = BasicMathOperation.Add
+  override def operation = BasicMathOperation.Add
 
   override def evaluate(left: Value, right: Value): Value =
     Value(left.asDouble + right.asDouble)
@@ -98,7 +98,7 @@ class Subtraction(l: Expression, r: Expression) extends BasicMath(l, r) {
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)
 
-  override val operation = BasicMathOperation.Subtract
+  override def operation = BasicMathOperation.Subtract
 
   override def evaluate(left: Value, right: Value): Value =
     Value(left.asDouble - right.asDouble)
@@ -115,7 +115,7 @@ class Multiplication(l: Expression, r: Expression) extends BasicMath(l, r) {
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)
 
-  override val operation = BasicMathOperation.Multiply
+  override def operation = BasicMathOperation.Multiply
 
   override def evaluate(left: Value, right: Value): Value =
     Value(left.asDouble * right.asDouble)
@@ -132,7 +132,7 @@ class Division(l: Expression, r: Expression) extends BasicMath(l, r) {
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)
 
-  override val operation = BasicMathOperation.Divide
+  override def operation = BasicMathOperation.Divide
 
   override def evaluate(left: Value, right: Value): Value =
     Value(left.asDouble / right.asDouble)

@@ -1,15 +1,16 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, MathView}
-import com.vaadin.ui.{Alignment, Label, CssLayout, HorizontalLayout}
+import com.vaadin.ui._
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
-import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
+import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
+import com.quane.little.ide.view.html.MathLayout._
+import com.quane.little.language.math.BasicMathOperation
+import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.data.model.CodeCategory
-import com.quane.little.ide.presenter.command._
-import com.quane.little.ide.view.html.MathLayout._
-import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
+import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddExpressionCommand, IDECommandExecutor}
 
 object MathLayout {
   val Style = "l-math"
@@ -28,7 +29,7 @@ class MathLayout
   with VaadinMixin {
 
   private val leftValueWrapper = new DroppableTarget(new CssLayout, new MathDropHandler(this, LeftIndex))
-  private val operatorLabel = new Label("?")
+  private val operatorField = new MathOperatorComboBox()
   private val rightValueWrapper = new DroppableTarget(new CssLayout, new MathDropHandler(this, RightIndex))
 
   setSpacing(true)
@@ -36,10 +37,10 @@ class MathLayout
   setStyleNames(ExpressionLayout.Style, MathLayout.Style)
 
   add(leftValueWrapper)
-  add(operatorLabel)
+  add(operatorField)
   add(rightValueWrapper)
 
-  override def setOperation(operation: BasicMathOperation) = operatorLabel.setValue(operation.toString)
+  override def setOperation(operation: BasicMathOperation) = operatorField.setValue(operation.toString)
 
   override def createLeftGetStatement() = setLeftValueComponent(new GetterLayout)
 
@@ -84,5 +85,14 @@ private class MathDropHandler(view: MathLayout, index: Int) extends DropHandler 
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
     }
+
+}
+
+private class MathOperatorComboBox extends ComboBox {
+
+  BasicMathOperation.values foreach {
+    operation =>
+      addItem(operation.toString)
+  }
 
 }
