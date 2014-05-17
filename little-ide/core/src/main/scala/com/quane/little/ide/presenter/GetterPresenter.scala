@@ -35,6 +35,6 @@ class GetterPresenter[V <: GetterView](view: V)
 
   override def onNameChange(name: String): Unit = _name = name
 
-  override def compile: Getter = new Getter(_name)
+  override def compile(): Getter = new Getter(_name)
 
 }

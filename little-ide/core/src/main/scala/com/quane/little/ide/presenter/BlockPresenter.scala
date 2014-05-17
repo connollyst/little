@@ -7,6 +7,7 @@ import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{FunctionService, ExpressionService, StatementService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.language._
+import com.quane.little.language.math.BasicMath
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -46,6 +47,9 @@ class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: Bindin
   private[presenter] def add(step: EvaluableCode, index: Int): Unit = {
     val presenter =
       step match {
+        case m: BasicMath =>
+          val stepView = view.addMath(index)
+          presenterFactory.createMathPresenter(stepView).initialize(m)
         case s: Setter =>
           val stepView = view.addSetStatement(index)
           presenterFactory.createSetPresenter(stepView).initialize(s)
@@ -54,10 +58,10 @@ class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: Bindin
           presenterFactory.createGetPresenter(stepView).initialize(g)
         case p: Printer =>
           val stepView = view.addPrintStatement(index)
-          new PrinterPresenter(stepView).initialize(p)
+          presenterFactory.createPrintPresenter(stepView).initialize(p)
         case c: Conditional =>
           val stepView = view.addConditional(index)
-          new ConditionalPresenter(stepView).initialize(c)
+          presenterFactory.createConditionalPresenter(stepView).initialize(c)
         case f: FunctionReference =>
           val stepView = view.addFunctionReference(index)
           presenterFactory.createFunctionReference(stepView).initialize(f)

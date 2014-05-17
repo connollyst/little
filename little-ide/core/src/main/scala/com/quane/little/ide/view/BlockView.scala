@@ -4,6 +4,10 @@ import com.quane.little.ide.presenter._
 
 trait BlockView extends ExpressionView[BlockViewPresenter] {
 
+  def addMath(): MathView
+
+  def addMath(index: Int): MathView
+
   def addConditional(): ConditionalView
 
   def addConditional(index: Int): ConditionalView

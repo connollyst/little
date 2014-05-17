@@ -23,13 +23,19 @@ class PresenterFactory(implicit val bindingModule: BindingModule) {
 
   // TODO generify this into the above function
 
+  def createMathPresenter(view: MathView) = new MathPresenter(view)
+
   def createValuePresenter(view: ValueView) = new ValuePresenter(view)
 
   def createSetPresenter(view: SetterView) = new SetterPresenter(view)
 
   def createGetPresenter(view: GetterView) = new GetterPresenter(view)
 
-  def createArgument(view: FunctionArgumentView) = new FunctionArgumentPresenter(view)
+  def createPrintPresenter(view: PrinterView) = new PrinterPresenter(view)
+
+  def createConditionalPresenter(view: ConditionalView) = new ConditionalPresenter(view)
+
+  def createFunctionArgument(view: FunctionArgumentView) = new FunctionArgumentPresenter(view)
 
   def createFunctionReference(view: FunctionReferenceView) = new FunctionReferencePresenter(view)
 

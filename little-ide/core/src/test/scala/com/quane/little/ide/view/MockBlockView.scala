@@ -11,6 +11,10 @@ class MockBlockView(implicit val bindingModule: BindingModule)
   extends BlockView
   with MockView {
 
+  def addMath(): MathView = new MockMathView
+
+  def addMath(index: Int): MathView = new MockMathView
+
   def addConditional() = new MockConditionalView
 
   def addConditional(index: Int) = new MockConditionalView

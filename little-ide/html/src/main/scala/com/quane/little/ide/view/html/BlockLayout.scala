@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.BlockView
+import com.quane.little.ide.view.{MathView, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
@@ -33,6 +33,10 @@ class BlockLayout
   setStyleName(Style)
 
   super.addComponent(new BlockStepSeparator(this))
+
+  override def addMath(): MathView = addMath(DefaultIndex)
+
+  override def addMath(index: Int) = add(new MathLayout(), componentIndex(index))
 
   override def addConditional() = addConditional(DefaultIndex)
 

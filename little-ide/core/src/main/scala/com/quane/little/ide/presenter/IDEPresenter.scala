@@ -16,8 +16,8 @@ class IDEPresenter[V <: IDEView](view: V)(implicit val bindingModule: BindingMod
   private val functionService = inject[FunctionService]
 
   // TODO this is temporary
-  functionService.init()
   userService.init()
+  functionService.init()
   val user = userService.upsert("connollyst")
   // TODO that is temporary
 

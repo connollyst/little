@@ -4,6 +4,45 @@ import com.quane.little.language.{Scope, Expression}
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
 
+/** Factory for [[com.quane.little.language.math.BasicMath]] instances. **/
+object BasicMath {
+
+  /** Returns an appropriate [[com.quane.little.language.math.BasicMath]]
+    * expression as specified by the given
+    * [[com.quane.little.language.math.BasicMathOperation]].
+    *
+    * @param l the left operand
+    * @param o the operator
+    * @param r the right operand
+    * @return the math expression
+    */
+  def apply(l: Expression, o: BasicMathOperation, r: Expression): BasicMath = {
+    o match {
+      case _: AdditionOperation => new Addition(l, r)
+      case _: SubtractionOperation => new Subtraction(l, r)
+      case _: MultiplicationOperation => new Multiplication(l, r)
+      case _: DivisionOperation => new Division(l, r)
+    }
+  }
+
+}
+
+/** A basic math operation. **/
+sealed trait BasicMathOperation
+
+class AdditionOperation extends BasicMathOperation
+
+class SubtractionOperation extends BasicMathOperation
+
+class MultiplicationOperation extends BasicMathOperation
+
+class DivisionOperation extends BasicMathOperation
+
+/** An abstract basic math expression.
+  *
+  * @param l the left operand
+  * @param r the right operand
+  */
 abstract class BasicMath(val l: Expression, val r: Expression) extends Math {
 
   override def evaluate(scope: Scope): Value = {
@@ -33,6 +72,11 @@ abstract class BasicMath(val l: Expression, val r: Expression) extends Math {
 
 }
 
+/** A basic addition expression.
+  *
+  * @param l the left operand
+  * @param r the right operand
+  */
 class Addition(l: Expression, r: Expression) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?
@@ -43,6 +87,11 @@ class Addition(l: Expression, r: Expression) extends BasicMath(l, r) {
 
 }
 
+/** A basic subtraction expression.
+  *
+  * @param l the left operand
+  * @param r the right operand
+  */
 class Subtraction(l: Expression, r: Expression) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?
@@ -53,6 +102,11 @@ class Subtraction(l: Expression, r: Expression) extends BasicMath(l, r) {
 
 }
 
+/** A basic multiplication expression.
+  *
+  * @param l the left operand
+  * @param r the right operand
+  */
 class Multiplication(l: Expression, r: Expression) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?
@@ -63,6 +117,11 @@ class Multiplication(l: Expression, r: Expression) extends BasicMath(l, r) {
 
 }
 
+/** A basic division expression.
+  *
+  * @param l the left operand
+  * @param r the right operand
+  */
 class Division(l: Expression, r: Expression) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?

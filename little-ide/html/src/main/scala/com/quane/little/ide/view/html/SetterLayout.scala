@@ -40,23 +40,14 @@ class SetterLayout
     })
   }
 
-  override def createValueStatement(): ValueLayout = {
-    removeValueComponent()
-    val view = new ValueLayout
-    valueComponent = Some(view)
-    add(view)
-  }
+  override def createValueStatement() = setValueComponent(new ValueLayout)
 
-  override def createGetStatement(): GetterLayout = {
-    removeValueComponent()
-    val view = new GetterLayout
-    valueComponent = Some(view)
-    add(view)
-  }
+  override def createGetStatement() = setValueComponent(new GetterLayout)
 
-  override def createFunctionReference(): FunctionReferenceLayout = {
+  override def createFunctionReference() = setValueComponent(new FunctionReferenceLayout)
+
+  private def setValueComponent[T <: ExpressionView[_] with RemovableComponent](view: T): T = {
     removeValueComponent()
-    val view = new FunctionReferenceLayout
     valueComponent = Some(view)
     add(view)
   }

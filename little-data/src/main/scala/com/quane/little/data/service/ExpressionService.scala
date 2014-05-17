@@ -4,20 +4,25 @@ import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.language._
 import scala.collection.immutable
 import com.quane.little.language.data.Value
+import com.quane.little.language.math.Addition
 
 object ExpressionService {
 
   val Get = "_little_get"
   val Conditional = "_little_conditional"
+  // Math Expressions
+  val Addition = "_little_math_addition"
 
   val All = immutable.List[String](
     Get,
-    Conditional
+    Conditional,
+    Addition
   )
 
   val Names = immutable.Map[String, String](
     Get -> "get",
-    Conditional -> "if/else"
+    Conditional -> "if/else",
+    Addition -> "+"
   )
 
 }
@@ -74,6 +79,7 @@ object ExpressionFactory {
     id match {
       case ExpressionService.Get => new Getter("")
       case ExpressionService.Conditional => new Conditional(new Evaluation(Value(1), Equals, Value(1)))
+      case ExpressionService.Addition => new Addition(Value(1), Value(1))
       case _ => throw new IllegalAccessException("No expression '" + id + "'")
     }
   }

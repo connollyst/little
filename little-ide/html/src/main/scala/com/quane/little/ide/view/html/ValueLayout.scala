@@ -16,7 +16,6 @@ class ValueLayout
   val valueField = createValueField()
 
   addComponent(valueField)
-  addComponent(Buttons.closeButton(this))
 
   override def setValue(value: String): Unit = valueField.setValue(value)
 
