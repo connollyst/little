@@ -38,7 +38,7 @@ class TestStatement
   test("test getter") {
     val scope = new Runtime
     scope.save("Obj", Value("A"))
-    val get = new GetStatement("Obj")
+    val get = new Getter("Obj")
     assertGet("Obj", "A", scope, get)
   }
 
@@ -57,14 +57,14 @@ object TestStatement {
     assert(objValue == value, "expected " + value + ", found " + objValue)
   }
 
-  /** Assert that the [[GetStatement]] returns the expected value.
+  /** Assert that the [[Getter]] returns the expected value.
     *
     * @param name the name of the variable
     * @param value the expected value
     * @param scope the scope in which to evaluate
     * @param get the get statement under test
     */
-  private def assertGet(name: String, value: Any, scope: Scope, get: GetStatement) = {
+  private def assertGet(name: String, value: Any, scope: Scope, get: Getter) = {
     val block = new Block
     block += get
     val obj = block.evaluate(scope)

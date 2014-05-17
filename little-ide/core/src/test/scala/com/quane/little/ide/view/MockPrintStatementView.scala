@@ -11,7 +11,7 @@ class MockPrintStatementView
 
   override def createValueStatement() = new MockValueView
 
-  override def createGetStatement() = new MockGetStatementView
+  override def createGetStatement() = new MockGetterView
 
   override def createFunctionReference() = new MockFunctionReferenceView
 

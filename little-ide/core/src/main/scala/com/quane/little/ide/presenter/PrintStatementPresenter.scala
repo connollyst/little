@@ -5,7 +5,7 @@ import scala._
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.language.{FunctionReference, GetStatement, Expression, PrintStatement}
+import com.quane.little.language.{FunctionReference, Getter, Expression, PrintStatement}
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
 
@@ -52,7 +52,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bin
   private[presenter] def value_=(e: Expression): Unit = {
     val presenter =
       e match {
-        case g: GetStatement =>
+        case g: Getter =>
           presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
         case v: Value =>
           presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)

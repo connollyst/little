@@ -49,7 +49,7 @@ class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: Bindin
         case s: SetStatement =>
           val stepView = view.addSetStatement(index)
           presenterFactory.createSetPresenter(stepView).initialize(s)
-        case g: GetStatement =>
+        case g: Getter =>
           val stepView = view.addGetStatement(index)
           presenterFactory.createGetPresenter(stepView).initialize(g)
         case p: PrintStatement =>

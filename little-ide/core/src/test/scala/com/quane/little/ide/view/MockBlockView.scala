@@ -15,9 +15,9 @@ class MockBlockView(implicit val bindingModule: BindingModule)
 
   def addConditional(index: Int) = new MockConditionalView
 
-  def addGetStatement() = new MockGetStatementView
+  def addGetStatement() = new MockGetterView
 
-  def addGetStatement(index: Int) = new MockGetStatementView
+  def addGetStatement(index: Int) = new MockGetterView
 
   def addSetStatement() = new MockSetStatementView
 

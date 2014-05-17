@@ -47,9 +47,9 @@ class SetStatementLayout
     add(view)
   }
 
-  override def createGetStatement(): GetStatementLayout = {
+  override def createGetStatement(): GetterLayout = {
     removeValueComponent()
-    val view = new GetStatementLayout
+    val view = new GetterLayout
     valueComponent = Some(view)
     add(view)
   }

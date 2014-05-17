@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.{Equals, Evaluation, Conditional, GetStatement}
+import com.quane.little.language.{Equals, Evaluation, Conditional, Getter}
 import com.quane.little.data.model.RecordId
 import com.quane.little.language.data.Value
 
@@ -25,7 +25,7 @@ class TestExpressionService extends FlatSpec with ShouldMatchers {
   it should "find get expressions" in {
     val id = new RecordId(ExpressionService.Get)
     val expression = service.findExpression(id)
-    expression should be(new GetStatement(""))
+    expression should be(new Getter(""))
   }
   it should "find if/else expressions" in {
     val id = new RecordId(ExpressionService.Conditional)

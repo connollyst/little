@@ -18,7 +18,7 @@ class TestOperator extends FunSuite {
     val operator = new Operator(new Runtime, new StubOperable)
     operator.save(new Variable("x", Value(1234)))
     val subScope = new Block
-    subScope += new GetStatement("x")
+    subScope += new Getter("x")
     val x = subScope.evaluate(operator)
     assert(x.primitive == 1234, "expected 'x' to be '1234' but is: " + x)
   }

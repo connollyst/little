@@ -35,7 +35,7 @@ class TestFunction extends FlatSpec with ShouldMatchers {
   it should "return value from get expression" in {
     val fun = new FunctionDefinition("myFun")
     fun.addStep(new SetStatement("Obj", Value("A")))
-    fun.addStep(new GetStatement("Obj"))
+    fun.addStep(new Getter("Obj"))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference("myFun")

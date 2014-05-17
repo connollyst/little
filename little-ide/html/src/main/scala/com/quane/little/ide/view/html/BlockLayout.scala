@@ -40,7 +40,7 @@ class BlockLayout
 
   override def addGetStatement() = addGetStatement(DefaultIndex)
 
-  override def addGetStatement(index: Int) = add(new GetStatementLayout(), componentIndex(index))
+  override def addGetStatement(index: Int) = add(new GetterLayout(), componentIndex(index))
 
   override def addSetStatement() = addSetStatement(DefaultIndex)
 

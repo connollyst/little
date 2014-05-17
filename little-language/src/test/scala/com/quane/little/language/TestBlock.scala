@@ -46,7 +46,7 @@ class TestBlock extends FlatSpec with ShouldMatchers {
     val block = new Block
     block.addStep(new SetStatement("Obj1", Value("A")))
     block.addStep(new SetStatement("Obj2", Value("B")))
-    block.addStep(new SetStatement("Obj1", new GetStatement("Obj2")))
+    block.addStep(new SetStatement("Obj1", new Getter("Obj2")))
     block.addStep(snapshot)
     block.evaluate(new Runtime)
     val obj1 = snapshot.scope.fetch("Obj1")
@@ -59,7 +59,7 @@ class TestBlock extends FlatSpec with ShouldMatchers {
   it should "return value from get expression" in {
     val block = new Block
     block.addStep(new SetStatement("Obj", Value("A")))
-    block.addStep(new GetStatement("Obj"))
+    block.addStep(new Getter("Obj"))
     val obj = block.evaluate(new Runtime)
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }

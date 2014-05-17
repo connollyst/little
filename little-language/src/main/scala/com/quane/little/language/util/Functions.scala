@@ -16,7 +16,7 @@ object Functions {
 
   def move: FunctionDefinition = {
     val fun = new FunctionDefinition("move").addParam("speed")
-    fun.addStep(new SetStatement(Operable.SPEED, new GetStatement("speed")))
+    fun.addStep(new SetStatement(Operable.SPEED, new Getter("speed")))
   }
 
   def stop: FunctionDefinition = {
@@ -26,7 +26,7 @@ object Functions {
 
   def turn: FunctionDefinition = {
     val fun = new FunctionDefinition("turn").addParam("direction")
-    fun.addStep(new SetStatement(Operable.DIRECTION, new GetStatement("direction")))
+    fun.addStep(new SetStatement(Operable.DIRECTION, new Getter("direction")))
   }
 
   def turnRandom: Block = {
@@ -39,8 +39,8 @@ object Functions {
 
   def turnRelative: FunctionDefinition = {
     val relativelyFun = new FunctionDefinition("turnRelative").addParam("degrees")
-    val getCurrentDir = new GetStatement(Operable.DIRECTION)
-    val dirChange = new GetStatement("degrees")
+    val getCurrentDir = new Getter(Operable.DIRECTION)
+    val dirChange = new Getter("degrees")
     val getNewDirection = new Addition(getCurrentDir, dirChange)
     val setNewDirection = new SetStatement(Operable.DIRECTION, getNewDirection)
     relativelyFun.addStep(setNewDirection)
@@ -48,9 +48,9 @@ object Functions {
 
   def voyage: FunctionDefinition = {
     val fun = new FunctionDefinition("voyage")
-    val myDirection = new GetStatement(Operable.DIRECTION)
-    val myX = new GetStatement(Operable.X)
-    val myY = new GetStatement(Operable.Y)
+    val myDirection = new Getter(Operable.DIRECTION)
+    val myX = new Getter(Operable.X)
+    val myY = new Getter(Operable.Y)
     // Step #1: Turn South if I'm facing North
     val north = Value(270)
     val south = Value(90)
@@ -67,7 +67,7 @@ object Functions {
 
   def printDirection: FunctionDefinition = {
     val fun = new FunctionDefinition("print dir")
-    fun.addStep(new PrintStatement(new GetStatement(Operable.DIRECTION)))
+    fun.addStep(new PrintStatement(new Getter(Operable.DIRECTION)))
   }
 
   def pointToward(x: Expression, y: Expression): Block = {
@@ -76,8 +76,8 @@ object Functions {
   }
 
   def getAngleTo(x: Expression, y: Expression): Block = {
-    val mobX = new GetStatement(Operable.X)
-    val mobY = new GetStatement(Operable.Y)
+    val mobX = new Getter(Operable.X)
+    val mobY = new Getter(Operable.Y)
     getAngleBetween(mobX, mobY, x, y)
   }
 
@@ -92,14 +92,14 @@ object Functions {
     // Save the angle to memory
     val saveAngleStep = new SetStatement(anglePointer, calculateAngleStep)
     // Check if the angle is too small
-    val tooSmallChecker = new Evaluation(new GetStatement(anglePointer), LessThan, Value(0))
-    val cleanerFunction = new SetStatement(anglePointer, new Addition(new GetStatement(anglePointer), Value(360)))
+    val tooSmallChecker = new Evaluation(new Getter(anglePointer), LessThan, Value(0))
+    val cleanerFunction = new SetStatement(anglePointer, new Addition(new Getter(anglePointer), Value(360)))
     val tooSmallCleaner = new Conditional(tooSmallChecker).addStep(cleanerFunction)
     // Build the function
     angleFunction += calculateAngleStep
     angleFunction += saveAngleStep
     angleFunction += tooSmallCleaner
-    angleFunction += new GetStatement(anglePointer)
+    angleFunction += new Getter(anglePointer)
     angleFunction
   }
 

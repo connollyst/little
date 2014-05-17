@@ -4,7 +4,7 @@ import com.quane.little.ide.view.{ExpressionViewPresenter, SetStatementViewPrese
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.language.{FunctionReference, SetStatement, Expression, GetStatement}
+import com.quane.little.language.{FunctionReference, SetStatement, Expression, Getter}
 import com.quane.little.language.data.Value
 
 /** Presenter for views representing a [[com.quane.little.language.SetStatement]].
@@ -57,7 +57,7 @@ class SetStatementPresenter[V <: SetStatementView](view: V)(implicit val binding
   private[presenter] def value_=(e: Expression): Unit = {
     val presenter =
       e match {
-        case g: GetStatement =>
+        case g: Getter =>
           presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
         case v: Value =>
           presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)

@@ -7,7 +7,7 @@ trait PrintStatementView
 
   def createValueStatement(): ValueView
 
-  def createGetStatement(): GetStatementView
+  def createGetStatement(): GetterView
 
   def createFunctionReference(): FunctionReferenceView
 

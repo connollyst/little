@@ -8,7 +8,7 @@ import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language.data.Value
-import com.quane.little.language.{FunctionReference, GetStatement, Expression}
+import com.quane.little.language.{FunctionReference, Getter, Expression}
 import com.quane.little.ide.IDEBindingModule
 
 @RunWith(classOf[JUnitRunner])
@@ -103,18 +103,18 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test get statement added to view") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    when(view.createGetStatement()).thenReturn(mock[GetStatementView])
-    presenter.value = new GetStatement("x")
+    when(view.createGetStatement()).thenReturn(mock[GetterView])
+    presenter.value = new Getter("x")
     verify(view).createGetStatement()
   }
 
   test("test get statement added to presenter") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getterView = mock[GetStatementView]
+    val getterView = mock[GetterView]
     val getterPresenter = new GetterPresenter(getterView)
     when(view.createGetStatement()).thenReturn(getterView)
-    presenter.value = new GetStatement("x")
+    presenter.value = new Getter("x")
     // TODO test isn't applicable as presenter comes from factory
     assert(presenter.value == getterPresenter)
   }
@@ -122,10 +122,10 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("test get statement initialized") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    val getterView = mock[GetStatementView]
-    val getterPresenter = mock[GetterPresenter[GetStatementView]]
+    val getterView = mock[GetterView]
+    val getterPresenter = mock[GetterPresenter[GetterView]]
     when(view.createGetStatement()).thenReturn(getterView)
-    val statement = new GetStatement("x")
+    val statement = new Getter("x")
     presenter.value = statement
     // TODO test isn't applicable as presenter comes from factory
     verify(getterPresenter).initialize(statement)
@@ -177,8 +177,8 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
   test("should compile print(get expression)") {
     val view = mock[SetStatementView]
     val presenter = new SetStatementPresenter(view)
-    when(view.createGetStatement()).thenReturn(mock[GetStatementView])
-    val value = new GetStatement("varName")
+    when(view.createGetStatement()).thenReturn(mock[GetterView])
+    val value = new Getter("varName")
     presenter.value = value
     val compiled = presenter.compile()
     assert(compiled.value == value)

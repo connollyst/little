@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
-import com.quane.little.language.{FunctionReference, Expression, GetStatement}
+import com.quane.little.language.{FunctionReference, Expression, Getter}
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
@@ -55,7 +55,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
     val presenter =
       e match {
         // TODO skip if nothing has changed
-        case g: GetStatement =>
+        case g: Getter =>
           presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
         case v: Value =>
           presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)

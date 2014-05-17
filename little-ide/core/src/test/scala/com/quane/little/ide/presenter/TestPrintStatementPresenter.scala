@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.{FunctionReference, GetStatement, Expression}
+import com.quane.little.language.{FunctionReference, Getter, Expression}
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
@@ -47,10 +47,10 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   test("test get expression propagates to view") {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
-    val getterView = mock[GetStatementView]
-    val getterPresenter = mock[GetterPresenter[GetStatementView]]
+    val getterView = mock[GetterView]
+    val getterPresenter = mock[GetterPresenter[GetterView]]
     when(view.createGetStatement()).thenReturn(getterView)
-    val getter = mock[GetStatement]
+    val getter = mock[Getter]
     presenter.value = getter
     verify(view).createGetStatement()
     // TODO test isn't applicable as presenter comes from factory
@@ -87,7 +87,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   }
 
   test("should compile print(get expression)") {
-    assertCompiledValue(new GetStatement("varName"))
+    assertCompiledValue(new Getter("varName"))
   }
 
   test("should compile print(function reference)") {
@@ -97,7 +97,7 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   private def assertCompiledValue(value: Expression) = {
     val view = mock[PrintStatementView]
     val presenter = new PrintStatementPresenter(view)
-    when(view.createGetStatement()).thenReturn(new MockGetStatementView)
+    when(view.createGetStatement()).thenReturn(new MockGetterView)
     when(view.createValueStatement()).thenReturn(new MockValueView)
     when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
     presenter.value = value

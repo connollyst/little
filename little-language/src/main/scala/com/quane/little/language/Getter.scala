@@ -3,12 +3,11 @@ package com.quane.little.language
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
 
-/**
- *
- *
+/** An expression to retrieve a variable's value from memory.
+  *
  * @author Sean Connolly
  */
-class GetStatement(val name: String)
+class Getter(val name: String)
   extends Expression {
 
   override def evaluate(scope: Scope): Value = {
@@ -17,7 +16,7 @@ class GetStatement(val name: String)
   }
 
   override def equals(that: Any) = that match {
-    case g: GetStatement => name.equals(g.name)
+    case g: Getter => name.equals(g.name)
     case _ => false
   }
 

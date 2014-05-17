@@ -49,8 +49,8 @@ class FunctionArgumentComponent
     value
   }
 
-  override def createGetStatement(): GetStatementLayout = {
-    value = new GetStatementLayout
+  override def createGetStatement(): GetterLayout = {
+    value = new GetterLayout
     value
   }
 

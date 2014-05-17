@@ -36,9 +36,9 @@ class PrintStatementLayout
     add(view)
   }
 
-  override def createGetStatement(): GetStatementLayout = {
+  override def createGetStatement(): GetterLayout = {
     removePrintValueView()
-    val view = new GetStatementLayout
+    val view = new GetterLayout
     printValue = Some(view)
     add(view)
   }

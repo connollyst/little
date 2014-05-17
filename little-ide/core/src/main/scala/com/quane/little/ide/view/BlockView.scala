@@ -8,9 +8,9 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
 
   def addConditional(index: Int): ConditionalView
 
-  def addGetStatement(): GetStatementView
+  def addGetStatement(): GetterView
 
-  def addGetStatement(index: Int): GetStatementView
+  def addGetStatement(index: Int): GetterView
 
   def addSetStatement(): SetStatementView
 

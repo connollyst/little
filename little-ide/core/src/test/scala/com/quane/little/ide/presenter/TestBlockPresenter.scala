@@ -65,26 +65,26 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
     "add get statement to view" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addGetStatement()).thenReturn(new MockGetStatementView)
-      presenter.add(new GetStatement("x"))
+      when(view.addGetStatement()).thenReturn(new MockGetterView)
+      presenter.add(new Getter("x"))
       verify(view).addGetStatement()
     }
 
     "add get statement to presenter" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addGetStatement()).thenReturn(new MockGetStatementView)
-      presenter.add(new GetStatement("x"))
+      when(view.addGetStatement()).thenReturn(new MockGetterView)
+      presenter.add(new Getter("x"))
       presenter.steps.size should be(1)
-      presenter.steps(0).getClass should be(classOf[GetterPresenter[_ <: GetStatementView]])
+      presenter.steps(0).getClass should be(classOf[GetterPresenter[_ <: GetterView]])
     }
 
     "initialize get statement when added" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addGetStatement()).thenReturn(new MockGetStatementView)
-      val getPresenter = mock[GetterPresenter[GetStatementView]]
-      val statement = new GetStatement("x")
+      when(view.addGetStatement()).thenReturn(new MockGetterView)
+      val getPresenter = mock[GetterPresenter[GetterView]]
+      val statement = new Getter("x")
       presenter.add(statement)
       // TODO test isn't applicable as presenter comes from factory
       verify(getPresenter).initialize(statement)

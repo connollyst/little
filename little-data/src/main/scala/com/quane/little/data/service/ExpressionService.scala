@@ -72,7 +72,7 @@ object ExpressionFactory {
 
   def create(id: String): Expression = {
     id match {
-      case ExpressionService.Get => new GetStatement("")
+      case ExpressionService.Get => new Getter("")
       case ExpressionService.Conditional => new Conditional(new Evaluation(Value(1), Equals, Value(1)))
       case _ => throw new IllegalAccessException("No expression '" + id + "'")
     }

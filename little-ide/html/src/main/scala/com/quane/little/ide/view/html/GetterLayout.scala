@@ -1,11 +1,11 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.GetStatementView
+import com.quane.little.ide.view.GetterView
 import com.vaadin.ui.{TextField, HorizontalLayout}
 import com.vaadin.event.FieldEvents.{TextChangeEvent, TextChangeListener}
 import com.quane.vaadin.scala.VaadinMixin
 
-object GetStatementLayout {
+object GetterLayout {
   val Style = "l-get"
   val StyleValue = Style + "-value"
 }
@@ -14,16 +14,16 @@ object GetStatementLayout {
   *
   * @author Sean Connolly
   */
-class GetStatementLayout
+class GetterLayout
   extends HorizontalLayout
-  with GetStatementView
+  with GetterView
   with RemovableComponent
   with VaadinMixin {
 
   private val nameField = createNameField()
 
-  setStyleNames(ExpressionLayout.Style, GetStatementLayout.Style)
-  nameField.setStyleName(GetStatementLayout.StyleValue)
+  setStyleNames(ExpressionLayout.Style, GetterLayout.Style)
+  nameField.setStyleName(GetterLayout.StyleValue)
 
   addComponent(nameField)
 
