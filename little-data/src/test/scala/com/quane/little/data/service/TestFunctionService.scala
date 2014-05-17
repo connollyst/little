@@ -5,7 +5,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import com.quane.little.language.FunctionDefinition
-import com.quane.little.data.model.FunctionCategory
+import com.quane.little.data.model.CodeSubcategory
 import com.quane.little.data.{DataBindingModule, EmbeddedMongoDB}
 import com.mongodb.casbah.MongoClient
 import com.escalatesoft.subcut.inject.{Injectable, NewBindingModule}
@@ -35,7 +35,7 @@ class TestFunctionService extends FlatSpec with ShouldMatchers with EmbeddedMong
 
   "FunctionService" should "detect existing function" in {
     val name = "MyFunction"
-    functions.insert(userOne, FunctionCategory.Misc, new FunctionDefinition(name))
+    functions.insert(userOne, CodeSubcategory.Misc, new FunctionDefinition(name))
     val exists = functions.exists(userOne, name)
     exists should be(right = true)
   }
@@ -46,7 +46,7 @@ class TestFunctionService extends FlatSpec with ShouldMatchers with EmbeddedMong
   }
   it should "not detect other user's existing function" in {
     val name = "HisFunction"
-    functions.insert(userTwo, FunctionCategory.Misc, new FunctionDefinition(name))
+    functions.insert(userTwo, CodeSubcategory.Misc, new FunctionDefinition(name))
     val exists = functions.exists(userOne, name)
     exists should be(right = false)
   }

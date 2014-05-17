@@ -5,6 +5,8 @@ import com.quane.little.language._
 import scala.collection.immutable
 import com.quane.little.language.data.Value
 import com.quane.little.language.math.{Multiplication, Division, Subtraction, Addition}
+import com.quane.little.data.model.CodeSubcategory
+import com.quane.little.data.model.CodeSubcategory.CodeSubcategory
 
 object ExpressionService {
 
@@ -24,7 +26,6 @@ object ExpressionService {
     Multiplication,
     Division
   )
-
   val Names = immutable.Map[String, String](
     Get -> "get",
     Conditional -> "if/else",
@@ -33,7 +34,14 @@ object ExpressionService {
     Multiplication -> "*",
     Division -> "/"
   )
-
+  val Categories = immutable.Map[String, CodeSubcategory](
+    Get -> CodeSubcategory.Basic,
+    Conditional -> CodeSubcategory.Basic,
+    Addition -> CodeSubcategory.Math,
+    Subtraction -> CodeSubcategory.Math,
+    Multiplication -> CodeSubcategory.Math,
+    Division -> CodeSubcategory.Math
+  )
 }
 
 trait ExpressionService {
@@ -73,7 +81,12 @@ class BasicExpressionService extends ExpressionService {
   override def find(id: RecordId): PrimitiveRecord = createRecord(id)
 
   override def createRecord(id: RecordId): PrimitiveRecord =
-    new PrimitiveRecord(id, ExpressionService.Names(id.oid), ExpressionFactory.create(id.oid))
+    new PrimitiveRecord(
+      id,
+      ExpressionService.Categories(id.oid),
+      ExpressionService.Names(id.oid),
+      ExpressionFactory.create(id.oid)
+    )
 
 }
 

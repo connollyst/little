@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
-import com.quane.little.data.model.{CodeCategory, FunctionCategory}
+import com.quane.little.data.model.{CodeCategory, CodeSubcategory}
 import com.quane.little.data.service.{ExpressionService, StatementService, FunctionService}
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 
@@ -20,19 +20,17 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
 
   view.registerViewPresenter(this)
 
-  view.createToolboxTab(CodeCategory.Expression)
-  view.createToolboxTab(CodeCategory.Statement)
-  FunctionCategory.values foreach {
+  CodeSubcategory.values foreach {
     category =>
-      view.createToolboxTab(CodeCategory.Function, category)
+      view.createToolboxTab(category)
   }
   expressionService.all foreach {
     expression =>
-      view.createToolboxItem(CodeCategory.Expression, expression.name, expression.id)
+      view.createToolboxItem(CodeCategory.Expression, expression.category, expression.name, expression.id)
   }
   statementService.all foreach {
     statement =>
-      view.createToolboxItem(CodeCategory.Statement, statement.name, statement.id)
+      view.createToolboxItem(CodeCategory.Statement, statement.category, statement.name, statement.id)
   }
   functionService.findByUser("connollyst") foreach {
     function =>

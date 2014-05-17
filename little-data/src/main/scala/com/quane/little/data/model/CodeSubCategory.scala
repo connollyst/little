@@ -13,7 +13,7 @@ object CodeCategory extends Enumeration {
   *
   * @author Sean Connolly
   */
-object FunctionCategory extends Enumeration {
-  type FunctionCategory = Value
+object CodeSubcategory extends Enumeration {
+  type CodeSubcategory = Value
   val Basic, Sensing, Motion, Math, Misc = Value
 }

@@ -22,7 +22,7 @@ class TestFunctionRecord extends WordSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
   val userId = new RecordId("UserRecordID")
-  val category = FunctionCategory.Misc
+  val category = CodeSubcategory.Misc
   val definitionBlank = new FunctionDefinition("BlankFunction")
   val functionBlankId = new RecordId("BlankFunctionDefinitionRecordID")
   val functionBlank = new FunctionRecord(userId, category, definitionBlank)
