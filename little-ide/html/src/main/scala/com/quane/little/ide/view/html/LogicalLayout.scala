@@ -1,28 +1,28 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.MathView
-import com.vaadin.ui._
-import com.quane.vaadin.scala.EnumerationComboBox
+import com.vaadin.ui.{Alignment, HorizontalLayout}
+import com.quane.little.ide.view.LogicalView
 import com.quane.little.data.model.RecordId
-import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddExpressionCommand, IDECommandExecutor}
-import com.quane.little.language.math.BasicMathOperation
-import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
+import com.quane.little.ide.presenter.command.{AddExpressionCommand, AddFunctionReferenceCommand, IDECommandExecutor}
+import com.quane.little.language.EvaluationOperator
+import com.quane.little.language.EvaluationOperator.EvaluationOperator
+import com.quane.vaadin.scala.EnumerationComboBox
 
-object MathLayout {
-  val Style = "l-math"
+object LogicalLayout {
+  val Style = "l-logical"
 }
 
-/** An HTML layout view representing a [[com.quane.little.language.math.Math]]
+/** An HTML layout view representing a [[com.quane.little.language.LogicalOperation]]
   * expression.
   *
   * @author Sean Connolly
   */
-class MathLayout
+class LogicalLayout
   extends HorizontalLayout
-  with MathView
+  with LogicalView
   with HasLeftAndRightExpressions {
 
-  val operatorField = new EnumerationComboBox(BasicMathOperation)
+  val operatorField = new EnumerationComboBox(EvaluationOperator)
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
@@ -32,7 +32,7 @@ class MathLayout
   add(operatorField)
   add(rightValueWrapper)
 
-  override def setOperation(operation: BasicMathOperation) = operatorField.setValue(operation.toString)
+  override def setOperation(operation: EvaluationOperator) = operatorField.setValue(operation.toString)
 
   override def requestSetExpression(codeId: RecordId, index: Int) =
     IDECommandExecutor.execute(

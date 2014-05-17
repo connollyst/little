@@ -38,6 +38,9 @@ class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingMo
   private[presenter] def condition_=(condition: Expression): Unit = {
     val presenter =
       condition match {
+        case l: LogicalOperation =>
+          val stepView = view.createLogicalCondition()
+          presenterFactory.createLogicalPresenter(stepView).initialize(l)
         case m: BasicMath =>
           val stepView = view.createMathCondition()
           presenterFactory.createMathPresenter(stepView).initialize(m)

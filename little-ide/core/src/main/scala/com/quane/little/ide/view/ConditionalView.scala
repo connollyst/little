@@ -6,6 +6,8 @@ trait ConditionalView extends ExpressionView[ConditionalViewPresenter] {
 
   def createGetterCondition(): GetterView
 
+  def createLogicalCondition(): LogicalView
+
   def createConditionalCondition(): ConditionalView
 
   def createFunctionReferenceCondition(): FunctionReferenceView

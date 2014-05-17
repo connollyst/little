@@ -70,6 +70,8 @@ class ConditionalLayout
 
   override def createGetterCondition() = thenHeader.createGetterCondition()
 
+  override def createLogicalCondition() = thenHeader.createLogicalCondition()
+
   override def createConditionalCondition() = thenHeader.createConditionalCondition()
 
   override def createFunctionReferenceCondition() = thenHeader.createFunctionReferenceCondition()
@@ -91,6 +93,8 @@ class ConditionalHeader extends HorizontalLayout with VaadinMixin {
   def createMathCondition() = setCondition(new MathLayout)
 
   def createGetterCondition() = setCondition(new GetterLayout)
+
+  def createLogicalCondition() = setCondition(new LogicalLayout)
 
   def createConditionalCondition() = setCondition(new ConditionalLayout)
 

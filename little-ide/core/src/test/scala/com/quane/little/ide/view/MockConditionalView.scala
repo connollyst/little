@@ -11,6 +11,8 @@ class MockConditionalView(implicit val bindingModule: BindingModule)
   extends ConditionalView
   with MockView {
 
+  def createLogicalCondition() = new MockLogicalView
+
   def createMathCondition() = new MockMathView
 
   def createGetterCondition() = new MockGetterView
