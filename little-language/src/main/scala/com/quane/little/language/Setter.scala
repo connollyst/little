@@ -3,7 +3,7 @@ package com.quane.little.language
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
 
-/** Factory for [[Setter]] instances. **/
+/** Factory for [[com.quane.little.language.Setter]] instances. **/
 object Setter {
 
   def apply(name: String, value: String): Setter = new Setter(name, Value(value))
