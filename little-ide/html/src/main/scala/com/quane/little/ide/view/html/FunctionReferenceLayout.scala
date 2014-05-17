@@ -19,7 +19,7 @@ class FunctionReferenceLayout
   with RemovableComponent
   with VaadinMixin {
 
-  private val nameLabel = new Label("???")
+  private val nameLabel = new Label("")
   private val args = mutable.ListBuffer[FunctionArgumentComponent]()
 
   setSpacing(true)
