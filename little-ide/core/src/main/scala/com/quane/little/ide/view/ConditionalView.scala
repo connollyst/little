@@ -2,11 +2,17 @@ package com.quane.little.ide.view
 
 trait ConditionalView extends ExpressionView[ConditionalViewPresenter] {
 
-  def setConditionStatement(): BlockView
+  def createMathCondition(): MathView
 
-  def setThenBlock(): BlockView
+  def createGetterCondition(): GetterView
 
-  def setElseBlock(): BlockView
+  def createConditionalCondition(): ConditionalView
+
+  def createFunctionReferenceCondition(): FunctionReferenceView
+
+  def createThenBlock(): BlockView
+
+  def createElseBlock(): BlockView
 
 }
 

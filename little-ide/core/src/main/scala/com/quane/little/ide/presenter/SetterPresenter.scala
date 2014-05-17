@@ -45,7 +45,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
 
   private[presenter] def value: ExpressionViewPresenter =
     _value match {
-      case e: Some[ExpressionViewPresenter] => e.get
+      case Some(e) => e
       case _ => throw new IllegalAccessException("No value expression set.")
     }
 

@@ -30,6 +30,7 @@ class FunctionArgumentComponent
   private def value[T <: ExpressionView[_] with RemovableComponent]: T =
     valueComponent match {
       case Some(v) => v match {
+        // TODO generic type T is lost to erasure, check Manifest instead
         case t: T => t
         case _ =>
           throw new IllegalAccessException("Didn't expect value component to be a" + v.getClass)

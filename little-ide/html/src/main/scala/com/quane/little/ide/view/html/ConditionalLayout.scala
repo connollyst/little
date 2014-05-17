@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{BlockView, ConditionalView}
+import com.quane.little.ide.view._
 import com.vaadin.ui._
 import com.vaadin.server.Sizeable
 import com.quane.vaadin.scala.VaadinMixin
@@ -21,26 +21,23 @@ object ConditionalLayout {
 class ConditionalLayout
   extends VerticalLayout
   with ConditionalView
-  with RemovableComponent {
+  with RemovableComponent
+  with VaadinMixin {
 
+  private val thenHeader = new ConditionalHeader
   private val thenBlockWrapper = new CssLayout with VaadinMixin
   private val elseBlockWrapper = new CssLayout with VaadinMixin
 
   setSpacing(false)
   setStyleName(ConditionalLayout.Style)
-  addComponent(createThenHeader())
-  addComponent(createThenBody())
-  addComponent(createElseHeader())
-  addComponent(createElseBody())
-  addComponent(createFooter())
 
-  private def createThenHeader(): Component = {
-    new ConditionalHeader("if <TODO>")
-  }
+  add(thenHeader)
+  add(createThenBody())
+  add(createElseHeader())
+  add(createElseBody())
+  add(createFooter())
 
-  private def createThenBody(): Component = {
-    createBody(thenBlockWrapper)
-  }
+  private def createThenBody(): Component = createBody(thenBlockWrapper)
 
   private def createElseHeader(): Component = {
     val elseHeader = new Label
@@ -49,9 +46,7 @@ class ConditionalLayout
     elseHeader
   }
 
-  private def createElseBody(): Component = {
-    createBody(elseBlockWrapper)
-  }
+  private def createElseBody(): Component = createBody(elseBlockWrapper)
 
   private def createBody(blockWrapper: Component): Component = {
     val body = new HorizontalLayout
@@ -71,24 +66,39 @@ class ConditionalLayout
     footer
   }
 
-  // TODO this expression layout belongs in the header
-  override def setConditionStatement() = new BlockLayout
+  override def createMathCondition() = thenHeader.createMathCondition()
 
-  override def setThenBlock(): BlockView =
-    thenBlockWrapper.removeAll().add(new BlockLayout)
+  override def createGetterCondition() = thenHeader.createGetterCondition()
 
-  override def setElseBlock(): BlockView =
-    elseBlockWrapper.removeAll().add(new BlockLayout)
+  override def createConditionalCondition() = thenHeader.createConditionalCondition()
+
+  override def createFunctionReferenceCondition() = thenHeader.createFunctionReferenceCondition()
+
+  override def createThenBlock() = thenBlockWrapper.removeAll().add(new BlockLayout)
+
+  override def createElseBlock() = elseBlockWrapper.removeAll().add(new BlockLayout)
 
 }
 
-class ConditionalHeader(condition: String) extends HorizontalLayout {
+class ConditionalHeader extends HorizontalLayout with VaadinMixin {
 
-  def this() {
-    this("<condition>")
-  }
+  private val conditionWrapper = new CssLayout with VaadinMixin
 
   setStyleName(ConditionalLayout.StyleIfHead)
-  addComponent(new Label(condition))
+
+  add(conditionWrapper)
+
+  def createMathCondition() = setCondition(new MathLayout)
+
+  def createGetterCondition() = setCondition(new GetterLayout)
+
+  def createConditionalCondition() = setCondition(new ConditionalLayout)
+
+  def createFunctionReferenceCondition() = setCondition(new FunctionReferenceLayout)
+
+  def setCondition[V <: ExpressionView[_] with Component](view: V): V = {
+    conditionWrapper.removeAll()
+    conditionWrapper.add(view)
+  }
 
 }

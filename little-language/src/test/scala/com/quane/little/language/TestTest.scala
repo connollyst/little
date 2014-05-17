@@ -4,6 +4,7 @@ import com.quane.little.language.data.Value
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import org.junit.Assert._
 
 @RunWith(classOf[JUnitRunner])
 class TestTest extends FunSuite {
@@ -13,30 +14,40 @@ class TestTest extends FunSuite {
 
   // Test AND
   test("t && t == t") {
-    assert(new Test(t, AND, t).isTrue(new Runtime))
+    assertEvaluatesToTrue(new LogicalOperation(t, EvaluationOperator.And, t))
   }
   test("f && f == f") {
-    assert(new Test(f, AND, f).isFalse(new Runtime))
+    assertEvaluatesToFalse(new LogicalOperation(f, EvaluationOperator.And, f))
   }
   test("t && f == f") {
-    assert(new Test(t, AND, f).isFalse(new Runtime))
+    assertEvaluatesToFalse(new LogicalOperation(t, EvaluationOperator.And, f))
   }
   test("f && t == f") {
-    assert(new Test(f, AND, t).isFalse(new Runtime))
+    assertEvaluatesToFalse(new LogicalOperation(f, EvaluationOperator.And, t))
   }
 
   // Test OR
   test("t || t == f") {
-    assert(new Test(t, OR, t).isTrue(new Runtime))
+    assertEvaluatesToTrue(new LogicalOperation(t, EvaluationOperator.Or, t))
   }
   test("f || f == t") {
-    assert(new Test(f, OR, f).isFalse(new Runtime))
+    assertEvaluatesToFalse(new LogicalOperation(f, EvaluationOperator.Or, f))
   }
   test("t || f == t") {
-    assert(new Test(t, OR, f).isTrue(new Runtime))
+    assertEvaluatesToTrue(new LogicalOperation(t, EvaluationOperator.Or, f))
   }
   test("f || t == t") {
-    assert(new Test(f, OR, t).isTrue(new Runtime))
+    assertEvaluatesToTrue(new LogicalOperation(f, EvaluationOperator.Or, t))
+  }
+
+  private def assertEvaluatesToTrue(operation: LogicalOperation) = {
+    val result = operation.evaluate(new Runtime)
+    assertTrue(result.asBool)
+  }
+
+  private def assertEvaluatesToFalse(operation: LogicalOperation) = {
+    val result = operation.evaluate(new Runtime)
+    assertFalse(result.asBool)
   }
 
 }

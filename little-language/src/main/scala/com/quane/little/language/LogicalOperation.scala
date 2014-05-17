@@ -2,6 +2,8 @@ package com.quane.little.language
 
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
+import com.quane.little.language.EvaluationOperator.EvaluationOperator
+import com.sun.tools.corba.se.idl.constExpr.GreaterThan
 
 /** A logical evaluation of the relationship between two arguments expressions.
   *
@@ -9,9 +11,9 @@ import com.google.common.base.Objects
   * @param operator the evaluation operator
   * @param right the right operand
   */
-class Evaluation(val left: Expression,
-                 val operator: EvaluationOperator,
-                 val right: Expression)
+class LogicalOperation(val left: Expression,
+                       val operator: EvaluationOperator,
+                       val right: Expression)
   extends Expression {
 
   override def evaluate(scope: Scope): Value = {
@@ -19,18 +21,20 @@ class Evaluation(val left: Expression,
     val r = right.evaluate(scope)
     Value(
       operator match {
-        case Equals => l equals r
-        case NotEquals => !(l equals r)
-        case LessThan => (l compare r) < 0
-        case GreaterThan => (l compare r) > 0
+        case EvaluationOperator.Equals => l equals r
+        case EvaluationOperator.NotEquals => !(l equals r)
+        case EvaluationOperator.LessThan => (l compare r) < 0
+        case EvaluationOperator.GreaterThan => (l compare r) > 0
+        case EvaluationOperator.And => l.asBool && r.asBool
+        case EvaluationOperator.Or => l.asBool || r.asBool
       }
     )
   }
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Evaluation]
+  def canEqual(other: Any): Boolean = other.isInstanceOf[LogicalOperation]
 
   override def equals(other: Any): Boolean = other match {
-    case that: Evaluation =>
+    case that: LogicalOperation =>
       (that canEqual this) &&
         left == that.left &&
         operator == that.operator &&
@@ -52,14 +56,7 @@ class Evaluation(val left: Expression,
 
 }
 
-sealed trait EvaluationOperator
-
-object Equals extends EvaluationOperator
-
-object NotEquals extends EvaluationOperator
-
-object LessThan extends EvaluationOperator
-
-object GreaterThan extends EvaluationOperator
-
-// TODO Contains..
+object EvaluationOperator extends Enumeration {
+  type EvaluationOperator = Value
+  val Equals, NotEquals, LessThan, GreaterThan, And, Or = Value
+}

@@ -15,19 +15,19 @@ trait SetterView extends StatementView[SetterViewPresenter] {
     */
   def setName(name: String): Unit
 
-  /** Replace the existing assignment value expression with a [[ValueView]].
+  /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.ValueView]].
     *
     * @return the view which was create
     */
   def createValueStatement(): ValueView
 
-  /** Replace the existing assignment value expression with a [[GetterView]].
+  /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.GetterView]].
     *
     * @return the view which was create
     */
   def createGetStatement(): GetterView
 
-  /** Replace the existing assignment value expression with a [[FunctionReferenceView]].
+  /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
     *
     * @return the view which was create
     */
@@ -35,7 +35,7 @@ trait SetterView extends StatementView[SetterViewPresenter] {
 
 }
 
-/** The presenter backing the [[SetterView]].
+/** The presenter backing the [[com.quane.little.ide.view.SetterView]].
   *
   * @author Sean Connolly
   */

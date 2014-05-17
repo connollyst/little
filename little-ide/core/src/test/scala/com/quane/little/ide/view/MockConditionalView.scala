@@ -11,11 +11,16 @@ class MockConditionalView(implicit val bindingModule: BindingModule)
   extends ConditionalView
   with MockView {
 
-  // TODO is there a better mock condition here?
-  def setConditionStatement() = new MockBlockView
+  def createMathCondition() = new MockMathView
 
-  def setThenBlock() = new MockBlockView
+  def createGetterCondition() = new MockGetterView
 
-  def setElseBlock() = new MockBlockView
+  def createConditionalCondition() = new MockConditionalView()
+
+  def createFunctionReferenceCondition() = new MockFunctionReferenceView
+
+  def createThenBlock() = new MockBlockView
+
+  def createElseBlock() = new MockBlockView
 
 }
