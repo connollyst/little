@@ -1,12 +1,15 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ExpressionViewPresenter, MathViewPresenter, MathView}
-import com.quane.little.language.math.{AdditionOperation, BasicMathOperation, BasicMath}
+import com.quane.little.language.math.BasicMath
 import com.quane.little.data.model.RecordId
 import com.quane.little.language.{FunctionReference, Getter, Expression}
 import com.quane.little.language.data.Value
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.data.service.{FunctionService, ExpressionService}
+import com.quane.little.language.math.BasicMathOperation
+import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
+import scala.Some
 
 /**
  *
@@ -22,14 +25,14 @@ class MathPresenter[V <: MathView](view: V)(implicit val bindingModule: BindingM
   private val functionService = inject[FunctionService]
 
   private var _left: Option[ExpressionViewPresenter] = None
-  private var _operation: BasicMathOperation = new AdditionOperation
+  private var _operation = BasicMathOperation.Add
   private var _right: Option[ExpressionViewPresenter] = None
 
   view.registerViewPresenter(this)
   view.setOperation(_operation)
 
   private[presenter] def initialize(math: BasicMath): MathPresenter[V] = {
-    // operation = math.operation
+    operation = math.operation
     left = math.l
     right = math.r
     this

@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.language.math.BasicMathOperation
+import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
 
 class MockMathView extends MathView with MockView {
 

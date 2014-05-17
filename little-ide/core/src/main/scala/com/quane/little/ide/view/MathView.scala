@@ -1,7 +1,7 @@
 package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter.{PresenterAcceptsFunctionReference, PresenterAcceptsExpression}
-import com.quane.little.language.math.BasicMathOperation
+import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
 
 /** The view for a [[com.quane.little.language.math.Math]] statement displayed in
   * the IDE.
@@ -40,13 +40,13 @@ trait MathView extends ExpressionView[MathViewPresenter] {
     */
   def createRightGetStatement(): GetterView
 
-  /** Replace the existing left value expression with a [[FunctionReferenceView]].
+  /** Replace the existing left value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
     *
     * @return the view which was create
     */
   def createLeftFunctionReference(): FunctionReferenceView
 
-  /** Replace the existing right value expression with a [[FunctionReferenceView]].
+  /** Replace the existing right value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
     *
     * @return the view which was create
     */
@@ -54,7 +54,7 @@ trait MathView extends ExpressionView[MathViewPresenter] {
 
 }
 
-/** The presenter backing the [[MathView]].
+/** The presenter backing the [[com.quane.little.ide.view.MathView]].
   *
   * @author Sean Connolly
   */

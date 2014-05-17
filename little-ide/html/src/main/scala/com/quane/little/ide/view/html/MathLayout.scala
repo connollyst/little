@@ -2,7 +2,6 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, MathView}
 import com.vaadin.ui.{Alignment, Label, CssLayout, HorizontalLayout}
-import com.quane.little.language.math.BasicMathOperation
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
@@ -10,6 +9,7 @@ import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.data.model.CodeCategory
 import com.quane.little.ide.presenter.command._
 import com.quane.little.ide.view.html.MathLayout._
+import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
 
 object MathLayout {
   val Style = "l-math"
@@ -28,6 +28,7 @@ class MathLayout
   with VaadinMixin {
 
   private val leftValueWrapper = new DroppableTarget(new CssLayout, new MathDropHandler(this, LeftIndex))
+  private val operatorLabel = new Label("?")
   private val rightValueWrapper = new DroppableTarget(new CssLayout, new MathDropHandler(this, RightIndex))
 
   setSpacing(true)
@@ -35,10 +36,10 @@ class MathLayout
   setStyleNames(ExpressionLayout.Style, MathLayout.Style)
 
   add(leftValueWrapper)
-  add(new Label("?"))
+  add(operatorLabel)
   add(rightValueWrapper)
 
-  override def setOperation(operation: BasicMathOperation): Unit = {}
+  override def setOperation(operation: BasicMathOperation) = operatorLabel.setValue(operation.toString)
 
   override def createLeftGetStatement() = setLeftValueComponent(new GetterLayout)
 
