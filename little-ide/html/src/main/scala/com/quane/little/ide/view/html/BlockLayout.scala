@@ -9,10 +9,14 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
 import com.quane.little.data.model.{CodeCategory, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
+import scala.collection.JavaConversions._
+import com.vaadin.server.Sizeable
 
 object BlockLayout {
   val DefaultIndex = -1
   val Style = "l-block"
+  val StyleStep = Style + "-step"
+  val StyleStepBorder = StyleStep + "-border"
   val StyleSeparator = Style + "-separator"
 }
 
@@ -60,8 +64,12 @@ class BlockLayout
     if (index < 0) {
       addComponent(component)
     } else {
-      super.addComponent(component, index)
+      super.addComponent(new BlockStep(component), index)
       super.addComponent(new BlockStepSeparator(this), index + 1)
+    }
+    components foreach {
+      case step: BlockStep => step.border.index = stepIndex(step) + 1
+      case _ => // do nothing
     }
     component
   }
@@ -115,6 +123,21 @@ class BlockLayout
 
 }
 
+private class BlockStep(step: Component)
+  extends HorizontalLayout
+  with VaadinMixin {
+
+  setSizeFull()
+  setStyleName(StyleStep)
+
+  val border = new BlockStepBorder
+
+  add(border)
+  add(step)
+  setExpandRatio(step, 1f)
+
+}
+
 private class BlockStepSeparator(block: BlockLayout)
   extends HorizontalLayout
   with VaadinMixin {
@@ -122,10 +145,15 @@ private class BlockStepSeparator(block: BlockLayout)
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
   setDefaultComponentAlignment(Alignment.MIDDLE_CENTER)
-  add(new ExpressionMenu(block, index))
+
+  val border = new BlockStepBorder
+  val menu = new ExpressionMenu(block, index)
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
   dndTarget.setSizeFull()
+
+  add(border)
+  add(menu)
   add(dndTarget)
   setExpandRatio(dndTarget, 1f)
 
@@ -145,6 +173,28 @@ private class BlockStepSeparator(block: BlockLayout)
     )
 
   def index: Int = block.stepIndex(this)
+
+}
+
+private class BlockStepBorder extends VerticalLayout {
+
+  private var _index: Int = 0
+  private val indexLabel = new Label(if (_index > 0) {
+    _index.toString
+  } else {
+    ""
+  })
+
+  def index: Int = _index
+
+  def index_=(i: Int) = {
+    _index = i
+    indexLabel.setValue(_index.toString)
+  }
+
+  setWidth(25, Sizeable.Unit.PIXELS)
+  setStyleName(StyleStepBorder)
+  addComponent(indexLabel)
 
 }
 
