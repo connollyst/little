@@ -14,25 +14,25 @@ class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSuga
 
   "SetStatementView" should "accept get" in {
     val get = expression(ExpressionService.Get)
-    val view = mock[SetStatementView]
+    val view = mock[SetterView]
     val accepts = PresenterAccepts.accepts(view, get)
     accepts should be(right = true)
   }
   it should "not accept set" in {
     val set = statement(StatementService.Set)
-    val view = mock[SetStatementView]
+    val view = mock[SetterView]
     val accepts = PresenterAccepts.accepts(view, set)
     accepts should be(right = false)
   }
   it should "not accept print" in {
     val print = statement(StatementService.Print)
-    val view = mock[SetStatementView]
+    val view = mock[SetterView]
     val accepts = PresenterAccepts.accepts(view, print)
     accepts should be(right = false)
   }
   it should "not accept conditional" in {
     val conditional = expression(ExpressionService.Conditional)
-    val view = mock[SetStatementView]
+    val view = mock[SetterView]
     val accepts = PresenterAccepts.accepts(view, conditional)
     accepts should be(right = true)
   }

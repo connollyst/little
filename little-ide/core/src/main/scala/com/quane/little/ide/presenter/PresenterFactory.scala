@@ -25,7 +25,7 @@ class PresenterFactory(implicit val bindingModule: BindingModule) {
 
   def createValuePresenter(view: ValueView) = new ValuePresenter(view)
 
-  def createSetPresenter(view: SetStatementView) = new SetStatementPresenter(view)
+  def createSetPresenter(view: SetterView) = new SetterPresenter(view)
 
   def createGetPresenter(view: GetterView) = new GetterPresenter(view)
 

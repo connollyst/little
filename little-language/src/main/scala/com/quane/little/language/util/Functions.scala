@@ -16,23 +16,23 @@ object Functions {
 
   def move: FunctionDefinition = {
     val fun = new FunctionDefinition("move").addParam("speed")
-    fun.addStep(new SetStatement(Operable.SPEED, new Getter("speed")))
+    fun.addStep(new Setter(Operable.SPEED, new Getter("speed")))
   }
 
   def stop: FunctionDefinition = {
     val fun = new FunctionDefinition("stop")
-    fun.addStep(new SetStatement(Operable.SPEED, Value(0)))
+    fun.addStep(new Setter(Operable.SPEED, Value(0)))
   }
 
   def turn: FunctionDefinition = {
     val fun = new FunctionDefinition("turn").addParam("direction")
-    fun.addStep(new SetStatement(Operable.DIRECTION, new Getter("direction")))
+    fun.addStep(new Setter(Operable.DIRECTION, new Getter("direction")))
   }
 
   def turnRandom: Block = {
     val min = Value(1)
     val max = Value(360)
-    val setter = new SetStatement(Operable.DIRECTION, new RandomNumber(min, max))
+    val setter = new Setter(Operable.DIRECTION, new RandomNumber(min, max))
     val randomFun = new Block
     randomFun.addStep(setter)
   }
@@ -42,7 +42,7 @@ object Functions {
     val getCurrentDir = new Getter(Operable.DIRECTION)
     val dirChange = new Getter("degrees")
     val getNewDirection = new Addition(getCurrentDir, dirChange)
-    val setNewDirection = new SetStatement(Operable.DIRECTION, getNewDirection)
+    val setNewDirection = new Setter(Operable.DIRECTION, getNewDirection)
     relativelyFun.addStep(setNewDirection)
   }
 
@@ -59,8 +59,8 @@ object Functions {
     val turnSouthIfNorth = new Conditional(isNorth).addStep(turnSouth)
     fun.addStep(turnSouthIfNorth)
     // Step #2: Remember _Home_ is _Here_
-    fun.addStep(new SetStatement("HomeX", myX))
-    fun.addStep(new SetStatement("HomeY", myY))
+    fun.addStep(new Setter("HomeX", myX))
+    fun.addStep(new Setter("HomeY", myY))
     // Step #3: Set speed to 10
     fun.addStep(new FunctionReference("move").addArg("speed", Value(10)))
   }
@@ -72,7 +72,7 @@ object Functions {
 
   def pointToward(x: Expression, y: Expression): Block = {
     val fun = new Block
-    fun.addStep(new SetStatement(Operable.DIRECTION, getAngleTo(x, y)))
+    fun.addStep(new Setter(Operable.DIRECTION, getAngleTo(x, y)))
   }
 
   def getAngleTo(x: Expression, y: Expression): Block = {
@@ -90,10 +90,10 @@ object Functions {
     val radians = new ArcTan2(deltaY, deltaX)
     val calculateAngleStep = new Division(new Multiplication(radians, Value(180)), Value(scala.math.Pi))
     // Save the angle to memory
-    val saveAngleStep = new SetStatement(anglePointer, calculateAngleStep)
+    val saveAngleStep = new Setter(anglePointer, calculateAngleStep)
     // Check if the angle is too small
     val tooSmallChecker = new Evaluation(new Getter(anglePointer), LessThan, Value(0))
-    val cleanerFunction = new SetStatement(anglePointer, new Addition(new Getter(anglePointer), Value(360)))
+    val cleanerFunction = new Setter(anglePointer, new Addition(new Getter(anglePointer), Value(360)))
     val tooSmallCleaner = new Conditional(tooSmallChecker).addStep(cleanerFunction)
     // Build the function
     angleFunction += calculateAngleStep

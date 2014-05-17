@@ -1,12 +1,12 @@
 package com.quane.little.ide.view
 
-/** An implementation of [[com.quane.little.ide.view.SetStatementView]] for
+/** An implementation of [[com.quane.little.ide.view.SetterView]] for
   * testing purposes.
   *
   * @author Sean Connolly
   */
-class MockSetStatementView
-  extends SetStatementView
+class MockSetterView
+  extends SetterView
   with MockView {
 
   override def setName(name: String) = Unit

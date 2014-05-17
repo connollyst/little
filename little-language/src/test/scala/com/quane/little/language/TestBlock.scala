@@ -26,8 +26,8 @@ class TestBlock extends FlatSpec with ShouldMatchers {
   it should "store and fetch values accurately" in {
     val snapshot = new ScopeSnapshot
     val block = new Block
-    block.addStep(SetStatement("Obj1", "A"))
-    block.addStep(SetStatement("Obj2", "B"))
+    block.addStep(Setter("Obj1", "A"))
+    block.addStep(Setter("Obj2", "B"))
     block.addStep(snapshot)
     block.evaluate(new Runtime)
     val obj1 = snapshot.scope.fetch("Obj1")
@@ -44,9 +44,9 @@ class TestBlock extends FlatSpec with ShouldMatchers {
   it should "update values accurately" in {
     val snapshot = new ScopeSnapshot
     val block = new Block
-    block.addStep(new SetStatement("Obj1", Value("A")))
-    block.addStep(new SetStatement("Obj2", Value("B")))
-    block.addStep(new SetStatement("Obj1", new Getter("Obj2")))
+    block.addStep(new Setter("Obj1", Value("A")))
+    block.addStep(new Setter("Obj2", Value("B")))
+    block.addStep(new Setter("Obj1", new Getter("Obj2")))
     block.addStep(snapshot)
     block.evaluate(new Runtime)
     val obj1 = snapshot.scope.fetch("Obj1")
@@ -58,7 +58,7 @@ class TestBlock extends FlatSpec with ShouldMatchers {
   }
   it should "return value from get expression" in {
     val block = new Block
-    block.addStep(new SetStatement("Obj", Value("A")))
+    block.addStep(new Setter("Obj", Value("A")))
     block.addStep(new Getter("Obj"))
     val obj = block.evaluate(new Runtime)
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
@@ -71,7 +71,7 @@ class TestBlock extends FlatSpec with ShouldMatchers {
   }
   it should "return nada when ending in a set statement" in {
     val block = new Block
-    block.addStep(new SetStatement("Obj", Value("A")))
+    block.addStep(new Setter("Obj", Value("A")))
     val obj = block.evaluate(new Runtime)
     assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }

@@ -13,23 +13,23 @@ class TestStatement
   /* Set Statement */
 
   test("test setter with value") {
-    val set = new SetStatement("Obj", Value("A"))
+    val set = new Setter("Obj", Value("A"))
     assertSet("Obj", "A", set)
   }
   test("test setter with string") {
-    val set = SetStatement("Obj", "A")
+    val set = Setter("Obj", "A")
     assertSet("Obj", "A", set)
   }
   test("test setter with boolean") {
-    val set = SetStatement("Obj", true)
+    val set = Setter("Obj", true)
     assertSet("Obj", true, set)
   }
   test("test setter with int") {
-    val set = SetStatement("Obj", 1)
+    val set = Setter("Obj", 1)
     assertSet("Obj", 1, set)
   }
   test("test setter with double") {
-    val set = SetStatement("Obj", 1.0)
+    val set = Setter("Obj", 1.0)
     assertSet("Obj", 1.0, set)
   }
 
@@ -46,7 +46,7 @@ class TestStatement
 
 object TestStatement {
 
-  private def assertSet(name: String, value: Any, set: SetStatement) = {
+  private def assertSet(name: String, value: Any, set: Setter) = {
     val snapshot = new ScopeSnapshot
     val block = new Block
     block += set

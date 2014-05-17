@@ -1,12 +1,12 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{ExpressionView, SetStatementView}
+import com.quane.little.ide.view.{ExpressionView, SetterView}
 import com.vaadin.ui.{TextField, HorizontalLayout, Label}
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.quane.vaadin.scala.VaadinMixin
 import scala.Some
 
-object SetStatementLayout {
+object SetterLayout {
   val Style = "l-set"
 }
 
@@ -14,16 +14,16 @@ object SetStatementLayout {
   *
   * @author Sean Connolly
   */
-class SetStatementLayout
+class SetterLayout
   extends HorizontalLayout
-  with SetStatementView
+  with SetterView
   with RemovableComponent
   with VaadinMixin {
 
   private val nameField = createNameTextField()
   private var valueComponent: Option[ExpressionView[_] with RemovableComponent] = None
 
-  setStyleNames(ExpressionLayout.Style, SetStatementLayout.Style)
+  setStyleNames(ExpressionLayout.Style, SetterLayout.Style)
   setSpacing(true)
 
   addComponent(nameField)

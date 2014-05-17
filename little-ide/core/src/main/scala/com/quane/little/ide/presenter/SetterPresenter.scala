@@ -1,18 +1,18 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ExpressionViewPresenter, SetStatementViewPresenter, SetStatementView}
+import com.quane.little.ide.view.{ExpressionViewPresenter, SetterViewPresenter, SetterView}
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.language.{FunctionReference, SetStatement, Expression, Getter}
+import com.quane.little.language.{FunctionReference, Setter, Expression, Getter}
 import com.quane.little.language.data.Value
 
-/** Presenter for views representing a [[com.quane.little.language.SetStatement]].
+/** Presenter for views representing a [[com.quane.little.language.Setter]].
   *
   * @author Sean Connolly
   */
-class SetStatementPresenter[V <: SetStatementView](view: V)(implicit val bindingModule: BindingModule)
-  extends SetStatementViewPresenter
+class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: BindingModule)
+  extends SetterViewPresenter
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
@@ -30,7 +30,7 @@ class SetStatementPresenter[V <: SetStatementView](view: V)(implicit val binding
     * @param s the set statement
     * @return the initialized presenter
     */
-  private[presenter] def initialize(s: SetStatement): SetStatementPresenter[V] = {
+  private[presenter] def initialize(s: Setter): SetterPresenter[V] = {
     name = s.name
     value = s.value
     this
@@ -78,6 +78,6 @@ class SetStatementPresenter[V <: SetStatementView](view: V)(implicit val binding
   override def requestAddFunctionReference(id: RecordId, index: Int) =
     value = functionService.findReference(id)
 
-  override def compile(): SetStatement = new SetStatement(_name, value.compile())
+  override def compile(): Setter = new Setter(_name, value.compile())
 
 }

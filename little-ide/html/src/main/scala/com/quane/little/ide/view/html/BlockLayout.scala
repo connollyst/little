@@ -44,7 +44,7 @@ class BlockLayout
 
   override def addSetStatement() = addSetStatement(DefaultIndex)
 
-  override def addSetStatement(index: Int) = add(new SetStatementLayout(), componentIndex(index))
+  override def addSetStatement(index: Int) = add(new SetterLayout(), componentIndex(index))
 
   override def addPrintStatement() = addPrintStatement(DefaultIndex)
 

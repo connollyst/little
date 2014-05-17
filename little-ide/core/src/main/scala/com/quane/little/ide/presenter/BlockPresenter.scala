@@ -46,7 +46,7 @@ class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: Bindin
   private[presenter] def add(step: EvaluableCode, index: Int): Unit = {
     val presenter =
       step match {
-        case s: SetStatement =>
+        case s: Setter =>
           val stepView = view.addSetStatement(index)
           presenterFactory.createSetPresenter(stepView).initialize(s)
         case g: Getter =>

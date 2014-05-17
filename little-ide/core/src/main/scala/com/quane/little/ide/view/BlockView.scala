@@ -12,9 +12,9 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
 
   def addGetStatement(index: Int): GetterView
 
-  def addSetStatement(): SetStatementView
+  def addSetStatement(): SetterView
 
-  def addSetStatement(index: Int): SetStatementView
+  def addSetStatement(index: Int): SetterView
 
   def addPrintStatement(): PrintStatementView
 

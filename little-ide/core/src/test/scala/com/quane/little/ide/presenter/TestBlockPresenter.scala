@@ -37,26 +37,26 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
     "add set statement to view" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addSetStatement()).thenReturn(new MockSetStatementView)
-      presenter.add(new SetStatement("x", Value("y")))
+      when(view.addSetStatement()).thenReturn(new MockSetterView)
+      presenter.add(new Setter("x", Value("y")))
       verify(view).addSetStatement()
     }
 
     "add set statement to presenter" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addSetStatement()).thenReturn(new MockSetStatementView)
-      presenter.add(new SetStatement("x", Value("y")))
+      when(view.addSetStatement()).thenReturn(new MockSetterView)
+      presenter.add(new Setter("x", Value("y")))
       presenter.steps.size should be(1)
-      presenter.steps(0).getClass should be(classOf[SetStatementPresenter[_ <: SetStatementView]])
+      presenter.steps(0).getClass should be(classOf[SetterPresenter[_ <: SetterView]])
     }
 
     "initialize set statement when added" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addSetStatement()).thenReturn(new MockSetStatementView)
-      val setPresenter = mock[SetStatementPresenter[SetStatementView]]
-      val statement = new SetStatement("x", Value("y"))
+      when(view.addSetStatement()).thenReturn(new MockSetterView)
+      val setPresenter = mock[SetterPresenter[SetterView]]
+      val statement = new Setter("x", Value("y"))
       presenter.add(statement)
       // TODO test isn't applicable as presenter comes from factory
       verify(setPresenter).initialize(statement)

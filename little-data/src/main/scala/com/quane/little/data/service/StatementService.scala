@@ -72,7 +72,7 @@ object StatementFactory {
 
   def create(id: String): EvaluableCode = {
     id match {
-      case StatementService.Set => new SetStatement("", Value(""))
+      case StatementService.Set => new Setter("", Value(""))
       case StatementService.Print => new PrintStatement(Value(""))
       case _ => throw new IllegalAccessException("No statement '" + id + "'")
     }

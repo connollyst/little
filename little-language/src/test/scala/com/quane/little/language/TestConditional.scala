@@ -35,8 +35,8 @@ class TestConditional extends FlatSpec with ShouldMatchers {
     val name = "InnerScopeVariable"
     val then = new Block
     val otherwise = new Block
-    then += new SetStatement(name, thenValue)
-    otherwise += new SetStatement(name, otherwiseValue)
+    then += new Setter(name, thenValue)
+    otherwise += new Setter(name, otherwiseValue)
     val snapshot = evaluateConditional(positive, then, otherwise)
     snapshot.scope.contains(name) should be(false)
   }
@@ -44,8 +44,8 @@ class TestConditional extends FlatSpec with ShouldMatchers {
     val name = "InnerScopeVariable"
     val then = new Block
     val otherwise = new Block
-    then += new SetStatement(name, thenValue)
-    otherwise += new SetStatement(name, otherwiseValue)
+    then += new Setter(name, thenValue)
+    otherwise += new Setter(name, otherwiseValue)
     val snapshot = evaluateConditional(negative, then, otherwise)
     snapshot.scope.contains(name) should be(false)
   }
@@ -61,8 +61,8 @@ class TestConditional extends FlatSpec with ShouldMatchers {
   private def evaluateConditional(test: Expression): ScopeSnapshot = {
     val then = new Block
     val otherwise = new Block
-    then += new SetStatement(name, thenValue)
-    otherwise += new SetStatement(name, otherwiseValue)
+    then += new Setter(name, thenValue)
+    otherwise += new Setter(name, otherwiseValue)
     evaluateConditional(test, then, otherwise)
   }
 
@@ -80,7 +80,7 @@ class TestConditional extends FlatSpec with ShouldMatchers {
   private def evaluateConditional(test: Expression, then: Block, otherwise: Block): ScopeSnapshot = {
     val snapshot = new ScopeSnapshot
     val block = new Block
-    block += new SetStatement(name, defaultValue)
+    block += new Setter(name, defaultValue)
     block += new Conditional(test, then, otherwise)
     block += snapshot
     block.evaluate(new Runtime)
