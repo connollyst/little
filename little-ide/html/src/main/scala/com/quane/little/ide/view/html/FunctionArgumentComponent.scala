@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
-import com.vaadin.ui.{Label, HorizontalLayout}
+import com.vaadin.ui.{Alignment, Label, HorizontalLayout}
 
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
@@ -19,8 +19,9 @@ class FunctionArgumentComponent
   private val nameLabel = new Label()
   private var valueComponent: Option[ExpressionView[_] with RemovableComponent] = None
 
-  setStyleName(FunctionArgumentComponent.Style)
   setSpacing(true)
+  setDefaultComponentAlignment(Alignment.MIDDLE_CENTER)
+  setStyleName(FunctionArgumentComponent.Style)
 
   addComponent(nameLabel)
   addComponent(new Label("="))
