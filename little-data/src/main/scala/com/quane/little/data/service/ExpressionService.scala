@@ -4,7 +4,7 @@ import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.language._
 import scala.collection.immutable
 import com.quane.little.language.data.Value
-import com.quane.little.language.math.Addition
+import com.quane.little.language.math.{Multiplication, Division, Subtraction, Addition}
 
 object ExpressionService {
 
@@ -12,17 +12,26 @@ object ExpressionService {
   val Conditional = "_little_conditional"
   // Math Expressions
   val Addition = "_little_math_addition"
+  val Subtraction = "_little_math_subtraction"
+  val Multiplication = "_little_math_multiplication"
+  val Division = "_little_math_division"
 
   val All = immutable.List[String](
     Get,
     Conditional,
-    Addition
+    Addition,
+    Subtraction,
+    Multiplication,
+    Division
   )
 
   val Names = immutable.Map[String, String](
     Get -> "get",
     Conditional -> "if/else",
-    Addition -> "+"
+    Addition -> "+",
+    Subtraction -> "-",
+    Multiplication -> "*",
+    Division -> "/"
   )
 
 }
@@ -80,6 +89,9 @@ object ExpressionFactory {
       case ExpressionService.Get => new Getter("")
       case ExpressionService.Conditional => new Conditional(new Evaluation(Value(1), Equals, Value(1)))
       case ExpressionService.Addition => new Addition(Value(1), Value(1))
+      case ExpressionService.Subtraction => new Subtraction(Value(1), Value(1))
+      case ExpressionService.Multiplication => new Multiplication(Value(1), Value(1))
+      case ExpressionService.Division => new Division(Value(1), Value(1))
       case _ => throw new IllegalAccessException("No expression '" + id + "'")
     }
   }
