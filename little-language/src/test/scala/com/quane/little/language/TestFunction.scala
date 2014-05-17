@@ -16,7 +16,7 @@ class TestFunction extends FlatSpec with ShouldMatchers {
 
   "FunctionReference" should "return nada from print statement" in {
     val fun = new FunctionDefinition("myFun")
-    fun.addStep(new PrintStatement(Value("A")))
+    fun.addStep(new Printer(Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference("myFun")

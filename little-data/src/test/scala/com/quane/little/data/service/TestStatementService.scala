@@ -4,7 +4,7 @@ import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.FlatSpec
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.{Setter, PrintStatement}
+import com.quane.little.language.{Setter, Printer}
 import com.quane.little.data.model.RecordId
 import com.quane.little.language.data.Value
 
@@ -30,7 +30,7 @@ class TestStatementService extends FlatSpec with ShouldMatchers {
   it should "find print statement" in {
     val id = new RecordId(StatementService.Print)
     val primitive = service.findStatement(id)
-    primitive should be(new PrintStatement(Value("")))
+    primitive should be(new Printer(Value("")))
   }
 
 

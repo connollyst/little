@@ -1,7 +1,7 @@
 package com.quane.little.data.repo
 
 import com.quane.little.data.model.{FunctionCategory, RecordId, FunctionRecord}
-import com.quane.little.language.{PrintStatement, FunctionDefinition}
+import com.quane.little.language.{Printer, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -63,8 +63,8 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
     originalDefinition.addParam("Param 2")
     updatedDefinition.addParam("Param A")
     updatedDefinition.addParam("Param B")
-    originalDefinition.addStep(new PrintStatement(Value("Hello Original World!")))
-    updatedDefinition.addStep(new PrintStatement(Value("Hello Updated World!")))
+    originalDefinition.addStep(new Printer(Value("Hello Original World!")))
+    updatedDefinition.addStep(new Printer(Value("Hello Updated World!")))
     val repo = functionRepository
     val function = new FunctionRecord(ownerId, FunctionCategory.Misc, originalDefinition)
     repo.insert(function)

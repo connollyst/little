@@ -16,8 +16,8 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   implicit val bindingModule = IDEBindingModule
 
   test("test value is set") {
-    val view = new MockPrintStatementView
-    val presenter = new PrintStatementPresenter(view)
+    val view = new MockPrinterView
+    val presenter = new PrinterPresenter(view)
     presenter.value = Value("text")
     val valuePresenter = presenter.value.asInstanceOf[ValuePresenter[_ <: ValueView]]
     assert(valuePresenter.value == "text")
@@ -26,14 +26,14 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   /* Test View interaction */
 
   test("test listener registered") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
     verify(view).registerViewPresenter(presenter)
   }
 
   test("test value expression propagates to view") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
     val valueView = mock[ValueView]
     val valuePresenter = mock[ValuePresenter[ValueView]]
     when(view.createValueStatement()).thenReturn(valueView)
@@ -45,8 +45,8 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   }
 
   test("test get expression propagates to view") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
     val getterView = mock[GetterView]
     val getterPresenter = mock[GetterPresenter[GetterView]]
     when(view.createGetStatement()).thenReturn(getterView)
@@ -58,8 +58,8 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   }
 
   test("test function reference expression propagates to view") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
     val functionView = mock[FunctionReferenceView]
     val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when(view.createFunctionReference()).thenReturn(functionView)
@@ -73,8 +73,8 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   /* Test setting expressions for the value */
 
   test("should error when adding unknown expression") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
     intercept[IllegalArgumentException] {
       presenter.value = mock[Expression]
     }
@@ -95,8 +95,8 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   }
 
   private def assertCompiledValue(value: Expression) = {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
     when(view.createGetStatement()).thenReturn(new MockGetterView)
     when(view.createValueStatement()).thenReturn(new MockValueView)
     when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
@@ -106,8 +106,8 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   }
 
   test("should error if compiled without expression") {
-    val view = mock[PrintStatementView]
-    val presenter = new PrintStatementPresenter(view)
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
     intercept[IllegalAccessException] {
       presenter.compile()
     }

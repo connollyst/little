@@ -67,7 +67,7 @@ object Functions {
 
   def printDirection: FunctionDefinition = {
     val fun = new FunctionDefinition("print dir")
-    fun.addStep(new PrintStatement(new Getter(Operable.DIRECTION)))
+    fun.addStep(new Printer(new Getter(Operable.DIRECTION)))
   }
 
   def pointToward(x: Expression, y: Expression): Block = {

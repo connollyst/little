@@ -1,7 +1,7 @@
 package com.quane.little.tools.json
 
 import com.quane.little.language.data.Value
-import com.quane.little.language.{PrintStatement, Expression, FunctionDefinition, FunctionReference}
+import com.quane.little.language.{Printer, Expression, FunctionDefinition, FunctionReference}
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
@@ -65,7 +65,7 @@ class TestFunctionDeserialization
     val fun = deserialize[FunctionDefinition](name)
     fun should be(
       new FunctionDefinition("sayHello")
-        .addStep(new PrintStatement(Value("Hello World!"))
+        .addStep(new Printer(Value("Hello World!"))
         )
     )
   }

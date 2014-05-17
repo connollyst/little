@@ -48,7 +48,7 @@ class BlockLayout
 
   override def addPrintStatement() = addPrintStatement(DefaultIndex)
 
-  override def addPrintStatement(index: Int) = add(new PrintStatementLayout(), componentIndex(index))
+  override def addPrintStatement(index: Int) = add(new PrinterLayout(), componentIndex(index))
 
   override def addFunctionReference() = addFunctionReference(DefaultIndex)
 

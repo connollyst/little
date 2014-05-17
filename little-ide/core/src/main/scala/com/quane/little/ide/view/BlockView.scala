@@ -16,9 +16,9 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
 
   def addSetStatement(index: Int): SetterView
 
-  def addPrintStatement(): PrintStatementView
+  def addPrintStatement(): PrinterView
 
-  def addPrintStatement(index: Int): PrintStatementView
+  def addPrintStatement(index: Int): PrinterView
 
   def addFunctionReference(): FunctionReferenceView
 

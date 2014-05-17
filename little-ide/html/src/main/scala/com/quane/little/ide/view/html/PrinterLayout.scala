@@ -1,10 +1,10 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{ExpressionView, PrintStatementView}
+import com.quane.little.ide.view.{ExpressionView, PrinterView}
 import com.vaadin.ui.{Alignment, HorizontalLayout, Label}
 import com.quane.vaadin.scala.VaadinMixin
 
-object PrintStatementLayout {
+object PrinterLayout {
   val Style = "l-print"
 }
 
@@ -12,9 +12,9 @@ object PrintStatementLayout {
   *
   * @author Sean Connolly
   */
-class PrintStatementLayout
+class PrinterLayout
   extends HorizontalLayout
-  with PrintStatementView
+  with PrinterView
   with RemovableComponent
   with VaadinMixin {
 
@@ -23,7 +23,7 @@ class PrintStatementLayout
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
-  setStyleNames(ExpressionLayout.Style, PrintStatementLayout.Style)
+  setStyleNames(ExpressionLayout.Style, PrinterLayout.Style)
 
   addComponent(printLabel)
   addComponent(new ExpressionMenu(this))

@@ -1,20 +1,20 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ExpressionViewPresenter, PrintStatementViewPresenter, PrintStatementView}
+import com.quane.little.ide.view.{ExpressionViewPresenter, PrinterViewPresenter, PrinterView}
 import scala._
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.language.{FunctionReference, Getter, Expression, PrintStatement}
+import com.quane.little.language.{FunctionReference, Getter, Expression, Printer}
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
 
-/** Presenter for views representing a [[com.quane.little.language.PrintStatement]].
+/** Presenter for views representing a [[com.quane.little.language.Printer]].
   *
   * @author Sean Connolly
   */
-class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bindingModule: BindingModule)
-  extends PrintStatementViewPresenter
+class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: BindingModule)
+  extends PrinterViewPresenter
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
@@ -30,7 +30,7 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bin
     * @param p the print expression
     * @return the initialized presenter
     */
-  private[presenter] def initialize(p: PrintStatement): PrintStatementPresenter[V] = {
+  private[presenter] def initialize(p: Printer): PrinterPresenter[V] = {
     value = p.value
     this
   }
@@ -70,11 +70,11 @@ class PrintStatementPresenter[V <: PrintStatementView](view: V)(implicit val bin
   override def requestAddFunctionReference(id: RecordId, index: Int) =
     value = functionService.findReference(id)
 
-  /** Compile to a [[com.quane.little.language.PrintStatement]].
+  /** Compile to a [[com.quane.little.language.Printer]].
     *
     * @return the compiled print statement
     */
-  override def compile(): PrintStatement = new PrintStatement(value.compile())
+  override def compile(): Printer = new Printer(value.compile())
 
   override def toString =
     Objects.toStringHelper(getClass)

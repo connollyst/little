@@ -65,7 +65,7 @@ class TestBlock extends FlatSpec with ShouldMatchers {
   }
   it should "return nada when ending in a print statement" in {
     val block = new Block
-    block.addStep(new PrintStatement(Value("A")))
+    block.addStep(new Printer(Value("A")))
     val obj = block.evaluate(new Runtime)
     assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }

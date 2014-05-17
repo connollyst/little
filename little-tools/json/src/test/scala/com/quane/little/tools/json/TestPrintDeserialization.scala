@@ -5,9 +5,9 @@ import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.PrintStatement
+import com.quane.little.language.Printer
 
-/** Test of [[PrintStatement]] deserialization from JSON.
+/** Test of [[Printer]] deserialization from JSON.
   *
   * @author Sean Connolly
   */
@@ -16,24 +16,24 @@ class TestPrintDeserialization
   extends FlatSpec with ShouldMatchers with JSONTestUtilities {
 
   "json deserializer" should "deserialize print string" in {
-    val print = deserialize[PrintStatement]("print_string")
-    print should be(new PrintStatement(new Text("abc")))
+    val print = deserialize[Printer]("print_string")
+    print should be(new Printer(new Text("abc")))
   }
   it should "deserialize print integer" in {
-    val print = deserialize[PrintStatement]("print_integer")
-    print should be(new PrintStatement(new NumberSimple(1234)))
+    val print = deserialize[Printer]("print_integer")
+    print should be(new Printer(new NumberSimple(1234)))
   }
   it should "deserialize print double" in {
-    val print = deserialize[PrintStatement]("print_double")
-    print should be(new PrintStatement(new NumberDecimal(12.34)))
+    val print = deserialize[Printer]("print_double")
+    print should be(new Printer(new NumberDecimal(12.34)))
   }
   it should "deserialize print boolean true" in {
-    val print = deserialize[PrintStatement]("print_boolean_true")
-    print should be(new PrintStatement(new Bool(true)))
+    val print = deserialize[Printer]("print_boolean_true")
+    print should be(new Printer(new Bool(true)))
   }
   it should "deserialize print boolean false" in {
-    val print = deserialize[PrintStatement]("print_boolean_false")
-    print should be(new PrintStatement(new Bool(false)))
+    val print = deserialize[Printer]("print_boolean_false")
+    print should be(new Printer(new Bool(false)))
   }
 
 }

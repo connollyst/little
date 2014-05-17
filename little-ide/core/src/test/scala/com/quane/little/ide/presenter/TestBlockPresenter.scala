@@ -93,26 +93,26 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
     "add print statement to view" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addPrintStatement()).thenReturn(new MockPrintStatementView)
-      presenter.add(new PrintStatement(Value("x")))
+      when(view.addPrintStatement()).thenReturn(new MockPrinterView)
+      presenter.add(new Printer(Value("x")))
       verify(view).addPrintStatement()
     }
 
     "add print statement to presenter" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addPrintStatement()).thenReturn(new MockPrintStatementView)
-      presenter.add(new PrintStatement(Value("x")))
+      when(view.addPrintStatement()).thenReturn(new MockPrinterView)
+      presenter.add(new Printer(Value("x")))
       presenter.steps.size should be(1)
-      presenter.steps(0).getClass should be(classOf[PrintStatementPresenter[_ <: PrintStatementView]])
+      presenter.steps(0).getClass should be(classOf[PrinterPresenter[_ <: PrinterView]])
     }
 
     "initialize print statement when added" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
-      when(view.addPrintStatement()).thenReturn(new MockPrintStatementView)
-      val printPresenter = mock[PrintStatementPresenter[PrintStatementView]]
-      val statement = new PrintStatement(Value("x"))
+      when(view.addPrintStatement()).thenReturn(new MockPrinterView)
+      val printPresenter = mock[PrinterPresenter[PrinterView]]
+      val statement = new Printer(Value("x"))
       presenter.add(statement)
       // TODO test isn't applicable as presenter comes from factory
       verify(printPresenter).initialize(statement)

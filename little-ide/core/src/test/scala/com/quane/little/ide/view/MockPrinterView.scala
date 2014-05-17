@@ -1,12 +1,12 @@
 package com.quane.little.ide.view
 
-/** An implementation of [[com.quane.little.ide.view.PrintStatementView]] for
+/** An implementation of [[com.quane.little.ide.view.PrinterView]] for
   * testing purposes.
   *
   * @author Sean Connolly
   */
-class MockPrintStatementView
-  extends PrintStatementView
+class MockPrinterView
+  extends PrinterView
   with MockView {
 
   override def createValueStatement() = new MockValueView
