@@ -4,8 +4,10 @@ import com.quane.little.ide.view.{ExpressionViewPresenter, SetterViewPresenter, 
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.language.{FunctionReference, Setter, Expression, Getter}
+import com.quane.little.language._
 import com.quane.little.language.data.Value
+import com.quane.little.language.math.BasicMath
+import scala.Some
 
 /** Presenter for views representing a [[com.quane.little.language.Setter]].
   *
@@ -57,9 +59,13 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     val presenter =
       e match {
         case g: Getter =>
-          presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
+          presenterFactory.createGetPresenter(view.createGetExpression()).initialize(g)
+        case m: BasicMath =>
+          presenterFactory.createMathPresenter(view.createMathExpression()).initialize(m)
+        case l: Logic =>
+          presenterFactory.createLogicPresenter(view.createLogicExpression()).initialize(l)
         case v: Value =>
-          presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)
+          presenterFactory.createValuePresenter(view.createValueExpression()).initialize(v)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)
@@ -73,7 +79,6 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
   override def requestAddExpression(id: RecordId, index: Int) =
     value = expressionService.findExpression(id)
 
-  // TODO skip if already this function reference
   override def requestAddFunctionReference(id: RecordId, index: Int) =
     value = functionService.findReference(id)
 

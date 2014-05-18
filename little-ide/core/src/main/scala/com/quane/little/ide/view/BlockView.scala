@@ -4,31 +4,31 @@ import com.quane.little.ide.presenter._
 
 trait BlockView extends ExpressionView[BlockViewPresenter] {
 
-  def addMath(): MathView
+  def addMathStep(): MathView
 
   def addMathStep(index: Int): MathView
 
-  def addConditional(): ConditionalView
-
-  def addConditionalStep(index: Int): ConditionalView
-
-  def addLogicalOperation(): LogicView
+  def addLogicStep(): LogicView
 
   def addLogicStep(index: Int): LogicView
 
-  def addGetStatement(): GetterView
+  def addGetStep(): GetterView
 
   def addGetStep(index: Int): GetterView
 
-  def addSetStatement(): SetterView
+  def addSetStep(): SetterView
 
   def addSetStep(index: Int): SetterView
 
-  def addPrintStatement(): PrinterView
+  def addPrintStep(): PrinterView
 
   def addPrintStep(index: Int): PrinterView
 
-  def addFunctionReference(): FunctionReferenceView
+  def addConditionalStep(): ConditionalView
+
+  def addConditionalStep(index: Int): ConditionalView
+
+  def addFunctionStep(): FunctionReferenceView
 
   def addFunctionStep(index: Int): FunctionReferenceView
 

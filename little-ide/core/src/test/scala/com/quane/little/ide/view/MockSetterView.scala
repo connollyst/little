@@ -11,9 +11,9 @@ class MockSetterView
 
   override def setName(name: String) = Unit
 
-  override def createValueStatement() = new MockValueView
+  override def createValueExpression() = new MockValueView
 
-  override def createGetStatement() = new MockGetterView
+  override def createGetExpression() = new MockGetterView
 
   override def createFunctionReference() = new MockFunctionReferenceView
 
