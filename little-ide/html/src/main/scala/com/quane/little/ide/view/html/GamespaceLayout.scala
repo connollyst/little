@@ -8,6 +8,7 @@ import com.quane.little.data.model.RecordId
 import com.quane.vaadin.scala.VaadinMixin
 import com.porotype.iconfont.FontAwesome.{IconVariant, Icon}
 import com.vaadin.ui.Button.{ClickEvent, ClickListener}
+import com.vaadin.shared.ui.window.WindowMode
 
 object GamespaceLayout {
   val Style = "l-gamespace"
@@ -46,10 +47,37 @@ class GamespaceLayout
   * @author Sean connolly
   */
 class GamespaceViewer
-  extends BrowserFrame("", GamespaceLayout.GameURL) {
+  extends VerticalLayout
+  with VaadinMixin {
+
+  private val browser = add(new BrowserFrame("", GamespaceLayout.GameURL))
+  private val controls = add(new HorizontalLayout)
 
   setSizeFull()
+  setExpandRatio(browser, 1)
   setStyleName(GamespaceLayout.StyleView)
+
+  browser.setSizeFull()
+  controls.setWidth(100, Sizeable.Unit.PERCENTAGE)
+  controls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT)
+  controls.addComponent(new FullscreenButton)
+
+  private class FullscreenButton extends NativeButton {
+    setCaption(Icon.fullscreen.variant(IconVariant.SIZE_LARGE))
+    setHtmlContentAllowed(true)
+    addClickListener(new ClickListener {
+      override def buttonClick(event: ClickEvent) = {
+        val browser = new BrowserFrame("", GamespaceLayout.GameURL)
+        browser.setSizeFull()
+        val window = new Window("little", browser)
+        window.setWidth(80, Sizeable.Unit.PERCENTAGE)
+        window.setHeight(80, Sizeable.Unit.PERCENTAGE)
+        window.setWindowMode(WindowMode.MAXIMIZED)
+        window.center()
+        getUI.addWindow(window)
+      }
+    })
+  }
 
 }
 
