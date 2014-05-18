@@ -54,6 +54,10 @@ class BlockLayout
 
   override def addPrintStatement(index: Int) = add(new PrinterLayout(), componentIndex(index))
 
+  override def addLogicalOperation() = addLogicalOperation(DefaultIndex)
+
+  override def addLogicalOperation(index: Int) = add(new LogicalLayout, componentIndex(index))
+
   override def addFunctionReference() = addFunctionReference(DefaultIndex)
 
   override def addFunctionReference(index: Int) = add(new FunctionReferenceLayout(), componentIndex(index))
@@ -161,11 +165,6 @@ private class BlockStepSeparator(block: BlockLayout)
   add(dndTarget)
   setExpandRatio(dndTarget, 1f)
 
-  def addFunction(functionId: RecordId) =
-    IDECommandExecutor.execute(
-      new AddFunctionReferenceCommand(block.presenter, functionId, index)
-    )
-
   def addExpression(primitiveId: RecordId) =
     IDECommandExecutor.execute(
       new AddExpressionCommand(block.presenter, primitiveId, index)
@@ -174,6 +173,11 @@ private class BlockStepSeparator(block: BlockLayout)
   def addStatement(primitiveId: RecordId) =
     IDECommandExecutor.execute(
       new AddStatementCommand(block.presenter, primitiveId, index)
+    )
+
+  def addFunction(functionId: RecordId) =
+    IDECommandExecutor.execute(
+      new AddFunctionReferenceCommand(block.presenter, functionId, index)
     )
 
   def index: Int = block.stepIndex(this)
@@ -196,9 +200,13 @@ private class BlockStepBorder extends VerticalLayout {
     indexLabel.setValue(_index.toString)
   }
 
-  setWidth(25, Sizeable.Unit.PIXELS)
   setStyleName(StyleStepBorder)
+  setWidth(25, Sizeable.Unit.PIXELS)
+  setHeight(100, Sizeable.Unit.PERCENTAGE)
+  setDefaultComponentAlignment(Alignment.TOP_CENTER)
+
   addComponent(indexLabel)
+  setExpandRatio(indexLabel, 1)
 
 }
 

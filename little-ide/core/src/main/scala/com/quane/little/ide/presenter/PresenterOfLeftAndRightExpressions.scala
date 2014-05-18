@@ -1,10 +1,12 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{FunctionReferenceView, ValueView, GetterView, ExpressionViewPresenter}
-import com.quane.little.language.{FunctionReference, Getter, Expression}
+import com.quane.little.ide.view._
+import com.quane.little.language.{LogicalOperation, FunctionReference, Getter, Expression}
 import com.quane.little.language.data.Value
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{FunctionService, ExpressionService}
+import com.quane.little.language.math.BasicMath
+import scala.Some
 
 /** A trait shared by presenters who manage two expressions, one being thought
   * of as the 'left' and the other as the 'right'. For example, a mathematical
@@ -12,7 +14,7 @@ import com.quane.little.data.service.{FunctionService, ExpressionService}
   *
   * @author Sean Connolly
   */
-trait HasLeftAndRightExpressions {
+trait PresenterOfLeftAndRightExpressions {
 
   private var _left: Option[ExpressionViewPresenter] = None
   private var _right: Option[ExpressionViewPresenter] = None
@@ -23,15 +25,7 @@ trait HasLeftAndRightExpressions {
 
   protected def functionService: FunctionService
 
-  protected def view: {
-    // TODO move these required functions to a trait
-    def createLeftGetStatement(): GetterView
-    def createRightGetStatement(): GetterView
-    def createLeftValueStatement(): ValueView
-    def createRightValueStatement(): ValueView
-    def createLeftFunctionReference(): FunctionReferenceView
-    def createRightFunctionReference(): FunctionReferenceView
-  }
+  protected def view: ViewOfLeftAndRightExpressions
 
   private[presenter] def left: ExpressionViewPresenter = {
     _left match {
@@ -54,10 +48,14 @@ trait HasLeftAndRightExpressions {
   private[presenter] def left_=(e: Expression): Unit = {
     val presenter =
       e match {
+        case m: BasicMath =>
+          presenterFactory.createMathPresenter(view.createLeftMath()).initialize(m)
         case g: Getter =>
           presenterFactory.createGetPresenter(view.createLeftGetStatement()).initialize(g)
         case v: Value =>
           presenterFactory.createValuePresenter(view.createLeftValueStatement()).initialize(v)
+        case l: LogicalOperation =>
+          presenterFactory.createLogicalPresenter(view.createLeftLogicOperation()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createLeftFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)
@@ -73,10 +71,14 @@ trait HasLeftAndRightExpressions {
   private[presenter] def right_=(e: Expression): Unit = {
     val presenter =
       e match {
+        case m: BasicMath =>
+          presenterFactory.createMathPresenter(view.createRightMath()).initialize(m)
         case g: Getter =>
           presenterFactory.createGetPresenter(view.createRightGetStatement()).initialize(g)
         case v: Value =>
           presenterFactory.createValuePresenter(view.createRightValueStatement()).initialize(v)
+        case l: LogicalOperation =>
+          presenterFactory.createLogicalPresenter(view.createRightLogicOperation()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createRightFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)

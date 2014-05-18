@@ -12,6 +12,10 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
 
   def addConditional(index: Int): ConditionalView
 
+  def addLogicalOperation(): LogicalView
+
+  def addLogicalOperation(index: Int): LogicalView
+
   def addGetStatement(): GetterView
 
   def addGetStatement(index: Int): GetterView

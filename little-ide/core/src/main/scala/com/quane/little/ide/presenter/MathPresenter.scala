@@ -14,7 +14,7 @@ import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
  */
 class MathPresenter[V <: MathView](protected val view: V)(implicit val bindingModule: BindingModule)
   extends MathViewPresenter
-  with HasLeftAndRightExpressions
+  with PresenterOfLeftAndRightExpressions
   with Injectable {
 
   protected val presenterFactory = inject[PresenterFactory]

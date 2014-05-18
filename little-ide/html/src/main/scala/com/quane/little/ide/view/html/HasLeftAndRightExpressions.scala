@@ -2,7 +2,7 @@ package com.quane.little.ide.view.html
 
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
 import com.vaadin.ui.{Component, CssLayout}
-import com.quane.little.ide.view.ExpressionView
+import com.quane.little.ide.view.{ViewOfLeftAndRightExpressions, ExpressionView}
 import com.quane.little.ide.view.html.HasLeftAndRightExpressions._
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
@@ -14,30 +14,41 @@ object HasLeftAndRightExpressions {
   val RightIndex = 1
 }
 
-trait HasLeftAndRightExpressions extends Component with VaadinMixin {
+trait HasLeftAndRightExpressions
+  extends Component
+  with ViewOfLeftAndRightExpressions
+  with VaadinMixin {
 
   val leftValueWrapper = new DroppableTarget(new CssLayout, new LeftAndRightDropHandler(this, LeftIndex))
   val rightValueWrapper = new DroppableTarget(new CssLayout, new LeftAndRightDropHandler(this, RightIndex))
 
-  def createLeftGetStatement() = setLeftValueComponent(new GetterLayout)
+  override def createLeftMath() = setLeftValueComponent(new MathLayout)
 
-  def createRightGetStatement() = setRightValueComponent(new GetterLayout)
+  override def createRightMath() = setRightValueComponent(new MathLayout)
 
-  def createLeftValueStatement() = setLeftValueComponent(new ValueLayout)
+  override def createLeftGetStatement() = setLeftValueComponent(new GetterLayout)
 
-  def createRightValueStatement() = setRightValueComponent(new ValueLayout)
+  override def createRightGetStatement() = setRightValueComponent(new GetterLayout)
 
-  def createLeftFunctionReference() = setLeftValueComponent(new FunctionReferenceLayout)
+  override def createLeftValueStatement() = setLeftValueComponent(new ValueLayout)
 
-  def createRightFunctionReference() = setRightValueComponent(new FunctionReferenceLayout)
+  override def createRightValueStatement() = setRightValueComponent(new ValueLayout)
 
-  def setLeftValueComponent[T <: ExpressionView[_] with RemovableComponent](view: T): T = {
+  override def createLeftLogicOperation() = setLeftValueComponent(new LogicalLayout)
+
+  override def createRightLogicOperation() = setRightValueComponent(new LogicalLayout)
+
+  override def createLeftFunctionReference() = setLeftValueComponent(new FunctionReferenceLayout)
+
+  override def createRightFunctionReference() = setRightValueComponent(new FunctionReferenceLayout)
+
+  def setLeftValueComponent[T <: ExpressionView[_] with Component](view: T): T = {
     leftValueWrapper.component.removeAllComponents()
     leftValueWrapper.component.addComponent(view)
     view
   }
 
-  def setRightValueComponent[T <: ExpressionView[_] with RemovableComponent](view: T): T = {
+  def setRightValueComponent[T <: ExpressionView[_] with Component](view: T): T = {
     rightValueWrapper.component.removeAllComponents()
     rightValueWrapper.component.addComponent(view)
     view
@@ -49,6 +60,14 @@ trait HasLeftAndRightExpressions extends Component with VaadinMixin {
 
 }
 
+/** Handles drops on both the left and right value components. Leftness and
+  * rightness is specified by `index` provided on creation.
+  *
+  * @param view the main view component
+  * @param index the index indicating leftness or rightness
+  * @see [[com.quane.little.ide.view.html.HasLeftAndRightExpressions.LeftIndex]]
+  * @see [[com.quane.little.ide.view.html.HasLeftAndRightExpressions.RightIndex]]
+  */
 private class LeftAndRightDropHandler(view: HasLeftAndRightExpressions, index: Int) extends DropHandler {
 
   override def getAcceptCriterion = AcceptAll.get()

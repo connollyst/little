@@ -9,7 +9,7 @@ import com.quane.little.data.service.{FunctionService, ExpressionService}
 
 class LogicalPresenter[V <: LogicalView](protected val view: V)(implicit val bindingModule: BindingModule)
   extends LogicalViewPresenter
-  with HasLeftAndRightExpressions
+  with PresenterOfLeftAndRightExpressions
   with Injectable {
 
   protected val presenterFactory = inject[PresenterFactory]
@@ -17,6 +17,8 @@ class LogicalPresenter[V <: LogicalView](protected val view: V)(implicit val bin
   protected val functionService = inject[FunctionService]
 
   private var _operation = EvaluationOperator.Equals
+
+  view.registerViewPresenter(this)
 
   private[presenter] def initialize(logical: LogicalOperation): LogicalPresenter[V] = {
     operation = logical.operator

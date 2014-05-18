@@ -59,6 +59,9 @@ class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: Bindin
         case p: Printer =>
           val stepView = view.addPrintStatement(index)
           presenterFactory.createPrintPresenter(stepView).initialize(p)
+        case l: LogicalOperation =>
+          val stepView = view.addLogicalOperation(index)
+          presenterFactory.createLogicalPresenter(stepView).initialize(l)
         case c: Conditional =>
           val stepView = view.addConditional(index)
           presenterFactory.createConditionalPresenter(stepView).initialize(c)

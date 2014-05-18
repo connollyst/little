@@ -11,28 +11,32 @@ class MockBlockView(implicit val bindingModule: BindingModule)
   extends BlockView
   with MockView {
 
-  def addMath(): MathView = new MockMathView
+  override def addMath(): MathView = new MockMathView
 
-  def addMath(index: Int): MathView = new MockMathView
+  override def addMath(index: Int): MathView = new MockMathView
 
-  def addConditional() = new MockConditionalView
+  override def addConditional() = new MockConditionalView
 
-  def addConditional(index: Int) = new MockConditionalView
+  override def addConditional(index: Int) = new MockConditionalView
 
-  def addGetStatement() = new MockGetterView
+  override def addGetStatement() = new MockGetterView
 
-  def addGetStatement(index: Int) = new MockGetterView
+  override def addGetStatement(index: Int) = new MockGetterView
 
-  def addSetStatement() = new MockSetterView
+  override def addSetStatement() = new MockSetterView
 
-  def addSetStatement(index: Int) = new MockSetterView
+  override def addSetStatement(index: Int) = new MockSetterView
 
-  def addPrintStatement() = new MockPrinterView
+  override def addLogicalOperation() = new MockLogicalView
 
-  def addPrintStatement(index: Int) = new MockPrinterView
+  override def addLogicalOperation(index: Int) = new MockLogicalView
 
-  def addFunctionReference() = new MockFunctionReferenceView
+  override def addPrintStatement() = new MockPrinterView
 
-  def addFunctionReference(index: Int) = new MockFunctionReferenceView
+  override def addPrintStatement(index: Int) = new MockPrinterView
+
+  override def addFunctionReference() = new MockFunctionReferenceView
+
+  override def addFunctionReference(index: Int) = new MockFunctionReferenceView
 
 }

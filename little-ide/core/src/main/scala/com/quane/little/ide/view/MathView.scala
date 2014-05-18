@@ -8,49 +8,15 @@ import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
   *
   * @author Sean Connolly
   */
-trait MathView extends ExpressionView[MathViewPresenter] {
+trait MathView
+  extends ExpressionView[MathViewPresenter]
+  with ViewOfLeftAndRightExpressions {
 
   /** Change the math operation in the view.
     *
     * @param operation the new math operation
     */
   def setOperation(operation: BasicMathOperation)
-
-  /** Replace the existing left value expression with a [[com.quane.little.ide.view.ValueView]].
-    *
-    * @return the view which was create
-    */
-  def createLeftValueStatement(): ValueView
-
-  /** Replace the existing right value expression with a [[com.quane.little.ide.view.ValueView]].
-    *
-    * @return the view which was create
-    */
-  def createRightValueStatement(): ValueView
-
-  /** Replace the existing left value expression with a [[com.quane.little.ide.view.GetterView]].
-    *
-    * @return the view which was create
-    */
-  def createLeftGetStatement(): GetterView
-
-  /** Replace the existing right value expression with a [[com.quane.little.ide.view.GetterView]].
-    *
-    * @return the view which was create
-    */
-  def createRightGetStatement(): GetterView
-
-  /** Replace the existing left value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
-    *
-    * @return the view which was create
-    */
-  def createLeftFunctionReference(): FunctionReferenceView
-
-  /** Replace the existing right value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
-    *
-    * @return the view which was create
-    */
-  def createRightFunctionReference(): FunctionReferenceView
 
 }
 
