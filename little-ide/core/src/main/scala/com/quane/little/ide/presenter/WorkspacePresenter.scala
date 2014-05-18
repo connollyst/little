@@ -28,6 +28,10 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)(implicit val bindingModule
     new EventListenerPresenter(view.createEventListener()).initialize(id, listener)
   }
 
-  override def requestAddBlankEventListener(index: Int) = view.createEventListener()
+  override def requestAddBlankFunctionDefinition(index: Int) =
+    new FunctionDefinitionPresenter(view.createFunctionDefinition())
+
+  override def requestAddBlankEventListener(index: Int) =
+    new EventListenerPresenter(view.createEventListener())
 
 }

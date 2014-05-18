@@ -52,8 +52,8 @@ class GamespaceViewer
 
 }
 
-/** Layout containing this user's [[EventListener]] list and controls for
-  * creating and editing them.
+/** Layout containing this user's [[com.quane.little.language.event.EventListener]]
+  * list and controls for creating and editing them.
   *
   * @param view the root gamespace layout
   *
@@ -66,10 +66,18 @@ class GamespaceListenerLayout(view: GamespaceLayout)
   setSpacing(true)
   setStyleName(GamespaceLayout.StyleListeners)
 
-  add(new NativeButton("+", new ClickListener {
-    override def buttonClick(event: ClickEvent) =
-      view.presenter.newGameListener()
-  }))
+  add(new NativeButton("New Listener",
+    new ClickListener {
+      override def buttonClick(event: ClickEvent) =
+        view.presenter.newGameListener()
+    })
+  )
+  add(new NativeButton("New Function",
+    new ClickListener {
+      override def buttonClick(event: ClickEvent) =
+        view.presenter.newFunction()
+    })
+  )
 
   def addGameListener(listener: EventListener, listenerId: RecordId) = {
     val label = new Label(listener.event.toString)

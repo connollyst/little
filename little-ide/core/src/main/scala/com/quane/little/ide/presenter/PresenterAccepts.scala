@@ -39,6 +39,8 @@ trait PresenterAcceptsFunctionDefinition extends PresenterAccepts {
 
   def requestAddFunctionDefinition(id: RecordId, index: Int): Unit
 
+  def requestAddBlankFunctionDefinition(index: Int): Unit
+
 }
 
 trait PresenterAcceptsEventListener extends PresenterAccepts {
