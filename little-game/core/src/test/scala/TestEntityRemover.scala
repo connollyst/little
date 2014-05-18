@@ -33,7 +33,7 @@ class TestEntityRemover
     val remover = new EntityRemover()
     val listener = mock[EntityRemovalListener]
     val entity = mock[Entity]
-    remover.add(listener)
+    remover.register(listener)
     remover.remove(entity)
     remover.cleanAll()
     verify(listener).entityRemoved(entity)
@@ -43,7 +43,7 @@ class TestEntityRemover
     val remover = new EntityRemover()
     val listener = mock[EntityRemovalListener]
     val entity = mock[Entity]
-    remover.add(listener)
+    remover.register(listener)
     remover.remove(entity)
     verify(listener, never).entityRemoved(entity)
   }
@@ -56,9 +56,9 @@ class TestEntityRemover
     val entityA = mock[Entity]
     val entityB = mock[Entity]
     val entityC = mock[Entity]
-    remover.add(listener1)
-    remover.add(listener2)
-    remover.add(listener3)
+    remover.register(listener1)
+    remover.register(listener2)
+    remover.register(listener3)
     remover.remove(entityA)
     remover.remove(entityB)
     remover.remove(entityC)

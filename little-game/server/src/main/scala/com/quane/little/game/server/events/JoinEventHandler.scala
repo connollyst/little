@@ -1,7 +1,6 @@
 package com.quane.little.game.server.events
 
 import com.smartfoxserver.v2.core.ISFSEvent
-import com.smartfoxserver.v2.mmo.Vec3D
 
 /** Handler for when a user joins the room.
   *
@@ -13,8 +12,11 @@ class JoinEventHandler
   override def handleServerEvent(event: ISFSEvent): Unit = {
     val room = getRoom(event)
     val user = getUser(event)
-    val position = new Vec3D(50.0f, 50.0f, 0)
+    val username = user.getName
+    trace(username + " signed in, connecting to game..")
+    val position = extension.game.connect(username)
     getMMOApi.setUserPosition(user, position, room)
+    trace(username + " spawned at " + position)
   }
 
 }

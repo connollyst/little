@@ -34,8 +34,8 @@ class Game(implicit val bindingModule: BindingModule)
   val stateUpdater = new TimedUpdater(30.0, updateState)
   val codeUpdate = new TimedUpdater(0.5, updateCode)
 
-  cleaner.add(this)
-  cleaner.add(engine)
+  cleaner.register(this)
+  cleaner.register(engine)
 
   def initialize() = {
     entityFactory.createMobs(5) foreach {
@@ -76,7 +76,7 @@ class Game(implicit val bindingModule: BindingModule)
     * @return the newly spawned mob
     * @throws IllegalArgumentException if this user already has a mob
     */
-  def spawn(username: String): Mob = {
+  def spawnPlayer(username: String): Mob = {
     if (users.contains(username)) {
       throw new IllegalArgumentException(
         "User '" + username + "' already has a mob: " + users(username)
@@ -86,6 +86,12 @@ class Game(implicit val bindingModule: BindingModule)
     entities += (mob.id -> mob)
     users += (username -> mob.id)
     mob
+  }
+
+  def removePlayer(username: String): Unit = {
+    val mob = entity(users(username))
+    cleaner.remove(mob)
+    users.remove(username)
   }
 
   /** Update the game engine's state.

@@ -13,14 +13,14 @@ class EntityRemover
   private val queue = new ListBuffer[Entity]
   private val listeners = new ListBuffer[EntityRemovalListener]
 
-  def add(listener: EntityRemovalListener) = listeners += listener
+  def register(listener: EntityRemovalListener): Unit = listeners += listener
 
-  def remove(entity: Entity) = {
+  def remove(entity: Entity): Unit = {
     debug("Queued entity to be removed from simulation: " + entity)
     queue += entity
   }
 
-  def cleanAll() {
+  def cleanAll(): Unit = {
     queue foreach (
       entity => {
         debug("Marking as removed: " + entity)
@@ -46,6 +46,6 @@ trait EntityRemovalListener {
     *
     * @param entity the Entity which has been removed
     */
-  def entityRemoved(entity: Entity)
+  def entityRemoved(entity: Entity): Unit
 
 }

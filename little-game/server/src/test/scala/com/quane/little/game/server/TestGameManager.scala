@@ -26,7 +26,7 @@ class TestGameManager extends FlatSpec with ShouldMatchers with MockitoSugar {
     val client = mock[ClientCommunicator]
     val game = mockGame()
     val manager = new GameManager(client, game)
-    verify(game.cleaner).add(manager)
+    verify(game.cleaner).register(manager)
   }
 
   it should "initialize game" in {

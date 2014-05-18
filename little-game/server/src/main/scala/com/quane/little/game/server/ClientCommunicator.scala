@@ -11,20 +11,22 @@ import com.smartfoxserver.v2.mmo.{Vec3D, MMOItem}
   */
 trait ClientCommunicator {
 
-  /** Create the [[MMOItem]] representation of the given [[Entity]].
+  /** Create the [[com.smartfoxserver.v2.mmo.MMOItem]] representation of the
+    * given [[com.quane.little.game.entity.Entity]].
     *
     * @param entity the Entity to create as an MMO item
     * @return the MMO item representation of the Entity
     */
   def createItem(entity: Entity): MMOItem
 
-  /** Remove the [[MMOItem]] from the client.
+  /** Remove the [[com.smartfoxserver.v2.mmo.MMOItem]] from the client.
     *
     * @param item the item to remove
     */
   def removeItem(item: MMOItem): Unit
 
-  /** Set the [[MMOItem]] position, informing the client of the change.
+  /** Set the [[com.smartfoxserver.v2.mmo.MMOItem]] position, informing the
+    * client of the change.
     *
     * @param item the item whose position to update
     * @param position the new item position

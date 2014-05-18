@@ -37,7 +37,12 @@ class IDEConnectionHandler(implicit val bindingModule: BindingModule)
     // TODO this is not how we want to authorize IDEs
     if (!userService.exists(ideId)) {
       // TODO put ideId somewhere
-      setUserPosition(user)
+      val little = extension
+      val room = little.getParentRoom
+      val mmo = little.getMMOApi
+      val position = new Vec3D(50.0f, 50.0f, 0)
+      mmo.setUserPosition(user, position, room)
+      sendValidResponse(user, valid = true)
     } else {
       throw new IllegalArgumentException("No user with username " + ideId)
     }
@@ -45,18 +50,18 @@ class IDEConnectionHandler(implicit val bindingModule: BindingModule)
 
   private def setDebugPosition(user: User): Unit = {
     trace("AUTHENTICATING DEBUGGER")
-    setUserPosition(user)
-  }
-
-  private def setUserPosition(user: User): Unit = {
     val little = extension
     val room = little.getParentRoom
     val mmo = little.getMMOApi
     val position = new Vec3D(50.0f, 50.0f, 0)
     mmo.setUserPosition(user, position, room)
+    sendValidResponse(user, valid = true)
+  }
+
+  private def sendValidResponse(user: User, valid: Boolean): Unit = {
     val data = new SFSObject()
-    data.putBool("valid", true)
-    little.send(LittleEvents.IDE_AUTH, data, user)
+    data.putBool("valid", valid)
+    extension.send(LittleEvents.IDE_AUTH, data, user)
   }
 
 }

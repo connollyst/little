@@ -20,9 +20,9 @@ class GameManager(client: ClientCommunicator, val game: Game)
   val items: mutable.Map[String, MMOItem] = mutable.Map()
   val updater = new TimedUpdater(15, sendItems)
 
-  game.cleaner.add(this)
+  game.cleaner.register(this)
 
-  def init() = {
+  def init(): Unit = {
     game.initialize()
     game.entities.values foreach {
       entity =>
@@ -33,17 +33,38 @@ class GameManager(client: ClientCommunicator, val game: Game)
     }
   }
 
-  def start() = {
+  def start(): Unit = {
     game.start()
     new Thread(updater).start()
   }
 
-  def stop() = {
+  def stop(): Unit = {
     updater.stop()
     game.stop()
   }
 
-  def sendItems() =
+  /** Connect a player to the game.<br/>
+    * A new [[com.quane.little.game.entity.Mob]] will be added to the game.
+    *
+    * @param username the username of the player
+    * @return the game location of the connected player
+    */
+  def connect(username: String): Vec3D = {
+    val mob = game.spawnPlayer(username)
+    new Vec3D(mob.x, mob.y)
+  }
+
+  /** Disconnect a player from the game.<br/>
+    * Their managed [[com.quane.little.game.entity.Mob]] will be removed from
+    * the game.
+    *
+    * @param username the username of the player
+    */
+  def disconnect(username: String): Unit = game.removePlayer(username)
+
+  /** Send [[com.smartfoxserver.v2.mmo.MMOItem]] position to the players.
+    */
+  def sendItems(): Unit =
     items.keys foreach {
       id =>
         val item = items(id)
@@ -56,7 +77,12 @@ class GameManager(client: ClientCommunicator, val game: Game)
         }
     }
 
-  override def entityRemoved(entity: Entity) =
+  /** Handle the removal of an [[com.quane.little.game.entity.Entity]] from the
+    * game simulation.
+    *
+    * @param entity the Entity which has been removed
+    */
+  override def entityRemoved(entity: Entity): Unit =
     items.remove(entity.id) match {
       case Some(item) => client.removeItem(item)
       case _ => error("Tried to remove unknown MMO item " + entity)

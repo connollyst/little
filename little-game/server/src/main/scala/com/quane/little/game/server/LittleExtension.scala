@@ -36,6 +36,7 @@ class LittleExtension
     new MMOItem(serializer.serialize(entity))
 
   override def removeItem(item: MMOItem) =
+  // TODO this doesn't seem to remove the item from already connected clients
     getMMOApi.removeMMOItem(item)
 
   override def setItemPosition(item: MMOItem, position: Vec3D) = {
