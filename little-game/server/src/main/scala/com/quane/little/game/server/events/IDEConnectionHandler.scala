@@ -32,7 +32,7 @@ class IDEConnectionHandler(implicit val bindingModule: BindingModule)
     }
   }
 
-  private def setUserPosition(user: User, ideId: String) = {
+  private def setUserPosition(user: User, ideId: String): Unit = {
     trace("AUTHENTICATING '" + ideId + "'..")
     // TODO this is not how we want to authorize IDEs
     if (!userService.exists(ideId)) {
@@ -43,12 +43,12 @@ class IDEConnectionHandler(implicit val bindingModule: BindingModule)
     }
   }
 
-  private def setDebugPosition(user: User) = {
+  private def setDebugPosition(user: User): Unit = {
     trace("AUTHENTICATING DEBUGGER")
     setUserPosition(user)
   }
 
-  private def setUserPosition(user: User) = {
+  private def setUserPosition(user: User): Unit = {
     val little = extension
     val room = little.getParentRoom
     val mmo = little.getMMOApi

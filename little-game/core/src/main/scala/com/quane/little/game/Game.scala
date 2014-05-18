@@ -22,18 +22,17 @@ class Game(implicit val bindingModule: BindingModule)
   private val functionService = inject[FunctionService]
   private val listenerService = inject[ListenerService]
 
-  val hertz = 30.0
-  val poll = 0.5
   val eventBus: EventBus = new EventBus
   val engine: PhysicsEngine = new PhysicsEngine
   val cleaner: EntityRemover = new EntityRemover
   val builder = new BodyBuilder(this, engine.world)
   val entityFactory: EntityFactory = new EntityFactory(this)
 
+  val users: mutable.Map[String, String] = mutable.Map()
   val entities: mutable.Map[String, Entity] = mutable.Map()
 
-  val stateUpdater = new TimedUpdater(hertz, updateState)
-  val codeUpdate = new TimedUpdater(poll, updateCode)
+  val stateUpdater = new TimedUpdater(30.0, updateState)
+  val codeUpdate = new TimedUpdater(0.5, updateCode)
 
   cleaner.add(this)
   cleaner.add(engine)
@@ -71,6 +70,24 @@ class Game(implicit val bindingModule: BindingModule)
     }
   }
 
+  /** Spawn a mob for a user.
+    *
+    * @param username the name of the user for whom to spawn the mob
+    * @return the newly spawned mob
+    * @throws IllegalArgumentException if this user already has a mob
+    */
+  def spawn(username: String): Mob = {
+    if (users.contains(username)) {
+      throw new IllegalArgumentException(
+        "User '" + username + "' already has a mob: " + users(username)
+      )
+    }
+    val mob = entityFactory.createMob()
+    entities += (mob.id -> mob)
+    users += (username -> mob.id)
+    mob
+  }
+
   /** Update the game engine's state.
     */
   def updateState(): Unit = {
@@ -80,18 +97,23 @@ class Game(implicit val bindingModule: BindingModule)
   }
 
   def updateCode(): Unit = {
-    val username = "connollyst"
     functionService.init() // TODO this is temporary
     listenerService.init() // TODO this is temporary
-    val functions = functionService.findDefinitionsByUser(username)
-    val listeners = listenerService.findListenersByUser(username)
-    entities.values foreach {
-      case mob: Mob =>
-        functions foreach {
-          function => mob.operator.runtime.saveFunction(function)
-        }
-        listeners foreach {
-          listener => mob.operator.addEventListener(listener)
+    users foreach {
+      case (username, entityId) =>
+        val functions = functionService.findDefinitionsByUser(username)
+        val listeners = listenerService.findListenersByUser(username)
+        entity(entityId) match {
+          case mob: Mob =>
+            functions foreach {
+              function => mob.operator.runtime.saveFunction(function)
+            }
+            listeners foreach {
+              listener => mob.operator.addEventListener(listener)
+            }
+          case other: Entity => throw new IllegalAccessException(
+            "Expected user's Entity to be Mob but was " + other.getClass
+          )
         }
     }
   }
