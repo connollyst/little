@@ -49,7 +49,6 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
   /** Initialize the data source.
     */
   override def init(): Unit = {
-    init(CodeSubcategory.Basic, Functions.blank)
     init(CodeSubcategory.Basic, Functions.printDirection)
     init(CodeSubcategory.Motion, Functions.move)
     init(CodeSubcategory.Motion, Functions.stop)
