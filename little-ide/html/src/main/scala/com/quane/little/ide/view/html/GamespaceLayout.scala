@@ -17,7 +17,8 @@ object GamespaceLayout {
 }
 
 /** Layout containing the core game elements: a display of the game itself and
-  * the tools for editing the [[EventListener]] list.
+  * the tools for editing the [[com.quane.little.language.event.EventListener]]
+  * list.
   *
   * @author Sean connolly
   */

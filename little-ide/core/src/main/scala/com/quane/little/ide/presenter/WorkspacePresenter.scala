@@ -18,20 +18,20 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)(implicit val bindingModule
   private val functionService = inject[FunctionService]
   private val listenerService = inject[ListenerService]
 
-  override def requestAddFunctionDefinition(id: RecordId, index: Int) = {
+  override def requestAddFunctionDefinition(id: RecordId, index: Int = 0) = {
     val function = functionService.findDefinition(id)
     new FunctionDefinitionPresenter(view.createFunctionDefinition()).initialize(id, function)
   }
 
-  override def requestAddEventListener(id: RecordId, index: Int) = {
+  override def requestAddEventListener(id: RecordId, index: Int = 0) = {
     val listener = listenerService.findListener(id)
     new EventListenerPresenter(view.createEventListener()).initialize(id, listener)
   }
 
-  override def requestAddBlankFunctionDefinition(index: Int) =
+  override def requestAddBlankFunctionDefinition(index: Int = 0) =
     new FunctionDefinitionPresenter(view.createFunctionDefinition())
 
-  override def requestAddBlankEventListener(index: Int) =
+  override def requestAddBlankEventListener(index: Int = 0) =
     new EventListenerPresenter(view.createEventListener())
 
 }

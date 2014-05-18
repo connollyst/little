@@ -21,11 +21,11 @@ class GamespacePresenter[V <: GamespaceView](view: V)(implicit val bindingModule
   }
 
   // TODO this doesn't belong in the gamespace
-  override def newFunction() = workspace.requestAddBlankFunctionDefinition(0)
+  override def newFunction() = workspace.requestAddBlankFunctionDefinition()
 
-  override def newGameListener() = workspace.requestAddBlankEventListener(0)
+  override def newGameListener() = workspace.requestAddBlankEventListener()
 
-  override def openGameListener(listenerId: RecordId) = workspace.requestAddEventListener(listenerId, 0)
+  override def openGameListener(listenerId: RecordId) = workspace.requestAddEventListener(listenerId)
 
 
 }
