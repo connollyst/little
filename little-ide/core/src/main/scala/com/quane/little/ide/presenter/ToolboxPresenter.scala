@@ -1,10 +1,10 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
-import com.quane.little.data.model.{RecordId, CodeCategory}
+import com.quane.little.data.model.{RecordId, CodeType}
 import com.quane.little.data.service.{ExpressionService, StatementService, FunctionService}
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.quane.little.data.model.CodeSubcategory
+import com.quane.little.data.model.CodeCategory
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -21,21 +21,21 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
 
   view.registerViewPresenter(this)
 
-  CodeSubcategory.values foreach {
+  CodeCategory.values foreach {
     category =>
       view.createToolboxTab(category)
   }
   expressionService.all foreach {
     expression =>
-      view.createToolboxItem(CodeCategory.Expression, expression.category, expression.name, expression.id)
+      view.createToolboxItem(expression.category, expression.name, CodeType.Expression, expression.id)
   }
   statementService.all foreach {
     statement =>
-      view.createToolboxItem(CodeCategory.Statement, statement.category, statement.name, statement.id)
+      view.createToolboxItem(statement.category, statement.name, CodeType.Statement, statement.id)
   }
   functionService.findByUser("connollyst") foreach {
     function =>
-      view.createToolboxItem(CodeCategory.Function, function.category, function.definition.name, function.id)
+      view.createToolboxItem(function.category, function.definition.name, CodeType.Function, function.id)
   }
 
   override def requestNewFunctionDefinition() =

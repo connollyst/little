@@ -6,7 +6,7 @@ import scala.collection.JavaConversions._
 import com.vaadin.event.Transferable
 import com.quane.little.data.model.RecordId
 import com.vaadin.ui.Component
-import com.quane.little.data.model.CodeCategory._
+import com.quane.little.data.model.CodeType._
 import com.google.common.base.Objects
 
 object CodeTransferable {
@@ -14,7 +14,7 @@ object CodeTransferable {
   val CODE_ID = "little-code-id"
 }
 
-class CodeTransferable(source: Component, val category: CodeCategory, val codeId: RecordId) extends Transferable {
+class CodeTransferable(source: Component, val category: CodeType, val codeId: RecordId) extends Transferable {
 
   private var data = mutable.Map[String, AnyRef](
     CodeTransferable.CODE_CATEGORY -> category,

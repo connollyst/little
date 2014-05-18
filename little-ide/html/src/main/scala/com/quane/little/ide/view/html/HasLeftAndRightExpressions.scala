@@ -7,7 +7,7 @@ import com.quane.little.ide.view.html.HasLeftAndRightExpressions._
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.data.model.{RecordId, CodeCategory}
+import com.quane.little.data.model.{RecordId, CodeType}
 
 object HasLeftAndRightExpressions {
   val LeftIndex = 0
@@ -74,9 +74,9 @@ private class LeftAndRightDropHandler(view: HasLeftAndRightExpressions, index: I
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Expression =>
+      case transferable: CodeTransferable if transferable.category == CodeType.Expression =>
         view.requestSetExpression(transferable.codeId, index)
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
+      case transferable: CodeTransferable if transferable.category == CodeType.Function =>
         view.requestSetFunctionReference(transferable.codeId, index)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)

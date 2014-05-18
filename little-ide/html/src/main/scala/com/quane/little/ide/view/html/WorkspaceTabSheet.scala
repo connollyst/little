@@ -7,7 +7,7 @@ import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.ContainsDataFlavor
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.ide.presenter.command.{AddEventListenerCommand, AddFunctionDefinitionCommand, IDECommandExecutor}
-import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.model.CodeType
 
 object WorkspaceTabSheet {
   val Style = "l-workspace"
@@ -69,11 +69,11 @@ class WorkspaceDropHandler(workspace: WorkspaceTabSheet) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
+      case transferable: CodeTransferable if transferable.category == CodeType.Function =>
         IDECommandExecutor.execute(
           new AddFunctionDefinitionCommand(workspace.presenter, transferable.codeId)
         )
-      case transferable: CodeTransferable if transferable.category == CodeCategory.EventListener =>
+      case transferable: CodeTransferable if transferable.category == CodeType.EventListener =>
         IDECommandExecutor.execute(
           new AddEventListenerCommand(workspace.presenter, transferable.codeId)
         )

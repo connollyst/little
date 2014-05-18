@@ -1,10 +1,10 @@
 package com.quane.little.data.service
 
-import com.quane.little.data.model.{CodeSubcategory, PrimitiveRecord, RecordId}
+import com.quane.little.data.model.{CodeCategory, PrimitiveRecord, RecordId}
 import com.quane.little.language._
 import scala.collection.immutable
 import com.quane.little.language.data.Value
-import com.quane.little.data.model.CodeSubcategory.CodeSubcategory
+import com.quane.little.data.model.CodeCategory.CodeCategory
 
 object StatementService {
 
@@ -19,9 +19,9 @@ object StatementService {
     Set -> "set",
     Print -> "print"
   )
-  val Categories = immutable.Map[String, CodeSubcategory](
-    Set -> CodeSubcategory.Basic,
-    Print -> CodeSubcategory.Basic
+  val Categories = immutable.Map[String, CodeCategory](
+    Set -> CodeCategory.Basic,
+    Print -> CodeCategory.Basic
   )
 
 }

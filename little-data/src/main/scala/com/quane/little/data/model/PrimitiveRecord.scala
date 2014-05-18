@@ -2,14 +2,14 @@ package com.quane.little.data.model
 
 import com.quane.little.language.EvaluableCode
 import com.google.common.base.Objects
-import com.quane.little.data.model.CodeSubcategory._
+import com.quane.little.data.model.CodeCategory._
 
 /** A database record for a primitive [[com.quane.little.language.Expression]].
   * That is, all expressions which are not themselves functions.
   *
   * @author Sean Connolly
   */
-class PrimitiveRecord(var id: RecordId, val category: CodeSubcategory, val name: String, val expression: EvaluableCode)
+class PrimitiveRecord(var id: RecordId, val category: CodeCategory, val name: String, val expression: EvaluableCode)
   extends HasRecordId {
 
   override def equals(other: Any): Boolean = other match {

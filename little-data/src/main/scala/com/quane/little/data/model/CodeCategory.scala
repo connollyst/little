@@ -4,8 +4,9 @@ package com.quane.little.data.model
   *
   * @author Sean Connolly
   */
-object CodeCategory extends Enumeration {
-  type CodeCategory = Value
+object CodeType extends Enumeration {
+  type CodeType = Value
+  // TODO this can be inferred by the class hierarchy!
   val Expression, Statement, Function, EventListener = Value
 }
 
@@ -13,7 +14,7 @@ object CodeCategory extends Enumeration {
   *
   * @author Sean Connolly
   */
-object CodeSubcategory extends Enumeration {
-  type CodeSubcategory = Value
+object CodeCategory extends Enumeration {
+  type CodeCategory = Value
   val Basic, Sensing, Motion, Math, Misc = Value
 }

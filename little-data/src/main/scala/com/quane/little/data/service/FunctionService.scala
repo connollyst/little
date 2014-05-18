@@ -1,11 +1,11 @@
 package com.quane.little.data.service
 
 import com.mongodb.casbah.{MongoCollection, MongoClient}
-import com.quane.little.data.model.{UserRecord, CodeSubcategory, RecordId, FunctionRecord}
+import com.quane.little.data.model.{UserRecord, CodeCategory, RecordId, FunctionRecord}
 import com.quane.little.language.{FunctionReference, FunctionDefinition}
 import com.quane.little.data.repo.FunctionRepository
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.data.model.CodeSubcategory.CodeSubcategory
+import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.language.util.Functions
 
 /** A service for interacting with [[com.quane.little.data.model.FunctionRecord]].
@@ -33,7 +33,7 @@ trait FunctionService {
 
   def update(id: RecordId, fun: FunctionDefinition): FunctionRecord
 
-  def insert(username: String, category: CodeSubcategory, fun: FunctionDefinition): FunctionRecord
+  def insert(username: String, category: CodeCategory, fun: FunctionDefinition): FunctionRecord
 
   def isReservedSystemName(functionName: String): Boolean
 
@@ -49,15 +49,15 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
   /** Initialize the data source.
     */
   override def init(): Unit = {
-    init(CodeSubcategory.Basic, Functions.printDirection)
-    init(CodeSubcategory.Motion, Functions.move)
-    init(CodeSubcategory.Motion, Functions.stop)
-    init(CodeSubcategory.Motion, Functions.turn)
-    init(CodeSubcategory.Motion, Functions.turnRelative)
-    init(CodeSubcategory.Motion, Functions.voyage)
+    init(CodeCategory.Basic, Functions.printDirection)
+    init(CodeCategory.Motion, Functions.move)
+    init(CodeCategory.Motion, Functions.stop)
+    init(CodeCategory.Motion, Functions.turn)
+    init(CodeCategory.Motion, Functions.turnRelative)
+    init(CodeCategory.Motion, Functions.voyage)
   }
 
-  private def init(category: CodeSubcategory, function: FunctionDefinition) =
+  private def init(category: CodeCategory, function: FunctionDefinition) =
     if (!exists(UserService.SYSTEM_USERNAME, function.name)) {
       insert(UserService.SYSTEM_USERNAME, category, function)
     }
@@ -96,7 +96,7 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
     }
   }
 
-  override def insert(username: String, category: CodeSubcategory, fun: FunctionDefinition): FunctionRecord = {
+  override def insert(username: String, category: CodeCategory, fun: FunctionDefinition): FunctionRecord = {
     val user = userService.fetch(username)
     if (exists(user, fun.name)) {
       throw new IllegalArgumentException("Function name taken '" + fun.name + "'")

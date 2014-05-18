@@ -7,7 +7,7 @@ import com.quane.little.ide.presenter.command._
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
-import com.quane.little.data.model.{CodeCategory, RecordId}
+import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import scala.collection.JavaConversions._
 import com.vaadin.server.Sizeable
@@ -221,11 +221,11 @@ class BlockDropHandler(block: BlockStepSeparator) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Expression =>
+      case transferable: CodeTransferable if transferable.category == CodeType.Expression =>
         block.addExpression(transferable.codeId)
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Statement =>
+      case transferable: CodeTransferable if transferable.category == CodeType.Statement =>
         block.addStatement(transferable.codeId)
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
+      case transferable: CodeTransferable if transferable.category == CodeType.Function =>
         block.addFunction(transferable.codeId)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)

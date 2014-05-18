@@ -1,6 +1,6 @@
 package com.quane.little.data.repo
 
-import com.quane.little.data.model.{CodeSubcategory, RecordId, FunctionRecord}
+import com.quane.little.data.model.{CodeCategory, RecordId, FunctionRecord}
 import com.quane.little.language.{Printer, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
@@ -30,26 +30,26 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
 
   "FunctionDefinitionRepository" should "assign a function id on insert" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     function.id should be(null)
     repo.insert(function)
     function.id should not be null
   }
   it should "maintain an owner's id on insert" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     repo.insert(function)
     function.ownerId should be(ownerId)
   }
   it should "maintain a function's definition on insert" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     repo.insert(function)
     function.definition should be(definition)
   }
   it should "update with known id (id doesn't change)" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     repo.insert(function)
     val recordId = function.id
     repo.update(function)
@@ -66,7 +66,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
     originalDefinition.addStep(new Printer(Value("Hello Original World!")))
     updatedDefinition.addStep(new Printer(Value("Hello Updated World!")))
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, originalDefinition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, originalDefinition)
     repo.insert(function)
     val recordId = function.id
     function.definition = updatedDefinition
@@ -77,7 +77,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   }
   it should "error out on insert with known id" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     repo.insert(function)
     val recordId = function.id
     val thrown = intercept[IllegalArgumentException] {
@@ -89,7 +89,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   }
   it should "error out on update without id" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     function.id = null
     val thrown = intercept[IllegalArgumentException] {
       repo.update(function)
@@ -100,7 +100,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   }
   it should "error out on insert with unknown id" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     function.id = new RecordId("UnknownId1234")
     val thrown = intercept[IllegalArgumentException] {
       repo.insert(function)
@@ -111,7 +111,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   }
   it should "error out on update with unknown id" in {
     val repo = functionRepository
-    val function = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     function.id = new RecordId("UnknownId1234")
     val thrown = intercept[IllegalArgumentException] {
       repo.update(function)
@@ -122,26 +122,26 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   }
   it should "insert simple function" in {
     val repo = functionRepository
-    val functionIn = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val functionIn = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     repo.insert(functionIn)
     functionIn.id should not be null
   }
   it should "insert and find simple function" in {
     val repo = functionRepository
-    val functionIn = new FunctionRecord(ownerId, CodeSubcategory.Misc, definition)
+    val functionIn = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
     repo.insert(functionIn)
     val functionOut = repo.find(functionIn.id).get
     functionOut should be(functionIn)
   }
   it should "insert complex function" in {
     val repo = functionRepository
-    val functionIn = new FunctionRecord(ownerId, CodeSubcategory.Misc, Functions.voyage)
+    val functionIn = new FunctionRecord(ownerId, CodeCategory.Misc, Functions.voyage)
     repo.insert(functionIn)
     functionIn.id should not be null
   }
   it should "insert and find complex function" in {
     val repo = functionRepository
-    val functionIn = new FunctionRecord(ownerId, CodeSubcategory.Misc, Functions.voyage)
+    val functionIn = new FunctionRecord(ownerId, CodeCategory.Misc, Functions.voyage)
     repo.insert(functionIn)
     val functionOut = repo.find(functionIn.id).get
     functionOut should be(functionIn)

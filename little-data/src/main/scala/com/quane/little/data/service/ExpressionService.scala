@@ -1,11 +1,11 @@
 package com.quane.little.data.service
 
-import com.quane.little.data.model.{CodeSubcategory, PrimitiveRecord, RecordId}
+import com.quane.little.data.model.{CodeCategory, PrimitiveRecord, RecordId}
 import com.quane.little.language._
 import scala.collection.immutable
 import com.quane.little.language.data.Value
 import com.quane.little.language.math.{Multiplication, Division, Subtraction, Addition}
-import com.quane.little.data.model.CodeSubcategory.CodeSubcategory
+import com.quane.little.data.model.CodeCategory.CodeCategory
 
 object ExpressionService {
 
@@ -56,21 +56,21 @@ object ExpressionService {
     And -> "and",
     Or -> "or"
   )
-  val Categories = immutable.Map[String, CodeSubcategory](
-    Get -> CodeSubcategory.Basic,
-    Conditional -> CodeSubcategory.Basic,
+  val Categories = immutable.Map[String, CodeCategory](
+    Get -> CodeCategory.Basic,
+    Conditional -> CodeCategory.Basic,
     // Math
-    Addition -> CodeSubcategory.Math,
-    Subtraction -> CodeSubcategory.Math,
-    Multiplication -> CodeSubcategory.Math,
-    Division -> CodeSubcategory.Math,
+    Addition -> CodeCategory.Math,
+    Subtraction -> CodeCategory.Math,
+    Multiplication -> CodeCategory.Math,
+    Division -> CodeCategory.Math,
     // Logic
-    Equals -> CodeSubcategory.Math,
-    NotEquals -> CodeSubcategory.Math,
-    LessThan -> CodeSubcategory.Math,
-    GreaterThan -> CodeSubcategory.Math,
-    And -> CodeSubcategory.Math,
-    Or -> CodeSubcategory.Math
+    Equals -> CodeCategory.Math,
+    NotEquals -> CodeCategory.Math,
+    LessThan -> CodeCategory.Math,
+    GreaterThan -> CodeCategory.Math,
+    And -> CodeCategory.Math,
+    Or -> CodeCategory.Math
   )
 }
 

@@ -3,14 +3,15 @@ package com.quane.little.ide.view.html
 import com.quane.little.ide.view.ToolboxView
 import com.vaadin.ui._
 import scala.collection.mutable
-import com.quane.little.data.model.{CodeCategory, RecordId}
-import com.quane.little.data.model.CodeSubcategory.CodeSubcategory
+import com.quane.little.data.model.{CodeType, RecordId}
+import com.quane.little.data.model.CodeCategory.CodeCategory
 import java.util
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.data.model.CodeCategory.CodeCategory
+import com.quane.little.data.model.CodeType.CodeType
 import com.porotype.iconfont.FontAwesome.{IconVariant, Icon}
 import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.ui.TabSheet.Tab
+import com.quane.vaadin.scala.VaadinMixin
 
 object ToolboxLayout {
   val Style = "l-toolbox"
@@ -31,36 +32,36 @@ class ToolboxLayout
   setSizeFull()
   setPrimaryStyleName(ToolboxLayout.StyleAccordion)
 
-  override def setSelectedTab(subcategory: CodeSubcategory) =
-    setSelectedTab(getTab(subcategory))
+  override def setSelectedTab(category: CodeCategory) =
+    setSelectedTab(getTab(category))
 
-  override def createToolboxTab(subcategory: CodeSubcategory) = {
-    addTab(subcategory, new ToolboxSectionComponent())
-    getTabContents(subcategory).add(new ToolboxNewFunctionButton(this, subcategory))
+  override def createToolboxTab(category: CodeCategory) = {
+    addTab(category, new ToolboxSectionComponent())
+    getTabContents(category).add(new ToolboxNewFunctionButton(this, category))
   }
 
-  override def createToolboxItem(category: CodeCategory, subcategory: CodeSubcategory, title: String, functionId: RecordId) =
-    addToolboxItem(subcategory, new ToolboxItem(this, title, category, functionId))
+  override def createToolboxItem(category: CodeCategory, title: String, codeType: CodeType, codeId: RecordId) =
+    addToolboxItem(category, new ToolboxItem(this, title, codeType, codeId))
 
-  private def addToolboxItem(subcategory: CodeSubcategory, item: ToolboxItem) = {
-    val tab = getTab(subcategory)
-    val content = getTabContents(subcategory)
+  private def addToolboxItem(category: CodeCategory, item: ToolboxItem) = {
+    val tab = getTab(category)
+    val content = getTabContents(category)
     content.add(item)
-    tab.setCaption(subcategory.toString + " (" + content.count + ")")
+    tab.setCaption(category.toString + " (" + content.count + ")")
   }
 
-  private def addTab(subcategory: CodeSubcategory, tabContent: ToolboxSectionComponent): Tab = {
-    val id = subcategory.toString
+  private def addTab(category: CodeCategory, tabContent: ToolboxSectionComponent): Tab = {
+    val id = category.toString
     tabContents += (id -> tabContent)
-    addTab(tabContent, subcategory.toString)
+    addTab(tabContent, category.toString)
   }
 
-  private def getTab(subcategory: CodeSubcategory): Tab =
-    getTab(getTabContents(subcategory))
+  private def getTab(category: CodeCategory): Tab =
+    getTab(getTabContents(category))
 
 
-  private def getTabContents(subcategory: CodeSubcategory): ToolboxSectionComponent =
-    tabContents(subcategory.toString)
+  private def getTabContents(category: CodeCategory): ToolboxSectionComponent =
+    tabContents(category.toString)
 
 }
 
@@ -68,11 +69,11 @@ class ToolboxLayout
   *
   * @param view the root toolbox view
   * @param title the item title
-  * @param category the code category
+  * @param codeType the code codeType
   * @param codeId the id for the represented code
   */
-class ToolboxItem(view: ToolboxLayout, title: String, category: CodeCategory, codeId: RecordId)
-  extends DragAndDropWrapper(new ToolboxItemContent(view, title, category, codeId)) {
+class ToolboxItem(view: ToolboxLayout, title: String, codeType: CodeType, codeId: RecordId)
+  extends DragAndDropWrapper(new ToolboxItemContent(view, title, codeType, codeId)) {
 
   setSizeUndefined()
   // TODO should look something like the real expression/statement
@@ -80,38 +81,42 @@ class ToolboxItem(view: ToolboxLayout, title: String, category: CodeCategory, co
   setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER)
 
   override def getTransferable(rawVariables: util.Map[String, AnyRef]) =
-    new CodeTransferable(this, category, codeId)
+    new CodeTransferable(this, codeType, codeId)
 
 }
 
-private class ToolboxItemContent(view: ToolboxLayout, title: String, category: CodeCategory, codeId: RecordId)
-  extends HorizontalLayout {
+private class ToolboxItemContent(view: ToolboxLayout, title: String, codeType: CodeType, codeId: RecordId)
+  extends HorizontalLayout
+  with VaadinMixin {
 
   setSpacing(true)
 
-  addComponent(new Label(title))
-
-  // If this is a function, add a button for editing it
-  if (category.equals(CodeCategory.Function)) {
-    val button = new NativeButton(Icon.edit.variant(IconVariant.SIZE_LARGE),
-      new ClickListener() {
-        def buttonClick(event: ClickEvent) = view.presenter.openFunctionDefinition(codeId)
-      }
-    )
-    button.setHtmlContentAllowed(true)
-    addComponent(button)
+  add(new Label(title))
+  if (codeType.equals(CodeType.Function)) {
+    add(new ToolboxEditFunctionButton(view, codeId))
   }
 
 }
 
-private class ToolboxNewFunctionButton(view: ToolboxLayout, subcategory: CodeSubcategory)
+private class ToolboxNewFunctionButton(view: ToolboxLayout, category: CodeCategory)
   extends NativeButton {
 
   setCaption(Icon.plus.variant(IconVariant.SIZE_LARGE))
   setHtmlContentAllowed(true)
   addClickListener(new ClickListener {
-    // TODO pass the category
+    // TODO pass the codeType
     def buttonClick(event: ClickEvent) = view.presenter.requestNewFunctionDefinition()
+  })
+
+}
+
+private class ToolboxEditFunctionButton(view: ToolboxLayout, codeId: RecordId)
+  extends NativeButton {
+
+  setCaption(Icon.edit.variant(IconVariant.SIZE_LARGE))
+  setHtmlContentAllowed(true)
+  addClickListener(new ClickListener {
+    def buttonClick(event: ClickEvent) = view.presenter.openFunctionDefinition(codeId)
   })
 
 }
