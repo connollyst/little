@@ -20,6 +20,7 @@ object LogicLayout {
 class LogicLayout
   extends HorizontalLayout
   with LogicView
+  with RemovableComponent
   with HasLeftAndRightExpressions {
 
   val operatorField = new EnumerationComboBox(LogicOperation)

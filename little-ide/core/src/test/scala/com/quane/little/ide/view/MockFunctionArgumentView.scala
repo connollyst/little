@@ -9,11 +9,17 @@ class MockFunctionArgumentView
   extends FunctionArgumentView
   with MockView {
 
-  override def setName(name: String) = Unit
+  var name: Option[String] = None
 
-  override def createValueStatement() = new MockValueView
+  override def setName(n: String) = name = Some(n)
 
-  override def createGetStatement() = new MockGetterView
+  override def createGetExpression() = new MockGetterView
+
+  override def createMathExpression() = new MockMathView
+
+  override def createLogicExpression() = new MockLogicView
+
+  override def createValueExpression() = new MockValueView
 
   override def createFunctionReference() = new MockFunctionReferenceView
 

@@ -21,19 +21,17 @@ sealed trait PresenterAccepts
 
 trait PresenterAcceptsExpression extends PresenterAccepts {
 
+  // TODO consolidate these
+
   def requestAddExpression(id: RecordId, index: Int): Unit
+
+  def requestAddFunctionReference(id: RecordId, index: Int): Unit
 
 }
 
 trait PresenterAcceptsStatement extends PresenterAccepts {
 
   def requestAddStatement(id: RecordId, index: Int): Unit
-
-}
-
-trait PresenterAcceptsFunctionReference extends PresenterAccepts {
-
-  def requestAddFunctionReference(id: RecordId, index: Int): Unit
 
 }
 

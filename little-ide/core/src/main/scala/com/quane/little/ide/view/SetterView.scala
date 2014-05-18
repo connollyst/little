@@ -53,8 +53,7 @@ trait SetterView extends StatementView[SetterViewPresenter] {
   */
 trait SetterViewPresenter
   extends StatementViewPresenter
-  with PresenterAcceptsExpression
-  with PresenterAcceptsFunctionReference {
+  with PresenterAcceptsExpression {
 
   /** Called when the variable name changes in the view.
     *

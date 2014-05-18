@@ -2,10 +2,11 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
-import com.quane.little.language.{FunctionReference, Expression, Getter}
+import com.quane.little.language.{Logic, FunctionReference, Expression, Getter}
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.language.math.BasicMath
 
 /** A presenter for views representing a function reference argument.
   *
@@ -56,9 +57,13 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
       e match {
         // TODO skip if nothing has changed
         case g: Getter =>
-          presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
+          presenterFactory.createGetPresenter(view.createGetExpression()).initialize(g)
+        case m: BasicMath =>
+          presenterFactory.createMathPresenter(view.createMathExpression()).initialize(m)
+        case l: Logic =>
+          presenterFactory.createLogicPresenter(view.createLogicExpression()).initialize(l)
         case v: Value =>
-          presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)
+          presenterFactory.createValuePresenter(view.createValueExpression()).initialize(v)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)

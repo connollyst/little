@@ -52,7 +52,7 @@ class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfte
     new ExpressionMenu(view, index)
   }
 
-  /** An 'index' function which can be passed to the [[ExpressionMenu]] for
+  /** An 'index' function which can be passed to the [[com.quane.little.ide.view.html.ExpressionMenu]] for
     * testing, letting us verify that it was called.
     *
     * @return 0, every time
@@ -70,7 +70,5 @@ class TestExpressionMenu extends FlatSpec with ShouldMatchers with BeforeAndAfte
     extends ViewPresenter
     with PresenterAcceptsExpression
     with PresenterAcceptsStatement
-
-  // TODO with PresenterAcceptsFunctionReference
 
 }

@@ -2,13 +2,17 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-trait FunctionArgumentView extends View[FunctionArgumentViewPresenter] {
+trait FunctionArgumentView extends ExpressionView[FunctionArgumentViewPresenter] {
 
   def setName(name: String): Unit
 
-  def createValueStatement(): ValueView
+  def createGetExpression(): GetterView
 
-  def createGetStatement(): GetterView
+  def createMathExpression(): MathView
+
+  def createLogicExpression(): LogicView
+
+  def createValueExpression(): ValueView
 
   def createFunctionReference(): FunctionReferenceView
 
@@ -17,4 +21,3 @@ trait FunctionArgumentView extends View[FunctionArgumentViewPresenter] {
 trait FunctionArgumentViewPresenter
   extends ExpressionViewPresenter
   with PresenterAcceptsExpression
-  with PresenterAcceptsFunctionReference

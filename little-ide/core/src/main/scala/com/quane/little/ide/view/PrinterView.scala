@@ -10,19 +10,19 @@ import com.quane.little.ide.presenter._
 trait PrinterView
   extends StatementView[PrinterViewPresenter] {
 
-  /** Replace the existing print value expression with a [[ValueView]].
+  /** Replace the existing print value expression with a [[com.quane.little.ide.view.ValueView]].
     *
     * @return the view which was create
     */
   def createValueStatement(): ValueView
 
-  /** Replace the existing print value expression with a [[GetterView]].
+  /** Replace the existing print value expression with a [[com.quane.little.ide.view.GetterView]].
     *
     * @return the view which was create
     */
   def createGetStatement(): GetterView
 
-  /** Replace the existing print value expression with a [[FunctionReferenceView]].
+  /** Replace the existing print value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
     *
     * @return the view which was create
     */
@@ -30,11 +30,10 @@ trait PrinterView
 
 }
 
-/** The presenter backing the [[PrinterView]].
+/** The presenter backing the [[com.quane.little.ide.view.PrinterView]].
   *
   * @author Sean Connolly
   */
 trait PrinterViewPresenter
   extends StatementViewPresenter
   with PresenterAcceptsExpression
-  with PresenterAcceptsFunctionReference

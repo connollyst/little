@@ -3,7 +3,7 @@ package com.quane.little.ide.view.html
 import com.vaadin.ui.MenuBar
 import com.quane.little.ide.presenter.command.{AddStatementCommand, AddExpressionCommand, AddFunctionReferenceCommand, IDECommandExecutor}
 import com.quane.little.ide.view.{ViewPresenter, View}
-import com.quane.little.ide.presenter.{PresenterAcceptsStatement, PresenterAcceptsExpression, PresenterAccepts, PresenterAcceptsFunctionReference}
+import com.quane.little.ide.presenter.{PresenterAcceptsStatement, PresenterAcceptsExpression, PresenterAccepts}
 import com.quane.little.data.model.{RecordId, PrimitiveRecord}
 
 /** A menu for selecting an [[com.quane.little.language.Expression]] to be added
@@ -21,25 +21,9 @@ class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit 
   })
 
   private val item = addItem("∆", null)
-  initExpressionMenuItems()
   initStatementMenuItems()
+  initExpressionMenuItems()
   initFunctionMenuItems()
-
-  /** Initialize the menu items for primitive expressions.
-    */
-  private def initExpressionMenuItems(): Unit = {
-    // TODO the view CAN'T access the data model.. what's the correct way here?
-    //    expressionService.all foreach {
-    //      expression =>
-    //        if (accepts(expression)) {
-    //          item.addItem(expression.name, new Command {
-    //            def menuSelected(selectedItem: MenuBar#MenuItem) = addExpressionClicked(expression.id)
-    //          })
-    //        } else {
-    //          item.addItem(expression.name, null).setEnabled(false)
-    //        }
-    //    }
-  }
 
   /** Initialize the menu items for primitive expressions.
     */
@@ -57,11 +41,27 @@ class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit 
     //    }
   }
 
+  /** Initialize the menu items for primitive expressions.
+    */
+  private def initExpressionMenuItems(): Unit = {
+    // TODO the view CAN'T access the data model.. what's the correct way here?
+    //    expressionService.all foreach {
+    //      expression =>
+    //        if (accepts(expression)) {
+    //          item.addItem(expression.name, new Command {
+    //            def menuSelected(selectedItem: MenuBar#MenuItem) = addExpressionClicked(expression.id)
+    //          })
+    //        } else {
+    //          item.addItem(expression.name, null).setEnabled(false)
+    //        }
+    //    }
+  }
+
   /** Initialize the menu items for function expressions.
     */
   private def initFunctionMenuItems(): Unit = {
     val functions = item.addItem("functions", null)
-    if (m <:< manifest[PresenterAcceptsFunctionReference]) {
+    if (m <:< manifest[PresenterAcceptsExpression]) {
       // TODO the view CAN'T access the data model.. what's the correct way here?
       //      functionService.findByUser("connollyst") foreach {
       //        function =>
@@ -74,18 +74,18 @@ class ExpressionMenu[P <: ViewPresenter](view: View[P], index: => Int)(implicit 
     }
   }
 
-  def addExpressionClicked(id: RecordId) = {
-    val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
-    IDECommandExecutor.execute(new AddExpressionCommand(p, id, index))
-  }
-
   def addStatementClicked(id: RecordId) = {
     val p = view.presenter.asInstanceOf[PresenterAcceptsStatement]
     IDECommandExecutor.execute(new AddStatementCommand(p, id, index))
   }
 
+  def addExpressionClicked(id: RecordId) = {
+    val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
+    IDECommandExecutor.execute(new AddExpressionCommand(p, id, index))
+  }
+
   def addFunctionClicked(id: RecordId) = {
-    val p = view.presenter.asInstanceOf[PresenterAcceptsFunctionReference]
+    val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
     IDECommandExecutor.execute(new AddFunctionReferenceCommand(p, id, index))
   }
 

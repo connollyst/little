@@ -20,6 +20,7 @@ object MathLayout {
 class MathLayout
   extends HorizontalLayout
   with MathView
+  with RemovableComponent
   with HasLeftAndRightExpressions {
 
   val operatorField = new EnumerationComboBox(BasicMathOperation)

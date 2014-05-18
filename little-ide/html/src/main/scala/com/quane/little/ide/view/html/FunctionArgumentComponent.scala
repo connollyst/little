@@ -1,12 +1,9 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{ExpressionView, FunctionArgumentView}
+import com.quane.little.ide.view.{FunctionArgumentViewPresenter, ExpressionView, FunctionArgumentView}
 import com.vaadin.ui._
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
-import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
-import com.vaadin.event.dd.acceptcriteria.AcceptAll
-import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.data.model.CodeCategory
+import com.quane.little.ide.view.html.dnd.ExpressionDropHandler
 
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
@@ -23,7 +20,10 @@ class FunctionArgumentComponent
   with VaadinMixin {
 
   private val nameLabel = new Label
-  private val valueWrapper = new DroppableTarget(new CssLayout, new FunctionArgumentDropHandler(this))
+  private val valueWrapper = new DroppableTarget(
+    new CssLayout,
+    new ExpressionDropHandler[FunctionArgumentViewPresenter, FunctionArgumentView](this)
+  )
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_CENTER)
@@ -36,9 +36,13 @@ class FunctionArgumentComponent
 
   override def setName(name: String): Unit = nameLabel.setValue(name)
 
-  override def createValueStatement(): ValueLayout = setValue(new ValueLayout)
+  override def createGetExpression(): GetterLayout = setValue(new GetterLayout)
 
-  override def createGetStatement(): GetterLayout = setValue(new GetterLayout)
+  override def createMathExpression(): MathLayout = setValue(new MathLayout)
+
+  override def createLogicExpression(): LogicLayout = setValue(new LogicLayout)
+
+  override def createValueExpression(): ValueLayout = setValue(new ValueLayout)
 
   override def createFunctionReference(): FunctionReferenceLayout = setValue(new FunctionReferenceLayout)
 
@@ -47,21 +51,5 @@ class FunctionArgumentComponent
     valueWrapper.component.addComponent(view)
     view
   }
-
-}
-
-private class FunctionArgumentDropHandler(view: FunctionArgumentComponent) extends DropHandler {
-
-  override def getAcceptCriterion = AcceptAll.get()
-
-  override def drop(event: DragAndDropEvent) =
-    event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Expression =>
-        view.presenter.requestAddExpression(transferable.codeId, 0)
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
-        view.presenter.requestAddFunctionReference(transferable.codeId, 0)
-      case _ =>
-        throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
-    }
 
 }

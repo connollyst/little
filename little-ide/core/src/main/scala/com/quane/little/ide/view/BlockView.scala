@@ -38,4 +38,3 @@ trait BlockViewPresenter
   extends ExpressionViewPresenter
   with PresenterAcceptsExpression
   with PresenterAcceptsStatement
-  with PresenterAcceptsFunctionReference

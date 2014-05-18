@@ -1,13 +1,10 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{ExpressionView, SetterView}
+import com.quane.little.ide.view.{SetterViewPresenter, ExpressionView, SetterView}
 import com.vaadin.ui.{CssLayout, TextField, HorizontalLayout, Label}
 import com.vaadin.event.FieldEvents.{TextChangeListener, TextChangeEvent}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
-import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
-import com.vaadin.event.dd.acceptcriteria.AcceptAll
-import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.data.model.CodeCategory
+import com.quane.little.ide.view.html.dnd.ExpressionDropHandler
 
 object SetterLayout {
   val Style = "l-set"
@@ -24,7 +21,10 @@ class SetterLayout
   with VaadinMixin {
 
   private val nameField = createNameTextField()
-  private val valueWrapper = new DroppableTarget(new CssLayout, new ArgumentDropHandler(this))
+  private val valueWrapper = new DroppableTarget(
+    new CssLayout,
+    new ExpressionDropHandler[SetterViewPresenter, SetterView](this)
+  )
 
   setStyleNames(ExpressionLayout.Style, SetterLayout.Style)
   setSpacing(true)
@@ -44,9 +44,13 @@ class SetterLayout
     })
   }
 
-  override def createValueExpression() = setValueComponent(new ValueLayout)
-
   override def createGetExpression() = setValueComponent(new GetterLayout)
+
+  override def createMathExpression() = setValueComponent(new MathLayout)
+
+  override def createLogicExpression() = setValueComponent(new LogicLayout)
+
+  override def createValueExpression() = setValueComponent(new ValueLayout)
 
   override def createFunctionReference() = setValueComponent(new FunctionReferenceLayout)
 
@@ -55,21 +59,5 @@ class SetterLayout
     valueWrapper.component.addComponent(view)
     view
   }
-
-}
-
-private class ArgumentDropHandler(view: SetterLayout) extends DropHandler {
-
-  override def getAcceptCriterion = AcceptAll.get()
-
-  override def drop(event: DragAndDropEvent) =
-    event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Expression =>
-        view.presenter.requestAddExpression(transferable.codeId, 0)
-      case transferable: CodeTransferable if transferable.category == CodeCategory.Function =>
-        view.presenter.requestAddFunctionReference(transferable.codeId, 0)
-      case _ =>
-        throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
-    }
 
 }

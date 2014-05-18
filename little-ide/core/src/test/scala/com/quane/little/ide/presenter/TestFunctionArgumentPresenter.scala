@@ -41,10 +41,10 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionArgumentPresenter(view)
     val valueView = mock[ValueView]
     val valuePresenter = mock[ValuePresenter[ValueView]]
-    when(view.createValueStatement()).thenReturn(valueView)
+    when(view.createValueExpression()).thenReturn(valueView)
     val value = mock[Value]
     presenter.value = value
-    verify(view).createValueStatement()
+    verify(view).createValueExpression()
     // TODO test isn't applicable as presenter comes from factory
     verify(valuePresenter).initialize(value)
   }
@@ -54,10 +54,10 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val presenter = new FunctionArgumentPresenter(view)
     val getterView = mock[GetterView]
     val getterPresenter = mock[GetterPresenter[GetterView]]
-    when(view.createGetStatement()).thenReturn(getterView)
+    when(view.createGetExpression()).thenReturn(getterView)
     val getter = mock[Getter]
     presenter.value = getter
-    verify(view).createGetStatement()
+    verify(view).createGetExpression()
     // TODO test isn't applicable as presenter comes from factory
     verify(getterPresenter).initialize(getter)
   }
@@ -92,8 +92,8 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
   private def assertCompiledValue(value: Expression) = {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
-    when(view.createGetStatement()).thenReturn(new MockGetterView)
-    when(view.createValueStatement()).thenReturn(new MockValueView)
+    when(view.createGetExpression()).thenReturn(new MockGetterView)
+    when(view.createValueExpression()).thenReturn(new MockValueView)
     when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
     presenter.value = value
     val compiled = presenter.compile()
