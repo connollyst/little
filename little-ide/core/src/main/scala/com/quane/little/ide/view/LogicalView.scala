@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.language.EvaluationOperator._
+import com.quane.little.language.LogicalOperation._
 import com.quane.little.ide.presenter.{PresenterAcceptsFunctionReference, PresenterAcceptsExpression}
 
 trait LogicalView
@@ -11,7 +11,7 @@ trait LogicalView
     *
     * @param operation the new logical operation
     */
-  def setOperation(operation: EvaluationOperator)
+  def setOperation(operation: LogicalOperation)
 
 
 }
@@ -25,6 +25,6 @@ trait LogicalViewPresenter
     *
     * @param operation the new logical operation
     */
-  def onOperationChange(operation: EvaluationOperator): Unit
+  def onOperationChange(operation: LogicalOperation): Unit
 
 }

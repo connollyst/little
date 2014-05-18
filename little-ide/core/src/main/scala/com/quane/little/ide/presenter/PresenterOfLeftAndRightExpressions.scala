@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.{LogicalOperation, FunctionReference, Getter, Expression}
+import com.quane.little.language.{Logical, FunctionReference, Getter, Expression}
 import com.quane.little.language.data.Value
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{FunctionService, ExpressionService}
@@ -54,7 +54,7 @@ trait PresenterOfLeftAndRightExpressions {
           presenterFactory.createGetPresenter(view.createLeftGetStatement()).initialize(g)
         case v: Value =>
           presenterFactory.createValuePresenter(view.createLeftValueStatement()).initialize(v)
-        case l: LogicalOperation =>
+        case l: Logical =>
           presenterFactory.createLogicalPresenter(view.createLeftLogicOperation()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createLeftFunctionReference()).initialize(f)
@@ -77,7 +77,7 @@ trait PresenterOfLeftAndRightExpressions {
           presenterFactory.createGetPresenter(view.createRightGetStatement()).initialize(g)
         case v: Value =>
           presenterFactory.createValuePresenter(view.createRightValueStatement()).initialize(v)
-        case l: LogicalOperation =>
+        case l: Logical =>
           presenterFactory.createLogicalPresenter(view.createRightLogicOperation()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createRightFunctionReference()).initialize(f)

@@ -100,7 +100,7 @@ object ExpressionFactory {
   def create(id: String): Expression = {
     id match {
       case ExpressionService.Get => new Getter("")
-      case ExpressionService.Conditional => new Conditional(new LogicalOperation(Value(1), EvaluationOperator.Equals, Value(1)))
+      case ExpressionService.Conditional => new Conditional(new Logical(Value(1), LogicalOperation.Equals, Value(1)))
       case ExpressionService.Addition => new Addition(Value(1), Value(1))
       case ExpressionService.Subtraction => new Subtraction(Value(1), Value(1))
       case ExpressionService.Multiplication => new Multiplication(Value(1), Value(1))

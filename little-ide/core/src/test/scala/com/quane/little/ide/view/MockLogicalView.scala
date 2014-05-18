@@ -1,11 +1,11 @@
 package com.quane.little.ide.view
 
-import com.quane.little.language.EvaluationOperator.EvaluationOperator
+import com.quane.little.language.LogicalOperation.LogicalOperation
 
 class MockLogicalView
   extends LogicalView
   with MockViewOfLeftAndRightExpressions {
 
-  def setOperation(operation: EvaluationOperator) = Unit
+  def setOperation(operation: LogicalOperation) = Unit
 
 }

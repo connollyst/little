@@ -14,38 +14,38 @@ class TestTest extends FunSuite {
 
   // Test AND
   test("t && t == t") {
-    assertEvaluatesToTrue(new LogicalOperation(t, EvaluationOperator.And, t))
+    assertEvaluatesToTrue(new Logical(t, LogicalOperation.And, t))
   }
   test("f && f == f") {
-    assertEvaluatesToFalse(new LogicalOperation(f, EvaluationOperator.And, f))
+    assertEvaluatesToFalse(new Logical(f, LogicalOperation.And, f))
   }
   test("t && f == f") {
-    assertEvaluatesToFalse(new LogicalOperation(t, EvaluationOperator.And, f))
+    assertEvaluatesToFalse(new Logical(t, LogicalOperation.And, f))
   }
   test("f && t == f") {
-    assertEvaluatesToFalse(new LogicalOperation(f, EvaluationOperator.And, t))
+    assertEvaluatesToFalse(new Logical(f, LogicalOperation.And, t))
   }
 
   // Test OR
   test("t || t == f") {
-    assertEvaluatesToTrue(new LogicalOperation(t, EvaluationOperator.Or, t))
+    assertEvaluatesToTrue(new Logical(t, LogicalOperation.Or, t))
   }
   test("f || f == t") {
-    assertEvaluatesToFalse(new LogicalOperation(f, EvaluationOperator.Or, f))
+    assertEvaluatesToFalse(new Logical(f, LogicalOperation.Or, f))
   }
   test("t || f == t") {
-    assertEvaluatesToTrue(new LogicalOperation(t, EvaluationOperator.Or, f))
+    assertEvaluatesToTrue(new Logical(t, LogicalOperation.Or, f))
   }
   test("f || t == t") {
-    assertEvaluatesToTrue(new LogicalOperation(f, EvaluationOperator.Or, t))
+    assertEvaluatesToTrue(new Logical(f, LogicalOperation.Or, t))
   }
 
-  private def assertEvaluatesToTrue(operation: LogicalOperation) = {
+  private def assertEvaluatesToTrue(operation: Logical) = {
     val result = operation.evaluate(new Runtime)
     assertTrue(result.asBool)
   }
 
-  private def assertEvaluatesToFalse(operation: LogicalOperation) = {
+  private def assertEvaluatesToFalse(operation: Logical) = {
     val result = operation.evaluate(new Runtime)
     assertFalse(result.asBool)
   }
