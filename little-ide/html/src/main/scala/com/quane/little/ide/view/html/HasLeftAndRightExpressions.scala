@@ -26,17 +26,17 @@ trait HasLeftAndRightExpressions
 
   override def createRightMath() = setRightValueComponent(new MathLayout)
 
-  override def createLeftGetStatement() = setLeftValueComponent(new GetterLayout)
+  override def createLeftGetter() = setLeftValueComponent(new GetterLayout)
 
-  override def createRightGetStatement() = setRightValueComponent(new GetterLayout)
+  override def createRightGetter() = setRightValueComponent(new GetterLayout)
 
-  override def createLeftValueStatement() = setLeftValueComponent(new ValueLayout)
+  override def createLeftLiteral() = setLeftValueComponent(new ValueLayout)
 
-  override def createRightValueStatement() = setRightValueComponent(new ValueLayout)
+  override def createRightLiteral() = setRightValueComponent(new ValueLayout)
 
-  override def createLeftLogicOperation() = setLeftValueComponent(new LogicalLayout)
+  override def createLeftLogic() = setLeftValueComponent(new LogicLayout)
 
-  override def createRightLogicOperation() = setRightValueComponent(new LogicalLayout)
+  override def createRightLogic() = setRightValueComponent(new LogicLayout)
 
   override def createLeftFunctionReference() = setLeftValueComponent(new FunctionReferenceLayout)
 

@@ -7,45 +7,45 @@ import org.scalatest.junit.JUnitRunner
 import org.junit.Assert._
 
 @RunWith(classOf[JUnitRunner])
-class TestTest extends FunSuite {
+class TestLogicWithBoolean extends FunSuite {
 
   val t = Value(true)
   val f = Value(false)
 
   // Test AND
   test("t && t == t") {
-    assertEvaluatesToTrue(new Logical(t, LogicalOperation.And, t))
+    assertEvaluatesToTrue(new Logic(t, LogicOperation.And, t))
   }
   test("f && f == f") {
-    assertEvaluatesToFalse(new Logical(f, LogicalOperation.And, f))
+    assertEvaluatesToFalse(new Logic(f, LogicOperation.And, f))
   }
   test("t && f == f") {
-    assertEvaluatesToFalse(new Logical(t, LogicalOperation.And, f))
+    assertEvaluatesToFalse(new Logic(t, LogicOperation.And, f))
   }
   test("f && t == f") {
-    assertEvaluatesToFalse(new Logical(f, LogicalOperation.And, t))
+    assertEvaluatesToFalse(new Logic(f, LogicOperation.And, t))
   }
 
   // Test OR
   test("t || t == f") {
-    assertEvaluatesToTrue(new Logical(t, LogicalOperation.Or, t))
+    assertEvaluatesToTrue(new Logic(t, LogicOperation.Or, t))
   }
   test("f || f == t") {
-    assertEvaluatesToFalse(new Logical(f, LogicalOperation.Or, f))
+    assertEvaluatesToFalse(new Logic(f, LogicOperation.Or, f))
   }
   test("t || f == t") {
-    assertEvaluatesToTrue(new Logical(t, LogicalOperation.Or, f))
+    assertEvaluatesToTrue(new Logic(t, LogicOperation.Or, f))
   }
   test("f || t == t") {
-    assertEvaluatesToTrue(new Logical(f, LogicalOperation.Or, t))
+    assertEvaluatesToTrue(new Logic(f, LogicOperation.Or, t))
   }
 
-  private def assertEvaluatesToTrue(operation: Logical) = {
+  private def assertEvaluatesToTrue(operation: Logic) = {
     val result = operation.evaluate(new Runtime)
     assertTrue(result.asBool)
   }
 
-  private def assertEvaluatesToFalse(operation: Logical) = {
+  private def assertEvaluatesToFalse(operation: Logic) = {
     val result = operation.evaluate(new Runtime)
     assertFalse(result.asBool)
   }

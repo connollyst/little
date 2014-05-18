@@ -1,22 +1,22 @@
 package com.quane.little.ide.view
 
-import com.quane.little.language.LogicalOperation._
+import com.quane.little.language.LogicOperation._
 import com.quane.little.ide.presenter.{PresenterAcceptsFunctionReference, PresenterAcceptsExpression}
 
-trait LogicalView
-  extends ExpressionView[LogicalViewPresenter]
+trait LogicView
+  extends ExpressionView[LogicViewPresenter]
   with ViewOfLeftAndRightExpressions {
 
   /** Change the logical operation in the view.
     *
     * @param operation the new logical operation
     */
-  def setOperation(operation: LogicalOperation)
+  def setOperation(operation: LogicOperation)
 
 
 }
 
-trait LogicalViewPresenter
+trait LogicViewPresenter
   extends ExpressionViewPresenter
   with PresenterAcceptsExpression
   with PresenterAcceptsFunctionReference {
@@ -25,6 +25,6 @@ trait LogicalViewPresenter
     *
     * @param operation the new logical operation
     */
-  def onOperationChange(operation: LogicalOperation): Unit
+  def onOperationChange(operation: LogicOperation): Unit
 
 }

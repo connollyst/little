@@ -34,33 +34,33 @@ class BlockLayout
 
   super.addComponent(new BlockStepSeparator(this))
 
-  override def addMath(): MathView = addMath(DefaultIndex)
+  override def addMath(): MathView = addMathStep(DefaultIndex)
 
-  override def addMath(index: Int) = add(new MathLayout(), componentIndex(index))
+  override def addMathStep(index: Int) = add(new MathLayout(), componentIndex(index))
 
-  override def addConditional() = addConditional(DefaultIndex)
+  override def addConditional() = addConditionalStep(DefaultIndex)
 
-  override def addConditional(index: Int) = add(new ConditionalLayout(), componentIndex(index))
+  override def addConditionalStep(index: Int) = add(new ConditionalLayout(), componentIndex(index))
 
-  override def addGetStatement() = addGetStatement(DefaultIndex)
+  override def addGetStatement() = addGetStep(DefaultIndex)
 
-  override def addGetStatement(index: Int) = add(new GetterLayout(), componentIndex(index))
+  override def addGetStep(index: Int) = add(new GetterLayout(), componentIndex(index))
 
-  override def addSetStatement() = addSetStatement(DefaultIndex)
+  override def addSetStatement() = addSetStep(DefaultIndex)
 
-  override def addSetStatement(index: Int) = add(new SetterLayout(), componentIndex(index))
+  override def addSetStep(index: Int) = add(new SetterLayout(), componentIndex(index))
 
-  override def addPrintStatement() = addPrintStatement(DefaultIndex)
+  override def addPrintStatement() = addPrintStep(DefaultIndex)
 
-  override def addPrintStatement(index: Int) = add(new PrinterLayout(), componentIndex(index))
+  override def addPrintStep(index: Int) = add(new PrinterLayout(), componentIndex(index))
 
-  override def addLogicalOperation() = addLogicalOperation(DefaultIndex)
+  override def addLogicalOperation() = addLogicStep(DefaultIndex)
 
-  override def addLogicalOperation(index: Int) = add(new LogicalLayout, componentIndex(index))
+  override def addLogicStep(index: Int) = add(new LogicLayout, componentIndex(index))
 
-  override def addFunctionReference() = addFunctionReference(DefaultIndex)
+  override def addFunctionReference() = addFunctionStep(DefaultIndex)
 
-  override def addFunctionReference(index: Int) = add(new FunctionReferenceLayout(), componentIndex(index))
+  override def addFunctionStep(index: Int) = add(new FunctionReferenceLayout(), componentIndex(index))
 
   override def addComponent(component: Component) = {
     super.addComponent(component)

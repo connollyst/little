@@ -33,7 +33,7 @@ class PresenterFactory(implicit val bindingModule: BindingModule) {
 
   def createPrintPresenter(view: PrinterView) = new PrinterPresenter(view)
 
-  def createLogicalPresenter(view: LogicalView) = new LogicalPresenter(view)
+  def createLogicPresenter(view: LogicView) = new LogicPresenter(view)
 
   def createConditionalPresenter(view: ConditionalView) = new ConditionalPresenter(view)
 

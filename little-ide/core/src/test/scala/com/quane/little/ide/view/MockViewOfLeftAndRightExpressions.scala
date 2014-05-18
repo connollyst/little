@@ -8,17 +8,17 @@ trait MockViewOfLeftAndRightExpressions
 
   def createRightMath() = new MockMathView
 
-  def createLeftValueStatement() = new MockValueView
+  def createLeftLiteral() = new MockValueView
 
-  def createRightValueStatement() = new MockValueView
+  def createRightLiteral() = new MockValueView
 
-  def createLeftGetStatement() = new MockGetterView
+  def createLeftGetter() = new MockGetterView
 
-  def createRightGetStatement() = new MockGetterView
+  def createRightGetter() = new MockGetterView
 
-  def createLeftLogicOperation() = new MockLogicalView
+  def createLeftLogic() = new MockLogicView
 
-  def createRightLogicOperation() = new MockLogicalView
+  def createRightLogic() = new MockLogicView
 
   def createLeftFunctionReference() = new MockFunctionReferenceView
 

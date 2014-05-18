@@ -48,25 +48,25 @@ class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: Bindin
     val presenter =
       step match {
         case m: BasicMath =>
-          val stepView = view.addMath(index)
+          val stepView = view.addMathStep(index)
           presenterFactory.createMathPresenter(stepView).initialize(m)
         case s: Setter =>
-          val stepView = view.addSetStatement(index)
+          val stepView = view.addSetStep(index)
           presenterFactory.createSetPresenter(stepView).initialize(s)
         case g: Getter =>
-          val stepView = view.addGetStatement(index)
+          val stepView = view.addGetStep(index)
           presenterFactory.createGetPresenter(stepView).initialize(g)
         case p: Printer =>
-          val stepView = view.addPrintStatement(index)
+          val stepView = view.addPrintStep(index)
           presenterFactory.createPrintPresenter(stepView).initialize(p)
-        case l: Logical =>
-          val stepView = view.addLogicalOperation(index)
-          presenterFactory.createLogicalPresenter(stepView).initialize(l)
+        case l: Logic =>
+          val stepView = view.addLogicStep(index)
+          presenterFactory.createLogicPresenter(stepView).initialize(l)
         case c: Conditional =>
-          val stepView = view.addConditional(index)
+          val stepView = view.addConditionalStep(index)
           presenterFactory.createConditionalPresenter(stepView).initialize(c)
         case f: FunctionReference =>
-          val stepView = view.addFunctionReference(index)
+          val stepView = view.addFunctionStep(index)
           presenterFactory.createFunctionReference(stepView).initialize(f)
         case _ => throw new IllegalArgumentException("Not supported: " + step)
       }

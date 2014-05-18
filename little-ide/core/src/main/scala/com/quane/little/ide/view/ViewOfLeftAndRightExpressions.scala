@@ -1,11 +1,34 @@
 package com.quane.little.ide.view
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** A view of an operation on a left and a right operand.
+  *
+  * @author Sean Connolly
+  */
 trait ViewOfLeftAndRightExpressions {
+
+  /** Replace the existing left value expression with a [[com.quane.little.ide.view.ValueView]].
+    *
+    * @return the view which was created
+    */
+  def createLeftLiteral(): ValueView
+
+  /** Replace the existing right value expression with a [[com.quane.little.ide.view.ValueView]].
+    *
+    * @return the view which was created
+    */
+  def createRightLiteral(): ValueView
+
+  /** Replace the existing left value expression with a [[com.quane.little.ide.view.GetterView]].
+    *
+    * @return the view which was created
+    */
+  def createLeftGetter(): GetterView
+
+  /** Replace the existing right value expression with a [[com.quane.little.ide.view.GetterView]].
+    *
+    * @return the view which was created
+    */
+  def createRightGetter(): GetterView
 
   /** Replace the existing left value expression with a [[com.quane.little.ide.view.MathView]].
     *
@@ -19,41 +42,17 @@ trait ViewOfLeftAndRightExpressions {
     */
   def createRightMath(): MathView
 
-  /** Replace the existing left value expression with a [[com.quane.little.ide.view.ValueView]].
+  /** Replace the existing left value expression with a [[com.quane.little.ide.view.LogicView]].
     *
     * @return the view which was created
     */
-  def createLeftValueStatement(): ValueView
+  def createLeftLogic(): LogicView
 
-  /** Replace the existing right value expression with a [[com.quane.little.ide.view.ValueView]].
+  /** Replace the existing right value expression with a [[com.quane.little.ide.view.LogicView]].
     *
     * @return the view which was created
     */
-  def createRightValueStatement(): ValueView
-
-  /** Replace the existing left value expression with a [[com.quane.little.ide.view.GetterView]].
-    *
-    * @return the view which was created
-    */
-  def createLeftGetStatement(): GetterView
-
-  /** Replace the existing right value expression with a [[com.quane.little.ide.view.GetterView]].
-    *
-    * @return the view which was created
-    */
-  def createRightGetStatement(): GetterView
-
-  /** Replace the existing left value expression with a [[com.quane.little.ide.view.LogicalView]].
-    *
-    * @return the view which was created
-    */
-  def createLeftLogicOperation(): LogicalView
-
-  /** Replace the existing right value expression with a [[com.quane.little.ide.view.LogicalView]].
-    *
-    * @return the view which was created
-    */
-  def createRightLogicOperation(): LogicalView
+  def createRightLogic(): LogicView
 
   /** Replace the existing left value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
     *

@@ -1,28 +1,28 @@
 package com.quane.little.ide.view.html
 
 import com.vaadin.ui.{Alignment, HorizontalLayout}
-import com.quane.little.ide.view.LogicalView
+import com.quane.little.ide.view.LogicView
 import com.quane.little.data.model.RecordId
 import com.quane.little.ide.presenter.command.{AddExpressionCommand, AddFunctionReferenceCommand, IDECommandExecutor}
-import com.quane.little.language.LogicalOperation
-import com.quane.little.language.LogicalOperation.LogicalOperation
+import com.quane.little.language.LogicOperation
+import com.quane.little.language.LogicOperation.LogicOperation
 import com.quane.vaadin.scala.EnumerationComboBox
 
-object LogicalLayout {
+object LogicLayout {
   val Style = "l-logical"
 }
 
-/** An HTML layout view representing a [[com.quane.little.language.Logical]]
+/** An HTML layout view representing a [[com.quane.little.language.Logic]]
   * expression.
   *
   * @author Sean Connolly
   */
-class LogicalLayout
+class LogicLayout
   extends HorizontalLayout
-  with LogicalView
+  with LogicView
   with HasLeftAndRightExpressions {
 
-  val operatorField = new EnumerationComboBox(LogicalOperation)
+  val operatorField = new EnumerationComboBox(LogicOperation)
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
@@ -32,7 +32,7 @@ class LogicalLayout
   add(operatorField)
   add(rightValueWrapper)
 
-  override def setOperation(operation: LogicalOperation) = operatorField.setValue(operation.toString)
+  override def setOperation(operation: LogicOperation) = operatorField.setValue(operation.toString)
 
   override def requestSetExpression(codeId: RecordId, index: Int) =
     IDECommandExecutor.execute(

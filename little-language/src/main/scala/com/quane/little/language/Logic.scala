@@ -2,15 +2,15 @@ package com.quane.little.language
 
 import com.quane.little.language.data.Value
 import com.google.common.base.Objects
-import com.quane.little.language.LogicalOperation.LogicalOperation
+import com.quane.little.language.LogicOperation.LogicOperation
 
 /** An enumeration of all operations supported by the
-  * [[com.quane.little.language.Logical]] expression.
+  * [[com.quane.little.language.Logic]] expression.
   *
   * @author Sean Connolly
   */
-object LogicalOperation extends Enumeration {
-  type LogicalOperation = Value
+object LogicOperation extends Enumeration {
+  type LogicOperation = Value
   val Equals, NotEquals, LessThan, GreaterThan, And, Or = Value
 }
 
@@ -22,9 +22,9 @@ object LogicalOperation extends Enumeration {
   *
   * @author Sean Connolly
   */
-class Logical(val left: Expression,
-              val operation: LogicalOperation,
-              val right: Expression)
+class Logic(val left: Expression,
+            val operation: LogicOperation,
+            val right: Expression)
   extends Expression {
 
   override def evaluate(scope: Scope): Value = {
@@ -33,23 +33,22 @@ class Logical(val left: Expression,
     val r = right.evaluate(scope)
     Value(
       operation match {
-        case LogicalOperation.Equals => l equals r
-        case LogicalOperation.NotEquals => !(l equals r)
-        case LogicalOperation.LessThan => (l compare r) < 0
-        case LogicalOperation.GreaterThan => (l compare r) > 0
-        case LogicalOperation.And => l.asBool && r.asBool
-        case LogicalOperation.Or => l.asBool || r.asBool
+        case LogicOperation.Equals => l equals r
+        case LogicOperation.NotEquals => !(l equals r)
+        case LogicOperation.LessThan => (l compare r) < 0
+        case LogicOperation.GreaterThan => (l compare r) > 0
+        case LogicOperation.And => l.asBool && r.asBool
+        case LogicOperation.Or => l.asBool || r.asBool
       }
     )
   }
 
-  def canEqual(other: Any): Boolean = other.isInstanceOf[Logical]
 
   override def equals(other: Any): Boolean = other match {
-    case that: Logical =>
-      (that canEqual this) &&
-        left == that.left &&
+    case that: Logic =>
+      that.isInstanceOf[Logic] &&
         operation == that.operation &&
+        left == that.left &&
         right == that.right
     case _ => false
   }

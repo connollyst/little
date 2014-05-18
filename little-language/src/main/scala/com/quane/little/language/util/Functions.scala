@@ -53,7 +53,7 @@ object Functions {
     // Step #1: Turn South if I'm facing North
     val north = Value(270)
     val south = Value(90)
-    val isNorth = new Logical(myDirection, LogicalOperation.Equals, north)
+    val isNorth = new Logic(myDirection, LogicOperation.Equals, north)
     val turnSouth = new FunctionReference("turn").addArg("direction", south)
     val turnSouthIfNorth = new Conditional(isNorth).addStep(turnSouth)
     fun.addStep(turnSouthIfNorth)
@@ -91,7 +91,7 @@ object Functions {
     // Save the angle to memory
     val saveAngleStep = new Setter(anglePointer, calculateAngleStep)
     // Check if the angle is too small
-    val tooSmallChecker = new Logical(new Getter(anglePointer), LogicalOperation.LessThan, Value(0))
+    val tooSmallChecker = new Logic(new Getter(anglePointer), LogicOperation.LessThan, Value(0))
     val cleanerFunction = new Setter(anglePointer, new Addition(new Getter(anglePointer), Value(360)))
     val tooSmallCleaner = new Conditional(tooSmallChecker).addStep(cleanerFunction)
     // Build the function

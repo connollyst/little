@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.{Logical, FunctionReference, Getter, Expression}
+import com.quane.little.language.{Logic, FunctionReference, Getter, Expression}
 import com.quane.little.language.data.Value
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{FunctionService, ExpressionService}
@@ -48,14 +48,14 @@ trait PresenterOfLeftAndRightExpressions {
   private[presenter] def left_=(e: Expression): Unit = {
     val presenter =
       e match {
+        case v: Value =>
+          presenterFactory.createValuePresenter(view.createLeftLiteral()).initialize(v)
+        case g: Getter =>
+          presenterFactory.createGetPresenter(view.createLeftGetter()).initialize(g)
         case m: BasicMath =>
           presenterFactory.createMathPresenter(view.createLeftMath()).initialize(m)
-        case g: Getter =>
-          presenterFactory.createGetPresenter(view.createLeftGetStatement()).initialize(g)
-        case v: Value =>
-          presenterFactory.createValuePresenter(view.createLeftValueStatement()).initialize(v)
-        case l: Logical =>
-          presenterFactory.createLogicalPresenter(view.createLeftLogicOperation()).initialize(l)
+        case l: Logic =>
+          presenterFactory.createLogicPresenter(view.createLeftLogic()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createLeftFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)
@@ -71,14 +71,14 @@ trait PresenterOfLeftAndRightExpressions {
   private[presenter] def right_=(e: Expression): Unit = {
     val presenter =
       e match {
+        case v: Value =>
+          presenterFactory.createValuePresenter(view.createRightLiteral()).initialize(v)
+        case g: Getter =>
+          presenterFactory.createGetPresenter(view.createRightGetter()).initialize(g)
         case m: BasicMath =>
           presenterFactory.createMathPresenter(view.createRightMath()).initialize(m)
-        case g: Getter =>
-          presenterFactory.createGetPresenter(view.createRightGetStatement()).initialize(g)
-        case v: Value =>
-          presenterFactory.createValuePresenter(view.createRightValueStatement()).initialize(v)
-        case l: Logical =>
-          presenterFactory.createLogicalPresenter(view.createRightLogicOperation()).initialize(l)
+        case l: Logic =>
+          presenterFactory.createLogicPresenter(view.createRightLogic()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createRightFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Expression not supported: " + e)
@@ -87,19 +87,36 @@ trait PresenterOfLeftAndRightExpressions {
     _right = Some(presenter)
   }
 
-
-  // TODO skip if already this expression
+  /** Set the left or right expression to the [[com.quane.little.language.Expression]]
+    * specified by the `id`
+    *
+    * @param id the expression id
+    * @param index `0` for the left operand, `1` for the right
+    * @throws IllegalArgumentException for an index other than `0` or `1`
+    */
   def requestAddExpression(id: RecordId, index: Int) =
     index match {
       case 0 => left = expressionService.findExpression(id)
       case 1 => right = expressionService.findExpression(id)
+      case _ => throw new IllegalArgumentException(
+        "Invalid left/right index " + index + ", expected 0 or 1"
+      )
     }
 
-  // TODO skip if already this function reference
+  /** Set the left or right expression to the [[com.quane.little.language.FunctionReference]]
+    * specified by the `id`
+    *
+    * @param id the function id
+    * @param index `0` for the left operand, `1` for the right
+    * @throws IllegalArgumentException for an index other than `0` or `1`
+    */
   def requestAddFunctionReference(id: RecordId, index: Int) =
     index match {
       case 0 => left = functionService.findReference(id)
       case 1 => right = functionService.findReference(id)
+      case _ => throw new IllegalArgumentException(
+        "Invalid left/right index " + index + ", expected 0 or 1"
+      )
     }
 
 }

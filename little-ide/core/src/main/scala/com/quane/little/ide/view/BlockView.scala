@@ -6,31 +6,31 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
 
   def addMath(): MathView
 
-  def addMath(index: Int): MathView
+  def addMathStep(index: Int): MathView
 
   def addConditional(): ConditionalView
 
-  def addConditional(index: Int): ConditionalView
+  def addConditionalStep(index: Int): ConditionalView
 
-  def addLogicalOperation(): LogicalView
+  def addLogicalOperation(): LogicView
 
-  def addLogicalOperation(index: Int): LogicalView
+  def addLogicStep(index: Int): LogicView
 
   def addGetStatement(): GetterView
 
-  def addGetStatement(index: Int): GetterView
+  def addGetStep(index: Int): GetterView
 
   def addSetStatement(): SetterView
 
-  def addSetStatement(index: Int): SetterView
+  def addSetStep(index: Int): SetterView
 
   def addPrintStatement(): PrinterView
 
-  def addPrintStatement(index: Int): PrinterView
+  def addPrintStep(index: Int): PrinterView
 
   def addFunctionReference(): FunctionReferenceView
 
-  def addFunctionReference(index: Int): FunctionReferenceView
+  def addFunctionStep(index: Int): FunctionReferenceView
 
 }
 
