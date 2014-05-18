@@ -76,16 +76,18 @@ class Game(implicit val bindingModule: BindingModule)
     * @return the newly spawned mob
     * @throws IllegalArgumentException if this user already has a mob
     */
-  def spawnPlayer(username: String): Mob = {
+  def spawnPlayer(username: String): Entity = {
     if (users.contains(username)) {
-      throw new IllegalArgumentException(
-        "User '" + username + "' already has a mob: " + users(username)
-      )
+      //      throw new IllegalArgumentException(
+      //        "User '" + username + "' already has a mob: " + users(username)
+      //      )
+      entity(users(username))
+    } else {
+      val mob = entityFactory.createMob()
+      entities += (mob.id -> mob)
+      users += (username -> mob.id)
+      mob
     }
-    val mob = entityFactory.createMob()
-    entities += (mob.id -> mob)
-    users += (username -> mob.id)
-    mob
   }
 
   def removePlayer(username: String): Unit = {

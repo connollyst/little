@@ -1,6 +1,6 @@
 package com.quane.little.game.server
 
-import com.quane.little.game.server.events.{JoinEventHandler, ServerReadyEventHandler, IDEConnectionHandler, LittleEvents}
+import com.quane.little.game.server.events.{JoinEventHandler, ServerReadyEventHandler, LittleEvents}
 import org.junit.runner.RunWith
 import org.mockito.Matchers._
 import org.mockito.Mockito._
@@ -35,15 +35,6 @@ class TestEventManager extends WordSpec with MockitoSugar {
       verify(client).addHandler(
         same(LittleEvents.SERVER_READY),
         any[ServerReadyEventHandler]
-      )
-    }
-    "event handler added: ide auth" in {
-      val client = mock[ClientCommunicator]
-      val manager = new EventManager(client)
-      manager.init()
-      verify(client).addHandler(
-        same(LittleEvents.IDE_AUTH),
-        any[IDEConnectionHandler]
       )
     }
   }

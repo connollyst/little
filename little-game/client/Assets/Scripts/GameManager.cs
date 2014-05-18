@@ -18,7 +18,9 @@ public class GameManager : MonoBehaviour
 		public GameObject playerModel;
 		public GameObject foodModel;
 		private SmartFox server;
-		private Dictionary<string, GameObject> myMobs = new Dictionary<string, GameObject> ();
+		private string playerMobId;
+		private static string room = "LittleTest";
+		private Dictionary<string, GameObject> mobs = new Dictionary<string, GameObject> ();
 		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
 		private Dictionary<string, GameObject> walls = new Dictionary<string, GameObject> ();
 
@@ -32,6 +34,16 @@ public class GameManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
 				server.AddEventListener (SFSEvent.PROXIMITY_LIST_UPDATE, OnProximityListUpdate);
 				server.AddEventListener (SFSEvent.MMOITEM_VARIABLES_UPDATE, OnItemUpdate);
+				server.AddEventListener (SFSEvent.EXTENSION_RESPONSE, OnExtensionResponse);
+				server.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
+				Debug.Log ("Joining room..");
+				server.Send (new JoinRoomRequest (room));	
+		}
+	
+		public void OnRoomJoin (BaseEvent evt)
+		{
+				Debug.Log ("Joined room!");
+				// TODO can we safely move this to the ConnectionManager?
 		}
 
 		void FixedUpdate ()
@@ -43,9 +55,23 @@ public class GameManager : MonoBehaviour
 
 		public void OnConnectionLost (BaseEvent evt)
 		{
+				Debug.Log ("Lost server connection, reconnecting..");
 				// Reset all internal states so we kick back to login screen
 				server.RemoveAllEventListeners ();
 				Application.LoadLevel ("Connector");
+		}
+
+		public void OnExtensionResponse (BaseEvent evt)
+		{
+				string cmd = (string)evt.Params ["cmd"];
+				SFSObject dataObject = (SFSObject)evt.Params ["params"];
+				if (cmd == "follow") {
+						var mobId = dataObject.GetUtfString ("mobId");
+						Debug.Log ("Following mob " + mobId);
+						playerMobId = mobId;
+				} else {
+						Debug.LogError ("Unrecognized extension command: " + cmd);
+				}
 		}
 
 		public void OnProximityListUpdate (BaseEvent evt)
@@ -137,8 +163,8 @@ public class GameManager : MonoBehaviour
 
 		private Controller GetPlayerController (string id)
 		{
-				if (myMobs.ContainsKey (id)) {
-						return myMobs [id].GetComponent<Controller> ();
+				if (mobs.ContainsKey (id)) {
+						return mobs [id].GetComponent<Controller> ();
 				} else {
 						return null;
 				}
@@ -189,10 +215,10 @@ public class GameManager : MonoBehaviour
 				string id = item.GetVariable ("id").GetStringValue ();
 				int speed = item.GetVariable ("s").GetIntValue ();
 				int direction = item.GetVariable ("d").GetIntValue ();
-				if (!myMobs.ContainsKey (id)) {
-						myMobs.Add (id, GameObject.Instantiate (playerModel) as GameObject);
+				if (!mobs.ContainsKey (id)) {
+						mobs.Add (id, GameObject.Instantiate (playerModel) as GameObject);
 				}
-				GameObject mob = myMobs [id];
+				GameObject mob = mobs [id];
 				PlayerController controller = mob.GetComponent<PlayerController> ();
 				controller.UUID = id;
 				// controller.Speed = speed;
@@ -204,7 +230,7 @@ public class GameManager : MonoBehaviour
 		{
 				string id = item.GetVariable ("id").GetStringValue ();
 				Debug.Log ("Removing player " + id);
-				myMobs.Remove (id);
+				mobs.Remove (id);
 		}
 
 }

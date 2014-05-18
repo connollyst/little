@@ -14,7 +14,6 @@ public class ConnectionManager : MonoBehaviour
 		private static int    serverPort = 9933;
 		private static string password = "";
 		private static string zone = "little";
-		private static string room = "LittleTest";
 		private static string gameScene = "Game";
 		private SmartFox server;
 
@@ -26,7 +25,6 @@ public class ConnectionManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.CONNECTION_LOST, OnConnectionLost);
 				server.AddEventListener (SFSEvent.LOGIN, OnLogin);
 				server.AddEventListener (SFSEvent.LOGIN_ERROR, OnLoginError);
-				server.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
 				SetMessage ("Connecting..");
 				if (Security.PrefetchSocketPolicy (serverName, serverPort, 200)) {
 						server.Connect (serverName, serverPort);
@@ -76,21 +74,15 @@ public class ConnectionManager : MonoBehaviour
 	
 		public void OnLogin (BaseEvent evt)
 		{
-				SetMessage ("Logged in, joining room..");
-				server.Send (new JoinRoomRequest (room));
+				SetMessage ("Logged in, starting game..");
+				server.RemoveAllEventListeners ();
+				Application.LoadLevel (gameScene);
 		}
 	
 		public void OnLoginError (BaseEvent evt)
 		{
 				string error = (string)evt.Params ["errorMessage"];
 				SetError ("Login to server failed: " + error);
-		}
-
-		public void OnRoomJoin (BaseEvent evt)
-		{
-				SetMessage ("Joined room, starting game..");
-				server.RemoveAllEventListeners ();
-				Application.LoadLevel (gameScene);
 		}
 
 		private void SetMessage (string text)

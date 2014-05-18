@@ -49,10 +49,7 @@ class GameManager(client: ClientCommunicator, val game: Game)
     * @param username the username of the player
     * @return the game location of the connected player
     */
-  def connect(username: String): Vec3D = {
-    val mob = game.spawnPlayer(username)
-    new Vec3D(mob.x, mob.y)
-  }
+  def connect(username: String): Entity = game.spawnPlayer(username)
 
   /** Disconnect a player from the game.<br/>
     * Their managed [[com.quane.little.game.entity.Mob]] will be removed from
