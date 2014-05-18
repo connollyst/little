@@ -1,9 +1,10 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
-import com.quane.little.data.model.{RecordId, CodeCategory, CodeSubcategory}
+import com.quane.little.data.model.{RecordId, CodeCategory}
 import com.quane.little.data.service.{ExpressionService, StatementService, FunctionService}
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.quane.little.data.model.CodeSubcategory
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -36,6 +37,9 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
     function =>
       view.createToolboxItem(CodeCategory.Function, function.category, function.definition.name, function.id)
   }
+
+  override def requestNewFunctionDefinition() =
+    workspace.requestAddBlankFunctionDefinition()
 
   override def openFunctionDefinition(functionId: RecordId) =
     workspace.requestAddFunctionDefinition(functionId)

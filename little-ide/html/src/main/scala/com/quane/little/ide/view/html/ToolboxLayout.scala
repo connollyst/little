@@ -34,8 +34,10 @@ class ToolboxLayout
   override def setSelectedTab(subcategory: CodeSubcategory) =
     setSelectedTab(getTab(subcategory))
 
-  override def createToolboxTab(subcategory: CodeSubcategory) =
+  override def createToolboxTab(subcategory: CodeSubcategory) = {
     addTab(subcategory, new ToolboxSectionComponent())
+    getTabContents(subcategory).add(new ToolboxNewFunctionButton(this, subcategory))
+  }
 
   override def createToolboxItem(category: CodeCategory, subcategory: CodeSubcategory, title: String, functionId: RecordId) =
     addToolboxItem(subcategory, new ToolboxItem(this, title, category, functionId))
@@ -47,7 +49,7 @@ class ToolboxLayout
     tab.setCaption(subcategory.toString + " (" + content.count + ")")
   }
 
-  private def addTab(subcategory: CodeSubcategory, tabContent: ToolboxSectionComponent): Unit = {
+  private def addTab(subcategory: CodeSubcategory, tabContent: ToolboxSectionComponent): Tab = {
     val id = subcategory.toString
     tabContents += (id -> tabContent)
     addTab(tabContent, subcategory.toString)
@@ -93,12 +95,23 @@ private class ToolboxItemContent(view: ToolboxLayout, title: String, category: C
   if (category.equals(CodeCategory.Function)) {
     val button = new NativeButton(Icon.edit.variant(IconVariant.SIZE_LARGE),
       new ClickListener() {
-        override def buttonClick(event: ClickEvent) =
-          view.presenter.openFunctionDefinition(codeId)
+        def buttonClick(event: ClickEvent) = view.presenter.openFunctionDefinition(codeId)
       }
     )
     button.setHtmlContentAllowed(true)
     addComponent(button)
   }
+
+}
+
+private class ToolboxNewFunctionButton(view: ToolboxLayout, subcategory: CodeSubcategory)
+  extends NativeButton {
+
+  setCaption(Icon.plus.variant(IconVariant.SIZE_LARGE))
+  setHtmlContentAllowed(true)
+  addClickListener(new ClickListener {
+    // TODO pass the category
+    def buttonClick(event: ClickEvent) = view.presenter.requestNewFunctionDefinition()
+  })
 
 }
