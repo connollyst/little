@@ -4,19 +4,17 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
+        <artifactId>little-tools</artifactId>
         <groupId>com.quane.little</groupId>
-        <artifactId>little</artifactId>
         <version>0.0.8-SNAPSHOT</version>
     </parent>
+    <artifactId>little-data-mocks</artifactId>
 
-    <artifactId>little-tools</artifactId>
-    <packaging>pom</packaging>
-    <name>Little Tools</name>
-
-    <modules>
-        <module>json</module>
-        <module>logging</module>
-        <module>little-data-mocks</module>
-    </modules>
-
+    <dependencies>
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>little-data</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
