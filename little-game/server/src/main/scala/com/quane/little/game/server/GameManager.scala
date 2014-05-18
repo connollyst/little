@@ -25,11 +25,7 @@ class GameManager(client: ClientCommunicator, val game: Game)
   def init(): Unit = {
     game.initialize()
     game.entities.values foreach {
-      entity =>
-        info("Adding game item " + entity)
-        val id = entity.id
-        val item = client.createItem(entity)
-        items += (id -> item)
+      entity => addItem(entity)
     }
   }
 
@@ -49,7 +45,18 @@ class GameManager(client: ClientCommunicator, val game: Game)
     * @param username the username of the player
     * @return the game location of the connected player
     */
-  def connect(username: String): Entity = game.spawnPlayer(username)
+  def connect(username: String): Entity = {
+    val player = game.spawnPlayer(username)
+    addItem(player)
+    player
+  }
+
+  private def addItem(entity: Entity) = {
+    info("Adding game item " + entity)
+    val id = entity.id
+    val item = client.createItem(entity)
+    items += (id -> item)
+  }
 
   /** Disconnect a player from the game.<br/>
     * Their managed [[com.quane.little.game.entity.Mob]] will be removed from

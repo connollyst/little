@@ -17,8 +17,9 @@ public class GameManager : MonoBehaviour
 
 		public GameObject playerModel;
 		public GameObject foodModel;
+		private GameCamera camera;
+		private string followMobId;
 		private SmartFox server;
-		private string playerMobId;
 		private static string room = "LittleTest";
 		private Dictionary<string, GameObject> mobs = new Dictionary<string, GameObject> ();
 		private Dictionary<string, GameObject> items = new Dictionary<string, GameObject> ();
@@ -38,6 +39,7 @@ public class GameManager : MonoBehaviour
 				server.AddEventListener (SFSEvent.ROOM_JOIN, OnRoomJoin);
 				Debug.Log ("Joining room..");
 				server.Send (new JoinRoomRequest (room));	
+				camera = GetComponent<GameCamera> ();
 		}
 	
 		public void OnRoomJoin (BaseEvent evt)
@@ -51,11 +53,21 @@ public class GameManager : MonoBehaviour
 				if (server != null) {
 						server.ProcessEvents ();
 				}
+				if (followMobId != null) {
+						if (mobs.ContainsKey (followMobId)) {
+								Debug.Log ("Following mob: " + followMobId);
+								GameObject mob = mobs [followMobId];
+								camera.SetTarget (mob.transform);
+								followMobId = null;
+						} else {
+								Debug.Log ("Following mob (waiting to spawn): " + followMobId);
+						}
+				}
 		}
 
 		public void OnConnectionLost (BaseEvent evt)
 		{
-				Debug.Log ("Lost server connection, reconnecting..");
+				Debug.LogError ("Lost server connection, reconnecting..");
 				// Reset all internal states so we kick back to login screen
 				server.RemoveAllEventListeners ();
 				Application.LoadLevel ("Connector");
@@ -66,9 +78,7 @@ public class GameManager : MonoBehaviour
 				string cmd = (string)evt.Params ["cmd"];
 				SFSObject dataObject = (SFSObject)evt.Params ["params"];
 				if (cmd == "follow") {
-						var mobId = dataObject.GetUtfString ("mobId");
-						Debug.Log ("Following mob " + mobId);
-						playerMobId = mobId;
+						followMobId = dataObject.GetUtfString ("mobId");
 				} else {
 						Debug.LogError ("Unrecognized extension command: " + cmd);
 				}
