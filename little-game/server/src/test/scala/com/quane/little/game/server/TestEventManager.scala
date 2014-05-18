@@ -4,47 +4,48 @@ import com.quane.little.game.server.events.{JoinEventHandler, ServerReadyEventHa
 import org.junit.runner.RunWith
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.scalatest.FunSuite
+import org.scalatest.WordSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
+import com.quane.little.data.MockDataBindingModule
 
-/** Test cases for [[EventManager]].
+/** Test cases for [[com.quane.little.game.server.EventManager]].
   *
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestEventManager
-  extends FunSuite
-  with MockitoSugar {
+class TestEventManager extends WordSpec with MockitoSugar {
 
-  test("event handler added: user join room") {
-    val client = mock[ClientCommunicator]
-    val manager = new EventManager(client)
-    manager.init()
-    verify(client).addHandler(
-      same(LittleEvents.SERVER_READY),
-      any[JoinEventHandler]
-    )
-  }
+  implicit val bindingModule = MockDataBindingModule
 
-  test("event handler added: server ready") {
-    val client = mock[ClientCommunicator]
-    val manager = new EventManager(client)
-    manager.init()
-    verify(client).addHandler(
-      same(LittleEvents.SERVER_READY),
-      any[ServerReadyEventHandler]
-    )
-  }
-
-  test("event handler added: ide auth") {
-    val client = mock[ClientCommunicator]
-    val manager = new EventManager(client)
-    manager.init()
-    verify(client).addHandler(
-      same(LittleEvents.IDE_AUTH),
-      any[IDEConnectionHandler]
-    )
+  "EventManager" should {
+    "event handler added: user join room" in {
+      val client = mock[ClientCommunicator]
+      val manager = new EventManager(client)
+      manager.init()
+      verify(client).addHandler(
+        same(LittleEvents.SERVER_READY),
+        any[JoinEventHandler]
+      )
+    }
+    "event handler added: server ready" in {
+      val client = mock[ClientCommunicator]
+      val manager = new EventManager(client)
+      manager.init()
+      verify(client).addHandler(
+        same(LittleEvents.SERVER_READY),
+        any[ServerReadyEventHandler]
+      )
+    }
+    "event handler added: ide auth" in {
+      val client = mock[ClientCommunicator]
+      val manager = new EventManager(client)
+      manager.init()
+      verify(client).addHandler(
+        same(LittleEvents.IDE_AUTH),
+        any[IDEConnectionHandler]
+      )
+    }
   }
 
 }

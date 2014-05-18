@@ -115,6 +115,14 @@
             <version>${mockito.version}</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Provides Mock Data DI in Tests -->
+        <dependency>
+            <groupId>${project.groupId}</groupId>
+            <artifactId>little-data-mocks</artifactId>
+            <version>${project.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 
 </project>

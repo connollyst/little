@@ -1,12 +1,13 @@
 package com.quane.little.game.server
 
 import com.quane.little.game.server.events.{IDEConnectionHandler, ServerReadyEventHandler, JoinEventHandler, LittleEvents}
+import com.escalatesoft.subcut.inject.BindingModule
 
-/** Manages [[ClientCommunicator]] event handlers.
+/** Manages [[com.quane.little.game.server.ClientCommunicator]] event handlers.
   *
   * @author Sean Connolly
   */
-class EventManager(client: ClientCommunicator) {
+class EventManager(client: ClientCommunicator)(implicit val bindingModule: BindingModule) {
 
   def init(): Unit = {
     client.addHandler(LittleEvents.USER_JOIN_ROOM, new JoinEventHandler)
