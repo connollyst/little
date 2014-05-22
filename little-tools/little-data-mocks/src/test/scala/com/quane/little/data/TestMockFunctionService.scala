@@ -4,7 +4,7 @@ import org.scalatest.{BeforeAndAfterEach, WordSpec}
 import com.quane.little.data.service.{UserService, FunctionService}
 import com.escalatesoft.subcut.inject.Injectable
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.model.{RecordId, CodeCategory}
 import com.quane.little.language.FunctionDefinition
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -40,6 +40,39 @@ class TestMockFunctionService extends WordSpec with ShouldMatchers with BeforeAn
   }
 
   "MockFunctionService" should {
+    "assign id on insert" in {
+      val function = functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("MyFunction")
+      )
+      function.id should not be null
+    }
+    "assign unique id on insert" in {
+      val functionA1 = functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("FunctionA1")
+      )
+      val functionA2 = functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("FunctionA2")
+      )
+      functionA1.id should not be functionA2.id
+    }
+    "maintain id on update" in {
+      val originalFunction = functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("OriginalFunction")
+      )
+      val updatedFunction = functionService.update(
+        originalFunction.id, new FunctionDefinition("UpdatedFunction")
+      )
+      originalFunction.id should be(updatedFunction.id)
+    }
+    "error when updating with unknown id" in {
+      val badId = "SomeFakeId"
+      val error = intercept[IllegalArgumentException] {
+        functionService.update(
+          new RecordId(badId), new FunctionDefinition("UpdatedFunction")
+        )
+      }
+      error.getMessage should be("No function: " + badId)
+    }
     "remove all records on init" in {
       functionService.insert(
         testUsernameA, CodeCategory.Misc, new FunctionDefinition("FunctionA1")
@@ -73,13 +106,47 @@ class TestMockFunctionService extends WordSpec with ShouldMatchers with BeforeAn
       functionService.findByUser(testUsernameA).size should be(2)
       functionService.findByUser(testUsernameB).size should be(2)
     }
-    "assign id on insert" in {
-      val record = functionService.insert(
-        testUsernameA,
-        CodeCategory.Misc,
-        new FunctionDefinition("test_function")
+    "report existing definition exists" in {
+      functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("MyFunction")
       )
-      record.id should not be null
+      val exists = functionService.exists(testUsernameA, "MyFunction")
+      exists should be(right = true)
+    }
+    "report non existing definition doesn't exist" in {
+      functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("MyFunction")
+      )
+      val exists = functionService.exists(testUsernameA, "AnotherFunction")
+      exists should be(right = false)
+    }
+    "find definition by id" in {
+      val function = functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("MyFunction")
+      )
+      val definition = functionService.findDefinition(function.id)
+      function.definition should be(definition)
+    }
+    "find reference by id" in {
+      val function = functionService.insert(
+        testUsernameA, CodeCategory.Misc, new FunctionDefinition("MyFunction")
+      )
+      val reference = functionService.findReference(function.id)
+      function.definition.asReference should be(reference)
+    }
+    "not find definition by unknown id" in {
+      val badId = "SomeFakeId"
+      val error = intercept[IllegalArgumentException] {
+        functionService.findDefinition(new RecordId(badId))
+      }
+      error.getMessage should be("No function: " + badId)
+    }
+    "not find reference by unknown id" in {
+      val badId = "SomeFakeId"
+      val error = intercept[IllegalArgumentException] {
+        functionService.findReference(new RecordId(badId))
+      }
+      error.getMessage should be("No function: " + badId)
     }
   }
 

@@ -7,11 +7,12 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
 import scala.collection.mutable.ListBuffer
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** A mock implementation of the [[com.quane.little.data.service.FunctionService]]
+  * trait to be injected into tests. It's behavior emulates that of the real
+  * implementation, letting us focus on higher level logic in test.
+  *
+  * @author Sean Connolly
+  */
 class MockFunctionService(implicit val bindingModule: BindingModule)
   extends FunctionService
   with Injectable {
@@ -50,7 +51,7 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
       case Some(function) =>
         function.definition = fun
         function
-      case None => throw new IllegalArgumentException("No function: " + id)
+      case None => throw new IllegalArgumentException("No function: " + id.oid)
     }
   }
 
@@ -68,7 +69,7 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
   override def findDefinition(id: RecordId): FunctionDefinition =
     getFunction(id) match {
       case Some(function) => function.definition
-      case None => throw new IllegalArgumentException("No function: " + id)
+      case None => throw new IllegalArgumentException("No function: " + id.oid)
     }
 
   override def exists(username: String, functionName: String): Boolean =
