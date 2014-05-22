@@ -2,26 +2,27 @@ package com.quane.little.data
 
 import com.quane.little.data.service.UserService
 import com.quane.little.data.model.{RecordId, UserRecord}
-import scala.collection.mutable.ListBuffer
 
-/** A mock implementation of [[com.quane.little.data.service.UserService]] for
-  * testing higher level functionality.
+/** A mock [[com.quane.little.data.service.UserService]] to be injected into
+  * tests.
   *
   * @author Sean Connolly
   */
-class MockUserService extends UserService {
+class MockUserService
+  extends UserService
+  with MockService[UserRecord] {
 
-  private val users = ListBuffer[UserRecord]()
-  private var idSequence = 1
+  override def upsert(username: String): UserRecord =
+    getUser(username) match {
+      case Some(u) => u
+      case None => insert(username)
+    }
 
-  override def init(): Unit = {
-    users.clear()
-    idSequence = 1
-  }
-
-  private def nextId: RecordId = {
-    idSequence += 1
-    new RecordId(idSequence.toString)
+  private def insert(username: String): UserRecord = {
+    val record = new UserRecord(username, username + "First", username + "Last")
+    record.id = nextId
+    records += record
+    record
   }
 
   override def fetch(username: String): UserRecord =
@@ -31,39 +32,20 @@ class MockUserService extends UserService {
     }
 
   override def fetch(userId: RecordId): UserRecord =
-    getUser(userId) match {
+    get(userId) match {
       case Some(user) => user
       case None => throw new IllegalArgumentException("No user: " + userId.oid)
-    }
-
-  override def upsert(username: String): UserRecord =
-    getUser(username) match {
-      case Some(u) => u
-      case None => insert(username)
     }
 
   override def exists(username: String): Boolean =
     getUser(username).isDefined
 
   private def getUser(username: String): Option[UserRecord] = {
-    users foreach {
+    records foreach {
       user => if (user.username == username) return Some(user)
     }
     None
   }
 
-  private def getUser(userId: RecordId): Option[UserRecord] = {
-    users foreach {
-      user => if (user.id == userId) return Some(user)
-    }
-    None
-  }
-
-  private def insert(username: String): UserRecord = {
-    val record = new UserRecord(username, username + "First", username + "Last")
-    record.id = nextId
-    users += record
-    record
-  }
 
 }
