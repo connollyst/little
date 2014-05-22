@@ -16,5 +16,20 @@
             <artifactId>little-data</artifactId>
             <version>${project.version}</version>
         </dependency>
+
+        <!-- Test Dependencies -->
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>${junit.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.scalatest</groupId>
+            <artifactId>scalatest_${scala.version}</artifactId>
+            <version>${scalatest.version}</version>
+            <scope>test</scope>
+        </dependency>
     </dependencies>
 </project>

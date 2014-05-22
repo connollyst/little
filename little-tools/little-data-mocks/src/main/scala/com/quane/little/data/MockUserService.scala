@@ -12,8 +12,17 @@ import scala.collection.mutable.ListBuffer
 class MockUserService extends UserService {
 
   private val users = ListBuffer[UserRecord]()
+  private var idSequence = 1
 
-  override def init(): Unit = ()
+  override def init(): Unit = {
+    users.clear()
+    idSequence = 1
+  }
+
+  private def nextId: RecordId = {
+    idSequence += 1
+    new RecordId(idSequence.toString)
+  }
 
   override def fetch(username: String): UserRecord =
     getUser(username) match {
@@ -52,6 +61,7 @@ class MockUserService extends UserService {
 
   private def insert(username: String): UserRecord = {
     val record = new UserRecord(username, username + "First", username + "Last")
+    record.id = nextId
     users += record
     record
   }

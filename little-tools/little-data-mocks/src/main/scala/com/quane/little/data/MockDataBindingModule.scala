@@ -1,7 +1,7 @@
 package com.quane.little.data
 
 import com.escalatesoft.subcut.inject.NewBindingModule
-import com.quane.little.data.service.UserService
+import com.quane.little.data.service.{FunctionService, UserService}
 
 /** An extension of the normal data binding module which provides mock
   * implementations of the data services for testing higher level function.
@@ -15,6 +15,7 @@ object MockDataBindingModule extends NewBindingModule(module => {
   module <~ DataBindingModule
 
   bind[UserService] toModuleSingle { implicit module => new MockUserService}
+  bind[FunctionService] toModuleSingle { implicit module => new MockFunctionService}
   // TODO mock out other services
 
 })
