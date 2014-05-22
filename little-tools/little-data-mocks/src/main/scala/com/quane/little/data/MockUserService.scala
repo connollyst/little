@@ -18,12 +18,8 @@ class MockUserService
       case None => insert(username)
     }
 
-  private def insert(username: String): UserRecord = {
-    val record = new UserRecord(username, username + "First", username + "Last")
-    record.id = nextId
-    records += record
-    record
-  }
+  private def insert(username: String): UserRecord =
+    insert(new UserRecord(username, username + "First", username + "Last"))
 
   override def fetch(username: String): UserRecord =
     getUser(username) match {

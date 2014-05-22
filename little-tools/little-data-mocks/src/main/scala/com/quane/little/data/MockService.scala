@@ -21,9 +21,11 @@ trait MockService[R <: Any with HasRecordId] {
     idSequence = 1
   }
 
-  protected def nextId: RecordId = {
-    idSequence += 1
-    new RecordId(idSequence.toString)
+
+  protected def insert(record: R): R = {
+    record.id = nextId
+    records += record
+    record
   }
 
   protected def get(id: RecordId): Option[R] = {
@@ -31,6 +33,11 @@ trait MockService[R <: Any with HasRecordId] {
       record => if (record.id == id) return Some(record)
     }
     None
+  }
+
+  private def nextId: RecordId = {
+    idSequence += 1
+    new RecordId(idSequence.toString)
   }
 
 }

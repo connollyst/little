@@ -21,10 +21,7 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
 
   override def insert(username: String, category: CodeCategory, fun: FunctionDefinition): FunctionRecord = {
     val owner = userService.fetch(username)
-    val record = new FunctionRecord(owner.id, category, fun)
-    record.id = nextId
-    records += record
-    record
+    insert(new FunctionRecord(owner.id, category, fun))
   }
 
   override def update(id: RecordId, fun: FunctionDefinition): FunctionRecord = {

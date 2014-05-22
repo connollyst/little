@@ -21,10 +21,7 @@ class MockListenerService(implicit val bindingModule: BindingModule)
 
   override def insert(username: String, listener: EventListener): ListenerRecord = {
     val owner = userService.fetch(username)
-    val record = new ListenerRecord(owner.id, listener)
-    record.id = nextId
-    records += record
-    record
+    insert(new ListenerRecord(owner.id, listener))
   }
 
   override def update(id: RecordId, listener: EventListener): ListenerRecord = {
