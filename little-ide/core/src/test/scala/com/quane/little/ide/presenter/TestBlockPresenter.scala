@@ -8,13 +8,13 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language._
 import com.quane.little.language.data.Value
-import com.quane.little.ide.IDEBindingModule
+import com.quane.little.ide.MockIDEBindingModule
 import org.scalatest.matchers.ShouldMatchers
 
 @RunWith(classOf[JUnitRunner])
 class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar {
 
-  implicit val bindingModule = IDEBindingModule
+  implicit val bindingModule = MockIDEBindingModule
 
   "BlockPresenter" should {
 
