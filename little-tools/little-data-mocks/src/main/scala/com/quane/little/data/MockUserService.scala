@@ -33,7 +33,7 @@ class MockUserService extends UserService {
   override def fetch(userId: RecordId): UserRecord =
     getUser(userId) match {
       case Some(user) => user
-      case None => throw new IllegalArgumentException("No user: " + userId)
+      case None => throw new IllegalArgumentException("No user: " + userId.oid)
     }
 
   override def upsert(username: String): UserRecord =

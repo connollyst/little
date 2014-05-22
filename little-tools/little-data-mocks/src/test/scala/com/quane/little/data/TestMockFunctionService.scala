@@ -6,11 +6,14 @@ import com.escalatesoft.subcut.inject.Injectable
 import org.scalatest.matchers.ShouldMatchers
 import com.quane.little.data.model.CodeCategory
 import com.quane.little.language.FunctionDefinition
+import org.junit.runner.RunWith
+import org.scalatest.junit.JUnitRunner
 
 /** Test cases for the mock service.
   *
   * @author Sean Connolly
   */
+@RunWith(classOf[JUnitRunner])
 class TestMockFunctionService extends WordSpec with ShouldMatchers with BeforeAndAfterEach with Injectable {
 
   implicit val bindingModule = MockDataBindingModule
