@@ -44,7 +44,7 @@ class SetterLayout
     })
   }
 
-  override def createGetExpression() = setValueComponent(new GetterLayout)
+  override def createGetterExpression() = setValueComponent(new GetterLayout)
 
   override def createMathExpression() = setValueComponent(new MathLayout)
 

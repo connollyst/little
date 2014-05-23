@@ -60,7 +60,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     val presenter =
       e match {
         case g: Getter =>
-          presenterFactory.createGetPresenter(view.createGetExpression()).initialize(g)
+          presenterFactory.createGetPresenter(view.createGetterExpression()).initialize(g)
         case m: BasicMath =>
           presenterFactory.createMathPresenter(view.createMathExpression()).initialize(m)
         case l: Logic =>

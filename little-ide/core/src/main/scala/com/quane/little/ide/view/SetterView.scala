@@ -19,7 +19,7 @@ trait SetterView extends StatementView[SetterViewPresenter] {
     *
     * @return the view which was created
     */
-  def createGetExpression(): GetterView
+  def createGetterExpression(): GetterView
 
   /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.MathView]].
     *

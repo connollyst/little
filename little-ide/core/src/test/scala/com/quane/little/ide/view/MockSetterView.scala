@@ -20,7 +20,7 @@ class MockSetterView
 
   override def setName(n: String) = name = Some(n)
 
-  override def createGetExpression() = new MockGetterView
+  override def createGetterExpression() = new MockGetterView
 
   override def createMathExpression() = new MockMathView
 
