@@ -57,7 +57,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
       e match {
         // TODO skip if nothing has changed
         case g: Getter =>
-          presenterFactory.createGetPresenter(view.createGetExpression()).initialize(g)
+          presenterFactory.createGetPresenter(view.createGetterExpression()).initialize(g)
         case m: BasicMath =>
           presenterFactory.createMathPresenter(view.createMathExpression()).initialize(m)
         case l: Logic =>

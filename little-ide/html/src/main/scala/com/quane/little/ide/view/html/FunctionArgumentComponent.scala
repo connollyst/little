@@ -36,7 +36,7 @@ class FunctionArgumentComponent
 
   override def setName(name: String): Unit = nameLabel.setValue(name)
 
-  override def createGetExpression(): GetterLayout = setValue(new GetterLayout)
+  override def createGetterExpression(): GetterLayout = setValue(new GetterLayout)
 
   override def createMathExpression(): MathLayout = setValue(new MathLayout)
 
