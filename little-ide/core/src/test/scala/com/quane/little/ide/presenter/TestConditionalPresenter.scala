@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import org.scalatest.FunSuite
+import org.scalatest.WordSpec
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.ide.view._
 import org.mockito.Mockito._
@@ -13,14 +13,16 @@ import com.quane.little.ide.MockIDEBindingModule
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestConditionalPresenter extends FunSuite with MockitoSugar {
+class TestConditionalPresenter extends WordSpec with MockitoSugar {
 
   implicit val bindingModule = MockIDEBindingModule
 
-  test("test listener registered") {
-    val view = mockConditionalView
-    val presenter = new ConditionalPresenter(view)
-    verify(view).registerViewPresenter(presenter)
+  "ConditionalPresenter" should {
+    "test listener registered" in {
+      val view = mockConditionalView
+      val presenter = new ConditionalPresenter(view)
+      verify(view).registerViewPresenter(presenter)
+    }
   }
 
   /** Utility function for mocking out a [[com.quane.little.ide.view.ConditionalView]]
