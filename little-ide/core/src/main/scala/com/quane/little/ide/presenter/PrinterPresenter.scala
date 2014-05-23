@@ -21,7 +21,7 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
   private val expressionService = inject[ExpressionService]
   private val functionService = inject[FunctionService]
 
-  private var _value: Option[_ <: ExpressionViewPresenter] = None
+  private var _text: Option[_ <: ExpressionViewPresenter] = None
 
   view.registerViewPresenter(this)
 
@@ -31,25 +31,26 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
     * @return the initialized presenter
     */
   private[presenter] def initialize(p: Printer): PrinterPresenter[V] = {
-    value = p.value
+    text = p.value
     this
   }
 
-  /** Get the print value expression.
+  /** Get the print text expression.
     *
-    * @return the value expression
+    * @return the text expression
     */
-  private[presenter] def value: ExpressionViewPresenter =
-    _value match {
-      case Some(e) => e
-      case None => throw new IllegalAccessException("No print expression specified.")
+  private[presenter] def text: ExpressionViewPresenter =
+    _text match {
+      case Some(t) => t
+      case None => throw new IllegalAccessException("No print text expression specified.")
     }
 
-  /** Set the print value expression.
+  /** Set the print text expression.
     *
-    * @param e the value expression
+    * @param e the text expression
     */
-  private[presenter] def value_=(e: Expression): Unit = {
+  private[presenter] def text_=(e: Expression): Unit = {
+    // TODO skip if not changed
     val presenter =
       e match {
         case g: Getter =>
@@ -58,27 +59,26 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
           presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
-        case _ => throw new IllegalArgumentException("Not supported: " + e)
+        case _ => throw new IllegalArgumentException("Print text expression not supported: " + e)
       }
-    _value = Some(presenter)
+    _text = Some(presenter)
   }
 
   override def requestAddExpression(id: RecordId, index: Int) =
-    value = expressionService.findExpression(id)
+    text = expressionService.findExpression(id)
 
-  // TODO skip if already this function reference
   override def requestAddFunctionReference(id: RecordId, index: Int) =
-    value = functionService.findReference(id)
+    text = functionService.findReference(id)
 
   /** Compile to a [[com.quane.little.language.Printer]].
     *
     * @return the compiled print statement
     */
-  override def compile(): Printer = new Printer(value.compile())
+  override def compile(): Printer = new Printer(text.compile())
 
   override def toString =
     Objects.toStringHelper(getClass)
-      .add("value", _value)
+      .add("text", _text)
       .toString
 
 }
