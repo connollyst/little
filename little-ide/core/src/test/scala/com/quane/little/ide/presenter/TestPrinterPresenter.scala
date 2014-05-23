@@ -38,26 +38,47 @@ class TestPrinterPresenter
     "create a view for a new Value expression" in {
       val view = mock[PrinterView]
       val presenter = new PrinterPresenter(view)
-      val expectedValueView = mock[ValueView]
-      when(view.createValueStatement()).thenReturn(expectedValueView)
+      when(view.createValueStatement()).thenReturn(mock[ValueView])
       presenter.text = Value("abc")
       verify(view).createValueStatement()
     }
     "create a view for a new Getter expression" in {
       val view = mock[PrinterView]
       val presenter = new PrinterPresenter(view)
-      val getterView = mock[GetterView]
-      when(view.createGetStatement()).thenReturn(getterView)
+      when(view.createGetStatement()).thenReturn(mock[GetterView])
       presenter.text = new Getter("TestValue")
       verify(view).createGetStatement()
     }
     "create a view for a new FunctionReference expression" in {
       val view = mock[PrinterView]
       val presenter = new PrinterPresenter(view)
+      when(view.createFunctionReference()).thenReturn(mock[FunctionReferenceView])
+      presenter.text = new FunctionReference("TestFunction")
+      verify(view).createFunctionReference()
+    }
+    "initialize the view for a new Value expression" in {
+      val view = mock[PrinterView]
+      val presenter = new PrinterPresenter(view)
+      val valueView = mock[ValueView]
+      when(view.createValueStatement()).thenReturn(valueView)
+      presenter.text = Value("abc")
+      verify(valueView).setValue("abc")
+    }
+    "initialize the view for a new Getter expression" in {
+      val view = mock[PrinterView]
+      val presenter = new PrinterPresenter(view)
+      val getterView = mock[GetterView]
+      when(view.createGetStatement()).thenReturn(getterView)
+      presenter.text = new Getter("TestValue")
+      verify(getterView).setName("TestValue")
+    }
+    "initialize the view for a new FunctionReference expression" in {
+      val view = mock[PrinterView]
+      val presenter = new PrinterPresenter(view)
       val functionView = mock[FunctionReferenceView]
       when(view.createFunctionReference()).thenReturn(functionView)
       presenter.text = new FunctionReference("TestFunction")
-      verify(view).createFunctionReference()
+      verify(functionView).setName("TestFunction")
     }
     "create a view with a presenter for a new Value expression" in {
       val view = mock[PrinterView]
