@@ -7,7 +7,7 @@ import com.quane.little.language.Getter
   *
   * @author Sean Connolly
   */
-class GetterPresenter[V <: GetterView](view: V)
+class GetterPresenter(val view: GetterView)
   extends GetterViewPresenter {
 
   private var _name = ""
@@ -21,7 +21,7 @@ class GetterPresenter[V <: GetterView](view: V)
     * @param g the get statement
     * @return the initialized presenter
     */
-  private[presenter] def initialize(g: Getter): GetterPresenter[V] = {
+  private[presenter] def initialize(g: Getter): GetterPresenter = {
     name = g.name
     this
   }

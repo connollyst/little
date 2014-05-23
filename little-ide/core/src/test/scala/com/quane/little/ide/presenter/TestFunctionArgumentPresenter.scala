@@ -40,7 +40,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
     val valueView = mock[ValueView]
-    val valuePresenter = mock[ValuePresenter[ValueView]]
+    val valuePresenter = mock[ValuePresenter]
     when(view.createValueExpression()).thenReturn(valueView)
     val value = mock[Value]
     presenter.value = value
@@ -53,7 +53,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
     val getterView = mock[GetterView]
-    val getterPresenter = mock[GetterPresenter[GetterView]]
+    val getterPresenter = mock[GetterPresenter]
     when(view.createGetExpression()).thenReturn(getterView)
     val getter = mock[Getter]
     presenter.value = getter
@@ -66,7 +66,7 @@ class TestFunctionArgumentPresenter extends FunSuite with MockitoSugar {
     val view = mock[FunctionArgumentView]
     val presenter = new FunctionArgumentPresenter(view)
     val valueView = mock[FunctionReferenceView]
-    val valuePresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
+    val valuePresenter = mock[FunctionReferencePresenter]
     when(view.createFunctionReference()).thenReturn(valueView)
     val function = mock[FunctionReference]
     presenter.value = function

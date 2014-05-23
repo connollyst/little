@@ -76,14 +76,14 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
       when(view.addGetStep()).thenReturn(new MockGetterView)
       presenter.add(new Getter("x"))
       presenter.steps.size should be(1)
-      presenter.steps(0).getClass should be(classOf[GetterPresenter[_ <: GetterView]])
+      presenter.steps(0).getClass should be(classOf[GetterPresenter])
     }
 
     "initialize get statement when added" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
       when(view.addGetStep()).thenReturn(new MockGetterView)
-      val getPresenter = mock[GetterPresenter[GetterView]]
+      val getPresenter = mock[GetterPresenter]
       val statement = new Getter("x")
       presenter.add(statement)
       // TODO test isn't applicable as presenter comes from factory
@@ -132,14 +132,14 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
       when(view.addFunctionStep()).thenReturn(new MockFunctionReferenceView)
       presenter.add(new FunctionReference("funName"))
       presenter.steps.size should be(1)
-      presenter.steps(0).getClass should be(classOf[FunctionReferencePresenter[_ <: FunctionReferenceView]])
+      presenter.steps(0).getClass should be(classOf[FunctionReferencePresenter])
     }
 
     "initialize function reference when added" in {
       val view = mock[BlockView]
       val presenter = new BlockPresenter(view)
       when(view.addFunctionStep()).thenReturn(new MockFunctionReferenceView)
-      val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
+      val functionPresenter = mock[FunctionReferencePresenter]
       val statement = new FunctionReference("funName")
       presenter.add(statement)
       // TODO test isn't applicable as presenter comes from factory

@@ -9,8 +9,8 @@ import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
   *
   * @author Sean Connolly
   */
-class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
-                                                             args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])(implicit val bindingModule: BindingModule)
+class FunctionReferencePresenter(val view: FunctionReferenceView,
+                                 args: ListBuffer[FunctionArgumentPresenter[_]] = new ListBuffer[FunctionArgumentPresenter[_]])(implicit val bindingModule: BindingModule)
   extends FunctionReferenceViewPresenter
   with Injectable {
 
@@ -20,7 +20,9 @@ class FunctionReferencePresenter[V <: FunctionReferenceView](view: V,
 
   view.registerViewPresenter(this)
 
-  private[presenter] def initialize(fun: FunctionReference): FunctionReferencePresenter[V] = {
+  private[presenter] def initialize(fun: FunctionReference): FunctionReferencePresenter = {
+    println("Initializing function reference: " + fun)
+    println("Initializing function reference args: " + fun.args)
     view.clearArguments()
     name = fun.name
     fun.args foreach {

@@ -13,7 +13,7 @@ import com.quane.little.language.math.BasicMath
   *
   * @author Sean Connolly
   */
-class BlockPresenter[V <: BlockView](view: V)(implicit val bindingModule: BindingModule)
+class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingModule)
   extends BlockViewPresenter
   with Injectable {
 

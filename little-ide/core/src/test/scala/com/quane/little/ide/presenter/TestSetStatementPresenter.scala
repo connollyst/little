@@ -123,7 +123,7 @@ class TestSetStatementPresenter extends FunSuite with MockitoSugar {
     val view = mock[SetterView]
     val presenter = new SetterPresenter(view)
     val getterView = mock[GetterView]
-    val getterPresenter = mock[GetterPresenter[GetterView]]
+    val getterPresenter = mock[GetterPresenter]
     when(view.createGetExpression()).thenReturn(getterView)
     val statement = new Getter("x")
     presenter.value = statement

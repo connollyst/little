@@ -7,7 +7,7 @@ import com.quane.little.language.data.Value
   *
   * @author Sean Connolly
   */
-class ValuePresenter[V <: ValueView](view: V)
+class ValuePresenter(val view: ValueView)
   extends ValueViewPresenter {
 
   private var _value: String = ""
@@ -20,7 +20,7 @@ class ValuePresenter[V <: ValueView](view: V)
     * @param v the value
     * @return the initialized presenter
     */
-  private[presenter] def initialize(v: Value): ValuePresenter[V] = {
+  private[presenter] def initialize(v: Value): ValuePresenter = {
     value = v.asText
     this
   }
@@ -38,6 +38,6 @@ class ValuePresenter[V <: ValueView](view: V)
     *
     * @return the compiled expression
     */
-  override def compile = Value(_value)
+  override def compile() = Value(_value)
 
 }

@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view._
-import com.quane.little.language.{FunctionReference, Getter, Expression}
+import com.quane.little.language.FunctionReference
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
 import org.scalatest.FunSuite
@@ -9,18 +9,28 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language.data.Value
 import com.quane.little.ide.MockIDEBindingModule
+import com.escalatesoft.subcut.inject.Injectable
+import org.scalatest.matchers.ShouldMatchers
 
+/** Tests for the [[com.quane.little.ide.presenter.PrinterPresenter]].
+  *
+  * @author Sean Connolly
+  */
 @RunWith(classOf[JUnitRunner])
-class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
+class TestPrintStatementPresenter
+  extends FunSuite
+  with ShouldMatchers
+  with MockitoSugar
+  with Injectable {
 
   implicit val bindingModule = MockIDEBindingModule
 
   test("test value is set") {
     val view = new MockPrinterView
     val presenter = new PrinterPresenter(view)
-    presenter.value = Value("text")
-    val valuePresenter = presenter.value.asInstanceOf[ValuePresenter[_ <: ValueView]]
-    assert(valuePresenter.value == "text")
+    presenter.value = Value("abc")
+    val valuePresenter = presenter.value.asInstanceOf[ValuePresenter]
+    assert(valuePresenter.value == "abc")
   }
 
   /* Test View interaction */
@@ -34,40 +44,63 @@ class TestPrintStatementPresenter extends FunSuite with MockitoSugar {
   test("test value expression propagates to view") {
     val view = mock[PrinterView]
     val presenter = new PrinterPresenter(view)
-    val valueView = mock[ValueView]
-    val valuePresenter = mock[ValuePresenter[ValueView]]
-    when(view.createValueStatement()).thenReturn(valueView)
-    val value = mock[Value]
-    presenter.value = value
+    val expectedValueView = mock[ValueView]
+    when(view.createValueStatement()).thenReturn(expectedValueView)
+    presenter.value = Value("abc")
     verify(view).createValueStatement()
-    // TODO test isn't applicable as presenter comes from factory
-    verify(valuePresenter).initialize(value)
+  }
+
+  test("test value expression presenter wired to view") {
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
+    val expectedValueView = mock[ValueView]
+    when(view.createValueStatement()).thenReturn(expectedValueView)
+    presenter.value = Value("abc")
+    presenter.value.getClass should be(classOf[ValuePresenter])
+    val valuePresenter = presenter.value.asInstanceOf[ValuePresenter]
+    valuePresenter.view should be(expectedValueView)
   }
 
   test("test get expression propagates to view") {
     val view = mock[PrinterView]
     val presenter = new PrinterPresenter(view)
     val getterView = mock[GetterView]
-    val getterPresenter = mock[GetterPresenter[GetterView]]
     when(view.createGetStatement()).thenReturn(getterView)
-    val getter = mock[Getter]
+    val getter = new Getter("TestValue")
     presenter.value = getter
     verify(view).createGetStatement()
-    // TODO test isn't applicable as presenter comes from factory
-    verify(getterPresenter).initialize(getter)
+  }
+
+  test("test get expression presenter wired to view") {
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
+    val getterView = mock[GetterView]
+    when(view.createGetStatement()).thenReturn(getterView)
+    presenter.value = new Getter("TestValue")
+    presenter.value.getClass should be(classOf[GetterPresenter])
+    val getterPresenter = presenter.value.asInstanceOf[GetterPresenter]
+    getterPresenter.view should be(getterView)
   }
 
   test("test function reference expression propagates to view") {
     val view = mock[PrinterView]
     val presenter = new PrinterPresenter(view)
     val functionView = mock[FunctionReferenceView]
-    val functionPresenter = mock[FunctionReferencePresenter[FunctionReferenceView]]
     when(view.createFunctionReference()).thenReturn(functionView)
-    val function = mock[FunctionReference]
+    val function = new FunctionReference("TestFunction")
     presenter.value = function
     verify(view).createFunctionReference()
-    // TODO test isn't applicable as presenter comes from factory
-    verify(functionPresenter).initialize(function)
+  }
+
+  test("test function reference expression presenter wired to view") {
+    val view = mock[PrinterView]
+    val presenter = new PrinterPresenter(view)
+    val functionView = mock[FunctionReferenceView]
+    when(view.createFunctionReference()).thenReturn(functionView)
+    presenter.value = new FunctionReference("TestFunction")
+    presenter.value.getClass should be(classOf[FunctionReferencePresenter])
+    val functionPresenter = presenter.value.asInstanceOf[FunctionReferencePresenter]
+    functionPresenter.view should be(functionView)
   }
 
   /* Test setting expressions for the value */
