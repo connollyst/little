@@ -37,10 +37,16 @@ class TestSetterPresenter extends WordSpec with ShouldMatchers with MockitoSugar
       val presenter = new SetterPresenter(view)
       verify(view).registerViewPresenter(presenter)
     }
-    "initialize name in its view" in {
+    "set default name in its view immediately" in {
       val view = mockSetterView
       new SetterPresenter(view)
-      verify(view).setName(anyString())
+      verify(view).setName(anyString)
+    }
+    "initialize name in its view" in {
+      val view = mockSetterView
+      val presenter = new SetterPresenter(view)
+      presenter.name = "abc"
+      verify(view).setName("abc")
     }
     "propagate name change to its view" in {
       val view = mockSetterView

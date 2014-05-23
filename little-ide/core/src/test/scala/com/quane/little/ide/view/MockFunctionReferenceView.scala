@@ -1,7 +1,18 @@
 package com.quane.little.ide.view
 
-object MockFunctionReferenceView {
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito._
+
+object MockFunctionReferenceView extends MockitoSugar {
+
   def apply(): MockFunctionReferenceView = new MockFunctionReferenceView
+
+  def mocked(): FunctionReferenceView = {
+    val view = mock[FunctionReferenceView]
+    when(view.createArgument()).then(MockView.answer(MockFunctionArgumentView.apply))
+    view
+  }
+
 }
 
 /** An implementation of [[com.quane.little.ide.view.FunctionReferenceView]] for

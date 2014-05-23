@@ -1,5 +1,9 @@
 package com.quane.little.ide.view
 
+object MockFunctionArgumentView {
+  def apply() = new MockFunctionArgumentView
+}
+
 /** An implementation of [[com.quane.little.ide.view.FunctionArgumentView]] for
   * testing purposes.
   *

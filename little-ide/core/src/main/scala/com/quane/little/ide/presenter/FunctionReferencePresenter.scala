@@ -19,6 +19,7 @@ class FunctionReferencePresenter(val view: FunctionReferenceView,
   private var _name: String = ""
 
   view.registerViewPresenter(this)
+  view.setName(_name)
 
   private[presenter] def initialize(fun: FunctionReference): FunctionReferencePresenter = {
     println("Initializing function reference: " + fun)
