@@ -1,13 +1,11 @@
 package com.quane.little.ide.view
 
-import com.escalatesoft.subcut.inject.BindingModule
-
 /** An implementation of [[com.quane.little.ide.view.BlockView]] for testing
   * purposes.
   *
   * @author Sean Connolly
   */
-class MockBlockView(implicit val bindingModule: BindingModule)
+class MockBlockView
   extends BlockView
   with MockView {
 

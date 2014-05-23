@@ -1,5 +1,9 @@
 package com.quane.little.ide.view
 
+object MockFunctionReferenceView {
+  def apply(): MockFunctionReferenceView = new MockFunctionReferenceView
+}
+
 /** An implementation of [[com.quane.little.ide.view.FunctionReferenceView]] for
   * testing purposes.
   *

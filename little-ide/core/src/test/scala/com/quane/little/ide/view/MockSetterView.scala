@@ -1,5 +1,12 @@
 package com.quane.little.ide.view
 
+object MockSetterView {
+  def apply(): MockSetterView = {
+    println("Creating new setter view..")
+    new MockSetterView
+  }
+}
+
 /** An implementation of [[com.quane.little.ide.view.SetterView]] for
   * testing purposes.
   *

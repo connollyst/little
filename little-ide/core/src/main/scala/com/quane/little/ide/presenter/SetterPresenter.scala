@@ -33,6 +33,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     * @return the initialized presenter
     */
   private[presenter] def initialize(s: Setter): SetterPresenter[V] = {
+    println("Initializing setter")
     name = s.name
     value = s.value
     this

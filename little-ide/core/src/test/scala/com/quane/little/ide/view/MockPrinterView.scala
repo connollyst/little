@@ -1,5 +1,9 @@
 package com.quane.little.ide.view
 
+object MockPrinterView {
+  def apply(): MockPrinterView = new MockPrinterView
+}
+
 /** An implementation of [[com.quane.little.ide.view.PrinterView]] for
   * testing purposes.
   *

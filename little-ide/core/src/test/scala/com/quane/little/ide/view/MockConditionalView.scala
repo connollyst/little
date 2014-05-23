@@ -1,13 +1,15 @@
 package com.quane.little.ide.view
 
-import com.escalatesoft.subcut.inject.BindingModule
+object MockConditionalView {
+  def apply(): MockConditionalView = new MockConditionalView
+}
 
 /** An implementation of [[com.quane.little.ide.view.ConditionalView]] for
   * testing purposes.
   *
   * @author Sean Connolly
   */
-class MockConditionalView(implicit val bindingModule: BindingModule)
+class MockConditionalView
   extends ConditionalView
   with MockView {
 
