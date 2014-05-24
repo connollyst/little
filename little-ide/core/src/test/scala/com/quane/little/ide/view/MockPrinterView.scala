@@ -9,9 +9,7 @@ object MockPrinterView {
   *
   * @author Sean Connolly
   */
-class MockPrinterView
-  extends PrinterView
-  with MockView {
+class MockPrinterView extends PrinterView with MockView {
 
   override def createValueStatement() = new MockValueView
 

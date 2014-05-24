@@ -58,7 +58,6 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
           presenterFactory.createGetPresenter(stepView).initialize(g)
         case s: Setter =>
           val stepView = view.addSetStep(index)
-          println("Creating setter with step: " + stepView)
           presenterFactory.createSetPresenter(stepView).initialize(s)
         case p: Printer =>
           val stepView = view.addPrintStep(index)

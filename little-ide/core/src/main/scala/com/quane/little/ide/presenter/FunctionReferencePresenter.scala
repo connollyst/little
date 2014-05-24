@@ -22,8 +22,6 @@ class FunctionReferencePresenter(val view: FunctionReferenceView,
   view.setName(_name)
 
   private[presenter] def initialize(fun: FunctionReference): FunctionReferencePresenter = {
-    println("Initializing function reference: " + fun)
-    println("Initializing function reference args: " + fun.args)
     view.clearArguments()
     name = fun.name
     fun.args foreach {
