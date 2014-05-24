@@ -1,13 +1,28 @@
 package com.quane.little.ide.view
 
-import com.escalatesoft.subcut.inject.BindingModule
+import org.scalatest.mock.MockitoSugar
+import org.mockito.Mockito._
+import com.quane.little.ide.view.MockView._
+
+object MockFunctionDefinitionView extends MockitoSugar {
+
+  def apply() = new MockFunctionDefinitionView
+
+  def mocked(): FunctionDefinitionView = {
+    val view = mock[FunctionDefinitionView]
+    when(view.createBlock()).then(answer(MockBlockView.apply))
+    when(view.createFunctionParameter()).then(answer(MockFunctionParameterView.apply))
+    view
+  }
+
+}
 
 /** An implementation of [[com.quane.little.ide.view.FunctionDefinitionView]]
   * for testing purposes.
   *
   * @author Sean Connolly
   */
-class MockFunctionDefinitionView(implicit val bindingModule: BindingModule)
+class MockFunctionDefinitionView
   extends FunctionDefinitionView
   with MockView {
 

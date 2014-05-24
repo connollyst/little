@@ -59,7 +59,7 @@ class TestSetterPresenter extends WordSpec with ShouldMatchers with MockitoSugar
       presenter.onNameChange("sean is cool")
       assert(presenter.name == "sean is cool")
     }
-    "not propagated name change to view when view is modified" in {
+    "not propagate name change to view when view is modified" in {
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       presenter.onNameChange("sean is cool")

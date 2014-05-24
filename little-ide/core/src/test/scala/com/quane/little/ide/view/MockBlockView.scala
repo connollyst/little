@@ -3,6 +3,7 @@ package com.quane.little.ide.view
 import org.mockito.Mockito._
 import org.mockito.Matchers._
 import org.scalatest.mock.MockitoSugar
+import com.quane.little.ide.view.MockView._
 
 object MockBlockView extends MockView with MockitoSugar {
 
@@ -16,20 +17,20 @@ object MockBlockView extends MockView with MockitoSugar {
     */
   def mocked(): BlockView = {
     val view = mock[BlockView]
-    when(view.addMathStep()).then(MockView.answer(MockMathView.apply))
-    when(view.addMathStep(anyInt)).then(MockView.answer(MockMathView.apply))
-    when(view.addLogicStep()).then(MockView.answer(MockLogicView.apply))
-    when(view.addLogicStep(anyInt)).then(MockView.answer(MockLogicView.apply))
-    when(view.addGetStep()).then(MockView.answer(MockGetterView.apply))
-    when(view.addGetStep(anyInt)).then(MockView.answer(MockGetterView.apply))
-    when(view.addSetStep()).then(MockView.answer(MockSetterView.apply))
-    when(view.addSetStep(anyInt)).then(MockView.answer(MockSetterView.apply))
-    when(view.addPrintStep()).then(MockView.answer(MockPrinterView.apply))
-    when(view.addPrintStep(anyInt)).then(MockView.answer(MockPrinterView.apply))
-    when(view.addConditionalStep()).then(MockView.answer(MockConditionalView.apply))
-    when(view.addConditionalStep(anyInt)).then(MockView.answer(MockConditionalView.apply))
-    when(view.addFunctionStep()).then(MockView.answer(MockFunctionReferenceView.apply))
-    when(view.addFunctionStep(anyInt)).then(MockView.answer(MockFunctionReferenceView.apply))
+    when(view.addMathStep()).then(answer(MockMathView.apply))
+    when(view.addMathStep(anyInt)).then(answer(MockMathView.apply))
+    when(view.addLogicStep()).then(answer(MockLogicView.apply))
+    when(view.addLogicStep(anyInt)).then(answer(MockLogicView.apply))
+    when(view.addGetStep()).then(answer(MockGetterView.apply))
+    when(view.addGetStep(anyInt)).then(answer(MockGetterView.apply))
+    when(view.addSetStep()).then(answer(MockSetterView.apply))
+    when(view.addSetStep(anyInt)).then(answer(MockSetterView.apply))
+    when(view.addPrintStep()).then(answer(MockPrinterView.apply))
+    when(view.addPrintStep(anyInt)).then(answer(MockPrinterView.apply))
+    when(view.addConditionalStep()).then(answer(MockConditionalView.apply))
+    when(view.addConditionalStep(anyInt)).then(answer(MockConditionalView.apply))
+    when(view.addFunctionStep()).then(answer(MockFunctionReferenceView.apply))
+    when(view.addFunctionStep(anyInt)).then(answer(MockFunctionReferenceView.apply))
     view
   }
 
