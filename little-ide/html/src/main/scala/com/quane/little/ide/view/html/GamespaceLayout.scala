@@ -9,13 +9,14 @@ import com.quane.vaadin.scala.VaadinMixin
 import com.porotype.iconfont.FontAwesome.{IconVariant, Icon}
 import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.shared.ui.window.WindowMode
+import com.vaadin.ui.Window.{CloseEvent, CloseListener}
 
 object GamespaceLayout {
   val Style = "l-gamespace"
   val StyleView = Style + "-viewer"
   val StyleListeners = Style + "-listeners"
   // TODO URL should come from presenter
-  val GameURL = new ExternalResource("http://localhost/~sean/little/game/little/little.html?username=connollyst")
+  val GameURL = new ExternalResource("http://localhost/~sean/little/game/little2/little.html?username=connollyst")
 }
 
 /** Layout containing the core game elements: a display of the game itself and
@@ -51,13 +52,15 @@ class GamespaceViewer
   extends VerticalLayout
   with VaadinMixin {
 
-  private val browser = add(new BrowserFrame("", GamespaceLayout.GameURL))
+  private val browserWrapper = add(new CssLayout with VaadinMixin)
+  private val browser = browserWrapper.add(new BrowserFrame("", GamespaceLayout.GameURL))
   private val controls = add(new HorizontalLayout)
 
   setSizeFull()
-  setExpandRatio(browser, 1)
+  setExpandRatio(browserWrapper, 1)
   setStyleName(GamespaceLayout.StyleView)
 
+  browserWrapper.setSizeFull()
   browser.setSizeFull()
   controls.setWidth(100, Sizeable.Unit.PERCENTAGE)
   controls.setDefaultComponentAlignment(Alignment.MIDDLE_RIGHT)
@@ -68,13 +71,16 @@ class GamespaceViewer
     setHtmlContentAllowed(true)
     addClickListener(new ClickListener {
       override def buttonClick(event: ClickEvent) = {
-        val browser = new BrowserFrame("", GamespaceLayout.GameURL)
-        browser.setSizeFull()
         val window = new Window("little", browser)
         window.setWidth(80, Sizeable.Unit.PERCENTAGE)
         window.setHeight(80, Sizeable.Unit.PERCENTAGE)
         window.setWindowMode(WindowMode.MAXIMIZED)
         window.center()
+        window.addCloseListener(new CloseListener {
+          override def windowClose(e: CloseEvent) = {
+            browserWrapper.add(browser)
+          }
+        })
         getUI.addWindow(window)
       }
     })
