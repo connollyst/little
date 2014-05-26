@@ -24,7 +24,7 @@ class FunctionDefinitionLayout
   with FunctionDefinitionView
   with RemovableComponent {
 
-  private val stepList = new BlockLayout
+  private val blockWrapper = new CssLayout with VaadinMixin
 
   private val header = createHeader()
   private val body = createBody()
@@ -45,29 +45,23 @@ class FunctionDefinitionLayout
     bodyLeft.setHeight(100, Sizeable.Unit.PERCENTAGE)
     bodyLeft.setStyleName(FunctionDefinitionLayout.StyleHeadLeft)
     body.addComponent(bodyLeft)
-    body.addComponent(stepList)
+    body.addComponent(blockWrapper)
     body.setStyleName(FunctionDefinitionLayout.StyleBody)
     body.setSpacing(false)
+    body.setSizeFull()
+    body.setExpandRatio(blockWrapper, 1)
     body
   }
 
   private def createFooter(): Component = {
-    val footer = new CssLayout()
+    val footer = new CssLayout
     footer.setStyleName(FunctionDefinitionLayout.StyleFoot)
     footer
   }
 
-  override def createFunctionParameter(): FunctionParameterComponent = {
-    val view = new FunctionParameterComponent()
-    // TODO simplify this assignment
-    header.parameters_+=(view)
-    view
-  }
+  override def createFunctionParameter() = header.add(new FunctionParameterComponent)
 
-  override def createBlock(): BlockLayout = {
-    // TODO this goes against the pattern, we should create the block view here!
-    stepList
-  }
+  override def createBlock() = blockWrapper.add(new BlockLayout)
 
   private[html] def requestAddParameter() = presenter.requestAddParameter()
 
@@ -103,7 +97,7 @@ private class FunctionDefinitionHeader(view: FunctionDefinitionLayout)
     // TODO should be a label that, when clicked, becomes a text field
   }
 
-  private def createParameterLayout(): Layout = new HorizontalLayout {
+  private def createParameterLayout() = new HorizontalLayout with VaadinMixin {
     setSpacing(true)
   }
 
@@ -114,6 +108,6 @@ private class FunctionDefinitionHeader(view: FunctionDefinitionLayout)
 
   def name_=(n: String) = nameField.setValue(n)
 
-  def parameters_+=(p: FunctionParameterComponent) = parameterLayout.addComponent(p)
+  def add(p: FunctionParameterComponent): FunctionParameterComponent = parameterLayout.add(p)
 
 }
