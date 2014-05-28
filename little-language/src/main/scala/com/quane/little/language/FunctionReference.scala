@@ -8,6 +8,7 @@ import com.quane.little.language.data.Value
   * evaluation.
   *
   * @param name the name of the function
+  * @see [[com.quane.little.language.FunctionDefinition]]
   */
 class FunctionReference(val name: String)
   extends Expression {

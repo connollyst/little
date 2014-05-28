@@ -8,6 +8,8 @@ import com.google.common.base.Objects
 /** Defines a function.
   *
   * @param name the function name
+  * @see [[com.quane.little.language.FunctionReference]]
+  * @see [[com.quane.little.language.FunctionParameter]]
   */
 class FunctionDefinition(val name: String) {
 
@@ -107,6 +109,7 @@ class FunctionDefinition(val name: String) {
 /** Defines a function parameter to be specified at evaluation time.
   *
   * @param name the name of the parameter
+  * @see [[com.quane.little.language.FunctionDefinition]]
   */
 class FunctionParameter(val name: String) {
 
