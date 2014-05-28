@@ -43,7 +43,7 @@ class EntityFactory(game: Game)(implicit val bindingModule: BindingModule)
     listenerService.findListenersByUser(username) foreach {
       listener => mob.operator.addEventListener(listener)
     }
-    game.eventBus.report(mob, Event.OnSpawn)
+    game.eventBus.report(Event.OnSpawn, mob, mob)
     mob
   }
 

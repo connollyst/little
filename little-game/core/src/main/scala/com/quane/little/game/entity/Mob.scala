@@ -3,14 +3,11 @@ package com.quane.little.game.entity
 import com.google.common.base.Objects
 import com.quane.little.game.engine.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
-import com.quane.little.language.{Operable, Operator, Runtime}
+import com.quane.little.language.Operator
 import scala.util.Random
 
 class Mob(body: EntityBody, manager: InteractionManager)
-  extends Entity(body, manager)
-  with Operable {
-
-  val operator = new Operator(new Runtime, this) // TODO where should the Runtime come from?
+  extends Entity(body, manager) {
 
   // Range of 1-10
   private var _speed = 0
@@ -36,8 +33,8 @@ class Mob(body: EntityBody, manager: InteractionManager)
     super.touchedBy(other)
     other match {
       case food: Food => manager.mobConsumesFood(this, food)
-      case wall: ImmovableEntity => manager.mobContactsImmovableObject(this)
-      case mob: Mob => manager.mobContactsMob(this)
+      case wall: ImmovableEntity => manager.mobContactsImmovableObject(this, wall)
+      case mob: Mob => manager.mobContactsMob(this, mob)
       case _ => error("Touched unexpected Entity: " + other)
     }
   }
@@ -46,8 +43,8 @@ class Mob(body: EntityBody, manager: InteractionManager)
     super.approachedBy(other)
     other match {
       case food: Food => manager.mobApproachesFood(this, food)
-      case wall: ImmovableEntity => manager.mobApproachesImmovableObject(this)
-      case mob: Mob => manager.mobApproachesMob(this)
+      case wall: ImmovableEntity => manager.mobApproachesImmovableObject(this, wall)
+      case mob: Mob => manager.mobApproachesMob(this, mob)
       case _ => error("Approaching unexpected Entity: " + other)
     }
   }

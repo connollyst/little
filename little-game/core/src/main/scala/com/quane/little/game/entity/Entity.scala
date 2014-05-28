@@ -5,7 +5,7 @@ import com.quane.little.game.engine.InteractionManager
 import com.quane.little.game.physics.bodies.EntityBody
 import com.quane.little.tools.Logging
 import java.util.UUID
-
+import com.quane.little.language.{Runtime, Operator, Operable}
 
 /** An entity, any object that exists in the game.
   *
@@ -14,13 +14,18 @@ import java.util.UUID
   * @constructor create a new entity
   * @param body the entity's physical body
   * @param manager the game's interaction manager
+  *
+  * @author Sean Connolly
   */
 abstract class Entity(val body: EntityBody, manager: InteractionManager)
-  extends Logging {
+  extends Operable
+  with Logging {
 
   body.attach(this)
 
   val id = UUID.randomUUID.toString
+  val operator = new Operator(new Runtime, this)
+  // TODO where should the Runtime come from?
   var isRemoved = false
 
   def x: Float = body.coords.x

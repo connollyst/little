@@ -4,10 +4,12 @@ import com.google.common.base.Objects
 import com.quane.little.language._
 import com.quane.little.language.event.Event.Event
 
-class EventListener(val event: Event)
+/** Evaluates a block of code in response to an [[com.quane.little.language.event.Event]].
+  *
+  * @param event the event to listen for
+  */
+class EventListener(val event: Event, block: Block = new Block)
   extends Code {
-
-  private val block = new Block
 
   def stepCount: Int = block.length
 
@@ -20,8 +22,19 @@ class EventListener(val event: Event)
 
   def steps_=(steps: List[EvaluableCode]) = block.steps = steps
 
-  def evaluate(scope: Scope): Unit = {
+  /** Evaluate the event listener; which should only be done when the event has occurred.<br/>
+    * Note: the listener defines it's own scope within the evaluation scope
+    *
+    * @param scope the primary object if the event (eg: the player)
+    * @param it the secondary object in the event (eg: some food)
+    */
+  def evaluate(scope: Operator, it: Operator): Unit = {
     val listenerScope = new Scope(scope)
+    // TODO can these be put into anonymous functions?
+    listenerScope.save("_little_it_x", it.x)
+    listenerScope.save("_little_it_y", it.y)
+    listenerScope.save("_little_it_speed", it.speed)
+    listenerScope.save("_little_it_direction", it.direction)
     block.evaluate(listenerScope)
   }
 

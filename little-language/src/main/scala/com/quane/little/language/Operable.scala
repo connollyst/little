@@ -2,13 +2,13 @@ package com.quane.little.language
 
 object Operable {
 
-  val X = "GuyX"
+  val X = "_little_x"
 
-  val Y = "GuyY"
+  val Y = "_little_y"
 
-  val SPEED = "GuySpeed"
+  val SPEED = "_little_speed"
 
-  val DIRECTION = "GuyDirection"
+  val DIRECTION = "_little_direction"
 
   val MAX_SPEED = 50
 
