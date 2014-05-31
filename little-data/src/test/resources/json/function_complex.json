@@ -1,4 +1,8 @@
 {
+
+    "_id": {
+        "$oid": "ComplexFunctionRecordID"
+    },
     "ownerId": {
         "$oid": "UserRecordID"
     },
@@ -32,8 +36,5 @@
                 "name": "degrees"
             }
         ]
-    },
-    "_id": {
-        "$oid": "ComplexFunctionRecordID"
     }
 }

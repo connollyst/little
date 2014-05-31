@@ -23,24 +23,26 @@ class TestFunctionRecord extends WordSpec with ShouldMatchers {
   val littleJSON = new LittleJSON()
   val userId = new RecordId("UserRecordID")
   val category = CodeCategory.Misc
-  val definitionBlank = new FunctionDefinition("BlankFunction")
-  val functionBlankId = new RecordId("BlankFunctionRecordID")
-  val functionBlank = new FunctionRecord(userId, category, definitionBlank)
-  functionBlank.id = functionBlankId
-  val definitionComplex = Functions.turnRelative
-  val functionComplexId = new RecordId("ComplexFunctionRecordID")
-  val functionComplex = new FunctionRecord(userId, category, definitionComplex)
-  functionComplex.id = functionComplexId
+  // A blank function definition
+  val blankFunction = new FunctionDefinition("BlankFunction")
+  val blankFunctionId = new RecordId("BlankFunctionRecordID")
+  val blankRecord = new FunctionRecord(userId, category, blankFunction)
+  blankRecord.id = blankFunctionId
+  // A more complex function definition
+  val complexFunction = Functions.turnRelative
+  val complexFunctionId = new RecordId("ComplexFunctionRecordID")
+  val complexRecord = new FunctionRecord(userId, category, complexFunction)
+  complexRecord.id = complexFunctionId
 
   classOf[FunctionRecord].getSimpleName should {
     "serialize blank function to JSON" in {
       val expected = getJSON("function_blank")
-      val actual = littleJSON.serialize(functionBlank)
+      val actual = littleJSON.serialize(blankRecord)
       JSONAssert.assertEquals(expected, actual, true)
     }
     "deserialize record id from JSON" in {
       val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
-      actual.id should be(functionBlankId)
+      actual.id should be(blankFunctionId)
     }
     "deserialize owner record id from JSON" in {
       val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
@@ -52,15 +54,15 @@ class TestFunctionRecord extends WordSpec with ShouldMatchers {
     }
     "deserialize function definition from JSON" in {
       val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
-      actual.definition should be(definitionBlank)
+      actual.definition should be(blankFunction)
     }
     "deserialize from JSON" in {
       val actual = littleJSON.deserialize[FunctionRecord](getJSON("function_blank"))
-      actual should be(functionBlank)
+      actual should be(blankRecord)
     }
     "serialize complex function to JSON" in {
       val expected = getJSON("function_turnRelative")
-      val actual = littleJSON.serialize(functionComplex)
+      val actual = littleJSON.serialize(complexRecord)
       println(actual)
       JSONAssert.assertEquals(expected, actual, true)
     }
