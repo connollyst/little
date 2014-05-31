@@ -26,7 +26,7 @@ class PrinterLayout
   setStyleNames(ExpressionLayout.Style, PrinterLayout.Style)
 
   addComponent(printLabel)
-  addComponent(new ExpressionMenu(this))
+  // TODO add the CodeMenuLayout wrapper here
   addComponent(Buttons.closeButton(this))
 
   override def createValueStatement(): ValueLayout = {

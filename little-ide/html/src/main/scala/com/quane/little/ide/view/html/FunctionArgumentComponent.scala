@@ -31,7 +31,7 @@ class FunctionArgumentComponent
 
   add(nameLabel)
   add(new Label("="))
-  add(new ExpressionMenu(this))
+  // TODO add the CodeMenuLayout wrapper here
   add(valueWrapper)
 
   override def setName(name: String): Unit = nameLabel.setValue(name)

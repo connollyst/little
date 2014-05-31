@@ -20,7 +20,7 @@ class PresenterFactory(implicit val bindingModule: BindingModule) {
 
   // TODO generify all of these into the above function
 
-  def createCodeMenu(view: CodeMenuView) = new CodeMenuPresenter(view)
+  def createCodeMenu[C <: PresenterAccepts](view: CodeMenuView, context: C)(implicit m: Manifest[C]) = new CodeMenuPresenter(view, context)
 
   def createMathPresenter(view: MathView) = new MathPresenter(view)
 

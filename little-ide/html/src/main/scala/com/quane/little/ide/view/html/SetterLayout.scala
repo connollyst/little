@@ -31,7 +31,7 @@ class SetterLayout
 
   addComponent(nameField)
   addComponent(new Label("="))
-  addComponent(new ExpressionMenu(this))
+  // TODO add the CodeMenuLayout wrapper here
   addComponent(valueWrapper)
   addComponent(Buttons.closeButton(this))
 

@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{CodeMenuView, BlockView}
+import com.quane.little.ide.view.BlockView
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
@@ -36,7 +36,15 @@ class BlockLayout
 
   override def addCodeMenu() = addCodeMenu(DefaultIndex)
 
-  override def addCodeMenu(index: Int) = new CodeMenuView {}
+  override def addCodeMenu(index: Int) = {
+    val menu = new CodeMenuLayout(this, index) // TODO index becomes out of date
+    if (index < 0) {
+      super.addComponent(menu)
+    } else {
+      super.addComponent(menu, index)
+    }
+    menu
+  }
 
   override def addMathStep() = addMathStep(DefaultIndex)
 
