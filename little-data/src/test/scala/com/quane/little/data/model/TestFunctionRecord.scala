@@ -61,7 +61,7 @@ class TestFunctionRecord extends WordSpec with ShouldMatchers {
       actual should be(blankRecord)
     }
     "serialize complex function to JSON" in {
-      val expected = getJSON("function_turnRelative")
+      val expected = getJSON("function_complex")
       val actual = littleJSON.serialize(complexRecord)
       println(actual)
       JSONAssert.assertEquals(expected, actual, true)
