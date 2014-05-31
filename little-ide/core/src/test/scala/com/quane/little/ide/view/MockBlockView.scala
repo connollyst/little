@@ -45,31 +45,35 @@ class MockBlockView
   extends BlockView
   with MockView {
 
-  override def addMathStep(): MathView = new MockMathView
+  override def addCodeMenu() = addCodeMenu(0)
 
-  override def addMathStep(index: Int): MathView = new MockMathView
+  override def addCodeMenu(index: Int) = new MockCodeMenuView
 
-  override def addConditionalStep() = new MockConditionalView
+  override def addMathStep() = addMathStep(0)
+
+  override def addMathStep(index: Int) = new MockMathView
+
+  override def addConditionalStep() = addConditionalStep(0)
 
   override def addConditionalStep(index: Int) = new MockConditionalView
 
-  override def addGetStep() = new MockGetterView
+  override def addGetStep() = addGetStep(0)
 
   override def addGetStep(index: Int) = new MockGetterView
 
-  override def addSetStep() = new MockSetterView
+  override def addSetStep() = addSetStep(0)
 
   override def addSetStep(index: Int) = new MockSetterView
 
-  override def addLogicStep() = new MockLogicView
+  override def addLogicStep() = addLogicStep(0)
 
   override def addLogicStep(index: Int) = new MockLogicView
 
-  override def addPrintStep() = new MockPrinterView
+  override def addPrintStep() = addPrintStep(0)
 
   override def addPrintStep(index: Int) = new MockPrinterView
 
-  override def addFunctionStep() = new MockFunctionReferenceView
+  override def addFunctionStep() = addFunctionStep(0)
 
   override def addFunctionStep(index: Int) = new MockFunctionReferenceView
 

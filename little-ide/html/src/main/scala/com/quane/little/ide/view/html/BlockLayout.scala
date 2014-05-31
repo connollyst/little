@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{MathView, BlockView}
+import com.quane.little.ide.view.{CodeMenuView, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
@@ -34,7 +34,11 @@ class BlockLayout
 
   super.addComponent(new BlockStepSeparator(this))
 
-  override def addMathStep(): MathView = addMathStep(DefaultIndex)
+  override def addCodeMenu() = addCodeMenu(DefaultIndex)
+
+  override def addCodeMenu(index: Int) = new CodeMenuView {}
+
+  override def addMathStep() = addMathStep(DefaultIndex)
 
   override def addMathStep(index: Int) = add(new MathLayout(), componentIndex(index))
 

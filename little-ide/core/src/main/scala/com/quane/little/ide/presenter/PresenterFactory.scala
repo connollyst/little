@@ -3,14 +3,11 @@ package com.quane.little.ide.presenter
 import com.quane.little.ide.view._
 import com.escalatesoft.subcut.inject.BindingModule
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** A factory for creating presenters.
+  *
+  * @author Sean Connolly
+  */
 class PresenterFactory(implicit val bindingModule: BindingModule) {
-
-  // TODO views should create views, presenters create presenters to wrap them
 
   // TODO generify ViewPresenter?
   def create[P <: ViewPresenter, V <: View[P]](view: V): ViewPresenter = {
@@ -22,6 +19,8 @@ class PresenterFactory(implicit val bindingModule: BindingModule) {
   }
 
   // TODO generify all of these into the above function
+
+  def createCodeMenu(view: CodeMenuView) = new CodeMenuPresenter(view)
 
   def createMathPresenter(view: MathView) = new MathPresenter(view)
 

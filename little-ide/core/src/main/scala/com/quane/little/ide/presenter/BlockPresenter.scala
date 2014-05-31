@@ -71,6 +71,16 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
         case _ => throw new IllegalArgumentException("Not supported: " + step)
       }
     add(presenter, index)
+    addCodeMenu(index + 1)
+  }
+
+  /** Add a new code menu to the block.
+    *
+    * @param index the index at which to add the menu to the view
+    */
+  private def addCodeMenu(index: Int): Unit = {
+    val menuView = view.addCodeMenu(index)
+    presenterFactory.createCodeMenu(menuView).initialize(this)
   }
 
   /** Add a step at the specified index.
