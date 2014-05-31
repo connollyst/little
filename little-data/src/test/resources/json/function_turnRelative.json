@@ -12,15 +12,15 @@
         "steps": [
             {
                 "_class": "com.quane.little.language.Setter",
-                "name": "GuyDirection",
+                "name": "_little_direction",
                 "value": {
                     "_class": "com.quane.little.language.math.Addition",
                     "l": {
-                        "_class": "com.quane.little.language.GetStatement",
-                        "name": "GuyDirection"
+                        "_class": "com.quane.little.language.Getter",
+                        "name": "_little_direction"
                     },
                     "r": {
-                        "_class": "com.quane.little.language.GetStatement",
+                        "_class": "com.quane.little.language.Getter",
                         "name": "degrees"
                     }
                 }
@@ -34,6 +34,6 @@
         ]
     },
     "_id": {
-        "$oid": "ComplexFunctionDefinitionRecordID"
+        "$oid": "ComplexFunctionRecordID"
     }
 }

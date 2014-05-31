@@ -24,15 +24,15 @@ class TestFunctionRecord extends WordSpec with ShouldMatchers {
   val userId = new RecordId("UserRecordID")
   val category = CodeCategory.Misc
   val definitionBlank = new FunctionDefinition("BlankFunction")
-  val functionBlankId = new RecordId("BlankFunctionDefinitionRecordID")
+  val functionBlankId = new RecordId("BlankFunctionRecordID")
   val functionBlank = new FunctionRecord(userId, category, definitionBlank)
   functionBlank.id = functionBlankId
   val definitionComplex = Functions.turnRelative
-  val functionComplexId = new RecordId("ComplexFunctionDefinitionRecordID")
+  val functionComplexId = new RecordId("ComplexFunctionRecordID")
   val functionComplex = new FunctionRecord(userId, category, definitionComplex)
   functionComplex.id = functionComplexId
 
-  "FunctionDefinitionRecord" should {
+  classOf[FunctionRecord].getSimpleName should {
     "serialize blank function to JSON" in {
       val expected = getJSON("function_blank")
       val actual = littleJSON.serialize(functionBlank)
