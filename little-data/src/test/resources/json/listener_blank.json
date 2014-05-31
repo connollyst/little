@@ -1,0 +1,16 @@
+{
+    "_id": {
+        "$oid": "BlankListenerRecordID"
+    },
+    "ownerId": {
+        "$oid": "UserRecordID"
+    },
+    "listener": {
+        "_class": "com.quane.little.language.event.EventListener",
+        "event": {
+            "enumClass": "com.quane.little.language.event.Event",
+            "value": "OnSpawn"
+        },
+        "steps": []
+    }
+}

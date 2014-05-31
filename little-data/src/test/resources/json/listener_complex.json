@@ -1,0 +1,32 @@
+{
+    "_id": {
+        "$oid": "ComplexListenerRecordID"
+    },
+    "ownerId": {
+        "$oid": "UserRecordID"
+    },
+    "listener": {
+        "_class": "com.quane.little.language.event.EventListener",
+        "event": {
+            "enumClass": "com.quane.little.language.event.Event",
+            "value": "OnSpawn"
+        },
+        "steps": [
+            {
+                "_class": "com.quane.little.language.Setter",
+                "name": "_little_direction",
+                "value": {
+                    "_class": "com.quane.little.language.math.Addition",
+                    "l": {
+                        "_class": "com.quane.little.language.Getter",
+                        "name": "_little_direction"
+                    },
+                    "r": {
+                        "_class": "com.quane.little.language.data.NumberSimple",
+                        "primitive": 180
+                    }
+                }
+            }
+        ]
+    }
+}

@@ -8,8 +8,10 @@ import com.quane.little.language.event.Event.Event
   *
   * @param event the event to listen for
   */
-class EventListener(val event: Event, block: Block = new Block)
+class EventListener(val event: Event)
   extends Code {
+
+  private val block: Block = new Block
 
   def stepCount: Int = block.length
 
@@ -36,6 +38,19 @@ class EventListener(val event: Event, block: Block = new Block)
     listenerScope.save("_little_it_speed", it.speed)
     listenerScope.save("_little_it_direction", it.direction)
     block.evaluate(listenerScope)
+  }
+
+  override def equals(other: Any): Boolean = other match {
+    case that: EventListener =>
+      other.isInstanceOf[EventListener] &&
+        block == that.block &&
+        event == that.event
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(block, event)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 
   override def toString: String =
