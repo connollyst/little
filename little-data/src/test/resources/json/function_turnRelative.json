@@ -11,7 +11,7 @@
         "name": "turnRelative",
         "steps": [
             {
-                "_class": "com.quane.little.language.SetStatement",
+                "_class": "com.quane.little.language.Setter",
                 "name": "GuyDirection",
                 "value": {
                     "_class": "com.quane.little.language.math.Addition",

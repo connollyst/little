@@ -12,7 +12,7 @@ import org.scalatest.mock.MockitoSugar
 @RunWith(classOf[JUnitRunner])
 class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSugar {
 
-  "SetStatementView" should "accept get" in {
+  "SetterView" should "accept get" in {
     val get = expression(ExpressionService.Get)
     val view = mock[SetterView]
     val accepts = PresenterAccepts.accepts(view, get)

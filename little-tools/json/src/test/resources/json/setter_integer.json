@@ -1,5 +1,5 @@
 {
-    "_class": "com.quane.little.language.SetStatement",
+    "_class": "com.quane.little.language.Setter",
     "name": "MyVariable",
     "value": {
         "_class": "com.quane.little.language.data.NumberSimple",
