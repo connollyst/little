@@ -3,7 +3,7 @@
     "name": "sayHello",
     "steps": [
         {
-            "_class": "com.quane.little.language.PrintStatement",
+            "_class": "com.quane.little.language.Printer",
             "value": {
                 "_class": "com.quane.little.language.data.Text",
                 "primitive": "Hello World!"

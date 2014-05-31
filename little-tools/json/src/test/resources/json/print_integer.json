@@ -1,5 +1,5 @@
 {
-    "_class": "com.quane.little.language.PrintStatement",
+    "_class": "com.quane.little.language.Printer",
     "value": {
         "_class": "com.quane.little.language.data.NumberSimple",
         "primitive": 1234
