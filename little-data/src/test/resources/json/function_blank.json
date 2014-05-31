@@ -6,7 +6,7 @@
         "$oid": "UserRecordID"
     },
     "category": {
-        "enumClass": "com.quane.little.data.model.FunctionCategory",
+        "enumClass": "com.quane.little.data.model.CodeCategory",
         "value": "Misc"
     },
     "definition": {
