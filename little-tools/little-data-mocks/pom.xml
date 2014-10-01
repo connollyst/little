@@ -10,6 +10,16 @@
     </parent>
     <artifactId>little-data-mocks</artifactId>
 
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.scala-tools</groupId>
+                <artifactId>maven-scala-plugin</artifactId>
+                <version>${scala.plugin.version}</version>
+            </plugin>
+        </plugins>
+    </build>
+
     <dependencies>
         <dependency>
             <groupId>${project.groupId}</groupId>
