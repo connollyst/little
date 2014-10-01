@@ -3,7 +3,7 @@ package com.quane.little.language
 import com.quane.little.tools.Logging
 import com.google.common.base.Objects
 
-/** A [[Statement]] which prints out text when evaluated.
+/** A [[com.quane.little.language.Statement]] which prints out text when evaluated.
   *
   * @author Sean Connolly
   */
