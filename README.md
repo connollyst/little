@@ -1,3 +1,6 @@
+![Travis CI Project Build Status](https://travis-ci.org/connollyst/little.svg?branch=master "Build Status")
+
+
 Short Term To Do
 ----------------
 - add primitives to toolkit
