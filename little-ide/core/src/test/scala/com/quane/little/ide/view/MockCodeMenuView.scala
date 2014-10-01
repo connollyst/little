@@ -4,6 +4,10 @@ import com.quane.little.data.model.CodeType.CodeType
 import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.RecordId
 
+object MockCodeMenuView {
+  def apply(): MockCodeMenuView = new MockCodeMenuView
+}
+
 /** An implementation of [[com.quane.little.ide.view.CodeMenuView]] for testing
   * purposes.
   *

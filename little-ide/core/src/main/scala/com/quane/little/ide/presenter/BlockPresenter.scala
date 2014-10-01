@@ -81,6 +81,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
     */
   private def addCodeMenu(index: Int): Unit = {
     val menuView = view.addCodeMenu(index)
+    println("menuView: " + menuView)
     presenterFactory.createCodeMenu(menuView, this)
   }
 

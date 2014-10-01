@@ -5,18 +5,19 @@ import org.mockito.Matchers._
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.ide.view.MockView._
 
-object MockBlockView extends MockView with MockitoSugar {
+object MockBlockView extends MockitoSugar {
 
   def apply(): MockBlockView = new MockBlockView
 
   /** Utility function for mocking out a [[com.quane.little.ide.view.BlockView]]
-    * which returns instances of the appropriate [[com.quane.little.ide.view.MockView]]
-    * when asked to.
+    * which returns instances of the appropriate mock views when asked to.
     *
     * @return the mock block view
     */
   def mocked(): BlockView = {
     val view = mock[BlockView]
+    when(view.addCodeMenu()).then(answer(MockCodeMenuView.apply))
+    when(view.addCodeMenu(anyInt)).then(answer(MockCodeMenuView.apply))
     when(view.addMathStep()).then(answer(MockMathView.apply))
     when(view.addMathStep(anyInt)).then(answer(MockMathView.apply))
     when(view.addLogicStep()).then(answer(MockLogicView.apply))

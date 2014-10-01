@@ -18,6 +18,8 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
   private val statementService = inject[StatementService]
   private val functionService = inject[FunctionService]
 
+  view.registerViewPresenter(this)
+
   CodeCategory.values foreach {
     category => view.addCategory(category)
   }
