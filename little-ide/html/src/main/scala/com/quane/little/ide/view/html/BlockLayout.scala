@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.BlockView
+import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
@@ -9,8 +9,8 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
 import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import scala.collection.JavaConversions._
 import com.vaadin.server.Sizeable
+import scala.collection.JavaConversions._
 
 object BlockLayout {
   val DefaultIndex = -1
@@ -32,66 +32,57 @@ class BlockLayout
   setSpacing(false)
   setStyleName(Style)
 
-  super.addComponent(new BlockStepSeparator(this))
-
-  override def addCodeMenu() = addCodeMenu(DefaultIndex)
-
-  override def addCodeMenu(index: Int) = {
-    val menu = new CodeMenuLayout(this, index) // TODO index becomes out of date
-    if (index < 0) {
-      super.addComponent(menu)
-    } else {
-      super.addComponent(menu, index)
-    }
-    menu
-  }
-
   override def addMathStep() = addMathStep(DefaultIndex)
 
-  override def addMathStep(index: Int) = add(new MathLayout(), componentIndex(index))
+  override def addMathStep(index: Int) = addStep(new MathLayout(), index)
 
   override def addConditionalStep() = addConditionalStep(DefaultIndex)
 
-  override def addConditionalStep(index: Int) = add(new ConditionalLayout(), componentIndex(index))
+  override def addConditionalStep(index: Int) = addStep(new ConditionalLayout(), index)
 
   override def addGetStep() = addGetStep(DefaultIndex)
 
-  override def addGetStep(index: Int) = add(new GetterLayout(), componentIndex(index))
+  override def addGetStep(index: Int) = addStep(new GetterLayout(), index)
 
   override def addSetStep() = addSetStep(DefaultIndex)
 
-  override def addSetStep(index: Int) = add(new SetterLayout(), componentIndex(index))
+  override def addSetStep(index: Int) = addStep(new SetterLayout(), index)
 
   override def addPrintStep() = addPrintStep(DefaultIndex)
 
-  override def addPrintStep(index: Int) = add(new PrinterLayout(), componentIndex(index))
+  override def addPrintStep(index: Int) = addStep(new PrinterLayout(), index)
 
   override def addLogicStep() = addLogicStep(DefaultIndex)
 
-  override def addLogicStep(index: Int) = add(new LogicLayout, componentIndex(index))
+  override def addLogicStep(index: Int) = addStep(new LogicLayout, index)
 
   override def addFunctionStep() = addFunctionStep(DefaultIndex)
 
-  override def addFunctionStep(index: Int) = add(new FunctionReferenceLayout(), componentIndex(index))
+  override def addFunctionStep(index: Int) = addStep(new FunctionReferenceLayout(), index)
 
-  override def addComponent(component: Component) = {
-    super.addComponent(component)
-    super.addComponent(new BlockStepSeparator(this))
-    component
-  }
-
-  def add[C <: Component](component: C, index: Int): C = {
-    if (index < 0) {
-      addComponent(component)
-    } else {
-      super.addComponent(new BlockStep(component), index)
-      super.addComponent(new BlockStepSeparator(this), index + 1)
-    }
+  // C <: EvaluableCodeView
+  private def addStep[C <: Component](component: C, sIndex: Int): C = {
+    val index = componentIndex(sIndex)
+    println("Adding component @ " + index + " (step #" + sIndex + "): " + component)
+    addComponent(new BlockStep(component), index)
+    // Update line counts & menus
     components foreach {
       case step: BlockStep => step.border.index = stepIndex(step) + 1
+      case space: BlockStepSeparator => space.menu.index(stepIndex(space) + 1)
       case _ => // do nothing
     }
     component
+  }
+
+  override def addCodeMenu() = addCodeMenu(DefaultIndex)
+
+  override def addCodeMenu(stepIndex: Int) = {
+    val menuIndex = if (stepIndex < 0) 0 else componentIndex(stepIndex) + 1
+    val nextStepIndex = if (stepIndex < 0) 0 else stepIndex + 1
+    val menu = new CodeMenuLayout(this, nextStepIndex)
+    val space = new BlockStepSeparator(this, menu)
+    addComponent(space, menuIndex)
+    menu
   }
 
   override def removeComponent(c: Component) {
@@ -120,7 +111,9 @@ class BlockLayout
     * @param i the index of the component
     * @return the index of the step in the block
     */
-  def stepIndex(i: Int): Int = scala.math.round(i / 2)
+  def stepIndex(i: Int): Int = {
+    scala.math.round(i / 2)
+  }
 
   /** Return the index of the Component, given the index of the step in the block.
     *
@@ -143,7 +136,7 @@ class BlockLayout
 
 }
 
-private class BlockStep(step: Component)
+private class BlockStep(val step: Component)
   extends HorizontalLayout
   with VaadinMixin {
 
@@ -158,7 +151,7 @@ private class BlockStep(step: Component)
 
 }
 
-private class BlockStepSeparator(block: BlockLayout)
+private class BlockStepSeparator(block: BlockLayout, val menu: CodeMenuLayout[BlockViewPresenter])
   extends HorizontalLayout
   with VaadinMixin {
 
@@ -167,7 +160,6 @@ private class BlockStepSeparator(block: BlockLayout)
   setDefaultComponentAlignment(Alignment.MIDDLE_CENTER)
 
   val border = new BlockStepBorder
-  val menu = new ExpressionMenu(block, index)
   val dndTarget = new DroppableTarget(new HorizontalLayout())
   dndTarget.setDropHandler(new BlockDropHandler(this))
   dndTarget.setSizeFull()

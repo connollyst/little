@@ -25,7 +25,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
   private val _steps = new ListBuffer[EvaluableCodeViewPresenter]
 
   view.registerViewPresenter(this)
-  addCodeMenu(0)
+  addCodeMenu(-1)
 
   private[presenter] def length = _steps.length
 
@@ -72,7 +72,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
         case _ => throw new IllegalArgumentException("Not supported: " + step)
       }
     add(presenter, index)
-    addCodeMenu(index + 1)
+    addCodeMenu(index)
   }
 
   /** Add a new code menu to the block.
@@ -80,9 +80,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
     * @param index the index at which to add the menu to the view
     */
   private def addCodeMenu(index: Int): Unit = {
-    val menuView = view.addCodeMenu(index)
-    println("menuView: " + menuView)
-    presenterFactory.createCodeMenu(menuView, this)
+    presenterFactory.createCodeMenu(view.addCodeMenu(index), this)
   }
 
   /** Add a step at the specified index.

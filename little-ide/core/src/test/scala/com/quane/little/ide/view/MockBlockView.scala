@@ -42,9 +42,7 @@ object MockBlockView extends MockitoSugar {
   *
   * @author Sean Connolly
   */
-class MockBlockView
-  extends BlockView
-  with MockView {
+class MockBlockView extends BlockView with MockView {
 
   override def addCodeMenu() = addCodeMenu(0)
 
