@@ -189,7 +189,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
 
   "BlockLayoutSeparator menu" should {
 
-    "have step index 0 at index 0" in {
+    "have step index 0 at index 0 when initialized" in {
       // given
       val view = new BlockLayout
       // when
@@ -197,7 +197,17 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index should be(0)
     }
-    "have step index 1 at index 2" in {
+    "have step index 0 at index 0 when appended" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      // when
+      view.addCodeMenu(0)
+      // then
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index should be(0)
+    }
+    "have step index 1 at index 2 when appended" in {
       // given
       val view = new BlockLayout
       view.addCodeMenu(-1)
@@ -207,7 +217,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index should be(1)
     }
-    "have step index 2 at index 4" in {
+    "have step index 2 at index 4 when appended" in {
       val view = new BlockLayout
       // given
       view.addCodeMenu(-1)
@@ -231,7 +241,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index should be(2)
     }
-    "have step index 3 at index 6" in {
+    "have step index 3 at index 6 when appended" in {
       val view = new BlockLayout
       // given
       view.addCodeMenu(-1)
@@ -287,7 +297,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index should be(3)
     }
-    "have step index 4 at index 8" in {
+    "have step index 4 at index 8 when appended" in {
       val view = new BlockLayout
       // given
       view.addCodeMenu(-1)

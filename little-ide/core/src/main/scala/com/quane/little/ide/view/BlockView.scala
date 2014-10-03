@@ -4,8 +4,6 @@ import com.quane.little.ide.presenter._
 
 trait BlockView extends ExpressionView[BlockViewPresenter] {
 
-  def addCodeMenu(index: Int): CodeMenuView
-
   def addMathStep(index: Int): MathView
 
   def addLogicStep(index: Int): LogicView
@@ -19,6 +17,8 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
   def addConditionalStep(index: Int): ConditionalView
 
   def addFunctionStep(index: Int): FunctionReferenceView
+
+  def addCodeMenu(index: Int): CodeMenuView
 
 }
 

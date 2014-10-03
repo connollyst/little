@@ -48,12 +48,11 @@ class BlockLayout
   // C <: EvaluableCodeView
   private def addStep[C <: Component](component: C, sIndex: Int): C = {
     val index = componentIndex(sIndex)
-    println("Adding component @ " + index + " (step #" + sIndex + "): " + component)
     addComponent(new BlockStep(component), index)
     // Update line counts & menus
     components foreach {
-      case step: BlockStep => step.border.index = stepIndex(step) + 1
-      case space: BlockStepSeparator => space.menu.index(stepIndex(space) + 1)
+      case step: BlockStep => if (stepIndex(step) > sIndex) step.border.index = stepIndex(step) + 1
+      case space: BlockStepSeparator => if (stepIndex(space) > sIndex) space.menu.index = stepIndex(space) + 1
       case _ => // do nothing
     }
     component

@@ -16,7 +16,7 @@ import com.quane.little.data.model.CodeType.CodeType
  */
 class CodeMenuLayout[P <: ViewPresenter](view: View[P], var _index: Int) extends MenuBar with CodeMenuView {
 
-  private val root = super.addItem("+", null)
+  private val root = super.addItem("#" + _index, null)
   private val categories = mutable.HashMap[CodeCategory, MenuBar#MenuItem]()
 
   override def addCategory(codeCategory: CodeCategory) = {
@@ -30,9 +30,9 @@ class CodeMenuLayout[P <: ViewPresenter](view: View[P], var _index: Int) extends
   override def addMenuItemDisabled(codeType: CodeType, codeCategory: CodeCategory, id: RecordId, name: String) =
     addItem(codeType, codeCategory, id, name).setEnabled(false)
 
-  def index(): Int = _index
+  def index: Int = _index
 
-  def index(i: Int) = {
+  def index_=(i: Int) = {
     _index = i
     root.setText("#" + _index)
   }
