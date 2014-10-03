@@ -10,13 +10,14 @@ import scala.collection.mutable
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.data.model.CodeType.CodeType
 
-/**
- *
- * @author Sean Connolly
- */
-class CodeMenuLayout[P <: ViewPresenter](view: View[P], var _index: Int) extends MenuBar with CodeMenuView {
+/** An HTML layout view for the 'Add Code' dropdown menu.
+  * This is one of the main tools the user uses to build their program.
+  *
+  * @author Sean Connolly
+  */
+class CodeMenuLayout[P <: ViewPresenter](view: View[P], var index: Int) extends MenuBar with CodeMenuView {
 
-  private val root = super.addItem("#" + _index, null)
+  private val root = super.addItem("+", null)
   private val categories = mutable.HashMap[CodeCategory, MenuBar#MenuItem]()
 
   override def addCategory(codeCategory: CodeCategory) = {
@@ -29,13 +30,6 @@ class CodeMenuLayout[P <: ViewPresenter](view: View[P], var _index: Int) extends
 
   override def addMenuItemDisabled(codeType: CodeType, codeCategory: CodeCategory, id: RecordId, name: String) =
     addItem(codeType, codeCategory, id, name).setEnabled(false)
-
-  def index: Int = _index
-
-  def index_=(i: Int) = {
-    _index = i
-    root.setText("#" + _index)
-  }
 
   private def addItem(codeType: CodeType, codeCategory: CodeCategory, id: RecordId, name: String) =
     categories(codeCategory).addItem(name,
