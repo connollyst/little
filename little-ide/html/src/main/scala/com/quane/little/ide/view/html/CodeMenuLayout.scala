@@ -9,6 +9,11 @@ import com.quane.little.ide.presenter.command.{AddExpressionCommand, AddFunction
 import scala.collection.mutable
 import com.vaadin.ui.MenuBar.Command
 import com.quane.little.data.model.CodeType.CodeType
+import com.quane.little.ide.view.html.CodeMenuLayout._
+
+object CodeMenuLayout {
+  val Style = "l-code-menu"
+}
 
 /** An HTML layout view for the 'Add Code' dropdown menu.
   * This is one of the main tools the user uses to build their program.
@@ -16,6 +21,8 @@ import com.quane.little.data.model.CodeType.CodeType
   * @author Sean Connolly
   */
 class CodeMenuLayout[P <: ViewPresenter](view: View[P], var index: Int) extends MenuBar with CodeMenuView {
+
+  setStyleName(Style)
 
   private val root = super.addItem("+", null)
   private val categories = mutable.HashMap[CodeCategory, MenuBar#MenuItem]()
