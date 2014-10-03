@@ -28,12 +28,10 @@ class FunctionDefinitionLayout
 
   private val header = createHeader()
   private val body = createBody()
-  private val footer = createFooter()
 
   setSpacing(false)
   addComponent(header)
   addComponent(body)
-  addComponent(footer)
 
   override def setName(name: String): Unit = header.name_=(name)
 
@@ -42,21 +40,14 @@ class FunctionDefinitionLayout
   private def createBody(): Component = {
     val body = new HorizontalLayout
     val bodyLeft = new Label
-    bodyLeft.setHeight(100, Sizeable.Unit.PERCENTAGE)
     bodyLeft.setStyleName(FunctionDefinitionLayout.StyleHeadLeft)
     body.addComponent(bodyLeft)
     body.addComponent(blockWrapper)
-    body.setStyleName(FunctionDefinitionLayout.StyleBody)
-    body.setSpacing(false)
-    body.setSizeFull()
     body.setExpandRatio(blockWrapper, 1)
+    body.setStyleName(FunctionDefinitionLayout.StyleBody)
+    body.setSizeFull()
+    body.setSpacing(false)
     body
-  }
-
-  private def createFooter(): Component = {
-    val footer = new CssLayout
-    footer.setStyleName(FunctionDefinitionLayout.StyleFoot)
-    footer
   }
 
   override def createFunctionParameter() = header.add(new FunctionParameterComponent)

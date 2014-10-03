@@ -9,7 +9,6 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
 import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.vaadin.server.Sizeable
 import scala.collection.JavaConversions._
 
 object BlockLayout {
@@ -30,6 +29,7 @@ class BlockLayout
 
   setSpacing(false)
   setStyleName(Style)
+  setDefaultComponentAlignment(Alignment.TOP_CENTER)
 
   override def addMathStep(index: Int) = addStep(new MathLayout(), index)
 
@@ -49,9 +49,8 @@ class BlockLayout
   private def addStep[C <: Component](component: C, sIndex: Int): C = {
     val index = componentIndex(sIndex)
     addComponent(new BlockStep(component), index)
-    // Update line counts & menus
+    // Update menus
     components foreach {
-      case step: BlockStep => if (stepIndex(step) > sIndex) step.border.index = stepIndex(step) + 1
       case space: BlockStepSeparator => if (stepIndex(space) > sIndex) space.menu.index = stepIndex(space) + 1
       case _ => // do nothing
     }
@@ -122,12 +121,8 @@ private class BlockStep(val step: Component)
   extends HorizontalLayout
   with VaadinMixin {
 
-  setSizeFull()
   setStyleName(StyleStep)
 
-  val border = new BlockStepBorder
-
-  add(border)
   add(step)
   setExpandRatio(step, 1f)
 
@@ -139,17 +134,17 @@ private class BlockStepSeparator(block: BlockLayout, val menu: CodeMenuLayout[Bl
 
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
-  setDefaultComponentAlignment(Alignment.MIDDLE_CENTER)
 
-  val border = new BlockStepBorder
-  val dndTarget = new DroppableTarget(new HorizontalLayout())
-  dndTarget.setDropHandler(new BlockDropHandler(this))
-  dndTarget.setSizeFull()
-
-  add(border)
+  val dndHandler = new BlockDropHandler(this)
+  val dndTargetLeft = new DroppableTarget(new HorizontalLayout())
+  val dndTargetRight = new DroppableTarget(new HorizontalLayout())
+  dndTargetLeft.setDropHandler(dndHandler)
+  dndTargetRight.setDropHandler(dndHandler)
+  add(dndTargetLeft)
   add(menu)
-  add(dndTarget)
-  setExpandRatio(dndTarget, 1f)
+  add(dndTargetRight)
+  setExpandRatio(dndTargetLeft, 1f)
+  setExpandRatio(dndTargetRight, 1f)
 
   def addExpression(primitiveId: RecordId) =
     IDECommandExecutor.execute(
@@ -167,32 +162,6 @@ private class BlockStepSeparator(block: BlockLayout, val menu: CodeMenuLayout[Bl
     )
 
   def index: Int = block.stepIndex(this)
-
-}
-
-private class BlockStepBorder extends VerticalLayout {
-
-  private var _index: Int = 0
-  private val indexLabel = new Label(if (_index > 0) {
-    _index.toString
-  } else {
-    ""
-  })
-
-  def index: Int = _index
-
-  def index_=(i: Int) = {
-    _index = i
-    indexLabel.setValue(_index.toString)
-  }
-
-  setStyleName(StyleStepBorder)
-  setWidth(25, Sizeable.Unit.PIXELS)
-  setHeight(100, Sizeable.Unit.PERCENTAGE)
-  setDefaultComponentAlignment(Alignment.TOP_CENTER)
-
-  addComponent(indexLabel)
-  setExpandRatio(indexLabel, 1)
 
 }
 
