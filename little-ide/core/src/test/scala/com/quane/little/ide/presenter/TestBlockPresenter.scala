@@ -94,7 +94,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
     "add get statement to presenter" in {
       val view = MockBlockView.mocked()
       val presenter = new BlockPresenter(view)
-      when(view.addGetStep()).thenReturn(new MockGetterView)
+      when(view.addGetStep(0)).thenReturn(new MockGetterView)
       presenter.add(new Getter("x"))
       presenter.steps.size should be(1)
       presenter.steps(0).getClass should be(classOf[GetterPresenter])
@@ -102,7 +102,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
     "add print statement to presenter" in {
       val view = MockBlockView.mocked()
       val presenter = new BlockPresenter(view)
-      when(view.addPrintStep()).thenReturn(new MockPrinterView)
+      when(view.addPrintStep(0)).thenReturn(new MockPrinterView)
       presenter.add(new Printer(Value("x")))
       presenter.steps.size should be(1)
       presenter.steps(0).getClass should be(classOf[PrinterPresenter[_ <: PrinterView]])
@@ -110,7 +110,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
     "add function reference to presenter" in {
       val view = MockBlockView.mocked()
       val presenter = new BlockPresenter(view)
-      when(view.addFunctionStep()).thenReturn(new MockFunctionReferenceView)
+      when(view.addFunctionStep(0)).thenReturn(new MockFunctionReferenceView)
       presenter.add(new FunctionReference("funName"))
       presenter.steps.size should be(1)
       presenter.steps(0).getClass should be(classOf[FunctionReferencePresenter])
@@ -123,7 +123,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
       val presenter = new BlockPresenter(view)
       val setterView = mock[SetterView]
       val valueView = mock[ValueView]
-      when(view.addSetStep()).thenReturn(setterView)
+      when(view.addSetStep(0)).thenReturn(setterView)
       when(view.addSetStep(anyInt)).thenReturn(setterView)
       when(setterView.createValueExpression()).thenReturn(valueView)
       val statement = new Setter("x", Value("y"))
@@ -136,7 +136,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
       val view = MockBlockView.mocked()
       val presenter = new BlockPresenter(view)
       val getterView = mock[GetterView]
-      when(view.addGetStep()).thenReturn(getterView)
+      when(view.addGetStep(0)).thenReturn(getterView)
       when(view.addGetStep(anyInt())).thenReturn(getterView)
       val statement = new Getter("x")
       presenter.add(statement)
@@ -147,7 +147,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
       val presenter = new BlockPresenter(view)
       val printerView = mock[PrinterView]
       val valueView = mock[ValueView]
-      when(view.addPrintStep()).thenReturn(printerView)
+      when(view.addPrintStep(0)).thenReturn(printerView)
       when(view.addPrintStep(anyInt)).thenReturn(printerView)
       when(printerView.createValueStatement()).thenReturn(valueView)
       val statement = new Printer(Value("x"))
@@ -159,7 +159,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
       val view = MockBlockView.mocked()
       val presenter = new BlockPresenter(view)
       val functionView = mock[FunctionReferenceView]
-      when(view.addFunctionStep()).thenReturn(functionView)
+      when(view.addFunctionStep(0)).thenReturn(functionView)
       when(view.addFunctionStep(anyInt)).thenReturn(functionView)
       val statement = new FunctionReference("TestFunction")
       presenter.add(statement)

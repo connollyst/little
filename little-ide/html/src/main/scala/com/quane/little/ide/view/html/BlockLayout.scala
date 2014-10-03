@@ -13,7 +13,6 @@ import com.vaadin.server.Sizeable
 import scala.collection.JavaConversions._
 
 object BlockLayout {
-  val DefaultIndex = -1
   val Style = "l-block"
   val StyleStep = Style + "-step"
   val StyleStepBorder = StyleStep + "-border"
@@ -32,31 +31,17 @@ class BlockLayout
   setSpacing(false)
   setStyleName(Style)
 
-  override def addMathStep() = addMathStep(DefaultIndex)
-
   override def addMathStep(index: Int) = addStep(new MathLayout(), index)
-
-  override def addConditionalStep() = addConditionalStep(DefaultIndex)
 
   override def addConditionalStep(index: Int) = addStep(new ConditionalLayout(), index)
 
-  override def addGetStep() = addGetStep(DefaultIndex)
-
   override def addGetStep(index: Int) = addStep(new GetterLayout(), index)
-
-  override def addSetStep() = addSetStep(DefaultIndex)
 
   override def addSetStep(index: Int) = addStep(new SetterLayout(), index)
 
-  override def addPrintStep() = addPrintStep(DefaultIndex)
-
   override def addPrintStep(index: Int) = addStep(new PrinterLayout(), index)
 
-  override def addLogicStep() = addLogicStep(DefaultIndex)
-
   override def addLogicStep(index: Int) = addStep(new LogicLayout, index)
-
-  override def addFunctionStep() = addFunctionStep(DefaultIndex)
 
   override def addFunctionStep(index: Int) = addStep(new FunctionReferenceLayout(), index)
 
@@ -73,8 +58,6 @@ class BlockLayout
     }
     component
   }
-
-  override def addCodeMenu() = addCodeMenu(DefaultIndex)
 
   override def addCodeMenu(stepIndex: Int) = {
     val menuIndex = if (stepIndex < 0) 0 else componentIndex(stepIndex) + 1
