@@ -9,7 +9,6 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
 import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import scala.collection.JavaConversions._
 
 object BlockLayout {
   val Style = "l-block"
@@ -121,12 +120,31 @@ class BlockLayout
 
 private class BlockStep(val step: Component)
   extends HorizontalLayout
+  with RemovableComponent
   with VaadinMixin {
 
   setStyleName(StyleStep)
 
   add(step)
   setExpandRatio(step, 1f)
+
+  /**
+   * Removes the component from this container. As the only content of a [[com.quane.little.ide.view.html.BlockStep]]
+   * is the step itself, the only valid `component` to remove is the `step`. If not, an exception is thrown. If so,
+   * the component is removed and, as it is now empty, this component removes itself from its parent.
+   *
+   * @param component the component to be removed.
+   * @throws IllegalArgumentException if the `component` is not the `step`
+   */
+  override def removeComponent(component: Component): Unit = {
+    if (component != step) {
+      throw new IllegalArgumentException("Attempt to remove " + component
+        + " from " + classOf[BlockStep] + ", can only remove: " + step)
+
+    }
+    super.removeComponent(component)
+    removeFromParent()
+  }
 
 }
 

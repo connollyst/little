@@ -320,10 +320,10 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // given
       val view = new BlockLayout
       view.addCodeMenu(-1)
-      view.addMathStep(0)
+      val step = view.addMathStep(0)
       view.addCodeMenu(0)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(0)))
+      step.removeFromParent()
       // then
       view.componentCount should be(1)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -333,12 +333,12 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // given
       val view = new BlockLayout
       view.addCodeMenu(-1)
-      view.addMathStep(0)
+      val step = view.addMathStep(0)
       view.addCodeMenu(0)
       view.addLogicStep(1)
       view.addCodeMenu(1)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(0)))
+      step.removeFromParent()
       // then
       view.componentCount should be(3)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -354,10 +354,10 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.addCodeMenu(-1)
       view.addLogicStep(0)
       view.addCodeMenu(0)
-      view.addMathStep(0) // inserted before previous step
+      val step = view.addMathStep(0) // inserted before previous step
       view.addCodeMenu(0)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(0)))
+      step.removeFromParent()
       // then
       view.componentCount should be(3)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -373,10 +373,10 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.addCodeMenu(-1)
       view.addMathStep(0)
       view.addCodeMenu(0)
-      view.addLogicStep(1)
+      val step = view.addLogicStep(1)
       view.addCodeMenu(1)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(1)))
+      step.removeFromParent()
       // then
       view.componentCount should be(3)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -392,12 +392,12 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.addCodeMenu(-1)
       view.addMathStep(0)
       view.addCodeMenu(0)
-      view.addLogicStep(1)
+      val step = view.addLogicStep(1)
       view.addCodeMenu(1)
       view.addFunctionStep(2)
       view.addCodeMenu(2)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(1)))
+      step.removeFromParent()
       // then
       view.componentCount should be(5)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -419,10 +419,10 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.addCodeMenu(0)
       view.addFunctionStep(1)
       view.addCodeMenu(1)
-      view.addLogicStep(1) // inserted before previous step
+      val step = view.addLogicStep(1) // inserted before previous step
       view.addCodeMenu(1)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(1)))
+      step.removeFromParent()
       // then
       view.componentCount should be(5)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -444,10 +444,10 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.addCodeMenu(0)
       view.addLogicStep(1)
       view.addCodeMenu(1)
-      view.addFunctionStep(2)
+      val step = view.addFunctionStep(2)
       view.addCodeMenu(2)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(2)))
+      step.removeFromParent()
       // then
       view.componentCount should be(5)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -471,10 +471,10 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.addCodeMenu(1)
       view.addPrintStep(2)
       view.addCodeMenu(2)
-      view.addFunctionStep(2) // inserted before previous step
+      val step = view.addFunctionStep(2) // inserted before previous step
       view.addCodeMenu(2)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(2)))
+      step.removeFromParent()
       // then
       view.componentCount should be(7)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -502,10 +502,10 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.addCodeMenu(1)
       view.addFunctionStep(2)
       view.addCodeMenu(2)
-      view.addPrintStep(3)
+      val step = view.addPrintStep(3)
       view.addCodeMenu(3)
       // when
-      view.removeComponent(view.getComponent(view.getComponentIndex(3)))
+      step.removeFromParent()
       // then
       view.componentCount should be(7)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
@@ -523,7 +523,6 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       view.getComponent(5).asInstanceOf[BlockStep].step.getClass should be(classOf[FunctionReferenceLayout])
       view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
     }
-
   }
 
 }
