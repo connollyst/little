@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.quane.little</groupId>
             <artifactId>little-language</artifactId>
-            <version>${pom.version}</version>
+            <version>${project.version}</version>
             <scope>provided</scope>
         </dependency>
 
