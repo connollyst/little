@@ -20,7 +20,7 @@ object CodeMenuLayout {
   *
   * @author Sean Connolly
   */
-class CodeMenuLayout[P <: ViewPresenter](view: View[P], var index: () => Int) extends MenuBar with CodeMenuView {
+class CodeMenuLayout[P <: ViewPresenter](view: View[P], val index: () => Int) extends MenuBar with CodeMenuView {
 
   setStyleName(Style)
 
