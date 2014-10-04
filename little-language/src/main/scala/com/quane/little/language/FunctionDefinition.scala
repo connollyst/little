@@ -4,6 +4,7 @@ import scala.collection.mutable.ListBuffer
 import com.quane.little.language.data.Value
 import scala.collection.immutable
 import com.google.common.base.Objects
+import com.quane.little.language.data.ValueType.ValueType
 
 /** Defines a function.
   *
@@ -25,17 +26,13 @@ class FunctionDefinition(val name: String) {
     this
   }
 
-  def addParam(name: String): FunctionDefinition = {
-    this += name
-    this
-  }
+  def addParam(name: String, valueType: ValueType): FunctionDefinition =
+    addParam(new FunctionParameter(name, valueType))
 
   def addParam(param: FunctionParameter): FunctionDefinition = {
     this += param
     this
   }
-
-  def +=(name: String) = _params += new FunctionParameter(name)
 
   def +=(param: FunctionParameter) = _params += param
 
@@ -111,7 +108,7 @@ class FunctionDefinition(val name: String) {
   * @param name the name of the parameter
   * @see [[com.quane.little.language.FunctionDefinition]]
   */
-class FunctionParameter(val name: String) {
+class FunctionParameter(val name: String, val valueType: ValueType) {
 
   override def toString = name
 

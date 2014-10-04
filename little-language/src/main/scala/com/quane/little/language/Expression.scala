@@ -9,6 +9,12 @@ import com.quane.little.language.data.Value
   */
 trait Expression extends EvaluableCode {
 
+  /** Evaluate this expression, in the given [[com.quane.little.language.Scope]],
+    * and output it's return [[com.quane.little.language.data.Value]].
+    *
+    * @param scope the scope in which to evaluate the expression
+    * @return the return value of the expression
+    */
   def evaluate(scope: Scope): Value
 
 }

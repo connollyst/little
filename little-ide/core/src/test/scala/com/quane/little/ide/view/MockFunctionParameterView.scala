@@ -1,5 +1,7 @@
 package com.quane.little.ide.view
 
+import com.quane.little.language.data.ValueType.ValueType
+
 object MockFunctionParameterView {
   def apply() = new MockFunctionParameterView
 }
@@ -13,6 +15,8 @@ class MockFunctionParameterView
   extends FunctionParameterView
   with MockView {
 
-  def setName(name: String) = Unit
+  override def setName(name: String) = Unit
+
+  override def setValueType(valueType: ValueType) = Unit
 
 }

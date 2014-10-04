@@ -1,6 +1,7 @@
 package com.quane.little.language.data
 
-/** Defines the primitive type of the [[Value]] for better internal manipulation.
+/** Defines the primitive type of the [[com.quane.little.language.data.Value]]
+  * for better internal manipulation.
   *
   * @author Sean Connolly
   */

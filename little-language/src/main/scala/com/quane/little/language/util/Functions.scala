@@ -1,6 +1,6 @@
 package com.quane.little.language.util
 
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.{ValueType, Value}
 import com.quane.little.language.math._
 import com.quane.little.language._
 
@@ -14,7 +14,7 @@ object Functions {
   def blank: FunctionDefinition = new FunctionDefinition("")
 
   def move: FunctionDefinition = {
-    val fun = new FunctionDefinition("move").addParam("speed")
+    val fun = new FunctionDefinition("move").addParam("speed", ValueType.Integer)
     fun.addStep(new Setter(Operable.SPEED, new Getter("speed")))
   }
 
@@ -24,7 +24,7 @@ object Functions {
   }
 
   def turn: FunctionDefinition = {
-    val fun = new FunctionDefinition("turn").addParam("direction")
+    val fun = new FunctionDefinition("turn").addParam("direction", ValueType.Integer)
     fun.addStep(new Setter(Operable.DIRECTION, new Getter("direction")))
   }
 
@@ -37,7 +37,7 @@ object Functions {
   }
 
   def turnRelative: FunctionDefinition = {
-    val relativelyFun = new FunctionDefinition("turnRelative").addParam("degrees")
+    val relativelyFun = new FunctionDefinition("turnRelative").addParam("degrees", ValueType.Integer)
     val getCurrentDir = new Getter(Operable.DIRECTION)
     val dirChange = new Getter("degrees")
     val getNewDirection = new Addition(getCurrentDir, dirChange)

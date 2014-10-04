@@ -8,6 +8,7 @@ import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language.FunctionParameter
 import com.quane.little.ide.MockIDEBindingModule
+import com.quane.little.language.data.ValueType
 
 /** Test cases for the [[com.quane.little.ide.presenter.FunctionDefinitionPresenter]].
   *
@@ -50,7 +51,7 @@ class TestFunctionDefinitionPresenter extends WordSpec with MockitoSugar {
       val presenter = new FunctionDefinitionPresenter(view)
       val paramView = mock[FunctionParameterView]
       when(view.createFunctionParameter()).thenReturn(paramView)
-      presenter += new FunctionParameter("sean is cool")
+      presenter += new FunctionParameter("sean is cool", ValueType.String)
       verify(paramView).setName("sean is cool")
     }
     "add new parameter presenter when requested" in {

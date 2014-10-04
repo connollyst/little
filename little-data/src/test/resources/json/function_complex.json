@@ -13,6 +13,16 @@
     "definition": {
         "_class": "com.quane.little.language.FunctionDefinition",
         "name": "turnRelative",
+        "params": [
+            {
+                "_class": "com.quane.little.language.FunctionParameter",
+                "name": "degrees",
+                "valueType": {
+                    "enumClass": "com.quane.little.language.data.ValueType",
+                    "value": "Integer"
+                }
+            }
+        ],
         "steps": [
             {
                 "_class": "com.quane.little.language.Setter",
@@ -28,12 +38,6 @@
                         "name": "degrees"
                     }
                 }
-            }
-        ],
-        "params": [
-            {
-                "_class": "com.quane.little.language.FunctionParameter",
-                "name": "degrees"
             }
         ]
     }

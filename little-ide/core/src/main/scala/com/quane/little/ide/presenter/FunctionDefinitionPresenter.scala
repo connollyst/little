@@ -7,6 +7,7 @@ import scala._
 import scala.collection.mutable.ListBuffer
 import com.quane.little.data.service.FunctionService
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.language.data.ValueType
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionDefinition]].
   *
@@ -68,7 +69,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
 
   override def onNameChange(name: String): Unit = _name = name
 
-  override def requestAddParameter() = this += new FunctionParameter("")
+  override def requestAddParameter() = this += new FunctionParameter("", ValueType.String)
 
   override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(_name)
