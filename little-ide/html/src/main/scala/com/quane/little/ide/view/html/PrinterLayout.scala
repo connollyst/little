@@ -1,8 +1,9 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{ExpressionView, PrinterView}
-import com.vaadin.ui.{Alignment, HorizontalLayout, Label}
+import com.quane.little.ide.view.{CodeMenuView, ExpressionView, PrinterView}
+import com.vaadin.ui._
 import com.quane.vaadin.scala.VaadinMixin
+import scala.Some
 
 object PrinterLayout {
   val Style = "l-print"
@@ -20,14 +21,20 @@ class PrinterLayout
 
   private val printLabel = new Label("print")
   private var printValue: Option[ExpressionView[_] with RemovableComponent] = None
+  private val menuWrapper = new CssLayout() with VaadinMixin
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
   setStyleNames(ExpressionLayout.Style, PrinterLayout.Style)
 
   addComponent(printLabel)
-  // TODO add the CodeMenuLayout wrapper here
+  addComponent(menuWrapper)
   addComponent(Buttons.closeButton(this))
+
+  override def createCodeMenu(): CodeMenuView = {
+    menuWrapper.removeAllComponents()
+    menuWrapper.add(new CodeMenuLayout(this))
+  }
 
   override def createValueStatement(): ValueLayout = {
     removePrintValueView()
@@ -50,6 +57,7 @@ class PrinterLayout
     add(view)
   }
 
+
   private def removePrintValueView(): Unit = {
     printValue match {
       case Some(removable) => removable.removeFromParent()
@@ -58,5 +66,18 @@ class PrinterLayout
     printValue = None
   }
 
-}
+  /**
+   * Removes the component from this container.<br/>
+   * If the component is the print value view, it is removed from this view also.
+   *
+   * @param c the component to be removed.
+   */
+  override def removeComponent(c: Component): Unit = {
+    printValue match {
+      case Some(removable) => if (c == removable) printValue = None // TODO notify presenter
+      case None => // do nothing
+    }
+    super.removeComponent(c)
+  }
 
+}

@@ -11,6 +11,8 @@ object MockPrinterView {
   */
 class MockPrinterView extends PrinterView with MockView {
 
+  override def createCodeMenu() = new MockCodeMenuView
+
   override def createValueStatement() = new MockValueView
 
   override def createGetStatement() = new MockGetterView

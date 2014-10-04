@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{EvaluableCodeViewPresenter, EvaluableCodeView, BlockViewPresenter, BlockView}
+import com.quane.little.ide.view.{EvaluableCodeView, BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
