@@ -6,6 +6,8 @@ trait FunctionArgumentView extends ExpressionView[FunctionArgumentViewPresenter]
 
   def setName(name: String): Unit
 
+  def createCodeMenu(): CodeMenuView
+
   def createGetterExpression(): GetterView
 
   def createMathExpression(): MathView

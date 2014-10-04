@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{FunctionReferenceViewPresenter, FunctionReferenceView}
+import com.quane.little.ide.view.{PrinterViewPresenter, FunctionReferenceViewPresenter, FunctionReferenceView}
 import com.quane.little.language.{Expression, FunctionReference}
 import scala.collection.mutable.ListBuffer
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
@@ -49,13 +49,10 @@ class FunctionReferencePresenter(val view: FunctionReferenceView,
 
   override def compile(): FunctionReference = {
     val fun = new FunctionReference(_name)
-    compileArgs(fun)
-    fun
-  }
-
-  private def compileArgs(fun: FunctionReference) =
     args.foreach {
       arg => fun.addArg(arg.name, arg.compile())
     }
+    fun
+  }
 
 }

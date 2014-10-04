@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{FunctionArgumentViewPresenter, ExpressionView, FunctionArgumentView}
+import com.quane.little.ide.view.{CodeMenuView, FunctionArgumentViewPresenter, ExpressionView, FunctionArgumentView}
 import com.vaadin.ui._
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.quane.little.ide.view.html.dnd.ExpressionDropHandler
@@ -24,6 +24,7 @@ class FunctionArgumentComponent
     new CssLayout,
     new ExpressionDropHandler[FunctionArgumentViewPresenter, FunctionArgumentView](this)
   )
+  private val menuWrapper = new CssLayout() with VaadinMixin
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_CENTER)
@@ -31,10 +32,15 @@ class FunctionArgumentComponent
 
   add(nameLabel)
   add(new Label("="))
-  // TODO add the CodeMenuLayout wrapper here
   add(valueWrapper)
+  add(menuWrapper)
 
   override def setName(name: String): Unit = nameLabel.setValue(name)
+
+  override def createCodeMenu(): CodeMenuView = {
+    menuWrapper.removeAllComponents()
+    menuWrapper.add(new CodeMenuLayout(this))
+  }
 
   override def createGetterExpression(): GetterLayout = setValue(new GetterLayout)
 

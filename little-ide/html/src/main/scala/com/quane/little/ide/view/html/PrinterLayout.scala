@@ -57,7 +57,6 @@ class PrinterLayout
     add(view)
   }
 
-
   private def removePrintValueView(): Unit = {
     printValue match {
       case Some(removable) => removable.removeFromParent()

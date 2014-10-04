@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
+import com.quane.little.ide.view.{PrinterViewPresenter, ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
 import com.quane.little.language.{Logic, FunctionReference, Expression, Getter}
 import com.quane.little.data.model.RecordId
@@ -25,6 +25,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
 
   view.registerViewPresenter(this)
   view.setName(_name)
+  createCodeMenu()
 
   private[presenter] def initialize(name: String, value: Expression): FunctionArgumentPresenter[V] = {
     this.name = name
@@ -71,6 +72,11 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
       }
     _value = Some(presenter)
   }
+
+  /** Create an add a new code menu to the printer.
+    */
+  private def createCodeMenu(): Unit =
+    presenterFactory.createCodeMenu[FunctionArgumentViewPresenter](view.createCodeMenu(), this)
 
   override def requestAddExpression(id: RecordId, index: Int) =
     value = expressionService.findExpression(id)

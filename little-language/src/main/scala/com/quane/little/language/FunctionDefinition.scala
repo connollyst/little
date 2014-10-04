@@ -56,6 +56,7 @@ class FunctionDefinition(val name: String) {
     params foreach {
       param =>
         // TODO parameters should have default values
+        // TODO parameters' default values should be specific to their type
         reference.addArg(param.name, Value(""))
     }
     reference
