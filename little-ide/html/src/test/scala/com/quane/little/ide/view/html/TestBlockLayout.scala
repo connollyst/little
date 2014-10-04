@@ -41,8 +41,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addLogicStep(0)
       // then
-      view.getComponent(1).getClass should be(classOf[BlockStep])
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(1).getClass should be(classOf[LogicLayout])
     }
     "append second step at index 4" in {
       val view = new BlockLayout
@@ -53,8 +52,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addLogicStep(1)
       // then
-      view.getComponent(3).getClass should be(classOf[BlockStep])
-      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(3).getClass should be(classOf[LogicLayout])
     }
     "append third step at index 6" in {
       val view = new BlockLayout
@@ -67,8 +65,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addLogicStep(2)
       // then
-      view.getComponent(5).getClass should be(classOf[BlockStep])
-      view.getComponent(5).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(5).getClass should be(classOf[LogicLayout])
     }
     "append fourth step at index 8" in {
       val view = new BlockLayout
@@ -83,8 +80,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addLogicStep(3)
       // then
-      view.getComponent(7).getClass should be(classOf[BlockStep])
-      view.getComponent(7).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(7).getClass should be(classOf[LogicLayout])
     }
   }
 
@@ -102,8 +98,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addLogicStep(2)
       // then
-      view.getComponent(5).getClass should be(classOf[BlockStep])
-      view.getComponent(5).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(5).getClass should be(classOf[LogicLayout])
     }
   }
 
@@ -342,10 +337,9 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(3)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[LogicLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
     }
     "remove step #0 from the beginning when it had been inserted" in {
@@ -361,10 +355,9 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(3)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[LogicLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
     }
     "remove step #1 from the end when it had been appended" in {
@@ -380,10 +373,9 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(3)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[MathLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
     }
     "remove step #1 from the middle when it had been appended" in {
@@ -401,14 +393,12 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(5)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[MathLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(3).getClass should be(classOf[FunctionReferenceLayout])
       view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
-      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[FunctionReferenceLayout])
       view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
     }
     "remove step #1 from the middle when it had been inserted" in {
@@ -426,14 +416,12 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(5)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[MathLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(3).getClass should be(classOf[FunctionReferenceLayout])
       view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
-      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[FunctionReferenceLayout])
       view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
     }
     "remove step #2 from the end when it had been appended" in {
@@ -451,14 +439,12 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(5)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[MathLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(3).getClass should be(classOf[LogicLayout])
       view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
-      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
       view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
     }
     "remove step #2 from the middle when it had been inserted" in {
@@ -478,18 +464,15 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(7)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[MathLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(3).getClass should be(classOf[LogicLayout])
       view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(5).getClass should be(classOf[BlockStep])
+      view.getComponent(5).getClass should be(classOf[PrinterLayout])
       view.getComponent(6).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
-      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
       view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
-      view.getComponent(5).asInstanceOf[BlockStep].step.getClass should be(classOf[PrinterLayout])
       view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
     }
     "remove step #3 from the end when it had been appended" in {
@@ -509,18 +492,15 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // then
       view.componentCount should be(7)
       view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(1).getClass should be(classOf[MathLayout])
       view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(3).getClass should be(classOf[LogicLayout])
       view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
-      view.getComponent(5).getClass should be(classOf[BlockStep])
+      view.getComponent(5).getClass should be(classOf[FunctionReferenceLayout])
       view.getComponent(6).getClass should be(classOf[BlockStepSeparator])
       view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
-      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
       view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
-      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
       view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
-      view.getComponent(5).asInstanceOf[BlockStep].step.getClass should be(classOf[FunctionReferenceLayout])
       view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
     }
   }

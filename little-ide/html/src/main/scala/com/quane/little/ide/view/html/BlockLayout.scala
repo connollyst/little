@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{BlockViewPresenter, BlockView}
+import com.quane.little.ide.view.{EvaluableCodeViewPresenter, EvaluableCodeView, BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
@@ -53,15 +53,15 @@ class BlockLayout
 
   override def removeComponent(component: Component) {
     component match {
-      case step: BlockStep => removeStep(getStepIndex(component))
+      case step: EvaluableCodeView[_] => removeStep(getStepIndex(component))
       case _ => throw new IllegalArgumentException("Attempt to remove " + component.getClass
-        + " from " + classOf[BlockLayout] + ", can only remove " + classOf[BlockStep])
+        + " from " + classOf[BlockLayout] + ", can only remove " + classOf[EvaluableCodeView[_]])
     }
   }
 
   private def addStep[C <: Component](component: C, stepIndex: Int): C = {
     val componentIndex = getComponentIndex(stepIndex)
-    addComponent(new BlockStep(component), componentIndex)
+    addComponent(component, componentIndex)
     component
   }
 
@@ -118,36 +118,6 @@ class BlockLayout
 
 }
 
-private class BlockStep(val step: Component)
-  extends HorizontalLayout
-  with RemovableComponent
-  with VaadinMixin {
-
-  setStyleName(StyleStep)
-
-  add(step)
-  setExpandRatio(step, 1f)
-
-  /**
-   * Removes the component from this container. As the only content of a [[com.quane.little.ide.view.html.BlockStep]]
-   * is the step itself, the only valid `component` to remove is the `step`. If not, an exception is thrown. If so,
-   * the component is removed and, as it is now empty, this component removes itself from its parent.
-   *
-   * @param component the component to be removed.
-   * @throws IllegalArgumentException if the `component` is not the `step`
-   */
-  override def removeComponent(component: Component): Unit = {
-    if (component != step) {
-      throw new IllegalArgumentException("Attempt to remove " + component
-        + " from " + classOf[BlockStep] + ", can only remove: " + step)
-
-    }
-    super.removeComponent(component)
-    removeFromParent()
-  }
-
-}
-
 private class BlockStepSeparator(block: BlockLayout)
   extends HorizontalLayout
   with VaadinMixin {
@@ -187,7 +157,7 @@ private class BlockStepSeparator(block: BlockLayout)
 }
 
 /**
- * Handler for drag &amp; drop events onto a block.
+ * Handler for drag &amp; drop events onto a [[com.quane.little.ide.view.html.BlockStepSeparator]].
  *
  * @param block the block to interact with
  */
