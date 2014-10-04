@@ -145,7 +145,7 @@ class TestBlockPresenter extends WordSpec with ShouldMatchers with MockitoSugar 
     "initialize print statement when added" in {
       val view = MockBlockView.mocked()
       val presenter = new BlockPresenter(view)
-      val printerView = mock[PrinterView]
+      val printerView = MockPrinterView.mocked()
       val valueView = mock[ValueView]
       when(view.addPrintStep(0)).thenReturn(printerView)
       when(view.addPrintStep(anyInt)).thenReturn(printerView)

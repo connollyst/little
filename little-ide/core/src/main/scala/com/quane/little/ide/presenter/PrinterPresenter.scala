@@ -68,9 +68,8 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
 
   /** Create an add a new code menu to the printer.
     */
-  private def createCodeMenu(): Unit = {
+  private def createCodeMenu(): Unit =
     presenterFactory.createCodeMenu[PrinterViewPresenter](view.createCodeMenu(), this)
-  }
 
   override def requestAddExpression(id: RecordId, index: Int) =
     text = expressionService.findExpression(id)

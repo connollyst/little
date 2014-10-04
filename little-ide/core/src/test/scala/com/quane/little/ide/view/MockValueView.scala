@@ -1,5 +1,9 @@
 package com.quane.little.ide.view
 
+object MockValueView {
+  def apply(): MockValueView = new MockValueView
+}
+
 /** An implementation of [[com.quane.little.ide.view.ValueView]] for testing
   * purposes.
   *

@@ -31,33 +31,33 @@ class TestPrinterPresenter
       assert(textPresenter.value == "abc")
     }
     "register itself with view immediately" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       verify(view).registerViewPresenter(presenter)
     }
     "create a view for a new Value expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       when(view.createValueStatement()).thenReturn(mock[ValueView])
       presenter.text = Value("abc")
       verify(view).createValueStatement()
     }
     "create a view for a new Getter expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       when(view.createGetStatement()).thenReturn(mock[GetterView])
       presenter.text = new Getter("TestValue")
       verify(view).createGetStatement()
     }
     "create a view for a new FunctionReference expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       when(view.createFunctionReference()).thenReturn(mock[FunctionReferenceView])
       presenter.text = new FunctionReference("TestFunction")
       verify(view).createFunctionReference()
     }
     "initialize the view for a new Value expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val valueView = mock[ValueView]
       when(view.createValueStatement()).thenReturn(valueView)
@@ -65,7 +65,7 @@ class TestPrinterPresenter
       verify(valueView).setValue("abc")
     }
     "initialize the view for a new Getter expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val getterView = mock[GetterView]
       when(view.createGetStatement()).thenReturn(getterView)
@@ -73,7 +73,7 @@ class TestPrinterPresenter
       verify(getterView).setName("TestValue")
     }
     "initialize the view for a new FunctionReference expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val functionView = mock[FunctionReferenceView]
       when(view.createFunctionReference()).thenReturn(functionView)
@@ -81,7 +81,7 @@ class TestPrinterPresenter
       verify(functionView).setName("TestFunction")
     }
     "create a view with a presenter for a new Value expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val expectedValueView = mock[ValueView]
       when(view.createValueStatement()).thenReturn(expectedValueView)
@@ -91,7 +91,7 @@ class TestPrinterPresenter
       valuePresenter.view should be(expectedValueView)
     }
     "create a view with a presenter for a new Getter expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val getterView = mock[GetterView]
       when(view.createGetStatement()).thenReturn(getterView)
@@ -101,7 +101,7 @@ class TestPrinterPresenter
       getterPresenter.view should be(getterView)
     }
     "create a view with a presenter for a new FunctionReference expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val functionView = mock[FunctionReferenceView]
       when(view.createFunctionReference()).thenReturn(functionView)
@@ -130,7 +130,7 @@ class TestPrinterPresenter
       assertCompiledValue(new FunctionReference("funName"))
     }
     "error if compiled without expression" in {
-      val view = mock[PrinterView]
+      val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       intercept[IllegalAccessException] {
         presenter.compile()
@@ -140,7 +140,7 @@ class TestPrinterPresenter
   }
 
   private def assertCompiledValue(value: Expression) = {
-    val view = mock[PrinterView]
+    val view = MockPrinterView.mocked()
     val presenter = new PrinterPresenter(view)
     when(view.createGetStatement()).thenReturn(new MockGetterView)
     when(view.createValueStatement()).thenReturn(new MockValueView)
