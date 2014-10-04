@@ -45,32 +45,34 @@ class BlockLayout
 
   override def addFunctionStep(index: Int) = addStep(new FunctionReferenceLayout(), index)
 
-  // C <: EvaluableCodeView
-  private def addStep[C <: Component](component: C, sIndex: Int): C = {
-    val index = componentIndex(sIndex)
-    addComponent(new BlockStep(component), index)
-    // Update menus
-    components foreach {
-      case space: BlockStepSeparator => if (stepIndex(space) > sIndex) space.menu.index = stepIndex(space) + 1
-      case _ => // do nothing
+  override def addCodeMenu(stepIndex: Int) = {
+    val menuIndex = if (stepIndex < 0) 0 else getComponentIndex(stepIndex) + 1
+    val space = new BlockStepSeparator(this)
+    addComponent(space, menuIndex)
+    space.menu
+  }
+
+  override def removeComponent(component: Component) {
+    component match {
+      case step: BlockStep => removeStep(getStepIndex(component))
+      case _ => throw new IllegalArgumentException("Attempt to remove " + component.getClass
+        + " from " + classOf[BlockLayout] + ", can only remove " + classOf[BlockStep])
     }
+  }
+
+  private def addStep[C <: Component](component: C, stepIndex: Int): C = {
+    val componentIndex = getComponentIndex(stepIndex)
+    addComponent(new BlockStep(component), componentIndex)
     component
   }
 
-  override def addCodeMenu(stepIndex: Int) = {
-    val menuIndex = if (stepIndex < 0) 0 else componentIndex(stepIndex) + 1
-    val nextStepIndex = if (stepIndex < 0) 0 else stepIndex + 1
-    val menu = new CodeMenuLayout(this, nextStepIndex)
-    val space = new BlockStepSeparator(this, menu)
-    addComponent(space, menuIndex)
-    menu
-  }
-
-  override def removeComponent(c: Component) {
-    val index = getComponentIndex(c)
-    val separator = getComponent(index + 1)
+  private def removeStep(stepIndex: Int): Unit = {
+    // Remove component & separator
+    val componentIndex = getComponentIndex(stepIndex)
+    val step = getComponent(componentIndex)
+    val separator = getComponent(componentIndex + 1)
     super.removeComponent(separator)
-    super.removeComponent(c)
+    super.removeComponent(step)
   }
 
   /** Returns `true` if this layout contains the given Component.
@@ -85,27 +87,27 @@ class BlockLayout
     * @param c the step component
     * @return the index of the step in the block
     */
-  def stepIndex(c: Component): Int = stepIndex(getComponentIndex(c))
+  def getStepIndex(c: Component): Int = getStepIndex(getComponentIndex(c))
 
   /** Return the index of the expression step in the block, given it's Component's index.
     *
-    * @param i the index of the component
+    * @param componentIndex the index of the component
     * @return the index of the step in the block
     */
-  def stepIndex(i: Int): Int = {
-    scala.math.round(i / 2)
+  def getStepIndex(componentIndex: Int): Int = {
+    scala.math.round(componentIndex / 2)
   }
 
   /** Return the index of the Component, given the index of the step in the block.
     *
-    * @param i the index of the step in the block
+    * @param stepIndex the index of the step in the block
     * @return the index of the component
     */
-  def componentIndex(i: Int): Int = {
-    if (i < 0) {
-      i
+  def getComponentIndex(stepIndex: Int): Int = {
+    if (stepIndex < 0) {
+      stepIndex
     } else {
-      (i * 2) + 1
+      (stepIndex * 2) + 1
     }
   }
 
@@ -128,13 +130,14 @@ private class BlockStep(val step: Component)
 
 }
 
-private class BlockStepSeparator(block: BlockLayout, val menu: CodeMenuLayout[BlockViewPresenter])
+private class BlockStepSeparator(block: BlockLayout)
   extends HorizontalLayout
   with VaadinMixin {
 
   setSizeFull()
   setStyleName(BlockLayout.StyleSeparator)
 
+  val menu = new CodeMenuLayout[BlockViewPresenter](block, index)
   val dndHandler = new BlockDropHandler(this)
   val dndTargetLeft = new DroppableTarget(new HorizontalLayout())
   val dndTargetRight = new DroppableTarget(new HorizontalLayout())
@@ -148,20 +151,20 @@ private class BlockStepSeparator(block: BlockLayout, val menu: CodeMenuLayout[Bl
 
   def addExpression(primitiveId: RecordId) =
     IDECommandExecutor.execute(
-      new AddExpressionCommand(block.presenter, primitiveId, index)
+      new AddExpressionCommand(block.presenter, primitiveId, index())
     )
 
   def addStatement(primitiveId: RecordId) =
     IDECommandExecutor.execute(
-      new AddStatementCommand(block.presenter, primitiveId, index)
+      new AddStatementCommand(block.presenter, primitiveId, index())
     )
 
   def addFunction(functionId: RecordId) =
     IDECommandExecutor.execute(
-      new AddFunctionReferenceCommand(block.presenter, functionId, index)
+      new AddFunctionReferenceCommand(block.presenter, functionId, index())
     )
 
-  def index: Int = block.stepIndex(this)
+  def index(): Int = block.getStepIndex(this)
 
 }
 

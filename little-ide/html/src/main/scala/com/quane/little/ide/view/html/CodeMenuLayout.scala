@@ -20,7 +20,7 @@ object CodeMenuLayout {
   *
   * @author Sean Connolly
   */
-class CodeMenuLayout[P <: ViewPresenter](view: View[P], var index: Int) extends MenuBar with CodeMenuView {
+class CodeMenuLayout[P <: ViewPresenter](view: View[P], var index: () => Int) extends MenuBar with CodeMenuView {
 
   setStyleName(Style)
 
@@ -56,17 +56,17 @@ class CodeMenuLayout[P <: ViewPresenter](view: View[P], var index: Int) extends 
 
   def addStatementClicked(id: RecordId) = {
     val p = view.presenter.asInstanceOf[PresenterAcceptsStatement]
-    IDECommandExecutor.execute(new AddStatementCommand(p, id, index))
+    IDECommandExecutor.execute(new AddStatementCommand(p, id, index()))
   }
 
   def addExpressionClicked(id: RecordId) = {
     val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
-    IDECommandExecutor.execute(new AddExpressionCommand(p, id, index))
+    IDECommandExecutor.execute(new AddExpressionCommand(p, id, index()))
   }
 
   def addFunctionClicked(id: RecordId) = {
     val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
-    IDECommandExecutor.execute(new AddFunctionReferenceCommand(p, id, index))
+    IDECommandExecutor.execute(new AddFunctionReferenceCommand(p, id, index()))
   }
 
 }

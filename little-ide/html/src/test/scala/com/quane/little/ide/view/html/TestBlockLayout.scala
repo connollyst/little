@@ -16,19 +16,19 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
 
   "BlockLayout componentIndex" should {
     "return 1" in {
-      new BlockLayout().componentIndex(0) should be(1)
+      new BlockLayout().getComponentIndex(0) should be(1)
     }
     "return 3" in {
-      new BlockLayout().componentIndex(1) should be(3)
+      new BlockLayout().getComponentIndex(1) should be(3)
     }
     "return 5" in {
-      new BlockLayout().componentIndex(2) should be(5)
+      new BlockLayout().getComponentIndex(2) should be(5)
     }
     "return 7" in {
-      new BlockLayout().componentIndex(3) should be(7)
+      new BlockLayout().getComponentIndex(3) should be(7)
     }
     "return 9" in {
-      new BlockLayout().componentIndex(4) should be(9)
+      new BlockLayout().getComponentIndex(4) should be(9)
     }
   }
 
@@ -195,7 +195,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(-1)
       // then
-      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index should be(0)
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
     }
     "have step index 0 at index 0 when appended" in {
       // given
@@ -205,7 +205,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(0)
       // then
-      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index should be(0)
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
     }
     "have step index 1 at index 2 when appended" in {
       // given
@@ -215,7 +215,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(0)
       // then
-      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index should be(1)
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
     }
     "have step index 2 at index 4 when appended" in {
       val view = new BlockLayout
@@ -227,7 +227,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(1)
       // then
-      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index should be(2)
+      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
     }
     "have step index 2 at index 4 when added" in {
       val view = new BlockLayout
@@ -239,7 +239,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(0)
       // then
-      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index should be(2)
+      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
     }
     "have step index 3 at index 6 when appended" in {
       val view = new BlockLayout
@@ -253,7 +253,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(2)
       // then
-      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index should be(3)
+      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
     }
     "have step index 3 at index 6 when added to start" in {
       val view = new BlockLayout
@@ -267,7 +267,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(0)
       // then
-      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index should be(3)
+      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
     }
     "have step index 3 at index 6 when added to middle" in {
       val view = new BlockLayout
@@ -281,7 +281,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(1)
       // then
-      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index should be(3)
+      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
     }
     "have step index 3 at index 6 when added (mixed)" in {
       val view = new BlockLayout
@@ -295,7 +295,7 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(0)
       // then
-      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index should be(3)
+      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
     }
     "have step index 4 at index 8 when appended" in {
       val view = new BlockLayout
@@ -311,8 +311,219 @@ class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
       // when
       view.addCodeMenu(3)
       // then
-      view.getComponent(8).asInstanceOf[BlockStepSeparator].menu.index should be(4)
+      view.getComponent(8).asInstanceOf[BlockStepSeparator].menu.index() should be(4)
     }
+  }
+
+  "BlockLayout" should {
+    "remove step #0 when it is the only step" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(0)))
+      // then
+      view.componentCount should be(1)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+    }
+    "remove step #0 from the beginning when it had been appended" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      view.addLogicStep(1)
+      view.addCodeMenu(1)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(0)))
+      // then
+      view.componentCount should be(3)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+    }
+    "remove step #0 from the beginning when it had been inserted" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addLogicStep(0)
+      view.addCodeMenu(0)
+      view.addMathStep(0) // inserted before previous step
+      view.addCodeMenu(0)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(0)))
+      // then
+      view.componentCount should be(3)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+    }
+    "remove step #1 from the end when it had been appended" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      view.addLogicStep(1)
+      view.addCodeMenu(1)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(1)))
+      // then
+      view.componentCount should be(3)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+    }
+    "remove step #1 from the middle when it had been appended" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      view.addLogicStep(1)
+      view.addCodeMenu(1)
+      view.addFunctionStep(2)
+      view.addCodeMenu(2)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(1)))
+      // then
+      view.componentCount should be(5)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[FunctionReferenceLayout])
+      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
+    }
+    "remove step #1 from the middle when it had been inserted" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      view.addFunctionStep(1)
+      view.addCodeMenu(1)
+      view.addLogicStep(1) // inserted before previous step
+      view.addCodeMenu(1)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(1)))
+      // then
+      view.componentCount should be(5)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[FunctionReferenceLayout])
+      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
+    }
+    "remove step #2 from the end when it had been appended" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      view.addLogicStep(1)
+      view.addCodeMenu(1)
+      view.addFunctionStep(2)
+      view.addCodeMenu(2)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(2)))
+      // then
+      view.componentCount should be(5)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
+    }
+    "remove step #2 from the middle when it had been inserted" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      view.addLogicStep(1)
+      view.addCodeMenu(1)
+      view.addPrintStep(2)
+      view.addCodeMenu(2)
+      view.addFunctionStep(2) // inserted before previous step
+      view.addCodeMenu(2)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(2)))
+      // then
+      view.componentCount should be(7)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(5).getClass should be(classOf[BlockStep])
+      view.getComponent(6).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
+      view.getComponent(5).asInstanceOf[BlockStep].step.getClass should be(classOf[PrinterLayout])
+      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
+    }
+    "remove step #3 from the end when it had been appended" in {
+      // given
+      val view = new BlockLayout
+      view.addCodeMenu(-1)
+      view.addMathStep(0)
+      view.addCodeMenu(0)
+      view.addLogicStep(1)
+      view.addCodeMenu(1)
+      view.addFunctionStep(2)
+      view.addCodeMenu(2)
+      view.addPrintStep(3)
+      view.addCodeMenu(3)
+      // when
+      view.removeComponent(view.getComponent(view.getComponentIndex(3)))
+      // then
+      view.componentCount should be(7)
+      view.getComponent(0).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(1).getClass should be(classOf[BlockStep])
+      view.getComponent(2).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(3).getClass should be(classOf[BlockStep])
+      view.getComponent(4).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(5).getClass should be(classOf[BlockStep])
+      view.getComponent(6).getClass should be(classOf[BlockStepSeparator])
+      view.getComponent(0).asInstanceOf[BlockStepSeparator].menu.index() should be(0)
+      view.getComponent(1).asInstanceOf[BlockStep].step.getClass should be(classOf[MathLayout])
+      view.getComponent(2).asInstanceOf[BlockStepSeparator].menu.index() should be(1)
+      view.getComponent(3).asInstanceOf[BlockStep].step.getClass should be(classOf[LogicLayout])
+      view.getComponent(4).asInstanceOf[BlockStepSeparator].menu.index() should be(2)
+      view.getComponent(5).asInstanceOf[BlockStep].step.getClass should be(classOf[FunctionReferenceLayout])
+      view.getComponent(6).asInstanceOf[BlockStepSeparator].menu.index() should be(3)
+    }
+
   }
 
 }
