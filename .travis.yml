@@ -1,9 +1,16 @@
 language: scala
+
 scala:
    - 2.9.3
+
 jdk:
   - oraclejdk7
   - openjdk7
+
+cache:
+  directories:
+  - $HOME/.m2
+
 notifications:
   email:
     - connolly.st@gmail.com
