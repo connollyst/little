@@ -53,7 +53,7 @@ class TestLogicWithStrings extends FunSuite {
 }
 
 @RunWith(classOf[JUnitRunner])
-class TestEvaluationWithBooleans extends FunSuite {
+class TestLogicWithBooleans extends FunSuite {
 
   /* Evaluate Equals with Boolean Values */
 
@@ -156,7 +156,7 @@ class TestEvaluationWithBooleans extends FunSuite {
 }
 
 @RunWith(classOf[JUnitRunner])
-class TestEvaluationWithIntegers extends FunSuite {
+class TestLogicWithIntegers extends FunSuite {
 
   /* Evaluate Equals with Integer Values */
 
