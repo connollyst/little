@@ -1,16 +1,15 @@
 package com.quane.little.ide.view.html
 
 import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
 import org.scalatest.WordSpec
+import org.scalatest.junit.JUnitRunner
 import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
 
-/**
- *
- *
- * @author Sean Connolly
- */
+/** Test cases for the [[com.quane.little.ide.view.html.BlockLayout]] UI component.
+  *
+  * @author Sean Connolly
+  */
 @RunWith(classOf[JUnitRunner])
 class TestBlockLayout extends WordSpec with ShouldMatchers with MockitoSugar {
 
