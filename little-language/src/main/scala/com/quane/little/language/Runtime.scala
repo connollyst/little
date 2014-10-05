@@ -13,20 +13,33 @@ class Runtime
     */
   override def runtime = this
 
-  def saveFunction(function: FunctionDefinition) =
-    functions += (function.name -> function)
+  /** Save the given function definition to this runtime.<br/>
+    * Once added, a function cannot be redefined.
+    *
+    * @param function the function definition to store in the runtime
+    * @throws IllegalAccessException if a function of this name is already defined
+    */
+  def saveFunction(function: FunctionDefinition): Unit =
+    if (containsFunction(function.name)) {
+      throw new IllegalAccessException(
+        "Function '" + function.name + "' already defined in runtime " + this
+      )
+    } else {
+      functions += (function.name -> function)
+    }
 
   /** Returns the named [[com.quane.little.language.FunctionDefinition]].
     *
     * @param name the name of the function
-    * @return the function if defined
+    * @return the function, if defined
+    * @throws RuntimeException if no function with this name is defined
     */
   def fetchFunction(name: String): FunctionDefinition = {
     if (functions.contains(name)) {
       functions(name)
     } else {
       // TODO what to do?
-      throw new RuntimeException("No function '" + name + "' in scope.")
+      throw new RuntimeException("No function '" + name + "' in runtime " + this)
     }
   }
 

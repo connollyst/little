@@ -15,12 +15,15 @@ import org.scalatest.matchers.ShouldMatchers
 class TestFunction extends FlatSpec with ShouldMatchers {
 
   "FunctionReference" should "return nada from print statement" in {
+    // Given
     val fun = new FunctionDefinition("myFun")
     fun.addStep(new Printer(Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference("myFun")
+    // When
     val obj = ref.evaluate(runtime)
+    // Then
     assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }
   it should "return nada from set statement" in {
@@ -29,17 +32,22 @@ class TestFunction extends FlatSpec with ShouldMatchers {
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference("myFun")
+    // When
     val obj = ref.evaluate(runtime)
+    // Then
     assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }
   it should "return value from get expression" in {
+    // Given
     val fun = new FunctionDefinition("myFun")
     fun.addStep(new Setter("Obj", Value("A")))
     fun.addStep(new Getter("Obj"))
     val runtime = new Runtime
     runtime.saveFunction(fun)
     val ref = new FunctionReference("myFun")
+    // When
     val obj = ref.evaluate(runtime)
+    // Then
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }
 
