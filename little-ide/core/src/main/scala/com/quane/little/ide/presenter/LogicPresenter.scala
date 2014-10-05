@@ -1,11 +1,12 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{LogicViewPresenter, LogicView}
-import com.quane.little.language.Logic
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.quane.little.data.service.{ExpressionService, FunctionService}
+import com.quane.little.ide.view.{LogicView, LogicViewPresenter}
 import com.quane.little.language.LogicOperation.LogicOperation
-import com.quane.little.language.LogicOperation
-import com.quane.little.data.service.{FunctionService, ExpressionService}
+import com.quane.little.language.data.ValueType
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.{Logic, LogicOperation}
 
 class LogicPresenter[V <: LogicView](protected val view: V)(implicit val bindingModule: BindingModule)
   extends LogicViewPresenter
@@ -33,6 +34,14 @@ class LogicPresenter[V <: LogicView](protected val view: V)(implicit val binding
     _operation = o
     view.setOperation(o)
   }
+
+  /** Returns the accepted value type for this expression.<br/>
+    * Note: any value type is accepted for both the left or right arguments,
+    * but they need to be the same type.
+    *
+    * @return the accepted value type
+    */
+  override def acceptedValueType: ValueType = ValueType.Any
 
   override def onOperationChange(operation: LogicOperation) =
     _operation = operation

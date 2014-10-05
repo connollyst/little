@@ -1,10 +1,10 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{CodeMenuView, CodeMenuViewPresenter}
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.data.service.{FunctionService, StatementService, ExpressionService}
-import com.quane.little.data.model.{CodeCategory, CodeType, PrimitiveRecord}
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.CodeType.CodeType
+import com.quane.little.data.model.{CodeCategory, CodeType, PrimitiveRecord}
+import com.quane.little.data.service.{ExpressionService, FunctionService, StatementService}
+import com.quane.little.ide.view.{CodeMenuView, CodeMenuViewPresenter}
 
 /** A presenter for views of the menu used to add code to a program.
   *
@@ -31,11 +31,21 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
   }
 
   if (m <:< manifest[PresenterAcceptsExpression]) {
+    val valueType = context.asInstanceOf[PresenterAcceptsExpression].acceptedValueType
     functionService.findByUser("connollyst") foreach {
-      function => view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
+      function =>
+        // TODO only display appropriate menu items
+        // TODO - check function return type
+        // TODO - check context's input type
+        view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
     }
   } else {
-    // disable functions category?
+    // TODO disable functions category?
+  }
+  if (m <:< manifest[PresenterAcceptsStatement]) {
+    // TODO do something
+  } else {
+    // TODO disable some category?
   }
 
   private def addItem(codeType: CodeType, primitive: PrimitiveRecord): Unit =

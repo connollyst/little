@@ -1,7 +1,7 @@
 package com.quane.little.data.repo
 
 import com.mongodb.casbah.Imports._
-import com.quane.little.data.model.{UserRecord, FunctionRecord}
+import com.quane.little.data.model.{FunctionRecord, UserRecord}
 
 /** Provides storage and retrieval access to the repository of
   * [[com.quane.little.data.model.FunctionRecord]] objects.

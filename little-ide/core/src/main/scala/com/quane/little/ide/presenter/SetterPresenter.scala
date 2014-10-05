@@ -1,13 +1,13 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ExpressionViewPresenter, SetterViewPresenter, SetterView}
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.ide.view.{ExpressionViewPresenter, SetterView, SetterViewPresenter}
 import com.quane.little.language._
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Value, ValueType}
 import com.quane.little.language.math.BasicMath
-import scala.Some
 
 /** Presenter for views representing a [[com.quane.little.language.Setter]].
   *
@@ -73,6 +73,9 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     // TODO skip if the presenter type hasn't changed (?)
     _value = Some(presenter)
   }
+
+  // TODO this changes depending on the Variable
+  override def acceptedValueType: ValueType = ValueType.Any
 
   override def onNameChange(name: String): Unit = _name = name
 

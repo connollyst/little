@@ -1,17 +1,15 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{MathViewPresenter, MathView}
+import com.quane.little.language.data.ValueType
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.math.BasicMath
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.data.service.{FunctionService, ExpressionService}
 import com.quane.little.language.math.BasicMathOperation
 import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
 
-/**
- *
- *
- * @author Sean Connolly
- */
 class MathPresenter[V <: MathView](protected val view: V)(implicit val bindingModule: BindingModule)
   extends MathViewPresenter
   with PresenterOfLeftAndRightExpressions
@@ -40,9 +38,10 @@ class MathPresenter[V <: MathView](protected val view: V)(implicit val bindingMo
     view.setOperation(o)
   }
 
+  override def acceptedValueType: ValueType = ValueType.Integer // TODO what about Double?
+
   override def onOperationChange(operation: BasicMathOperation) =
     _operation = operation
-
 
   /** Compile the presented data to a [[com.quane.little.language.math.BasicMath]]
     * expression.

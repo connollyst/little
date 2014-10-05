@@ -1,8 +1,9 @@
 package com.quane.little.language
 
-import collection.mutable
 import com.google.common.base.Objects
 import com.quane.little.language.data.Value
+
+import scala.collection.mutable
 
 /** A reference to a [[com.quane.little.language.FunctionDefinition]] for
   * evaluation.
@@ -16,7 +17,10 @@ class FunctionReference(val name: String)
   val args = mutable.Map[String, Expression]()
 
   def addArg(name: String, value: Expression): FunctionReference = {
-    // TODO assert arg is not already set
+    if (args.contains(name)) throw new IllegalAccessException(
+      "Tried to change argument '" + name + "' from '" + args(name) + "' to '" + value + "'."
+    )
+    // TODO validate arg valueType
     args(name) = value
     this
   }
@@ -26,10 +30,8 @@ class FunctionReference(val name: String)
    *
    * @return the function's return value
    */
-  override def evaluate(scope: Scope): Value = {
-    val definition = scope.runtime.fetchFunction(name)
-    definition.evaluate(scope, args.toMap)
-  }
+  override def evaluate(scope: Scope): Value =
+    scope.runtime.fetchFunction(name).evaluate(scope, args.toMap)
 
   override def equals(that: Any) = that match {
     case f: FunctionReference => name.equals(f.name) && args.equals(f.args)

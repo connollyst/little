@@ -1,13 +1,15 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view._
-import scala._
-import scala.collection.mutable.ListBuffer
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{FunctionService, ExpressionService, StatementService}
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.data.service.{ExpressionService, FunctionService, StatementService}
+import com.quane.little.ide.view._
 import com.quane.little.language._
+import com.quane.little.language.data.ValueType
+import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.math.BasicMath
+
+import scala.collection.mutable.ListBuffer
 
 /** A presenter for views representing a [[com.quane.little.language.Block]].
   *
@@ -98,6 +100,8 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
     */
   private[presenter] def get(index: Int): EvaluableCodeViewPresenter =
     _steps(index)
+
+  override def acceptedValueType: ValueType = ValueType.Any
 
   override def requestAddExpression(id: RecordId, index: Int) =
     add(expressionService.findExpression(id), index)

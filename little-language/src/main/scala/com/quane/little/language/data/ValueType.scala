@@ -7,5 +7,5 @@ package com.quane.little.language.data
   */
 object ValueType extends Enumeration {
   type ValueType = Value
-  val Boolean, Integer, Double, String, Nada = Value
+  val Any, Boolean, Integer, Double, String, Nada = Value
 }

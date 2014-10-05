@@ -1,9 +1,9 @@
 package com.quane.little.ide.presenter
 
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.google.common.base.Objects
 import com.quane.little.ide.view._
 import com.quane.little.language._
-import com.google.common.base.Objects
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.language.math.BasicMath
 
 /** A presenter for views representing an [[com.quane.little.language.Conditional]].

@@ -1,10 +1,12 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.service.{UserService, FunctionService}
 import com.quane.little.ide.view._
 import com.quane.little.language._
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
-import org.scalatest.WordSpec
+import org.scalatest.{BeforeAndAfter, WordSpec}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 import com.quane.little.language.data.Value
@@ -18,9 +20,16 @@ import org.scalatest.matchers.ShouldMatchers
   */
 @RunWith(classOf[JUnitRunner])
 class TestPrinterPresenter
-  extends WordSpec with ShouldMatchers with MockitoSugar with Injectable {
+  extends WordSpec with BeforeAndAfter with ShouldMatchers with MockitoSugar with Injectable {
 
   implicit val bindingModule = MockIDEBindingModule
+
+  before({
+    val mockUserService = inject[UserService]
+    val mockFunctionService = inject[FunctionService]
+    mockUserService.upsert("connollyst")
+    mockFunctionService.insert("connollyst", CodeCategory.Basic, new FunctionDefinition("TestFunction"))
+  })
 
   "PrinterPresenter" should {
 
@@ -121,13 +130,13 @@ class TestPrinterPresenter
       error.getMessage should startWith("Print text expression not supported")
     }
     "compile print(value expression)" in {
-      assertCompiledValue(Value("text"))
+      assertCompiledValue(Value("abc"))
     }
     "compile print(get expression)" in {
-      assertCompiledValue(new Getter("varName"))
+      assertCompiledValue(new Getter("TestValue"))
     }
     "compile print(function reference)" in {
-      assertCompiledValue(new FunctionReference("funName"))
+      assertCompiledValue(new FunctionReference("TestFunction"))
     }
     "error if compiled without expression" in {
       val view = MockPrinterView.mocked()

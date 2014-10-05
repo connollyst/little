@@ -1,13 +1,13 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ExpressionViewPresenter, PrinterViewPresenter, PrinterView}
-import scala._
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.google.common.base.Objects
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.language.{FunctionReference, Getter, Expression, Printer}
-import com.quane.little.language.data.Value
-import com.google.common.base.Objects
+import com.quane.little.ide.view.{ExpressionViewPresenter, PrinterView, PrinterViewPresenter}
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Value, ValueType}
+import com.quane.little.language.{Expression, FunctionReference, Getter, Printer}
 
 /** Presenter for views representing a [[com.quane.little.language.Printer]].
   *
@@ -76,6 +76,8 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
 
   override def requestAddFunctionReference(id: RecordId, index: Int) =
     text = functionService.findReference(id)
+
+  override def acceptedValueType: ValueType = ValueType.Any
 
   /** Compile to a [[com.quane.little.language.Printer]].
     *

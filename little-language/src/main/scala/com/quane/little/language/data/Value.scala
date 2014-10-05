@@ -1,9 +1,8 @@
 package com.quane.little.language.data
 
-import ValueType._
 import com.google.common.base.Objects
-import com.quane.little.language.{Scope, Expression}
-import scala.None
+import com.quane.little.language.data.ValueType._
+import com.quane.little.language.{Expression, Scope}
 
 object Value {
 

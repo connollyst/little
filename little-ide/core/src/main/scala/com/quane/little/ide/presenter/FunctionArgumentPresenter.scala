@@ -2,7 +2,8 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{PrinterViewPresenter, ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
 import com.quane.little.language.data.Value
-import com.quane.little.language.{Logic, FunctionReference, Expression, Getter}
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language._
 import com.quane.little.data.model.RecordId
 import com.quane.little.data.service.{ExpressionService, FunctionService}
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
@@ -22,14 +23,14 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
 
   private var _name: String = ""
   private var _value: Option[ExpressionViewPresenter] = None
+  private var _valueType: Option[ValueType] = None
 
   view.registerViewPresenter(this)
-  view.setName(_name)
-  createCodeMenu()
 
-  private[presenter] def initialize(name: String, value: Expression): FunctionArgumentPresenter[V] = {
-    this.name = name
+  private[presenter] def initialize(param: FunctionParameter, value: Expression): FunctionArgumentPresenter[V] = {
+    this.name = param.name
     this.value = value
+    this.valueType = param.valueType
     this
   }
 
@@ -73,10 +74,20 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
     _value = Some(presenter)
   }
 
-  /** Create an add a new code menu to the printer.
-    */
-  private def createCodeMenu(): Unit =
+  private[presenter] def valueType: ValueType = {
+    _valueType match {
+      case Some(t) => t
+      case None => throw new IllegalAccessException("No argument value type specified.")
+    }
+  }
+
+  private[presenter] def valueType_=(t: ValueType): Unit = {
+    _valueType = Some(t)
+    // TODO can we bypass all the Manifest business by just passing in the valueType?
     presenterFactory.createCodeMenu[FunctionArgumentViewPresenter](view.createCodeMenu(), this)
+  }
+
+  override def acceptedValueType: ValueType = valueType
 
   override def requestAddExpression(id: RecordId, index: Int) =
     value = expressionService.findExpression(id)

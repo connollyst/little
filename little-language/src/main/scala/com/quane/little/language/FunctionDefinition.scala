@@ -1,10 +1,11 @@
 package com.quane.little.language
 
-import scala.collection.mutable.ListBuffer
-import com.quane.little.language.data.Value
-import scala.collection.immutable
 import com.google.common.base.Objects
+import com.quane.little.language.data.Value
 import com.quane.little.language.data.ValueType.ValueType
+
+import scala.collection.immutable
+import scala.collection.mutable.ListBuffer
 
 /** Defines a function.
   *
@@ -61,6 +62,12 @@ class FunctionDefinition(val name: String) {
     }
     reference
   }
+
+  /** Returns the return [[ValueType]] of the function.
+    *
+    * @return the function's return type
+    */
+  def returnType: ValueType = block.returnType
 
   def evaluate(scope: Scope, args: immutable.Map[String, Expression]): Value = {
     val functionScope = new Scope(scope)

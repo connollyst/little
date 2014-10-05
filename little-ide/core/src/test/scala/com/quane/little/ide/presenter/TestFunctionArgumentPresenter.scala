@@ -1,5 +1,8 @@
 package com.quane.little.ide.presenter
 
+import com.escalatesoft.subcut.inject.Injectable
+import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.service.{FunctionService, UserService}
 import com.quane.little.ide.MockIDEBindingModule
 import com.quane.little.ide.view._
 import com.quane.little.language._
@@ -7,7 +10,8 @@ import com.quane.little.language.data.Value
 import com.quane.little.language.math._
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
-import org.scalatest.WordSpec
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.{BeforeAndAfter, WordSpec}
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
 
@@ -16,9 +20,17 @@ import org.scalatest.mock.MockitoSugar
   * @author Sean Connolly
   */
 @RunWith(classOf[JUnitRunner])
-class TestFunctionArgumentPresenter extends WordSpec with MockitoSugar {
+class TestFunctionArgumentPresenter
+  extends WordSpec with BeforeAndAfter with ShouldMatchers with MockitoSugar with Injectable {
 
   implicit val bindingModule = MockIDEBindingModule
+
+  before({
+    val mockUserService = inject[UserService]
+    val mockFunctionService = inject[FunctionService]
+    mockUserService.upsert("connollyst")
+    mockFunctionService.insert("connollyst", CodeCategory.Basic, new FunctionDefinition("TestFunction"))
+  })
 
   "FunctionArgumentPresenter" should {
     "store name changes" in {
@@ -70,7 +82,7 @@ class TestFunctionArgumentPresenter extends WordSpec with MockitoSugar {
     "create a view for a new FunctionReference expression" in {
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
-      presenter.value = new FunctionReference("MyFunction")
+      presenter.value = new FunctionReference("TestFunction")
       verify(view).createFunctionReference()
     }
 
@@ -121,8 +133,8 @@ class TestFunctionArgumentPresenter extends WordSpec with MockitoSugar {
       val presenter = new FunctionArgumentPresenter(view)
       val valueView = mock[FunctionReferenceView]
       when(view.createFunctionReference()).thenReturn(valueView)
-      presenter.value = new FunctionReference("MyFunction")
-      verify(valueView).setName("MyFunction")
+      presenter.value = new FunctionReference("TestFunction")
+      verify(valueView).setName("TestFunction")
     }
 
     /* Assert compilation values.. */
@@ -131,10 +143,10 @@ class TestFunctionArgumentPresenter extends WordSpec with MockitoSugar {
       assertCompiledValue(Value("text"))
     }
     "compile with Getter expression" in {
-      assertCompiledValue(new Getter("MyVariable"))
+      assertCompiledValue(new Getter("TestValue"))
     }
     "compile with FunctionReference" in {
-      assertCompiledValue(new FunctionReference("MyFunction"))
+      assertCompiledValue(new FunctionReference("TestFunction"))
     }
     "error if compiled without expression" in {
       val view = MockFunctionArgumentView.mocked

@@ -1,12 +1,12 @@
 package com.quane.little.data.service
 
-import com.mongodb.casbah.{MongoCollection, MongoClient}
-import com.quane.little.data.model.{UserRecord, CodeCategory, RecordId, FunctionRecord}
-import com.quane.little.language.{FunctionReference, FunctionDefinition}
-import com.quane.little.data.repo.FunctionRepository
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.quane.little.data.model.CodeCategory.CodeCategory
+import com.quane.little.data.model.{CodeCategory, FunctionRecord, RecordId, UserRecord}
+import com.quane.little.data.repo.FunctionRepository
 import com.quane.little.language.util.Functions
+import com.quane.little.language.{FunctionDefinition, FunctionReference}
 
 /** A service for interacting with [[com.quane.little.data.model.FunctionRecord]].
   *
@@ -30,6 +30,8 @@ trait FunctionService {
     findDefinition(id).asReference
 
   def findDefinition(id: RecordId): FunctionDefinition
+
+  def findDefinition(username: String, functionName: String): FunctionDefinition
 
   def update(id: RecordId, fun: FunctionDefinition): FunctionRecord
 
@@ -82,6 +84,12 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
     new FunctionRepository(collection).find(id) match {
       case Some(record) => record.definition
       case None => throw new RuntimeException("No function definition for " + id)
+    }
+
+  override def findDefinition(username: String, functionName: String): FunctionDefinition =
+    new FunctionRepository(collection).findByUser(userService.fetch(username), functionName) match {
+      case Some(record) => record.definition
+      case None => throw new RuntimeException("No function definition '" + functionName + "' for user '" + username + "'")
     }
 
   override def update(id: RecordId, fun: FunctionDefinition): FunctionRecord = {

@@ -6,9 +6,9 @@ import org.mockito.Mockito._
 import org.scalatest.WordSpec
 import org.scalatest.junit.JUnitRunner
 import org.scalatest.mock.MockitoSugar
-import com.quane.little.language.FunctionParameter
+import com.quane.little.language.{Printer, FunctionParameter}
 import com.quane.little.ide.MockIDEBindingModule
-import com.quane.little.language.data.ValueType
+import com.quane.little.language.data.{Value, ValueType}
 
 /** Test cases for the [[com.quane.little.ide.presenter.FunctionDefinitionPresenter]].
   *
@@ -113,14 +113,14 @@ class TestFunctionDefinitionPresenter extends WordSpec with MockitoSugar {
     }
     "compile with 1 step" in {
       val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
-      presenter += new FunctionReferencePresenter(new MockFunctionReferenceView)
+      presenter += new PrinterPresenter(new MockPrinterView).initialize(new Printer(Value("hello")))
       val function = presenter.compile()
       assert(function.stepCount == 1)
     }
     "compile with 2 steps" in {
       val presenter = new FunctionDefinitionPresenter(new MockFunctionDefinitionView)
-      presenter += new FunctionReferencePresenter(new MockFunctionReferenceView)
-      presenter += new FunctionReferencePresenter(new MockFunctionReferenceView)
+      presenter += new PrinterPresenter(new MockPrinterView).initialize(new Printer(Value("hello")))
+      presenter += new PrinterPresenter(new MockPrinterView).initialize(new Printer(Value("world")))
       val function = presenter.compile()
       assert(function.stepCount == 2)
     }

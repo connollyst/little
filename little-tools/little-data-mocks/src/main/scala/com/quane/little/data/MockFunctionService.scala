@@ -1,11 +1,12 @@
 package com.quane.little.data
 
-import com.quane.little.data.service.{UserService, FunctionService}
-import com.quane.little.data.model.{FunctionRecord, RecordId}
-import com.quane.little.language.FunctionDefinition
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.CodeCategory.CodeCategory
+import com.quane.little.data.model.{FunctionRecord, RecordId}
+import com.quane.little.data.service.{FunctionService, UserService}
+import com.quane.little.language.FunctionDefinition
+
 import scala.collection.mutable.ListBuffer
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 /** A mock [[com.quane.little.data.service.FunctionService]] to be injected into
   * tests.
@@ -51,6 +52,16 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
       case Some(function) => function.definition
       case None => throw new IllegalArgumentException("No function: " + id.oid)
     }
+
+  override def findDefinition(username: String, functionName: String): FunctionDefinition = {
+    findByUser(username) foreach {
+      function =>
+        if (function.definition.name == functionName) {
+          return function.definition
+        }
+    }
+    throw new IllegalArgumentException("No function " + functionName + " for user " + username)
+  }
 
   override def exists(username: String, functionName: String): Boolean =
     getFunction(username, functionName).isDefined

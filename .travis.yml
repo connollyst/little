@@ -11,6 +11,9 @@ cache:
   directories:
   - $HOME/.m2
 
+after_success:
+  - mvn clean cobertura:cobertura coveralls:cobertura
+
 notifications:
   email:
     - connolly.st@gmail.com

@@ -44,7 +44,7 @@ class Logic(val left: Expression,
     )
   }
 
-  override def valueType(): ValueType = ValueType.Boolean
+  override def returnType(): ValueType = ValueType.Boolean
 
   override def equals(other: Any): Boolean = other match {
     case that: Logic =>

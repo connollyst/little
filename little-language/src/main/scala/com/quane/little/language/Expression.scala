@@ -1,7 +1,6 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.ValueType.ValueType
-import com.quane.little.language.data.{Value, ValueType}
+import com.quane.little.language.data.Value
 
 /** An expression is one of the lowest level components of the language. It has a
   * return type and can be evaluated.
@@ -17,13 +16,5 @@ trait Expression extends EvaluableCode {
     * @return the return value of the expression
     */
   def evaluate(scope: Scope): Value
-
-  /** Returns this expression's [[com.quane.little.language.data.ValueType]]
-   *
-   * @return
-   */
-  def valueType(): ValueType = ValueType.Nada
-  // TODO remove default
-  // TODO requires Scope?
 
 }

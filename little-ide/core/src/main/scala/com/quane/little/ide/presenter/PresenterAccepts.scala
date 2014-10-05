@@ -3,6 +3,7 @@ package com.quane.little.ide.presenter
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
 import com.quane.little.data.service.{ExpressionService, StatementService}
 import com.quane.little.ide.view.{ViewPresenter, View}
+import com.quane.little.language.data.ValueType._
 
 object PresenterAccepts {
 
@@ -31,6 +32,8 @@ object PresenterAccepts {
 sealed trait PresenterAccepts
 
 trait PresenterAcceptsExpression extends PresenterAccepts {
+
+  def acceptedValueType: ValueType
 
   // TODO consolidate these
 

@@ -1,8 +1,10 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.{Nada, Value}
-import scala.collection.mutable.ListBuffer
 import com.google.common.base.Objects
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Nada, Value, ValueType}
+
+import scala.collection.mutable.ListBuffer
 
 
 /** An expression consisting of zero or more expressions, to be evaluated in
@@ -15,6 +17,8 @@ class Block extends Expression {
   private val _steps: ListBuffer[EvaluableCode] = ListBuffer[EvaluableCode]()
 
   def length: Int = _steps.length
+
+  def empty: Boolean = _steps.isEmpty
 
   def steps: List[EvaluableCode] = _steps.toList
 
@@ -32,6 +36,25 @@ class Block extends Expression {
     this
   }
 
+  /** Returns this block's return value type. If the block is empty, its return
+    * value type is [[ValueType.Nada]]. If the block is not empty, its return
+    * value type is defined by the last step in the block.
+    *
+    * @return the return value type of the block
+    */
+  override def returnType: ValueType =
+    if (!empty) {
+      steps.last.returnType
+    } else {
+      ValueType.Nada
+    }
+
+  /** Evaluates the block in the provided [[Scope]]. A new scope is defined for
+    * the block itself, and then each step is evaluated in order.
+    *
+    * @param scope the scope in which to evaluate the expression
+    * @return the return value of the block
+    */
   override def evaluate(scope: Scope): Value = {
     val blockScope = new Scope(scope)
     val stepOutput = _steps.map {
