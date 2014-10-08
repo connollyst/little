@@ -9,7 +9,7 @@ import com.quane.little.ide.view.{CodeMenuView, CodeMenuViewPresenter}
   *
   * @author Sean Connolly
   */
-class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: C)(implicit val bindingModule: BindingModule, m: Manifest[C])
+class CodeMenuPresenter[C <: PresenterAcceptsCode](val view: CodeMenuView, context: C)(implicit val bindingModule: BindingModule)
   extends CodeMenuViewPresenter
   with Injectable {
 

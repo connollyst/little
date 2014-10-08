@@ -8,26 +8,23 @@ import com.quane.little.tools.Logging
 
 object PresenterAccepts extends Logging {
 
-  def acceptsPrimitive[P <: PresenterAccepts](presenter: P, record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
+  def acceptsPrimitive[P <: PresenterAcceptsCode](presenter: P, record: PrimitiveRecord): Boolean =
     acceptsReturnType(presenter, record.expression.returnType)
 
-  def acceptsFunction[P <: PresenterAccepts](presenter: P, record: FunctionRecord)(implicit m: Manifest[P]): Boolean =
+  def acceptsFunction[P <: PresenterAcceptsCode](presenter: P, record: FunctionRecord): Boolean =
     acceptsReturnType(presenter, record.definition.returnType)
 
   // TODO do we need the manifest check?
 
-  def acceptsReturnType[P <: ViewPresenter](presenter: P, returnType: ValueType)(implicit m: Manifest[P]): Boolean =
-    if (m <:< manifest[PresenterAcceptsCode]) {
-      val acceptedType = presenter.asInstanceOf[PresenterAcceptsCode].acceptedValueType
-      info("Checking if " + presenter + " accepts " + returnType + " in " + acceptedType + "?..")
-      acceptedType match {
-        case ValueType.Anything => true
-        case ValueType.Something => returnType != ValueType.Nothing
-        case _ => acceptedType == returnType
-      }
-    } else {
-      false
+  def acceptsReturnType[P <: PresenterAcceptsCode](presenter: P, returnType: ValueType): Boolean = {
+    val acceptedType = presenter.acceptedValueType
+    info("Checking if " + presenter + " accepts " + returnType + " in " + acceptedType + "?..")
+    acceptedType match {
+      case ValueType.Anything => true
+      case ValueType.Something => returnType != ValueType.Nothing
+      case _ => acceptedType == returnType
     }
+  }
 
 }
 

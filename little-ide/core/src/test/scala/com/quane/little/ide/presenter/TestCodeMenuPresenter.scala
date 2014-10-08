@@ -20,7 +20,7 @@ class TestCodeMenuPresenter extends WordSpec with MockitoSugar {
   "CodeMenu" should {
     "register itself with its view" in {
       val view = mock[CodeMenuView]
-      val context = mock[PresenterAccepts]
+      val context = mock[PresenterAcceptsCode]
       val presenter = new CodeMenuPresenter(view, context)
       verify(view).registerViewPresenter(presenter)
     }
