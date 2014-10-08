@@ -1,15 +1,14 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.ValueType.ValueType
-import com.quane.little.language.data.{ValueType, Value}
 import com.google.common.base.Objects
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Value, ValueType}
 
 /** An expression to retrieve a variable's value from memory.
   *
   * @author Sean Connolly
   */
-class Getter(val name: String)
-  extends Expression {
+class Getter(val name: String) extends EvaluableCode {
 
   // TODO depends on Variable
   override def returnType: ValueType = ValueType.Something

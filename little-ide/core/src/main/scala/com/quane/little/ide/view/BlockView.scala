@@ -2,7 +2,7 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-trait BlockView extends ExpressionView[BlockViewPresenter] {
+trait BlockView extends EvaluableCodeView[BlockViewPresenter] {
 
   def addMathStep(index: Int): MathView
 
@@ -22,4 +22,4 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
 
 }
 
-trait BlockViewPresenter extends ExpressionViewPresenter with PresenterAcceptsCode
+trait BlockViewPresenter extends EvaluableCodeViewPresenter with PresenterAcceptsCode

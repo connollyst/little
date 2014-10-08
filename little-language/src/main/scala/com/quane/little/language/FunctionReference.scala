@@ -2,7 +2,7 @@ package com.quane.little.language
 
 import com.google.common.base.Objects
 import com.quane.little.language.data.ValueType.ValueType
-import com.quane.little.language.data.{ValueType, Value}
+import com.quane.little.language.data.{Value, ValueType}
 
 import scala.collection.mutable
 
@@ -12,12 +12,11 @@ import scala.collection.mutable
   * @param name the name of the function
   * @see [[com.quane.little.language.FunctionDefinition]]
   */
-class FunctionReference(val name: String)
-  extends Expression {
+class FunctionReference(val name: String) extends EvaluableCode {
 
-  val args = mutable.Map[String, Expression]()
+  val args = mutable.Map[String, EvaluableCode]()
 
-  def addArg(name: String, value: Expression): FunctionReference = {
+  def addArg(name: String, value: EvaluableCode): FunctionReference = {
     if (args.contains(name)) throw new IllegalAccessException(
       "Tried to change argument '" + name + "' from '" + args(name) + "' to '" + value + "'."
     )

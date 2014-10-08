@@ -3,18 +3,18 @@ package com.quane.little.ide.presenter
 import com.escalatesoft.subcut.inject.Injectable
 import com.quane.little.data.model.CodeCategory
 import com.quane.little.data.service.{FunctionService, UserService}
+import com.quane.little.ide.MockIDEBindingModule
 import com.quane.little.ide.view._
+import com.quane.little.language._
+import com.quane.little.language.data.Value
+import com.quane.little.language.math.{BasicMathOperation, Division, Multiplication}
 import org.junit.runner.RunWith
 import org.mockito.Matchers._
 import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfter, WordSpec}
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.mock.MockitoSugar
-import com.quane.little.language.data.Value
-import com.quane.little.language._
-import com.quane.little.ide.MockIDEBindingModule
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.math.{BasicMathOperation, Multiplication, Division}
+import org.scalatest.mock.MockitoSugar
+import org.scalatest.{BeforeAndAfter, WordSpec}
 
 /** Test cases for the [[com.quane.little.ide.presenter.SetterPresenter]].
   *
@@ -84,7 +84,7 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       val error = intercept[IllegalArgumentException] {
-        presenter.value = mock[Expression]
+        presenter.value = mock[EvaluableCode]
       }
       error.getMessage should startWith("Expression not supported")
     }
@@ -201,7 +201,7 @@ class TestSetterPresenter
 
   }
 
-  private def assertCompiledValue(value: Expression) = {
+  private def assertCompiledValue(value: EvaluableCode) = {
     val presenter = new SetterPresenter(mockSetterView)
     presenter.value = value
     val compiled = presenter.compile()

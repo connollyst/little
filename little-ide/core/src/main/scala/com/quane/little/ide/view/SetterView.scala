@@ -7,7 +7,7 @@ import com.quane.little.ide.presenter._
   *
   * @author Sean Connolly
   */
-trait SetterView extends StatementView[SetterViewPresenter] {
+trait SetterView extends EvaluableCodeView[SetterViewPresenter] {
 
   /** Change the variable name in the view.
     *
@@ -51,9 +51,7 @@ trait SetterView extends StatementView[SetterViewPresenter] {
   *
   * @author Sean Connolly
   */
-trait SetterViewPresenter
-  extends StatementViewPresenter
-  with PresenterAcceptsCode {
+trait SetterViewPresenter extends EvaluableCodeViewPresenter with PresenterAcceptsCode {
 
   /** Called when the variable name changes in the view.
     *

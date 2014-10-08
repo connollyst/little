@@ -3,11 +3,11 @@ package com.quane.little.ide.presenter
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.google.common.base.Objects
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{ExpressionService, FunctionService}
-import com.quane.little.ide.view.{ExpressionViewPresenter, PrinterView, PrinterViewPresenter}
+import com.quane.little.data.service.FunctionService
+import com.quane.little.ide.view.{EvaluableCodeViewPresenter, PrinterView, PrinterViewPresenter}
 import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.data.{Value, ValueType}
-import com.quane.little.language.{Expression, FunctionReference, Getter, Printer}
+import com.quane.little.language.{EvaluableCode, FunctionReference, Getter, Printer}
 
 /** Presenter for views representing a [[com.quane.little.language.Printer]].
   *
@@ -18,10 +18,9 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
-  private val expressionService = inject[ExpressionService]
   private val functionService = inject[FunctionService]
 
-  private var _text: Option[_ <: ExpressionViewPresenter] = None
+  private var _text: Option[_ <: EvaluableCodeViewPresenter] = None
 
   view.registerViewPresenter(this)
   createCodeMenu()
@@ -41,7 +40,7 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
     *
     * @return the text expression
     */
-  private[presenter] def text: ExpressionViewPresenter =
+  private[presenter] def text: EvaluableCodeViewPresenter =
     _text match {
       case Some(t) => t
       case None => throw new IllegalAccessException("No print text expression specified.")
@@ -51,7 +50,7 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
     *
     * @param e the text expression
     */
-  private[presenter] def text_=(e: Expression): Unit = {
+  private[presenter] def text_=(e: EvaluableCode): Unit = {
     // TODO skip if not changed
     val presenter =
       e match {

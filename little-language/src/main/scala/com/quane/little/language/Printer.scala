@@ -1,24 +1,31 @@
 package com.quane.little.language
 
-import com.quane.little.tools.Logging
 import com.google.common.base.Objects
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Nada, Value, ValueType}
+import com.quane.little.tools.Logging
 
-/** A [[com.quane.little.language.Statement]] which prints out text when evaluated.
+/** A statement which prints out text when evaluated.
   *
   * @author Sean Connolly
   */
-class Printer(val value: Expression)
-  extends Statement
-  with Logging {
+class Printer(val value: EvaluableCode) extends EvaluableCode with Logging {
+
+  /** Returns this statement's [[ValueType]]
+    *
+    * @return the return value type
+    */
+  override def returnType: ValueType = ValueType.Nothing
 
   /** Evaluate the print statement.
     *
     * @param scope the scope in which to evaluate
     */
-  override def evaluate(scope: Scope): Unit = {
+  override def evaluate(scope: Scope): Value = {
     val text = value.evaluate(scope)
     // TODO this should display a speech bubble over the guy
     error(text.asText)
+    new Nada
   }
 
   override def equals(that: Any) = that match {

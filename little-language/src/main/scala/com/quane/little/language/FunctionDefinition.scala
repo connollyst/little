@@ -75,7 +75,7 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
     * @param args the runtime arguments
     * @return the output of the function, or [[ValueType.Nothing]] otherwise
     */
-  def evaluate(scope: Scope, args: immutable.Map[String, Expression]): Value = {
+  def evaluate(scope: Scope, args: immutable.Map[String, EvaluableCode]): Value = {
     if (returnType != block.returnType) {
       throw new IllegalArgumentException(
         classOf[FunctionDefinition].getSimpleName + " '" + name + "' returns " + returnType
@@ -88,12 +88,12 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
     block.evaluate(functionScope)
   }
 
-  private def validateArguments(args: immutable.Map[String, Expression]) = {
+  private def validateArguments(args: immutable.Map[String, EvaluableCode]) = {
     // TODO validate we have all arguments
     // TODO validate all arguments are appropriate for this definition
   }
 
-  private def setArguments(scope: Scope, args: immutable.Map[String, Expression]) = {
+  private def setArguments(scope: Scope, args: immutable.Map[String, EvaluableCode]) = {
     // TODO Set arguments in Scope (NON RECURSIVELY)
     args.foreach {
       case (argName, argValue) =>

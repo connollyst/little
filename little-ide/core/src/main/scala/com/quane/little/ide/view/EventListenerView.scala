@@ -16,8 +16,7 @@ trait EventListenerView extends View[EventListenerViewPresenter] {
 
 }
 
-trait EventListenerViewPresenter
-  extends ViewPresenter {
+trait EventListenerViewPresenter extends ViewPresenter {
 
   def onEventChange(event: Event): Unit
 

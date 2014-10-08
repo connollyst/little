@@ -20,7 +20,7 @@ object DataBindingModule extends NewBindingModule(module => {
   bind[UserService] toModuleSingle { implicit module => new MongoUserService}
   bind[FunctionService] toModuleSingle { implicit module => new MongoFunctionService}
   bind[ListenerService] toModuleSingle { implicit module => new MongoListenerService}
-  bind[ExpressionService] toModuleSingle { implicit module => new BasicExpressionService}
+  bind[CodeService] toModuleSingle { implicit module => new BasicCodeService}
   bind[StatementService] toModuleSingle { implicit module => new BasicStatementService}
 
 })

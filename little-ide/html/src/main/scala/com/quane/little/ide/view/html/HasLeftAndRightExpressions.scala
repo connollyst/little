@@ -3,7 +3,7 @@ package com.quane.little.ide.view.html
 import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.html.HasLeftAndRightExpressions._
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.ide.view.{ExpressionView, ViewOfLeftAndRightExpressions}
+import com.quane.little.ide.view.{EvaluableCodeView, ViewOfLeftAndRightExpressions}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
@@ -42,13 +42,13 @@ trait HasLeftAndRightExpressions
 
   override def createRightFunctionReference() = setRightValueComponent(new FunctionReferenceLayout)
 
-  def setLeftValueComponent[T <: ExpressionView[_] with Component](view: T): T = {
+  def setLeftValueComponent[T <: EvaluableCodeView[_] with Component](view: T): T = {
     leftValueWrapper.component.removeAllComponents()
     leftValueWrapper.component.addComponent(view)
     view
   }
 
-  def setRightValueComponent[T <: ExpressionView[_] with Component](view: T): T = {
+  def setRightValueComponent[T <: EvaluableCodeView[_] with Component](view: T): T = {
     rightValueWrapper.component.removeAllComponents()
     rightValueWrapper.component.addComponent(view)
     view

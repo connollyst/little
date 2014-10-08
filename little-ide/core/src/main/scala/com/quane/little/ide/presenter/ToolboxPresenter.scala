@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
 import com.quane.little.data.model.{RecordId, CodeType}
-import com.quane.little.data.service.{ExpressionService, StatementService, FunctionService}
+import com.quane.little.data.service.{CodeService, StatementService, FunctionService}
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.CodeCategory
 
@@ -15,7 +15,7 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
   with HasWorkspace
   with Injectable {
 
-  private val expressionService = inject[ExpressionService]
+  private val expressionService = inject[CodeService]
   private val statementService = inject[StatementService]
   private val functionService = inject[FunctionService]
 
@@ -25,7 +25,7 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
     category =>
       view.createToolboxTab(category)
   }
-  expressionService.all foreach {
+  expressionService.allRecords foreach {
     expression =>
       view.createToolboxItem(expression.category, expression.name, CodeType.Expression, expression.id)
   }

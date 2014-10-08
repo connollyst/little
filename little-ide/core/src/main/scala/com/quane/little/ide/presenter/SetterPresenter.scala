@@ -2,8 +2,8 @@ package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{ExpressionService, FunctionService}
-import com.quane.little.ide.view.{ExpressionViewPresenter, SetterView, SetterViewPresenter}
+import com.quane.little.data.service.FunctionService
+import com.quane.little.ide.view._
 import com.quane.little.language._
 import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.data.{Value, ValueType}
@@ -18,11 +18,10 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
-  private val expressionService = inject[ExpressionService]
   private val functionService = inject[FunctionService]
 
   private var _name = ""
-  private var _value: Option[ExpressionViewPresenter] = None
+  private var _value: Option[EvaluableCodeViewPresenter] = None
 
   view.registerViewPresenter(this)
   view.setName(_name)
@@ -45,7 +44,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     view.setName(name)
   }
 
-  private[presenter] def value: ExpressionViewPresenter =
+  private[presenter] def value: EvaluableCodeViewPresenter =
     _value match {
       case Some(e) => e
       case _ => throw new IllegalAccessException("No value expression set.")
@@ -55,7 +54,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     *
     * @param e the value expression
     */
-  private[presenter] def value_=(e: Expression): Unit = {
+  private[presenter] def value_=(e: EvaluableCode): Unit = {
     val presenter =
       e match {
         case g: Getter =>

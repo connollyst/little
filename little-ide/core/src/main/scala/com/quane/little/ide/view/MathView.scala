@@ -8,9 +8,7 @@ import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
   *
   * @author Sean Connolly
   */
-trait MathView
-  extends ExpressionView[MathViewPresenter]
-  with ViewOfLeftAndRightExpressions {
+trait MathView extends EvaluableCodeView[MathViewPresenter] with ViewOfLeftAndRightExpressions {
 
   /** Change the math operation in the view.
     *
@@ -24,9 +22,7 @@ trait MathView
   *
   * @author Sean Connolly
   */
-trait MathViewPresenter
-  extends ExpressionViewPresenter
-  with PresenterAcceptsCode {
+trait MathViewPresenter extends EvaluableCodeViewPresenter with PresenterAcceptsCode {
 
   /** Called when the math operation changes in the view.
     *

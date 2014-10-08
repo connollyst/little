@@ -1,7 +1,8 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.Value
 import com.google.common.base.Objects
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Nada, Value, ValueType}
 
 /** Factory for [[com.quane.little.language.Setter]] instances. **/
 object Setter {
@@ -22,15 +23,22 @@ object Setter {
   * @param value the value to assign to the variable
   * @author Sean Connolly
   */
-class Setter(val name: String, val value: Expression)
-  extends Statement {
+class Setter(val name: String, val value: EvaluableCode) extends EvaluableCode {
+
+  /** Returns this statement's [[ValueType]]
+    *
+    * @return the return value type
+    */
+  override def returnType: ValueType = ValueType.Nothing
 
   /** Evaluate the assignment statement.
     *
     * @param scope the scope in which to evaluate
     */
-  override def evaluate(scope: Scope): Unit =
+  override def evaluate(scope: Scope): Value = {
     new Pointer(name).update(scope, value.evaluate(scope))
+    new Nada
+  }
 
   override def equals(that: Any) = that match {
     case s: Setter => name.equals(s.name) && value.equals(s.value)

@@ -2,7 +2,7 @@ package com.quane.little.language.data
 
 import com.google.common.base.Objects
 import com.quane.little.language.data.ValueType._
-import com.quane.little.language.{Expression, Scope}
+import com.quane.little.language.{EvaluableCode, Scope}
 
 object Value {
 
@@ -20,9 +20,7 @@ object Value {
 
 }
 
-sealed trait Value
-  extends Expression
-  with Ordered[Value] {
+sealed trait Value extends EvaluableCode with Ordered[Value] {
 
   val primitive: Any
 
@@ -93,8 +91,7 @@ sealed trait Value
 
 }
 
-class Bool(override val primitive: Boolean)
-  extends Value {
+class Bool(override val primitive: Boolean) extends Value {
 
   override def returnType: ValueType = ValueType.Boolean
 
@@ -135,8 +132,7 @@ class NumberSimple(override val primitive: Int)
 
 }
 
-class NumberDecimal(override val primitive: Double)
-  extends Value {
+class NumberDecimal(override val primitive: Double) extends Value {
 
 
   override def returnType: ValueType = ValueType.Double
@@ -155,8 +151,7 @@ class NumberDecimal(override val primitive: Double)
 
 }
 
-class Text(override val primitive: String)
-  extends Value {
+class Text(override val primitive: String) extends Value {
 
   override def returnType: ValueType = ValueType.String
 
@@ -211,8 +206,7 @@ class Text(override val primitive: String)
 
 }
 
-class Nada
-  extends Value {
+class Nada extends Value {
 
   override val primitive = None
 

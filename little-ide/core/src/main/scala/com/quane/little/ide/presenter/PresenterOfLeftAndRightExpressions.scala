@@ -1,12 +1,11 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view._
-import com.quane.little.language.{Logic, FunctionReference, Getter, Expression}
-import com.quane.little.language.data.Value
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{FunctionService, ExpressionService}
+import com.quane.little.data.service.{CodeService, FunctionService}
+import com.quane.little.ide.view._
+import com.quane.little.language._
+import com.quane.little.language.data.Value
 import com.quane.little.language.math.BasicMath
-import scala.Some
 
 /** A trait shared by presenters who manage two expressions, one being thought
   * of as the 'left' and the other as the 'right'. For example, a mathematical
@@ -16,25 +15,25 @@ import scala.Some
   */
 trait PresenterOfLeftAndRightExpressions {
 
-  private var _left: Option[ExpressionViewPresenter] = None
-  private var _right: Option[ExpressionViewPresenter] = None
+  private var _left: Option[EvaluableCodeViewPresenter] = None
+  private var _right: Option[EvaluableCodeViewPresenter] = None
 
   protected def presenterFactory: PresenterFactory
 
-  protected def expressionService: ExpressionService
+  protected def expressionService: CodeService
 
   protected def functionService: FunctionService
 
   protected def view: ViewOfLeftAndRightExpressions
 
-  private[presenter] def left: ExpressionViewPresenter = {
+  private[presenter] def left: EvaluableCodeViewPresenter = {
     _left match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No left operand expression set.")
     }
   }
 
-  private[presenter] def right: ExpressionViewPresenter = {
+  private[presenter] def right: EvaluableCodeViewPresenter = {
     _right match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No right operand expression set.")
@@ -45,7 +44,7 @@ trait PresenterOfLeftAndRightExpressions {
     *
     * @param e the new left operand expression
     */
-  private[presenter] def left_=(e: Expression): Unit = {
+  private[presenter] def left_=(e: EvaluableCode): Unit = {
     val presenter =
       e match {
         case v: Value =>
@@ -68,7 +67,7 @@ trait PresenterOfLeftAndRightExpressions {
     *
     * @param e the new left operand expression
     */
-  private[presenter] def right_=(e: Expression): Unit = {
+  private[presenter] def right_=(e: EvaluableCode): Unit = {
     val presenter =
       e match {
         case v: Value =>

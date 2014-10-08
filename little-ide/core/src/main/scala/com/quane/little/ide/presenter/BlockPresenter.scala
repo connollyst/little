@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{ExpressionService, FunctionService, StatementService}
+import com.quane.little.data.service.FunctionService
 import com.quane.little.ide.view._
 import com.quane.little.language._
 import com.quane.little.language.data.ValueType
@@ -20,8 +20,6 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
-  private val expressionService = inject[ExpressionService]
-  private val statementService = inject[StatementService]
   private val functionService = inject[FunctionService]
 
   private val _steps = new ListBuffer[EvaluableCodeViewPresenter]
@@ -109,8 +107,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
   override def compile(): Block = {
     val block = new Block
     steps.foreach {
-      case step: ExpressionViewPresenter => block += step.compile
-      case step: StatementViewPresenter => block += step.compile
+      block += _.compile
     }
     block
   }

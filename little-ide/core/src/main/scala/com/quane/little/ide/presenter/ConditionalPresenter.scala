@@ -16,7 +16,7 @@ class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingMo
 
   private val presenterFactory = inject[PresenterFactory]
 
-  private var _condition: Option[ExpressionViewPresenter] = None
+  private var _condition: Option[EvaluableCodeViewPresenter] = None
   private val _thenBlock = new BlockPresenter(view.createThenBlock())
   private val _elseBlock = new BlockPresenter(view.createElseBlock())
 
@@ -29,13 +29,13 @@ class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingMo
     this
   }
 
-  private[presenter] def condition: ExpressionViewPresenter =
+  private[presenter] def condition: EvaluableCodeViewPresenter =
     _condition match {
       case Some(e) => e
       case _ => throw new IllegalAccessException("No condition expression set.")
     }
 
-  private[presenter] def condition_=(condition: Expression): Unit = {
+  private[presenter] def condition_=(condition: EvaluableCode): Unit = {
     val presenter =
       condition match {
         case l: Logic =>

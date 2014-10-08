@@ -10,10 +10,10 @@ import com.quane.little.language.data.Value
 import com.quane.little.language.math._
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
-import org.scalatest.matchers.ShouldMatchers
-import org.scalatest.{BeforeAndAfter, WordSpec}
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.ShouldMatchers
 import org.scalatest.mock.MockitoSugar
+import org.scalatest.{BeforeAndAfter, WordSpec}
 
 /** Test cases for the [[com.quane.little.ide.presenter.ConditionalPresenter]].
   *
@@ -157,7 +157,7 @@ class TestFunctionArgumentPresenter
     }
   }
 
-  private def assertCompiledValue(value: Expression) = {
+  private def assertCompiledValue(value: EvaluableCode) = {
     val presenter = new FunctionArgumentPresenter(MockFunctionArgumentView.mocked)
     presenter.value = value
     val compiled = presenter.compile()

@@ -1,13 +1,14 @@
 package com.quane.little.language.math
 
-import com.quane.little.language.data.Value
-import com.quane.little.language.{Scope, Expression}
-import scala.math._
 import com.google.common.base.Objects
+import com.quane.little.language.data.Value
+import com.quane.little.language.{EvaluableCode, Scope}
+
+import scala.math._
 
 sealed trait AdvancedMath extends Math
 
-class ArcTan(val x: Expression) extends AdvancedMath {
+class ArcTan(val x: EvaluableCode) extends AdvancedMath {
 
   override def evaluate(scope: Scope): Value = {
     val numberA = x.evaluate(scope).asInt
@@ -34,7 +35,7 @@ class ArcTan(val x: Expression) extends AdvancedMath {
 
 }
 
-class ArcTan2(val l: Expression, val r: Expression) extends AdvancedMath {
+class ArcTan2(val l: EvaluableCode, val r: EvaluableCode) extends AdvancedMath {
 
   override def evaluate(scope: Scope): Value = {
     val left = l.evaluate(scope).asInt

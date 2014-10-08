@@ -1,9 +1,9 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{CodeMenuView, FunctionArgumentViewPresenter, ExpressionView, FunctionArgumentView}
-import com.vaadin.ui._
-import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.quane.little.ide.view.html.dnd.ExpressionDropHandler
+import com.quane.little.ide.view.{CodeMenuView, EvaluableCodeView, FunctionArgumentView, FunctionArgumentViewPresenter}
+import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
+import com.vaadin.ui._
 
 object FunctionArgumentComponent {
   private val Style = "l-function-ref-arg"
@@ -52,7 +52,7 @@ class FunctionArgumentComponent
 
   override def createFunctionReference(): FunctionReferenceLayout = setValue(new FunctionReferenceLayout)
 
-  private def setValue[V <: ExpressionView[_]](view: V with Component): V = {
+  private def setValue[V <: EvaluableCodeView[_]](view: V with Component): V = {
     valueWrapper.component.removeAllComponents()
     valueWrapper.component.addComponent(view)
     view

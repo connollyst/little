@@ -6,17 +6,15 @@ import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.math.BasicMath
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.data.service.{FunctionService, ExpressionService}
+import com.quane.little.data.service.{FunctionService, CodeService}
 import com.quane.little.language.math.BasicMathOperation
 import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
 
 class MathPresenter[V <: MathView](protected val view: V)(implicit val bindingModule: BindingModule)
-  extends MathViewPresenter
-  with PresenterOfLeftAndRightExpressions
-  with Injectable {
+  extends MathViewPresenter with PresenterOfLeftAndRightExpressions with Injectable {
 
   protected val presenterFactory = inject[PresenterFactory]
-  protected val expressionService = inject[ExpressionService]
+  protected val expressionService = inject[CodeService]
   protected val functionService = inject[FunctionService]
 
   private var _operation = BasicMathOperation.Add

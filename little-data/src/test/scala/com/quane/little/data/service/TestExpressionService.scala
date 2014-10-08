@@ -15,21 +15,21 @@ import com.quane.little.language.data.Value
 @RunWith(classOf[JUnitRunner])
 class TestExpressionService extends FlatSpec with ShouldMatchers {
 
-  val service = new BasicExpressionService
+  val service = new BasicCodeService
 
   "ExpressionService" should "support all expressions" in {
-    ExpressionService.All foreach {
-      expression => service.findExpression(new RecordId(expression))
+    CodeService.All foreach {
+      expression => service.find(new RecordId(expression))
     }
   }
   it should "find get expressions" in {
-    val id = new RecordId(ExpressionService.Get)
-    val expression = service.findExpression(id)
+    val id = new RecordId(CodeService.Get)
+    val expression = service.find(id)
     expression should be(new Getter(""))
   }
   it should "find if/else expressions" in {
-    val id = new RecordId(ExpressionService.Conditional)
-    val expression = service.findExpression(id)
+    val id = new RecordId(CodeService.Conditional)
+    val expression = service.find(id)
     expression should be(new Conditional(new Logic(Value(1), LogicOperation.Equals, Value(1))))
   }
 

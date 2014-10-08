@@ -3,7 +3,7 @@ package com.quane.little.tools.json
 import com.fasterxml.jackson.annotation.JsonTypeInfo
 import com.fasterxml.jackson.databind.JavaType
 import com.fasterxml.jackson.databind.ObjectMapper.{DefaultTypeResolverBuilder, DefaultTyping}
-import com.quane.little.language.Expression
+import com.quane.little.language.Code
 import com.quane.little.tools.json.LanguageTypeResolverBuilder._
 
 /** A [[com.fasterxml.jackson.databind.jsontype.TypeResolverBuilder]] which
@@ -35,6 +35,6 @@ class LanguageTypeResolverBuilder
 
 object LanguageTypeResolverBuilder {
 
-  val LANGUAGE_PACKAGE = classOf[Expression].getPackage.getName
+  val LANGUAGE_PACKAGE = classOf[Code].getPackage.getName
 
 }

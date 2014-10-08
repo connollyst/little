@@ -5,7 +5,7 @@ package com.quane.little.ide.view
   *
   * @author Sean Connolly
   */
-trait GetterView extends ExpressionView[GetterViewPresenter] {
+trait GetterView extends EvaluableCodeView[GetterViewPresenter] {
 
   /** Change the variable name in the view.
     *
@@ -19,7 +19,7 @@ trait GetterView extends ExpressionView[GetterViewPresenter] {
   *
   * @author Sean Connolly
   */
-trait GetterViewPresenter extends ExpressionViewPresenter {
+trait GetterViewPresenter extends EvaluableCodeViewPresenter {
 
   /** Called when the variable name changes in the view.
     *

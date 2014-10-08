@@ -12,7 +12,7 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class Block extends Expression {
+class Block extends EvaluableCode {
 
   private val _steps: ListBuffer[EvaluableCode] = ListBuffer[EvaluableCode]()
 
@@ -58,17 +58,9 @@ class Block extends Expression {
   override def evaluate(scope: Scope): Value = {
     val blockScope = new Scope(scope)
     val stepOutput = _steps.map {
-      case e: Expression =>
-        e.evaluate(blockScope)
-      case s: Statement =>
-        s.evaluate(blockScope)
-        new Nada
+      _.evaluate(blockScope)
     }
-    if (stepOutput.isEmpty) {
-      new Nada
-    } else {
-      stepOutput.last
-    }
+    if (stepOutput.nonEmpty) stepOutput.last else new Nada
   }
 
   override def equals(other: Any): Boolean =

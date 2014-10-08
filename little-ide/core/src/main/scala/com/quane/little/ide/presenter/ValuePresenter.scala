@@ -7,8 +7,7 @@ import com.quane.little.language.data.Value
   *
   * @author Sean Connolly
   */
-class ValuePresenter(val view: ValueView)
-  extends ValueViewPresenter {
+class ValuePresenter(val view: ValueView) extends ValueViewPresenter {
 
   private var _value: String = ""
 

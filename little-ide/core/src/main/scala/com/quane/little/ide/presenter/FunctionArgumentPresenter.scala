@@ -1,12 +1,12 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{PrinterViewPresenter, ExpressionViewPresenter, FunctionArgumentViewPresenter, FunctionArgumentView}
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.quane.little.data.model.RecordId
+import com.quane.little.data.service.FunctionService
+import com.quane.little.ide.view._
+import com.quane.little.language._
 import com.quane.little.language.data.Value
 import com.quane.little.language.data.ValueType.ValueType
-import com.quane.little.language._
-import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{ExpressionService, FunctionService}
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.language.math.BasicMath
 
 /** A presenter for views representing a function reference argument.
@@ -18,16 +18,15 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
-  private val expressionService = inject[ExpressionService]
   private val functionService = inject[FunctionService]
 
   private var _name: String = ""
-  private var _value: Option[ExpressionViewPresenter] = None
+  private var _value: Option[EvaluableCodeViewPresenter] = None
   private var _valueType: Option[ValueType] = None
 
   view.registerViewPresenter(this)
 
-  private[presenter] def initialize(param: FunctionParameter, value: Expression): FunctionArgumentPresenter[V] = {
+  private[presenter] def initialize(param: FunctionParameter, value: EvaluableCode): FunctionArgumentPresenter[V] = {
     this.name = param.name
     this.value = value
     this.valueType = param.valueType
@@ -45,7 +44,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
     *
     * @return the value expression
     */
-  private[presenter] def value: ExpressionViewPresenter =
+  private[presenter] def value: EvaluableCodeViewPresenter =
     _value match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No argument value expression specified.")
@@ -55,7 +54,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
     *
     * @param e the value expression
     */
-  private[presenter] def value_=(e: Expression): Unit = {
+  private[presenter] def value_=(e: EvaluableCode): Unit = {
     val presenter =
       e match {
         // TODO skip if nothing has changed
@@ -92,6 +91,6 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
   override def requestAddCode(id: RecordId, index: Int) =
     value = functionService.findReference(id)
 
-  override def compile(): Expression = value.compile()
+  override def compile(): EvaluableCode = value.compile()
 
 }

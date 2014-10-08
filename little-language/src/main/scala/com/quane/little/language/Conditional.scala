@@ -2,18 +2,18 @@ package com.quane.little.language
 
 import com.google.common.base.Objects
 import com.quane.little.language.data.ValueType.ValueType
-import com.quane.little.language.data.{ValueType, Value}
+import com.quane.little.language.data.{Value, ValueType}
 
 
-/** An [[Expression]] which evaluates the `then` block if the `test` evaluates
+/** An [[EvaluableCode]] which evaluates the `then` block if the `test` evaluates
   * to `true`, and the `otherwise` block if not.
   *
   * @author Sean Connolly
   */
-class Conditional(val test: Expression, val then: Block, val otherwise: Block)
-  extends Expression {
+class Conditional(val test: EvaluableCode, val then: Block, val otherwise: Block)
+  extends EvaluableCode {
 
-  def this(test: Expression) = this(test, new Block, new Block)
+  def this(test: EvaluableCode) = this(test, new Block, new Block)
 
   def addStep(step: EvaluableCode): Conditional = {
     then.addStep(step)
@@ -27,6 +27,7 @@ class Conditional(val test: Expression, val then: Block, val otherwise: Block)
     * to `true`, the ''function'' is evaluated.
     */
   override def evaluate(scope: Scope): Value =
+  // TODO asBool is not very safe
     if (test.evaluate(scope).asBool) {
       then.evaluate(scope)
     } else {

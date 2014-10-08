@@ -5,7 +5,7 @@ import com.quane.little.data.service.FunctionService
 import com.quane.little.ide.MockIDEBindingModule
 import com.quane.little.ide.view._
 import com.quane.little.language._
-import com.quane.little.language.data.{ValueType, Value}
+import com.quane.little.language.data.Value
 import org.junit.runner.RunWith
 import org.mockito.Matchers._
 import org.mockito.Mockito._
@@ -40,7 +40,7 @@ class TestBlockPresenter
         // Then
         intercept[IllegalArgumentException] {
           // When
-          presenter.add(mock[Expression])
+          presenter.add(mock[EvaluableCode])
         }
       }
     }

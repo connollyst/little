@@ -90,7 +90,7 @@ class TestFunctionDeserialization
     }
   }
 
-  private def assertArgEquals[E <: Expression](fun: FunctionReference, argName: String, argExpected: E): Unit = {
+  private def assertArgEquals[E <: EvaluableCode](fun: FunctionReference, argName: String, argExpected: E): Unit = {
     fun.args.contains(argName) should be(right = true)
     fun.args(argName) should be(argExpected)
   }

@@ -1,13 +1,14 @@
 package com.quane.little.data.service
 
+import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.{CodeCategory, PrimitiveRecord, RecordId}
 import com.quane.little.language._
-import scala.collection.immutable
 import com.quane.little.language.data.Value
-import com.quane.little.language.math.{Multiplication, Division, Subtraction, Addition}
-import com.quane.little.data.model.CodeCategory.CodeCategory
+import com.quane.little.language.math.{Addition, Division, Multiplication, Subtraction}
 
-object ExpressionService {
+import scala.collection.immutable
+
+object CodeService {
 
   val Get = "_little_get"
   val Conditional = "_little_conditional"
@@ -74,15 +75,15 @@ object ExpressionService {
   )
 }
 
-trait ExpressionService {
+trait CodeService {
 
-  def allExpressions: Iterable[Expression]
+  def all: Iterable[EvaluableCode]
 
-  def all: Iterable[PrimitiveRecord]
+  def allRecords: Iterable[PrimitiveRecord]
 
-  def findExpression(id: RecordId): Expression
+  def find(id: RecordId): EvaluableCode
 
-  def find(id: RecordId): PrimitiveRecord
+  def findRecord(id: RecordId): PrimitiveRecord
 
   def createRecord(id: RecordId): PrimitiveRecord
 
@@ -92,57 +93,57 @@ trait ExpressionService {
   *
   * @author Sean Connolly
   */
-class BasicExpressionService extends ExpressionService {
+class BasicCodeService extends CodeService {
 
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
-  override def allExpressions: Iterable[Expression] =
-    ExpressionService.All map {
+  override def all: Iterable[EvaluableCode] =
+    CodeService.All map {
       id => ExpressionFactory.create(id)
     }
 
-  override def all: Iterable[PrimitiveRecord] =
-    ExpressionService.All map {
+  override def allRecords: Iterable[PrimitiveRecord] =
+    CodeService.All map {
       id => createRecord(new RecordId(id))
     }
 
-  override def findExpression(id: RecordId): Expression = ExpressionFactory.create(id.oid)
+  override def find(id: RecordId): EvaluableCode = ExpressionFactory.create(id.oid)
 
-  override def find(id: RecordId): PrimitiveRecord = createRecord(id)
+  override def findRecord(id: RecordId): PrimitiveRecord = createRecord(id)
 
   override def createRecord(id: RecordId): PrimitiveRecord =
     new PrimitiveRecord(
       id,
-      ExpressionService.Categories(id.oid),
-      ExpressionService.Names(id.oid),
+      CodeService.Categories(id.oid),
+      CodeService.Names(id.oid),
       ExpressionFactory.create(id.oid)
     )
 
 }
 
-/** A factory for creating an [[com.quane.little.language.Expression]] for a
+/** A factory for creating an [[com.quane.little.language.EvaluableCode]] for a
   * primitive's id.
   *
   * @author Sean Connolly
   */
 object ExpressionFactory {
 
-  def create(id: String): Expression = {
+  def create(id: String): EvaluableCode = {
     id match {
-      case ExpressionService.Get => new Getter("")
-      case ExpressionService.Conditional => new Conditional(new Logic(Value(1), LogicOperation.Equals, Value(1)))
+      case CodeService.Get => new Getter("")
+      case CodeService.Conditional => new Conditional(new Logic(Value(1), LogicOperation.Equals, Value(1)))
       // Math
-      case ExpressionService.Addition => new Addition(Value(1), Value(1))
-      case ExpressionService.Subtraction => new Subtraction(Value(1), Value(1))
-      case ExpressionService.Multiplication => new Multiplication(Value(1), Value(1))
-      case ExpressionService.Division => new Division(Value(1), Value(1))
+      case CodeService.Addition => new Addition(Value(1), Value(1))
+      case CodeService.Subtraction => new Subtraction(Value(1), Value(1))
+      case CodeService.Multiplication => new Multiplication(Value(1), Value(1))
+      case CodeService.Division => new Division(Value(1), Value(1))
       // Logic
-      case ExpressionService.Equals => new Logic(Value(1), LogicOperation.Equals, Value(1))
-      case ExpressionService.NotEquals => new Logic(Value(1), LogicOperation.NotEquals, Value(1))
-      case ExpressionService.LessThan => new Logic(Value(1), LogicOperation.LessThan, Value(1))
-      case ExpressionService.GreaterThan => new Logic(Value(1), LogicOperation.GreaterThan, Value(1))
-      case ExpressionService.And => new Logic(Value(1), LogicOperation.And, Value(1))
-      case ExpressionService.Or => new Logic(Value(1), LogicOperation.Or, Value(1))
+      case CodeService.Equals => new Logic(Value(1), LogicOperation.Equals, Value(1))
+      case CodeService.NotEquals => new Logic(Value(1), LogicOperation.NotEquals, Value(1))
+      case CodeService.LessThan => new Logic(Value(1), LogicOperation.LessThan, Value(1))
+      case CodeService.GreaterThan => new Logic(Value(1), LogicOperation.GreaterThan, Value(1))
+      case CodeService.And => new Logic(Value(1), LogicOperation.And, Value(1))
+      case CodeService.Or => new Logic(Value(1), LogicOperation.Or, Value(1))
       case _ => throw new IllegalAccessException("No expression '" + id + "'")
     }
   }

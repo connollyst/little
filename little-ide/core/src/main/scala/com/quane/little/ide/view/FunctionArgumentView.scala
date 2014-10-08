@@ -2,7 +2,7 @@ package com.quane.little.ide.view
 
 import com.quane.little.ide.presenter._
 
-trait FunctionArgumentView extends ExpressionView[FunctionArgumentViewPresenter] {
+trait FunctionArgumentView extends EvaluableCodeView[FunctionArgumentViewPresenter] {
 
   def setName(name: String): Unit
 
@@ -20,6 +20,4 @@ trait FunctionArgumentView extends ExpressionView[FunctionArgumentViewPresenter]
 
 }
 
-trait FunctionArgumentViewPresenter
-  extends ExpressionViewPresenter
-  with PresenterAcceptsCode
+trait FunctionArgumentViewPresenter extends EvaluableCodeViewPresenter with PresenterAcceptsCode

@@ -1,7 +1,7 @@
 package com.quane.little.language
 
 import com.google.common.base.Objects
-import com.quane.little.language.data.ValueType
+import com.quane.little.language.data.{Value, ValueType}
 import com.quane.little.language.data.ValueType._
 
 /** Code is the root of the little language.
@@ -22,5 +22,13 @@ trait EvaluableCode extends Code {
     * @return the return value type
     */
   def returnType: ValueType
+
+  /** Evaluate this code, in the given [[com.quane.little.language.Scope]],
+    * and output it's return [[com.quane.little.language.data.Value]], if any.
+    *
+    * @param scope the scope in which to evaluate the expression
+    * @return the return value of the expression
+    */
+  def evaluate(scope: Scope): Value
 
 }

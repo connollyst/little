@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.quane.little.data.service.{ExpressionService, FunctionService}
+import com.quane.little.data.service.{CodeService, FunctionService}
 import com.quane.little.ide.view.{LogicView, LogicViewPresenter}
 import com.quane.little.language.LogicOperation.LogicOperation
 import com.quane.little.language.data.ValueType
@@ -9,12 +9,10 @@ import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.{Logic, LogicOperation}
 
 class LogicPresenter[V <: LogicView](protected val view: V)(implicit val bindingModule: BindingModule)
-  extends LogicViewPresenter
-  with PresenterOfLeftAndRightExpressions
-  with Injectable {
+  extends LogicViewPresenter with PresenterOfLeftAndRightExpressions with Injectable {
 
   protected val presenterFactory = inject[PresenterFactory]
-  protected val expressionService = inject[ExpressionService]
+  protected val expressionService = inject[CodeService]
   protected val functionService = inject[FunctionService]
 
   private var _operation = LogicOperation.Equals

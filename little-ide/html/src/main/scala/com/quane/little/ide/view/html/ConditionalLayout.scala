@@ -100,7 +100,7 @@ class ConditionalHeader extends HorizontalLayout with VaadinMixin {
 
   def createFunctionReferenceCondition() = setCondition(new FunctionReferenceLayout)
 
-  def setCondition[V <: ExpressionView[_] with Component](view: V): V = {
+  def setCondition[V <: EvaluableCodeView[_] with Component](view: V): V = {
     conditionWrapper.removeAll()
     conditionWrapper.add(view)
   }

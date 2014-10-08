@@ -1,9 +1,8 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{CodeMenuView, ExpressionView, PrinterView}
-import com.vaadin.ui._
+import com.quane.little.ide.view.{CodeMenuView, EvaluableCodeView, PrinterView}
 import com.quane.vaadin.scala.VaadinMixin
-import scala.Some
+import com.vaadin.ui._
 
 object PrinterLayout {
   val Style = "l-print"
@@ -20,7 +19,7 @@ class PrinterLayout
   with VaadinMixin {
 
   private val printLabel = new Label("print")
-  private var printValue: Option[ExpressionView[_] with RemovableComponent] = None
+  private var printValue: Option[EvaluableCodeView[_] with RemovableComponent] = None
   private val menuWrapper = new CssLayout() with VaadinMixin
 
   setSpacing(true)
