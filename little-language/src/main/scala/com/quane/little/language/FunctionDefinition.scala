@@ -1,7 +1,8 @@
 package com.quane.little.language
 
 import com.google.common.base.Objects
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{ValueType, Value}
 import com.quane.little.language.data.ValueType.ValueType
 
 import scala.collection.immutable
@@ -10,10 +11,11 @@ import scala.collection.mutable.ListBuffer
 /** Defines a function.
   *
   * @param name the function name
+  * @param returnType the function's return type, defaults to [[ValueType.Nada]]
   * @see [[com.quane.little.language.FunctionReference]]
   * @see [[com.quane.little.language.FunctionParameter]]
   */
-class FunctionDefinition(val name: String) {
+class FunctionDefinition(val name: String, var returnType: ValueType = ValueType.Nada) {
 
   private val _params = new ListBuffer[FunctionParameter]
   private val block = new Block
@@ -62,12 +64,6 @@ class FunctionDefinition(val name: String) {
     }
     reference
   }
-
-  /** Returns the return [[ValueType]] of the function.
-    *
-    * @return the function's return type
-    */
-  def returnType: ValueType = block.returnType
 
   def evaluate(scope: Scope, args: immutable.Map[String, Expression]): Value = {
     val functionScope = new Scope(scope)
@@ -118,6 +114,25 @@ class FunctionDefinition(val name: String) {
   */
 class FunctionParameter(val name: String, val valueType: ValueType) {
 
-  override def toString = name
+  def canEqual(other: Any): Boolean = other.isInstanceOf[FunctionParameter]
+
+  override def equals(other: Any): Boolean = other match {
+    case that: FunctionParameter =>
+      (that canEqual this) &&
+        name == that.name &&
+        valueType == that.valueType
+    case _ => false
+  }
+
+  override def hashCode(): Int = {
+    val state = Seq(name, valueType)
+    state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
+  }
+
+  override def toString: String =
+    Objects.toStringHelper(getClass)
+      .add("name", name)
+      .add("valueType", valueType)
+      .toString
 
 }

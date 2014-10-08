@@ -1,6 +1,6 @@
 {
     "_class": "com.quane.little.language.FunctionDefinition",
-    "name": "sayHello",
+    "name": "function_definition_say_hello",
     "steps": [
         {
             "_class": "com.quane.little.language.Printer",
@@ -10,5 +10,9 @@
             }
         }
     ],
-    "params": [ ]
+    "params": [ ],
+    "returnType": {
+        "enumClass": "com.quane.little.language.data.ValueType",
+        "value": "Nada"
+    }
 }

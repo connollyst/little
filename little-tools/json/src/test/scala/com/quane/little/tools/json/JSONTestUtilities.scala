@@ -30,8 +30,10 @@ trait JSONTestUtilities {
     * @param expected the expected json
     * @param actual the actual json
     */
-  private[json] def assertJSON(expected: String, actual: String) =
+  private[json] def assertJSON(expected: String, actual: String) = {
+    println(actual)
     JSONAssert.assertEquals(expected, actual, true)
+  }
 
   /** Get the expected JSON given the name of the serialized object.
     *

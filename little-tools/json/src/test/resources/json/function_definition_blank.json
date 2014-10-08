@@ -2,5 +2,9 @@
     "_class": "com.quane.little.language.FunctionDefinition",
     "name": "function_definition_blank",
     "params": [],
-    "steps": []
+    "steps": [],
+    "returnType": {
+        "enumClass": "com.quane.little.language.data.ValueType",
+        "value": "Nada"
+    }
 }
