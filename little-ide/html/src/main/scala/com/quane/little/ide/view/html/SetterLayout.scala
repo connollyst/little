@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.html.dnd.ExpressionDropHandler
+import com.quane.little.ide.view.html.dnd.CodeDropHandler
 import com.quane.little.ide.view.{CodeView, SetterView, SetterViewPresenter}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.event.FieldEvents.{TextChangeEvent, TextChangeListener}
@@ -23,10 +23,10 @@ class SetterLayout
   private val nameField = createNameTextField()
   private val valueWrapper = new DroppableTarget(
     new CssLayout,
-    new ExpressionDropHandler[SetterViewPresenter, SetterView](this)
+    new CodeDropHandler[SetterViewPresenter, SetterView](this)
   )
 
-  setStyleNames(ExpressionLayout.Style, SetterLayout.Style)
+  setStyleNames(CodeLayout.Style, SetterLayout.Style)
   setSpacing(true)
 
   addComponent(nameField)
@@ -44,15 +44,15 @@ class SetterLayout
     })
   }
 
-  override def createGetterExpression() = setValueComponent(new GetterLayout)
+  override def createGetterView() = setValueComponent(new GetterLayout)
 
-  override def createMathExpression() = setValueComponent(new MathLayout)
+  override def createMathView() = setValueComponent(new MathLayout)
 
-  override def createLogicExpression() = setValueComponent(new LogicLayout)
+  override def createLogicView() = setValueComponent(new LogicLayout)
 
-  override def createValueExpression() = setValueComponent(new ValueLayout)
+  override def createValueView() = setValueComponent(new ValueLayout)
 
-  override def createFunctionReference() = setValueComponent(new FunctionReferenceLayout)
+  override def createFunctionReferenceView() = setValueComponent(new FunctionReferenceLayout)
 
   private def setValueComponent[T <: CodeView[_] with RemovableComponent](view: T): T = {
     valueWrapper.component.removeAllComponents()

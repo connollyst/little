@@ -11,6 +11,8 @@ import scala.collection.immutable
 object CodeService {
 
   val Get = "_little_get"
+  val Set = "_little_set"
+  val Print = "_little_print"
   val Conditional = "_little_conditional"
   // Math
   val Addition = "_little_math_addition"
@@ -27,6 +29,8 @@ object CodeService {
 
   val All = immutable.List[String](
     Get,
+    Set,
+    Print,
     Conditional,
     // Math
     Addition,
@@ -43,6 +47,8 @@ object CodeService {
   )
   val Names = immutable.Map[String, String](
     Get -> "get",
+    Set -> "set",
+    Print -> "print",
     Conditional -> "if/else",
     // Math
     Addition -> "plus",
@@ -59,6 +65,8 @@ object CodeService {
   )
   val Categories = immutable.Map[String, CodeCategory](
     Get -> CodeCategory.Basic,
+    Set -> CodeCategory.Basic,
+    Print -> CodeCategory.Basic,
     Conditional -> CodeCategory.Basic,
     // Math
     Addition -> CodeCategory.Math,
@@ -131,6 +139,8 @@ object ExpressionFactory {
   def create(id: String): Code = {
     id match {
       case CodeService.Get => new Getter("")
+      case CodeService.Set => new Setter("", Value(""))
+      case CodeService.Print => new Printer(Value(""))
       case CodeService.Conditional => new Conditional(new Logic(Value(1), LogicOperation.Equals, Value(1)))
       // Math
       case CodeService.Addition => new Addition(Value(1), Value(1))

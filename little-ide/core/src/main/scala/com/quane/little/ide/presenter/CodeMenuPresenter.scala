@@ -3,7 +3,7 @@ package com.quane.little.ide.presenter
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.CodeType.CodeType
 import com.quane.little.data.model.{CodeCategory, CodeType, PrimitiveRecord}
-import com.quane.little.data.service.{CodeService, FunctionService, StatementService}
+import com.quane.little.data.service.{CodeService, FunctionService}
 import com.quane.little.ide.view.{CodeMenuView, CodeMenuViewPresenter}
 import com.quane.little.language.FunctionDefinition
 import com.quane.little.language.data.ValueType
@@ -16,8 +16,7 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
   extends CodeMenuViewPresenter
   with Injectable {
 
-  private val expressionService = inject[CodeService]
-  private val statementService = inject[StatementService]
+  private val codeService = inject[CodeService]
   private val functionService = inject[FunctionService]
 
   view.registerViewPresenter(this)
@@ -25,13 +24,9 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
   CodeCategory.values foreach {
     category => view.addCategory(category)
   }
-  expressionService.allRecords foreach {
+  codeService.allRecords foreach {
     expression => addItem(CodeType.Expression, expression)
   }
-  statementService.all foreach {
-    statement => addItem(CodeType.Statement, statement)
-  }
-
   if (m <:< manifest[PresenterAcceptsCode]) {
     functionService.findByUser("connollyst") foreach {
       function =>

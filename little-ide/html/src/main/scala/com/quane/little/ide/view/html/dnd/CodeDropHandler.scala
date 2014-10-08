@@ -6,7 +6,7 @@ import com.quane.little.data.model.CodeType
 import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 
-/** Drop handler for views which accept expression arguments.
+/** Drop handler for views which accept code.
   *
   * @param view
   * @param index
@@ -14,7 +14,7 @@ import com.vaadin.event.dd.acceptcriteria.AcceptAll
   * @tparam V
   * @author Sean Connolly
   */
-class ExpressionDropHandler[P <: ViewPresenter with PresenterAcceptsCode, V <: View[P]](view: V, index: Int = 0) extends DropHandler {
+class CodeDropHandler[P <: ViewPresenter with PresenterAcceptsCode, V <: View[P]](view: V, index: Int = 0) extends DropHandler {
 
   override def getAcceptCriterion = AcceptAll.get()
 

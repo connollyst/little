@@ -58,16 +58,16 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     val presenter =
       e match {
         case g: Getter =>
-          presenterFactory.createGetPresenter(view.createGetterExpression()).initialize(g)
+          presenterFactory.createGetPresenter(view.createGetterView()).initialize(g)
         case m: BasicMath =>
-          presenterFactory.createMathPresenter(view.createMathExpression()).initialize(m)
+          presenterFactory.createMathPresenter(view.createMathView()).initialize(m)
         case l: Logic =>
-          presenterFactory.createLogicPresenter(view.createLogicExpression()).initialize(l)
+          presenterFactory.createLogicPresenter(view.createLogicView()).initialize(l)
         case v: Value =>
-          presenterFactory.createValuePresenter(view.createValueExpression()).initialize(v)
+          presenterFactory.createValuePresenter(view.createValueView()).initialize(v)
         case f: FunctionReference =>
-          presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
-        case _ => throw new IllegalArgumentException("Expression not supported: " + e)
+          presenterFactory.createFunctionReference(view.createFunctionReferenceView()).initialize(f)
+        case _ => throw new IllegalArgumentException("Not supported: " + e)
       }
     // TODO skip if the presenter type hasn't changed (?)
     _value = Some(presenter)

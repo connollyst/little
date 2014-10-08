@@ -59,16 +59,16 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
       e match {
         // TODO skip if nothing has changed
         case g: Getter =>
-          presenterFactory.createGetPresenter(view.createGetterExpression()).initialize(g)
+          presenterFactory.createGetPresenter(view.createGetterView()).initialize(g)
         case m: BasicMath =>
-          presenterFactory.createMathPresenter(view.createMathExpression()).initialize(m)
+          presenterFactory.createMathPresenter(view.createMathView()).initialize(m)
         case l: Logic =>
-          presenterFactory.createLogicPresenter(view.createLogicExpression()).initialize(l)
+          presenterFactory.createLogicPresenter(view.createLogicView()).initialize(l)
         case v: Value =>
-          presenterFactory.createValuePresenter(view.createValueExpression()).initialize(v)
+          presenterFactory.createValuePresenter(view.createValueView()).initialize(v)
         case f: FunctionReference =>
-          presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
-        case _ => throw new IllegalArgumentException("Expression not supported: " + e)
+          presenterFactory.createFunctionReference(view.createFunctionReferenceView()).initialize(f)
+        case _ => throw new IllegalArgumentException("Not supported: " + e)
       }
     _value = Some(presenter)
   }
@@ -83,7 +83,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
   private[presenter] def valueType_=(t: ValueType): Unit = {
     _valueType = Some(t)
     // TODO can we bypass all the Manifest business by just passing in the valueType?
-    presenterFactory.createCodeMenu[FunctionArgumentViewPresenter](view.createCodeMenu(), this)
+    presenterFactory.createCodeMenu[FunctionArgumentViewPresenter](view.createCodeMenuView(), this)
   }
 
   override def acceptedValueType: ValueType = valueType

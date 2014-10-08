@@ -48,16 +48,16 @@ class TestPrinterPresenter
     "create a view for a new Value expression" in {
       val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
-      when(view.createValueStatement()).thenReturn(mock[ValueView])
+      when(view.createValueView()).thenReturn(mock[ValueView])
       presenter.text = Value("abc")
-      verify(view).createValueStatement()
+      verify(view).createValueView()
     }
     "create a view for a new Getter expression" in {
       val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
-      when(view.createGetStatement()).thenReturn(mock[GetterView])
+      when(view.createGetView()).thenReturn(mock[GetterView])
       presenter.text = new Getter("TestValue")
-      verify(view).createGetStatement()
+      verify(view).createGetView()
     }
     "create a view for a new FunctionReference expression" in {
       val view = MockPrinterView.mocked()
@@ -70,7 +70,7 @@ class TestPrinterPresenter
       val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val valueView = mock[ValueView]
-      when(view.createValueStatement()).thenReturn(valueView)
+      when(view.createValueView()).thenReturn(valueView)
       presenter.text = Value("abc")
       verify(valueView).setValue("abc")
     }
@@ -78,7 +78,7 @@ class TestPrinterPresenter
       val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val getterView = mock[GetterView]
-      when(view.createGetStatement()).thenReturn(getterView)
+      when(view.createGetView()).thenReturn(getterView)
       presenter.text = new Getter("TestValue")
       verify(getterView).setName("TestValue")
     }
@@ -94,7 +94,7 @@ class TestPrinterPresenter
       val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val expectedValueView = mock[ValueView]
-      when(view.createValueStatement()).thenReturn(expectedValueView)
+      when(view.createValueView()).thenReturn(expectedValueView)
       presenter.text = Value("abc")
       presenter.text.getClass should be(classOf[ValuePresenter])
       val valuePresenter = presenter.text.asInstanceOf[ValuePresenter]
@@ -104,7 +104,7 @@ class TestPrinterPresenter
       val view = MockPrinterView.mocked()
       val presenter = new PrinterPresenter(view)
       val getterView = mock[GetterView]
-      when(view.createGetStatement()).thenReturn(getterView)
+      when(view.createGetView()).thenReturn(getterView)
       presenter.text = new Getter("TestValue")
       presenter.text.getClass should be(classOf[GetterPresenter])
       val getterPresenter = presenter.text.asInstanceOf[GetterPresenter]
@@ -122,13 +122,13 @@ class TestPrinterPresenter
     }
     "error when adding unknown expression" in {
       val presenter = new PrinterPresenter(new MockPrinterView)
-      val unknownExpression = new Code {
+      val unknownCode = new Code {
         override def returnType: ValueType = ValueType.Something
 
         override def evaluate(scope: Scope): Value = Value("I shouldn't exist.")
       }
       val error = intercept[IllegalArgumentException] {
-        presenter.text = unknownExpression
+        presenter.text = unknownCode
       }
       error.getMessage should startWith("Print text expression not supported")
     }
@@ -154,8 +154,8 @@ class TestPrinterPresenter
   private def assertCompiledValue(value: Code) = {
     val view = MockPrinterView.mocked()
     val presenter = new PrinterPresenter(view)
-    when(view.createGetStatement()).thenReturn(new MockGetterView)
-    when(view.createValueStatement()).thenReturn(new MockValueView)
+    when(view.createGetView()).thenReturn(new MockGetterView)
+    when(view.createValueView()).thenReturn(new MockValueView)
     when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
     presenter.text = value
     val compiled = presenter.compile()

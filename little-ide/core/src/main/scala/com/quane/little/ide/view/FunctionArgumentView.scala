@@ -6,17 +6,17 @@ trait FunctionArgumentView extends CodeView[FunctionArgumentViewPresenter] {
 
   def setName(name: String): Unit
 
-  def createCodeMenu(): CodeMenuView
+  def createCodeMenuView(): CodeMenuView
 
-  def createGetterExpression(): GetterView
+  def createGetterView(): GetterView
 
-  def createMathExpression(): MathView
+  def createMathView(): MathView
 
-  def createLogicExpression(): LogicView
+  def createLogicView(): LogicView
 
-  def createValueExpression(): ValueView
+  def createValueView(): ValueView
 
-  def createFunctionReference(): FunctionReferenceView
+  def createFunctionReferenceView(): FunctionReferenceView
 
 }
 

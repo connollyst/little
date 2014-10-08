@@ -13,12 +13,12 @@ object MockFunctionArgumentView extends MockitoSugar {
     */
   def mocked: FunctionArgumentView = {
     val view = mock[FunctionArgumentView]
-    when(view.createCodeMenu()).thenReturn(new MockCodeMenuView)
-    when(view.createMathExpression()).thenReturn(new MockMathView)
-    when(view.createLogicExpression()).thenReturn(new MockLogicView)
-    when(view.createGetterExpression()).thenReturn(new MockGetterView)
-    when(view.createValueExpression()).thenReturn(new MockValueView)
-    when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
+    when(view.createCodeMenuView()).thenReturn(new MockCodeMenuView)
+    when(view.createMathView()).thenReturn(new MockMathView)
+    when(view.createLogicView()).thenReturn(new MockLogicView)
+    when(view.createGetterView()).thenReturn(new MockGetterView)
+    when(view.createValueView()).thenReturn(new MockValueView)
+    when(view.createFunctionReferenceView()).thenReturn(new MockFunctionReferenceView)
     view
   }
 }
@@ -36,16 +36,16 @@ class MockFunctionArgumentView
 
   override def setName(n: String) = name = Some(n)
 
-  override def createCodeMenu() = new MockCodeMenuView
+  override def createCodeMenuView() = new MockCodeMenuView
 
-  override def createGetterExpression() = new MockGetterView
+  override def createGetterView() = new MockGetterView
 
-  override def createMathExpression() = new MockMathView
+  override def createMathView() = new MockMathView
 
-  override def createLogicExpression() = new MockLogicView
+  override def createLogicView() = new MockLogicView
 
-  override def createValueExpression() = new MockValueView
+  override def createValueView() = new MockValueView
 
-  override def createFunctionReference() = new MockFunctionReferenceView
+  override def createFunctionReferenceView() = new MockFunctionReferenceView
 
 }

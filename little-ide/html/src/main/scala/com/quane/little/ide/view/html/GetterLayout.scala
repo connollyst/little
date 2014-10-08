@@ -22,7 +22,7 @@ class GetterLayout
 
   private val nameField = createNameField()
 
-  setStyleNames(ExpressionLayout.Style, GetterLayout.Style)
+  setStyleNames(CodeLayout.Style, GetterLayout.Style)
   nameField.setStyleName(GetterLayout.StyleValue)
 
   addComponent(nameField)

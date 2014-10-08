@@ -1,11 +1,11 @@
 package com.quane.little.data.model
 
-import com.quane.little.language.Code
 import com.google.common.base.Objects
 import com.quane.little.data.model.CodeCategory._
+import com.quane.little.language.Code
 
-/** A database record for a primitive [[com.quane.little.language.Expression]].
-  * That is, all expressions which are not themselves functions.
+/** A database record for a primitive [[com.quane.little.language.Code]].
+  * That is, all code which is not itself a function.
   *
   * @author Sean Connolly
   */

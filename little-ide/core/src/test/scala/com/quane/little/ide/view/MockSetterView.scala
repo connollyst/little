@@ -17,14 +17,14 @@ class MockSetterView
 
   override def setName(n: String) = name = Some(n)
 
-  override def createGetterExpression() = new MockGetterView
+  override def createGetterView() = new MockGetterView
 
-  override def createMathExpression() = new MockMathView
+  override def createMathView() = new MockMathView
 
-  override def createLogicExpression() = new MockLogicView
+  override def createLogicView() = new MockLogicView
 
-  override def createValueExpression() = new MockValueView
+  override def createValueView() = new MockValueView
 
-  override def createFunctionReference() = new MockFunctionReferenceView
+  override def createFunctionReferenceView() = new MockFunctionReferenceView
 
 }

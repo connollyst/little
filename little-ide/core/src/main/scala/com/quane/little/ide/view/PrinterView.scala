@@ -21,13 +21,13 @@ trait PrinterView
     *
     * @return the view which was created
     */
-  def createValueStatement(): ValueView
+  def createValueView(): ValueView
 
   /** Replace the existing print value expression with a [[com.quane.little.ide.view.GetterView]].
     *
     * @return the view which was created
     */
-  def createGetStatement(): GetterView
+  def createGetView(): GetterView
 
   /** Replace the existing print value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
     *

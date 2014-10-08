@@ -1,5 +1,5 @@
 package com.quane.little.ide.view.html
 
-object ExpressionLayout {
+object CodeLayout {
   val Style = "l-expression"
 }

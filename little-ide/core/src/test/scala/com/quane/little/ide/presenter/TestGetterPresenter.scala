@@ -1,15 +1,15 @@
 package com.quane.little.ide.presenter
 
-import org.scalatest.FunSuite
-import org.scalatest.mock.MockitoSugar
 import com.quane.little.ide.view.GetterView
-import org.mockito.Mockito._
-import org.mockito.Matchers._
 import org.junit.runner.RunWith
+import org.mockito.Matchers._
+import org.mockito.Mockito._
+import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
+import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
-class TestGetStatementPresenter extends FunSuite with MockitoSugar {
+class TestGetterPresenter extends FunSuite with MockitoSugar {
 
   test("test name is set") {
     val view = mock[GetterView]

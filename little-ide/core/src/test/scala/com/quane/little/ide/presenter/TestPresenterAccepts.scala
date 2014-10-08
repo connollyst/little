@@ -1,16 +1,15 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.MockIDEBindingModule
-import com.quane.little.language.data.ValueType
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.FlatSpec
-import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.data.service.{BasicStatementService, BasicCodeService, CodeService, StatementService}
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
+import com.quane.little.data.service.{BasicCodeService, CodeService}
+import com.quane.little.ide.MockIDEBindingModule
 import com.quane.little.ide.view._
-import org.scalatest.mock.MockitoSugar
+import org.junit.runner.RunWith
 import org.mockito.Mockito._
+import org.scalatest.FlatSpec
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.mock.MockitoSugar
 
 @RunWith(classOf[JUnitRunner])
 class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSugar {
@@ -18,7 +17,7 @@ class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSuga
   implicit val bindingModule = MockIDEBindingModule
 
   "SetterView" should "accept get" in {
-    val get = expression(CodeService.Get)
+    val get = primitive(CodeService.Get)
     val view = mock[SetterView]
     val presenter = new SetterPresenter(view)
     when(view.presenter).thenReturn(presenter)
@@ -27,7 +26,7 @@ class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSuga
     accepts should be(right = true)
   }
   it should "not accept set" in {
-    val set = statement(StatementService.Set)
+    val set = primitive(CodeService.Set)
     val view = mock[SetterView]
     val presenter = new SetterPresenter(view)
     when(view.presenter).thenReturn(presenter)
@@ -35,7 +34,7 @@ class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSuga
     accepts should be(right = false)
   }
   it should "not accept print" in {
-    val print = statement(StatementService.Print)
+    val print = primitive(CodeService.Print)
     val view = mock[SetterView]
     val presenter = new SetterPresenter(view)
     when(view.presenter).thenReturn(presenter)
@@ -43,7 +42,7 @@ class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSuga
     accepts should be(right = false)
   }
   it should "not accept conditional" in {
-    val conditional = expression(CodeService.Conditional)
+    val conditional = primitive(CodeService.Conditional)
     val view = mock[SetterView]
     val presenter = new SetterPresenter(view)
     when(view.presenter).thenReturn(presenter)
@@ -51,8 +50,6 @@ class TestPresenterAccepts extends FlatSpec with ShouldMatchers with MockitoSuga
     accepts should be(right = true)
   }
 
-  private def expression(id: String): PrimitiveRecord = new BasicCodeService().findRecord(new RecordId(id))
-
-  private def statement(id: String): PrimitiveRecord = new BasicStatementService().find(new RecordId(id))
+  private def primitive(id: String): PrimitiveRecord = new BasicCodeService().findRecord(new RecordId(id))
 
 }

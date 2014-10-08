@@ -86,7 +86,7 @@ class TestSetterPresenter
       val error = intercept[IllegalArgumentException] {
         presenter.value = mock[Code]
       }
-      error.getMessage should startWith("Expression not supported")
+      error.getMessage should startWith("Not supported")
     }
 
     /* Assert views are created for new expression values.. */
@@ -95,31 +95,31 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       presenter.value = Value("abc")
-      verify(view).createValueExpression()
+      verify(view).createValueView()
     }
     "create a view for a new Getter expression" in {
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       presenter.value = new Getter("x")
-      verify(view).createGetterExpression()
+      verify(view).createGetterView()
     }
     "create a view for a new Logic expression" in {
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       presenter.value = new Logic(Value("x"), LogicOperation.GreaterThan, Value("y"))
-      verify(view).createLogicExpression()
+      verify(view).createLogicView()
     }
     "create a view for a new Math expression" in {
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       presenter.value = new Division(Value(137), Value(42))
-      verify(view).createMathExpression()
+      verify(view).createMathView()
     }
     "create a view for a new FunctionReference expression" in {
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       presenter.value = new FunctionReference("TestFunction")
-      verify(view).createFunctionReference()
+      verify(view).createFunctionReferenceView()
     }
 
     /* Assert views are initialized for new expression values.. */
@@ -128,7 +128,7 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       val valueView = mock[ValueView]
-      when(view.createValueExpression()).thenReturn(valueView)
+      when(view.createValueView()).thenReturn(valueView)
       presenter.value = Value("abc")
       verify(valueView).setValue("abc")
     }
@@ -136,7 +136,7 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       val valueView = mock[GetterView]
-      when(view.createGetterExpression()).thenReturn(valueView)
+      when(view.createGetterView()).thenReturn(valueView)
       presenter.value = new Getter("x")
       verify(valueView).setName("x")
     }
@@ -144,7 +144,7 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       val valueView = mock[LogicView]
-      when(view.createLogicExpression()).thenReturn(valueView)
+      when(view.createLogicView()).thenReturn(valueView)
       when(valueView.createLeftLiteral()).thenReturn(new MockValueView)
       when(valueView.createRightLiteral()).thenReturn(new MockValueView)
       presenter.value = new Logic(Value("x"), LogicOperation.GreaterThan, Value("y"))
@@ -156,7 +156,7 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       val valueView = mock[MathView]
-      when(view.createMathExpression()).thenReturn(valueView)
+      when(view.createMathView()).thenReturn(valueView)
       when(valueView.createLeftLiteral()).thenReturn(new MockValueView)
       when(valueView.createRightLiteral()).thenReturn(new MockValueView)
       presenter.value = new Multiplication(Value(137), Value(42))
@@ -168,7 +168,7 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       val valueView = mock[FunctionReferenceView]
-      when(view.createFunctionReference()).thenReturn(valueView)
+      when(view.createFunctionReferenceView()).thenReturn(valueView)
       presenter.value = new FunctionReference("TestFunction")
       verify(valueView).setName("TestFunction")
     }
@@ -216,11 +216,11 @@ class TestSetterPresenter
     */
   private def mockSetterView: SetterView = {
     val view = mock[SetterView]
-    when(view.createMathExpression()).thenReturn(new MockMathView)
-    when(view.createLogicExpression()).thenReturn(new MockLogicView)
-    when(view.createGetterExpression()).thenReturn(new MockGetterView)
-    when(view.createValueExpression()).thenReturn(new MockValueView)
-    when(view.createFunctionReference()).thenReturn(new MockFunctionReferenceView)
+    when(view.createMathView()).thenReturn(new MockMathView)
+    when(view.createLogicView()).thenReturn(new MockLogicView)
+    when(view.createGetterView()).thenReturn(new MockGetterView)
+    when(view.createValueView()).thenReturn(new MockValueView)
+    when(view.createFunctionReferenceView()).thenReturn(new MockFunctionReferenceView)
     view
   }
 

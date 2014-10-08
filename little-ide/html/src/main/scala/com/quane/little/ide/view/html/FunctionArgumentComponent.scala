@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.html.dnd.ExpressionDropHandler
+import com.quane.little.ide.view.html.dnd.CodeDropHandler
 import com.quane.little.ide.view.{CodeMenuView, CodeView, FunctionArgumentView, FunctionArgumentViewPresenter}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.ui._
@@ -22,7 +22,7 @@ class FunctionArgumentComponent
   private val nameLabel = new Label
   private val valueWrapper = new DroppableTarget(
     new CssLayout,
-    new ExpressionDropHandler[FunctionArgumentViewPresenter, FunctionArgumentView](this)
+    new CodeDropHandler[FunctionArgumentViewPresenter, FunctionArgumentView](this)
   )
   private val menuWrapper = new CssLayout() with VaadinMixin
 
@@ -37,20 +37,20 @@ class FunctionArgumentComponent
 
   override def setName(name: String): Unit = nameLabel.setValue(name)
 
-  override def createCodeMenu(): CodeMenuView = {
+  override def createCodeMenuView(): CodeMenuView = {
     menuWrapper.removeAllComponents()
     menuWrapper.add(new CodeMenuLayout(this))
   }
 
-  override def createGetterExpression(): GetterLayout = setValue(new GetterLayout)
+  override def createGetterView(): GetterLayout = setValue(new GetterLayout)
 
-  override def createMathExpression(): MathLayout = setValue(new MathLayout)
+  override def createMathView(): MathLayout = setValue(new MathLayout)
 
-  override def createLogicExpression(): LogicLayout = setValue(new LogicLayout)
+  override def createLogicView(): LogicLayout = setValue(new LogicLayout)
 
-  override def createValueExpression(): ValueLayout = setValue(new ValueLayout)
+  override def createValueView(): ValueLayout = setValue(new ValueLayout)
 
-  override def createFunctionReference(): FunctionReferenceLayout = setValue(new FunctionReferenceLayout)
+  override def createFunctionReferenceView(): FunctionReferenceLayout = setValue(new FunctionReferenceLayout)
 
   private def setValue[V <: CodeView[_]](view: V with Component): V = {
     valueWrapper.component.removeAllComponents()

@@ -207,12 +207,12 @@ class TestBlockPresenter
         val setterView = mock[SetterView]
         val valueView = mock[ValueView]
         when(view.addSetStep(0)).thenReturn(setterView)
-        when(setterView.createValueExpression()).thenReturn(valueView)
+        when(setterView.createValueView()).thenReturn(valueView)
         val statement = new Setter("x", Value("y"))
         // When
         presenter.add(statement)
         // Then
-        verify(setterView).createValueExpression()
+        verify(setterView).createValueView()
         verify(setterView).setName("x")
         verify(valueView).setValue("y")
       }
@@ -238,11 +238,11 @@ class TestBlockPresenter
         val printerView = MockPrinterView.mocked()
         val valueView = mock[ValueView]
         when(view.addPrintStep(0)).thenReturn(printerView)
-        when(printerView.createValueStatement()).thenReturn(valueView)
+        when(printerView.createValueView()).thenReturn(valueView)
         // When
         presenter.add(new Printer(Value("x")))
         // Then
-        verify(printerView).createValueStatement()
+        verify(printerView).createValueView()
         verify(valueView).setValue("x")
       }
     }

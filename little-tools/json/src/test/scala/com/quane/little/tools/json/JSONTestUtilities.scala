@@ -1,9 +1,10 @@
 package com.quane.little.tools.json
 
-import com.google.common.io.Files
-import java.io.{FileNotFoundException, File}
+import java.io.{File, FileNotFoundException}
 import java.net.URL
 import java.nio.charset.Charset
+
+import com.google.common.io.Files
 import org.skyscreamer.jsonassert.JSONAssert
 
 /** Utilities for testing JSON serialization.
@@ -15,15 +16,15 @@ trait JSONTestUtilities {
   private[json] def deserialize[T: Manifest](jsonName: String): T =
     new LittleJSON().deserialize[T](getJSON(jsonName))
 
-  /** Serialize the [[com.quane.little.language.Expression]] and assert the JSON
+  /** Serialize the [[com.quane.little.language.Code]] and assert the JSON
     * looks as expected.
     *
     * @param expected the expected json
-    * @param e the expression to serialize
-    * @tparam E the type of expression being serialized
+    * @param c the code to serialize
+    * @tparam C the type of code being serialized
     */
-  private[json] def assertSerialization[E](expected: String, e: E) =
-    assertJSON(expected, new LittleJSON().serialize(e))
+  private[json] def assertSerialization[C](expected: String, c: C) =
+    assertJSON(expected, new LittleJSON().serialize(c))
 
   /** Assert that the `actual` JSON matches the expected JSON.
     *

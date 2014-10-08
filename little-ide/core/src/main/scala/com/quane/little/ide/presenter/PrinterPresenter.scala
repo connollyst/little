@@ -55,9 +55,9 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
     val presenter =
       e match {
         case g: Getter =>
-          presenterFactory.createGetPresenter(view.createGetStatement()).initialize(g)
+          presenterFactory.createGetPresenter(view.createGetView()).initialize(g)
         case v: Value =>
-          presenterFactory.createValuePresenter(view.createValueStatement()).initialize(v)
+          presenterFactory.createValuePresenter(view.createValueView()).initialize(v)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createFunctionReference()).initialize(f)
         case _ => throw new IllegalArgumentException("Print text expression not supported: " + e)

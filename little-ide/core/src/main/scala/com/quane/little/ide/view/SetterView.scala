@@ -19,31 +19,31 @@ trait SetterView extends CodeView[SetterViewPresenter] {
     *
     * @return the view which was created
     */
-  def createGetterExpression(): GetterView
+  def createGetterView(): GetterView
 
   /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.MathView]].
     *
     * @return the view which was created
     */
-  def createMathExpression(): MathView
+  def createMathView(): MathView
 
   /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.LogicView]].
     *
     * @return the view which was created
     */
-  def createLogicExpression(): LogicView
+  def createLogicView(): LogicView
 
   /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.ValueView]].
     *
     * @return the view which was created
     */
-  def createValueExpression(): ValueView
+  def createValueView(): ValueView
 
   /** Replace the existing assignment value expression with a [[com.quane.little.ide.view.FunctionReferenceView]].
     *
     * @return the view which was created
     */
-  def createFunctionReference(): FunctionReferenceView
+  def createFunctionReferenceView(): FunctionReferenceView
 
 }
 

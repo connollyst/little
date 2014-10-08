@@ -16,8 +16,8 @@ object MockPrinterView extends MockitoSugar {
   def mocked(): PrinterView = {
     val view = mock[PrinterView]
     when(view.createCodeMenu()).then(answer(MockCodeMenuView.apply))
-    when(view.createValueStatement()).then(answer(MockValueView.apply))
-    when(view.createGetStatement()).then(answer(MockGetterView.apply))
+    when(view.createValueView()).then(answer(MockValueView.apply))
+    when(view.createGetView()).then(answer(MockGetterView.apply))
     when(view.createFunctionReference()).then(answer(MockFunctionReferenceView.apply))
     view
   }
@@ -32,9 +32,9 @@ class MockPrinterView extends PrinterView with MockView {
 
   override def createCodeMenu() = new MockCodeMenuView
 
-  override def createValueStatement() = new MockValueView
+  override def createValueView() = new MockValueView
 
-  override def createGetStatement() = new MockGetterView
+  override def createGetView() = new MockGetterView
 
   override def createFunctionReference() = new MockFunctionReferenceView
 

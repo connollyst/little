@@ -77,7 +77,7 @@ class ToolboxItem(view: ToolboxLayout, title: String, codeType: CodeType, codeId
 
   setSizeUndefined()
   // TODO should look something like the real expression/statement
-  setStyleName(ExpressionLayout.Style)
+  setStyleName(CodeLayout.Style)
   setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER)
 
   override def getTransferable(rawVariables: util.Map[String, AnyRef]) =

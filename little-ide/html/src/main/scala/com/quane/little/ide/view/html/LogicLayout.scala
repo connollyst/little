@@ -27,7 +27,7 @@ class LogicLayout
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
-  setStyleNames(ExpressionLayout.Style, MathLayout.Style)
+  setStyleNames(CodeLayout.Style, MathLayout.Style)
 
   add(leftValueWrapper)
   add(operatorField)

@@ -1,10 +1,9 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
-import com.quane.little.data.model.{RecordId, CodeType}
-import com.quane.little.data.service.{CodeService, StatementService, FunctionService}
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.quane.little.data.model.CodeCategory
+import com.quane.little.data.model.{CodeCategory, CodeType, RecordId}
+import com.quane.little.data.service.{CodeService, FunctionService}
+import com.quane.little.ide.view.{ToolboxView, ToolboxViewPresenter}
 
 /** Presenter for the toolbox view, from which the user grab code components.
   *
@@ -15,8 +14,7 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
   with HasWorkspace
   with Injectable {
 
-  private val expressionService = inject[CodeService]
-  private val statementService = inject[StatementService]
+  private val codeService = inject[CodeService]
   private val functionService = inject[FunctionService]
 
   view.registerViewPresenter(this)
@@ -25,13 +23,9 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
     category =>
       view.createToolboxTab(category)
   }
-  expressionService.allRecords foreach {
+  codeService.allRecords foreach {
     expression =>
       view.createToolboxItem(expression.category, expression.name, CodeType.Expression, expression.id)
-  }
-  statementService.all foreach {
-    statement =>
-      view.createToolboxItem(statement.category, statement.name, CodeType.Statement, statement.id)
   }
   functionService.findByUser("connollyst") foreach {
     function =>

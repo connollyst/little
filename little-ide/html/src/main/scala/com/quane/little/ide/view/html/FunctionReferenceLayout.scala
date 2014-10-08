@@ -6,7 +6,7 @@ import com.quane.vaadin.scala.VaadinMixin
 import scala.collection.mutable
 
 object FunctionReferenceLayout {
-  val Style = ExpressionLayout.Style + " l-function-ref"
+  val Style = CodeLayout.Style + " l-function-ref"
 }
 
 /** An HTML layout view representing a function reference.
@@ -24,7 +24,7 @@ class FunctionReferenceLayout
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
-  setStyleNames(ExpressionLayout.Style, FunctionReferenceLayout.Style)
+  setStyleNames(CodeLayout.Style, FunctionReferenceLayout.Style)
 
   add(nameLabel)
   add(Buttons.closeButton(this))

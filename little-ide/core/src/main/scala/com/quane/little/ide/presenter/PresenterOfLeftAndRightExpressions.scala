@@ -57,7 +57,7 @@ trait PresenterOfLeftAndRightExpressions {
           presenterFactory.createLogicPresenter(view.createLeftLogic()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createLeftFunctionReference()).initialize(f)
-        case _ => throw new IllegalArgumentException("Expression not supported: " + e)
+        case _ => throw new IllegalArgumentException("Not supported: " + e)
       }
     // TODO skip if the presenter type hasn't changed (?)
     _left = Some(presenter)
@@ -80,7 +80,7 @@ trait PresenterOfLeftAndRightExpressions {
           presenterFactory.createLogicPresenter(view.createRightLogic()).initialize(l)
         case f: FunctionReference =>
           presenterFactory.createFunctionReference(view.createRightFunctionReference()).initialize(f)
-        case _ => throw new IllegalArgumentException("Expression not supported: " + e)
+        case _ => throw new IllegalArgumentException("Not supported: " + e)
       }
     // TODO skip if the presenter type hasn't changed (?)
     _right = Some(presenter)

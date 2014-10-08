@@ -59,31 +59,31 @@ class TestFunctionArgumentPresenter
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       presenter.value = Value("abc")
-      verify(view).createValueExpression()
+      verify(view).createValueView()
     }
     "create a view for a new Getter expression" in {
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       presenter.value = new Getter("x")
-      verify(view).createGetterExpression()
+      verify(view).createGetterView()
     }
     "create a view for a new Logic expression" in {
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       presenter.value = new Logic(Value("x"), LogicOperation.GreaterThan, Value("y"))
-      verify(view).createLogicExpression()
+      verify(view).createLogicView()
     }
     "create a view for a new Math expression" in {
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       presenter.value = new Division(Value(137), Value(42))
-      verify(view).createMathExpression()
+      verify(view).createMathView()
     }
     "create a view for a new FunctionReference expression" in {
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       presenter.value = new FunctionReference("TestFunction")
-      verify(view).createFunctionReference()
+      verify(view).createFunctionReferenceView()
     }
 
     /* Assert views are initialized for new expression values.. */
@@ -92,7 +92,7 @@ class TestFunctionArgumentPresenter
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       val valueView = mock[ValueView]
-      when(view.createValueExpression()).thenReturn(valueView)
+      when(view.createValueView()).thenReturn(valueView)
       presenter.value = Value("abc")
       verify(valueView).setValue("abc")
     }
@@ -100,7 +100,7 @@ class TestFunctionArgumentPresenter
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       val valueView = mock[GetterView]
-      when(view.createGetterExpression()).thenReturn(valueView)
+      when(view.createGetterView()).thenReturn(valueView)
       presenter.value = new Getter("x")
       verify(valueView).setName("x")
     }
@@ -108,7 +108,7 @@ class TestFunctionArgumentPresenter
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       val valueView = mock[LogicView]
-      when(view.createLogicExpression()).thenReturn(valueView)
+      when(view.createLogicView()).thenReturn(valueView)
       when(valueView.createLeftLiteral()).thenReturn(new MockValueView)
       when(valueView.createRightLiteral()).thenReturn(new MockValueView)
       presenter.value = new Logic(Value("x"), LogicOperation.GreaterThan, Value("y"))
@@ -120,7 +120,7 @@ class TestFunctionArgumentPresenter
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       val valueView = mock[MathView]
-      when(view.createMathExpression()).thenReturn(valueView)
+      when(view.createMathView()).thenReturn(valueView)
       when(valueView.createLeftLiteral()).thenReturn(new MockValueView)
       when(valueView.createRightLiteral()).thenReturn(new MockValueView)
       presenter.value = new Multiplication(Value(137), Value(42))
@@ -132,7 +132,7 @@ class TestFunctionArgumentPresenter
       val view = MockFunctionArgumentView.mocked
       val presenter = new FunctionArgumentPresenter(view)
       val valueView = mock[FunctionReferenceView]
-      when(view.createFunctionReference()).thenReturn(valueView)
+      when(view.createFunctionReferenceView()).thenReturn(valueView)
       presenter.value = new FunctionReference("TestFunction")
       verify(valueView).setName("TestFunction")
     }

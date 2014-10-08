@@ -24,7 +24,7 @@ class PrinterLayout
 
   setSpacing(true)
   setDefaultComponentAlignment(Alignment.MIDDLE_LEFT)
-  setStyleNames(ExpressionLayout.Style, PrinterLayout.Style)
+  setStyleNames(CodeLayout.Style, PrinterLayout.Style)
 
   addComponent(printLabel)
   addComponent(menuWrapper)
@@ -35,14 +35,14 @@ class PrinterLayout
     menuWrapper.add(new CodeMenuLayout(this))
   }
 
-  override def createValueStatement(): ValueLayout = {
+  override def createValueView(): ValueLayout = {
     removePrintValueView()
     val view = new ValueLayout
     printValue = Some(view)
     add(view)
   }
 
-  override def createGetStatement(): GetterLayout = {
+  override def createGetView(): GetterLayout = {
     removePrintValueView()
     val view = new GetterLayout
     printValue = Some(view)
