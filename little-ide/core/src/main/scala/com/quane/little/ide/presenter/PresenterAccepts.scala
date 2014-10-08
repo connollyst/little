@@ -1,15 +1,12 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.{FunctionRecord, PrimitiveRecord, RecordId}
-import com.quane.little.ide.view.{View, ViewPresenter}
+import com.quane.little.ide.view.ViewPresenter
 import com.quane.little.language.data.ValueType
 import com.quane.little.language.data.ValueType._
 import com.quane.little.tools.Logging
 
 object PresenterAccepts extends Logging {
-
-  def acceptsView[P <: PresenterAccepts](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
-    acceptsPrimitive(view.presenter, record)
 
   def acceptsPrimitive[P <: PresenterAccepts](presenter: P, record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
     acceptsReturnType(presenter, record.expression.returnType)
