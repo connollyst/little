@@ -1,12 +1,9 @@
 package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.quane.little.data.model.CodeType.CodeType
-import com.quane.little.data.model.{CodeCategory, CodeType, PrimitiveRecord}
+import com.quane.little.data.model.{FunctionRecord, CodeCategory, CodeType, PrimitiveRecord}
 import com.quane.little.data.service.{CodeService, FunctionService}
 import com.quane.little.ide.view.{CodeMenuView, CodeMenuViewPresenter}
-import com.quane.little.language.FunctionDefinition
-import com.quane.little.language.data.ValueType
 
 /** A presenter for views of the menu used to add code to a program.
   *
@@ -25,44 +22,30 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
     category => view.addCategory(category)
   }
   codeService.allRecords foreach {
-    expression => addItem(CodeType.Expression, expression)
+    code => addItem(code)
   }
-  if (m <:< manifest[PresenterAcceptsCode]) {
-    functionService.findByUser("connollyst") foreach {
-      function =>
-        val accepts = contextAccepts(function.definition)
-        println(".." + accepts)
-        if (accepts) {
-          view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
-        } else {
-          view.addMenuItemDisabled(CodeType.Function, function.category, function.id, function.definition.name)
-        }
-    }
-  } else {
-    // TODO disable functions category?
+  functionService.findByUser("connollyst") foreach {
+    function => addItem(function)
   }
 
-  // TODO expand to more than FunctionDefinition?
-  private def contextAccepts(function: FunctionDefinition): Boolean = {
-    val returnType = function.returnType
-    val acceptedType = context.asInstanceOf[PresenterAcceptsCode].acceptedValueType
-    print("accepts " + returnType + " in " + acceptedType + "?..")
-    acceptedType match {
-      case ValueType.Anything => true
-      case ValueType.Something => returnType != ValueType.Nothing
-      case _ => acceptedType == returnType
-    }
-  }
-
-  private def addItem(codeType: CodeType, primitive: PrimitiveRecord): Unit =
+  private def addItem(primitive: PrimitiveRecord): Unit =
     if (accepts(primitive)) {
-      view.addMenuItem(codeType, primitive.category, primitive.id, primitive.name)
+      view.addMenuItem(CodeType.Expression, primitive.category, primitive.id, primitive.name)
     } else {
-      view.addMenuItemDisabled(codeType, primitive.category, primitive.id, primitive.name)
+      view.addMenuItemDisabled(CodeType.Expression, primitive.category, primitive.id, primitive.name)
+    }
+
+  private def addItem(function: FunctionRecord): Unit =
+    if (accepts(function)) {
+      view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
+    } else {
+      view.addMenuItemDisabled(CodeType.Function, function.category, function.id, function.definition.name)
     }
 
   private def accepts(primitive: PrimitiveRecord): Boolean =
-  // TODO I think we mean the context view.. no?
-    PresenterAccepts.accepts(view, primitive)
+    PresenterAccepts.acceptsPrimitive(context, primitive)
+
+  private def accepts(function: FunctionRecord): Boolean =
+    PresenterAccepts.acceptsFunction(context, function)
 
 }

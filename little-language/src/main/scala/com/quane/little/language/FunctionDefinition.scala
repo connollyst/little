@@ -10,7 +10,7 @@ import scala.collection.mutable.ListBuffer
 /** Defines a function.
   *
   * @param name the function name
-  * @param returnType the function's return type, defaults to [[ValueType.Nothing]]
+  * @param returnType the function's return type, defaults to [[com.quane.little.language.data.ValueType.Nothing]]
   * @see [[com.quane.little.language.FunctionReference]]
   * @see [[com.quane.little.language.FunctionParameter]]
   */

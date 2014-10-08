@@ -1,20 +1,28 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{PrimitiveRecord, RecordId}
+import com.quane.little.data.model.{FunctionRecord, PrimitiveRecord, RecordId}
 import com.quane.little.ide.view.{View, ViewPresenter}
 import com.quane.little.language.data.ValueType
 import com.quane.little.language.data.ValueType._
+import com.quane.little.tools.Logging
 
-object PresenterAccepts {
+object PresenterAccepts extends Logging {
+
+  def acceptsView[P <: PresenterAccepts](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
+    acceptsPrimitive(view.presenter, record)
+
+  def acceptsPrimitive[P <: PresenterAccepts](presenter: P, record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
+    acceptsReturnType(presenter, record.expression.returnType)
+
+  def acceptsFunction[P <: PresenterAccepts](presenter: P, record: FunctionRecord)(implicit m: Manifest[P]): Boolean =
+    acceptsReturnType(presenter, record.definition.returnType)
 
   // TODO do we need the manifest check?
-  def accepts[P <: ViewPresenter](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
+
+  def acceptsReturnType[P <: ViewPresenter](presenter: P, returnType: ValueType)(implicit m: Manifest[P]): Boolean =
     if (m <:< manifest[PresenterAcceptsCode]) {
-      val presenter = view.presenter.asInstanceOf[PresenterAcceptsCode]
-      val acceptedType = presenter.acceptedValueType;
-      println(acceptedType)
-      val returnType = record.expression.returnType;
-      println(returnType)
+      val acceptedType = presenter.asInstanceOf[PresenterAcceptsCode].acceptedValueType
+      info("Checking if " + presenter + " accepts " + returnType + " in " + acceptedType + "?..")
       acceptedType match {
         case ValueType.Anything => true
         case ValueType.Something => returnType != ValueType.Nothing
@@ -26,7 +34,7 @@ object PresenterAccepts {
 
 }
 
-sealed trait PresenterAccepts
+sealed trait PresenterAccepts extends ViewPresenter
 
 trait PresenterAcceptsCode extends PresenterAccepts {
 
