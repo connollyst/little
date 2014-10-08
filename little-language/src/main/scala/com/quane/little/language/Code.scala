@@ -21,8 +21,6 @@ trait EvaluableCode extends Code {
     *
     * @return the return value type
     */
-  // TODO remove default
-  // TODO requires Scope?
-  def returnType: ValueType = ValueType.Nada
+  def returnType: ValueType
 
 }

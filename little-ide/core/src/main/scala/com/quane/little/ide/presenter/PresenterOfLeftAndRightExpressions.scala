@@ -87,22 +87,6 @@ trait PresenterOfLeftAndRightExpressions {
     _right = Some(presenter)
   }
 
-  /** Set the left or right expression to the [[com.quane.little.language.Expression]]
-    * specified by the `id`
-    *
-    * @param id the expression id
-    * @param index `0` for the left operand, `1` for the right
-    * @throws IllegalArgumentException for an index other than `0` or `1`
-    */
-  def requestAddExpression(id: RecordId, index: Int) =
-    index match {
-      case 0 => left = expressionService.findExpression(id)
-      case 1 => right = expressionService.findExpression(id)
-      case _ => throw new IllegalArgumentException(
-        "Invalid left/right index " + index + ", expected 0 or 1"
-      )
-    }
-
   /** Set the left or right expression to the [[com.quane.little.language.FunctionReference]]
     * specified by the `id`
     *
@@ -110,7 +94,7 @@ trait PresenterOfLeftAndRightExpressions {
     * @param index `0` for the left operand, `1` for the right
     * @throws IllegalArgumentException for an index other than `0` or `1`
     */
-  def requestAddFunctionReference(id: RecordId, index: Int) =
+  def requestAddCode(id: RecordId, index: Int) =
     index match {
       case 0 => left = functionService.findReference(id)
       case 1 => right = functionService.findReference(id)

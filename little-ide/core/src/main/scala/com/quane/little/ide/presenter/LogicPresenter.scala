@@ -41,7 +41,7 @@ class LogicPresenter[V <: LogicView](protected val view: V)(implicit val binding
     *
     * @return the accepted value type
     */
-  override def acceptedValueType: ValueType = ValueType.Any
+  override def acceptedValueType: ValueType = ValueType.Anything
 
   override def onOperationChange(operation: LogicOperation) =
     _operation = operation

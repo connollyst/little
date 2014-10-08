@@ -1,7 +1,8 @@
 package com.quane.little.language
 
 import com.google.common.base.Objects
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{ValueType, Value}
 
 
 /** An [[Expression]] which evaluates the `then` block if the `test` evaluates
@@ -18,6 +19,9 @@ class Conditional(val test: Expression, val then: Block, val otherwise: Block)
     then.addStep(step)
     this
   }
+
+  // TODO only returns something if block returns something
+  override def returnType: ValueType = ValueType.Something
 
   /** Evaluate the conditional statement; only if the ''test'' evaluates
     * to `true`, the ''function'' is evaluated.

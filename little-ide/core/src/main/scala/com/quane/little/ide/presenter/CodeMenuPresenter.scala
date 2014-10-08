@@ -32,11 +32,12 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
     statement => addItem(CodeType.Statement, statement)
   }
 
-  if (m <:< manifest[PresenterAcceptsExpression]) {
-
+  if (m <:< manifest[PresenterAcceptsCode]) {
     functionService.findByUser("connollyst") foreach {
       function =>
-        if (contextAccepts(function.definition)) {
+        val accepts = contextAccepts(function.definition)
+        println(".." + accepts)
+        if (accepts) {
           view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
         } else {
           view.addMenuItemDisabled(CodeType.Function, function.category, function.id, function.definition.name)
@@ -45,18 +46,15 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
   } else {
     // TODO disable functions category?
   }
-  if (m <:< manifest[PresenterAcceptsStatement]) {
-    // TODO do something
-  } else {
-    // TODO disable some category?
-  }
 
   // TODO expand to more than FunctionDefinition?
   private def contextAccepts(function: FunctionDefinition): Boolean = {
     val returnType = function.returnType
-    val acceptedType = context.asInstanceOf[PresenterAcceptsExpression].acceptedValueType
+    val acceptedType = context.asInstanceOf[PresenterAcceptsCode].acceptedValueType
+    print("accepts " + returnType + " in " + acceptedType + "?..")
     acceptedType match {
-      case ValueType.Any => true
+      case ValueType.Anything => true
+      case ValueType.Something => returnType != ValueType.Nothing
       case _ => acceptedType == returnType
     }
   }

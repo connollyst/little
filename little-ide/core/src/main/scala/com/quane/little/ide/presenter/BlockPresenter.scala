@@ -101,15 +101,9 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
   private[presenter] def get(index: Int): EvaluableCodeViewPresenter =
     _steps(index)
 
-  override def acceptedValueType: ValueType = ValueType.Any
+  override def acceptedValueType: ValueType = ValueType.Anything
 
-  override def requestAddExpression(id: RecordId, index: Int) =
-    add(expressionService.findExpression(id), index)
-
-  override def requestAddStatement(id: RecordId, index: Int) =
-    add(statementService.findStatement(id), index)
-
-  override def requestAddFunctionReference(id: RecordId, index: Int) =
+  override def requestAddCode(id: RecordId, index: Int) =
     add(functionService.findReference(id), index)
 
   override def compile(): Block = {

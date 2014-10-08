@@ -37,7 +37,7 @@ class Block extends Expression {
   }
 
   /** Returns this block's return value type. If the block is empty, its return
-    * value type is [[ValueType.Nada]]. If the block is not empty, its return
+    * value type is [[ValueType.Nothing]]. If the block is not empty, its return
     * value type is defined by the last step in the block.
     *
     * @return the return value type of the block
@@ -46,7 +46,7 @@ class Block extends Expression {
     if (!empty) {
       steps.last.returnType
     } else {
-      ValueType.Nada
+      ValueType.Nothing
     }
 
   /** Evaluates the block in the provided [[Scope]]. A new scope is defined for

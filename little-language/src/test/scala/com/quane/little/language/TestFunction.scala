@@ -1,6 +1,6 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.{Nada, Value}
+import com.quane.little.language.data.{ValueType, Nada, Value}
 import org.junit.runner.RunWith
 import org.scalatest.FlatSpec
 import org.scalatest.junit.JUnitRunner
@@ -20,9 +20,8 @@ class TestFunction extends FlatSpec with ShouldMatchers {
     fun.addStep(new Printer(Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
-    val ref = new FunctionReference("myFun")
     // When
-    val obj = ref.evaluate(runtime)
+    val obj = new FunctionReference("myFun").evaluate(runtime)
     // Then
     assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }
@@ -31,22 +30,20 @@ class TestFunction extends FlatSpec with ShouldMatchers {
     fun.addStep(new Setter("Obj", Value("A")))
     val runtime = new Runtime
     runtime.saveFunction(fun)
-    val ref = new FunctionReference("myFun")
     // When
-    val obj = ref.evaluate(runtime)
+    val obj = new FunctionReference("myFun").evaluate(runtime)
     // Then
     assert(obj.getClass == classOf[Nada], "expected return value to be 'Nada' but is: " + obj)
   }
   it should "return value from get expression" in {
     // Given
-    val fun = new FunctionDefinition("myFun")
+    val fun = new FunctionDefinition("myFun", ValueType.Something)
     fun.addStep(new Setter("Obj", Value("A")))
     fun.addStep(new Getter("Obj"))
     val runtime = new Runtime
     runtime.saveFunction(fun)
-    val ref = new FunctionReference("myFun")
     // When
-    val obj = ref.evaluate(runtime)
+    val obj = new FunctionReference("myFun").evaluate(runtime)
     // Then
     assert(obj.asText == "A", "expected return value to be 'A' but is: " + obj)
   }

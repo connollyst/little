@@ -74,15 +74,12 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     _value = Some(presenter)
   }
 
-  // TODO this changes depending on the Variable
-  override def acceptedValueType: ValueType = ValueType.Any
-
   override def onNameChange(name: String): Unit = _name = name
 
-  override def requestAddExpression(id: RecordId, index: Int) =
-    value = expressionService.findExpression(id)
+  // TODO this changes depending on the Variable
+  override def acceptedValueType: ValueType = ValueType.Something
 
-  override def requestAddFunctionReference(id: RecordId, index: Int) =
+  override def requestAddCode(id: RecordId, index: Int) =
     value = functionService.findReference(id)
 
   override def compile(): Setter = new Setter(_name, value.compile())

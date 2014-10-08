@@ -16,16 +16,8 @@ sealed trait IDECommand {
 
 }
 
-class AddStatementCommand(receiver: PresenterAcceptsStatement, id: RecordId, index: Int = 0) extends IDECommand {
-  override private[presenter] def execute() = receiver.requestAddStatement(id, index)
-}
-
-class AddExpressionCommand(receiver: PresenterAcceptsExpression, id: RecordId, index: Int = 0) extends IDECommand {
-  override private[presenter] def execute() = receiver.requestAddExpression(id, index)
-}
-
-class AddFunctionReferenceCommand(receiver: PresenterAcceptsExpression, id: RecordId, index: Int = 0) extends IDECommand {
-  override private[presenter] def execute() = receiver.requestAddFunctionReference(id, index)
+class AddCodeCommand(receiver: PresenterAcceptsCode, id: RecordId, index: Int = 0) extends IDECommand {
+  override private[presenter] def execute() = receiver.requestAddCode(id, index)
 }
 
 class AddFunctionDefinitionCommand(receiver: PresenterAcceptsFunctionDefinition, id: RecordId, index: Int = 0) extends IDECommand {

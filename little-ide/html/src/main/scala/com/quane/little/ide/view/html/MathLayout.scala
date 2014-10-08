@@ -1,12 +1,12 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.MathView
-import com.vaadin.ui._
-import com.quane.vaadin.scala.EnumerationComboBox
 import com.quane.little.data.model.RecordId
-import com.quane.little.ide.presenter.command.{AddFunctionReferenceCommand, AddExpressionCommand, IDECommandExecutor}
+import com.quane.little.ide.presenter.command.{AddCodeCommand, IDECommandExecutor}
+import com.quane.little.ide.view.MathView
 import com.quane.little.language.math.BasicMathOperation
 import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
+import com.quane.vaadin.scala.EnumerationComboBox
+import com.vaadin.ui._
 
 object MathLayout {
   val Style = "l-math"
@@ -35,14 +35,9 @@ class MathLayout
 
   override def setOperation(operation: BasicMathOperation) = operatorField.setValue(operation.toString)
 
-  override def requestSetExpression(codeId: RecordId, index: Int) =
+  override def requestSetCode(codeId: RecordId, index: Int) =
     IDECommandExecutor.execute(
-      new AddExpressionCommand(presenter, codeId, index)
-    )
-
-  override def requestSetFunctionReference(codeId: RecordId, index: Int) =
-    IDECommandExecutor.execute(
-      new AddFunctionReferenceCommand(presenter, codeId, index)
+      new AddCodeCommand(presenter, codeId, index)
     )
 
 }

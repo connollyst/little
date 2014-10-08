@@ -10,11 +10,11 @@ import scala.collection.mutable.ListBuffer
 /** Defines a function.
   *
   * @param name the function name
-  * @param returnType the function's return type, defaults to [[ValueType.Nada]]
+  * @param returnType the function's return type, defaults to [[ValueType.Nothing]]
   * @see [[com.quane.little.language.FunctionReference]]
   * @see [[com.quane.little.language.FunctionParameter]]
   */
-class FunctionDefinition(val name: String, var returnType: ValueType = ValueType.Nada) {
+class FunctionDefinition(val name: String, var returnType: ValueType = ValueType.Nothing) {
 
   private val _params = new ListBuffer[FunctionParameter]
   private val block = new Block
@@ -73,7 +73,7 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
     *
     * @param scope the current scope in which to evaluate the
     * @param args the runtime arguments
-    * @return the output of the function, or [[ValueType.Nada]] otherwise
+    * @return the output of the function, or [[ValueType.Nothing]] otherwise
     */
   def evaluate(scope: Scope, args: immutable.Map[String, Expression]): Value = {
     if (returnType != block.returnType) {

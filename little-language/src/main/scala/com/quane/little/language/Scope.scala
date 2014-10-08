@@ -87,6 +87,6 @@ class Scope(parent: Option[Scope]) {
     * @return is a variable for the given name defined?
     */
   def contains(name: String): Boolean =
-    fetch(name).value.valueType != ValueType.Nada
+    fetch(name).value.returnType != ValueType.Nothing
 
 }

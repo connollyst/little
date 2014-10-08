@@ -71,13 +71,10 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
   private def createCodeMenu(): Unit =
     presenterFactory.createCodeMenu[PrinterViewPresenter](view.createCodeMenu(), this)
 
-  override def requestAddExpression(id: RecordId, index: Int) =
-    text = expressionService.findExpression(id)
+  override def acceptedValueType: ValueType = ValueType.Anything
 
-  override def requestAddFunctionReference(id: RecordId, index: Int) =
+  override def requestAddCode(id: RecordId, index: Int) =
     text = functionService.findReference(id)
-
-  override def acceptedValueType: ValueType = ValueType.Any
 
   /** Compile to a [[com.quane.little.language.Printer]].
     *

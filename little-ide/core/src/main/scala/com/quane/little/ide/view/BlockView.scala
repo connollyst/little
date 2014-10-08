@@ -22,7 +22,4 @@ trait BlockView extends ExpressionView[BlockViewPresenter] {
 
 }
 
-trait BlockViewPresenter
-  extends ExpressionViewPresenter
-  with PresenterAcceptsExpression
-  with PresenterAcceptsStatement
+trait BlockViewPresenter extends ExpressionViewPresenter with PresenterAcceptsCode

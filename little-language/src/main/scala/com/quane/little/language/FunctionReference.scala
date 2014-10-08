@@ -1,7 +1,8 @@
 package com.quane.little.language
 
 import com.google.common.base.Objects
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{ValueType, Value}
 
 import scala.collection.mutable
 
@@ -24,6 +25,9 @@ class FunctionReference(val name: String)
     args(name) = value
     this
   }
+
+  // TODO depends on FunctionDefinition
+  override def returnType: ValueType = ValueType.Something
 
   /**
    * Evaluate the referenced function.

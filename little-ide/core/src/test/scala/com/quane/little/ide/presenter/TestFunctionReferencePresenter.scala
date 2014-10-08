@@ -244,7 +244,7 @@ class TestFunctionReferencePresenter
           // When
           val function = presenter.compile()
         }
-        err.getMessage should be ("Function reference name not set.")
+        err.getMessage should be("Function reference name not set.")
       }
     }
     "compile with name" in {
@@ -339,7 +339,7 @@ class TestFunctionReferencePresenter
         presenter.name = "TestFunction"
         presenter.add(
           new FunctionArgumentPresenter(new MockFunctionArgumentView)
-            .initialize(new FunctionParameter("x", ValueType.Any), Value("y"))
+            .initialize(new FunctionParameter("x", ValueType.Anything), Value("y"))
         )
         // When
         val function = presenter.compile()
@@ -355,11 +355,11 @@ class TestFunctionReferencePresenter
         presenter.name = "TestFunction"
         presenter.add(
           new FunctionArgumentPresenter(new MockFunctionArgumentView)
-            .initialize(new FunctionParameter("a", ValueType.Any), Value("x"))
+            .initialize(new FunctionParameter("a", ValueType.Anything), Value("x"))
         )
         presenter.add(
           new FunctionArgumentPresenter(new MockFunctionArgumentView)
-            .initialize(new FunctionParameter("b", ValueType.Any), Value("y"))
+            .initialize(new FunctionParameter("b", ValueType.Anything), Value("y"))
         )
         // When
         val function = presenter.compile()

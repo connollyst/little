@@ -22,4 +22,4 @@ trait FunctionArgumentView extends ExpressionView[FunctionArgumentViewPresenter]
 
 trait FunctionArgumentViewPresenter
   extends ExpressionViewPresenter
-  with PresenterAcceptsExpression
+  with PresenterAcceptsCode

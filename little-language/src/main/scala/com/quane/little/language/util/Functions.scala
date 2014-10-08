@@ -14,16 +14,16 @@ object Functions {
   def blank: FunctionDefinition = new FunctionDefinition("")
 
   def move: FunctionDefinition =
-    new FunctionDefinition("move", ValueType.Nada)
+    new FunctionDefinition("move", ValueType.Nothing)
       .addParam("speed", ValueType.Integer)
       .addStep(new Setter(Operable.SPEED, new Getter("speed")))
 
   def stop: FunctionDefinition =
-    new FunctionDefinition("stop", ValueType.Nada)
+    new FunctionDefinition("stop", ValueType.Nothing)
       .addStep(new Setter(Operable.SPEED, Value(0)))
 
   def turn: FunctionDefinition =
-    new FunctionDefinition("turn", ValueType.Nada)
+    new FunctionDefinition("turn", ValueType.Nothing)
       .addParam("direction", ValueType.Integer)
       .addStep(new Setter(Operable.DIRECTION, new Getter("direction")))
 
@@ -39,7 +39,7 @@ object Functions {
     val dirChange = new Getter("degrees")
     val getNewDirection = new Addition(getCurrentDir, dirChange)
     val setNewDirection = new Setter(Operable.DIRECTION, getNewDirection)
-    new FunctionDefinition("turnRelative", ValueType.Nada)
+    new FunctionDefinition("turnRelative", ValueType.Nothing)
       .addParam("degrees", ValueType.Integer)
       .addStep(setNewDirection)
   }

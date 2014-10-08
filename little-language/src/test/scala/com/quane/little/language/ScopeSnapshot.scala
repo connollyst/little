@@ -1,6 +1,7 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.Value
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{ValueType, Value}
 
 /** An expression to facilitate testing; takes a snapshot of the [[Scope]] as it
   * is evaluated.
@@ -17,6 +18,8 @@ class ScopeSnapshot
       case Some(s) => s
       case _ => throw new IllegalAccessException("No scope snapshot.")
     }
+
+  override def returnType: ValueType = ValueType.Nothing
 
   override def evaluate(scope: Scope): Value = {
     // TODO deep copy scope to really take a 'snapshot'

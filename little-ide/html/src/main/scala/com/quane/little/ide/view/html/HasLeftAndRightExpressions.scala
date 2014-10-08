@@ -1,13 +1,13 @@
 package com.quane.little.ide.view.html
 
-import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
-import com.vaadin.ui.{Component, CssLayout}
-import com.quane.little.ide.view.{ViewOfLeftAndRightExpressions, ExpressionView}
+import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.html.HasLeftAndRightExpressions._
-import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
-import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.data.model.{RecordId, CodeType}
+import com.quane.little.ide.view.{ExpressionView, ViewOfLeftAndRightExpressions}
+import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
+import com.vaadin.event.dd.acceptcriteria.AcceptAll
+import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
+import com.vaadin.ui.{Component, CssLayout}
 
 object HasLeftAndRightExpressions {
   val LeftIndex = 0
@@ -54,9 +54,7 @@ trait HasLeftAndRightExpressions
     view
   }
 
-  def requestSetExpression(codeId: RecordId, index: Int)
-
-  def requestSetFunctionReference(codeId: RecordId, index: Int)
+  def requestSetCode(codeId: RecordId, index: Int)
 
 }
 
@@ -74,10 +72,8 @@ private class LeftAndRightDropHandler(view: HasLeftAndRightExpressions, index: I
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeType.Expression =>
-        view.requestSetExpression(transferable.codeId, index)
       case transferable: CodeTransferable if transferable.category == CodeType.Function =>
-        view.requestSetFunctionReference(transferable.codeId, index)
+        view.requestSetCode(transferable.codeId, index)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
     }

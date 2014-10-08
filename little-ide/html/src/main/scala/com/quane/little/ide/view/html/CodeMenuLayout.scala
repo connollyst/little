@@ -1,15 +1,16 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{View, ViewPresenter, CodeMenuView}
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.{CodeType, RecordId}
-import com.vaadin.ui.MenuBar
-import com.quane.little.ide.presenter.{PresenterAcceptsExpression, PresenterAcceptsStatement}
-import com.quane.little.ide.presenter.command.{AddExpressionCommand, AddFunctionReferenceCommand, AddStatementCommand, IDECommandExecutor}
-import scala.collection.mutable
-import com.vaadin.ui.MenuBar.Command
 import com.quane.little.data.model.CodeType.CodeType
+import com.quane.little.data.model.{CodeType, RecordId}
+import com.quane.little.ide.presenter.PresenterAcceptsCode
+import com.quane.little.ide.presenter.command.{AddCodeCommand, IDECommandExecutor}
 import com.quane.little.ide.view.html.CodeMenuLayout._
+import com.quane.little.ide.view.{CodeMenuView, View, ViewPresenter}
+import com.vaadin.ui.MenuBar
+import com.vaadin.ui.MenuBar.Command
+
+import scala.collection.mutable
 
 object CodeMenuLayout {
   val Style = "l-code-menu"
@@ -45,9 +46,9 @@ class CodeMenuLayout[P <: ViewPresenter](view: View[P], val index: () => Int) ex
       new Command {
         override def menuSelected(selectedItem: MenuBar#MenuItem) = {
           codeType match {
-            case CodeType.Statement => addStatementClicked(id)
-            case CodeType.Expression => addExpressionClicked(id)
-            case CodeType.Function => addFunctionClicked(id)
+            case CodeType.Function =>
+              val p = view.presenter.asInstanceOf[PresenterAcceptsCode]
+              IDECommandExecutor.execute(new AddCodeCommand(p, id, index()))
             case _ => throw new IllegalArgumentException(
               "Unsupported menu item: " + codeType + " (" + name + ")"
             )
@@ -55,20 +56,5 @@ class CodeMenuLayout[P <: ViewPresenter](view: View[P], val index: () => Int) ex
         }
       }
     )
-
-  def addStatementClicked(id: RecordId) = {
-    val p = view.presenter.asInstanceOf[PresenterAcceptsStatement]
-    IDECommandExecutor.execute(new AddStatementCommand(p, id, index()))
-  }
-
-  def addExpressionClicked(id: RecordId) = {
-    val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
-    IDECommandExecutor.execute(new AddExpressionCommand(p, id, index()))
-  }
-
-  def addFunctionClicked(id: RecordId) = {
-    val p = view.presenter.asInstanceOf[PresenterAcceptsExpression]
-    IDECommandExecutor.execute(new AddFunctionReferenceCommand(p, id, index()))
-  }
 
 }

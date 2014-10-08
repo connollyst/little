@@ -1,12 +1,12 @@
 package com.quane.little.ide.view.html
 
-import com.vaadin.ui.{Alignment, HorizontalLayout}
-import com.quane.little.ide.view.LogicView
 import com.quane.little.data.model.RecordId
-import com.quane.little.ide.presenter.command.{AddExpressionCommand, AddFunctionReferenceCommand, IDECommandExecutor}
+import com.quane.little.ide.presenter.command.{AddCodeCommand, IDECommandExecutor}
+import com.quane.little.ide.view.LogicView
 import com.quane.little.language.LogicOperation
 import com.quane.little.language.LogicOperation.LogicOperation
 import com.quane.vaadin.scala.EnumerationComboBox
+import com.vaadin.ui.{Alignment, HorizontalLayout}
 
 object LogicLayout {
   val Style = "l-logical"
@@ -35,14 +35,9 @@ class LogicLayout
 
   override def setOperation(operation: LogicOperation) = operatorField.setValue(operation.toString)
 
-  override def requestSetExpression(codeId: RecordId, index: Int) =
+  override def requestSetCode(codeId: RecordId, index: Int) =
     IDECommandExecutor.execute(
-      new AddExpressionCommand(presenter, codeId, index)
-    )
-
-  override def requestSetFunctionReference(codeId: RecordId, index: Int) =
-    IDECommandExecutor.execute(
-      new AddFunctionReferenceCommand(presenter, codeId, index)
+      new AddCodeCommand(presenter, codeId, index)
     )
 
 }

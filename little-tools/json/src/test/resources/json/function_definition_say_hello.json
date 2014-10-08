@@ -13,6 +13,6 @@
     "params": [ ],
     "returnType": {
         "enumClass": "com.quane.little.language.data.ValueType",
-        "value": "Nada"
+        "value": "Nothing"
     }
 }

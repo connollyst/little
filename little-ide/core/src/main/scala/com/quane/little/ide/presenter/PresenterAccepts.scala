@@ -1,51 +1,38 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.{PrimitiveRecord, RecordId}
-import com.quane.little.data.service.{ExpressionService, StatementService}
-import com.quane.little.ide.view.{ViewPresenter, View}
+import com.quane.little.ide.view.{View, ViewPresenter}
+import com.quane.little.language.data.ValueType
 import com.quane.little.language.data.ValueType._
 
 object PresenterAccepts {
 
+  // TODO do we need the manifest check?
   def accepts[P <: ViewPresenter](view: View[_ <: P], record: PrimitiveRecord)(implicit m: Manifest[P]): Boolean =
-    record.id.oid match {
-      // TODO this is sketchy =\
-      case StatementService.Set => m <:< manifest[PresenterAcceptsStatement]
-      case StatementService.Print => m <:< manifest[PresenterAcceptsStatement]
-      case ExpressionService.Get => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.Conditional => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.Addition => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.Subtraction => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.Multiplication => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.Division => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.Equals => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.NotEquals => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.LessThan => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.GreaterThan => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.And => m <:< manifest[PresenterAcceptsExpression]
-      case ExpressionService.Or => m <:< manifest[PresenterAcceptsExpression]
-      case _ => throw new IllegalArgumentException("Unsupported primitive type: " + record.id.oid)
+    if (m <:< manifest[PresenterAcceptsCode]) {
+      val presenter = view.presenter.asInstanceOf[PresenterAcceptsCode]
+      val acceptedType = presenter.acceptedValueType;
+      println(acceptedType)
+      val returnType = record.expression.returnType;
+      println(returnType)
+      acceptedType match {
+        case ValueType.Anything => true
+        case ValueType.Something => returnType != ValueType.Nothing
+        case _ => acceptedType == returnType
+      }
+    } else {
+      false
     }
 
 }
 
 sealed trait PresenterAccepts
 
-trait PresenterAcceptsExpression extends PresenterAccepts {
+trait PresenterAcceptsCode extends PresenterAccepts {
 
   def acceptedValueType: ValueType
 
-  // TODO consolidate these
-
-  def requestAddExpression(id: RecordId, index: Int): Unit
-
-  def requestAddFunctionReference(id: RecordId, index: Int): Unit
-
-}
-
-trait PresenterAcceptsStatement extends PresenterAccepts {
-
-  def requestAddStatement(id: RecordId, index: Int): Unit
+  def requestAddCode(id: RecordId, index: Int): Unit
 
 }
 

@@ -26,7 +26,7 @@ sealed trait Value
 
   val primitive: Any
 
-  def valueType: ValueType
+  def returnType: ValueType
 
   def asText: String
 
@@ -57,8 +57,8 @@ sealed trait Value
   def compare(that: Value): Int = {
     // TODO move to individual implementation classes
     // 1) If the values are the same primitive type, compare the primitives
-    if (valueType == that.valueType) {
-      return valueType match {
+    if (returnType == that.returnType) {
+      return returnType match {
         case ValueType.String => asText compareTo that.asText
         case ValueType.Boolean => asBool compareTo that.asBool
         case ValueType.Integer => asInt compareTo that.asInt
@@ -68,14 +68,14 @@ sealed trait Value
     }
     // 2) If the primitive types are different, see if they can be cast (eg: Int & Double, Int & Boolean?)
     if ( // Compare int to double as int
-      (valueType == ValueType.Integer && that.valueType == ValueType.Double)
-        || (valueType == ValueType.Double && that.valueType == ValueType.Integer)
+      (returnType == ValueType.Integer && that.returnType == ValueType.Double)
+        || (returnType == ValueType.Double && that.returnType == ValueType.Integer)
         // Compare int to boolean as int
-        || (valueType == ValueType.Integer && that.valueType == ValueType.Boolean)
-        || (valueType == ValueType.Boolean && that.valueType == ValueType.Integer)
+        || (returnType == ValueType.Integer && that.returnType == ValueType.Boolean)
+        || (returnType == ValueType.Boolean && that.returnType == ValueType.Integer)
         // Compare double to boolean as int
-        || (valueType == ValueType.Double && that.valueType == ValueType.Boolean)
-        || (valueType == ValueType.Boolean && that.valueType == ValueType.Double)
+        || (returnType == ValueType.Double && that.returnType == ValueType.Boolean)
+        || (returnType == ValueType.Boolean && that.returnType == ValueType.Double)
     ) {
       return asInt compareTo that.asInt
       // TODO what other conversions are possible? boolean to 'true'/'false'?
@@ -87,7 +87,7 @@ sealed trait Value
   override def toString: String = {
     Objects.toStringHelper(getClass)
       .add("value", asText)
-      .add("type", valueType)
+      .add("type", returnType)
       .toString
   }
 
@@ -96,7 +96,7 @@ sealed trait Value
 class Bool(override val primitive: Boolean)
   extends Value {
 
-  override def valueType: ValueType = ValueType.Boolean
+  override def returnType: ValueType = ValueType.Boolean
 
   override def asBool: Boolean = primitive
 
@@ -119,7 +119,7 @@ class NumberSimple(override val primitive: Int)
   extends Value {
 
 
-  override def valueType: ValueType = ValueType.Integer
+  override def returnType: ValueType = ValueType.Integer
 
   override def asBool: Boolean =
     primitive match {
@@ -139,7 +139,7 @@ class NumberDecimal(override val primitive: Double)
   extends Value {
 
 
-  override def valueType: ValueType = ValueType.Double
+  override def returnType: ValueType = ValueType.Double
 
   override def asBool: Boolean =
     primitive match {
@@ -158,7 +158,7 @@ class NumberDecimal(override val primitive: Double)
 class Text(override val primitive: String)
   extends Value {
 
-  override def valueType: ValueType = ValueType.String
+  override def returnType: ValueType = ValueType.String
 
   override def asBool: Boolean = {
     if (primitive equalsIgnoreCase "true") {
@@ -216,7 +216,7 @@ class Nada
 
   override val primitive = None
 
-  override def valueType: ValueType = ValueType.Nada
+  override def returnType: ValueType = ValueType.Nothing
 
   override def asBool: Boolean = false
 

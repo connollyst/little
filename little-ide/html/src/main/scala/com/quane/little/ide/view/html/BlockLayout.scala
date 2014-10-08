@@ -137,19 +137,9 @@ private class BlockStepSeparator(block: BlockLayout)
   setExpandRatio(dndTargetLeft, 1f)
   setExpandRatio(dndTargetRight, 1f)
 
-  def addExpression(primitiveId: RecordId) =
-    IDECommandExecutor.execute(
-      new AddExpressionCommand(block.presenter, primitiveId, index())
-    )
-
-  def addStatement(primitiveId: RecordId) =
-    IDECommandExecutor.execute(
-      new AddStatementCommand(block.presenter, primitiveId, index())
-    )
-
   def addFunction(functionId: RecordId) =
     IDECommandExecutor.execute(
-      new AddFunctionReferenceCommand(block.presenter, functionId, index())
+      new AddCodeCommand(block.presenter, functionId, index())
     )
 
   def index(): Int = block.getStepIndex(this)
@@ -167,10 +157,6 @@ class BlockDropHandler(block: BlockStepSeparator) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeType.Expression =>
-        block.addExpression(transferable.codeId)
-      case transferable: CodeTransferable if transferable.category == CodeType.Statement =>
-        block.addStatement(transferable.codeId)
       case transferable: CodeTransferable if transferable.category == CodeType.Function =>
         block.addFunction(transferable.codeId)
       case _ =>

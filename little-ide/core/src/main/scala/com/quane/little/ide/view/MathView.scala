@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-import com.quane.little.ide.presenter.PresenterAcceptsExpression
+import com.quane.little.ide.presenter.PresenterAcceptsCode
 import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
 
 /** The view for a [[com.quane.little.language.math.Math]] statement displayed in
@@ -26,7 +26,7 @@ trait MathView
   */
 trait MathViewPresenter
   extends ExpressionViewPresenter
-  with PresenterAcceptsExpression {
+  with PresenterAcceptsCode {
 
   /** Called when the math operation changes in the view.
     *

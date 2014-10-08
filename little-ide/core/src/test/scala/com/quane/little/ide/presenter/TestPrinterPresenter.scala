@@ -1,18 +1,19 @@
 package com.quane.little.ide.presenter
 
+import com.escalatesoft.subcut.inject.Injectable
 import com.quane.little.data.model.CodeCategory
-import com.quane.little.data.service.{UserService, FunctionService}
+import com.quane.little.data.service.{FunctionService, UserService}
+import com.quane.little.ide.MockIDEBindingModule
 import com.quane.little.ide.view._
 import com.quane.little.language._
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Value, ValueType}
 import org.junit.runner.RunWith
 import org.mockito.Mockito._
-import org.scalatest.{BeforeAndAfter, WordSpec}
 import org.scalatest.junit.JUnitRunner
-import org.scalatest.mock.MockitoSugar
-import com.quane.little.language.data.Value
-import com.quane.little.ide.MockIDEBindingModule
-import com.escalatesoft.subcut.inject.Injectable
 import org.scalatest.matchers.ShouldMatchers
+import org.scalatest.mock.MockitoSugar
+import org.scalatest.{BeforeAndAfter, WordSpec}
 
 /** Tests for the [[com.quane.little.ide.presenter.PrinterPresenter]].
   *
@@ -122,6 +123,8 @@ class TestPrinterPresenter
     "error when adding unknown expression" in {
       val presenter = new PrinterPresenter(new MockPrinterView)
       val unknownExpression = new Expression {
+        override def returnType: ValueType = ValueType.Something
+
         override def evaluate(scope: Scope): Value = Value("I shouldn't exist.")
       }
       val error = intercept[IllegalArgumentException] {

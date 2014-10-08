@@ -1,7 +1,7 @@
 package com.quane.little.ide.view
 
 import com.quane.little.language.LogicOperation._
-import com.quane.little.ide.presenter.PresenterAcceptsExpression
+import com.quane.little.ide.presenter.PresenterAcceptsCode
 
 trait LogicView
   extends ExpressionView[LogicViewPresenter]
@@ -17,7 +17,7 @@ trait LogicView
 
 trait LogicViewPresenter
   extends ExpressionViewPresenter
-  with PresenterAcceptsExpression {
+  with PresenterAcceptsCode {
 
   /** Called when the logical operation changes in the view.
     *

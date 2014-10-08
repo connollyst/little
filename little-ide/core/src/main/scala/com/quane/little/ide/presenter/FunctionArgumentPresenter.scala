@@ -89,10 +89,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
 
   override def acceptedValueType: ValueType = valueType
 
-  override def requestAddExpression(id: RecordId, index: Int) =
-    value = expressionService.findExpression(id)
-
-  override def requestAddFunctionReference(id: RecordId, index: Int) =
+  override def requestAddCode(id: RecordId, index: Int) =
     value = functionService.findReference(id)
 
   override def compile(): Expression = value.compile()

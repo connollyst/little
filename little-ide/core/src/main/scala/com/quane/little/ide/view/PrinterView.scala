@@ -43,4 +43,4 @@ trait PrinterView
   */
 trait PrinterViewPresenter
   extends StatementViewPresenter
-  with PresenterAcceptsExpression
+  with PresenterAcceptsCode
