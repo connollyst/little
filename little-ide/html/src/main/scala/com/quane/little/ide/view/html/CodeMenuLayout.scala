@@ -2,11 +2,11 @@ package com.quane.little.ide.view.html
 
 import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.CodeType.CodeType
-import com.quane.little.data.model.{CodeType, RecordId}
+import com.quane.little.data.model.RecordId
 import com.quane.little.ide.presenter.PresenterAcceptsCode
 import com.quane.little.ide.presenter.command.{AddCodeCommand, IDECommandExecutor}
 import com.quane.little.ide.view.html.CodeMenuLayout._
-import com.quane.little.ide.view.{CodeMenuView, View, ViewPresenter}
+import com.quane.little.ide.view.{CodeMenuView, View}
 import com.vaadin.ui.MenuBar
 import com.vaadin.ui.MenuBar.Command
 
@@ -21,7 +21,7 @@ object CodeMenuLayout {
   *
   * @author Sean Connolly
   */
-class CodeMenuLayout[P <: ViewPresenter](view: View[P], val index: () => Int) extends MenuBar with CodeMenuView {
+class CodeMenuLayout[P <: PresenterAcceptsCode](view: View[P], val index: () => Int) extends MenuBar with CodeMenuView {
 
   def this(view: View[P]) = this(view, () => 0)
 
@@ -44,16 +44,8 @@ class CodeMenuLayout[P <: ViewPresenter](view: View[P], val index: () => Int) ex
   private def addItem(codeType: CodeType, codeCategory: CodeCategory, id: RecordId, name: String) =
     categories(codeCategory).addItem(name,
       new Command {
-        override def menuSelected(selectedItem: MenuBar#MenuItem) = {
-          codeType match {
-            case CodeType.Function =>
-              val p = view.presenter.asInstanceOf[PresenterAcceptsCode]
-              IDECommandExecutor.execute(new AddCodeCommand(p, id, index()))
-            case _ => throw new IllegalArgumentException(
-              "Unsupported menu item: " + codeType + " (" + name + ")"
-            )
-          }
-        }
+        override def menuSelected(selectedItem: MenuBar#MenuItem) =
+          IDECommandExecutor.execute(new AddCodeCommand(view.presenter, id, index()))
       }
     )
 
