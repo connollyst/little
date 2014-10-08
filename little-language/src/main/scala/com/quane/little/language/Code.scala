@@ -1,7 +1,7 @@
 package com.quane.little.language
 
 import com.google.common.base.Objects
-import com.quane.little.language.data.{Value, ValueType}
+import com.quane.little.language.data.Value
 import com.quane.little.language.data.ValueType._
 
 /** Code is the root of the little language.
@@ -9,13 +9,6 @@ import com.quane.little.language.data.ValueType._
   * @author Sean Connolly
   */
 trait Code {
-
-  override def toString: String = Objects.toStringHelper(getClass).toString
-
-}
-
-trait EvaluableCode extends Code {
-  // TODO is there any non-evaluable code??
 
   /** Returns this expression's [[com.quane.little.language.data.ValueType]]
     *
@@ -30,5 +23,7 @@ trait EvaluableCode extends Code {
     * @return the return value of the expression
     */
   def evaluate(scope: Scope): Value
+
+  override def toString: String = Objects.toStringHelper(getClass).toString
 
 }

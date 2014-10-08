@@ -84,7 +84,7 @@ class TestSetterPresenter
       val view = mockSetterView
       val presenter = new SetterPresenter(view)
       val error = intercept[IllegalArgumentException] {
-        presenter.value = mock[EvaluableCode]
+        presenter.value = mock[Code]
       }
       error.getMessage should startWith("Expression not supported")
     }
@@ -201,7 +201,7 @@ class TestSetterPresenter
 
   }
 
-  private def assertCompiledValue(value: EvaluableCode) = {
+  private def assertCompiledValue(value: Code) = {
     val presenter = new SetterPresenter(mockSetterView)
     presenter.value = value
     val compiled = presenter.compile()

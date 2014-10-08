@@ -122,7 +122,7 @@ class TestPrinterPresenter
     }
     "error when adding unknown expression" in {
       val presenter = new PrinterPresenter(new MockPrinterView)
-      val unknownExpression = new EvaluableCode {
+      val unknownExpression = new Code {
         override def returnType: ValueType = ValueType.Something
 
         override def evaluate(scope: Scope): Value = Value("I shouldn't exist.")
@@ -151,7 +151,7 @@ class TestPrinterPresenter
 
   }
 
-  private def assertCompiledValue(value: EvaluableCode) = {
+  private def assertCompiledValue(value: Code) = {
     val view = MockPrinterView.mocked()
     val presenter = new PrinterPresenter(view)
     when(view.createGetStatement()).thenReturn(new MockGetterView)

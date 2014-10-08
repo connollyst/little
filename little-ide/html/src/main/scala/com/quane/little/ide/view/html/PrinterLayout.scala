@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{CodeMenuView, EvaluableCodeView, PrinterView}
+import com.quane.little.ide.view.{CodeMenuView, CodeView, PrinterView}
 import com.quane.vaadin.scala.VaadinMixin
 import com.vaadin.ui._
 
@@ -19,7 +19,7 @@ class PrinterLayout
   with VaadinMixin {
 
   private val printLabel = new Label("print")
-  private var printValue: Option[EvaluableCodeView[_] with RemovableComponent] = None
+  private var printValue: Option[CodeView[_] with RemovableComponent] = None
   private val menuWrapper = new CssLayout() with VaadinMixin
 
   setSpacing(true)

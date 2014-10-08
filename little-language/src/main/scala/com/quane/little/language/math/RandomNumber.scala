@@ -2,7 +2,7 @@ package com.quane.little.language.math
 
 import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.data.{Value, ValueType}
-import com.quane.little.language.{EvaluableCode, Scope}
+import com.quane.little.language.{Code, Scope}
 
 import scala.util.Random
 
@@ -11,7 +11,7 @@ import scala.util.Random
   * @param low the minimum possible value
   * @param high the maximum possible value
   */
-class RandomNumber(low: Value, high: Value) extends EvaluableCode {
+class RandomNumber(low: Value, high: Value) extends Code {
 
   override def returnType: ValueType = ValueType.Integer
 

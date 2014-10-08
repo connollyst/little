@@ -8,21 +8,20 @@ import com.quane.little.language.event.Event.Event
   *
   * @param event the event to listen for
   */
-class EventListener(val event: Event)
-  extends Code {
+class EventListener(val event: Event) {
 
   private val block: Block = new Block
 
   def stepCount: Int = block.length
 
-  def addStep(step: EvaluableCode): EventListener = {
+  def addStep(step: Code): EventListener = {
     block.addStep(step)
     this
   }
 
-  def steps: List[EvaluableCode] = block.steps
+  def steps: List[Code] = block.steps
 
-  def steps_=(steps: List[EvaluableCode]) = block.steps = steps
+  def steps_=(steps: List[Code]) = block.steps = steps
 
   /** Evaluate the event listener; which should only be done when the event has occurred.<br/>
     * Note: the listener defines it's own scope within the evaluation scope

@@ -15,8 +15,8 @@ import com.quane.little.language.math.BasicMath
   */
 trait PresenterOfLeftAndRightExpressions {
 
-  private var _left: Option[EvaluableCodeViewPresenter] = None
-  private var _right: Option[EvaluableCodeViewPresenter] = None
+  private var _left: Option[CodeViewPresenter] = None
+  private var _right: Option[CodeViewPresenter] = None
 
   protected def presenterFactory: PresenterFactory
 
@@ -26,14 +26,14 @@ trait PresenterOfLeftAndRightExpressions {
 
   protected def view: ViewOfLeftAndRightExpressions
 
-  private[presenter] def left: EvaluableCodeViewPresenter = {
+  private[presenter] def left: CodeViewPresenter = {
     _left match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No left operand expression set.")
     }
   }
 
-  private[presenter] def right: EvaluableCodeViewPresenter = {
+  private[presenter] def right: CodeViewPresenter = {
     _right match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No right operand expression set.")
@@ -44,7 +44,7 @@ trait PresenterOfLeftAndRightExpressions {
     *
     * @param e the new left operand expression
     */
-  private[presenter] def left_=(e: EvaluableCode): Unit = {
+  private[presenter] def left_=(e: Code): Unit = {
     val presenter =
       e match {
         case v: Value =>
@@ -67,7 +67,7 @@ trait PresenterOfLeftAndRightExpressions {
     *
     * @param e the new left operand expression
     */
-  private[presenter] def right_=(e: EvaluableCode): Unit = {
+  private[presenter] def right_=(e: Code): Unit = {
     val presenter =
       e match {
         case v: Value =>

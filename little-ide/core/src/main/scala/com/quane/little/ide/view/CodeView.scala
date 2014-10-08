@@ -1,27 +1,23 @@
 package com.quane.little.ide.view
 
-import com.quane.little.language.EvaluableCode
+import com.quane.little.language.Code
 
-sealed trait CodeView[P <: CodeViewPresenter] extends View[P]
-
-sealed trait CodeViewPresenter extends ViewPresenter
-
-/** A view for a component representing an [[com.quane.little.language.EvaluableCode]].
+/** A view for a component representing an [[com.quane.little.language.Code]].
   *
   * @author Sean Connolly
   */
-trait EvaluableCodeView[P <: EvaluableCodeViewPresenter] extends CodeView[P]
+trait CodeView[P <: CodeViewPresenter] extends View[P]
 
-/** A presenter for views representing an [[com.quane.little.language.EvaluableCode]].
+/** A presenter for views representing an [[com.quane.little.language.Code]].
   *
   * @author Sean Connolly
   */
-trait EvaluableCodeViewPresenter extends CodeViewPresenter {
+trait CodeViewPresenter extends ViewPresenter {
 
-  /** Compile the presented data to an [[com.quane.little.language.EvaluableCode]].
+  /** Compile the presented data to an [[com.quane.little.language.Code]].
     *
     * @return the compiled expression
     */
-  def compile(): EvaluableCode
+  def compile(): Code
 
 }

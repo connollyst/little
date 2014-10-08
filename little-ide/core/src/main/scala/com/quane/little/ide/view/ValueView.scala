@@ -4,7 +4,7 @@ package com.quane.little.ide.view
   *
   * @author Sean Connolly
   */
-trait ValueView extends EvaluableCodeView[ValueViewPresenter] {
+trait ValueView extends CodeView[ValueViewPresenter] {
 
   def setValue(value: String): Unit
 
@@ -14,7 +14,7 @@ trait ValueView extends EvaluableCodeView[ValueViewPresenter] {
   *
   * @author Sean Connolly
   */
-trait ValueViewPresenter extends EvaluableCodeViewPresenter {
+trait ValueViewPresenter extends CodeViewPresenter {
 
   def onValueChange(value: String): Unit
 

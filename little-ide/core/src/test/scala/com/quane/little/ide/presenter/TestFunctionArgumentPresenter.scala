@@ -157,7 +157,7 @@ class TestFunctionArgumentPresenter
     }
   }
 
-  private def assertCompiledValue(value: EvaluableCode) = {
+  private def assertCompiledValue(value: Code) = {
     val presenter = new FunctionArgumentPresenter(MockFunctionArgumentView.mocked)
     presenter.value = value
     val compiled = presenter.compile()

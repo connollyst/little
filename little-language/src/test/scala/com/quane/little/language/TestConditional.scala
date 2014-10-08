@@ -58,7 +58,7 @@ class TestConditional extends FlatSpec with ShouldMatchers {
     * @param test the test expression
     * @return a snapshot of the scope following the evaluation
     */
-  private def evaluateConditional(test: EvaluableCode): ScopeSnapshot = {
+  private def evaluateConditional(test: Code): ScopeSnapshot = {
     val then = new Block
     val otherwise = new Block
     then += new Setter(name, thenValue)
@@ -77,7 +77,7 @@ class TestConditional extends FlatSpec with ShouldMatchers {
     * @param otherwise the otherwise block
     * @return  a snapshot of the scope following the evaluation
     */
-  private def evaluateConditional(test: EvaluableCode, then: Block, otherwise: Block): ScopeSnapshot = {
+  private def evaluateConditional(test: Code, then: Block, otherwise: Block): ScopeSnapshot = {
     val snapshot = new ScopeSnapshot
     val block = new Block
     block += new Setter(name, defaultValue)

@@ -40,7 +40,7 @@ class TestBlockPresenter
         // Then
         intercept[IllegalArgumentException] {
           // When
-          presenter.add(mock[EvaluableCode])
+          presenter.add(mock[Code])
         }
       }
     }

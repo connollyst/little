@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-trait FunctionReferenceView extends EvaluableCodeView[FunctionReferenceViewPresenter] {
+trait FunctionReferenceView extends CodeView[FunctionReferenceViewPresenter] {
 
   def setName(name: String): Unit
 
@@ -10,4 +10,4 @@ trait FunctionReferenceView extends EvaluableCodeView[FunctionReferenceViewPrese
 
 }
 
-trait FunctionReferenceViewPresenter extends EvaluableCodeViewPresenter
+trait FunctionReferenceViewPresenter extends CodeViewPresenter

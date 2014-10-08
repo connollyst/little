@@ -23,7 +23,7 @@ object Setter {
   * @param value the value to assign to the variable
   * @author Sean Connolly
   */
-class Setter(val name: String, val value: EvaluableCode) extends EvaluableCode {
+class Setter(val name: String, val value: Code) extends Code {
 
   /** Returns this statement's [[ValueType]]
     *

@@ -8,7 +8,7 @@ import com.quane.little.ide.presenter._
   * @author Sean Connolly
   */
 trait PrinterView
-  extends EvaluableCodeView[PrinterViewPresenter] {
+  extends CodeView[PrinterViewPresenter] {
 
   /** Create and add a [[com.quane.little.ide.view.CodeMenuView]] to the view. If
     * one already exists, it will be removed.
@@ -41,4 +41,4 @@ trait PrinterView
   *
   * @author Sean Connolly
   */
-trait PrinterViewPresenter extends EvaluableCodeViewPresenter with PresenterAcceptsCode
+trait PrinterViewPresenter extends CodeViewPresenter with PresenterAcceptsCode

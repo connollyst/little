@@ -1,6 +1,6 @@
 package com.quane.little.data.model
 
-import com.quane.little.language.EvaluableCode
+import com.quane.little.language.Code
 import com.google.common.base.Objects
 import com.quane.little.data.model.CodeCategory._
 
@@ -9,7 +9,7 @@ import com.quane.little.data.model.CodeCategory._
   *
   * @author Sean Connolly
   */
-class PrimitiveRecord(var id: RecordId, val category: CodeCategory, val name: String, val expression: EvaluableCode)
+class PrimitiveRecord(var id: RecordId, val category: CodeCategory, val name: String, val expression: Code)
   extends HasRecordId {
 
   override def equals(other: Any): Boolean = other match {

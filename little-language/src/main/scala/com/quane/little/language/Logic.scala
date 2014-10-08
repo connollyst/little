@@ -23,7 +23,7 @@ object LogicOperation extends Enumeration {
   *
   * @author Sean Connolly
   */
-class Logic(val left: EvaluableCode, val operation: LogicOperation, val right: EvaluableCode) extends EvaluableCode {
+class Logic(val left: Code, val operation: LogicOperation, val right: Code) extends Code {
 
   override def evaluate(scope: Scope): Value = {
     val l = left.evaluate(scope)

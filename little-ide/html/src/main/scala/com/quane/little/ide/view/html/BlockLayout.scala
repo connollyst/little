@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{EvaluableCodeView, BlockViewPresenter, BlockView}
+import com.quane.little.ide.view.{CodeView, BlockViewPresenter, BlockView}
 import com.quane.little.ide.view.html.BlockLayout._
 import com.vaadin.ui._
 import com.quane.little.ide.presenter.command._
@@ -53,9 +53,9 @@ class BlockLayout
 
   override def removeComponent(component: Component) {
     component match {
-      case step: EvaluableCodeView[_] => removeStep(getStepIndex(component))
+      case step: CodeView[_] => removeStep(getStepIndex(component))
       case _ => throw new IllegalArgumentException("Attempt to remove " + component.getClass
-        + " from " + classOf[BlockLayout] + ", can only remove " + classOf[EvaluableCodeView[_]])
+        + " from " + classOf[BlockLayout] + ", can only remove " + classOf[CodeView[_]])
     }
   }
 

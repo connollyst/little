@@ -12,26 +12,26 @@ import scala.collection.mutable.ListBuffer
   *
   * @author Sean Connolly
   */
-class Block extends EvaluableCode {
+class Block extends Code {
 
-  private val _steps: ListBuffer[EvaluableCode] = ListBuffer[EvaluableCode]()
+  private val _steps: ListBuffer[Code] = ListBuffer[Code]()
 
   def length: Int = _steps.length
 
   def empty: Boolean = _steps.isEmpty
 
-  def steps: List[EvaluableCode] = _steps.toList
+  def steps: List[Code] = _steps.toList
 
-  def steps_=(steps: List[EvaluableCode]): Unit = {
+  def steps_=(steps: List[Code]): Unit = {
     _steps.clear()
     _steps ++= steps
   }
 
   def clear(): Unit = _steps.clear()
 
-  def addStep(step: EvaluableCode): Block = this += step
+  def addStep(step: Code): Block = this += step
 
-  def +=(step: EvaluableCode): Block = {
+  def +=(step: Code): Block = {
     _steps += step
     this
   }

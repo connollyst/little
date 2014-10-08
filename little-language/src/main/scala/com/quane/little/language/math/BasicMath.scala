@@ -3,7 +3,7 @@ package com.quane.little.language.math
 import com.google.common.base.Objects
 import com.quane.little.language.data.Value
 import com.quane.little.language.math.BasicMathOperation.BasicMathOperation
-import com.quane.little.language.{EvaluableCode, Scope}
+import com.quane.little.language.{Code, Scope}
 
 /** Factory for [[com.quane.little.language.math.BasicMath]] instances. **/
 object BasicMath {
@@ -17,7 +17,7 @@ object BasicMath {
     * @param r the right operand
     * @return the math expression
     */
-  def apply(l: EvaluableCode, o: BasicMathOperation, r: EvaluableCode): BasicMath = {
+  def apply(l: Code, o: BasicMathOperation, r: Code): BasicMath = {
     o match {
       case BasicMathOperation.Add => new Addition(l, r)
       case BasicMathOperation.Subtract => new Subtraction(l, r)
@@ -40,7 +40,7 @@ object BasicMathOperation extends Enumeration {
   * @param l the left operand
   * @param r the right operand
   */
-abstract class BasicMath(val l: EvaluableCode, val r: EvaluableCode) extends Math {
+abstract class BasicMath(val l: Code, val r: Code) extends Math {
 
   override def evaluate(scope: Scope): Value = {
     val left = l.evaluate(scope)
@@ -76,7 +76,7 @@ abstract class BasicMath(val l: EvaluableCode, val r: EvaluableCode) extends Mat
   * @param l the left operand
   * @param r the right operand
   */
-class Addition(l: EvaluableCode, r: EvaluableCode) extends BasicMath(l, r) {
+class Addition(l: Code, r: Code) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)
@@ -93,7 +93,7 @@ class Addition(l: EvaluableCode, r: EvaluableCode) extends BasicMath(l, r) {
   * @param l the left operand
   * @param r the right operand
   */
-class Subtraction(l: EvaluableCode, r: EvaluableCode) extends BasicMath(l, r) {
+class Subtraction(l: Code, r: Code) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)
@@ -110,7 +110,7 @@ class Subtraction(l: EvaluableCode, r: EvaluableCode) extends BasicMath(l, r) {
   * @param l the left operand
   * @param r the right operand
   */
-class Multiplication(l: EvaluableCode, r: EvaluableCode) extends BasicMath(l, r) {
+class Multiplication(l: Code, r: Code) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)
@@ -127,7 +127,7 @@ class Multiplication(l: EvaluableCode, r: EvaluableCode) extends BasicMath(l, r)
   * @param l the left operand
   * @param r the right operand
   */
-class Division(l: EvaluableCode, r: EvaluableCode) extends BasicMath(l, r) {
+class Division(l: Code, r: Code) extends BasicMath(l, r) {
 
   // TODO only required for Jackson deserialization, can we avoid?
   def this() = this(null, null)

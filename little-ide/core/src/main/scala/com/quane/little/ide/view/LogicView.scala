@@ -3,7 +3,7 @@ package com.quane.little.ide.view
 import com.quane.little.ide.presenter.PresenterAcceptsCode
 import com.quane.little.language.LogicOperation._
 
-trait LogicView extends EvaluableCodeView[LogicViewPresenter] with ViewOfLeftAndRightExpressions {
+trait LogicView extends CodeView[LogicViewPresenter] with ViewOfLeftAndRightExpressions {
 
   /** Change the logical operation in the view.
     *
@@ -13,7 +13,7 @@ trait LogicView extends EvaluableCodeView[LogicViewPresenter] with ViewOfLeftAnd
 
 }
 
-trait LogicViewPresenter extends EvaluableCodeViewPresenter with PresenterAcceptsCode {
+trait LogicViewPresenter extends CodeViewPresenter with PresenterAcceptsCode {
 
   /** Called when the logical operation changes in the view.
     *

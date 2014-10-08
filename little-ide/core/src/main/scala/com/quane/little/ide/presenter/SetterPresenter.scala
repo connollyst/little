@@ -21,7 +21,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
   private val functionService = inject[FunctionService]
 
   private var _name = ""
-  private var _value: Option[EvaluableCodeViewPresenter] = None
+  private var _value: Option[CodeViewPresenter] = None
 
   view.registerViewPresenter(this)
   view.setName(_name)
@@ -44,7 +44,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     view.setName(name)
   }
 
-  private[presenter] def value: EvaluableCodeViewPresenter =
+  private[presenter] def value: CodeViewPresenter =
     _value match {
       case Some(e) => e
       case _ => throw new IllegalAccessException("No value expression set.")
@@ -54,7 +54,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
     *
     * @param e the value expression
     */
-  private[presenter] def value_=(e: EvaluableCode): Unit = {
+  private[presenter] def value_=(e: Code): Unit = {
     val presenter =
       e match {
         case g: Getter =>

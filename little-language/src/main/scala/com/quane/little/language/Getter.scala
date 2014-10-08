@@ -8,7 +8,7 @@ import com.quane.little.language.data.{Value, ValueType}
   *
   * @author Sean Connolly
   */
-class Getter(val name: String) extends EvaluableCode {
+class Getter(val name: String) extends Code {
 
   // TODO depends on Variable
   override def returnType: ValueType = ValueType.Something

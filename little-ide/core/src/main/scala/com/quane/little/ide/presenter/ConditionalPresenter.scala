@@ -16,7 +16,7 @@ class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingMo
 
   private val presenterFactory = inject[PresenterFactory]
 
-  private var _condition: Option[EvaluableCodeViewPresenter] = None
+  private var _condition: Option[CodeViewPresenter] = None
   private val _thenBlock = new BlockPresenter(view.createThenBlock())
   private val _elseBlock = new BlockPresenter(view.createElseBlock())
 
@@ -29,13 +29,13 @@ class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingMo
     this
   }
 
-  private[presenter] def condition: EvaluableCodeViewPresenter =
+  private[presenter] def condition: CodeViewPresenter =
     _condition match {
       case Some(e) => e
       case _ => throw new IllegalAccessException("No condition expression set.")
     }
 
-  private[presenter] def condition_=(condition: EvaluableCode): Unit = {
+  private[presenter] def condition_=(condition: Code): Unit = {
     val presenter =
       condition match {
         case l: Logic =>
@@ -58,13 +58,13 @@ class ConditionalPresenter[V <: ConditionalView](view: V)(implicit val bindingMo
     _condition = Some(presenter)
   }
 
-  private[presenter] def thenBlock: List[EvaluableCodeViewPresenter] = _thenBlock.steps
+  private[presenter] def thenBlock: List[CodeViewPresenter] = _thenBlock.steps
 
-  private[presenter] def thenBlock_=(steps: List[EvaluableCode]): Unit = _thenBlock.steps = steps
+  private[presenter] def thenBlock_=(steps: List[Code]): Unit = _thenBlock.steps = steps
 
-  private[presenter] def elseBlock: List[EvaluableCodeViewPresenter] = _elseBlock.steps
+  private[presenter] def elseBlock: List[CodeViewPresenter] = _elseBlock.steps
 
-  private[presenter] def elseBlock_=(steps: List[EvaluableCode]): Unit = _elseBlock.steps = steps
+  private[presenter] def elseBlock_=(steps: List[Code]): Unit = _elseBlock.steps = steps
 
   override def compile(): Conditional =
     new Conditional(condition.compile(), _thenBlock.compile(), _elseBlock.compile())

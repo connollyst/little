@@ -23,7 +23,7 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
 
   def stepCount: Int = block.length
 
-  def addStep(step: EvaluableCode): FunctionDefinition = {
+  def addStep(step: Code): FunctionDefinition = {
     block.addStep(step)
     this
   }
@@ -49,9 +49,9 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
     // _params ++= params
   }
 
-  def steps: List[EvaluableCode] = block.steps
+  def steps: List[Code] = block.steps
 
-  def steps_=(steps: List[EvaluableCode]) = block.steps = steps
+  def steps_=(steps: List[Code]) = block.steps = steps
 
   def asReference: FunctionReference = {
     val reference = new FunctionReference(name)
@@ -75,7 +75,7 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
     * @param args the runtime arguments
     * @return the output of the function, or [[ValueType.Nothing]] otherwise
     */
-  def evaluate(scope: Scope, args: immutable.Map[String, EvaluableCode]): Value = {
+  def evaluate(scope: Scope, args: immutable.Map[String, Code]): Value = {
     if (returnType != block.returnType) {
       throw new IllegalArgumentException(
         classOf[FunctionDefinition].getSimpleName + " '" + name + "' returns " + returnType
@@ -88,12 +88,12 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
     block.evaluate(functionScope)
   }
 
-  private def validateArguments(args: immutable.Map[String, EvaluableCode]) = {
+  private def validateArguments(args: immutable.Map[String, Code]) = {
     // TODO validate we have all arguments
     // TODO validate all arguments are appropriate for this definition
   }
 
-  private def setArguments(scope: Scope, args: immutable.Map[String, EvaluableCode]) = {
+  private def setArguments(scope: Scope, args: immutable.Map[String, Code]) = {
     // TODO Set arguments in Scope (NON RECURSIVELY)
     args.foreach {
       case (argName, argValue) =>

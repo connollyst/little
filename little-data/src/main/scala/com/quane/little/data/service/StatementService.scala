@@ -28,11 +28,11 @@ object StatementService {
 
 trait StatementService {
 
-  def allStatement: Iterable[EvaluableCode]
+  def allStatement: Iterable[Code]
 
   def all: Iterable[PrimitiveRecord]
 
-  def findStatement(id: RecordId): EvaluableCode
+  def findStatement(id: RecordId): Code
 
   def find(id: RecordId): PrimitiveRecord
 
@@ -48,7 +48,7 @@ class BasicStatementService extends StatementService {
 
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
-  override def allStatement: Iterable[EvaluableCode] =
+  override def allStatement: Iterable[Code] =
     StatementService.All map {
       id => StatementFactory.create(id)
     }
@@ -58,7 +58,7 @@ class BasicStatementService extends StatementService {
       id => createRecord(new RecordId(id))
     }
 
-  override def findStatement(id: RecordId): EvaluableCode = StatementFactory.create(id.oid)
+  override def findStatement(id: RecordId): Code = StatementFactory.create(id.oid)
 
   override def find(id: RecordId): PrimitiveRecord = createRecord(id)
 
@@ -79,7 +79,7 @@ class BasicStatementService extends StatementService {
   */
 object StatementFactory {
 
-  def create(id: String): EvaluableCode = {
+  def create(id: String): Code = {
     id match {
       case StatementService.Set => new Setter("", Value(""))
       case StatementService.Print => new Printer(Value(""))

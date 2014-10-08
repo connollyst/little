@@ -67,17 +67,17 @@ object Functions {
     new FunctionDefinition("print dir")
       .addStep(new Printer(new Getter(Operable.DIRECTION)))
 
-  def pointToward(x: EvaluableCode, y: EvaluableCode): Block =
+  def pointToward(x: Code, y: Code): Block =
     new Block()
       .addStep(new Setter(Operable.DIRECTION, getAngleTo(x, y)))
 
-  def getAngleTo(x: EvaluableCode, y: EvaluableCode): Block = {
+  def getAngleTo(x: Code, y: Code): Block = {
     val mobX = new Getter(Operable.X)
     val mobY = new Getter(Operable.Y)
     getAngleBetween(mobX, mobY, x, y)
   }
 
-  def getAngleBetween(fromX: EvaluableCode, fromY: EvaluableCode, toX: EvaluableCode, toY: EvaluableCode): Block = {
+  def getAngleBetween(fromX: Code, fromY: Code, toX: Code, toY: Code): Block = {
     val angleFunction = new Block
     val anglePointer = "angle"
     // Build the angle calculation

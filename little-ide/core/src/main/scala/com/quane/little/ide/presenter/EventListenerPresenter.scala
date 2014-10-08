@@ -1,12 +1,12 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{EvaluableCodeViewPresenter, EventListenerViewPresenter, EventListenerView}
+import com.quane.little.ide.view.{CodeViewPresenter, EventListenerViewPresenter, EventListenerView}
 import com.quane.little.data.model.{ListenerRecord, RecordId}
 import com.quane.little.data.service.ListenerService
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.language.event.Event.Event
 import com.quane.little.language.event.EventListener
-import com.quane.little.language.EvaluableCode
+import com.quane.little.language.Code
 
 class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindingModule: BindingModule)
   extends EventListenerViewPresenter
@@ -35,11 +35,11 @@ class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindi
     view.setEvent(e)
   }
 
-  private[presenter] def +=(step: EvaluableCodeViewPresenter): Unit = _block.add(step)
+  private[presenter] def +=(step: CodeViewPresenter): Unit = _block.add(step)
 
-  private[presenter] def steps: List[_ <: EvaluableCodeViewPresenter] = _block.steps
+  private[presenter] def steps: List[_ <: CodeViewPresenter] = _block.steps
 
-  private[presenter] def steps_=(steps: List[_ <: EvaluableCode]): Unit = _block.steps = steps
+  private[presenter] def steps_=(steps: List[_ <: Code]): Unit = _block.steps = steps
 
   override def onEventChange(e: Event) = event = e
 

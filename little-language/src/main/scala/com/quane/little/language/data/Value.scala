@@ -2,7 +2,7 @@ package com.quane.little.language.data
 
 import com.google.common.base.Objects
 import com.quane.little.language.data.ValueType._
-import com.quane.little.language.{EvaluableCode, Scope}
+import com.quane.little.language.{Code, Scope}
 
 object Value {
 
@@ -20,7 +20,7 @@ object Value {
 
 }
 
-sealed trait Value extends EvaluableCode with Ordered[Value] {
+sealed trait Value extends Code with Ordered[Value] {
 
   val primitive: Any
 

@@ -77,11 +77,11 @@ object CodeService {
 
 trait CodeService {
 
-  def all: Iterable[EvaluableCode]
+  def all: Iterable[Code]
 
   def allRecords: Iterable[PrimitiveRecord]
 
-  def find(id: RecordId): EvaluableCode
+  def find(id: RecordId): Code
 
   def findRecord(id: RecordId): PrimitiveRecord
 
@@ -97,7 +97,7 @@ class BasicCodeService extends CodeService {
 
   // TODO we are sort of abusing the RecordId here, let's abstract out an 'id'
 
-  override def all: Iterable[EvaluableCode] =
+  override def all: Iterable[Code] =
     CodeService.All map {
       id => ExpressionFactory.create(id)
     }
@@ -107,7 +107,7 @@ class BasicCodeService extends CodeService {
       id => createRecord(new RecordId(id))
     }
 
-  override def find(id: RecordId): EvaluableCode = ExpressionFactory.create(id.oid)
+  override def find(id: RecordId): Code = ExpressionFactory.create(id.oid)
 
   override def findRecord(id: RecordId): PrimitiveRecord = createRecord(id)
 
@@ -121,14 +121,14 @@ class BasicCodeService extends CodeService {
 
 }
 
-/** A factory for creating an [[com.quane.little.language.EvaluableCode]] for a
+/** A factory for creating an [[com.quane.little.language.Code]] for a
   * primitive's id.
   *
   * @author Sean Connolly
   */
 object ExpressionFactory {
 
-  def create(id: String): EvaluableCode = {
+  def create(id: String): Code = {
     id match {
       case CodeService.Get => new Getter("")
       case CodeService.Conditional => new Conditional(new Logic(Value(1), LogicOperation.Equals, Value(1)))

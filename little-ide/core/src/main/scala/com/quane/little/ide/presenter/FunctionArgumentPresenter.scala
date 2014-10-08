@@ -21,12 +21,12 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
   private val functionService = inject[FunctionService]
 
   private var _name: String = ""
-  private var _value: Option[EvaluableCodeViewPresenter] = None
+  private var _value: Option[CodeViewPresenter] = None
   private var _valueType: Option[ValueType] = None
 
   view.registerViewPresenter(this)
 
-  private[presenter] def initialize(param: FunctionParameter, value: EvaluableCode): FunctionArgumentPresenter[V] = {
+  private[presenter] def initialize(param: FunctionParameter, value: Code): FunctionArgumentPresenter[V] = {
     this.name = param.name
     this.value = value
     this.valueType = param.valueType
@@ -44,7 +44,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
     *
     * @return the value expression
     */
-  private[presenter] def value: EvaluableCodeViewPresenter =
+  private[presenter] def value: CodeViewPresenter =
     _value match {
       case Some(e) => e
       case None => throw new IllegalAccessException("No argument value expression specified.")
@@ -54,7 +54,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
     *
     * @param e the value expression
     */
-  private[presenter] def value_=(e: EvaluableCode): Unit = {
+  private[presenter] def value_=(e: Code): Unit = {
     val presenter =
       e match {
         // TODO skip if nothing has changed
@@ -91,6 +91,6 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
   override def requestAddCode(id: RecordId, index: Int) =
     value = functionService.findReference(id)
 
-  override def compile(): EvaluableCode = value.compile()
+  override def compile(): Code = value.compile()
 
 }

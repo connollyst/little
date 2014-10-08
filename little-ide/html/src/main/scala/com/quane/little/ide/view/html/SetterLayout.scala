@@ -1,7 +1,7 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.ide.view.html.dnd.ExpressionDropHandler
-import com.quane.little.ide.view.{EvaluableCodeView, SetterView, SetterViewPresenter}
+import com.quane.little.ide.view.{CodeView, SetterView, SetterViewPresenter}
 import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
 import com.vaadin.event.FieldEvents.{TextChangeEvent, TextChangeListener}
 import com.vaadin.ui.{CssLayout, HorizontalLayout, Label, TextField}
@@ -54,7 +54,7 @@ class SetterLayout
 
   override def createFunctionReference() = setValueComponent(new FunctionReferenceLayout)
 
-  private def setValueComponent[T <: EvaluableCodeView[_] with RemovableComponent](view: T): T = {
+  private def setValueComponent[T <: CodeView[_] with RemovableComponent](view: T): T = {
     valueWrapper.component.removeAllComponents()
     valueWrapper.component.addComponent(view)
     view

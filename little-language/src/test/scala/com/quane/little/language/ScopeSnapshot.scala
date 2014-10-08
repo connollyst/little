@@ -8,7 +8,7 @@ import com.quane.little.language.data.{Nada, ValueType, Value}
   *
   * @author Sean Connolly
   */
-class ScopeSnapshot extends EvaluableCode {
+class ScopeSnapshot extends Code {
 
   var _lastScope: Option[Scope] = None
 

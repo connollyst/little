@@ -9,7 +9,7 @@ import com.quane.little.tools.Logging
   *
   * @author Sean Connolly
   */
-class Printer(val value: EvaluableCode) extends EvaluableCode with Logging {
+class Printer(val value: Code) extends Code with Logging {
 
   /** Returns this statement's [[ValueType]]
     *

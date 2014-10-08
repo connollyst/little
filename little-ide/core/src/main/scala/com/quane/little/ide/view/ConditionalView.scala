@@ -1,6 +1,6 @@
 package com.quane.little.ide.view
 
-trait ConditionalView extends EvaluableCodeView[ConditionalViewPresenter] {
+trait ConditionalView extends CodeView[ConditionalViewPresenter] {
 
   def createMathCondition(): MathView
 
@@ -18,4 +18,4 @@ trait ConditionalView extends EvaluableCodeView[ConditionalViewPresenter] {
 
 }
 
-trait ConditionalViewPresenter extends EvaluableCodeViewPresenter
+trait ConditionalViewPresenter extends CodeViewPresenter

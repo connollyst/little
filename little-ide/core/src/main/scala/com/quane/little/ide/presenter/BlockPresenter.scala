@@ -22,30 +22,30 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
   private val presenterFactory = inject[PresenterFactory]
   private val functionService = inject[FunctionService]
 
-  private val _steps = new ListBuffer[EvaluableCodeViewPresenter]
+  private val _steps = new ListBuffer[CodeViewPresenter]
 
   view.registerViewPresenter(this)
   addCodeMenu(-1)
 
   private[presenter] def length = _steps.length
 
-  private[presenter] def steps: List[EvaluableCodeViewPresenter] = _steps.toList
+  private[presenter] def steps: List[CodeViewPresenter] = _steps.toList
 
-  private[presenter] def steps_=(steps: List[EvaluableCodeViewPresenter]) = {
+  private[presenter] def steps_=(steps: List[CodeViewPresenter]) = {
     _steps.clear()
     _steps ++= steps
   }
 
-  private[presenter] def steps_=[E <: EvaluableCode](steps: List[E]) = {
+  private[presenter] def steps_=[E <: Code](steps: List[E]) = {
     _steps.clear()
     steps.foreach {
       step => add(step)
     }
   }
 
-  private[presenter] def add(step: EvaluableCode): Unit = add(step, length)
+  private[presenter] def add(step: Code): Unit = add(step, length)
 
-  private[presenter] def add(step: EvaluableCode, index: Int): Unit = {
+  private[presenter] def add(step: Code, index: Int): Unit = {
     val presenter =
       step match {
         case m: BasicMath =>
@@ -88,7 +88,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
     * @param step the step presenter
     * @param index the step index
     */
-  private[presenter] def add(step: EvaluableCodeViewPresenter, index: Int = length): Unit =
+  private[presenter] def add(step: CodeViewPresenter, index: Int = length): Unit =
     _steps.insert(index, step)
 
   /** Return the step at the specified index.
@@ -96,7 +96,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
     * @param index the step index
     * @return the step presenter
     */
-  private[presenter] def get(index: Int): EvaluableCodeViewPresenter =
+  private[presenter] def get(index: Int): CodeViewPresenter =
     _steps(index)
 
   override def acceptedValueType: ValueType = ValueType.Anything

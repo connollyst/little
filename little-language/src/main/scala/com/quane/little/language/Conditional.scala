@@ -5,17 +5,17 @@ import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.data.{Value, ValueType}
 
 
-/** An [[EvaluableCode]] which evaluates the `then` block if the `test` evaluates
+/** An [[Code]] which evaluates the `then` block if the `test` evaluates
   * to `true`, and the `otherwise` block if not.
   *
   * @author Sean Connolly
   */
-class Conditional(val test: EvaluableCode, val then: Block, val otherwise: Block)
-  extends EvaluableCode {
+class Conditional(val test: Code, val then: Block, val otherwise: Block)
+  extends Code {
 
-  def this(test: EvaluableCode) = this(test, new Block, new Block)
+  def this(test: Code) = this(test, new Block, new Block)
 
-  def addStep(step: EvaluableCode): Conditional = {
+  def addStep(step: Code): Conditional = {
     then.addStep(step)
     this
   }

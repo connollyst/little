@@ -4,7 +4,7 @@ import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.service.FunctionService
 import com.quane.little.ide.view.{FunctionReferenceView, FunctionReferenceViewPresenter}
 import com.quane.little.language.data.Value
-import com.quane.little.language.{EvaluableCode, FunctionParameter, FunctionReference}
+import com.quane.little.language.{Code, FunctionParameter, FunctionReference}
 
 import scala.collection.mutable.ListBuffer
 
@@ -43,7 +43,7 @@ class FunctionReferencePresenter(val view: FunctionReferenceView,
     view.setName(n)
   }
 
-  private[presenter] def add(param: FunctionParameter, value: EvaluableCode): Unit = {
+  private[presenter] def add(param: FunctionParameter, value: Code): Unit = {
     val argView = view.createArgument()
     val argPresenter = presenterFactory.createFunctionArgument(argView)
     argPresenter.initialize(param, value)
