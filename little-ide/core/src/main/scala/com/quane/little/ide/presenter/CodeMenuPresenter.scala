@@ -38,8 +38,7 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
       function =>
         if (contextAccepts(function.definition)) {
           view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
-        }
-        else {
+        } else {
           view.addMenuItemDisabled(CodeType.Function, function.category, function.id, function.definition.name)
         }
     }
@@ -56,13 +55,9 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
   private def contextAccepts(function: FunctionDefinition): Boolean = {
     val returnType = function.returnType
     val acceptedType = context.asInstanceOf[PresenterAcceptsExpression].acceptedValueType
-    if (returnType == ValueType.Nada) {
-      true
-    } else {
-      acceptedType match {
-        case ValueType.Any => true
-        case _ => acceptedType == returnType
-      }
+    acceptedType match {
+      case ValueType.Any => true
+      case _ => acceptedType == returnType
     }
   }
 
