@@ -12,7 +12,11 @@
     "definition": {
         "_class": "com.quane.little.language.FunctionDefinition",
         "name": "BlankFunction",
-        "steps": [],
-        "params": [ ]
+        "params": [],
+        "returnType": {
+            "enumClass": "com.quane.little.language.data.ValueType",
+            "value": "Nada"
+        },
+        "steps": []
     }
 }

@@ -2,8 +2,7 @@ package com.quane.little.language
 
 import com.google.common.base.Objects
 import com.quane.little.language.data.ValueType.ValueType
-import com.quane.little.language.data.{ValueType, Value}
-import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Value, ValueType}
 
 import scala.collection.immutable
 import scala.collection.mutable.ListBuffer
@@ -65,7 +64,24 @@ class FunctionDefinition(val name: String, var returnType: ValueType = ValueType
     reference
   }
 
+  /** Evaluate the function with the given `args`.
+    *
+    * The function defines its own [[Scope]] within that provided. In it, the
+    * arguments are evaluated and set, and then the function's body is
+    * evaluated. The output of the body is the return value of the function,
+    * if any.
+    *
+    * @param scope the current scope in which to evaluate the
+    * @param args the runtime arguments
+    * @return the output of the function, or [[ValueType.Nada]] otherwise
+    */
   def evaluate(scope: Scope, args: immutable.Map[String, Expression]): Value = {
+    if (returnType != block.returnType) {
+      throw new IllegalArgumentException(
+        classOf[FunctionDefinition].getSimpleName + " '" + name + "' returns " + returnType
+          + " but its " + classOf[Block].getSimpleName + " returns " + block.returnType + "."
+      )
+    }
     val functionScope = new Scope(scope)
     validateArguments(args)
     setArguments(functionScope, args)

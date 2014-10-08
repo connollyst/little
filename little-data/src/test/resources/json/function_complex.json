@@ -23,6 +23,10 @@
                 }
             }
         ],
+        "returnType": {
+            "enumClass": "com.quane.little.language.data.ValueType",
+            "value": "Nada"
+        },
         "steps": [
             {
                 "_class": "com.quane.little.language.Setter",
