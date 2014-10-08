@@ -86,11 +86,12 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
       case None => throw new RuntimeException("No function definition for " + id)
     }
 
-  override def findDefinition(username: String, functionName: String): FunctionDefinition =
-    new FunctionRepository(collection).findByUser(userService.fetch(username), functionName) match {
-      case Some(record) => record.definition
-      case None => throw new RuntimeException("No function definition '" + functionName + "' for user '" + username + "'")
+  override def findDefinition(username: String, functionName: String): FunctionDefinition = {
+    findByUser(username) foreach {
+      function => if (function.definition.name == functionName) return function.definition
     }
+    throw new RuntimeException("No function definition '" + functionName + "' for user '" + username + "'")
+  }
 
   override def update(id: RecordId, fun: FunctionDefinition): FunctionRecord = {
     val repo = new FunctionRepository(collection)

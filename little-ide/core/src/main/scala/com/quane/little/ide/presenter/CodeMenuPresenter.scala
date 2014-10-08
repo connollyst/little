@@ -5,6 +5,8 @@ import com.quane.little.data.model.CodeType.CodeType
 import com.quane.little.data.model.{CodeCategory, CodeType, PrimitiveRecord}
 import com.quane.little.data.service.{ExpressionService, FunctionService, StatementService}
 import com.quane.little.ide.view.{CodeMenuView, CodeMenuViewPresenter}
+import com.quane.little.language.FunctionDefinition
+import com.quane.little.language.data.ValueType
 
 /** A presenter for views of the menu used to add code to a program.
   *
@@ -31,13 +33,15 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
   }
 
   if (m <:< manifest[PresenterAcceptsExpression]) {
-    val valueType = context.asInstanceOf[PresenterAcceptsExpression].acceptedValueType
+
     functionService.findByUser("connollyst") foreach {
       function =>
-        // TODO only display appropriate menu items
-        // TODO - check function return type
-        // TODO - check context's input type
-        view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
+        if (contextAccepts(function.definition)) {
+          view.addMenuItem(CodeType.Function, function.category, function.id, function.definition.name)
+        }
+        else {
+          view.addMenuItemDisabled(CodeType.Function, function.category, function.id, function.definition.name)
+        }
     }
   } else {
     // TODO disable functions category?
@@ -46,6 +50,20 @@ class CodeMenuPresenter[C <: PresenterAccepts](val view: CodeMenuView, context: 
     // TODO do something
   } else {
     // TODO disable some category?
+  }
+
+  // TODO expand to more than FunctionDefinition?
+  private def contextAccepts(function: FunctionDefinition): Boolean = {
+    val returnType = function.returnType
+    val acceptedType = context.asInstanceOf[PresenterAcceptsExpression].acceptedValueType
+    if (returnType == ValueType.Nada) {
+      true
+    } else {
+      acceptedType match {
+        case ValueType.Any => true
+        case _ => acceptedType == returnType
+      }
+    }
   }
 
   private def addItem(codeType: CodeType, primitive: PrimitiveRecord): Unit =
