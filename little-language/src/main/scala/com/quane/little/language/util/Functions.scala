@@ -1,8 +1,8 @@
 package com.quane.little.language.util
 
-import com.quane.little.language.data.{ValueType, Value}
-import com.quane.little.language.math._
 import com.quane.little.language._
+import com.quane.little.language.data.{Value, ValueType}
+import com.quane.little.language.math._
 
 /** A set functions used during development - mostly to sanity check the
   * language and how it compiles.
@@ -13,40 +13,38 @@ object Functions {
 
   def blank: FunctionDefinition = new FunctionDefinition("")
 
-  def move: FunctionDefinition = {
-    val fun = new FunctionDefinition("move").addParam("speed", ValueType.Integer)
-    fun.addStep(new Setter(Operable.SPEED, new Getter("speed")))
-  }
+  def move: FunctionDefinition =
+    new FunctionDefinition("move", ValueType.Nada)
+      .addParam("speed", ValueType.Integer)
+      .addStep(new Setter(Operable.SPEED, new Getter("speed")))
 
-  def stop: FunctionDefinition = {
-    val fun = new FunctionDefinition("stop")
-    fun.addStep(new Setter(Operable.SPEED, Value(0)))
-  }
+  def stop: FunctionDefinition =
+    new FunctionDefinition("stop", ValueType.Nada)
+      .addStep(new Setter(Operable.SPEED, Value(0)))
 
-  def turn: FunctionDefinition = {
-    val fun = new FunctionDefinition("turn").addParam("direction", ValueType.Integer)
-    fun.addStep(new Setter(Operable.DIRECTION, new Getter("direction")))
-  }
+  def turn: FunctionDefinition =
+    new FunctionDefinition("turn", ValueType.Nada)
+      .addParam("direction", ValueType.Integer)
+      .addStep(new Setter(Operable.DIRECTION, new Getter("direction")))
 
   def turnRandom: Block = {
     val min = Value(1)
     val max = Value(360)
     val setter = new Setter(Operable.DIRECTION, new RandomNumber(min, max))
-    val randomFun = new Block
-    randomFun.addStep(setter)
+    new Block().addStep(setter)
   }
 
   def turnRelative: FunctionDefinition = {
-    val relativelyFun = new FunctionDefinition("turnRelative").addParam("degrees", ValueType.Integer)
     val getCurrentDir = new Getter(Operable.DIRECTION)
     val dirChange = new Getter("degrees")
     val getNewDirection = new Addition(getCurrentDir, dirChange)
     val setNewDirection = new Setter(Operable.DIRECTION, getNewDirection)
-    relativelyFun.addStep(setNewDirection)
+    new FunctionDefinition("turnRelative", ValueType.Nada)
+      .addParam("degrees", ValueType.Integer)
+      .addStep(setNewDirection)
   }
 
   def voyage: FunctionDefinition = {
-    val fun = new FunctionDefinition("voyage")
     val myDirection = new Getter(Operable.DIRECTION)
     val myX = new Getter(Operable.X)
     val myY = new Getter(Operable.Y)
@@ -56,23 +54,22 @@ object Functions {
     val isNorth = new Logic(myDirection, LogicOperation.Equals, north)
     val turnSouth = new FunctionReference("turn").addArg("direction", south)
     val turnSouthIfNorth = new Conditional(isNorth).addStep(turnSouth)
-    fun.addStep(turnSouthIfNorth)
-    // Step #2: Remember _Home_ is _Here_
-    fun.addStep(new Setter("HomeX", myX))
-    fun.addStep(new Setter("HomeY", myY))
-    // Step #3: Set speed to 10
-    fun.addStep(new FunctionReference("move").addArg("speed", Value(10)))
+    new FunctionDefinition("voyage")
+      .addStep(turnSouthIfNorth)
+      // Step #2: Remember _Home_ is _Here_
+      .addStep(new Setter("HomeX", myX))
+      .addStep(new Setter("HomeY", myY))
+      // Step #3: Set speed to 10
+      .addStep(new FunctionReference("move").addArg("speed", Value(10)))
   }
 
-  def printDirection: FunctionDefinition = {
-    val fun = new FunctionDefinition("print dir")
-    fun.addStep(new Printer(new Getter(Operable.DIRECTION)))
-  }
+  def printDirection: FunctionDefinition =
+    new FunctionDefinition("print dir")
+      .addStep(new Printer(new Getter(Operable.DIRECTION)))
 
-  def pointToward(x: Expression, y: Expression): Block = {
-    val fun = new Block
-    fun.addStep(new Setter(Operable.DIRECTION, getAngleTo(x, y)))
-  }
+  def pointToward(x: Expression, y: Expression): Block =
+    new Block()
+      .addStep(new Setter(Operable.DIRECTION, getAngleTo(x, y)))
 
   def getAngleTo(x: Expression, y: Expression): Block = {
     val mobX = new Getter(Operable.X)
