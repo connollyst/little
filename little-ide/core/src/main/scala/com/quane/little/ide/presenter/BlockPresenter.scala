@@ -16,8 +16,7 @@ import scala.collection.mutable.ListBuffer
   * @author Sean Connolly
   */
 class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingModule)
-  extends BlockViewPresenter
-  with Injectable {
+  extends BlockViewPresenter with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
   private val functionService = inject[FunctionService]

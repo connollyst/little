@@ -9,19 +9,19 @@ import com.quane.little.language.Code
   *
   * @author Sean Connolly
   */
-class PrimitiveRecord(var id: RecordId, val category: CodeCategory, val name: String, val expression: Code)
+class CodeRecord(var id: RecordId, val category: CodeCategory, val name: String, val code: Code)
   extends HasRecordId {
 
   override def equals(other: Any): Boolean = other match {
-    case that: PrimitiveRecord =>
-      that.isInstanceOf[PrimitiveRecord] &&
+    case that: CodeRecord =>
+      that.isInstanceOf[CodeRecord] &&
         id == that.id &&
-        expression == that.expression
+        code == that.code
     case _ => false
   }
 
   override def hashCode(): Int = {
-    val state = Seq(id, expression)
+    val state = Seq(id, code)
     state.map(_.hashCode()).foldLeft(0)((a, b) => 31 * a + b)
   }
 
@@ -30,7 +30,7 @@ class PrimitiveRecord(var id: RecordId, val category: CodeCategory, val name: St
       .add("id", id)
       .add("category", category)
       .add("name", name)
-      .add("expression", expression)
+      .add("expression", code)
       .toString
 
 }

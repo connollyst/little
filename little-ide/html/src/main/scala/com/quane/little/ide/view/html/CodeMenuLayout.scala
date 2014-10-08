@@ -21,7 +21,8 @@ object CodeMenuLayout {
   *
   * @author Sean Connolly
   */
-class CodeMenuLayout[P <: PresenterAcceptsCode](view: View[P], val index: () => Int) extends MenuBar with CodeMenuView {
+class CodeMenuLayout[P <: PresenterAcceptsCode](view: View[P], val index: () => Int)
+  extends MenuBar with CodeMenuView {
 
   def this(view: View[P]) = this(view, () => 0)
 

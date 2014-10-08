@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{FunctionRecord, PrimitiveRecord, RecordId}
+import com.quane.little.data.model.RecordId
 import com.quane.little.ide.view.ViewPresenter
 import com.quane.little.language.data.ValueType
 import com.quane.little.language.data.ValueType._
@@ -8,15 +8,7 @@ import com.quane.little.tools.Logging
 
 object PresenterAccepts extends Logging {
 
-  def acceptsPrimitive[P <: PresenterAcceptsCode](presenter: P, record: PrimitiveRecord): Boolean =
-    acceptsReturnType(presenter, record.expression.returnType)
-
-  def acceptsFunction[P <: PresenterAcceptsCode](presenter: P, record: FunctionRecord): Boolean =
-    acceptsReturnType(presenter, record.definition.returnType)
-
-  // TODO do we need the manifest check?
-
-  def acceptsReturnType[P <: PresenterAcceptsCode](presenter: P, returnType: ValueType): Boolean = {
+  def accepts[P <: PresenterAcceptsCode](presenter: P, returnType: ValueType): Boolean = {
     val acceptedType = presenter.acceptedValueType
     info("Checking if " + presenter + " accepts " + returnType + " in " + acceptedType + "?..")
     acceptedType match {

@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{PrimitiveRecord, RecordId}
-import com.quane.little.data.service.{BasicCodeService, CodeService}
+import com.quane.little.data.model.{CodeRecord, RecordId}
+import com.quane.little.data.service.{BasicPrimitiveService, PrimitiveService}
 import com.quane.little.ide.MockIDEBindingModule
 import com.quane.little.ide.view._
 import org.junit.runner.RunWith
@@ -15,35 +15,38 @@ class TestPresenterAccepts extends WordSpec with ShouldMatchers with MockitoSuga
 
   implicit val bindingModule = MockIDEBindingModule
 
+  // TODO rewrite tests focused not on get/set/print but on returnType directly
+
   "SetterView" should {
     "accept get" in {
-      val get = primitive(CodeService.Get)
+      val get = primitive(PrimitiveService.Get)
       val presenter = new SetterPresenter(mock[SetterView])
-      val accepts = PresenterAccepts.acceptsPrimitive(presenter, get)
+      val accepts = PresenterAccepts.accepts(presenter, get.code.returnType)
       accepts should be(right = true)
     }
     "not accept set" in {
-      val set = primitive(CodeService.Set)
+      val set = primitive(PrimitiveService.Set)
       val presenter = new SetterPresenter(mock[SetterView])
-      val accepts = PresenterAccepts.acceptsPrimitive(presenter, set)
+      val accepts = PresenterAccepts.accepts(presenter, set.code.returnType)
       accepts should be(right = false)
     }
     "not accept print" in {
-      val print = primitive(CodeService.Print)
+      val print = primitive(PrimitiveService.Print)
       val presenter = new SetterPresenter(mock[SetterView])
-      val accepts = PresenterAccepts.acceptsPrimitive(presenter, print)
+      val accepts = PresenterAccepts.accepts(presenter, print.code.returnType)
       accepts should be(right = false)
     }
     "not accept conditional" in {
-      val conditional = primitive(CodeService.Conditional)
+      val conditional = primitive(PrimitiveService.Conditional)
       val presenter = new SetterPresenter(mock[SetterView])
-      val accepts = PresenterAccepts.acceptsPrimitive(presenter, conditional)
+      val accepts = PresenterAccepts.accepts(presenter, conditional.code.returnType)
       accepts should be(right = true)
     }
   }
 
-  // TODO test more cases!!
+  // TODO test more recipients!!
 
-  private def primitive(id: String): PrimitiveRecord = new BasicCodeService().findRecord(new RecordId(id))
+  private def primitive(id: String): CodeRecord =
+    new BasicPrimitiveService().findRecord(new RecordId(id))
 
 }

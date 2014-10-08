@@ -66,6 +66,8 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
   override def exists(username: String, functionName: String): Boolean =
     getFunction(username, functionName).isDefined
 
+  override def exists(id: RecordId): Boolean = get(id).isDefined
+
   override def isReservedSystemName(functionName: String): Boolean =
     getFunction(UserService.SYSTEM_USERNAME, functionName).isDefined
 

@@ -16,15 +16,17 @@ trait FunctionService {
 
   def init(): Unit
 
+  def exists(id: RecordId): Boolean
+
   def exists(username: String, functionName: String): Boolean
 
-  def findReferencesByUser(username: String): List[FunctionReference] =
+  def findReferencesByUser(username: String): Iterable[FunctionReference] =
     findDefinitionsByUser(username).map(_.asReference)
 
-  def findDefinitionsByUser(username: String): List[FunctionDefinition] =
+  def findDefinitionsByUser(username: String): Iterable[FunctionDefinition] =
     findByUser(username).map(_.definition)
 
-  def findByUser(username: String): List[FunctionRecord]
+  def findByUser(username: String): Iterable[FunctionRecord]
 
   def findReference(id: RecordId): FunctionReference =
     findDefinition(id).asReference
@@ -42,8 +44,7 @@ trait FunctionService {
 }
 
 class MongoFunctionService(implicit val bindingModule: BindingModule)
-  extends FunctionService
-  with Injectable {
+  extends FunctionService with Injectable {
 
   private val client = inject[MongoClient]
   private val userService = inject[UserService]
@@ -69,6 +70,9 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
 
   private def exists(userId: RecordId, functionName: String): Boolean =
     exists(userService.fetch(userId), functionName)
+
+  override def exists(id: RecordId): Boolean =
+    new FunctionRepository(collection).find(id).isDefined
 
   private def exists(user: UserRecord, functionName: String): Boolean =
     new FunctionRepository(collection).findByUser(user, functionName).isDefined
