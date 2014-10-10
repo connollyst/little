@@ -11,9 +11,9 @@ trait CodeService {
 
   def allRecordsForUser(username: String): Iterable[CodeRecord]
 
-  def findForUser(username: String, id: RecordId): Option[Code]
+  def find(id: RecordId): Option[Code]
 
-  def findRecordForUser(username: String, id: RecordId): Option[CodeRecord]
+  def findRecord(id: RecordId): Option[CodeRecord]
 
   def createRecordForUser(username: String, id: RecordId): CodeRecord
 
@@ -40,7 +40,7 @@ class BasicCodeService(implicit val bindingModule: BindingModule)
     }
   }
 
-  override def findForUser(username: String, id: RecordId): Option[Code] =
+  override def find(id: RecordId): Option[Code] =
     if (primitiveService.exists(id)) {
       Some(primitiveService.find(id))
     } else if (functionService.exists(id)) {
@@ -49,7 +49,7 @@ class BasicCodeService(implicit val bindingModule: BindingModule)
       None
     }
 
-  override def findRecordForUser(username: String, id: RecordId): Option[CodeRecord] =
+  override def findRecord(id: RecordId): Option[CodeRecord] =
     throw new NotImplementedError("Not yet implemented.")
 
   override def createRecordForUser(username: String, id: RecordId): CodeRecord =
