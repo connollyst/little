@@ -1,13 +1,13 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.{FunctionDefinitionView, EventListenerView, WorkspaceView}
-import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
-import com.vaadin.ui.{AbsoluteLayout, TabSheet}
-import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
-import com.vaadin.event.dd.acceptcriteria.ContainsDataFlavor
-import com.quane.little.ide.view.html.dnd.CodeTransferable
-import com.quane.little.ide.presenter.command.{AddEventListenerCommand, AddFunctionDefinitionCommand, IDECommandExecutor}
 import com.quane.little.data.model.CodeType
+import com.quane.little.ide.presenter.command.{AddEventListenerCommand, AddFunctionDefinitionCommand, IDECommandExecutor}
+import com.quane.little.ide.view.html.dnd.{CodeTransferable, EventListenerTransferable}
+import com.quane.little.ide.view.{EventListenerView, FunctionDefinitionView, WorkspaceView}
+import com.quane.vaadin.scala.{DroppableTarget, VaadinMixin}
+import com.vaadin.event.dd.acceptcriteria.ContainsDataFlavor
+import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
+import com.vaadin.ui.{AbsoluteLayout, TabSheet}
 
 object WorkspaceTabSheet {
   val Style = "l-workspace"
@@ -69,13 +69,13 @@ class WorkspaceDropHandler(workspace: WorkspaceTabSheet) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeType.Function =>
+      case t: CodeTransferable if t.category == CodeType.Function =>
         IDECommandExecutor.execute(
-          new AddFunctionDefinitionCommand(workspace.presenter, transferable.codeId)
+          new AddFunctionDefinitionCommand(workspace.presenter, t.id)
         )
-      case transferable: CodeTransferable if transferable.category == CodeType.EventListener =>
+      case t: EventListenerTransferable =>
         IDECommandExecutor.execute(
-          new AddEventListenerCommand(workspace.presenter, transferable.codeId)
+          new AddEventListenerCommand(workspace.presenter, t.id)
         )
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)

@@ -72,8 +72,8 @@ private class LeftAndRightDropHandler(view: HasLeftAndRightExpressions, index: I
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeType.Function =>
-        view.requestSetCode(transferable.codeId, index)
+      case t: CodeTransferable if t.category == CodeType.Function =>
+        view.requestSetCode(t.id, index)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
     }

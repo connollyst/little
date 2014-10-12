@@ -1,10 +1,10 @@
 package com.quane.little.ide.view.html.dnd
 
-import com.quane.little.ide.presenter.PresenterAcceptsCode
-import com.quane.little.ide.view.{ViewPresenter, View}
 import com.quane.little.data.model.CodeType
-import com.vaadin.event.dd.{DropHandler, DragAndDropEvent}
+import com.quane.little.ide.presenter.PresenterAcceptsCode
+import com.quane.little.ide.view.{View, ViewPresenter}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
+import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 
 /** Drop handler for views which accept code.
   *
@@ -20,8 +20,8 @@ class CodeDropHandler[P <: ViewPresenter with PresenterAcceptsCode, V <: View[P]
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable if transferable.category == CodeType.Function =>
-        view.presenter.requestAddCode(transferable.codeId, index)
+      case t: CodeTransferable if t.category == CodeType.Function =>
+        view.presenter.requestAddCode(t.id, index)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
     }

@@ -7,7 +7,7 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.CodeType.CodeType
 import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.ToolboxView
-import com.quane.little.ide.view.html.dnd.CodeTransferable
+import com.quane.little.ide.view.html.dnd.{CodeTransferable, IDETransferable}
 import com.quane.vaadin.scala.VaadinMixin
 import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.ui.TabSheet.Tab

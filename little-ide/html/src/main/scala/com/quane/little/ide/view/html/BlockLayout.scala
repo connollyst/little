@@ -8,7 +8,7 @@ import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
 import com.quane.little.data.model.RecordId
-import com.quane.little.ide.view.html.dnd.CodeTransferable
+import com.quane.little.ide.view.html.dnd.IDETransferable
 
 object BlockLayout {
   val Style = "l-block"
@@ -157,7 +157,7 @@ class BlockDropHandler(block: BlockStepSeparator) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case transferable: CodeTransferable => block.addFunction(transferable.codeId)
+      case transferable: IDETransferable => block.addFunction(transferable.id)
       case _ => throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
     }
 
