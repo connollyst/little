@@ -7,7 +7,7 @@ package com.quane.little.data.model
 object CodeType extends Enumeration {
   type CodeType = Value
   // TODO this can be inferred by the class hierarchy!
-  val Primitive, Function, EventListener = Value
+  val Primitive, Function = Value
 }
 
 /** User to organize functions in the UI.
