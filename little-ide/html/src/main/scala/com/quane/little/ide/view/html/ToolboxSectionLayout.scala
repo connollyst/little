@@ -17,7 +17,7 @@ class ToolboxSectionComponent
   setSpacing(true)
 
   // TODO doesn't take separator into account
-  def count: Int = getComponentCount
+  def count: Int = getComponentCount - 1
 
 }
 

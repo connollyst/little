@@ -1,17 +1,19 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.ide.view.ToolboxView
-import com.vaadin.ui._
-import scala.collection.mutable
-import com.quane.little.data.model.{CodeType, RecordId}
-import com.quane.little.data.model.CodeCategory.CodeCategory
 import java.util
-import com.quane.little.ide.view.html.dnd.CodeTransferable
+
+import com.porotype.iconfont.FontAwesome.{Icon, IconVariant}
+import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.CodeType.CodeType
-import com.porotype.iconfont.FontAwesome.{IconVariant, Icon}
+import com.quane.little.data.model.{CodeType, RecordId}
+import com.quane.little.ide.view.ToolboxView
+import com.quane.little.ide.view.html.dnd.CodeTransferable
+import com.quane.vaadin.scala.VaadinMixin
 import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.ui.TabSheet.Tab
-import com.quane.vaadin.scala.VaadinMixin
+import com.vaadin.ui._
+
+import scala.collection.mutable
 
 object ToolboxLayout {
   val Style = "l-toolbox"
@@ -92,6 +94,9 @@ private class ToolboxItemContent(view: ToolboxLayout, title: String, codeType: C
   setSpacing(true)
 
   add(new Label(title))
+
+  println("Rendering " + codeType)
+
   if (codeType.equals(CodeType.Function)) {
     add(new ToolboxEditFunctionButton(view, codeId))
   }
