@@ -10,7 +10,7 @@ object CodeType extends Enumeration {
   val Primitive, Function = Value
 }
 
-/** User to organize functions in the UI.
+/** Used to organize functions in the UI.
   *
   * @author Sean Connolly
   */
