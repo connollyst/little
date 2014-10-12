@@ -117,7 +117,7 @@ class BasicPrimitiveService extends PrimitiveService {
       id => createRecord(new RecordId(id))
     }
 
-  override def exists(id: RecordId): Boolean = PrimitiveService.All.contains(id)
+  override def exists(id: RecordId): Boolean = PrimitiveService.All.contains(id.oid)
 
   override def find(id: RecordId): Code = PrimitiveFactory.create(id.oid)
 

@@ -1,14 +1,14 @@
 package com.quane.little.data.service
 
-import org.scalatest.FlatSpec
-import org.junit.runner.RunWith
-import org.scalatest.junit.JUnitRunner
-import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.language.FunctionDefinition
+import com.escalatesoft.subcut.inject.{Injectable, NewBindingModule}
+import com.mongodb.casbah.MongoClient
 import com.quane.little.data.model.CodeCategory
 import com.quane.little.data.{DataBindingModule, EmbeddedMongoDB}
-import com.mongodb.casbah.MongoClient
-import com.escalatesoft.subcut.inject.{Injectable, NewBindingModule}
+import com.quane.little.language.FunctionDefinition
+import org.junit.runner.RunWith
+import org.scalatest.FlatSpec
+import org.scalatest.junit.JUnitRunner
+import org.scalatest.matchers.ShouldMatchers
 
 /** Test cases for the [[com.quane.little.data.service.FunctionService]]
   *
