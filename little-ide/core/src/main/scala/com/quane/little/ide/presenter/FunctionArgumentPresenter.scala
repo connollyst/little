@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.CodeService
 import com.quane.little.ide.view._
 import com.quane.little.language._
 import com.quane.little.language.data.Value
@@ -18,7 +18,7 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
-  private val functionService = inject[FunctionService]
+  private val codeService = inject[CodeService]
 
   private var _name: String = ""
   private var _value: Option[CodeViewPresenter] = None
@@ -89,7 +89,10 @@ class FunctionArgumentPresenter[V <: FunctionArgumentView](view: V)(implicit val
   override def acceptedValueType: ValueType = valueType
 
   override def requestAddCode(id: RecordId, index: Int) =
-    value = functionService.findReference(id)
+    codeService.find(id) match {
+      case Some(c) => value = c
+      case None => throw new IllegalAccessException("No code found for id " + id.oid)
+    }
 
   override def compile(): Code = value.compile()
 

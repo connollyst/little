@@ -12,8 +12,7 @@ class LogicPresenter[V <: LogicView](protected val view: V)(implicit val binding
   extends LogicViewPresenter with PresenterOfLeftAndRightExpressions with Injectable {
 
   protected val presenterFactory = inject[PresenterFactory]
-  protected val expressionService = inject[CodeService]
-  protected val functionService = inject[FunctionService]
+  protected val codeService = inject[CodeService]
 
   private var _operation = LogicOperation.Equals
 

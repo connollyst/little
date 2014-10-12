@@ -14,8 +14,7 @@ class MathPresenter[V <: MathView](protected val view: V)(implicit val bindingMo
   extends MathViewPresenter with PresenterOfLeftAndRightExpressions with Injectable {
 
   protected val presenterFactory = inject[PresenterFactory]
-  protected val expressionService = inject[CodeService]
-  protected val functionService = inject[FunctionService]
+  protected val codeService = inject[CodeService]
 
   private var _operation = BasicMathOperation.Add
 

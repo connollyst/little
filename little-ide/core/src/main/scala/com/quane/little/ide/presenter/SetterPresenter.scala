@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.FunctionService
+import com.quane.little.data.service.CodeService
 import com.quane.little.ide.view._
 import com.quane.little.language._
 import com.quane.little.language.data.ValueType.ValueType
@@ -18,7 +18,7 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
   with Injectable {
 
   private val presenterFactory = inject[PresenterFactory]
-  private val functionService = inject[FunctionService]
+  private val codeService = inject[CodeService]
 
   private var _name = ""
   private var _value: Option[CodeViewPresenter] = None
@@ -79,7 +79,10 @@ class SetterPresenter[V <: SetterView](view: V)(implicit val bindingModule: Bind
   override def acceptedValueType: ValueType = ValueType.Something
 
   override def requestAddCode(id: RecordId, index: Int) =
-    value = functionService.findReference(id)
+    value = codeService.find(id) match {
+      case Some(c) => c
+      case None => throw new IllegalArgumentException("No code with id=" + id.oid)
+    }
 
   override def compile(): Setter = new Setter(_name, value.compile())
 

@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.RecordId
-import com.quane.little.data.service.{CodeService, FunctionService}
+import com.quane.little.data.service.CodeService
 import com.quane.little.ide.view._
 import com.quane.little.language._
 import com.quane.little.language.data.Value
@@ -20,9 +20,7 @@ trait PresenterOfLeftAndRightExpressions {
 
   protected def presenterFactory: PresenterFactory
 
-  protected def expressionService: CodeService
-
-  protected def functionService: FunctionService
+  protected def codeService: CodeService
 
   protected def view: ViewOfLeftAndRightExpressions
 
@@ -95,11 +93,17 @@ trait PresenterOfLeftAndRightExpressions {
     */
   def requestAddCode(id: RecordId, index: Int) =
     index match {
-      case 0 => left = functionService.findReference(id)
-      case 1 => right = functionService.findReference(id)
+      case 0 => left = find(id)
+      case 1 => right = find(id)
       case _ => throw new IllegalArgumentException(
         "Invalid left/right index " + index + ", expected 0 or 1"
       )
+    }
+
+  private def find(id: RecordId): Code =
+    codeService.find(id) match {
+      case Some(c) => c
+      case None => throw new IllegalArgumentException("Node code found for id=" + id.oid)
     }
 
 }
