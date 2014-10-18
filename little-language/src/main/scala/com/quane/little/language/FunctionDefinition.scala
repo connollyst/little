@@ -7,7 +7,8 @@ import com.quane.little.language.data.{Value, ValueType}
 import scala.collection.immutable
 import scala.collection.mutable.ListBuffer
 
-/** Defines a function.
+/** Defines a function.<br/>
+  * Note: a function definition _is not_ [[com.quane.little.language.Code]]
   *
   * @param name the function name
   * @param returnType the function's return type, defaults to [[com.quane.little.language.data.ValueType.Nothing]]

@@ -77,7 +77,6 @@ class ToolboxItem(view: ToolboxLayout, title: String, codeId: RecordId)
   extends DragAndDropWrapper(new ToolboxItemContent(view, title, codeId)) {
 
   setSizeUndefined()
-  // TODO should look something like the real expression/statement
   setStyleName(CodeLayout.Style)
   setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER)
 
@@ -92,10 +91,9 @@ private class ToolboxItemContent(view: ToolboxLayout, title: String, codeId: Rec
 
   setSpacing(true)
 
-  add(new Label(title))
-
   println("Rendering " + codeId.getClass)
 
+  add(new Label(title))
   add(new ToolboxEditFunctionButton(view, codeId))
 
 }
@@ -106,7 +104,7 @@ private class ToolboxNewFunctionButton(view: ToolboxLayout, category: CodeCatego
   setCaption(Icon.plus.variant(IconVariant.SIZE_LARGE))
   setHtmlContentAllowed(true)
   addClickListener(new ClickListener {
-    // TODO pass the codeType
+    // TODO pass the CodeCategory
     def buttonClick(event: ClickEvent) = view.presenter.requestNewFunctionDefinition()
   })
 
