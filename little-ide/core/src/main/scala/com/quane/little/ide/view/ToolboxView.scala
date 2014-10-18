@@ -1,8 +1,7 @@
 package com.quane.little.ide.view
 
-import com.quane.little.data.model.RecordId
 import com.quane.little.data.model.CodeCategory._
-import com.quane.little.data.model.CodeType.CodeType
+import com.quane.little.data.model.RecordId
 
 trait ToolboxView extends View[ToolboxViewPresenter] {
 
@@ -10,7 +9,7 @@ trait ToolboxView extends View[ToolboxViewPresenter] {
 
   def createToolboxTab(category: CodeCategory): Unit
 
-  def createToolboxItem(category: CodeCategory, title: String, codeType: CodeType, codeId: RecordId): Unit
+  def createToolboxItem(category: CodeCategory, title: String, codeId: RecordId): Unit
 
 }
 

@@ -26,9 +26,9 @@ class CodeMenuPresenter[C <: PresenterAcceptsCode](val view: CodeMenuView, conte
 
   private def addItem(record: CodeRecord): Unit =
     if (accepts(record)) {
-      view.addMenuItem(CodeType.Primitive, record.category, record.id, record.name)
+      view.addMenuItem(record.category, record.id, record.name)
     } else {
-      view.addMenuItemDisabled(CodeType.Primitive, record.category, record.id, record.name)
+      view.addMenuItemDisabled(record.category, record.id, record.name)
     }
 
   private def accepts(record: CodeRecord): Boolean =

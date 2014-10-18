@@ -3,7 +3,6 @@ package com.quane.little.ide.view.html.dnd
 import java.util
 
 import com.google.common.base.Objects
-import com.quane.little.data.model.CodeType._
 import com.quane.little.data.model.RecordId
 import com.vaadin.event.Transferable
 import com.vaadin.ui.Component
@@ -22,7 +21,7 @@ sealed trait IDETransferable extends Transferable {
 
   def id: RecordId
 
-  def data: mutable.Map[String, AnyRef]
+  val data = mutable.Map[String, AnyRef](IDETransferable.ID -> id)
 
   override def getSourceComponent = source
 
@@ -40,26 +39,6 @@ sealed trait IDETransferable extends Transferable {
 
 }
 
-class EventListenerTransferable(val source: Component, val id: RecordId) extends IDETransferable {
+class EventListenerTransferable(val source: Component, val id: RecordId) extends IDETransferable
 
-  var data = mutable.Map[String, AnyRef](
-    IDETransferable.ID -> id
-  )
-
-}
-
-class CodeTransferable(val source: Component, val category: CodeType, val id: RecordId) extends IDETransferable {
-
-  var data = mutable.Map[String, AnyRef](
-    IDETransferable.CATEGORY -> category,
-    IDETransferable.ID -> id
-  )
-
-  override def toString: String =
-    Objects.toStringHelper(getClass)
-      .add("id", id)
-      .add("category", category)
-      .add("source", source)
-      .toString
-
-}
+class CodeTransferable(val source: Component, val id: RecordId) extends IDETransferable

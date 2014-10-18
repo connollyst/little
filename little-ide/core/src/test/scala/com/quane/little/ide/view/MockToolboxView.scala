@@ -14,10 +14,9 @@ object MockToolboxView {
   */
 class MockToolboxView extends ToolboxView with MockView {
 
-  override def createToolboxItem(category: CodeCategory, title: String, codeType: CodeType, codeId: RecordId) = Unit
+  override def setSelectedTab(category: CodeCategory) = Unit
 
   override def createToolboxTab(category: CodeCategory) = Unit
 
-  override def setSelectedTab(category: CodeCategory) = Unit
-
+  override def createToolboxItem(category: CodeCategory, title: String, codeId: RecordId) = Unit
 }

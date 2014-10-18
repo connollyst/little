@@ -69,7 +69,7 @@ class WorkspaceDropHandler(workspace: WorkspaceTabSheet) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case t: CodeTransferable if t.category == CodeType.Function =>
+      case t: CodeTransferable =>
         IDECommandExecutor.execute(
           new AddFunctionDefinitionCommand(workspace.presenter, t.id)
         )

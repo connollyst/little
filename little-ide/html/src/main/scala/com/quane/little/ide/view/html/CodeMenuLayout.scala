@@ -1,7 +1,6 @@
 package com.quane.little.ide.view.html
 
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.CodeType.CodeType
 import com.quane.little.data.model.RecordId
 import com.quane.little.ide.presenter.PresenterAcceptsCode
 import com.quane.little.ide.presenter.command.{AddCodeCommand, IDECommandExecutor}
@@ -36,13 +35,13 @@ class CodeMenuLayout[P <: PresenterAcceptsCode](view: View[P], val index: () => 
     categories += codeCategory -> item
   }
 
-  override def addMenuItem(codeType: CodeType, codeCategory: CodeCategory, id: RecordId, name: String) =
-    addItem(codeType, codeCategory, id, name)
+  override def addMenuItem(codeCategory: CodeCategory, id: RecordId, name: String) =
+    addItem(codeCategory, id, name)
 
-  override def addMenuItemDisabled(codeType: CodeType, codeCategory: CodeCategory, id: RecordId, name: String) =
-    addItem(codeType, codeCategory, id, name).setEnabled(false)
+  override def addMenuItemDisabled(codeCategory: CodeCategory, id: RecordId, name: String) =
+    addItem(codeCategory, id, name).setEnabled(false)
 
-  private def addItem(codeType: CodeType, codeCategory: CodeCategory, id: RecordId, name: String) =
+  private def addItem(codeCategory: CodeCategory, id: RecordId, name: String) =
     categories(codeCategory).addItem(name,
       new Command {
         override def menuSelected(selectedItem: MenuBar#MenuItem) =

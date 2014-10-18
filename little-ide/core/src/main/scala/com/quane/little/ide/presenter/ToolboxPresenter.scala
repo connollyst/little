@@ -24,7 +24,7 @@ class ToolboxPresenter[V <: ToolboxView](val view: V)(implicit val bindingModule
   }
   codeService.allRecordsForUser("connollyst") foreach {
     code =>
-      view.createToolboxItem(code.category, code.name, CodeType.Primitive, code.id)
+      view.createToolboxItem(code.category, code.name, code.id)
   }
 
   override def requestNewFunctionDefinition() =

@@ -7,7 +7,7 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.CodeType.CodeType
 import com.quane.little.data.model.{CodeType, RecordId}
 import com.quane.little.ide.view.ToolboxView
-import com.quane.little.ide.view.html.dnd.{CodeTransferable, IDETransferable}
+import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.vaadin.scala.VaadinMixin
 import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.ui.TabSheet.Tab
@@ -42,8 +42,8 @@ class ToolboxLayout
     getTabContents(category).add(new ToolboxNewFunctionButton(this, category))
   }
 
-  override def createToolboxItem(category: CodeCategory, title: String, codeType: CodeType, codeId: RecordId) =
-    addToolboxItem(category, new ToolboxItem(this, title, codeType, codeId))
+  override def createToolboxItem(category: CodeCategory, title: String, codeId: RecordId) =
+    addToolboxItem(category, new ToolboxItem(this, title, codeId))
 
   private def addToolboxItem(category: CodeCategory, item: ToolboxItem) = {
     val tab = getTab(category)
@@ -71,11 +71,10 @@ class ToolboxLayout
   *
   * @param view the root toolbox view
   * @param title the item title
-  * @param codeType the code codeType
   * @param codeId the id for the represented code
   */
-class ToolboxItem(view: ToolboxLayout, title: String, codeType: CodeType, codeId: RecordId)
-  extends DragAndDropWrapper(new ToolboxItemContent(view, title, codeType, codeId)) {
+class ToolboxItem(view: ToolboxLayout, title: String, codeId: RecordId)
+  extends DragAndDropWrapper(new ToolboxItemContent(view, title, codeId)) {
 
   setSizeUndefined()
   // TODO should look something like the real expression/statement
@@ -83,11 +82,11 @@ class ToolboxItem(view: ToolboxLayout, title: String, codeType: CodeType, codeId
   setDragStartMode(DragAndDropWrapper.DragStartMode.WRAPPER)
 
   override def getTransferable(rawVariables: util.Map[String, AnyRef]) =
-    new CodeTransferable(this, codeType, codeId)
+    new CodeTransferable(this, codeId)
 
 }
 
-private class ToolboxItemContent(view: ToolboxLayout, title: String, codeType: CodeType, codeId: RecordId)
+private class ToolboxItemContent(view: ToolboxLayout, title: String, codeId: RecordId)
   extends HorizontalLayout
   with VaadinMixin {
 
@@ -95,11 +94,9 @@ private class ToolboxItemContent(view: ToolboxLayout, title: String, codeType: C
 
   add(new Label(title))
 
-  println("Rendering " + codeType)
+  println("Rendering " + codeId.getClass)
 
-  if (codeType.equals(CodeType.Function)) {
-    add(new ToolboxEditFunctionButton(view, codeId))
-  }
+  add(new ToolboxEditFunctionButton(view, codeId))
 
 }
 

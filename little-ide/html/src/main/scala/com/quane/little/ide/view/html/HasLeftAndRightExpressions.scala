@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.data.model.{CodeType, RecordId}
+import com.quane.little.data.model.RecordId
 import com.quane.little.ide.view.html.HasLeftAndRightExpressions._
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.ide.view.{CodeView, ViewOfLeftAndRightExpressions}
@@ -72,7 +72,7 @@ private class LeftAndRightDropHandler(view: HasLeftAndRightExpressions, index: I
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case t: CodeTransferable if t.category == CodeType.Function =>
+      case t: CodeTransferable =>
         view.requestSetCode(t.id, index)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)

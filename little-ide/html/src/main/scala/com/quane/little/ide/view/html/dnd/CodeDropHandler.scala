@@ -1,6 +1,5 @@
 package com.quane.little.ide.view.html.dnd
 
-import com.quane.little.data.model.CodeType
 import com.quane.little.ide.presenter.PresenterAcceptsCode
 import com.quane.little.ide.view.{View, ViewPresenter}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
@@ -20,7 +19,7 @@ class CodeDropHandler[P <: ViewPresenter with PresenterAcceptsCode, V <: View[P]
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case t: CodeTransferable if t.category == CodeType.Function =>
+      case t: CodeTransferable =>
         view.presenter.requestAddCode(t.id, index)
       case _ =>
         throw new IllegalAccessException("Drop not supported: " + event.getTransferable)
