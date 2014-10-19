@@ -62,7 +62,7 @@ class TestFunctionReferencePresenter
         val funDefinition = new FunctionDefinition(funName)
           .addParam("a", ValueType.String)
           .addParam("b", ValueType.Integer)
-          .addParam("c", ValueType.Boolean)
+          .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]
         when(funService.findDefinition("connollyst", funName)).thenReturn(funDefinition)
@@ -83,7 +83,7 @@ class TestFunctionReferencePresenter
         val funDefinition = new FunctionDefinition(funName)
           .addParam("a", ValueType.String)
           .addParam("b", ValueType.Integer)
-          .addParam("c", ValueType.Boolean)
+          .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]
         when(funService.findDefinition("connollyst", funName)).thenReturn(funDefinition)
@@ -114,7 +114,7 @@ class TestFunctionReferencePresenter
         val funDefinition = new FunctionDefinition(funName)
           .addParam("a", ValueType.String)
           .addParam("b", ValueType.Integer)
-          .addParam("c", ValueType.Boolean)
+          .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]
         when(funService.findDefinition("connollyst", funName)).thenReturn(funDefinition)
@@ -145,7 +145,7 @@ class TestFunctionReferencePresenter
         val funDefinition = new FunctionDefinition(funName)
           .addParam("a", ValueType.String)
           .addParam("b", ValueType.Integer)
-          .addParam("c", ValueType.Boolean)
+          .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]
         when(funService.findDefinition("connollyst", funName)).thenReturn(funDefinition)
@@ -176,7 +176,7 @@ class TestFunctionReferencePresenter
         val funDefinition = new FunctionDefinition(funName)
           .addParam("a", ValueType.String)
           .addParam("b", ValueType.Integer)
-          .addParam("c", ValueType.Boolean)
+          .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]
         when(funService.findDefinition("connollyst", funName)).thenReturn(funDefinition)
@@ -207,7 +207,7 @@ class TestFunctionReferencePresenter
         val funDefinition = new FunctionDefinition(funName)
           .addParam("a", ValueType.String)
           .addParam("b", ValueType.Integer)
-          .addParam("c", ValueType.Boolean)
+          .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]
         when(funService.findDefinition("connollyst", funName)).thenReturn(funDefinition)

@@ -58,7 +58,7 @@ sealed trait Value extends Code with Ordered[Value] {
     if (returnType == that.returnType) {
       return returnType match {
         case ValueType.String => asText compareTo that.asText
-        case ValueType.Boolean => asBool compareTo that.asBool
+        case ValueType.TrueFalse => asBool compareTo that.asBool
         case ValueType.Integer => asInt compareTo that.asInt
         case ValueType.Double => asDouble compareTo that.asDouble
         case _ => throw new IllegalAccessException("Unrecognized value type: " + toString)
@@ -69,11 +69,11 @@ sealed trait Value extends Code with Ordered[Value] {
       (returnType == ValueType.Integer && that.returnType == ValueType.Double)
         || (returnType == ValueType.Double && that.returnType == ValueType.Integer)
         // Compare int to boolean as int
-        || (returnType == ValueType.Integer && that.returnType == ValueType.Boolean)
-        || (returnType == ValueType.Boolean && that.returnType == ValueType.Integer)
+        || (returnType == ValueType.Integer && that.returnType == ValueType.TrueFalse)
+        || (returnType == ValueType.TrueFalse && that.returnType == ValueType.Integer)
         // Compare double to boolean as int
-        || (returnType == ValueType.Double && that.returnType == ValueType.Boolean)
-        || (returnType == ValueType.Boolean && that.returnType == ValueType.Double)
+        || (returnType == ValueType.Double && that.returnType == ValueType.TrueFalse)
+        || (returnType == ValueType.TrueFalse && that.returnType == ValueType.Double)
     ) {
       return asInt compareTo that.asInt
       // TODO what other conversions are possible? boolean to 'true'/'false'?
@@ -93,7 +93,7 @@ sealed trait Value extends Code with Ordered[Value] {
 
 class Bool(override val primitive: Boolean) extends Value {
 
-  override def returnType: ValueType = ValueType.Boolean
+  override def returnType: ValueType = ValueType.TrueFalse
 
   override def asBool: Boolean = primitive
 
