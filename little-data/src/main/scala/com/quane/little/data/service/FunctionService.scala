@@ -35,7 +35,7 @@ trait FunctionService {
 
   def findDefinition(username: String, functionName: String): FunctionDefinition
 
-  def update(id: FunctionId, fun: FunctionDefinition): FunctionRecord
+  def update(id: FunctionId, category: CodeCategory, fun: FunctionDefinition): FunctionRecord
 
   def insert(username: String, category: CodeCategory, fun: FunctionDefinition): FunctionRecord
 
@@ -97,12 +97,13 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
     throw new RuntimeException("No function definition '" + functionName + "' for user '" + username + "'")
   }
 
-  override def update(id: FunctionId, fun: FunctionDefinition): FunctionRecord = {
+  override def update(id: FunctionId, category: CodeCategory, fun: FunctionDefinition): FunctionRecord = {
     val repo = new FunctionRepository(collection)
     repo.find(id) match {
       case Some(record) =>
         // TODO check if name is taken by another function
         record.definition = fun
+        record.category = category
         repo.update(record)
         record
       case None => throw new RuntimeException("No function definition for " + id)

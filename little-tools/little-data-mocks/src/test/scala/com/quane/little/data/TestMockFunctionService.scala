@@ -60,7 +60,7 @@ class TestMockFunctionService extends WordSpec with ShouldMatchers with BeforeAn
         testUsernameA, CodeCategory.Misc, new FunctionDefinition("OriginalFunction")
       )
       val updatedFunction = functionService.update(
-        originalFunction.id, new FunctionDefinition("UpdatedFunction")
+        originalFunction.id, CodeCategory.Misc, new FunctionDefinition("UpdatedFunction")
       )
       originalFunction.id should be(updatedFunction.id)
     }
@@ -68,7 +68,7 @@ class TestMockFunctionService extends WordSpec with ShouldMatchers with BeforeAn
       val badId = "SomeFakeId"
       val error = intercept[IllegalArgumentException] {
         functionService.update(
-          new FunctionId(badId), new FunctionDefinition("UpdatedFunction")
+          new FunctionId(badId), CodeCategory.Misc, new FunctionDefinition("UpdatedFunction")
         )
       }
       error.getMessage should be("No function: " + badId)

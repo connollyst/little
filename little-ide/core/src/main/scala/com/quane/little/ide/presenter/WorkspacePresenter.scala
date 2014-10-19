@@ -1,5 +1,6 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.data.model.CodeCategory._
 import com.quane.little.ide.view.{WorkspaceViewPresenter, WorkspaceView}
 import com.quane.little.data.model.{FunctionId, ListenerId, Id}
 import com.quane.little.data.service.{ListenerService, FunctionService}
@@ -28,7 +29,7 @@ class WorkspacePresenter[V <: WorkspaceView](view: V)(implicit val bindingModule
     new EventListenerPresenter(view.createEventListener()).initialize(id, listener)
   }
 
-  override def requestAddBlankFunctionDefinition(index: Int = 0) =
+  override def requestAddBlankFunctionDefinition(category: CodeCategory, index: Int = 0) =
     new FunctionDefinitionPresenter(view.createFunctionDefinition())
 
   override def requestAddBlankEventListener(index: Int = 0) =

@@ -1,13 +1,14 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{FunctionId, CodeCategory, Id, FunctionRecord}
-import com.quane.little.ide.view.{CodeViewPresenter, FunctionDefinitionView, FunctionDefinitionViewPresenter}
-import com.quane.little.language.{FunctionParameter, FunctionDefinition, Code}
-import scala._
-import scala.collection.mutable.ListBuffer
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.quane.little.data.model.CodeCategory.CodeCategory
+import com.quane.little.data.model.{CodeCategory, FunctionId, FunctionRecord}
 import com.quane.little.data.service.FunctionService
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.ide.view.{CodeViewPresenter, FunctionDefinitionView, FunctionDefinitionViewPresenter}
 import com.quane.little.language.data.ValueType
+import com.quane.little.language.{Code, FunctionDefinition, FunctionParameter}
+
+import scala.collection.mutable.ListBuffer
 
 /** Presenter for views representing a [[com.quane.little.language.FunctionDefinition]].
   *
@@ -21,10 +22,11 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
   private val functionService = inject[FunctionService]
 
   private var _id: Option[FunctionId] = None
-  private val _username = "connollyst"
   private var _name = ""
+  private var _category = CodeCategory.Misc
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
   private val _block = new BlockPresenter(view.createBlock())
+  private val _username = "connollyst"
 
   view.registerViewPresenter(this)
 
@@ -67,6 +69,11 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
 
   private[presenter] def steps_=(steps: List[_ <: Code]): Unit = _block.steps = steps
 
+  private[presenter] def category: CodeCategory = _category
+
+  // TODO notify view
+  private[presenter] def category_=(category: CodeCategory) = _category = category
+
   override def onNameChange(name: String): Unit = _name = name
 
   override def requestAddParameter() = this += new FunctionParameter("", ValueType.String)
@@ -87,10 +94,10 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
     _id match {
       case Some(id) =>
         println("Saving changes to function definition " + id + "..")
-        functionService.update(id, fun)
+        functionService.update(id, category, fun)
       case None =>
         println("Saving new function definition..")
-        val record = functionService.insert(_username, CodeCategory.Misc, fun)
+        val record = functionService.insert(_username, category, fun)
         _id = Some(record.id)
         record
     }

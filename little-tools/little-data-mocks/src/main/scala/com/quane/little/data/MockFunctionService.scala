@@ -27,7 +27,7 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
     insert(new FunctionRecord(owner.id, category, fun))
   }
 
-  override def update(id: FunctionId, fun: FunctionDefinition): FunctionRecord = {
+  override def update(id: FunctionId, category: CodeCategory, fun: FunctionDefinition): FunctionRecord = {
     get(id) match {
       case Some(function) =>
         function.definition = fun

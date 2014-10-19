@@ -9,7 +9,7 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
   *
   * @author Sean Connolly
   */
-class FunctionRecord(val ownerId: UserId, val category: CodeCategory, var definition: FunctionDefinition)
+class FunctionRecord(val ownerId: UserId, var category: CodeCategory, var definition: FunctionDefinition)
   extends HasId[FunctionId] {
 
   @JsonProperty("_id")

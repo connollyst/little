@@ -1,5 +1,6 @@
 package com.quane.little.ide.presenter
 
+import com.quane.little.data.model.CodeCategory.CodeCategory
 import com.quane.little.data.model.{ListenerId, FunctionId, Id}
 import com.quane.little.ide.view.ViewPresenter
 import com.quane.little.language.data.ValueType
@@ -34,7 +35,7 @@ trait PresenterAcceptsFunctionDefinition extends PresenterAccepts {
 
   def requestAddFunctionDefinition(id: FunctionId, index: Int): Unit
 
-  def requestAddBlankFunctionDefinition(index: Int): Unit
+  def requestAddBlankFunctionDefinition(category: CodeCategory, index: Int): Unit
 
 }
 

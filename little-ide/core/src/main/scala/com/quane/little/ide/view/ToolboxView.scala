@@ -15,7 +15,7 @@ trait ToolboxView extends View[ToolboxViewPresenter] {
 
 trait ToolboxViewPresenter extends ViewPresenter {
 
-  def requestNewFunctionDefinition()
+  def requestNewFunctionDefinition(category: CodeCategory)
 
   def openFunctionDefinition(id: FunctionId): Unit
 

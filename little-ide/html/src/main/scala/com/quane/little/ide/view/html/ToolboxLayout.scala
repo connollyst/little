@@ -90,8 +90,6 @@ private class ToolboxItemContent(view: ToolboxLayout, title: String, id: Id)
 
   setSpacing(true)
 
-  println("Rendering " + id.getClass)
-
   add(new Label(title))
   id match {
     case f: FunctionId => add(new ToolboxEditButton(view, f))
@@ -109,8 +107,7 @@ private class ToolboxNewButton(view: ToolboxLayout, category: CodeCategory)
   setCaption(Icon.plus.variant(IconVariant.SIZE_LARGE))
   setHtmlContentAllowed(true)
   addClickListener(new ClickListener {
-    // TODO pass the CodeCategory
-    def buttonClick(event: ClickEvent) = view.presenter.requestNewFunctionDefinition()
+    def buttonClick(event: ClickEvent) = view.presenter.requestNewFunctionDefinition(category)
   })
 
 }
