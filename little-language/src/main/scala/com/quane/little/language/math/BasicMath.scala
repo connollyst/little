@@ -83,8 +83,7 @@ class Addition(l: Code, r: Code) extends BasicMath(l, r) {
 
   override def operation = BasicMathOperation.Add
 
-  override def evaluate(left: Value, right: Value): Value =
-    Value(left.asDouble + right.asDouble)
+  override def evaluate(left: Value, right: Value): Value = left.asNumber + right.asNumber
 
 }
 
@@ -100,8 +99,7 @@ class Subtraction(l: Code, r: Code) extends BasicMath(l, r) {
 
   override def operation = BasicMathOperation.Subtract
 
-  override def evaluate(left: Value, right: Value): Value =
-    Value(left.asDouble - right.asDouble)
+  override def evaluate(left: Value, right: Value): Value = left.asNumber - right.asNumber
 
 }
 
@@ -117,8 +115,7 @@ class Multiplication(l: Code, r: Code) extends BasicMath(l, r) {
 
   override def operation = BasicMathOperation.Multiply
 
-  override def evaluate(left: Value, right: Value): Value =
-    Value(left.asDouble * right.asDouble)
+  override def evaluate(left: Value, right: Value): Value = left.asNumber * right.asNumber
 
 }
 
@@ -134,7 +131,6 @@ class Division(l: Code, r: Code) extends BasicMath(l, r) {
 
   override def operation = BasicMathOperation.Divide
 
-  override def evaluate(left: Value, right: Value): Value =
-    Value(left.asDouble / right.asDouble)
+  override def evaluate(left: Value, right: Value): Value = left.asNumber / right.asNumber
 
 }

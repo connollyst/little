@@ -16,27 +16,27 @@ class TestValueDeserialization
 
   "json deserializer" should "deserialize value blank" in {
     val value = deserialize[Value]("value_blank")
-    value should be(new Text(""))
+    value should be(new TextValue(""))
   }
   it should "deserialize value string" in {
     val value = deserialize[Value]("value_string")
-    value should be(new Text("abc"))
+    value should be(new TextValue("abc"))
   }
   it should "deserialize value integer" in {
     val value = deserialize[Value]("value_integer")
-    value should be(new NumberSimple(1234))
+    value should be(new NumberValue(1234))
   }
   it should "deserialize value double" in {
     val value = deserialize[Value]("value_double")
-    value should be(new NumberDecimal(12.34))
+    value should be(new NumberValue(12.34))
   }
   it should "deserialize value boolean true" in {
     val value = deserialize[Value]("value_boolean_true")
-    value should be(new Bool(true))
+    value should be(new TrueFalseValue(true))
   }
   it should "deserialize value boolean false" in {
     val value = deserialize[Value]("value_boolean_false")
-    value should be(new Bool(false))
+    value should be(new TrueFalseValue(false))
   }
 
 }

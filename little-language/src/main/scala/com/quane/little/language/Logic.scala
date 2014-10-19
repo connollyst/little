@@ -1,9 +1,9 @@
 package com.quane.little.language
 
-import com.quane.little.language.data.ValueType.ValueType
-import com.quane.little.language.data.{ValueType, Value}
 import com.google.common.base.Objects
 import com.quane.little.language.LogicOperation.LogicOperation
+import com.quane.little.language.data.ValueType.ValueType
+import com.quane.little.language.data.{Value, ValueType}
 
 /** An enumeration of all operations supported by the
   * [[com.quane.little.language.Logic]] expression.
@@ -31,10 +31,10 @@ class Logic(val left: Code, val operation: LogicOperation, val right: Code) exte
     val r = right.evaluate(scope)
     Value(
       operation match {
-        case LogicOperation.Equals => l equals r
-        case LogicOperation.NotEquals => !(l equals r)
-        case LogicOperation.LessThan => (l compare r) < 0
-        case LogicOperation.GreaterThan => (l compare r) > 0
+        case LogicOperation.Equals => l == r
+        case LogicOperation.NotEquals => l != r
+        case LogicOperation.LessThan => l < r
+        case LogicOperation.GreaterThan => l > r
         case LogicOperation.And => l.asBool && r.asBool
         case LogicOperation.Or => l.asBool || r.asBool
       }

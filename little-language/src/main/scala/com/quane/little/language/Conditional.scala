@@ -5,13 +5,12 @@ import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.data.{Value, ValueType}
 
 
-/** An [[Code]] which evaluates the `then` block if the `test` evaluates
-  * to `true`, and the `otherwise` block if not.
+/** [[com.quane.little.language.Code]] which evaluates the `then` block if the `test` evaluates to `true`, and the
+  * `otherwise` block if not.
   *
   * @author Sean Connolly
   */
-class Conditional(val test: Code, val then: Block, val otherwise: Block)
-  extends Code {
+class Conditional(val test: Code, val then: Block, val otherwise: Block) extends Code {
 
   def this(test: Code) = this(test, new Block, new Block)
 
@@ -23,12 +22,13 @@ class Conditional(val test: Code, val then: Block, val otherwise: Block)
   // TODO only returns something if block returns something
   override def returnType: ValueType = ValueType.Something
 
-  /** Evaluate the conditional statement; only if the ''test'' evaluates
-    * to `true`, the ''function'' is evaluated.
+  /** Evaluate the conditional statement.
+    *
+    * The `then` block is evaluated if the `test` evaluates to `true`, otherwise the `otherwise` block is evaluated.
     */
   override def evaluate(scope: Scope): Value =
   // TODO asBool is not very safe
-    if (test.evaluate(scope).asBool) {
+    if (test.evaluate(scope).asBool.primitive) {
       then.evaluate(scope)
     } else {
       otherwise.evaluate(scope)

@@ -6,23 +6,23 @@
         "name": "MyFunction",
         "args": {
             "arg1": {
-                "_class": "com.quane.little.language.data.Text",
+                "_class": "com.quane.little.language.data.TextValue",
                 "primitive": "abc"
             },
             "arg2": {
-                "_class": "com.quane.little.language.data.NumberSimple",
+                "_class": "com.quane.little.language.data.NumberValue",
                 "primitive": 1234
             },
             "arg3": {
-                "_class": "com.quane.little.language.data.NumberDecimal",
+                "_class": "com.quane.little.language.data.NumberValue",
                 "primitive": 12.34
             },
             "arg4": {
-                "_class": "com.quane.little.language.data.Bool",
+                "_class": "com.quane.little.language.data.TrueFalseValue",
                 "primitive": true
             },
             "arg5": {
-                "_class": "com.quane.little.language.data.Bool",
+                "_class": "com.quane.little.language.data.TrueFalseValue",
                 "primitive": false
             }
         }

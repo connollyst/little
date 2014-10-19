@@ -3,15 +3,15 @@
     "name": "function_reference_with_multiple_value_args",
     "args": {
         "x": {
-            "_class": "com.quane.little.language.data.Text",
+            "_class": "com.quane.little.language.data.TextValue",
             "primitive": "abc"
         },
         "y": {
-            "_class": "com.quane.little.language.data.NumberSimple",
+            "_class": "com.quane.little.language.data.NumberValue",
             "primitive": 123
         },
         "z": {
-            "_class": "com.quane.little.language.data.Bool",
+            "_class": "com.quane.little.language.data.TrueFalseValue",
             "primitive": true
         }
     }

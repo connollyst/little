@@ -19,7 +19,7 @@
                 "name": "degrees",
                 "valueType": {
                     "enumClass": "com.quane.little.language.data.ValueType",
-                    "value": "Integer"
+                    "value": "Number"
                 }
             }
         ],

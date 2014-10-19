@@ -11,8 +11,8 @@ sealed trait AdvancedMath extends Math
 class ArcTan(val x: Code) extends AdvancedMath {
 
   override def evaluate(scope: Scope): Value = {
-    val numberA = x.evaluate(scope).asInt
-    Value(atan(numberA))
+    val numberA = x.evaluate(scope).asNumber
+    Value(atan(numberA.asInt))
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[ArcTan]
@@ -38,9 +38,9 @@ class ArcTan(val x: Code) extends AdvancedMath {
 class ArcTan2(val l: Code, val r: Code) extends AdvancedMath {
 
   override def evaluate(scope: Scope): Value = {
-    val left = l.evaluate(scope).asInt
-    val right = r.evaluate(scope).asInt
-    Value(atan2(left, right))
+    val left = l.evaluate(scope).asNumber
+    val right = r.evaluate(scope).asNumber
+    Value(atan2(left.asInt, right.asInt))
   }
 
   def canEqual(other: Any): Boolean = other.isInstanceOf[ArcTan2]

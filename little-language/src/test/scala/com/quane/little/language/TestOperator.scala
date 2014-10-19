@@ -38,31 +38,31 @@ class TestOperator extends FunSuite {
   test("set direction") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction = Value(42)
-    assert(guy.direction.asInt == 42, "expected direction to be 42 but it was " + guy.direction)
+    assert(guy.direction.asNumber == 42, "expected direction to be 42 but it was " + guy.direction)
   }
 
   test("set direction: low limit") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction = Value(0) // A-Ok
-    assert(guy.direction.asInt == 0, "expected direction to be 0 but it was " + guy.direction)
+    assert(guy.direction.asNumber == 0, "expected direction to be 0 but it was " + guy.direction)
   }
 
   test("set direction: high limit") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction = Value(360) // is really 0 degrees
-    assert(guy.direction.asInt == 0, "expected direction to be 0 but it was " + guy.direction)
+    assert(guy.direction.asNumber == 0, "expected direction to be 0 but it was " + guy.direction)
   }
 
   test("set direction: very high") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction = Value(360 * 42 + 137) // modulus should remove the excess
-    assert(guy.direction.asInt == 137, "expected direction to be 137 but it was " + guy.direction)
+    assert(guy.direction.asNumber == 137, "expected direction to be 137 but it was " + guy.direction)
   }
 
   test("set direction: very low") {
     val guy = new Operator(new Runtime, new StubOperable)
     guy.direction = Value(0 - 137) // negative degrees should loop around
-    assert(guy.direction.asInt == (360 - 137), "expected direction to be " + (360 - 137) + " but it was " + guy.direction)
+    assert(guy.direction.asNumber == (360 - 137), "expected direction to be " + (360 - 137) + " but it was " + guy.direction)
   }
 
 }

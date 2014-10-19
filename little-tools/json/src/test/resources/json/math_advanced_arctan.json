@@ -1,7 +1,7 @@
 {
     "_class": "com.quane.little.language.math.ArcTan",
     "x": {
-        "_class": "com.quane.little.language.data.NumberSimple",
+        "_class": "com.quane.little.language.data.NumberValue",
         "primitive": 1234
     }
 }

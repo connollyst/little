@@ -2,7 +2,7 @@
     "_class": "com.quane.little.language.Setter",
     "name": "MyVariable",
     "value": {
-        "_class": "com.quane.little.language.data.NumberSimple",
+        "_class": "com.quane.little.language.data.NumberValue",
         "primitive": 1234
     }
 }

@@ -4,16 +4,23 @@ import com.google.common.base.Objects
 import com.quane.little.language.data.ValueType.ValueType
 import com.quane.little.language.data.{Nada, Value, ValueType}
 
-/** Factory for [[com.quane.little.language.Setter]] instances. **/
+/** Factory for [[com.quane.little.language.Setter]] instances. */
 object Setter {
 
   def apply(name: String, value: String): Setter = new Setter(name, Value(value))
 
   def apply(name: String, value: Boolean): Setter = new Setter(name, Value(value))
 
+  def apply(name: String, value: BigDecimal): Setter = new Setter(name, Value(value))
+
   def apply(name: String, value: Int): Setter = new Setter(name, Value(value))
 
+  def apply(name: String, value: Long): Setter = new Setter(name, Value(value))
+
+  def apply(name: String, value: Float): Setter = new Setter(name, Value(value))
+
   def apply(name: String, value: Double): Setter = new Setter(name, Value(value))
+
 
 }
 

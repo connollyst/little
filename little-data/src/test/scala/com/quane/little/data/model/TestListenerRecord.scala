@@ -13,7 +13,7 @@ import java.net.URL
 import com.google.common.io.Files
 import com.quane.little.language.event.{EventListener, Event}
 import com.quane.little.language.math.Addition
-import com.quane.little.language.data.NumberSimple
+import com.quane.little.language.data.NumberValue
 
 /** Test cases for the [[com.quane.little.data.model.ListenerRecord]].
   *
@@ -36,7 +36,7 @@ class TestListenerRecord extends WordSpec with ShouldMatchers {
     Operable.DIRECTION,
     new Addition(
       new Getter(Operable.DIRECTION),
-      new NumberSimple(180)
+      new NumberValue(180)
     ))
   )
   val complexListenerId = new ListenerId("ComplexListenerRecordID")

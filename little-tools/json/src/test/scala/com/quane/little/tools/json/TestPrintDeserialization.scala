@@ -17,23 +17,23 @@ class TestPrintDeserialization
 
   "json deserializer" should "deserialize print string" in {
     val print = deserialize[Printer]("print_string")
-    print should be(new Printer(new Text("abc")))
+    print should be(new Printer(new TextValue("abc")))
   }
   it should "deserialize print integer" in {
     val print = deserialize[Printer]("print_integer")
-    print should be(new Printer(new NumberSimple(1234)))
+    print should be(new Printer(new NumberValue(1234)))
   }
   it should "deserialize print double" in {
     val print = deserialize[Printer]("print_double")
-    print should be(new Printer(new NumberDecimal(12.34)))
+    print should be(new Printer(new NumberValue(12.34)))
   }
   it should "deserialize print boolean true" in {
     val print = deserialize[Printer]("print_boolean_true")
-    print should be(new Printer(new Bool(true)))
+    print should be(new Printer(new TrueFalseValue(true)))
   }
   it should "deserialize print boolean false" in {
     val print = deserialize[Printer]("print_boolean_false")
-    print should be(new Printer(new Bool(false)))
+    print should be(new Printer(new TrueFalseValue(false)))
   }
 
 }

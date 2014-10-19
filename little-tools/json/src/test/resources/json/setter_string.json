@@ -2,7 +2,7 @@
     "_class": "com.quane.little.language.Setter",
     "name": "MyVariable",
     "value": {
-        "_class": "com.quane.little.language.data.Text",
+        "_class": "com.quane.little.language.data.TextValue",
         "primitive": "abc"
     }
 }

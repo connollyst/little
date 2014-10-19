@@ -22,7 +22,7 @@
                         "name": "_little_direction"
                     },
                     "r": {
-                        "_class": "com.quane.little.language.data.NumberSimple",
+                        "_class": "com.quane.little.language.data.NumberValue",
                         "primitive": 180
                     }
                 }

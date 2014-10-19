@@ -1,11 +1,11 @@
 {
     "_class": "com.quane.little.language.math.Division",
     "l": {
-        "_class": "com.quane.little.language.data.NumberSimple",
+        "_class": "com.quane.little.language.data.NumberValue",
         "primitive": 1234
     },
     "r": {
-        "_class": "com.quane.little.language.data.NumberDecimal",
+        "_class": "com.quane.little.language.data.NumberValue",
         "primitive": 56.78
     }
 }

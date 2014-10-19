@@ -18,7 +18,7 @@ class TestBasicMath extends FunSuite {
     val pi = Value(scala.math.Pi)
     val piPlusPi = new Addition(pi, pi).evaluate(new Runtime)
     val twoPi = new Multiplication(Value(2), pi).evaluate(new Runtime)
-    assert(piPlusPi == twoPi, piPlusPi.asDouble + " == " + twoPi.asDouble)
+    assert(piPlusPi == twoPi, piPlusPi.asNumber + " == " + twoPi.asNumber)
   }
 
 }

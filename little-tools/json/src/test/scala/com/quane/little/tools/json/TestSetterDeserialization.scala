@@ -19,31 +19,31 @@ class TestSetterDeserialization
     val name = "setter_string"
     val setter = deserialize[Setter](name)
     setter.name should be("MyVariable")
-    setter.value should be(new Text("abc"))
+    setter.value should be(new TextValue("abc"))
   }
   it should "deserialize a setter with an integer value" in {
     val name = "setter_integer"
     val setter = deserialize[Setter](name)
     setter.name should be("MyVariable")
-    setter.value should be(new NumberSimple(1234))
+    setter.value should be(new NumberValue(1234))
   }
   it should "deserialize a setter with an double value" in {
     val name = "setter_double"
     val setter = deserialize[Setter](name)
     setter.name should be("MyVariable")
-    setter.value should be(new NumberDecimal(12.34))
+    setter.value should be(new NumberValue(12.34))
   }
   it should "deserialize a setter with an boolean value (true)" in {
     val name = "setter_boolean_true"
     val setter = deserialize[Setter](name)
     setter.name should be("MyVariable")
-    setter.value should be(new Bool(true))
+    setter.value should be(new TrueFalseValue(true))
   }
   it should "deserialize a setter with an boolean value (false)" in {
     val name = "setter_boolean_false"
     val setter = deserialize[Setter](name)
     setter.name should be("MyVariable")
-    setter.value should be(new Bool(false))
+    setter.value should be(new TrueFalseValue(false))
   }
   it should "deserialize a setter with a function reference" in {
     val name = "setter_function_reference"

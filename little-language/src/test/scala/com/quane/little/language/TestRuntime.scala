@@ -47,7 +47,7 @@ class TestRuntime extends WordSpec with ShouldMatchers with MockitoSugar {
       original.addParam("y", ValueType.Number)
       runtime.saveFunction(original)
       val duplicate = new FunctionDefinition("myFunction")
-      duplicate.addParam("z", ValueType.Double)
+      duplicate.addParam("z", ValueType.Text)
       // Then
       intercept[IllegalAccessException] {
         // When

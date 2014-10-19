@@ -3,11 +3,11 @@
     "_class": "com.quane.little.language.Block",
     "steps": [
         {
-            "_class": "com.quane.little.language.data.Text",
+            "_class": "com.quane.little.language.data.TextValue",
             "primitive": "abc"
         },
         {
-            "_class": "com.quane.little.language.data.NumberSimple",
+            "_class": "com.quane.little.language.data.NumberValue",
             "primitive": 123
         }
     ]

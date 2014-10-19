@@ -1,4 +1,4 @@
 {
-    "_class": "com.quane.little.language.data.Bool",
+    "_class": "com.quane.little.language.data.TrueFalseValue",
     "primitive": false
 }

@@ -1,20 +1,11 @@
 package com.quane.little.language.data
 
-import java.lang.ClassCastException
 import org.junit.runner.RunWith
 import org.scalatest.FunSuite
 import org.scalatest.junit.JUnitRunner
 
 @RunWith(classOf[JUnitRunner])
 class TestValue extends FunSuite {
-
-  /* Test Unit Isn't Allowed */
-
-  test("unit throws error") {
-    intercept[IllegalArgumentException] {
-      Value()
-    }
-  }
 
   /* Test Boolean Values */
 
@@ -30,12 +21,12 @@ class TestValue extends FunSuite {
 
   test("true as number") {
     val t = Value(true)
-    assert(t.asInt == 1, "true as a number should be 1")
+    assert(t.asNumber == 1, "true as a number should be 1")
   }
 
   test("false as number") {
     val f = Value(false)
-    assert(f.asInt == 0, "false as a number should be 0")
+    assert(f.asNumber == 0, "false as a number should be 0")
   }
 
   test("true as text") {
@@ -67,7 +58,7 @@ class TestValue extends FunSuite {
 
   test("number as number") {
     val num = Value(137)
-    assert(num.asInt == 137, "137 as a number should be 137")
+    assert(num.asNumber == 137, "137 as a number should be 137")
   }
 
   test("number as text") {
@@ -96,23 +87,23 @@ class TestValue extends FunSuite {
 
   test("'137' as number") {
     val text = Value("137")
-    assert(text.asInt == 137, "'137' as a number should be 137")
+    assert(text.asNumber == 137, "'137' as a number should be 137")
   }
 
   test("'true' as number") {
     val text = Value("true")
-    assert(text.asInt == 1, "'true' as a number should be 1")
+    assert(text.asNumber == 1, "'true' as a number should be 1")
   }
 
   test("'false' as number") {
     val text = Value("false")
-    assert(text.asInt == 0, "'false' as a number should be 0")
+    assert(text.asNumber == 0, "'false' as a number should be 0")
   }
 
   test("'hello world' as number") {
     val text = Value("hello world")
     intercept[ClassCastException] {
-      text.asInt
+      text.asNumber
     }
   }
 
@@ -145,7 +136,7 @@ class TestValue extends FunSuite {
 
   test("nada as number") {
     val nada = new Nada
-    assert(nada.asInt == 0, "nada as a number should be 0")
+    assert(nada.asNumber == 0, "nada as a number should be 0")
   }
 
   test("nada as text") {

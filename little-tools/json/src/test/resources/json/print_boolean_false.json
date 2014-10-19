@@ -1,7 +1,7 @@
 {
     "_class": "com.quane.little.language.Printer",
     "value": {
-        "_class": "com.quane.little.language.data.Bool",
+        "_class": "com.quane.little.language.data.TrueFalseValue",
         "primitive": false
     }
 }

@@ -5,7 +5,7 @@
         {
             "_class": "com.quane.little.language.Printer",
             "value": {
-                "_class": "com.quane.little.language.data.Text",
+                "_class": "com.quane.little.language.data.TextValue",
                 "primitive": "Hello World!"
             }
         }

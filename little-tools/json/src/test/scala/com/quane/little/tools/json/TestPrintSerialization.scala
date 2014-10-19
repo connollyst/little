@@ -17,27 +17,27 @@ class TestPrintSerialization
 
   "JSON serializer" should "serialize print string" in {
     val name = "print_string"
-    val v = new Printer(new Text("abc"))
+    val v = new Printer(new TextValue("abc"))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize print integer" in {
     val name = "print_integer"
-    val v = new Printer(new NumberSimple(1234))
+    val v = new Printer(new NumberValue(1234))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize print double" in {
     val name = "print_double"
-    val v = new Printer(new NumberDecimal(12.34d))
+    val v = new Printer(new NumberValue(12.34d))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize print boolean true" in {
     val name = "print_boolean_true"
-    val v = new Printer(new Bool(true))
+    val v = new Printer(new TrueFalseValue(true))
     assertSerialization(getJSON(name), v)
   }
   it should "serialize print boolean false" in {
     val name = "print_boolean_false"
-    val v = new Printer(new Bool(false))
+    val v = new Printer(new TrueFalseValue(false))
     assertSerialization(getJSON(name), v)
   }
 

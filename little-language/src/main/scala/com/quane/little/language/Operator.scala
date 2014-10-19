@@ -1,28 +1,29 @@
 package com.quane.little.language
 
 import com.quane.little.language.data.{Value, Variable}
-import com.quane.little.language.event.EventListener
-import scala.collection.mutable.ListBuffer
 import com.quane.little.language.event.Event.Event
+import com.quane.little.language.event.EventListener
+
+import scala.collection.mutable.ListBuffer
 
 class Operator(override val runtime: Runtime, mob: Operable) extends Scope(runtime) {
 
-  def x: Value = Value(mob.x toDouble)
+  def x: Value = Value(mob.x)
 
-  def y: Value = Value(mob.y toDouble)
+  def y: Value = Value(mob.y)
 
   def speed: Value = Value(mob.speed)
 
-  def speed_=(speed: Value): Unit = mob.speed = scala.math.max(Operable.MIN_SPEED, scala.math.min(speed asInt, Operable.MAX_SPEED))
+  def speed_=(speed: Value): Unit =
+    mob.speed = scala.math.max(Operable.MIN_SPEED, scala.math.min(speed.asNumber.asInt, Operable.MAX_SPEED))
 
   def direction: Value = Value(mob.direction)
 
   def direction_=(degrees: Value): Unit =
-    if (degrees.asInt < 0) {
-      // TODO can we avoid creating a new Value here?
-      direction = Value(360 + degrees.asInt)
+    if (degrees.asNumber < 0) {
+      direction = degrees.asNumber + 360
     } else {
-      mob.direction = degrees.asInt % 360
+      mob.direction = (degrees.asNumber % 360).asInt
     }
 
   val eventListeners = ListBuffer[EventListener]()

@@ -20,7 +20,7 @@ class ValuePresenter(val view: ValueView) extends ValueViewPresenter {
     * @return the initialized presenter
     */
   private[presenter] def initialize(v: Value): ValuePresenter = {
-    value = v.asText
+    value = v.asString
     this
   }
 

@@ -24,7 +24,7 @@ class Printer(val value: Code) extends Code with Logging {
   override def evaluate(scope: Scope): Value = {
     val text = value.evaluate(scope)
     // TODO this should display a speech bubble over the guy
-    error(text.asText)
+    error(text.asString)
     new Nada
   }
 

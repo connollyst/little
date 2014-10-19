@@ -42,12 +42,12 @@ class TestLogicWithBoolean extends FunSuite {
 
   private def assertEvaluatesToTrue(operation: Logic) = {
     val result = operation.evaluate(new Runtime)
-    assertTrue(result.asBool)
+    assertTrue(result.asBool.primitive)
   }
 
   private def assertEvaluatesToFalse(operation: Logic) = {
     val result = operation.evaluate(new Runtime)
-    assertFalse(result.asBool)
+    assertFalse(result.asBool.primitive)
   }
 
 }
