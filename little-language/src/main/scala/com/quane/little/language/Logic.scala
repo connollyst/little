@@ -41,7 +41,7 @@ class Logic(val left: Code, val operation: LogicOperation, val right: Code) exte
     )
   }
 
-  override def returnType(): ValueType = ValueType.Boolean
+  override def returnType: ValueType = ValueType.Boolean
 
   override def equals(other: Any): Boolean = other match {
     case that: Logic =>
