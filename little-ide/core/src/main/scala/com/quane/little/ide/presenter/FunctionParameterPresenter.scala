@@ -13,7 +13,7 @@ class FunctionParameterPresenter[V <: FunctionParameterView](view: V)
   extends FunctionParameterViewPresenter {
 
   private var _name = ""
-  private var _valueType = ValueType.String
+  private var _valueType = ValueType.Text
 
   view.registerViewPresenter(this)
 

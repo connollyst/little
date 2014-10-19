@@ -76,7 +76,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
 
   override def onNameChange(name: String): Unit = _name = name
 
-  override def requestAddParameter() = this += new FunctionParameter("", ValueType.String)
+  override def requestAddParameter() = this += new FunctionParameter("", ValueType.Text)
 
   override def compile(): FunctionDefinition = {
     val fun = new FunctionDefinition(_name)

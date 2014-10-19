@@ -60,7 +60,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
           .addParam("b", ValueType.Integer)
           .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
@@ -81,7 +81,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
           .addParam("b", ValueType.Integer)
           .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
@@ -112,7 +112,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
           .addParam("b", ValueType.Integer)
           .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
@@ -143,7 +143,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
           .addParam("b", ValueType.Integer)
           .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
@@ -174,7 +174,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
           .addParam("b", ValueType.Integer)
           .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
@@ -205,7 +205,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
           .addParam("b", ValueType.Integer)
           .addParam("c", ValueType.TrueFalse)
         val funRecord = new FunctionRecord(null, null, funDefinition)
@@ -283,7 +283,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]
         when(funService.findDefinition("connollyst", funName)).thenReturn(funDefinition)
@@ -303,7 +303,7 @@ class TestFunctionReferencePresenter
         // Given
         val funName = "TestFunction"
         val funDefinition = new FunctionDefinition(funName)
-          .addParam("a", ValueType.String)
+          .addParam("a", ValueType.Text)
           .addParam("b", ValueType.Integer)
         val funRecord = new FunctionRecord(null, null, funDefinition)
         val funService = mock[FunctionService]

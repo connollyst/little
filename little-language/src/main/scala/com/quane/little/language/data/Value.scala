@@ -57,7 +57,7 @@ sealed trait Value extends Code with Ordered[Value] {
     // 1) If the values are the same primitive type, compare the primitives
     if (returnType == that.returnType) {
       return returnType match {
-        case ValueType.String => asText compareTo that.asText
+        case ValueType.Text => asText compareTo that.asText
         case ValueType.TrueFalse => asBool compareTo that.asBool
         case ValueType.Integer => asInt compareTo that.asInt
         case ValueType.Double => asDouble compareTo that.asDouble
@@ -153,7 +153,7 @@ class NumberDecimal(override val primitive: Double) extends Value {
 
 class Text(override val primitive: String) extends Value {
 
-  override def returnType: ValueType = ValueType.String
+  override def returnType: ValueType = ValueType.Text
 
   override def asBool: Boolean = {
     if (primitive equalsIgnoreCase "true") {

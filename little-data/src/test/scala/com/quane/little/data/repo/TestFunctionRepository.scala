@@ -59,10 +59,10 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   it should "update function with known id (definition changes)" in {
     val originalDefinition = new FunctionDefinition("Original Function")
     val updatedDefinition = new FunctionDefinition("Updated Function")
-    originalDefinition.addParam("Param 1", ValueType.String)
-    originalDefinition.addParam("Param 2", ValueType.String)
-    updatedDefinition.addParam("Param A", ValueType.String)
-    updatedDefinition.addParam("Param B", ValueType.String)
+    originalDefinition.addParam("Param 1", ValueType.Text)
+    originalDefinition.addParam("Param 2", ValueType.Text)
+    updatedDefinition.addParam("Param A", ValueType.Text)
+    updatedDefinition.addParam("Param B", ValueType.Text)
     originalDefinition.addStep(new Printer(Value("Hello Original World!")))
     updatedDefinition.addStep(new Printer(Value("Hello Updated World!")))
     val repo = functionRepository

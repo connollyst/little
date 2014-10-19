@@ -51,7 +51,7 @@ class TestFunctionDefinitionPresenter extends WordSpec with MockitoSugar {
       val presenter = new FunctionDefinitionPresenter(view)
       val paramView = mock[FunctionParameterView]
       when(view.createFunctionParameter()).thenReturn(paramView)
-      presenter += new FunctionParameter("sean is cool", ValueType.String)
+      presenter += new FunctionParameter("sean is cool", ValueType.Text)
       verify(paramView).setName("sean is cool")
     }
     "add new parameter presenter when requested" in {
