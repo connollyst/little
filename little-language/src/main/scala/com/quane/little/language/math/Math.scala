@@ -7,6 +7,6 @@ import com.quane.little.language.data.ValueType.ValueType
 trait Math extends Code {
 
   // TODO why only integer?
-  override def returnType: ValueType = ValueType.Integer
+  override def returnType: ValueType = ValueType.Number
 
 }

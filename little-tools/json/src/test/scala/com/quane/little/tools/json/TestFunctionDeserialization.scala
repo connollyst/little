@@ -84,7 +84,7 @@ class TestFunctionDeserialization
       val fun = deserialize[FunctionDefinition](name)
       fun should be(
         new FunctionDefinition(name)
-          .addParam("input", ValueType.Integer)
+          .addParam("input", ValueType.Number)
           .addStep(new Addition(new Getter("input"), Value(1)))
       )
     }

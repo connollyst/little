@@ -15,7 +15,7 @@ object Functions {
 
   def move: FunctionDefinition =
     new FunctionDefinition("move", ValueType.Nothing)
-      .addParam("speed", ValueType.Integer)
+      .addParam("speed", ValueType.Number)
       .addStep(new Setter(Operable.SPEED, new Getter("speed")))
 
   def stop: FunctionDefinition =
@@ -24,7 +24,7 @@ object Functions {
 
   def turn: FunctionDefinition =
     new FunctionDefinition("turn", ValueType.Nothing)
-      .addParam("direction", ValueType.Integer)
+      .addParam("direction", ValueType.Number)
       .addStep(new Setter(Operable.DIRECTION, new Getter("direction")))
 
   def turnRandom: Block = {
@@ -40,7 +40,7 @@ object Functions {
     val getNewDirection = new Addition(getCurrentDir, dirChange)
     val setNewDirection = new Setter(Operable.DIRECTION, getNewDirection)
     new FunctionDefinition("turnRelative", ValueType.Nothing)
-      .addParam("degrees", ValueType.Integer)
+      .addParam("degrees", ValueType.Number)
       .addStep(setNewDirection)
   }
 

@@ -67,7 +67,7 @@ class TestFunctionSerialization
     "serialize 'increment' function definition" in {
       val name = "function_definition_increment"
       val fun = new FunctionDefinition(name)
-        .addParam("input", ValueType.Integer)
+        .addParam("input", ValueType.Number)
         .addStep(new Addition(new Getter("input"), Value(1)))
       val actual = new LittleJSON().serialize(fun)
       val expected = getJSON(name)

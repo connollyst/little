@@ -18,8 +18,8 @@ class TestRuntime extends WordSpec with ShouldMatchers with MockitoSugar {
       // Given
       val runtime = new Runtime
       val original = new FunctionDefinition("myFunction")
-      original.addParam("x", ValueType.Integer)
-      original.addParam("y", ValueType.Integer)
+      original.addParam("x", ValueType.Number)
+      original.addParam("y", ValueType.Number)
       runtime.saveFunction(original)
       // When
       val result = runtime.fetchFunction("myFunction")
@@ -30,8 +30,8 @@ class TestRuntime extends WordSpec with ShouldMatchers with MockitoSugar {
       // Given
       val runtime = new Runtime
       val original = new FunctionDefinition("myFunction")
-      original.addParam("x", ValueType.Integer)
-      original.addParam("y", ValueType.Integer)
+      original.addParam("x", ValueType.Number)
+      original.addParam("y", ValueType.Number)
       runtime.saveFunction(original)
       // Then
       intercept[IllegalAccessException] {
@@ -43,8 +43,8 @@ class TestRuntime extends WordSpec with ShouldMatchers with MockitoSugar {
       // Given
       val runtime = new Runtime
       val original = new FunctionDefinition("myFunction")
-      original.addParam("x", ValueType.Integer)
-      original.addParam("y", ValueType.Integer)
+      original.addParam("x", ValueType.Number)
+      original.addParam("y", ValueType.Number)
       runtime.saveFunction(original)
       val duplicate = new FunctionDefinition("myFunction")
       duplicate.addParam("z", ValueType.Double)

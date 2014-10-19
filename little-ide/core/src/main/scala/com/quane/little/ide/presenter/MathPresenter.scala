@@ -35,7 +35,7 @@ class MathPresenter[V <: MathView](protected val view: V)(implicit val bindingMo
     view.setOperation(o)
   }
 
-  override def acceptedValueType: ValueType = ValueType.Integer // TODO what about Double?
+  override def acceptedValueType: ValueType = ValueType.Number // TODO what about Double?
 
   override def onOperationChange(operation: BasicMathOperation) =
     _operation = operation

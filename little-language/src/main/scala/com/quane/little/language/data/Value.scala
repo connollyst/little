@@ -59,18 +59,18 @@ sealed trait Value extends Code with Ordered[Value] {
       return returnType match {
         case ValueType.Text => asText compareTo that.asText
         case ValueType.TrueFalse => asBool compareTo that.asBool
-        case ValueType.Integer => asInt compareTo that.asInt
+        case ValueType.Number => asInt compareTo that.asInt
         case ValueType.Double => asDouble compareTo that.asDouble
         case _ => throw new IllegalAccessException("Unrecognized value type: " + toString)
       }
     }
     // 2) If the primitive types are different, see if they can be cast (eg: Int & Double, Int & Boolean?)
     if ( // Compare int to double as int
-      (returnType == ValueType.Integer && that.returnType == ValueType.Double)
-        || (returnType == ValueType.Double && that.returnType == ValueType.Integer)
+      (returnType == ValueType.Number && that.returnType == ValueType.Double)
+        || (returnType == ValueType.Double && that.returnType == ValueType.Number)
         // Compare int to boolean as int
-        || (returnType == ValueType.Integer && that.returnType == ValueType.TrueFalse)
-        || (returnType == ValueType.TrueFalse && that.returnType == ValueType.Integer)
+        || (returnType == ValueType.Number && that.returnType == ValueType.TrueFalse)
+        || (returnType == ValueType.TrueFalse && that.returnType == ValueType.Number)
         // Compare double to boolean as int
         || (returnType == ValueType.Double && that.returnType == ValueType.TrueFalse)
         || (returnType == ValueType.TrueFalse && that.returnType == ValueType.Double)
@@ -116,7 +116,7 @@ class NumberSimple(override val primitive: Int)
   extends Value {
 
 
-  override def returnType: ValueType = ValueType.Integer
+  override def returnType: ValueType = ValueType.Number
 
   override def asBool: Boolean =
     primitive match {
