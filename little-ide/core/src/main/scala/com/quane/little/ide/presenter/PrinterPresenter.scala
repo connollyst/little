@@ -70,7 +70,7 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
   private def createCodeMenu(): Unit =
     presenterFactory.createCodeMenu[PrinterViewPresenter](view.createCodeMenu(), this)
 
-  override def acceptedValueType: ValueType = ValueType.Anything
+  override def acceptedValueType: ValueType = ValueType.Something
 
   override def requestAddCode(id: Id, index: Int) =
     text = codeService.find(id) match {
