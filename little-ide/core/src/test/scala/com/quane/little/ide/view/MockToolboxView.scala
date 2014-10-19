@@ -1,8 +1,7 @@
 package com.quane.little.ide.view
 
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.CodeType.CodeType
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.Id
 
 object MockToolboxView {
   def apply(): MockToolboxView = new MockToolboxView
@@ -18,5 +17,5 @@ class MockToolboxView extends ToolboxView with MockView {
 
   override def createToolboxTab(category: CodeCategory) = Unit
 
-  override def createToolboxItem(category: CodeCategory, title: String, codeId: RecordId) = Unit
+  override def createToolboxItem(category: CodeCategory, title: String, codeId: Id) = Unit
 }

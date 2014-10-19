@@ -4,8 +4,7 @@ import java.util
 
 import com.porotype.iconfont.FontAwesome.{Icon, IconVariant}
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.CodeType.CodeType
-import com.quane.little.data.model.{CodeType, RecordId}
+import com.quane.little.data.model.{FunctionId, Id, PrimitiveId}
 import com.quane.little.ide.view.ToolboxView
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.vaadin.scala.VaadinMixin
@@ -39,10 +38,10 @@ class ToolboxLayout
 
   override def createToolboxTab(category: CodeCategory) = {
     addTab(category, new ToolboxSectionComponent())
-    getTabContents(category).add(new ToolboxNewFunctionButton(this, category))
+    getTabContents(category).add(new ToolboxNewButton(this, category))
   }
 
-  override def createToolboxItem(category: CodeCategory, title: String, codeId: RecordId) =
+  override def createToolboxItem(category: CodeCategory, title: String, codeId: Id) =
     addToolboxItem(category, new ToolboxItem(this, title, codeId))
 
   private def addToolboxItem(category: CodeCategory, item: ToolboxItem) = {
@@ -73,7 +72,7 @@ class ToolboxLayout
   * @param title the item title
   * @param codeId the id for the represented code
   */
-class ToolboxItem(view: ToolboxLayout, title: String, codeId: RecordId)
+class ToolboxItem(view: ToolboxLayout, title: String, codeId: Id)
   extends DragAndDropWrapper(new ToolboxItemContent(view, title, codeId)) {
 
   setSizeUndefined()
@@ -85,20 +84,26 @@ class ToolboxItem(view: ToolboxLayout, title: String, codeId: RecordId)
 
 }
 
-private class ToolboxItemContent(view: ToolboxLayout, title: String, codeId: RecordId)
+private class ToolboxItemContent(view: ToolboxLayout, title: String, id: Id)
   extends HorizontalLayout
   with VaadinMixin {
 
   setSpacing(true)
 
-  println("Rendering " + codeId.getClass)
+  println("Rendering " + id.getClass)
 
   add(new Label(title))
-  add(new ToolboxEditFunctionButton(view, codeId))
+  id match {
+    case f: FunctionId => add(new ToolboxEditButton(view, f))
+    case p: PrimitiveId => // primitives can't be edited
+    case _ => throw new IllegalArgumentException(
+      "Cannot create " + classOf[ToolboxItemContent] + " for " + id.getClass
+    )
+  }
 
 }
 
-private class ToolboxNewFunctionButton(view: ToolboxLayout, category: CodeCategory)
+private class ToolboxNewButton(view: ToolboxLayout, category: CodeCategory)
   extends NativeButton {
 
   setCaption(Icon.plus.variant(IconVariant.SIZE_LARGE))
@@ -110,13 +115,13 @@ private class ToolboxNewFunctionButton(view: ToolboxLayout, category: CodeCatego
 
 }
 
-private class ToolboxEditFunctionButton(view: ToolboxLayout, codeId: RecordId)
+private class ToolboxEditButton(view: ToolboxLayout, id: FunctionId)
   extends NativeButton {
 
   setCaption(Icon.edit.variant(IconVariant.SIZE_LARGE))
   setHtmlContentAllowed(true)
   addClickListener(new ClickListener {
-    def buttonClick(event: ClickEvent) = view.presenter.openFunctionDefinition(codeId)
+    def buttonClick(event: ClickEvent) = view.presenter.openFunctionDefinition(id)
   })
 
 }

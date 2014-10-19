@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.Id
 import com.quane.little.ide.presenter.command.{AddCodeCommand, IDECommandExecutor}
 import com.quane.little.ide.view.MathView
 import com.quane.little.language.math.BasicMathOperation
@@ -35,7 +35,7 @@ class MathLayout
 
   override def setOperation(operation: BasicMathOperation) = operatorField.setValue(operation.toString)
 
-  override def requestSetCode(codeId: RecordId, index: Int) =
+  override def requestSetCode(codeId: Id, index: Int) =
     IDECommandExecutor.execute(
       new AddCodeCommand(presenter, codeId, index)
     )

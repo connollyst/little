@@ -1,7 +1,8 @@
 package com.quane.little.data.repo
 
+import com.mongodb.casbah.Imports
 import com.mongodb.casbah.Imports._
-import com.quane.little.data.model.{FunctionRecord, UserRecord}
+import com.quane.little.data.model.{FunctionId, FunctionRecord, UserRecord}
 
 /** Provides storage and retrieval access to the repository of
   * [[com.quane.little.data.model.FunctionRecord]] objects.
@@ -9,7 +10,7 @@ import com.quane.little.data.model.{FunctionRecord, UserRecord}
   * @author Sean Connolly
   */
 class FunctionRepository(collection: MongoCollection)
-  extends MongoRepository[FunctionRecord](collection) {
+  extends MongoRepository[FunctionId, FunctionRecord](collection) {
 
   def findByUser(user: UserRecord): List[FunctionRecord] = {
     val query = MongoDBObject("ownerId" -> user.id.toObjectId)
@@ -22,5 +23,7 @@ class FunctionRepository(collection: MongoCollection)
     val result = collection.findOne(query)
     deserialize(result)
   }
+
+  protected def recordId(oid: Imports.ObjectId) = new FunctionId(oid)
 
 }

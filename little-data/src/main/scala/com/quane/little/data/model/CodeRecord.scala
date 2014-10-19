@@ -9,8 +9,8 @@ import com.quane.little.language.Code
   *
   * @author Sean Connolly
   */
-class CodeRecord(var id: RecordId, val category: CodeCategory, val name: String, val code: Code)
-  extends HasRecordId {
+class CodeRecord(var id: Id, val category: CodeCategory, val name: String, val code: Code)
+  extends HasId[Id] {
 
   override def equals(other: Any): Boolean = other match {
     case that: CodeRecord =>
@@ -28,9 +28,9 @@ class CodeRecord(var id: RecordId, val category: CodeCategory, val name: String,
   override def toString: String =
     Objects.toStringHelper(getClass)
       .add("id", id)
-      .add("category", category)
       .add("name", name)
-      .add("expression", code)
+      .add("category", category)
+      .add("code", code)
       .toString
 
 }

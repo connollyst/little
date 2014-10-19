@@ -1,11 +1,11 @@
 package com.quane.little.data
 
-import com.quane.little.data.service.{UserService, ListenerService}
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
-import com.quane.little.data.model.{ListenerRecord, RecordId}
-import scala.collection.mutable.ListBuffer
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.quane.little.data.model.{ListenerId, ListenerRecord}
+import com.quane.little.data.service.{ListenerService, UserService}
 import com.quane.little.language.event.EventListener
-import scala.Some
+
+import scala.collection.mutable.ListBuffer
 
 /** A mock [[com.quane.little.data.service.ListenerService]] to be injected into
   * tests.
@@ -13,8 +13,10 @@ import scala.Some
   * @author Sean Connolly
   */
 class MockListenerService(implicit val bindingModule: BindingModule)
-  extends ListenerService
-  with MockService[ListenerRecord]
+  extends MockService[ListenerId, ListenerRecord](new IdFactory[ListenerId] {
+    override def next = new ListenerId(increment)
+  })
+  with ListenerService
   with Injectable {
 
   private val userService = inject[UserService]
@@ -24,12 +26,12 @@ class MockListenerService(implicit val bindingModule: BindingModule)
     insert(new ListenerRecord(owner.id, listener))
   }
 
-  override def update(id: RecordId, listener: EventListener): ListenerRecord = {
+  override def update(id: ListenerId, listener: EventListener): ListenerRecord = {
     get(id) match {
       case Some(function) =>
         function.listener = listener
         function
-      case None => throw new IllegalArgumentException("No listener: " + id.oid)
+      case None => throw new IllegalArgumentException("No listener: " + id.id)
     }
   }
 
@@ -46,10 +48,10 @@ class MockListenerService(implicit val bindingModule: BindingModule)
     userListeners.toList
   }
 
-  override def findListener(id: RecordId): EventListener =
+  override def findListener(id: ListenerId): EventListener =
     get(id) match {
       case Some(function) => function.listener
-      case None => throw new IllegalArgumentException("No listener: " + id.oid)
+      case None => throw new IllegalArgumentException("No listener: " + id.id)
     }
 
 }

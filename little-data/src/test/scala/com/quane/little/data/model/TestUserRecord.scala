@@ -16,7 +16,7 @@ class TestUserRecord extends FlatSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
   val user = new UserRecord("User Name", "First Name", "Last Name")
-  user.id = new RecordId("abcd1234")
+  user.id = new UserId("abcd1234")
   val json = // TODO move to JSON file
     """{
       |"_id" : { "$oid" : "abcd1234"},

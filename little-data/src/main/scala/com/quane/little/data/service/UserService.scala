@@ -1,9 +1,9 @@
 package com.quane.little.data.service
 
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.mongodb.casbah.{MongoClient, MongoCollection}
-import com.quane.little.data.model.{RecordId, UserRecord}
+import com.quane.little.data.model.{UserId, UserRecord}
 import com.quane.little.data.repo.UserRepository
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 
 object UserService {
 
@@ -19,7 +19,7 @@ trait UserService {
 
   def fetch(username: String): UserRecord
 
-  def fetch(userId: RecordId): UserRecord
+  def fetch(userId: UserId): UserRecord
 
   def exists(username: String): Boolean
 
@@ -53,7 +53,7 @@ class MongoUserService(implicit val bindingModule: BindingModule)
     }
   }
 
-  override def fetch(userId: RecordId): UserRecord = {
+  override def fetch(userId: UserId): UserRecord = {
     val repo = new UserRepository(collection)
     repo.find(userId) match {
       case Some(user) => user

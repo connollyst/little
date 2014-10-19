@@ -9,11 +9,15 @@ import com.quane.little.data.model.CodeCategory.CodeCategory
   *
   * @author Sean Connolly
   */
-class FunctionRecord(val ownerId: RecordId, val category: CodeCategory, var definition: FunctionDefinition)
-  extends HasRecordId {
+class FunctionRecord(val ownerId: UserId, val category: CodeCategory, var definition: FunctionDefinition)
+  extends HasId[FunctionId] {
 
   @JsonProperty("_id")
-  var id: RecordId = _
+  var id: FunctionId = _
+
+  def asCodeRecord: CodeRecord = {
+    new CodeRecord(id, category, definition.name, definition.asReference)
+  }
 
   override def equals(other: Any): Boolean = other match {
     case that: FunctionRecord =>

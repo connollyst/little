@@ -4,7 +4,7 @@ import org.scalatest.{BeforeAndAfterEach, WordSpec}
 import com.quane.little.data.service.{ListenerService, UserService}
 import com.escalatesoft.subcut.inject.Injectable
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.{ListenerId, Id}
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
 import com.quane.little.language.event.{Event, EventListener}
@@ -68,7 +68,7 @@ class TestMockListenerService extends WordSpec with ShouldMatchers with BeforeAn
       val badId = "SomeFakeId"
       val error = intercept[IllegalArgumentException] {
         listenerService.update(
-          new RecordId(badId), new EventListener(Event.OnSpawn)
+          new ListenerId(badId), new EventListener(Event.OnSpawn)
         )
       }
       error.getMessage should be("No listener: " + badId)
@@ -116,7 +116,7 @@ class TestMockListenerService extends WordSpec with ShouldMatchers with BeforeAn
     "not find listener by unknown id" in {
       val badId = "SomeFakeId"
       val error = intercept[IllegalArgumentException] {
-        listenerService.findListener(new RecordId(badId))
+        listenerService.findListener(new ListenerId(badId))
       }
       error.getMessage should be("No listener: " + badId)
     }

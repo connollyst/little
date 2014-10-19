@@ -1,6 +1,6 @@
 package com.quane.little.data.repo
 
-import com.quane.little.data.model.{CodeCategory, RecordId, FunctionRecord}
+import com.quane.little.data.model._
 import com.quane.little.language.{Printer, FunctionDefinition}
 import com.quane.little.tools.json.LittleJSON
 import org.junit.runner.RunWith
@@ -15,7 +15,7 @@ import com.quane.little.language.util.Functions
 class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
-  var ownerId: RecordId = _
+  var ownerId: UserId = _
   val definition = new FunctionDefinition("MyFunction")
 
   /** Before the tests start, prepare a [[com.quane.little.data.model.UserRecord]]
@@ -84,7 +84,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
       repo.insert(function)
     }
     thrown.getMessage should be(
-      "Cannot insert FunctionRecord with known id: " + recordId.oid
+      "Cannot insert FunctionRecord with known id: " + recordId.id
     )
   }
   it should "error out on update without id" in {
@@ -101,7 +101,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   it should "error out on insert with unknown id" in {
     val repo = functionRepository
     val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
-    function.id = new RecordId("UnknownId1234")
+    function.id = new FunctionId("UnknownId1234")
     val thrown = intercept[IllegalArgumentException] {
       repo.insert(function)
     }
@@ -112,7 +112,7 @@ class TestFunctionRepository extends FlatSpec with EmbeddedMongoDB with ShouldMa
   it should "error out on update with unknown id" in {
     val repo = functionRepository
     val function = new FunctionRecord(ownerId, CodeCategory.Misc, definition)
-    function.id = new RecordId("UnknownId1234")
+    function.id = new FunctionId("UnknownId1234")
     val thrown = intercept[IllegalArgumentException] {
       repo.update(function)
     }

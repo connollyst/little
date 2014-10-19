@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.Id
 import com.quane.little.ide.view.html.HasLeftAndRightExpressions._
 import com.quane.little.ide.view.html.dnd.CodeTransferable
 import com.quane.little.ide.view.{CodeView, ViewOfLeftAndRightExpressions}
@@ -54,7 +54,7 @@ trait HasLeftAndRightExpressions
     view
   }
 
-  def requestSetCode(codeId: RecordId, index: Int)
+  def requestSetCode(codeId: Id, index: Int)
 
 }
 

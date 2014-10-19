@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.Id
 import com.quane.little.data.service.CodeService
 import com.quane.little.ide.view._
 import com.quane.little.language._
@@ -100,7 +100,7 @@ class BlockPresenter(val view: BlockView)(implicit val bindingModule: BindingMod
 
   override def acceptedValueType: ValueType = ValueType.Anything
 
-  override def requestAddCode(id: RecordId, index: Int) =
+  override def requestAddCode(id: Id, index: Int) =
     codeService.find(id) match {
       case Some(code) => add(code, index)
       case _ => throw new IllegalArgumentException("No code " + id)

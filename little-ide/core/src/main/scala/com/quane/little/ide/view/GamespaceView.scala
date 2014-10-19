@@ -1,7 +1,7 @@
 package com.quane.little.ide.view
 
+import com.quane.little.data.model.{ListenerId, Id}
 import com.quane.little.language.event.EventListener
-import com.quane.little.data.model.RecordId
 
 /** The view for the part of the IDE displaying the game and event listeners.
   *
@@ -9,7 +9,7 @@ import com.quane.little.data.model.RecordId
   */
 trait GamespaceView extends View[GamespaceViewPresenter] {
 
-  def createGameListener(event: EventListener, listenerId: RecordId): Unit
+  def createGameListener(event: EventListener, id: ListenerId): Unit
 
 }
 
@@ -20,6 +20,6 @@ trait GamespaceViewPresenter extends ViewPresenter {
 
   def newGameListener(): Unit
 
-  def openGameListener(listenerId: RecordId): Unit
+  def openGameListener(id: ListenerId): Unit
 
 }

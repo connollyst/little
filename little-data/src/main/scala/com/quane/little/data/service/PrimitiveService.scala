@@ -1,7 +1,7 @@
 package com.quane.little.data.service
 
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.{CodeCategory, CodeRecord, RecordId}
+import com.quane.little.data.model.{PrimitiveId, CodeCategory, CodeRecord, Id}
 import com.quane.little.language._
 import com.quane.little.language.data.Value
 import com.quane.little.language.math.{Division, Multiplication, Subtraction, Addition}
@@ -89,13 +89,13 @@ trait PrimitiveService {
 
   def allRecords: Iterable[CodeRecord]
 
-  def exists(id: RecordId): Boolean
+  def exists(id: PrimitiveId): Boolean
 
-  def find(id: RecordId): Code
+  def find(id: PrimitiveId): Code
 
-  def findRecord(id: RecordId): CodeRecord
+  def findRecord(id: PrimitiveId): CodeRecord
 
-  def createRecord(id: RecordId): CodeRecord
+  def createRecord(id: PrimitiveId): CodeRecord
 
 }
 
@@ -114,21 +114,21 @@ class BasicPrimitiveService extends PrimitiveService {
 
   override def allRecords: Iterable[CodeRecord] =
     PrimitiveService.All map {
-      id => createRecord(new RecordId(id))
+      id => createRecord(new PrimitiveId(id))
     }
 
-  override def exists(id: RecordId): Boolean = PrimitiveService.All.contains(id.oid)
+  override def exists(id: PrimitiveId): Boolean = PrimitiveService.All.contains(id.id)
 
-  override def find(id: RecordId): Code = PrimitiveFactory.create(id.oid)
+  override def find(id: PrimitiveId): Code = PrimitiveFactory.create(id.id)
 
-  override def findRecord(id: RecordId): CodeRecord = createRecord(id)
+  override def findRecord(id: PrimitiveId): CodeRecord = createRecord(id)
 
-  override def createRecord(id: RecordId): CodeRecord =
+  override def createRecord(id: PrimitiveId): CodeRecord =
     new CodeRecord(
       id,
-      PrimitiveService.Categories(id.oid),
-      PrimitiveService.Names(id.oid),
-      PrimitiveFactory.create(id.oid)
+      PrimitiveService.Categories(id.id),
+      PrimitiveService.Names(id.id),
+      PrimitiveFactory.create(id.id)
     )
 
 }

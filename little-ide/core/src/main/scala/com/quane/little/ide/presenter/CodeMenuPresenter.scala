@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
-import com.quane.little.data.model.{CodeCategory, CodeType, CodeRecord}
+import com.quane.little.data.model.{CodeCategory, CodeRecord}
 import com.quane.little.data.service.CodeService
 import com.quane.little.ide.view.{CodeMenuView, CodeMenuViewPresenter}
 
@@ -20,9 +20,7 @@ class CodeMenuPresenter[C <: PresenterAcceptsCode](val view: CodeMenuView, conte
   CodeCategory.values foreach {
     category => view.addCategory(category)
   }
-  codeService.allRecordsForUser("connollyst") foreach {
-    code => addItem(code)
-  }
+  codeService.allRecordsForUser("connollyst") foreach addItem
 
   private def addItem(record: CodeRecord): Unit =
     if (accepts(record)) {

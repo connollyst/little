@@ -6,7 +6,7 @@ import com.escalatesoft.subcut.inject.Injectable
 import org.scalatest.matchers.ShouldMatchers
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.{UserId, Id}
 
 /** Test cases for the mock [[com.quane.little.data.service.UserService]].
   *
@@ -64,7 +64,7 @@ class TestMockUserService extends WordSpec with ShouldMatchers with BeforeAndAft
     "throw error when fetching user for non-existing user id" in {
       val id = "A Non-Existing Id"
       val error = intercept[IllegalArgumentException] {
-        userService.fetch(new RecordId(id))
+        userService.fetch(new UserId(id))
       }
       error.getMessage should be("No user: " + id)
     }

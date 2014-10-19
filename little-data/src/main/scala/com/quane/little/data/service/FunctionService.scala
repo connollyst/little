@@ -3,7 +3,7 @@ package com.quane.little.data.service
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.mongodb.casbah.{MongoClient, MongoCollection}
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.{CodeCategory, FunctionRecord, RecordId, UserRecord}
+import com.quane.little.data.model._
 import com.quane.little.data.repo.FunctionRepository
 import com.quane.little.language.util.Functions
 import com.quane.little.language.{FunctionDefinition, FunctionReference}
@@ -16,7 +16,7 @@ trait FunctionService {
 
   def init(): Unit
 
-  def exists(id: RecordId): Boolean
+  def exists(id: FunctionId): Boolean
 
   def exists(username: String, functionName: String): Boolean
 
@@ -28,14 +28,14 @@ trait FunctionService {
 
   def findByUser(username: String): Iterable[FunctionRecord]
 
-  def findReference(id: RecordId): FunctionReference =
+  def findReference(id: FunctionId): FunctionReference =
     findDefinition(id).asReference
 
-  def findDefinition(id: RecordId): FunctionDefinition
+  def findDefinition(id: FunctionId): FunctionDefinition
 
   def findDefinition(username: String, functionName: String): FunctionDefinition
 
-  def update(id: RecordId, fun: FunctionDefinition): FunctionRecord
+  def update(id: FunctionId, fun: FunctionDefinition): FunctionRecord
 
   def insert(username: String, category: CodeCategory, fun: FunctionDefinition): FunctionRecord
 
@@ -68,10 +68,10 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
   override def exists(username: String, functionName: String): Boolean =
     exists(userService.fetch(username), functionName)
 
-  private def exists(userId: RecordId, functionName: String): Boolean =
+  private def exists(userId: UserId, functionName: String): Boolean =
     exists(userService.fetch(userId), functionName)
 
-  override def exists(id: RecordId): Boolean =
+  override def exists(id: FunctionId): Boolean =
     new FunctionRepository(collection).find(id).isDefined
 
   private def exists(user: UserRecord, functionName: String): Boolean =
@@ -84,7 +84,7 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
     systemFunctions ::: userFunctions
   }
 
-  override def findDefinition(id: RecordId): FunctionDefinition =
+  override def findDefinition(id: FunctionId): FunctionDefinition =
     new FunctionRepository(collection).find(id) match {
       case Some(record) => record.definition
       case None => throw new RuntimeException("No function definition for " + id)
@@ -97,7 +97,7 @@ class MongoFunctionService(implicit val bindingModule: BindingModule)
     throw new RuntimeException("No function definition '" + functionName + "' for user '" + username + "'")
   }
 
-  override def update(id: RecordId, fun: FunctionDefinition): FunctionRecord = {
+  override def update(id: FunctionId, fun: FunctionDefinition): FunctionRecord = {
     val repo = new FunctionRepository(collection)
     repo.find(id) match {
       case Some(record) =>

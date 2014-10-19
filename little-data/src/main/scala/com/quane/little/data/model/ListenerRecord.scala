@@ -8,11 +8,11 @@ import com.quane.little.language.event.EventListener
   *
   * @author Sean Connolly
   */
-class ListenerRecord(val ownerId: RecordId, var listener: EventListener)
-  extends HasRecordId {
+class ListenerRecord(val ownerId: UserId, var listener: EventListener)
+  extends HasId[ListenerId] {
 
   @JsonProperty("_id")
-  var id: RecordId = _
+  var id: ListenerId = _
 
   override def equals(other: Any): Boolean = other match {
     case that: ListenerRecord =>

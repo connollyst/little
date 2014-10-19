@@ -23,11 +23,11 @@ import com.quane.little.language.data.NumberSimple
 class TestListenerRecord extends WordSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
-  val userId = new RecordId("UserRecordID")
+  val userId = new UserId("UserRecordID")
   val category = CodeCategory.Misc
   // A blank event listener
   val blankListener = new EventListener(Event.OnSpawn)
-  val blankListenerId = new RecordId("BlankListenerRecordID")
+  val blankListenerId = new ListenerId("BlankListenerRecordID")
   val blankRecord = new ListenerRecord(userId, blankListener)
   blankRecord.id = blankListenerId
   // A more complex event listener
@@ -39,7 +39,7 @@ class TestListenerRecord extends WordSpec with ShouldMatchers {
       new NumberSimple(180)
     ))
   )
-  val complexListenerId = new RecordId("ComplexListenerRecordID")
+  val complexListenerId = new ListenerId("ComplexListenerRecordID")
   val complexRecord = new ListenerRecord(userId, complexListener)
   complexRecord.id = complexListenerId
 

@@ -1,9 +1,9 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.ide.view.{GamespaceView, GamespaceViewPresenter}
+import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
+import com.quane.little.data.model.ListenerId
 import com.quane.little.data.service.ListenerService
-import com.quane.little.data.model.RecordId
-import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
+import com.quane.little.ide.view.{GamespaceView, GamespaceViewPresenter}
 
 class GamespacePresenter[V <: GamespaceView](view: V)(implicit val bindingModule: BindingModule)
   extends GamespaceViewPresenter
@@ -25,7 +25,7 @@ class GamespacePresenter[V <: GamespaceView](view: V)(implicit val bindingModule
 
   override def newGameListener() = workspace.requestAddBlankEventListener()
 
-  override def openGameListener(listenerId: RecordId) = workspace.requestAddEventListener(listenerId)
+  override def openGameListener(id: ListenerId) = workspace.requestAddEventListener(id)
 
 
 }

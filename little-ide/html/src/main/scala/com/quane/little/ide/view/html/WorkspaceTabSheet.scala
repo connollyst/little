@@ -1,6 +1,6 @@
 package com.quane.little.ide.view.html
 
-import com.quane.little.data.model.CodeType
+import com.quane.little.data.model.FunctionId
 import com.quane.little.ide.presenter.command.{AddEventListenerCommand, AddFunctionDefinitionCommand, IDECommandExecutor}
 import com.quane.little.ide.view.html.dnd.{CodeTransferable, EventListenerTransferable}
 import com.quane.little.ide.view.{EventListenerView, FunctionDefinitionView, WorkspaceView}
@@ -69,9 +69,10 @@ class WorkspaceDropHandler(workspace: WorkspaceTabSheet) extends DropHandler {
 
   override def drop(event: DragAndDropEvent) =
     event.getTransferable match {
-      case t: CodeTransferable =>
+      // TODO should we have FunctionDefinitionTransferable?
+      case t: CodeTransferable if t.id.isInstanceOf[FunctionId] =>
         IDECommandExecutor.execute(
-          new AddFunctionDefinitionCommand(workspace.presenter, t.id)
+          new AddFunctionDefinitionCommand(workspace.presenter, t.id.asInstanceOf[FunctionId])
         )
       case t: EventListenerTransferable =>
         IDECommandExecutor.execute(

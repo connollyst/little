@@ -7,7 +7,7 @@ import com.quane.little.ide.presenter.command._
 import com.vaadin.event.dd.{DragAndDropEvent, DropHandler}
 import com.vaadin.event.dd.acceptcriteria.AcceptAll
 import com.quane.vaadin.scala.{VaadinMixin, DroppableTarget}
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.Id
 import com.quane.little.ide.view.html.dnd.IDETransferable
 
 object BlockLayout {
@@ -137,7 +137,7 @@ private class BlockStepSeparator(block: BlockLayout)
   setExpandRatio(dndTargetLeft, 1f)
   setExpandRatio(dndTargetRight, 1f)
 
-  def addFunction(functionId: RecordId) =
+  def addFunction(functionId: Id) =
     IDECommandExecutor.execute(
       new AddCodeCommand(block.presenter, functionId, index())
     )

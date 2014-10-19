@@ -2,7 +2,7 @@ package com.quane.little.ide.presenter
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.google.common.base.Objects
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.Id
 import com.quane.little.data.service.{CodeService, FunctionService}
 import com.quane.little.ide.view.{CodeViewPresenter, PrinterView, PrinterViewPresenter}
 import com.quane.little.language.data.ValueType.ValueType
@@ -72,10 +72,10 @@ class PrinterPresenter[V <: PrinterView](view: V)(implicit val bindingModule: Bi
 
   override def acceptedValueType: ValueType = ValueType.Anything
 
-  override def requestAddCode(id: RecordId, index: Int) =
+  override def requestAddCode(id: Id, index: Int) =
     text = codeService.find(id) match {
       case Some(c) => c
-      case None => throw new IllegalArgumentException("No code with id=" + id.oid)
+      case None => throw new IllegalArgumentException("No code with id=" + id.id)
     }
 
   /** Compile to a [[com.quane.little.language.Printer]].

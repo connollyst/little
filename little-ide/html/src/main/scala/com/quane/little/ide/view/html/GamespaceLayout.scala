@@ -1,15 +1,15 @@
 package com.quane.little.ide.view.html
 
-import com.vaadin.ui._
+import com.porotype.iconfont.FontAwesome.{Icon, IconVariant}
+import com.quane.little.data.model.ListenerId
 import com.quane.little.ide.view.GamespaceView
-import com.vaadin.server.{ExternalResource, Sizeable}
 import com.quane.little.language.event.EventListener
-import com.quane.little.data.model.RecordId
 import com.quane.vaadin.scala.VaadinMixin
-import com.porotype.iconfont.FontAwesome.{IconVariant, Icon}
-import com.vaadin.ui.Button.{ClickEvent, ClickListener}
+import com.vaadin.server.{ExternalResource, Sizeable}
 import com.vaadin.shared.ui.window.WindowMode
+import com.vaadin.ui.Button.{ClickEvent, ClickListener}
 import com.vaadin.ui.Window.{CloseEvent, CloseListener}
+import com.vaadin.ui._
 
 object GamespaceLayout {
   val Style = "l-gamespace"
@@ -39,8 +39,8 @@ class GamespaceLayout
   setFirstComponent(game)
   setSecondComponent(listeners)
 
-  override def createGameListener(listener: EventListener, listenerId: RecordId) =
-    listeners.addGameListener(listener, listenerId)
+  override def createGameListener(listener: EventListener, id: ListenerId) =
+    listeners.addGameListener(listener, id)
 
 }
 
@@ -115,12 +115,12 @@ class GamespaceListenerLayout(view: GamespaceLayout)
     })
   )
 
-  def addGameListener(listener: EventListener, listenerId: RecordId) = {
+  def addGameListener(listener: EventListener, id: ListenerId) = {
     val label = new Label(listener.event.toString)
     val button = new NativeButton(Icon.edit.variant(IconVariant.SIZE_LARGE),
       new ClickListener() {
         override def buttonClick(event: ClickEvent) = {
-          view.presenter.openGameListener(listenerId)
+          view.presenter.openGameListener(id)
         }
       }
     )

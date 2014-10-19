@@ -1,7 +1,8 @@
 package com.quane.little.data.repo
 
+import com.mongodb.casbah.Imports
 import com.mongodb.casbah.Imports._
-import com.quane.little.data.model.UserRecord
+import com.quane.little.data.model.{UserId, UserRecord}
 import com.quane.little.tools.Logging
 
 /** Provides storage and retrieval access to the repository of [[com.quane.little.data.model.UserRecord]]
@@ -10,7 +11,7 @@ import com.quane.little.tools.Logging
   * @author Sean Connolly
   */
 class UserRepository(collection: MongoCollection)
-  extends MongoRepository[UserRecord](collection) with Logging {
+  extends MongoRepository[UserId, UserRecord](collection) with Logging {
 
   def find(username: String): Option[UserRecord] = {
     val query = MongoDBObject("username" -> username)
@@ -24,5 +25,7 @@ class UserRepository(collection: MongoCollection)
     insert(user)
     user
   }
+
+  protected def recordId(oid: Imports.ObjectId) = new UserId(oid)
 
 }

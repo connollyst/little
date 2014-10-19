@@ -2,7 +2,7 @@ package com.quane.little.data.service
 
 import com.escalatesoft.subcut.inject.{Injectable, NewBindingModule}
 import com.mongodb.casbah.MongoClient
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.PrimitiveId
 import com.quane.little.data.{DataBindingModule, EmbeddedMongoDB}
 import com.quane.little.language._
 import org.junit.runner.RunWith
@@ -19,23 +19,11 @@ class TestCodeService extends WordSpec with ShouldMatchers with EmbeddedMongoDB 
 
   implicit val bindingModule = TestCodeServiceBindingModule
 
-  val userOne = "userOne"
-  val userTwo = "userTwo"
-  val users = inject[UserService]
-  val functions = inject[FunctionService]
   val code = inject[CodeService]
-
-  override def beforeAll() {
-    super.beforeAll()
-    users.init()
-    users.upsert(userOne)
-    users.upsert(userTwo)
-    // TODO if we always initialize, we can't test initialization..
-    functions.init()
-  }
 
   "CodeService" should {
     "find primitive Get" in {
+      println(code)
       findPrimitive(PrimitiveService.Get, classOf[Getter])
     }
     "find primitive Set" in {
@@ -50,9 +38,9 @@ class TestCodeService extends WordSpec with ShouldMatchers with EmbeddedMongoDB 
   }
 
   private def findPrimitive(id: String, expected: Class[_ <: Code]): Unit =
-    code.find(new RecordId(id)) match {
+    code.find(new PrimitiveId(id)) match {
       case Some(primitive) => primitive.getClass should be(expected)
-      case None => fail("Expected " + expected + " for " + id)
+      case None => fail("Expected " + expected + " for " + id + ", got None")
     }
 
 }

@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.{ListenerId, FunctionId, Id}
 import com.quane.little.ide.view.ViewPresenter
 import com.quane.little.language.data.ValueType
 import com.quane.little.language.data.ValueType._
@@ -26,13 +26,13 @@ trait PresenterAcceptsCode extends PresenterAccepts {
 
   def acceptedValueType: ValueType
 
-  def requestAddCode(id: RecordId, index: Int): Unit
+  def requestAddCode(id: Id, index: Int): Unit
 
 }
 
 trait PresenterAcceptsFunctionDefinition extends PresenterAccepts {
 
-  def requestAddFunctionDefinition(id: RecordId, index: Int): Unit
+  def requestAddFunctionDefinition(id: FunctionId, index: Int): Unit
 
   def requestAddBlankFunctionDefinition(index: Int): Unit
 
@@ -40,7 +40,7 @@ trait PresenterAcceptsFunctionDefinition extends PresenterAccepts {
 
 trait PresenterAcceptsEventListener extends PresenterAccepts {
 
-  def requestAddEventListener(id: RecordId, index: Int): Unit
+  def requestAddEventListener(id: ListenerId, index: Int): Unit
 
   def requestAddBlankEventListener(index: Int): Unit
 

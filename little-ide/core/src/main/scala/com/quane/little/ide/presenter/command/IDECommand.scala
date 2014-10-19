@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter.command
 
+import com.quane.little.data.model.{FunctionId, ListenerId, Id}
 import com.quane.little.ide.presenter._
-import com.quane.little.data.model.RecordId
 
 /** An IDE command: an action, usually initiated by the user, which can be
   * executed and undone if necessary.
@@ -16,14 +16,17 @@ sealed trait IDECommand {
 
 }
 
-class AddCodeCommand(receiver: PresenterAcceptsCode, id: RecordId, index: Int = 0) extends IDECommand {
+class AddCodeCommand(receiver: PresenterAcceptsCode, id: Id, index: Int = 0)
+  extends IDECommand {
   override private[presenter] def execute() = receiver.requestAddCode(id, index)
 }
 
-class AddFunctionDefinitionCommand(receiver: PresenterAcceptsFunctionDefinition, id: RecordId, index: Int = 0) extends IDECommand {
+class AddFunctionDefinitionCommand(receiver: PresenterAcceptsFunctionDefinition, id: FunctionId, index: Int = 0)
+  extends IDECommand {
   override private[presenter] def execute() = receiver.requestAddFunctionDefinition(id, index)
 }
 
-class AddEventListenerCommand(receiver: PresenterAcceptsEventListener, id: RecordId, index: Int = 0) extends IDECommand {
+class AddEventListenerCommand(receiver: PresenterAcceptsEventListener, id: ListenerId, index: Int = 0)
+  extends IDECommand {
   override private[presenter] def execute() = receiver.requestAddEventListener(id, index)
 }

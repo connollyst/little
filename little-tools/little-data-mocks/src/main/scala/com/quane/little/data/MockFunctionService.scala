@@ -2,7 +2,7 @@ package com.quane.little.data
 
 import com.escalatesoft.subcut.inject.{BindingModule, Injectable}
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.{FunctionRecord, RecordId}
+import com.quane.little.data.model.{FunctionId, FunctionRecord}
 import com.quane.little.data.service.{FunctionService, UserService}
 import com.quane.little.language.FunctionDefinition
 
@@ -14,8 +14,10 @@ import scala.collection.mutable.ListBuffer
   * @author Sean Connolly
   */
 class MockFunctionService(implicit val bindingModule: BindingModule)
-  extends FunctionService
-  with MockService[FunctionRecord]
+  extends MockService[FunctionId, FunctionRecord](new IdFactory[FunctionId] {
+    override def next = new FunctionId(increment)
+  })
+  with FunctionService
   with Injectable {
 
   private val userService = inject[UserService]
@@ -25,12 +27,12 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
     insert(new FunctionRecord(owner.id, category, fun))
   }
 
-  override def update(id: RecordId, fun: FunctionDefinition): FunctionRecord = {
+  override def update(id: FunctionId, fun: FunctionDefinition): FunctionRecord = {
     get(id) match {
       case Some(function) =>
         function.definition = fun
         function
-      case None => throw new IllegalArgumentException("No function: " + id.oid)
+      case None => throw new IllegalArgumentException("No function: " + id.id)
     }
   }
 
@@ -47,10 +49,10 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
     userFunctions.toList
   }
 
-  override def findDefinition(id: RecordId): FunctionDefinition =
+  override def findDefinition(id: FunctionId): FunctionDefinition =
     get(id) match {
       case Some(function) => function.definition
-      case None => throw new IllegalArgumentException("No function: " + id.oid)
+      case None => throw new IllegalArgumentException("No function: " + id.id)
     }
 
   override def findDefinition(username: String, functionName: String): FunctionDefinition = {
@@ -66,7 +68,7 @@ class MockFunctionService(implicit val bindingModule: BindingModule)
   override def exists(username: String, functionName: String): Boolean =
     getFunction(username, functionName).isDefined
 
-  override def exists(id: RecordId): Boolean = get(id).isDefined
+  override def exists(id: FunctionId): Boolean = get(id).isDefined
 
   override def isReservedSystemName(functionName: String): Boolean =
     getFunction(UserService.SYSTEM_USERNAME, functionName).isDefined

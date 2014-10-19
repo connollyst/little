@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.ide.view.{CodeViewPresenter, EventListenerViewPresenter, EventListenerView}
-import com.quane.little.data.model.{ListenerRecord, RecordId}
+import com.quane.little.data.model.{ListenerId, ListenerRecord, Id}
 import com.quane.little.data.service.ListenerService
 import com.escalatesoft.subcut.inject.{Injectable, BindingModule}
 import com.quane.little.language.event.Event.Event
@@ -16,12 +16,12 @@ class EventListenerPresenter[V <: EventListenerView](view: V)(implicit val bindi
 
   private val listenerService = inject[ListenerService]
 
-  private var _id: Option[RecordId] = None
+  private var _id: Option[ListenerId] = None
   private val _username = "connollyst"
   private var _event: Option[Event] = None
   private val _block = new BlockPresenter(view.createBlock())
 
-  private[presenter] def initialize(id: RecordId, listener: EventListener): EventListenerPresenter[V] = {
+  private[presenter] def initialize(id: ListenerId, listener: EventListener): EventListenerPresenter[V] = {
     _id = Some(id)
     event = listener.event
     steps = listener.steps

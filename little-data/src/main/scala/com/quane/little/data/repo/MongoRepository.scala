@@ -2,14 +2,14 @@ package com.quane.little.data.repo
 
 import com.mongodb.casbah.Imports._
 import com.mongodb.util.JSON
-import com.quane.little.data.model.{RecordId, HasRecordId}
+import com.quane.little.data.model.{HasId, MongoId}
 import com.quane.little.tools.json.LittleJSON
 
 /** An abstract MongoDB repository.
   *
   * @author Sean Connolly
   */
-abstract class MongoRepository[T <: HasRecordId : Manifest](collection: MongoCollection) {
+abstract class MongoRepository[I <: MongoId, T <: HasId[I] : Manifest](collection: MongoCollection) {
 
   private val little = new LittleJSON()
 
@@ -25,32 +25,32 @@ abstract class MongoRepository[T <: HasRecordId : Manifest](collection: MongoCol
       case dbObject: DBObject =>
         val writeResult = collection += dbObject
         if (writeResult.getError != null) {
-          throw new RuntimeException(
-            "Failed to write object to database: " + writeResult.getError
-          )
+          throw new RuntimeException("Failed to write object to database: " + writeResult.getError)
         }
         dbObject._id match {
-          case Some(id) => record.id = RecordId(id)
-          case None => throw new RuntimeException(
-            "Expected DBObject was assigned an OID."
-          )
+          case Some(id) => record.id = recordId(id)
+          case None =>
+            throw new RuntimeException("Expected DBObject was assigned an OID.")
         }
-      case _ => throw new RuntimeException("Expected DBObject for " + json)
+      case _ =>
+        throw new RuntimeException("Expected DBObject for " + json)
     }
   }
 
-  def find(id: Option[RecordId]): Option[T] = {
+  def find(id: Option[MongoId]): Option[T] = {
     id match {
       case Some(rid) => find(rid)
       case None => None
     }
   }
 
-  def find(id: RecordId): Option[T] = {
+  def find(id: MongoId): Option[T] = {
     val query = MongoDBObject("_id" -> id.toObjectId)
     val result = collection.findOne(query)
     deserialize(result)
   }
+
+  protected def recordId(oid: ObjectId): I
 
   protected def deserialize[A <% DBObject](o: Option[A]): Option[T] =
     o match {

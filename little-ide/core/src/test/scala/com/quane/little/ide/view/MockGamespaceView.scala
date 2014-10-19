@@ -1,7 +1,7 @@
 package com.quane.little.ide.view
 
 import com.quane.little.language.event.EventListener
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.{ListenerId, Id}
 
 object MockGamespaceView {
   def apply(): MockGamespaceView = new MockGamespaceView
@@ -14,6 +14,6 @@ object MockGamespaceView {
   */
 class MockGamespaceView extends GamespaceView with MockView {
 
-  override def createGameListener(event: EventListener, listenerId: RecordId) = Unit
+  override def createGameListener(event: EventListener, id: ListenerId) = Unit
 
 }

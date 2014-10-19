@@ -4,7 +4,7 @@ import org.scalatest.{BeforeAndAfterEach, WordSpec}
 import com.quane.little.data.service.{UserService, FunctionService}
 import com.escalatesoft.subcut.inject.Injectable
 import org.scalatest.matchers.ShouldMatchers
-import com.quane.little.data.model.{RecordId, CodeCategory}
+import com.quane.little.data.model.{FunctionId, Id, CodeCategory}
 import com.quane.little.language.FunctionDefinition
 import org.junit.runner.RunWith
 import org.scalatest.junit.JUnitRunner
@@ -68,7 +68,7 @@ class TestMockFunctionService extends WordSpec with ShouldMatchers with BeforeAn
       val badId = "SomeFakeId"
       val error = intercept[IllegalArgumentException] {
         functionService.update(
-          new RecordId(badId), new FunctionDefinition("UpdatedFunction")
+          new FunctionId(badId), new FunctionDefinition("UpdatedFunction")
         )
       }
       error.getMessage should be("No function: " + badId)
@@ -137,14 +137,14 @@ class TestMockFunctionService extends WordSpec with ShouldMatchers with BeforeAn
     "not find definition by unknown id" in {
       val badId = "SomeFakeId"
       val error = intercept[IllegalArgumentException] {
-        functionService.findDefinition(new RecordId(badId))
+        functionService.findDefinition(new FunctionId(badId))
       }
       error.getMessage should be("No function: " + badId)
     }
     "not find reference by unknown id" in {
       val badId = "SomeFakeId"
       val error = intercept[IllegalArgumentException] {
-        functionService.findReference(new RecordId(badId))
+        functionService.findReference(new FunctionId(badId))
       }
       error.getMessage should be("No function: " + badId)
     }

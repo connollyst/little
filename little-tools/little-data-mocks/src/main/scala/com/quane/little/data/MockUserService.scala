@@ -1,7 +1,7 @@
 package com.quane.little.data
 
+import com.quane.little.data.model.{UserId, UserRecord}
 import com.quane.little.data.service.UserService
-import com.quane.little.data.model.{RecordId, UserRecord}
 
 /** A mock [[com.quane.little.data.service.UserService]] to be injected into
   * tests.
@@ -9,8 +9,10 @@ import com.quane.little.data.model.{RecordId, UserRecord}
   * @author Sean Connolly
   */
 class MockUserService
-  extends UserService
-  with MockService[UserRecord] {
+  extends MockService[UserId, UserRecord](new IdFactory[UserId] {
+    override def next = new UserId(increment)
+  })
+  with UserService {
 
   override def upsert(username: String): UserRecord =
     getUser(username) match {
@@ -27,10 +29,10 @@ class MockUserService
       case None => throw new IllegalArgumentException("No user: " + username)
     }
 
-  override def fetch(userId: RecordId): UserRecord =
+  override def fetch(userId: UserId): UserRecord =
     get(userId) match {
       case Some(user) => user
-      case None => throw new IllegalArgumentException("No user: " + userId.oid)
+      case None => throw new IllegalArgumentException("No user: " + userId.id)
     }
 
   override def exists(username: String): Boolean =

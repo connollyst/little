@@ -1,7 +1,7 @@
 package com.quane.little.data.service
 
 import com.mongodb.casbah.{MongoCollection, MongoClient}
-import com.quane.little.data.model.{RecordId, ListenerRecord}
+import com.quane.little.data.model.{ListenerId, Id, ListenerRecord}
 import com.quane.little.data.repo.ListenerRepository
 import com.quane.little.language.event.{Event, EventListener}
 import com.quane.little.language.FunctionReference
@@ -17,14 +17,14 @@ trait ListenerService {
 
   def init(): Unit
 
-  def findListener(id: RecordId): EventListener
+  def findListener(id: ListenerId): EventListener
 
   def findListenersByUser(username: String): List[EventListener] =
     findByUser(username).map(_.listener)
 
   def findByUser(username: String): List[ListenerRecord]
 
-  def update(id: RecordId, listener: EventListener): ListenerRecord
+  def update(id: ListenerId, listener: EventListener): ListenerRecord
 
   def insert(username: String, listener: EventListener): ListenerRecord
 
@@ -71,7 +71,7 @@ class MongoListenerService(implicit val bindingModule: BindingModule)
     )
   }
 
-  override def findListener(id: RecordId): EventListener =
+  override def findListener(id: ListenerId): EventListener =
     repository.find(id) match {
       case Some(record) => record.listener
       case None => throw new RuntimeException("No event listener for " + id)
@@ -80,7 +80,7 @@ class MongoListenerService(implicit val bindingModule: BindingModule)
   override def findByUser(username: String): List[ListenerRecord] =
     repository.findByUser(userService.fetch(username))
 
-  override def update(id: RecordId, listener: EventListener): ListenerRecord = {
+  override def update(id: ListenerId, listener: EventListener): ListenerRecord = {
     val repo = repository
     repo.find(id) match {
       case Some(record) =>

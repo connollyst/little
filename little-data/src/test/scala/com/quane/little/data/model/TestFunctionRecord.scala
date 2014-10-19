@@ -21,16 +21,16 @@ import com.google.common.io.Files
 class TestFunctionRecord extends WordSpec with ShouldMatchers {
 
   val littleJSON = new LittleJSON()
-  val userId = new RecordId("UserRecordID")
+  val userId = new UserId("UserRecordID")
   val category = CodeCategory.Misc
   // A blank function definition
   val blankFunction = new FunctionDefinition("BlankFunction")
-  val blankFunctionId = new RecordId("BlankFunctionRecordID")
+  val blankFunctionId = new FunctionId("BlankFunctionRecordID")
   val blankRecord = new FunctionRecord(userId, category, blankFunction)
   blankRecord.id = blankFunctionId
   // A more complex function definition
   val complexFunction = Functions.turnRelative
-  val complexFunctionId = new RecordId("ComplexFunctionRecordID")
+  val complexFunctionId = new FunctionId("ComplexFunctionRecordID")
   val complexRecord = new FunctionRecord(userId, category, complexFunction)
   complexRecord.id = complexFunctionId
 

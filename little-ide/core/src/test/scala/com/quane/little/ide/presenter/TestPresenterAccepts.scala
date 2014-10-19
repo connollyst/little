@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{CodeRecord, RecordId}
+import com.quane.little.data.model.{PrimitiveId, CodeRecord, Id}
 import com.quane.little.data.service.{BasicPrimitiveService, PrimitiveService}
 import com.quane.little.ide.MockIDEBindingModule
 import com.quane.little.ide.view._
@@ -47,6 +47,6 @@ class TestPresenterAccepts extends WordSpec with ShouldMatchers with MockitoSuga
   // TODO test more recipients!!
 
   private def primitive(id: String): CodeRecord =
-    new BasicPrimitiveService().findRecord(new RecordId(id))
+    new BasicPrimitiveService().findRecord(new PrimitiveId(id))
 
 }

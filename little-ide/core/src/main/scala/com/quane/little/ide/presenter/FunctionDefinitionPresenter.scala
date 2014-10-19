@@ -1,6 +1,6 @@
 package com.quane.little.ide.presenter
 
-import com.quane.little.data.model.{CodeCategory, RecordId, FunctionRecord}
+import com.quane.little.data.model.{FunctionId, CodeCategory, Id, FunctionRecord}
 import com.quane.little.ide.view.{CodeViewPresenter, FunctionDefinitionView, FunctionDefinitionViewPresenter}
 import com.quane.little.language.{FunctionParameter, FunctionDefinition, Code}
 import scala._
@@ -20,7 +20,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
   private val presenterFactory = inject[PresenterFactory]
   private val functionService = inject[FunctionService]
 
-  private var _id: Option[RecordId] = None
+  private var _id: Option[FunctionId] = None
   private val _username = "connollyst"
   private var _name = ""
   private val _params = new ListBuffer[FunctionParameterPresenter[_]]
@@ -28,7 +28,7 @@ class FunctionDefinitionPresenter[V <: FunctionDefinitionView](view: V)(implicit
 
   view.registerViewPresenter(this)
 
-  private[presenter] def initialize(id: RecordId, fun: FunctionDefinition): FunctionDefinitionPresenter[V] = {
+  private[presenter] def initialize(id: FunctionId, fun: FunctionDefinition): FunctionDefinitionPresenter[V] = {
     _id = Some(id)
     name = fun.name
     steps = fun.steps

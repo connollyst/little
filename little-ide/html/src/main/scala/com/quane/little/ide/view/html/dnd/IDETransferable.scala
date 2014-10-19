@@ -3,7 +3,7 @@ package com.quane.little.ide.view.html.dnd
 import java.util
 
 import com.google.common.base.Objects
-import com.quane.little.data.model.RecordId
+import com.quane.little.data.model.{ListenerId, Id}
 import com.vaadin.event.Transferable
 import com.vaadin.ui.Component
 
@@ -19,7 +19,7 @@ sealed trait IDETransferable extends Transferable {
 
   def source: Component
 
-  def id: RecordId
+  def id: Id
 
   val data = mutable.Map[String, AnyRef](IDETransferable.ID -> id)
 
@@ -39,6 +39,6 @@ sealed trait IDETransferable extends Transferable {
 
 }
 
-class EventListenerTransferable(val source: Component, val id: RecordId) extends IDETransferable
+class EventListenerTransferable(val source: Component, val id: ListenerId) extends IDETransferable
 
-class CodeTransferable(val source: Component, val id: RecordId) extends IDETransferable
+class CodeTransferable(val source: Component, val id: Id) extends IDETransferable
