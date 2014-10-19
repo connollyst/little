@@ -1,7 +1,7 @@
 package com.quane.little.ide.presenter
 
 import com.quane.little.data.model.CodeCategory.CodeCategory
-import com.quane.little.data.model.{ListenerId, FunctionId, Id}
+import com.quane.little.data.model.{FunctionId, Id, ListenerId}
 import com.quane.little.ide.view.ViewPresenter
 import com.quane.little.language.data.ValueType
 import com.quane.little.language.data.ValueType._
@@ -11,12 +11,13 @@ object PresenterAccepts extends Logging {
 
   def accepts[P <: PresenterAcceptsCode](presenter: P, returnType: ValueType): Boolean = {
     val acceptedType = presenter.acceptedValueType
-    info("Checking if " + presenter + " accepts " + returnType + " in " + acceptedType + "?..")
-    acceptedType match {
+    val accepted = acceptedType match {
       case ValueType.Anything => true
       case ValueType.Something => returnType != ValueType.Nothing
       case _ => acceptedType == returnType
     }
+    debug(presenter.getClass.getSimpleName + " accepts " + returnType + " in " + acceptedType + ": " + accepted)
+    accepted
   }
 
 }
